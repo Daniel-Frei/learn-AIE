@@ -1,0 +1,10 @@
+
+I want you to add 100 questions so that I can learn the chapter. I already created lib\chapter2.ts for those questions and the questions should be selectable as "Chapter 2 only" on the frontend.
+
+Requirements:
+- Same format as we already used with four potential answers/options, the options/answer should be true or false (more than one answer can be true or false), explanation.
+- 100 questions in total (with four options each)
+- the order of the options / answers should be random (so that I don't accidentally remember the order), so basically we can use the current implementation.
+- questions can cover anything from simple terminology questions (e.g. "what does RNN stand for?") and basic concepts to more difficult and complex questions. The goal is to test (and practice) my understanding of this chapter. It can also include math related questions (related to the equations in the chapter) and what we have discussed so far.
+- the goal of the question isn't to literally ask about the chapter but instead test / practice the knowledge in the chapter. So imagine if someone tried to answer the questions but didn't read the chapter but still has the same knowledge as what is discussed in the chapter. They should be able to answer the questions and not fail due to vague references to the chapter (e.g. "the equation in the chapter").
+- easy questions should focus on terminology, simple concept, key concepts including concepts might not be explicitly explained in the chapter but important to understand it... Mastering easy questions should make it easier to understand concepts in medium and hard question. e.g. some medium and hard questions mention "logits" but what logits are is never asked in an easy question. make sure that the questions have a equally distributed answer pattern (e.g. it seems like many questions have the format that ticking 3 out of 4 options is correct but only 25% of the questions should have that pattern).
