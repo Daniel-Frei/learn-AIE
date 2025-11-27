@@ -57,6 +57,7 @@ export function useQuiz() {
   const [correctCount, setCorrectCount] = useState(0);
 
   // Reset order & stats whenever the available question set changes
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (availableQuestions.length === 0) {
       setQuestionOrder([]);
@@ -78,6 +79,8 @@ export function useQuiz() {
     setAnsweredCount(0);
     setCorrectCount(0);
   }, [availableQuestions.length]);
+  /* eslint-enable react-hooks/set-state-in-effect */
+
 
   const currentQuestion = useMemo(() => {
     if (!availableQuestions.length || !questionOrder.length) return null;
@@ -89,7 +92,8 @@ export function useQuiz() {
     if (!currentQuestion) return [];
     // shuffle only when the question changes
     return shuffle(currentQuestion.options);
-  }, [currentQuestion?.id]);
+  }, [currentQuestion]);
+
 
   const toggleOption = (idx: number) => {
     if (showResult) return;

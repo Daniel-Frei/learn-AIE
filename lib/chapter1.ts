@@ -825,33 +825,6 @@ export const chapter1Questions: Question[] = [
       "A common setup uses BCE loss with Adam and trains in batches for the two-class sentiment task.",
   },
   {
-    id: "ch1-q32",
-    chapter: 1,
-    difficulty: "easy",
-    prompt:
-      "Consider a commonly used movie review dataset for binary sentiment analysis. Which statements are TRUE?",
-    options: [
-      {
-        text: "It contains 50,000 reviews labeled as positive or negative.",
-        isCorrect: true,
-      },
-      {
-        text: "Reviews vary in length, with an average around a few hundred words.",
-        isCorrect: true,
-      },
-      {
-        text: "The most frequent words include ‘movie’ and ‘film’.",
-        isCorrect: true,
-      },
-      {
-        text: "All reviews are exactly the same length before preprocessing.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "The dataset is large, with varied review lengths and frequent words like 'movie' and 'film', motivating padding and preprocessing.",
-  },
-  {
     id: "ch1-q33",
     chapter: 1,
     difficulty: "medium",

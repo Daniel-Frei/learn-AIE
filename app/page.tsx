@@ -2,6 +2,7 @@
 "use client";
 
 import { useQuiz, Mode, DifficultyFilter } from "../lib/useQuiz";
+import QuestionExplanationChat from "../components/QuestionExplanationChat";
 
 export default function QuizPage() {
   const {
@@ -190,21 +191,34 @@ export default function QuizPage() {
             )}
           </div>
 
-          {showResult && (
-            <div
-              className={`mt-2 rounded-lg border px-4 py-3 text-sm ${
-                showResult.isCorrect
-                  ? "border-emerald-500 bg-emerald-900/30 text-emerald-100"
-                  : "border-rose-500 bg-rose-900/30 text-rose-100"
-              }`}
-            >
-              <p className="font-semibold mb-1">
-                {showResult.isCorrect
-                  ? "Correct 🎉"
-                  : "Not quite – review the explanation:"}
-              </p>
-              <p>{currentQuestion.explanation}</p>
-            </div>
+          {showResult && currentQuestion && (
+            <>
+              <div
+                className={`mt-2 rounded-lg border px-4 py-3 text-sm ${
+                  showResult.isCorrect
+                    ? "border-emerald-500 bg-emerald-900/30 text-emerald-100"
+                    : "border-rose-500 bg-rose-900/30 text-rose-100"
+                }`}
+              >
+                <p className="font-semibold mb-1">
+                  {showResult.isCorrect
+                    ? "Correct 🎉"
+                    : "Not quite – review the explanation:"}
+                </p>
+                <p>{currentQuestion.explanation}</p>
+              </div>
+
+              {/* NEW: detailed explanation chat */}
+              <QuestionExplanationChat
+                question={currentQuestion}
+                options={shuffledOptions.map((opt, idx) => ({
+                  text: opt.text,
+                  isCorrect: opt.isCorrect,
+                  selected: selectedIndexes.includes(idx),
+                }))}
+                isOverallCorrect={showResult.isCorrect}
+              />
+            </>
           )}
         </footer>
       </div>
