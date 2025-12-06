@@ -10,5 +10,6 @@ Requirements:
 - easy questions should focus on terminology, simple concept, key concepts including concepts might not be explicitly explained in the chapter but important to understand it... Mastering easy questions should make it easier to understand concepts in medium and hard question. e.g. some medium and hard questions might mention "logits" but what logits are is never asked in an easy question.
 - easy questions can also cover topics where there are no medium or hard questions for.
 - questions should cover broadly what was discussed in the chapter.
+- Write out acronyms.
 - The answer patterns should be equaly destributed: 25% of all questions should where all answers are true, 25% should be where three answers are true, 25% should be where two answers are true, 25% should be where one answer is true. Note that by true I am referring to the user ticking the box, the statement in the answers doesn't have to be true, e.g. the question could be "which of the following statements are false?" and then the answer "RNNs use transformers" would be a true answer even though the statement by itself is wrong.
 - There should roughly be the same amount of easy, medium and hard questions.

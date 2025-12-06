@@ -2700,7 +2700,7 @@ export const aieChapter2Questions: Question[] = [
     chapter: 2,
     difficulty: "easy",
     prompt:
-      "Which statement is correct about why chapter-level fundamentals matter for your own applications?",
+      "Which statement is correct about understanding ML/DL fundamentals?",
     options: [
       {
         text: "They let you reason about model choice, sampling settings, and risk trade-offs instead of treating the model as a complete black box.",
