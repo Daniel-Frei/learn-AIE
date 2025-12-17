@@ -2,7 +2,8 @@
 "use client";
 
 import { useRef } from "react";
-import type { Mode, DifficultyRange } from "../lib/useQuiz";
+import type { DifficultyRange } from "../lib/useQuiz";
+import { QUESTION_SOURCES, type Mode } from "../lib/quiz";
 
 type Props = {
   title: string;
@@ -82,10 +83,11 @@ export default function QuizHeader({
             value={mode}
             onChange={(e) => changeMode(e.target.value as Mode)}
           >
-            <option value="chapter-1">Chapter 1 only</option>
-            <option value="chapter-2">Chapter 2 only</option>
-            <option value="chapter-3">Chapter 3 only</option>
-            <option value="aie-build-app-ch2">AIE build app - Chap 2</option>
+            {QUESTION_SOURCES.map((src) => (
+              <option key={src.id} value={src.id}>
+                {src.label}
+              </option>
+            ))}
             <option value="all">All chapters</option>
           </select>
         </label>

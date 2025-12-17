@@ -2,11 +2,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { chapter1Questions } from "./chapter1";
-import { chapter2Questions } from "./chapter2";
-import { chapter3Questions } from "./chapter3";
-import { aieChapter2Questions } from "./books/AIE_building_apps/chapter2";
-import { allQuestions, Question } from "./quiz";
+import {
+  getQuestionsForMode,
+  type Question,
+  type Mode,
+} from "./quiz";
 import {
   loadDifficultyMap,
   saveDifficultyMap,
@@ -14,13 +14,6 @@ import {
   computeDifficultyScore,
   type DifficultyMap,
 } from "./difficultyStore";
-
-export type Mode =
-  | "chapter-1"
-  | "chapter-2"
-  | "chapter-3"
-  | "aie-build-app-ch2"
-  | "all";
 
 // Difficulty filter is now a numeric range [0,100]
 export type DifficultyRange = {
@@ -35,14 +28,6 @@ function shuffle<T>(items: T[]): T[] {
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
-}
-
-function getQuestionsForMode(mode: Mode): Question[] {
-  if (mode === "chapter-1") return chapter1Questions;
-  if (mode === "chapter-2") return chapter2Questions;
-  if (mode === "chapter-3") return chapter3Questions;
-  if (mode === "aie-build-app-ch2") return aieChapter2Questions;
-  return allQuestions;
 }
 
 export function useQuiz() {
@@ -253,3 +238,6 @@ export function useQuiz() {
     importDifficultyFromJson,
   };
 }
+
+// Optional: if you want to keep importing Mode from useQuiz elsewhere
+export type { Mode } from "./quiz";

@@ -1,7 +1,8 @@
 // app/page.tsx
 "use client";
 
-import { useQuiz, Mode } from "../lib/useQuiz";
+import { useQuiz } from "../lib/useQuiz";
+import { getTitleForMode, type Mode } from "../lib/quiz";
 import QuizHeader from "../components/QuizHeader";
 import QuizQuestionSection from "../components/QuizQuestionSection";
 import QuizFooter from "../components/QuizFooter";
@@ -29,16 +30,7 @@ export default function QuizPage() {
     importDifficultyFromJson,
   } = useQuiz();
 
-  const title =
-    mode === "chapter-1"
-      ? "Chapter 1 Quiz – Analyzing Text Data with Deep Learning"
-      : mode === "chapter-2"
-      ? "Chapter 2 Quiz – The Transformer and Modern NLP"
-      : mode === "chapter-3"
-      ? "Chapter 3 Quiz – Large Language Models & Prompting"
-      : mode === "aie-build-app-ch2"
-      ? "AIE build app – Chapter 2: Understanding Foundation Models"
-      : "All Chapters Quiz – Text, Transformers & LLMs";
+  const title = getTitleForMode(mode as Mode);
 
   const difficultyPercent =
     currentDifficultyScore != null
