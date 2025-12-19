@@ -7,6 +7,8 @@ import { aieChapter3Questions } from "./books/AIE_building_apps/chapter3";
 import { aieChapter4Questions } from "./books/AIE_building_apps/chapter4";
 import { stanfordCME295Lecture1Questions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture1_transformer";
 import { stanfordCME295Lecture2Questions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture2_models";
+import { stanfordCME295Lecture3LLMsQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture3_LLMs";
+import { stanfordCME295Lecture4TrainingQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture4_training";
 import { mixedQuestions } from "./other/other";
 
 export type Difficulty = "easy" | "medium" | "hard";
@@ -87,6 +89,20 @@ export const QUESTION_SOURCES = [
     questions: stanfordCME295Lecture2Questions,
   },
   {
+    id: "cme295-lect3" as const,
+    label: "Stanford CME295 Lecture 3",
+    title:
+      "Stanford CME295 Lecture 3: Large Language Models, MoE & Inference",
+    questions: stanfordCME295Lecture3LLMsQuestions,
+  },
+  {
+    id: "cme295-lect4" as const,
+    label: "Stanford CME295 Lecture 4",
+    title:
+      "Stanford CME295 Lecture 4: LLM Training, Scaling & Alignment",
+    questions: stanfordCME295Lecture4TrainingQuestions,
+  },
+  {
     id: "other" as const,
     label: "Other",
     title: "Other Questions",
@@ -128,4 +144,6 @@ export { aieChapter3Questions } from "./books/AIE_building_apps/chapter3";
 export { aieChapter4Questions } from "./books/AIE_building_apps/chapter4";
 export { stanfordCME295Lecture1Questions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture1_transformer";
 export { stanfordCME295Lecture2Questions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture2_models";
+export { stanfordCME295Lecture3LLMsQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture3_LLMs";
+export { stanfordCME295Lecture4TrainingQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture4_training";
 export { mixedQuestions } from "./other/other";

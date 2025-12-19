@@ -1,6 +1,6 @@
 
 
-I want you to create 100 questions so that I can learn the lecture (see transcript below and attached pdf). I already created lib\lectures\Stanford CME295 Transformers & LLMs\lecture2_models.ts for those questions. Note that this is referring to a lecture but the same requirements (below) as for lectures apply.
+I want you to create 100 questions so that I can learn the lecture (see transcript below and attached pdf). I already created lib\lectures\Stanford CME295 Transformers & LLMs\lecture2_models.ts for those questions. Note that this is referring to a lecture but the same requirements (below) as for chapters apply.
 
 Requirements:
 - Same format as we already used with four potential answers/options, the options/answer should be true or false (more than one answer can be true or false), explanation.
