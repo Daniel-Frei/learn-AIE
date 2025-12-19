@@ -2,17 +2,16 @@
 "use client";
 
 import { useQuiz } from "../lib/useQuiz";
-import { getTitleForMode, type Mode } from "../lib/quiz";
+import { getTitleForSelection } from "../lib/quiz";
 import QuizHeader from "../components/QuizHeader";
 import QuizQuestionSection from "../components/QuizQuestionSection";
 import QuizFooter from "../components/QuizFooter";
 
 export default function QuizPage() {
   const {
-    mode,
+    selectedSources,
     difficultyRange,
-    changeMode,
-    changeDifficultyRange,
+    applySelection,
     availableCount,
     currentIndex,
     currentQuestion,
@@ -30,7 +29,7 @@ export default function QuizPage() {
     importDifficultyFromJson,
   } = useQuiz();
 
-  const title = getTitleForMode(mode as Mode);
+  const title = getTitleForSelection(selectedSources);
 
   const difficultyPercent =
     currentDifficultyScore != null
@@ -44,10 +43,9 @@ export default function QuizPage() {
       <div className="w-full max-w-3xl rounded-2xl bg-slate-900 shadow-xl border border-slate-800 p-6 md:p-8 space-y-6">
         <QuizHeader
           title={title}
-          mode={mode as Mode}
+          selectedSources={selectedSources}
           difficultyRange={difficultyRange}
-          changeMode={changeMode}
-          changeDifficultyRange={changeDifficultyRange}
+          applySelection={applySelection}
           answeredCount={answeredCount}
           correctCount={correctCount}
           accuracy={accuracy}

@@ -2,11 +2,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import {
-  getQuestionsForMode,
-  type Question,
-  type Mode,
-} from "./quiz";
+import { ALL_SOURCE_IDS, getQuestionsForSources, type SourceId } from "./quiz";
 import {
   loadDifficultyMap,
   saveDifficultyMap,
@@ -31,7 +27,9 @@ function shuffle<T>(items: T[]): T[] {
 }
 
 export function useQuiz() {
-  const [mode, setMode] = useState<Mode>("chapter-1");
+  const [selectedSources, setSelectedSources] = useState<SourceId[]>(() =>
+    ALL_SOURCE_IDS.length ? [ALL_SOURCE_IDS[0]] : []
+  );
 
   // numeric difficulty filter
   const [difficultyRange, setDifficultyRange] = useState<DifficultyRange>({
@@ -40,17 +38,13 @@ export function useQuiz() {
   });
 
   // persistent difficulty stats (per question)
-  const [difficultyMap, setDifficultyMap] = useState<DifficultyMap>({});
-
-  // load difficulty stats once on mount
-  useEffect(() => {
-    const loaded = loadDifficultyMap();
-    setDifficultyMap(loaded);
-  }, []);
+  const [difficultyMap, setDifficultyMap] = useState<DifficultyMap>(() =>
+    loadDifficultyMap()
+  );
 
   const baseQuestions = useMemo(
-    () => getQuestionsForMode(mode),
-    [mode]
+    () => getQuestionsForSources(selectedSources),
+    [selectedSources]
   );
 
   // filter questions by empirical difficulty score
@@ -75,8 +69,9 @@ export function useQuiz() {
   const [correctCount, setCorrectCount] = useState(0);
 
   // --- Reset navigation when the *set* of available questions changes ---
-  // (e.g. mode / difficulty range / imported difficulty file)
+  // (e.g. selection / difficulty range / imported difficulty file)
   // We DO NOT touch answeredCount / correctCount here.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => {
     if (availableQuestions.length === 0) {
       setQuestionOrder([]);
@@ -95,11 +90,12 @@ export function useQuiz() {
     setShowResult(null);
   }, [availableQuestions.length]);
 
-  // --- Reset stats only when filters change (mode or difficulty range) ---
+  // --- Reset stats only when filters change (selection or difficulty range) ---
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => {
     setAnsweredCount(0);
     setCorrectCount(0);
-  }, [mode, difficultyRange.min, difficultyRange.max]);
+  }, [selectedSources, difficultyRange.min, difficultyRange.max]);
 
   const currentQuestion = useMemo(() => {
     if (!availableQuestions.length || !questionOrder.length) return null;
@@ -179,15 +175,24 @@ export function useQuiz() {
       ? 0
       : Math.round((100 * correctCount) / answeredCount);
 
-  const changeMode = (newMode: Mode) => {
-    setMode(newMode);
-  };
-
-  const changeDifficultyRange = (newRange: DifficultyRange) => {
-    // clamp + sort to be safe
+  const clampRange = (newRange: DifficultyRange) => {
     const min = Math.max(0, Math.min(100, newRange.min));
     const max = Math.max(min, Math.min(100, newRange.max));
-    setDifficultyRange({ min, max });
+    return { min, max };
+  };
+
+  const applySelection = (payload: {
+    sources: SourceId[];
+    difficultyRange: DifficultyRange;
+  }) => {
+    const clampedRange = clampRange(payload.difficultyRange);
+    const uniqueSources =
+      payload.sources.length > 0
+        ? Array.from(new Set(payload.sources))
+        : [...ALL_SOURCE_IDS];
+
+    setSelectedSources(uniqueSources);
+    setDifficultyRange(clampedRange);
   };
 
   // -------- EXPORT / IMPORT HELPERS --------
@@ -209,10 +214,9 @@ export function useQuiz() {
 
   return {
     // configuration
-    mode,
+    selectedSources,
     difficultyRange,
-    changeMode,
-    changeDifficultyRange,
+    applySelection,
 
     // question set info
     availableCount: availableQuestions.length,
@@ -238,6 +242,3 @@ export function useQuiz() {
     importDifficultyFromJson,
   };
 }
-
-// Optional: if you want to keep importing Mode from useQuiz elsewhere
-export type { Mode } from "./quiz";

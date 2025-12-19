@@ -119,11 +119,21 @@ export const allQuestions: Question[] = QUESTION_SOURCES.flatMap(
   (s) => s.questions
 );
 
+export const ALL_SOURCE_IDS: SourceId[] = QUESTION_SOURCES.map((s) => s.id);
+
 // Helper: get questions for a given mode
 export function getQuestionsForMode(mode: Mode): Question[] {
   if (mode === "all") return allQuestions;
   const src = QUESTION_SOURCES.find((s) => s.id === mode);
   return src ? src.questions : allQuestions;
+}
+
+// Helper: get questions for a set of sources (multi-select)
+export function getQuestionsForSources(sourceIds: SourceId[]): Question[] {
+  const active = sourceIds.length ? new Set(sourceIds) : new Set(ALL_SOURCE_IDS);
+  return QUESTION_SOURCES.filter((s) => active.has(s.id)).flatMap(
+    (s) => s.questions
+  );
 }
 
 // Helper: title for the current mode (for page header)
@@ -133,6 +143,30 @@ export function getTitleForMode(mode: Mode): string {
   }
   const src = QUESTION_SOURCES.find((s) => s.id === mode);
   return src ? src.title : "Quiz";
+}
+
+// Helper: title for a custom multi-source selection
+export function getTitleForSelection(sourceIds: SourceId[]): string {
+  const allSelected =
+    sourceIds.length === 0 ||
+    ALL_SOURCE_IDS.every((id) => sourceIds.includes(id));
+
+  if (allSelected) {
+    return "All Chapters Quiz – Text, Transformers & LLMs";
+  }
+
+  if (sourceIds.length === 1) {
+    const src = QUESTION_SOURCES.find((s) => s.id === sourceIds[0]);
+    return src ? src.title : "Quiz";
+  }
+
+  const names = QUESTION_SOURCES.filter((s) =>
+    sourceIds.includes(s.id)
+  ).map((s) => s.label);
+  const preview = names.slice(0, 2).join(", ");
+  const extra = names.length > 2 ? ` +${names.length - 2} more` : "";
+
+  return `Custom Quiz – ${preview}${extra}`;
 }
 
 // Re-export question arrays if you still want direct imports elsewhere
