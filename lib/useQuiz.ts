@@ -27,37 +27,49 @@ function shuffle<T>(items: T[]): T[] {
 }
 
 export function useQuiz() {
-  const [selectedSources, setSelectedSources] = useState<SourceId[]>(() =>
-    ALL_SOURCE_IDS.length ? [ALL_SOURCE_IDS[0]] : []
-  );
-
-  // numeric difficulty filter
-  const [difficultyRange, setDifficultyRange] = useState<DifficultyRange>({
-    min: 0,
-    max: 100,
-  });
+  const initialSources = ALL_SOURCE_IDS.length ? [ALL_SOURCE_IDS[0]] : [];
+  const initialRange: DifficultyRange = { min: 0, max: 100 };
 
   // persistent difficulty stats (per question)
   const [difficultyMap, setDifficultyMap] = useState<DifficultyMap>(() =>
     loadDifficultyMap()
   );
 
-  const baseQuestions = useMemo(
+  const [selectedSources, setSelectedSources] =
+    useState<SourceId[]>(initialSources);
+
+  // numeric difficulty filter (applied on selection)
+  const [difficultyRange, setDifficultyRange] =
+    useState<DifficultyRange>(initialRange);
+
+  const [appliedQuestionIds, setAppliedQuestionIds] = useState<string[]>(() => {
+    const pool = getQuestionsForSources(initialSources);
+    return pool
+      .filter((q) => {
+        const score = computeDifficultyScore(q.id, q.difficulty, difficultyMap);
+        const scorePercent = Math.round(score * 100);
+        return (
+          scorePercent >= initialRange.min &&
+          scorePercent <= initialRange.max
+        );
+      })
+      .map((q) => q.id);
+  });
+
+  const sourcePool = useMemo(
     () => getQuestionsForSources(selectedSources),
     [selectedSources]
   );
 
-  // filter questions by empirical difficulty score
+  const questionById = useMemo(() => {
+    return new Map(sourcePool.map((q) => [q.id, q]));
+  }, [sourcePool]);
+
   const availableQuestions = useMemo(() => {
-    return baseQuestions.filter((q) => {
-      const score = computeDifficultyScore(q.id, q.difficulty, difficultyMap);
-      const scorePercent = Math.round(score * 100); // 0–100 for UI/filter
-      return (
-        scorePercent >= difficultyRange.min &&
-        scorePercent <= difficultyRange.max
-      );
-    });
-  }, [baseQuestions, difficultyMap, difficultyRange.min, difficultyRange.max]);
+    return appliedQuestionIds
+      .map((id) => questionById.get(id))
+      .filter((q): q is NonNullable<typeof q> => Boolean(q));
+  }, [appliedQuestionIds, questionById]);
 
   const [questionOrder, setQuestionOrder] = useState<number[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -69,7 +81,6 @@ export function useQuiz() {
   const [correctCount, setCorrectCount] = useState(0);
 
   // --- Reset navigation when the *set* of available questions changes ---
-  // (e.g. selection / difficulty range / imported difficulty file)
   // We DO NOT touch answeredCount / correctCount here.
   // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => {
@@ -89,13 +100,6 @@ export function useQuiz() {
     setSelectedIndexes([]);
     setShowResult(null);
   }, [availableQuestions.length]);
-
-  // --- Reset stats only when filters change (selection or difficulty range) ---
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => {
-    setAnsweredCount(0);
-    setCorrectCount(0);
-  }, [selectedSources, difficultyRange.min, difficultyRange.max]);
 
   const currentQuestion = useMemo(() => {
     if (!availableQuestions.length || !questionOrder.length) return null;
@@ -191,8 +195,24 @@ export function useQuiz() {
         ? Array.from(new Set(payload.sources))
         : [...ALL_SOURCE_IDS];
 
+    const pool = getQuestionsForSources(uniqueSources);
+    const eligibleIds = pool
+      .filter((q) => {
+        const score = computeDifficultyScore(q.id, q.difficulty, difficultyMap);
+        const scorePercent = Math.round(score * 100);
+        return scorePercent >= clampedRange.min && scorePercent <= clampedRange.max;
+      })
+      .map((q) => q.id);
+
     setSelectedSources(uniqueSources);
     setDifficultyRange(clampedRange);
+    setAppliedQuestionIds(eligibleIds);
+    setAnsweredCount(0);
+    setCorrectCount(0);
+    setQuestionOrder([]);
+    setCurrentIndex(0);
+    setSelectedIndexes([]);
+    setShowResult(null);
   };
 
   // -------- EXPORT / IMPORT HELPERS --------
