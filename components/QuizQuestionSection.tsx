@@ -2,6 +2,7 @@
 "use client";
 
 import type { Question } from "../lib/quiz";
+import MathText from "./MathText";
 
 type Option = {
   text: string;
@@ -57,9 +58,10 @@ export default function QuizQuestionSection({
         </div>
       ) : (
         <>
-          <h2 className="text-lg md:text-xl font-semibold">
-            {currentQuestion!.prompt}
-          </h2>
+          <MathText
+            text={currentQuestion!.prompt}
+            className="text-lg md:text-xl font-semibold"
+          />
 
           <div className="space-y-3">
             {shuffledOptions.map((opt, idx) => {
@@ -103,7 +105,11 @@ export default function QuizQuestionSection({
                       </span>
                     )}
                   </div>
-                  <span className="text-sm md:text-base">{opt.text}</span>
+                  <MathText
+                    text={opt.text}
+                    inline
+                    className="text-sm md:text-base"
+                  />
                 </button>
               );
             })}

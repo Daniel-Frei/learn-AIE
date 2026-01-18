@@ -4,7 +4,10 @@
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import type { Question } from "../lib/quiz";
+import { normalizeMathDelimiters } from "../lib/normalizeMath";
 
 type ChatRole = "user" | "assistant";
 
@@ -159,7 +162,8 @@ export default function QuestionExplanationChat({
                   {msg.role === "assistant" ? (
                     <div className="text-[11px] leading-relaxed space-y-1">
                       <ReactMarkdown
-                        remarkPlugins={[remarkGfm]}
+                        remarkPlugins={[remarkGfm, remarkMath]}
+                        rehypePlugins={[rehypeKatex]}
                         components={{
                           p: (props) => (
                             <p {...props} className="mb-1" />
@@ -199,7 +203,7 @@ export default function QuestionExplanationChat({
                           ),
                         }}
                       >
-                        {msg.content}
+                        {normalizeMathDelimiters(msg.content)}
                       </ReactMarkdown>
                     </div>
                   ) : (

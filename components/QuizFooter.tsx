@@ -2,6 +2,7 @@
 "use client";
 
 import QuestionExplanationChat from "./QuestionExplanationChat";
+import MathText from "./MathText";
 import type { Question } from "../lib/quiz";
 
 type Option = {
@@ -71,7 +72,7 @@ export default function QuizFooter({
                 ? "Correct 🎉"
                 : "Not quite – review the explanation:"}
             </p>
-            <p>{currentQuestion.explanation}</p>
+            <MathText text={currentQuestion.explanation} />
           </div>
 
           <QuestionExplanationChat

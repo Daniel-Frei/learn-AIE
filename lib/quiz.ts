@@ -9,6 +9,13 @@ import { stanfordCME295Lecture1Questions } from "./lectures/Stanford CME295 Tran
 import { stanfordCME295Lecture2Questions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture2_models";
 import { stanfordCME295Lecture3LLMsQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture3_LLMs";
 import { stanfordCME295Lecture4TrainingQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture4_training";
+import { cs224rLecture1IntroQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture1_intro";
+import { cs224rLecture2ImitationLearningQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture2_Imitation Learning";
+import { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture3_Policy Gradients";
+import { cs224rLecture4ActorCriticQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture4_Actor-Critic Methods";
+import { lecture5_OffPolicyActorCriticQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture5_Off-Policy Actor Critic Methods";
+import { OtherRL_introductiontoReinforcementLearning } from "./lectures/Other RL/introduction to Reinforcement Learning";
+import { L5_DeepReinforcementLearning } from "./lectures/MIT 6.S191 Deep Learning 2025/L5_Deep Reinforcement Learning";
 import { mixedQuestions } from "./other/other";
 
 export type Difficulty = "easy" | "medium" | "hard";
@@ -103,6 +110,55 @@ export const QUESTION_SOURCES = [
     questions: stanfordCME295Lecture4TrainingQuestions,
   },
   {
+    id: "cs224r-lect1" as const,
+    label: "Stanford CS224R Lecture 1",
+    title:
+      "Stanford CS224R Lecture 1: Intro to Deep Reinforcement Learning",
+    questions: cs224rLecture1IntroQuestions,
+  },
+  {
+    id: "cs224r-lect2" as const,
+    label: "Stanford CS224R Lecture 2",
+    title:
+      "Stanford CS224R Lecture 2: Imitation Learning",
+    questions: cs224rLecture2ImitationLearningQuestions,
+  },
+  {
+    id: "cs224r-lect3" as const,
+    label: "Stanford CS224R Lecture 3",
+    title:
+      "Stanford CS224R Lecture 3: Policy Gradients",
+    questions: cs224rLecture3PolicyGradientsQuestions,
+  },
+  {
+    id: "cs224r-lect4" as const,
+    label: "Stanford CS224R Lecture 4",
+    title:
+      "Stanford CS224R Lecture 4: Actor-Critic Methods",
+    questions: cs224rLecture4ActorCriticQuestions,
+  },
+  {
+    id: "cs224r-lect5" as const,
+    label: "Stanford CS224R Lecture 5",
+    title:
+      "Stanford CS224R Lecture 5: Off-Policy Actor-Critic Methods",
+    questions: lecture5_OffPolicyActorCriticQuestions,
+  },
+  {
+    id: "other-rl-intro" as const,
+    label: "Other RL Intro",
+    title:
+      "Other RL: Introduction to Reinforcement Learning",
+    questions: OtherRL_introductiontoReinforcementLearning,
+  },
+  {
+    id: "mit6s191-l5" as const,
+    label: "MIT 6.S191 L5",
+    title:
+      "MIT 6.S191 L5: Deep Reinforcement Learning",
+    questions: L5_DeepReinforcementLearning,
+  },
+  {
     id: "other" as const,
     label: "Other",
     title: "Other Questions",
@@ -180,4 +236,11 @@ export { stanfordCME295Lecture1Questions } from "./lectures/Stanford CME295 Tran
 export { stanfordCME295Lecture2Questions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture2_models";
 export { stanfordCME295Lecture3LLMsQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture3_LLMs";
 export { stanfordCME295Lecture4TrainingQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture4_training";
+export { cs224rLecture1IntroQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture1_intro";
+export { cs224rLecture2ImitationLearningQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture2_Imitation Learning";
+export { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture3_Policy Gradients";
+export { cs224rLecture4ActorCriticQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture4_Actor-Critic Methods";
+export { lecture5_OffPolicyActorCriticQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture5_Off-Policy Actor Critic Methods";
+export { OtherRL_introductiontoReinforcementLearning } from "./lectures/Other RL/introduction to Reinforcement Learning";
+export { L5_DeepReinforcementLearning } from "./lectures/MIT 6.S191 Deep Learning 2025/L5_Deep Reinforcement Learning";
 export { mixedQuestions } from "./other/other";
