@@ -116,7 +116,7 @@ export const L5_DeepReinforcementLearning: Question[] = [
       { text: "Supervised learning uses labeled pairs \\((x,y)\\) to learn a mapping from inputs to desired outputs.", isCorrect: true },
       { text: "Unsupervised learning uses data \\(x\\) without labels \\(y\\) to discover structure or patterns.", isCorrect: true },
       { text: "Reinforcement learning focuses on \\((\\text{state}, \\text{action})\\) interaction to maximize future reward over time.", isCorrect: true },
-      { text: "Reinforcement learning requires a pre-collected dataset and cannot learn from interaction.", isCorrect: true },
+      { text: "Reinforcement learning requires a pre-collected dataset and cannot learn from interaction.", isCorrect: false },
     ],
     explanation:
       "Supervised learning learns from labeled examples, and unsupervised learning learns structure without labels. RL is different: it learns by acting and observing consequences, aiming to maximize long-term reward rather than predict labels.",
@@ -147,7 +147,7 @@ export const L5_DeepReinforcementLearning: Question[] = [
     options: [
       { text: "A discrete action space might be \\{\\text{left},\\text{right},\\text{stay}\\} where only a finite set of actions are allowed.", isCorrect: true },
       { text: "A continuous action space might represent a steering angle where infinitely many values are possible.", isCorrect: true },
-      { text: "Value-based argmax selection becomes difficult in large or continuous action spaces because \\(\\arg\\max\\) may require searching an infinite set.", isCorrect: false },
+      { text: "Value-based argmax selection becomes difficult in large or continuous action spaces because \\(\\arg\\max\\) may require searching an infinite set.", isCorrect: true },
       { text: "Continuous action spaces cannot be handled by any policy-based method.", isCorrect: false },
     ],
     explanation:
@@ -180,7 +180,7 @@ export const L5_DeepReinforcementLearning: Question[] = [
       { text: "A policy network can output a probability distribution over actions in a discrete action space.", isCorrect: true },
       { text: "Sampling actions \\(a \\sim \\pi(\\cdot\\mid s)\\) introduces stochasticity, enabling exploration.", isCorrect: true },
       { text: "For discrete actions, softmax is commonly used so the output probabilities sum to 1.", isCorrect: true },
-      { text: "Policy learning always requires computing \\(\\arg\\max_a Q(s,a)\\) at decision time.", isCorrect: true },
+      { text: "Policy learning always requires computing \\(\\arg\\max_a Q(s,a)\\) at decision time.", isCorrect: false },
     ],
     explanation:
       "Policy networks directly represent how actions are chosen, often as probabilities (discrete) or as a distribution (continuous). They enable sampling-based exploration. Computing \\(\\arg\\max_a Q(s,a)\\) is characteristic of value-based methods, not required for policy learning.",
@@ -228,7 +228,7 @@ export const L5_DeepReinforcementLearning: Question[] = [
       { text: "Value learning focuses on estimating \\(Q(s,a)\\) (or related value functions) and then deriving a policy from those values.", isCorrect: true },
       { text: "Policy learning focuses on learning \\(\\pi(a\\mid s)\\) (or \\(\\pi(s)\\)) directly, often by optimizing expected return.", isCorrect: true },
       { text: "In value learning with discrete actions, a common action selection is \\(a = \\arg\\max_a Q(s,a)\\).", isCorrect: true },
-      { text: "Policy learning cannot represent stochastic policies.", isCorrect: true },
+      { text: "Policy learning cannot represent stochastic policies.", isCorrect: false },
     ],
     explanation:
       "Value learning estimates values and derives decisions from them, while policy learning directly represents how actions are chosen (often stochastically). Stochastic policies are a key advantage of policy learning, not a limitation.",
@@ -339,7 +339,7 @@ export const L5_DeepReinforcementLearning: Question[] = [
     options: [
       { text: "If a Q-based policy always chooses \\(\\arg\\max_a Q(s,a)\\), it will return the same action for the same state (given the same Q-function).", isCorrect: true },
       { text: "Deterministic greedy action selection can reduce exploration because the agent rarely tries alternatives.", isCorrect: true },
-      { text: "A deterministic policy can be brittle in stochastic environments where different actions may be needed for similar-looking states.", isCorrect: false },
+      { text: "A deterministic policy can be brittle in stochastic environments where different actions may be needed for similar-looking states.", isCorrect: true },
       { text: "Determinism guarantees the learned behavior is optimal even if \\(Q\\) is poorly estimated.", isCorrect: false },
     ],
     explanation:
@@ -371,8 +371,8 @@ export const L5_DeepReinforcementLearning: Question[] = [
     options: [
       { text: "A policy can output parameters of a continuous distribution (e.g., \\(\\mu\\) and \\(\\sigma\\)) rather than enumerating all actions.", isCorrect: true },
       { text: "Sampling from a continuous distribution produces a valid continuous action without requiring a discrete argmax.", isCorrect: true },
-      { text: "Softmax is required for continuous actions because probabilities must sum to 1 across infinitely many actions.", isCorrect: true },
-      { text: "Value-based methods can never be used in continuous action spaces under any circumstances.", isCorrect: true },
+      { text: "Softmax is required for continuous actions because probabilities must sum to 1 across infinitely many actions.", isCorrect: false },
+      { text: "Value-based methods can never be used in continuous action spaces under any circumstances.", isCorrect: false },
     ],
     explanation:
       "Policy learning commonly handles continuous actions by representing a distribution (often Gaussian) and sampling from it. Softmax is typical for discrete distributions; continuous distributions are normalized by their density function, not by summing finite outputs. Value methods can be extended to continuous actions too, but doing \\(\\arg\\max\\) over continuous actions is harder and often needs extra machinery.",
@@ -404,7 +404,7 @@ export const L5_DeepReinforcementLearning: Question[] = [
       { text: "Sparse rewards make credit assignment harder because many actions occur before any reward signal is observed.", isCorrect: true },
       { text: "One motivation for learning state values is to provide a denser learning signal than only final win/loss.", isCorrect: true },
       { text: "Sparse rewards guarantee faster convergence because there is less noise in feedback.", isCorrect: false },
-      { text: "Sparse rewards make exploration more important, since the agent must discover which behaviors lead to reward.", isCorrect: false },
+      { text: "Sparse rewards make exploration more important, since the agent must discover which behaviors lead to reward.", isCorrect: true },
     ],
     explanation:
       "When feedback is rare, it’s difficult to know which earlier choices mattered. Value estimation can provide intermediate assessments of states, and exploration is often crucial—sparse rewards do not automatically make learning easier.",
@@ -436,7 +436,7 @@ export const L5_DeepReinforcementLearning: Question[] = [
       { text: "\\(r_t\\) is typically the immediate feedback received at time \\(t\\) after taking an action.", isCorrect: true },
       { text: "\\(R_t\\) aggregates multiple future rewards, often with discounting, e.g., \\(R_t = r_t + \\gamma r_{t+1} + \\gamma^2 r_{t+2} + \\dots\\).", isCorrect: true },
       { text: "\\(r_t\\) and \\(R_t\\) are always numerically identical in any RL task.", isCorrect: false },
-      { text: "If the horizon is more than one step and \\(\\gamma>0\\), \\(R_t\\) generally depends on rewards after time \\(t\\).", isCorrect: false },
+      { text: "If the horizon is more than one step and \\(\\gamma>0\\), \\(R_t\\) generally depends on rewards after time \\(t\\).", isCorrect: true },
     ],
     explanation:
       "The reward is a single-step signal, while the return is a multi-step cumulative objective (often discounted). They coincide only in special cases (e.g., \\(\\gamma=0\\) or horizon of one step).",
@@ -468,7 +468,7 @@ export const L5_DeepReinforcementLearning: Question[] = [
       { text: "You can increase the likelihood of actions that were part of high-return trajectories by updating \\(\\theta\\) to increase \\(\\log \\pi_\\theta(a_t\\mid s_t)\\).", isCorrect: true },
       { text: "You can decrease the likelihood of actions that were part of low-return trajectories by updating \\(\\theta\\) to reduce \\(\\pi_\\theta(a_t\\mid s_t)\\).", isCorrect: true },
       { text: "This approach can work even without human demonstrations, relying only on reward signals from the environment.", isCorrect: true },
-      { text: "Because the environment provides reward, the policy network weights never need gradient-based updates.", isCorrect: true },
+      { text: "Because the environment provides reward, the policy network weights never need gradient-based updates.", isCorrect: false },
     ],
     explanation:
       "Policy learning uses gradient-based optimization to adjust network weights based on experience and returns. The environment provides the reward signal, but learning still requires computing gradients and updating parameters.",
@@ -484,7 +484,7 @@ export const L5_DeepReinforcementLearning: Question[] = [
       { text: "Some actions that look locally reasonable may be worse than actions that set up a future 'high payoff' strategy.", isCorrect: true },
       { text: "Q-values incorporate long-term return, so a seemingly risky move can have higher expected value if it unlocks future rewards.", isCorrect: true },
       { text: "Human intuition is always aligned with maximizing discounted return in unfamiliar environments.", isCorrect: false },
-      { text: "Estimating the consequences of actions many steps into the future is cognitively hard, especially with complex dynamics.", isCorrect: false },
+      { text: "Estimating the consequences of actions many steps into the future is cognitively hard, especially with complex dynamics.", isCorrect: true },
     ],
     explanation:
       "Because Q-values reflect expected long-term return, policies may learn strategies that look unintuitive but yield more future reward. Long-horizon reasoning is difficult for humans, so our local intuition can be misleading.",
@@ -532,7 +532,7 @@ export const L5_DeepReinforcementLearning: Question[] = [
       { text: "Simulation can generate large amounts of experience cheaply compared to real-world data collection.", isCorrect: true },
       { text: "Simulation makes it safer to encounter failures (like crashes) that would be unacceptable in reality.", isCorrect: true },
       { text: "If simulation is photorealistic enough, policies may transfer better to real-world deployment.", isCorrect: true },
-      { text: "Simulation removes the need to define rewards because the simulator automatically infers human preferences.", isCorrect: true },
+      { text: "Simulation removes the need to define rewards because the simulator automatically infers human preferences.", isCorrect: false },
     ],
     explanation:
       "Simulators help with scale and safety, and realism can improve transfer. But reward design is still required—simulation does not automatically solve the problem of defining what the agent should optimize.",
@@ -547,7 +547,7 @@ export const L5_DeepReinforcementLearning: Question[] = [
     options: [
       { text: "Softmax maps logits \\(z_i\\) to probabilities \\(p_i = \\frac{e^{z_i}}{\\sum_j e^{z_j}}\\).", isCorrect: true },
       { text: "If you sample from the softmax probabilities, you get a stochastic policy that can explore.", isCorrect: true },
-      { text: "Softmax is typically used to turn a vector of unconstrained scores into a valid probability distribution.", isCorrect: false },
+      { text: "Softmax is typically used to turn a vector of unconstrained scores into a valid probability distribution.", isCorrect: true },
       { text: "Softmax guarantees the chosen action is always the \\(\\arg\\max\\) action.", isCorrect: false },
     ],
     explanation:
@@ -579,7 +579,7 @@ export const L5_DeepReinforcementLearning: Question[] = [
     options: [
       { text: "A stochastic policy can assign nonzero probability to multiple actions in the same state.", isCorrect: true },
       { text: "Sampling from a stochastic policy can yield different actions on different visits to the same state.", isCorrect: true },
-      { text: "Stochasticity can help in environments where the dynamics or observations are noisy or unpredictable.", isCorrect: false },
+      { text: "Stochasticity can help in environments where the dynamics or observations are noisy or unpredictable.", isCorrect: true },
       { text: "Stochastic policies are only useful when the action space is discrete; they never apply to continuous control.", isCorrect: false },
     ],
     explanation:
@@ -643,7 +643,7 @@ export const L5_DeepReinforcementLearning: Question[] = [
     options: [
       { text: "In many simplified treatments, the observation is treated as the state input to the policy/value network.", isCorrect: true },
       { text: "After taking an action, the agent receives a new observation that reflects how the environment changed.", isCorrect: true },
-      { text: "If the observation is incomplete, the agent may need memory (e.g., recurrence) to act well, even if the underlying state is Markov.", isCorrect: false },
+      { text: "If the observation is incomplete, the agent may need memory (e.g., recurrence) to act well, even if the underlying state is Markov.", isCorrect: true },
       { text: "Observations are always identical to the full true environment state in all RL tasks.", isCorrect: false },
     ],
     explanation:
@@ -675,7 +675,7 @@ export const L5_DeepReinforcementLearning: Question[] = [
     options: [
       { text: "Q-values are on an arbitrary scale of expected return, while policy probabilities must satisfy normalization constraints.", isCorrect: true },
       { text: "Sampling from a policy distribution can select sub-maximal actions sometimes, enabling exploration.", isCorrect: true },
-      { text: "Greedy Q-selection chooses the action with maximum estimated return and is deterministic if the Q-function is fixed.", isCorrect: false },
+      { text: "Greedy Q-selection chooses the action with maximum estimated return and is deterministic if the Q-function is fixed.", isCorrect: true },
       { text: "Policy probabilities are always computed by taking \\(\\arg\\max\\) over Q-values.", isCorrect: false },
     ],
     explanation:

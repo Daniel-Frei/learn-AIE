@@ -86,18 +86,19 @@ explanation: "Markov states must contain all information needed to predict trans
 },
 
 {
-id: "other-rl-intro-q07",
-chapter: 0,
-difficulty: "medium",
-prompt: "Which are valid components of a Markov Decision Process?",
-options: [
-{ text: "State space \\(\\mathcal{S}\\)", isCorrect: true },
-{ text: "Action space \\(\\mathcal{A}\\)", isCorrect: true },
-{ text: "Reward function \\(r(s,a)\\)", isCorrect: true },
-{ text: "Policy \\(\\pi(a|s)\\)", isCorrect: true }
-],
-explanation: "An MDP formally consists of states, actions, rewards, and a policy governing decisions."
+  id: "other-rl-intro-q07",
+  chapter: 0,
+  difficulty: "medium",
+  prompt: "Which are formal components of a Markov Decision Process?",
+  options: [
+    { text: "State space", isCorrect: true },
+    { text: "Action space", isCorrect: true },
+    { text: "Reward signal", isCorrect: false },
+    { text: "Transition dynamics relating states and actions", isCorrect: true }
+  ],
+  explanation: "The MDP is defined by states, actions, rewards and transition dynamics. The policy is what the agent tries to learn, not part of the environment definition."
 },
+
 
 {
 id: "other-rl-intro-q08",
@@ -184,18 +185,19 @@ explanation: "Temporal difference uses one-step estimates rather than full rollo
 },
 
 {
-id: "other-rl-intro-q14",
-chapter: 0,
-difficulty: "medium",
-prompt: "Which algorithms are off-policy?",
-options: [
-{ text: "Q-learning", isCorrect: true },
-{ text: "Monte Carlo control", isCorrect: false },
-{ text: "State-Action-Reward-State-Action", isCorrect: false },
-{ text: "Expected State-Action-Reward-State-Action", isCorrect: false }
-],
-explanation: "Q-learning estimates the optimal value independent of the behavior policy, unlike SARSA variants."
+  id: "other-rl-intro-q14",
+  chapter: 0,
+  difficulty: "medium",
+  prompt: "According to the lecture, which of the following are described as off-policy methods?",
+  options: [
+    { text: "Q-learning", isCorrect: true },
+    { text: "SARSA", isCorrect: false },
+    { text: "Expected SARSA", isCorrect: false },
+    { text: "Monte Carlo control (as used in the maze example)", isCorrect: false }
+  ],
+  explanation: "The lecture explicitly labels SARSA variants as on-policy and Q-learning as off-policy."
 },
+
 
 {
 id: "other-rl-intro-q15",
@@ -212,18 +214,19 @@ explanation: "Epsilon-greedy ensures continued exploration but does not guarante
 },
 
 {
-id: "other-rl-intro-q16",
-chapter: 0,
-difficulty: "medium",
-prompt: "Which statements about sample efficiency are correct?",
-options: [
-{ text: "Temporal difference methods often require fewer samples than Monte Carlo.", isCorrect: true },
-{ text: "Q-learning is generally more sample efficient than SARSA.", isCorrect: true },
-{ text: "Higher sample efficiency means faster learning from fewer interactions.", isCorrect: true },
-{ text: "Monte Carlo is typically the most sample efficient.", isCorrect: false }
-],
-explanation: "Q-learning benefits from bootstrapping and off-policy learning, improving efficiency."
+  id: "other-rl-intro-q16",
+  chapter: 0,
+  difficulty: "medium",
+  prompt: "Which statements about sample efficiency from the lecture are correct?",
+  options: [
+    { text: "Temporal difference methods often outperform Monte Carlo in sample efficiency.", isCorrect: true },
+    { text: "In the maze example, Q-learning was more sample efficient than SARSA.", isCorrect: true },
+    { text: "Sample efficiency refers to how many interactions are needed to learn good behavior.", isCorrect: true },
+    { text: "Monte Carlo was shown to be more efficient than TD methods.", isCorrect: false }
+  ],
+  explanation: "The lecture only makes empirical comparisons (maze) and explains sample efficiency conceptually."
 },
+
 
 {
 id: "other-rl-intro-q17",
@@ -422,18 +425,19 @@ explanation: "Gaussian policies enable continuous control through parameterized 
 },
 
 {
-id: "other-rl-intro-q31",
-chapter: 0,
-difficulty: "medium",
-prompt: "Which statements about policy objective \\(J(\\theta)\\) are correct?",
-options: [
-{ text: "Measures expected performance across trajectories.", isCorrect: true },
-{ text: "Optimized via gradient ascent.", isCorrect: true },
-{ text: "Multiple equivalent definitions exist.", isCorrect: true },
-{ text: "It directly provides state-level feedback.", isCorrect: false }
-],
-explanation: "J evaluates overall policy quality, unlike Q which evaluates individual state-action pairs."
+  id: "other-rl-intro-q31",
+  chapter: 0,
+  difficulty: "medium",
+  prompt: "Which statements about the policy objective J(?) are correct?",
+  options: [
+    { text: "It measures expected performance over trajectories.", isCorrect: true },
+    { text: "It is optimized using gradient ascent.", isCorrect: true },
+    { text: "Different equivalent definitions exist.", isCorrect: true },
+    { text: "It provides direct per-state learning targets like Q-values do.", isCorrect: false }
+  ],
+  explanation: "J evaluates the policy globally; Q and V provide state/action-level learning structure."
 },
+
 
 {
 id: "other-rl-intro-q32",
