@@ -93,7 +93,7 @@ explanation: "Markov states must contain all information needed to predict trans
   options: [
     { text: "State space", isCorrect: true },
     { text: "Action space", isCorrect: true },
-    { text: "Reward signal", isCorrect: false },
+    { text: "Reward signal", isCorrect: true },
     { text: "Transition dynamics relating states and actions", isCorrect: true }
   ],
   explanation: "The MDP is defined by states, actions, rewards and transition dynamics. The policy is what the agent tries to learn, not part of the environment definition."
