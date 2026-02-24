@@ -16,6 +16,8 @@ import { cs224rLecture4ActorCriticQuestions } from "./lectures/Stanford CS224R D
 import { lecture5_OffPolicyActorCriticQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture5_Off-Policy Actor Critic Methods";
 import { OtherRL_introductiontoReinforcementLearning } from "./lectures/Other RL/introduction to Reinforcement Learning";
 import { L5_DeepReinforcementLearning } from "./lectures/MIT 6.S191 Deep Learning 2025/L5_Deep Reinforcement Learning";
+import { L1_IntroductionToNeuralNetworksAndDeepLearning } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L1_ Introduction to Neural Networks and Deep Learning";
+import { L2_TrainingDeepNNs } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L2_Training Deep NNs";
 import { mixedQuestions } from "./other/other";
 
 export type Difficulty = "easy" | "medium" | "hard";
@@ -159,6 +161,20 @@ export const QUESTION_SOURCES = [
     questions: L5_DeepReinforcementLearning,
   },
   {
+    id: "mit15773-l1" as const,
+    label: "MIT 15.773 L1",
+    title:
+      "MIT 15.773 L1: Introduction to Neural Networks and Deep Learning",
+    questions: L1_IntroductionToNeuralNetworksAndDeepLearning,
+  },
+  {
+    id: "mit15773-l2" as const,
+    label: "MIT 15.773 L2",
+    title:
+      "MIT 15.773 L2: Training Deep NNs",
+    questions: L2_TrainingDeepNNs,
+  },
+  {
     id: "other" as const,
     label: "Other",
     title: "Other Questions",
@@ -243,4 +259,6 @@ export { cs224rLecture4ActorCriticQuestions } from "./lectures/Stanford CS224R D
 export { lecture5_OffPolicyActorCriticQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture5_Off-Policy Actor Critic Methods";
 export { OtherRL_introductiontoReinforcementLearning } from "./lectures/Other RL/introduction to Reinforcement Learning";
 export { L5_DeepReinforcementLearning } from "./lectures/MIT 6.S191 Deep Learning 2025/L5_Deep Reinforcement Learning";
+export { L1_IntroductionToNeuralNetworksAndDeepLearning } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L1_ Introduction to Neural Networks and Deep Learning";
+export { L2_TrainingDeepNNs } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L2_Training Deep NNs";
 export { mixedQuestions } from "./other/other";

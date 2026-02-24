@@ -1,6 +1,8 @@
 
 
-I want you to create 100 questions so that I can learn the lecture (see transcript below and attached pdf for the slides). I already created lib\lectures\Stanford CME295 Transformers & LLMs\lecture2_models.ts for those questions. Note that this is referring to a lecture but the same requirements (below) as for chapters apply.
+I want you to create 40 questions so that I can learn the lecture (see transcript below and attached pdf for the slides). As this often requires a lot of tokens, I think it's best to break this up into two batches (provide 20 questions, then in a next step we can add 20 more questions)
+
+I already created lib\lectures\MIT 15.773 Hands-On Deep Learning Spring 2024\L1_ Introduction to Neural Networks and Deep Learning.ts for those questions. Note that this is referring to a lecture but the same requirements (below) as for chapters apply.
 
 Requirements:
 - Same format as we already used with four potential answers/options, the options/answer should be true or false (more than one answer can be true or false), explanation.
