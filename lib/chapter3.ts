@@ -143,7 +143,8 @@ export const chapter3Questions: Question[] = [
     id: "ch3-q06",
     chapter: 3,
     difficulty: "medium",
-    prompt: "Which statements correctly describe mixture-of-experts (MoE) layers?",
+    prompt:
+      "Which statements correctly describe mixture-of-experts (MoE) layers?",
     options: [
       {
         text: "An MoE layer contains several expert networks (often FFNs) and a router that decides which experts to apply to each token.",
@@ -465,8 +466,7 @@ export const chapter3Questions: Question[] = [
     id: "ch3-q18",
     chapter: 3,
     difficulty: "medium",
-    prompt:
-      "Which statements correctly describe CLIP-style multimodal models?",
+    prompt: "Which statements correctly describe CLIP-style multimodal models?",
     options: [
       {
         text: "CLIP trains a text encoder and an image encoder jointly so that corresponding image–text pairs have similar embeddings.",
@@ -848,8 +848,7 @@ export const chapter3Questions: Question[] = [
     id: "ch3-q32",
     chapter: 3,
     difficulty: "medium",
-    prompt:
-      "Which statements about instruction tuning datasets are correct?",
+    prompt: "Which statements about instruction tuning datasets are correct?",
     options: [
       {
         text: "They contain natural-language instructions paired with target outputs.",
@@ -875,8 +874,7 @@ export const chapter3Questions: Question[] = [
     id: "ch3-q33",
     chapter: 3,
     difficulty: "medium",
-    prompt:
-      "Which statements about the reward model used in RLHF are correct?",
+    prompt: "Which statements about the reward model used in RLHF are correct?",
     options: [
       {
         text: "It is trained on human preference rankings over multiple candidate responses per prompt.",
@@ -1010,8 +1008,7 @@ export const chapter3Questions: Question[] = [
     id: "ch3-q38",
     chapter: 3,
     difficulty: "medium",
-    prompt:
-      "Which statements about CLIP’s training objective are correct?",
+    prompt: "Which statements about CLIP’s training objective are correct?",
     options: [
       {
         text: "In each batch, the model sees multiple images and multiple captions.",
@@ -1064,8 +1061,7 @@ export const chapter3Questions: Question[] = [
     id: "ch3-q40",
     chapter: 3,
     difficulty: "medium",
-    prompt:
-      "Which statements about LLM-generated misinformation are correct?",
+    prompt: "Which statements about LLM-generated misinformation are correct?",
     options: [
       {
         text: "LLMs can generate high-volume, plausible-sounding text that could be used for disinformation campaigns.",
@@ -1091,8 +1087,7 @@ export const chapter3Questions: Question[] = [
     id: "ch3-q41",
     chapter: 3,
     difficulty: "easy",
-    prompt:
-      "Which statements correctly describe zero-shot prompting?",
+    prompt: "Which statements correctly describe zero-shot prompting?",
     options: [
       {
         text: "The prompt contains an instruction or question but no input–output examples.",
@@ -1118,8 +1113,7 @@ export const chapter3Questions: Question[] = [
     id: "ch3-q42",
     chapter: 3,
     difficulty: "medium",
-    prompt:
-      "Which statements about few-shot prompting are correct?",
+    prompt: "Which statements about few-shot prompting are correct?",
     options: [
       {
         text: "The prompt includes several example input–output pairs before the query to be answered.",
@@ -1420,8 +1414,7 @@ export const chapter3Questions: Question[] = [
     id: "ch3-q53",
     chapter: 3,
     difficulty: "medium",
-    prompt:
-      "Which statements about MoE memory and compute are correct?",
+    prompt: "Which statements about MoE memory and compute are correct?",
     options: [
       {
         text: "All experts must reside in memory even though only a subset are used per token.",
@@ -1474,8 +1467,7 @@ export const chapter3Questions: Question[] = [
     id: "ch3-q55",
     chapter: 3,
     difficulty: "medium",
-    prompt:
-      "Which statements about adapters and LoRA are correct?",
+    prompt: "Which statements about adapters and LoRA are correct?",
     options: [
       {
         text: "Both approaches add a relatively small number of new trainable parameters compared with the base model.",
@@ -1501,8 +1493,7 @@ export const chapter3Questions: Question[] = [
     id: "ch3-q56",
     chapter: 3,
     difficulty: "medium",
-    prompt:
-      "Which statements correctly relate RLHF and DPO?",
+    prompt: "Which statements correctly relate RLHF and DPO?",
     options: [
       {
         text: "Both use human preference data to steer model behavior toward preferred responses.",
@@ -1582,8 +1573,7 @@ export const chapter3Questions: Question[] = [
     id: "ch3-q59",
     chapter: 3,
     difficulty: "medium",
-    prompt:
-      "Which statements about VLMs like BLIP-2 are correct?",
+    prompt: "Which statements about VLMs like BLIP-2 are correct?",
     options: [
       {
         text: "They can answer natural-language questions about images by combining visual and textual understanding.",

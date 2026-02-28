@@ -2,6 +2,7 @@
 "use client";
 
 import ReactMarkdown from "react-markdown";
+import type { Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
@@ -16,8 +17,8 @@ type Props = {
 export default function MathText({ text, className, inline }: Props) {
   const normalized = normalizeMathDelimiters(text);
 
-  const components = {
-    p: ({ children }: { children: React.ReactNode }) =>
+  const components: Components = {
+    p: ({ children }) =>
       inline ? (
         <span className={className}>{children}</span>
       ) : (

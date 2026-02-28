@@ -36,8 +36,7 @@ export default function QuizQuestionSection({
     <section className="space-y-4">
       <div className="text-xs uppercase tracking-wide text-slate-400 flex justify-between">
         <span>
-          Question{" "}
-          {hasQuestion ? currentIndex + 1 : 0} of {availableCount}
+          Question {hasQuestion ? currentIndex + 1 : 0} of {availableCount}
         </span>
         {difficultyPercent !== null && hasQuestion && (
           <span>

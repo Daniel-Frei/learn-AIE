@@ -8,7 +8,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q01",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Why were attention mechanisms first introduced for sequence-to-sequence models?",
+    prompt:
+      "Why were attention mechanisms first introduced for sequence-to-sequence models?",
     options: [
       {
         text: "To learn which input tokens are most relevant when generating each output token.",
@@ -34,7 +35,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q02",
     chapter: 2,
     difficulty: "easy",
-    prompt: "In an encoder–decoder model with attention, what is the role of the context vector at a decoder time step?",
+    prompt:
+      "In an encoder–decoder model with attention, what is the role of the context vector at a decoder time step?",
     options: [
       {
         text: "It summarizes the encoder hidden states using attention weights for that time step.",
@@ -60,7 +62,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q03",
     chapter: 2,
     difficulty: "medium",
-    prompt: "In classic additive or dot-product attention, what does the score function score(sᵢ₋₁, hⱼ) represent?",
+    prompt:
+      "In classic additive or dot-product attention, what does the score function score(sᵢ₋₁, hⱼ) represent?",
     options: [
       {
         text: "A similarity measure between the current decoder state and an encoder hidden state.",
@@ -86,7 +89,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q04",
     chapter: 2,
     difficulty: "easy",
-    prompt: "What does the softmax function do when applied to a vector of attention scores?",
+    prompt:
+      "What does the softmax function do when applied to a vector of attention scores?",
     options: [
       {
         text: "Converts arbitrary real-valued scores into positive weights that sum to 1.",
@@ -112,7 +116,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q05",
     chapter: 2,
     difficulty: "medium",
-    prompt: "Which statements describe advantages of adding attention to encoder–decoder models?",
+    prompt:
+      "Which statements describe advantages of adding attention to encoder–decoder models?",
     options: [
       {
         text: "It provides a shortcut path from early encoder states to the decoder, helping gradients flow.",
@@ -141,7 +146,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q06",
     chapter: 2,
     difficulty: "easy",
-    prompt: "In self-attention, what is the basic idea when processing a sequence of tokens?",
+    prompt:
+      "In self-attention, what is the basic idea when processing a sequence of tokens?",
     options: [
       {
         text: "Each token attends to other tokens in the same sequence to build a richer representation.",
@@ -167,7 +173,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q07",
     chapter: 2,
     difficulty: "medium",
-    prompt: "In the self-attention formula Attention(Q, K, V) = softmax(QKᵀ / √dₖ) · V, what do Q, K, and V represent?",
+    prompt:
+      "In the self-attention formula Attention(Q, K, V) = softmax(QKᵀ / √dₖ) · V, what do Q, K, and V represent?",
     options: [
       {
         text: "They are learned linear projections of the same input representations.",
@@ -193,7 +200,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q08",
     chapter: 2,
     difficulty: "medium",
-    prompt: "Why is the dot product QKᵀ divided by √dₖ before applying softmax in scaled dot-product attention?",
+    prompt:
+      "Why is the dot product QKᵀ divided by √dₖ before applying softmax in scaled dot-product attention?",
     options: [
       {
         text: "To prevent very large dot products when vectors have high dimensionality.",
@@ -271,7 +279,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q11",
     chapter: 2,
     difficulty: "hard",
-    prompt: "Self-attention over a sequence of length T and hidden size d has what approximate time and memory complexity?",
+    prompt:
+      "Self-attention over a sequence of length T and hidden size d has what approximate time and memory complexity?",
     options: [
       {
         text: "Time complexity grows on the order of T² with respect to sequence length.",
@@ -326,7 +335,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q13",
     chapter: 2,
     difficulty: "medium",
-    prompt: "Which statements describe sinusoidal positional encodings used in the original transformer?",
+    prompt:
+      "Which statements describe sinusoidal positional encodings used in the original transformer?",
     options: [
       {
         text: "They use sine and cosine functions of different frequencies over the position index.",
@@ -378,7 +388,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q15",
     chapter: 2,
     difficulty: "medium",
-    prompt: "The position-wise feedforward network in a transformer block has which characteristics?",
+    prompt:
+      "The position-wise feedforward network in a transformer block has which characteristics?",
     options: [
       {
         text: "It consists of two linear layers with a nonlinearity such as ReLU in between.",
@@ -404,7 +415,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q16",
     chapter: 2,
     difficulty: "easy",
-    prompt: "What is the main purpose of residual (skip) connections in deep neural networks such as transformers?",
+    prompt:
+      "What is the main purpose of residual (skip) connections in deep neural networks such as transformers?",
     options: [
       {
         text: "They add the input of a sublayer to its output before normalization.",
@@ -459,7 +471,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q18",
     chapter: 2,
     difficulty: "medium",
-    prompt: "In an encoder–decoder transformer for translation, what is cross-attention?",
+    prompt:
+      "In an encoder–decoder transformer for translation, what is cross-attention?",
     options: [
       {
         text: "An attention mechanism in the decoder that uses encoder outputs as keys and values.",
@@ -485,7 +498,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q19",
     chapter: 2,
     difficulty: "medium",
-    prompt: "Why is masking used in the decoder’s self-attention for language modeling?",
+    prompt:
+      "Why is masking used in the decoder’s self-attention for language modeling?",
     options: [
       {
         text: "To prevent each position from attending to future tokens that should not be known yet.",
@@ -511,7 +525,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q20",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Which statements correctly contrast encoder-only, decoder-only, and encoder–decoder transformers?",
+    prompt:
+      "Which statements correctly contrast encoder-only, decoder-only, and encoder–decoder transformers?",
     options: [
       {
         text: "Encoder-only models (like BERT) are well-suited for understanding tasks such as classification.",
@@ -540,7 +555,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q21",
     chapter: 2,
     difficulty: "medium",
-    prompt: "In autoregressive language modeling, how is the probability of a sequence w₁…wₙ typically factorized?",
+    prompt:
+      "In autoregressive language modeling, how is the probability of a sequence w₁…wₙ typically factorized?",
     options: [
       {
         text: "As the product ∏ᵢ P(wᵢ | w₁:ᵢ₋₁).",
@@ -566,7 +582,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q22",
     chapter: 2,
     difficulty: "medium",
-    prompt: "During training of a language model, what are the predicted and true distributions used in the cross-entropy loss?",
+    prompt:
+      "During training of a language model, what are the predicted and true distributions used in the cross-entropy loss?",
     options: [
       {
         text: "The predicted distribution is the softmax over logits for the next token.",
@@ -592,7 +609,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q23",
     chapter: 2,
     difficulty: "medium",
-    prompt: "What is teacher forcing in the context of training sequence models?",
+    prompt:
+      "What is teacher forcing in the context of training sequence models?",
     options: [
       {
         text: "Feeding the ground-truth previous token into the model when predicting the next one.",
@@ -618,7 +636,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q24",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Why is greedy decoding (always picking the highest-probability token) often unsatisfactory for text generation?",
+    prompt:
+      "Why is greedy decoding (always picking the highest-probability token) often unsatisfactory for text generation?",
     options: [
       {
         text: "It tends to produce repetitive and overly generic text.",
@@ -644,7 +663,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q25",
     chapter: 2,
     difficulty: "medium",
-    prompt: "Which statements correctly describe common stochastic decoding strategies for language models?",
+    prompt:
+      "Which statements correctly describe common stochastic decoding strategies for language models?",
     options: [
       {
         text: "Top-k sampling restricts sampling to the k most probable tokens at each step.",
@@ -673,7 +693,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q26",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Why do modern transformers often tokenize text into subword units instead of whole words?",
+    prompt:
+      "Why do modern transformers often tokenize text into subword units instead of whole words?",
     options: [
       {
         text: "To reduce the number of unknown tokens for rare or new words.",
@@ -699,7 +720,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q27",
     chapter: 2,
     difficulty: "medium",
-    prompt: "Which statements describe Byte-Pair Encoding (BPE) for building a subword vocabulary?",
+    prompt:
+      "Which statements describe Byte-Pair Encoding (BPE) for building a subword vocabulary?",
     options: [
       {
         text: "It starts from individual characters as initial tokens.",
@@ -725,7 +747,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q28",
     chapter: 2,
     difficulty: "medium",
-    prompt: "What happens to very rare or unseen words when using a BPE-style tokenizer?",
+    prompt:
+      "What happens to very rare or unseen words when using a BPE-style tokenizer?",
     options: [
       {
         text: "They are decomposed into smaller subword units that are in the vocabulary.",
@@ -754,7 +777,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q29",
     chapter: 2,
     difficulty: "easy",
-    prompt: "What is the key difference between a causal language model and a bidirectional encoder such as BERT?",
+    prompt:
+      "What is the key difference between a causal language model and a bidirectional encoder such as BERT?",
     options: [
       {
         text: "A causal model predicts each token using only past context.",
@@ -780,7 +804,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q30",
     chapter: 2,
     difficulty: "medium",
-    prompt: "In masked language modeling (MLM) used to train BERT-style models, what is the training objective?",
+    prompt:
+      "In masked language modeling (MLM) used to train BERT-style models, what is the training objective?",
     options: [
       {
         text: "Randomly mask some input tokens and have the model predict the original tokens.",
@@ -806,7 +831,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q31",
     chapter: 2,
     difficulty: "medium",
-    prompt: "What are some limitations of the masked language modeling objective?",
+    prompt:
+      "What are some limitations of the masked language modeling objective?",
     options: [
       {
         text: "Only a small fraction of tokens (e.g., 15%) contribute directly to the loss.",
@@ -832,7 +858,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q32",
     chapter: 2,
     difficulty: "medium",
-    prompt: "How is the [CLS] token typically used in BERT-like models for classification tasks?",
+    prompt:
+      "How is the [CLS] token typically used in BERT-like models for classification tasks?",
     options: [
       {
         text: "It is added at the beginning of the input sequence.",
@@ -887,7 +914,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q34",
     chapter: 2,
     difficulty: "medium",
-    prompt: "What can attention visualizations reveal about a transformer model?",
+    prompt:
+      "What can attention visualizations reveal about a transformer model?",
     options: [
       {
         text: "Which input tokens a given head focuses on when processing a particular token.",
@@ -913,7 +941,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q35",
     chapter: 2,
     difficulty: "hard",
-    prompt: "What does the Gradient × Input method aim to measure in a transformer language model?",
+    prompt:
+      "What does the Gradient × Input method aim to measure in a transformer language model?",
     options: [
       {
         text: "The sensitivity of the output (e.g., next-token probability) to small changes in each input token.",
@@ -939,7 +968,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q36",
     chapter: 2,
     difficulty: "hard",
-    prompt: "Why might Non-Negative Matrix Factorization (NMF) be used on neuron activations in transformer feedforward layers?",
+    prompt:
+      "Why might Non-Negative Matrix Factorization (NMF) be used on neuron activations in transformer feedforward layers?",
     options: [
       {
         text: "To decompose activations into non-negative factors that are easier to interpret.",
@@ -968,7 +998,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q37",
     chapter: 2,
     difficulty: "easy",
-    prompt: "What is the core idea of transfer learning with large pretrained transformers?",
+    prompt:
+      "What is the core idea of transfer learning with large pretrained transformers?",
     options: [
       {
         text: "First train a model on a broad, generic task using massive text corpora.",
@@ -994,7 +1025,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q38",
     chapter: 2,
     difficulty: "medium",
-    prompt: "During standard supervised fine-tuning of a transformer for classification, which practices are common?",
+    prompt:
+      "During standard supervised fine-tuning of a transformer for classification, which practices are common?",
     options: [
       {
         text: "Add one or more randomly initialized linear layers on top of the pretrained backbone.",
@@ -1020,7 +1052,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q39",
     chapter: 2,
     difficulty: "medium",
-    prompt: "Why is fine-tuning often feasible on a single GPU or even CPU, whereas pretraining is not?",
+    prompt:
+      "Why is fine-tuning often feasible on a single GPU or even CPU, whereas pretraining is not?",
     options: [
       {
         text: "Fine-tuning uses a much smaller dataset focused on a specific task.",
@@ -1075,7 +1108,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q41",
     chapter: 2,
     difficulty: "hard",
-    prompt: "Which statements about the distillation loss between teacher and student outputs are TRUE?",
+    prompt:
+      "Which statements about the distillation loss between teacher and student outputs are TRUE?",
     options: [
       {
         text: "It often uses Kullback–Leibler divergence between the softened probability distributions.",
@@ -1101,7 +1135,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q42",
     chapter: 2,
     difficulty: "medium",
-    prompt: "Compared to training a small model directly on labeled data, why can distillation from a larger model be beneficial?",
+    prompt:
+      "Compared to training a small model directly on labeled data, why can distillation from a larger model be beneficial?",
     options: [
       {
         text: "The teacher’s soft targets encode information about class similarities.",
@@ -1130,7 +1165,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q43",
     chapter: 2,
     difficulty: "hard",
-    prompt: "Consider a self-attention layer with input matrix X (T × d). What are the dimensions of Q, K, and V after multiplying by learned weight matrices W_Q, W_K, W_V of shape d × dₖ?",
+    prompt:
+      "Consider a self-attention layer with input matrix X (T × d). What are the dimensions of Q, K, and V after multiplying by learned weight matrices W_Q, W_K, W_V of shape d × dₖ?",
     options: [
       {
         text: "Q, K, and V each have shape T × dₖ.",
@@ -1156,7 +1192,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q44",
     chapter: 2,
     difficulty: "hard",
-    prompt: "Which statements about the softmax function are mathematically correct?",
+    prompt:
+      "Which statements about the softmax function are mathematically correct?",
     options: [
       {
         text: "Adding the same constant to all inputs xᵢ does not change the softmax output.",
@@ -1182,7 +1219,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q45",
     chapter: 2,
     difficulty: "medium",
-    prompt: "Why do feedforward sublayers contribute a large fraction of parameters in a transformer?",
+    prompt:
+      "Why do feedforward sublayers contribute a large fraction of parameters in a transformer?",
     options: [
       {
         text: "They usually have a hidden dimension larger than the model dimension (e.g., 4× larger).",
@@ -1211,7 +1249,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q46",
     chapter: 2,
     difficulty: "medium",
-    prompt: "Why is it useful to freeze most layers of a pretrained transformer during fine-tuning sometimes?",
+    prompt:
+      "Why is it useful to freeze most layers of a pretrained transformer during fine-tuning sometimes?",
     options: [
       {
         text: "To reduce the risk of overfitting when the downstream dataset is small.",
@@ -1237,7 +1276,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q47",
     chapter: 2,
     difficulty: "medium",
-    prompt: "What is a confusion matrix typically used for when evaluating classification models fine-tuned from transformers?",
+    prompt:
+      "What is a confusion matrix typically used for when evaluating classification models fine-tuned from transformers?",
     options: [
       {
         text: "To show counts of true vs predicted labels for each class.",
@@ -1263,7 +1303,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q48",
     chapter: 2,
     difficulty: "medium",
-    prompt: "Which statements about using Hugging Face’s Trainer for fine-tuning transformers are TRUE?",
+    prompt:
+      "Which statements about using Hugging Face’s Trainer for fine-tuning transformers are TRUE?",
     options: [
       {
         text: "You specify training hyperparameters such as batch size, epochs, and learning rate via TrainingArguments.",
@@ -1289,7 +1330,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q49",
     chapter: 2,
     difficulty: "medium",
-    prompt: "Why is it important to use the tokenizer that matches a given pretrained transformer model?",
+    prompt:
+      "Why is it important to use the tokenizer that matches a given pretrained transformer model?",
     options: [
       {
         text: "Because the model’s embedding matrix is aligned with the token IDs produced by its tokenizer.",
@@ -1315,7 +1357,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q50",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Which high-level capabilities of transformers explain their success in modern NLP?",
+    prompt:
+      "Which high-level capabilities of transformers explain their success in modern NLP?",
     options: [
       {
         text: "Ability to model long-range dependencies via attention.",
@@ -1337,7 +1380,7 @@ export const chapter2Questions: Question[] = [
     explanation:
       "Transformers combine efficient self-attention, scalable training, and self-supervised pretraining, which together enable strong performance on diverse language tasks.",
   },
-    {
+  {
     id: "ch2-q51",
     chapter: 2,
     difficulty: "easy",
@@ -1367,7 +1410,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q52",
     chapter: 2,
     difficulty: "easy",
-    prompt: "What is a 'sequence-to-sequence' (seq2seq) model in machine translation?",
+    prompt:
+      "What is a 'sequence-to-sequence' (seq2seq) model in machine translation?",
     options: [
       {
         text: "A model with an encoder that reads the source sentence and a decoder that generates the target sentence.",
@@ -1419,7 +1463,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q54",
     chapter: 2,
     difficulty: "easy",
-    prompt: "In self-attention, what does it mean that 'each token attends to all other tokens'?",
+    prompt:
+      "In self-attention, what does it mean that 'each token attends to all other tokens'?",
     options: [
       {
         text: "For every token, the model computes how related it is to every token (including itself) in the sequence.",
@@ -1445,7 +1490,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q55",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Which statements about queries, keys, and values (Q, K, V) in self-attention are TRUE?",
+    prompt:
+      "Which statements about queries, keys, and values (Q, K, V) in self-attention are TRUE?",
     options: [
       {
         text: "They are different linear projections of the same input token representations.",
@@ -1471,7 +1517,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q56",
     chapter: 2,
     difficulty: "easy",
-    prompt: "What problem does the scaling factor 1/√dₖ in scaled dot-product attention address?",
+    prompt:
+      "What problem does the scaling factor 1/√dₖ in scaled dot-product attention address?",
     options: [
       {
         text: "Without scaling, dot products can become very large when vectors are high-dimensional.",
@@ -1523,7 +1570,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q58",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Which statements about the computational cost of self-attention are TRUE?",
+    prompt:
+      "Which statements about the computational cost of self-attention are TRUE?",
     options: [
       {
         text: "The attention matrix compares every token with every other token.",
@@ -1575,7 +1623,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q60",
     chapter: 2,
     difficulty: "easy",
-    prompt: "What characterizes sinusoidal positional encodings used in the original transformer?",
+    prompt:
+      "What characterizes sinusoidal positional encodings used in the original transformer?",
     options: [
       {
         text: "They use sine and cosine functions with different frequencies over the position index.",
@@ -1627,7 +1676,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q62",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Which statements about the feedforward network (FFN) inside a transformer block are TRUE?",
+    prompt:
+      "Which statements about the feedforward network (FFN) inside a transformer block are TRUE?",
     options: [
       {
         text: "It applies two linear layers with a non-linear activation (like ReLU) in between.",
@@ -1731,7 +1781,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q66",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Why is a causal mask used in decoder self-attention for language modeling?",
+    prompt:
+      "Why is a causal mask used in decoder self-attention for language modeling?",
     options: [
       {
         text: "To block attention to future tokens that should not be known yet.",
@@ -1757,7 +1808,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q67",
     chapter: 2,
     difficulty: "easy",
-    prompt: "How is the probability of a sentence usually factorized in an autoregressive language model?",
+    prompt:
+      "How is the probability of a sentence usually factorized in an autoregressive language model?",
     options: [
       {
         text: "As a product of conditional probabilities for each token given all previous tokens.",
@@ -1809,7 +1861,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q69",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Which statements about cross-entropy loss in language modeling are TRUE?",
+    prompt:
+      "Which statements about cross-entropy loss in language modeling are TRUE?",
     options: [
       {
         text: "It measures the difference between the predicted distribution and the true distribution over the vocabulary.",
@@ -1861,7 +1914,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q71",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Why is greedy decoding (always picking the top-probability token) often not ideal?",
+    prompt:
+      "Why is greedy decoding (always picking the top-probability token) often not ideal?",
     options: [
       {
         text: "It tends to produce repetitive, generic, and sometimes boring text.",
@@ -1887,7 +1941,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q72",
     chapter: 2,
     difficulty: "easy",
-    prompt: "What is the main idea behind subword tokenization methods like Byte-Pair Encoding (BPE)?",
+    prompt:
+      "What is the main idea behind subword tokenization methods like Byte-Pair Encoding (BPE)?",
     options: [
       {
         text: "Represent rare words as combinations of more frequent smaller units.",
@@ -1913,7 +1968,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q73",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Which statements about the <UNK> (unknown) token and subword tokenization are TRUE?",
+    prompt:
+      "Which statements about the <UNK> (unknown) token and subword tokenization are TRUE?",
     options: [
       {
         text: "Without subword methods, many rare or new words would be mapped to a single <UNK> token.",
@@ -1939,7 +1995,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q74",
     chapter: 2,
     difficulty: "easy",
-    prompt: "What is the key idea of masked language modeling (MLM) used for BERT?",
+    prompt:
+      "What is the key idea of masked language modeling (MLM) used for BERT?",
     options: [
       {
         text: "Randomly mask some tokens and train the model to predict the original tokens using both left and right context.",
@@ -1965,7 +2022,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q75",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Which statements correctly compare BERT-style encoders and GPT-2-style decoders?",
+    prompt:
+      "Which statements correctly compare BERT-style encoders and GPT-2-style decoders?",
     options: [
       {
         text: "BERT is bidirectional and mainly used for understanding tasks (classification, QA, etc.).",
@@ -2017,7 +2075,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q77",
     chapter: 2,
     difficulty: "easy",
-    prompt: "What is the high-level idea of transfer learning with pretrained transformers?",
+    prompt:
+      "What is the high-level idea of transfer learning with pretrained transformers?",
     options: [
       {
         text: "First pretrain on massive unlabeled text to learn general language patterns.",
@@ -2043,7 +2102,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q78",
     chapter: 2,
     difficulty: "easy",
-    prompt: "During standard supervised fine-tuning for classification, what usually changes?",
+    prompt:
+      "During standard supervised fine-tuning for classification, what usually changes?",
     options: [
       {
         text: "We add a small classification head (for example, a linear layer) on top of the pretrained model.",
@@ -2095,7 +2155,8 @@ export const chapter2Questions: Question[] = [
     id: "ch2-q80",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Why is it important to use the tokenizer that matches a given pretrained transformer model?",
+    prompt:
+      "Why is it important to use the tokenizer that matches a given pretrained transformer model?",
     options: [
       {
         text: "Because the model’s embedding matrix expects the exact token IDs produced by its tokenizer.",
@@ -2117,5 +2178,4 @@ export const chapter2Questions: Question[] = [
     explanation:
       "Pretrained models are tightly coupled to their tokenizers; mismatching them scrambles the mapping from text to embeddings and breaks performance.",
   },
-
 ];

@@ -151,9 +151,18 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
       "The lecture describes three forces that jointly enabled the modern Deep Learning breakthrough. Which options match those forces?",
     options: [
       { text: "New algorithmic ideas.", isCorrect: true },
-      { text: "Access to large amounts of data due to broad digitization.", isCorrect: true },
-      { text: "Increased compute power via parallel hardware such as Graphics Processing Units (GPUs).", isCorrect: true },
-      { text: "Replacing numerical computation with hand-written symbolic IF–THEN rules.", isCorrect: false },
+      {
+        text: "Access to large amounts of data due to broad digitization.",
+        isCorrect: true,
+      },
+      {
+        text: "Increased compute power via parallel hardware such as Graphics Processing Units (GPUs).",
+        isCorrect: true,
+      },
+      {
+        text: "Replacing numerical computation with hand-written symbolic IF–THEN rules.",
+        isCorrect: false,
+      },
     ],
     explanation:
       "The lecture highlights a convergence: better algorithms, more data, and significantly more compute (especially parallel compute on GPUs). Together these revitalized older ideas like neural networks and made deep learning practical at large scale.",
@@ -615,9 +624,15 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
     prompt:
       "Consider a dense layer with input \\(x\\in\\mathbb{R}^d\\), weights \\(W\\in\\mathbb{R}^{h\\times d}\\), bias \\(b\\in\\mathbb{R}^h\\), and ReLU activation. Which option correctly expresses the layer output \\(a\\in\\mathbb{R}^h\\)?",
     options: [
-      { text: "\\(a = \\max(0, Wx + b)\\) (elementwise max).", isCorrect: true },
+      {
+        text: "\\(a = \\max(0, Wx + b)\\) (elementwise max).",
+        isCorrect: true,
+      },
       { text: "\\(a = W + x + b\\).", isCorrect: false },
-      { text: "\\(a = \\sigma(Wx + b)\\) where \\(\\sigma\\) is the sigmoid.", isCorrect: false },
+      {
+        text: "\\(a = \\sigma(Wx + b)\\) where \\(\\sigma\\) is the sigmoid.",
+        isCorrect: false,
+      },
       { text: "\\(a = \\max(0, x)W + b\\).", isCorrect: false },
     ],
     explanation:
@@ -827,10 +842,22 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
     prompt:
       "You build a dense network with 2 inputs, one hidden layer of 3 neurons, and 1 output neuron; every neuron has a bias. Which statements about parameter counting are correct?",
     options: [
-      { text: "Input→hidden has \\(2\\times 3 = 6\\) weights.", isCorrect: true },
-      { text: "Hidden layer contributes 3 biases (one per hidden neuron).", isCorrect: true },
-      { text: "Hidden→output has \\(3\\times 1 = 3\\) weights.", isCorrect: true },
-      { text: "Output layer contributes 1 bias, giving a total of \\(6+3+3+1=13\\) parameters.", isCorrect: true },
+      {
+        text: "Input→hidden has \\(2\\times 3 = 6\\) weights.",
+        isCorrect: true,
+      },
+      {
+        text: "Hidden layer contributes 3 biases (one per hidden neuron).",
+        isCorrect: true,
+      },
+      {
+        text: "Hidden→output has \\(3\\times 1 = 3\\) weights.",
+        isCorrect: true,
+      },
+      {
+        text: "Output layer contributes 1 bias, giving a total of \\(6+3+3+1=13\\) parameters.",
+        isCorrect: true,
+      },
     ],
     explanation:
       "In dense layers, weights count as (number of incoming units) × (number of outgoing units). Biases add one parameter per neuron that performs an affine transform; including the output bias is a common place people forget, which is why this hand-check is useful.",
@@ -873,8 +900,14 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
     options: [
       { text: "The number of hidden layers.", isCorrect: true },
       { text: "The number of neurons in each hidden layer.", isCorrect: true },
-      { text: "The activation functions used in hidden layers (e.g., choosing ReLU as a default).", isCorrect: true },
-      { text: "Ensuring the output layer/activation matches the output type you need (e.g., probabilities vs coordinates).", isCorrect: true },
+      {
+        text: "The activation functions used in hidden layers (e.g., choosing ReLU as a default).",
+        isCorrect: true,
+      },
+      {
+        text: "Ensuring the output layer/activation matches the output type you need (e.g., probabilities vs coordinates).",
+        isCorrect: true,
+      },
     ],
     explanation:
       "The inputs and outputs are usually dictated by the problem, but the architecture in the middle is a design space you choose. The lecture emphasizes that the output activation is constrained by what you want the output to mean (e.g., a probability or a multi-class distribution).",
@@ -1075,5 +1108,4 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
     explanation:
       "The core idea is that sensors are sources of unstructured signals, and deep learning can convert those signals into structured decisions such as detections and classifications. This pattern shows up across consumer devices, healthcare imaging, and industrial inspection workflows.",
   },
-
 ];

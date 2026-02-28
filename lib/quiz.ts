@@ -16,6 +16,7 @@ import { cs224rLecture4ActorCriticQuestions } from "./lectures/Stanford CS224R D
 import { lecture5_OffPolicyActorCriticQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture5_Off-Policy Actor Critic Methods";
 import { OtherRL_introductiontoReinforcementLearning } from "./lectures/Other RL/introduction to Reinforcement Learning";
 import { L5_DeepReinforcementLearning } from "./lectures/MIT 6.S191 Deep Learning 2025/L5_Deep Reinforcement Learning";
+import { L1_IntroductionToNeuralNetworksAndDeepLearning as MIT6S191L1IntroductionQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L1_Introduction";
 import { L1_IntroductionToNeuralNetworksAndDeepLearning } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L1_ Introduction to Neural Networks and Deep Learning";
 import { L2_TrainingDeepNNs } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L2_Training Deep NNs";
 import { mixedQuestions } from "./other/other";
@@ -65,8 +66,7 @@ export const QUESTION_SOURCES = [
   {
     id: "aie-build-app-ch2" as const,
     label: "AIE build app - Chap 2",
-    title:
-      "AIE build app – Chapter 2: Understanding Foundation Models",
+    title: "AIE build app – Chapter 2: Understanding Foundation Models",
     questions: aieChapter2Questions,
   },
   {
@@ -79,99 +79,91 @@ export const QUESTION_SOURCES = [
   {
     id: "aie-build-app-ch4" as const,
     label: "AIE build app - Chap 4",
-    title:
-      "AIE build app – Chapter 4: Building Agents with Foundation Models",
+    title: "AIE build app – Chapter 4: Building Agents with Foundation Models",
     questions: aieChapter4Questions,
   },
   {
     id: "cme295-lect1" as const,
     label: "Stanford CME295 Lecture 1",
-    title:
-      "Stanford CME295 Lecture 1: Transformers & LLMs",
+    title: "Stanford CME295 Lecture 1: Transformers & LLMs",
     questions: stanfordCME295Lecture1Questions,
   },
   {
     id: "cme295-lect2" as const,
     label: "Stanford CME295 Lecture 2",
-    title:
-      "Stanford CME295 Lecture 2: Transformer-Based Models & Tricks",
+    title: "Stanford CME295 Lecture 2: Transformer-Based Models & Tricks",
     questions: stanfordCME295Lecture2Questions,
   },
   {
     id: "cme295-lect3" as const,
     label: "Stanford CME295 Lecture 3",
-    title:
-      "Stanford CME295 Lecture 3: Large Language Models, MoE & Inference",
+    title: "Stanford CME295 Lecture 3: Large Language Models, MoE & Inference",
     questions: stanfordCME295Lecture3LLMsQuestions,
   },
   {
     id: "cme295-lect4" as const,
     label: "Stanford CME295 Lecture 4",
-    title:
-      "Stanford CME295 Lecture 4: LLM Training, Scaling & Alignment",
+    title: "Stanford CME295 Lecture 4: LLM Training, Scaling & Alignment",
     questions: stanfordCME295Lecture4TrainingQuestions,
   },
   {
     id: "cs224r-lect1" as const,
     label: "Stanford CS224R Lecture 1",
-    title:
-      "Stanford CS224R Lecture 1: Intro to Deep Reinforcement Learning",
+    title: "Stanford CS224R Lecture 1: Intro to Deep Reinforcement Learning",
     questions: cs224rLecture1IntroQuestions,
   },
   {
     id: "cs224r-lect2" as const,
     label: "Stanford CS224R Lecture 2",
-    title:
-      "Stanford CS224R Lecture 2: Imitation Learning",
+    title: "Stanford CS224R Lecture 2: Imitation Learning",
     questions: cs224rLecture2ImitationLearningQuestions,
   },
   {
     id: "cs224r-lect3" as const,
     label: "Stanford CS224R Lecture 3",
-    title:
-      "Stanford CS224R Lecture 3: Policy Gradients",
+    title: "Stanford CS224R Lecture 3: Policy Gradients",
     questions: cs224rLecture3PolicyGradientsQuestions,
   },
   {
     id: "cs224r-lect4" as const,
     label: "Stanford CS224R Lecture 4",
-    title:
-      "Stanford CS224R Lecture 4: Actor-Critic Methods",
+    title: "Stanford CS224R Lecture 4: Actor-Critic Methods",
     questions: cs224rLecture4ActorCriticQuestions,
   },
   {
     id: "cs224r-lect5" as const,
     label: "Stanford CS224R Lecture 5",
-    title:
-      "Stanford CS224R Lecture 5: Off-Policy Actor-Critic Methods",
+    title: "Stanford CS224R Lecture 5: Off-Policy Actor-Critic Methods",
     questions: lecture5_OffPolicyActorCriticQuestions,
   },
   {
     id: "other-rl-intro" as const,
     label: "Other RL Intro",
-    title:
-      "Other RL: Introduction to Reinforcement Learning",
+    title: "Other RL: Introduction to Reinforcement Learning",
     questions: OtherRL_introductiontoReinforcementLearning,
+  },
+  {
+    id: "mit6s191-l1" as const,
+    label: "MIT 6.S191 L1",
+    title: "MIT 6.S191 L1: Introduction to Deep Learning",
+    questions: MIT6S191L1IntroductionQuestions,
   },
   {
     id: "mit6s191-l5" as const,
     label: "MIT 6.S191 L5",
-    title:
-      "MIT 6.S191 L5: Deep Reinforcement Learning",
+    title: "MIT 6.S191 L5: Deep Reinforcement Learning",
     questions: L5_DeepReinforcementLearning,
   },
   {
     id: "mit15773-l1" as const,
     label: "MIT 15.773 L1",
-    title:
-      "MIT 15.773 L1: Introduction to Neural Networks and Deep Learning",
+    title: "MIT 15.773 L1: Introduction to Neural Networks and Deep Learning",
     questions: L1_IntroductionToNeuralNetworksAndDeepLearning,
   },
   {
     id: "mit15773-l2" as const,
     label: "MIT 15.773 L2",
-    title:
-      "MIT 15.773 L2: Training Deep NNs",
+    title: "MIT 15.773 L2: Training Deep NNs",
     questions: L2_TrainingDeepNNs,
   },
   {
@@ -180,7 +172,6 @@ export const QUESTION_SOURCES = [
     title: "Other Questions",
     questions: mixedQuestions,
   },
-
 ];
 
 export type SourceId = (typeof QUESTION_SOURCES)[number]["id"];
@@ -188,7 +179,7 @@ export type Mode = SourceId | "all";
 
 // All questions across all sources
 export const allQuestions: Question[] = QUESTION_SOURCES.flatMap(
-  (s) => s.questions
+  (s) => s.questions,
 );
 
 export const ALL_SOURCE_IDS: SourceId[] = QUESTION_SOURCES.map((s) => s.id);
@@ -202,9 +193,11 @@ export function getQuestionsForMode(mode: Mode): Question[] {
 
 // Helper: get questions for a set of sources (multi-select)
 export function getQuestionsForSources(sourceIds: SourceId[]): Question[] {
-  const active = sourceIds.length ? new Set(sourceIds) : new Set(ALL_SOURCE_IDS);
+  const active = sourceIds.length
+    ? new Set(sourceIds)
+    : new Set(ALL_SOURCE_IDS);
   return QUESTION_SOURCES.filter((s) => active.has(s.id)).flatMap(
-    (s) => s.questions
+    (s) => s.questions,
   );
 }
 
@@ -232,9 +225,9 @@ export function getTitleForSelection(sourceIds: SourceId[]): string {
     return src ? src.title : "Quiz";
   }
 
-  const names = QUESTION_SOURCES.filter((s) =>
-    sourceIds.includes(s.id)
-  ).map((s) => s.label);
+  const names = QUESTION_SOURCES.filter((s) => sourceIds.includes(s.id)).map(
+    (s) => s.label,
+  );
   const preview = names.slice(0, 2).join(", ");
   const extra = names.length > 2 ? ` +${names.length - 2} more` : "";
 
@@ -259,6 +252,7 @@ export { cs224rLecture4ActorCriticQuestions } from "./lectures/Stanford CS224R D
 export { lecture5_OffPolicyActorCriticQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture5_Off-Policy Actor Critic Methods";
 export { OtherRL_introductiontoReinforcementLearning } from "./lectures/Other RL/introduction to Reinforcement Learning";
 export { L5_DeepReinforcementLearning } from "./lectures/MIT 6.S191 Deep Learning 2025/L5_Deep Reinforcement Learning";
+export { L1_IntroductionToNeuralNetworksAndDeepLearning as MIT6S191L1IntroductionQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L1_Introduction";
 export { L1_IntroductionToNeuralNetworksAndDeepLearning } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L1_ Introduction to Neural Networks and Deep Learning";
 export { L2_TrainingDeepNNs } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L2_Training Deep NNs";
 export { mixedQuestions } from "./other/other";

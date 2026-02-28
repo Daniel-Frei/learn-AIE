@@ -1,10 +1,9 @@
-
-
 I want you to create 40 questions so that I can learn the lecture (see transcript below and attached pdf for the slides). As this often requires a lot of tokens, I think it's best to break this up into two batches (provide 20 questions, then in a next step we can add 20 more questions)
 
-I already created lib\lectures\MIT 15.773 Hands-On Deep Learning Spring 2024\L1_ Introduction to Neural Networks and Deep Learning.ts for those questions. Note that this is referring to a lecture but the same requirements (below) as for chapters apply.
+I already created lib\lectures\MIT 15.773 Hands-On Deep Learning Spring 2024\L1\_ Introduction to Neural Networks and Deep Learning.ts for those questions. Note that this is referring to a lecture but the same requirements (below) as for chapters apply.
 
 Requirements:
+
 - Same format as we already used with four potential answers/options, the options/answer should be true or false (more than one answer can be true or false), explanation.
 - each question with four options
 - the order of the options / answers is random (so that I don't accidentally remember the order), so basically we can use the current implementation. This also means that the order of the answers shouldn't matter (neither how they are beind displayed to the user nor the order of the user ticking the boxes; e.g. don't have answers that say "First..." and then in another answer "Then.." as the user might not see the answers in that order)
@@ -25,33 +24,32 @@ Requirements:
 - Especially the explanations (which the user sees after answering the question) should really explain the answers (at least two sentences long). The explanation should explain the issues in simple terms, so that the user can learn from it.
 - provide the questions as code (see example)
 
-
 Question Authoring Guide for Math & Formatting
 
 For math, wrap LaTeX in:
 
 Inline math: \( ... \)
-Example: The ratio is \( \rho_t = \frac{\pi_{\theta'}(a_t\mid s_t)}{\pi_{\theta}(a_t\mid s_t)} \).
+Example: The ratio is \( \rho*t = \frac{\pi*{\theta'}(a*t\mid s_t)}{\pi*{\theta}(a_t\mid s_t)} \).
 
 Block math: \[ ... \]
 Example:
 The return is
-\[ G_t = \sum_{t'=t}^T r_{t'} \]
+\[ G*t = \sum*{t'=t}^T r\_{t'} \]
 
 Notes:
 
 Always escape backslashes in TS/JS strings: write \\( ... \\) and \\[ ... \\].
 Keep each prompt/option/explanation as a single string. The renderer will handle multiple sentences and line breaks.
-Use standard LaTeX for fractions, sums, subscripts, and Greek letters: \frac{a}{b}, \sum, _t, \theta, \pi.
+Use standard LaTeX for fractions, sums, subscripts, and Greek letters: \frac{a}{b}, \sum, \_t, \theta, \pi.
 
 Example:
 
-prompt: "In off-policy policy gradient, what does the importance ratio \\(\\rho_t\\) represent?",
+prompt: "In off-policy policy gradient, what does the importance ratio \\(\\rho*t\\) represent?",
 options: [
-  { text: "\\(\\rho_t = \\frac{\\pi_{\\theta'}(a_t\\mid s_t)}{\\pi_{\\theta}(a_t\\mid s_t)}\\)", isCorrect: true },
-  { text: "\\(\\rho_t = \\frac{\\pi_{\\theta}(a_t\\mid s_t)}{\\pi_{\\theta'}(a_t\\mid s_t)}\\)", isCorrect: false },
-  { text: "\\(\\rho_t\\) is the baseline \\(b\\).", isCorrect: false },
-  { text: "\\(\\rho_t\\) is the return \\(G_t = \\sum_{t'=t}^T r_{t'}\\).", isCorrect: false },
+{ text: "\\(\\rho_t = \\frac{\\pi*{\\theta'}(a*t\\mid s_t)}{\\pi*{\\theta}(a*t\\mid s_t)}\\)", isCorrect: true },
+{ text: "\\(\\rho_t = \\frac{\\pi*{\\theta}(a*t\\mid s_t)}{\\pi*{\\theta'}(a*t\\mid s_t)}\\)", isCorrect: false },
+{ text: "\\(\\rho_t\\) is the baseline \\(b\\).", isCorrect: false },
+{ text: "\\(\\rho_t\\) is the return \\(G_t = \\sum*{t'=t}^T r*{t'}\\).", isCorrect: false },
 ],
 explanation:
-  "Off-policy PG reweights samples from behavior policy \\(\\pi_\\theta\\) to estimate gradients for target policy \\(\\pi_{\\theta'}\\). The per-step ratio is \\(\\rho_t = \\pi_{\\theta'}(a_t\\mid s_t) / \\pi_{\\theta}(a_t\\mid s_t)\\)."
+"Off-policy PG reweights samples from behavior policy \\(\\pi*\\theta\\) to estimate gradients for target policy \\(\\pi*{\\theta'}\\). The per-step ratio is \\(\\rho_t = \\pi*{\\theta'}(a*t\\mid s_t) / \\pi*{\\theta}(a_t\\mid s_t)\\)."

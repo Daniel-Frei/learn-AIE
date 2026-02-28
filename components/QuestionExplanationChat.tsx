@@ -42,7 +42,9 @@ export default function QuestionExplanationChat({
 
   const hasStarted = messages.length > 0;
 
-  const callApi = async (chatHistory: { role: ChatRole; content: string }[]) => {
+  const callApi = async (
+    chatHistory: { role: ChatRole; content: string }[],
+  ) => {
     const res = await fetch("/api/explain", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -112,7 +114,7 @@ export default function QuestionExplanationChat({
 
     try {
       const replyText = await callApi(
-        nextMessages.map(({ role, content }) => ({ role, content }))
+        nextMessages.map(({ role, content }) => ({ role, content })),
       );
 
       const reply: ChatMessage = {
@@ -165,24 +167,14 @@ export default function QuestionExplanationChat({
                         remarkPlugins={[remarkGfm, remarkMath]}
                         rehypePlugins={[rehypeKatex]}
                         components={{
-                          p: (props) => (
-                            <p {...props} className="mb-1" />
-                          ),
+                          p: (props) => <p {...props} className="mb-1" />,
                           ul: (props) => (
-                            <ul
-                              {...props}
-                              className="list-disc ml-4 mb-1"
-                            />
+                            <ul {...props} className="list-disc ml-4 mb-1" />
                           ),
                           ol: (props) => (
-                            <ol
-                              {...props}
-                              className="list-decimal ml-4 mb-1"
-                            />
+                            <ol {...props} className="list-decimal ml-4 mb-1" />
                           ),
-                          li: (props) => (
-                            <li {...props} className="mb-0.5" />
-                          ),
+                          li: (props) => <li {...props} className="mb-0.5" />,
                           h3: (props) => (
                             <h3
                               {...props}
@@ -190,16 +182,10 @@ export default function QuestionExplanationChat({
                             />
                           ),
                           hr: (props) => (
-                            <hr
-                              {...props}
-                              className="border-slate-700 my-2"
-                            />
+                            <hr {...props} className="border-slate-700 my-2" />
                           ),
                           strong: (props) => (
-                            <strong
-                              {...props}
-                              className="font-semibold"
-                            />
+                            <strong {...props} className="font-semibold" />
                           ),
                         }}
                       >
@@ -221,9 +207,7 @@ export default function QuestionExplanationChat({
               </div>
             )}
 
-            {error && (
-              <div className="text-[11px] text-rose-300">{error}</div>
-            )}
+            {error && <div className="text-[11px] text-rose-300">{error}</div>}
           </div>
 
           {/* Input for follow-up questions */}

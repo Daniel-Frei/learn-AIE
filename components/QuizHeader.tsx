@@ -32,8 +32,10 @@ export default function QuizHeader({
 }: Props) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
-  const [pendingSources, setPendingSources] = useState<SourceId[]>(selectedSources);
-  const [pendingRange, setPendingRange] = useState<DifficultyRange>(difficultyRange);
+  const [pendingSources, setPendingSources] =
+    useState<SourceId[]>(selectedSources);
+  const [pendingRange, setPendingRange] =
+    useState<DifficultyRange>(difficultyRange);
 
   useEffect(() => {
     setPendingSources(selectedSources);
@@ -51,7 +53,7 @@ export default function QuizHeader({
 
   const togglePendingSource = (id: SourceId) => {
     setPendingSources((prev) =>
-      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id],
     );
   };
 
@@ -88,7 +90,7 @@ export default function QuizHeader({
 
     const a = document.createElement("a");
     a.href = url;
-    a.download = "difficulty-stats.json";
+    a.download = "quiz-ratings.json";
     document.body.appendChild(a);
     a.click();
     a.remove();
@@ -114,7 +116,7 @@ export default function QuizHeader({
   };
 
   const selectedLabels = QUESTION_SOURCES.filter((src) =>
-    selectedSources.includes(src.id)
+    selectedSources.includes(src.id),
   ).map((src) => src.label);
   const allSelected =
     selectedSources.length === QUESTION_SOURCES.length &&
@@ -123,11 +125,11 @@ export default function QuizHeader({
     allSelected && selectedLabels.length
       ? "All sources"
       : selectedLabels.length
-      ? selectedLabels.slice(0, 3).join(", ") +
-        (selectedLabels.length > 3
-          ? ` +${selectedLabels.length - 3} more`
-          : "")
-      : "No sources selected";
+        ? selectedLabels.slice(0, 3).join(", ") +
+          (selectedLabels.length > 3
+            ? ` +${selectedLabels.length - 3} more`
+            : "")
+        : "No sources selected";
 
   return (
     <header className="space-y-3">
@@ -166,14 +168,14 @@ export default function QuizHeader({
               onClick={handleExportClick}
               className="px-3 py-1 rounded-md bg-slate-800 border border-slate-700 text-xs"
             >
-              Export difficulty
+              Export ratings
             </button>
             <button
               type="button"
               onClick={handleImportClick}
               className="px-3 py-1 rounded-md bg-slate-800 border border-slate-700 text-xs"
             >
-              Import difficulty
+              Import ratings
             </button>
             <input
               ref={fileInputRef}
@@ -186,7 +188,9 @@ export default function QuizHeader({
 
           <div className="text-xs text-slate-400">
             Answered:{" "}
-            <span className="font-semibold text-slate-200">{answeredCount}</span>{" "}
+            <span className="font-semibold text-slate-200">
+              {answeredCount}
+            </span>{" "}
             Correct:{" "}
             <span className="font-semibold text-emerald-300">
               {correctCount}

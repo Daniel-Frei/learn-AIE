@@ -34,7 +34,8 @@ export const chapter1Questions: Question[] = [
     id: "ch1-q02",
     chapter: 1,
     difficulty: "easy",
-    prompt: "Text normalization before tokenization often includes which steps?",
+    prompt:
+      "Text normalization before tokenization often includes which steps?",
     options: [
       {
         text: "Converting all characters to lowercase.",
@@ -86,7 +87,8 @@ export const chapter1Questions: Question[] = [
     id: "ch1-q04",
     chapter: 1,
     difficulty: "medium",
-    prompt: "What problems are commonly associated with BoW and one-hot representations?",
+    prompt:
+      "What problems are commonly associated with BoW and one-hot representations?",
     options: [
       {
         text: "High memory and computation cost due to large vector dimensionality.",
@@ -321,7 +323,8 @@ export const chapter1Questions: Question[] = [
     id: "ch1-q13",
     chapter: 1,
     difficulty: "medium",
-    prompt: "Which statements about the dot product between two embedding vectors are TRUE?",
+    prompt:
+      "Which statements about the dot product between two embedding vectors are TRUE?",
     options: [
       {
         text: "A large positive dot product suggests the vectors point in a similar direction.",
@@ -401,7 +404,8 @@ export const chapter1Questions: Question[] = [
     id: "ch1-q16",
     chapter: 1,
     difficulty: "medium",
-    prompt: "How does the size of the context window affect word2vec embeddings?",
+    prompt:
+      "How does the size of the context window affect word2vec embeddings?",
     options: [
       {
         text: "Smaller windows (e.g., 2) help capture syntactic information such as part of speech.",
@@ -435,7 +439,7 @@ export const chapter1Questions: Question[] = [
       },
       {
         text: "It is always between −1 and 1.",
-        isCorrect:true,
+        isCorrect: true,
       },
       {
         text: "It is invariant to rescaling the vectors by positive constants.",
@@ -534,7 +538,8 @@ export const chapter1Questions: Question[] = [
     id: "ch1-q21",
     chapter: 1,
     difficulty: "easy",
-    prompt: "What is a Recurrent Neural Network (RNN) mainly designed to handle?",
+    prompt:
+      "What is a Recurrent Neural Network (RNN) mainly designed to handle?",
     options: [
       {
         text: "Sequences of inputs where the current output depends on previous elements.",
@@ -614,7 +619,8 @@ export const chapter1Questions: Question[] = [
     id: "ch1-q24",
     chapter: 1,
     difficulty: "medium",
-    prompt: "Which statements about LSTMs (Long Short-Term Memory networks) are TRUE?",
+    prompt:
+      "Which statements about LSTMs (Long Short-Term Memory networks) are TRUE?",
     options: [
       {
         text: "They introduce gates to control information flow.",
@@ -640,8 +646,7 @@ export const chapter1Questions: Question[] = [
     id: "ch1-q25",
     chapter: 1,
     difficulty: "hard",
-    prompt:
-      "In the LSTM equations, which roles do the gates play?",
+    prompt: "In the LSTM equations, which roles do the gates play?",
     options: [
       {
         text: "The forget gate f(t) decides how much of the previous cell state c(t−1) to keep.",
@@ -693,8 +698,7 @@ export const chapter1Questions: Question[] = [
     id: "ch1-q27",
     chapter: 1,
     difficulty: "medium",
-    prompt:
-      "What are some typical trade-offs between LSTMs and GRUs?",
+    prompt: "What are some typical trade-offs between LSTMs and GRUs?",
     options: [
       {
         text: "GRUs have fewer parameters and can converge faster.",
@@ -720,8 +724,7 @@ export const chapter1Questions: Question[] = [
     id: "ch1-q28",
     chapter: 1,
     difficulty: "medium",
-    prompt:
-      "How are 1D Convolutional Neural Networks (CNNs) used for text?",
+    prompt: "How are 1D Convolutional Neural Networks (CNNs) used for text?",
     options: [
       {
         text: "They slide 1D filters over sequences to extract local patterns.",
@@ -1017,8 +1020,7 @@ export const chapter1Questions: Question[] = [
     id: "ch1-q40",
     chapter: 1,
     difficulty: "medium",
-    prompt:
-      "What are some ways word embeddings can be *used* once trained?",
+    prompt: "What are some ways word embeddings can be *used* once trained?",
     options: [
       {
         text: "Finding most similar words via cosine similarity.",
@@ -1098,8 +1100,7 @@ export const chapter1Questions: Question[] = [
     id: "ch1-q43",
     chapter: 1,
     difficulty: "medium",
-    prompt:
-      "Which statements about CNNs versus RNNs for text are TRUE?",
+    prompt: "Which statements about CNNs versus RNNs for text are TRUE?",
     options: [
       {
         text: "CNNs are good at capturing local patterns via filters of limited size.",
@@ -1179,8 +1180,7 @@ export const chapter1Questions: Question[] = [
     id: "ch1-q46",
     chapter: 1,
     difficulty: "hard",
-    prompt:
-      "Which statements about a standard TF-IDF implementation are TRUE?",
+    prompt: "Which statements about a standard TF-IDF implementation are TRUE?",
     options: [
       {
         text: "TF is often computed as count divided by total words in the document.",

@@ -6,7 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "format": "prettier --write .",
+    "format-check": "prettier --check \"{app,components,lib,docs,tests,e2e}/**/*.{ts,tsx,md,css}\" \"*.{md,json,mjs,ts,tsx}\"",
+    "lint": "eslint .",
+    "types-check": "tsc --noEmit",
+    "test": "vitest run --config vitest.config.ts",
+    "test:watch": "vitest --config vitest.config.ts",
+    "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui",
+    "check": "npm run format-check && npm run lint && npm run types-check && npm run test"
   },
   "dependencies": {
     "katex": "^0.16.22",
@@ -20,13 +28,16 @@
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.56.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.0.3",
+    "prettier": "^3.6.2",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.0.0"
   }
 }

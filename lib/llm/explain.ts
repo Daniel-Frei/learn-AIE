@@ -5,7 +5,7 @@ const apiKey = process.env.OPENAI_API_KEY;
 
 if (!apiKey) {
   console.warn(
-    "Warning: OPENAI_API_KEY is not set. The detailed explanation feature will not work."
+    "Warning: OPENAI_API_KEY is not set. The detailed explanation feature will not work.",
   );
 }
 
@@ -39,19 +39,8 @@ function buildContextPrompt(req: ExplanationRequest): string {
   const { questionPrompt, genericExplanation, options, isOverallCorrect } = req;
 
   // Classify options from the perspective of the grading logic
-  const correctlySelected = options.filter(
-    (o) => o.isCorrect && o.selected
-  );
-  const missedCorrect = options.filter(
-    (o) => o.isCorrect && !o.selected
-  );
-  const wronglySelected = options.filter(
-    (o) => !o.isCorrect && o.selected
-  );
-  const correctlySkipped = options.filter(
-    (o) => !o.isCorrect && !o.selected
-  );
-
+  const missedCorrect = options.filter((o) => o.isCorrect && !o.selected);
+  const wronglySelected = options.filter((o) => !o.isCorrect && o.selected);
   const header = [
     "You are helping a user with a multi-select quiz question about deep learning / NLP.",
     "",
@@ -77,7 +66,9 @@ function buildContextPrompt(req: ExplanationRequest): string {
         "USER ANSWERED CORRECTLY: this option is INCORRECT and the user did NOT select it.";
     }
 
-    const correctness = opt.isCorrect ? "ACTUALLY CORRECT" : "ACTUALLY INCORRECT";
+    const correctness = opt.isCorrect
+      ? "ACTUALLY CORRECT"
+      : "ACTUALLY INCORRECT";
 
     return `- "${opt.text}" — ${correctness}. ${gradingLabel}`;
   });
@@ -88,25 +79,25 @@ function buildContextPrompt(req: ExplanationRequest): string {
   if (hasMistakes) {
     mistakeLines.push(
       "",
-      "User mistakes (FOCUS YOUR EXPLANATION ON THESE OPTIONS):"
+      "User mistakes (FOCUS YOUR EXPLANATION ON THESE OPTIONS):",
     );
 
     wronglySelected.forEach((opt) => {
       mistakeLines.push(
-        `- "${opt.text}" — INCORRECT option that the user SELECTED (explain why it is wrong and what misconception it reflects).`
+        `- "${opt.text}" — INCORRECT option that the user SELECTED (explain why it is wrong and what misconception it reflects).`,
       );
     });
 
     missedCorrect.forEach((opt) => {
       mistakeLines.push(
-        `- "${opt.text}" — CORRECT option that the user did NOT SELECT (explain why it is actually correct and what idea they might be missing).`
+        `- "${opt.text}" — CORRECT option that the user did NOT SELECT (explain why it is actually correct and what idea they might be missing).`,
       );
     });
   } else {
     mistakeLines.push(
       "",
       "The user answered this question perfectly (no grading mistakes).",
-      "You should still briefly reinforce the core concept and, if helpful, highlight why the other options are wrong."
+      "You should still briefly reinforce the core concept and, if helpful, highlight why the other options are wrong.",
     );
   }
 
@@ -129,18 +120,13 @@ function buildContextPrompt(req: ExplanationRequest): string {
     "- Be clear and concise; avoid repeating the full question text.",
   ];
 
-  return [
-    ...header,
-    ...optionLines,
-    "",
-    ...mistakeLines,
-    "",
-    ...footer,
-  ].join("\n");
+  return [...header, ...optionLines, "", ...mistakeLines, "", ...footer].join(
+    "\n",
+  );
 }
 
 export async function getLLMExplanation(
-  req: ExplanationRequest
+  req: ExplanationRequest,
 ): Promise<string> {
   if (!client) {
     return "OpenAI API key is not configured on the server.";

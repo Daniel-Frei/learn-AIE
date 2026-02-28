@@ -745,8 +745,7 @@ export const aieChapter2Questions: Question[] = [
     id: "aie-ch2-q28",
     chapter: 2,
     difficulty: "medium",
-    prompt:
-      "Which statements about proprietary training data are correct?",
+    prompt: "Which statements about proprietary training data are correct?",
     options: [
       {
         text: "Contracts, medical records, and internal documents can be valuable proprietary datasets.",
@@ -880,8 +879,7 @@ export const aieChapter2Questions: Question[] = [
     id: "aie-ch2-q33",
     chapter: 2,
     difficulty: "medium",
-    prompt:
-      "Which statements about the cost of scaling models are correct?",
+    prompt: "Which statements about the cost of scaling models are correct?",
     options: [
       {
         text: "Training cost generally increases with both model size and dataset size.",
@@ -1042,8 +1040,7 @@ export const aieChapter2Questions: Question[] = [
     id: "aie-ch2-q39",
     chapter: 2,
     difficulty: "medium",
-    prompt:
-      "Which statements about top-k vs. top-p sampling are correct?",
+    prompt: "Which statements about top-k vs. top-p sampling are correct?",
     options: [
       {
         text: "Top-k restricts sampling to the k most likely tokens, regardless of their cumulative probability.",
@@ -1339,8 +1336,7 @@ export const aieChapter2Questions: Question[] = [
     id: "aie-ch2-q50",
     chapter: 2,
     difficulty: "easy",
-    prompt:
-      "Which statements about inconsistency in LLM outputs are correct?",
+    prompt: "Which statements about inconsistency in LLM outputs are correct?",
     options: [
       {
         text: "Asking the same question twice can yield different answers when sampling is stochastic.",
@@ -1452,8 +1448,7 @@ export const aieChapter2Questions: Question[] = [
     id: "aie-ch2-q54",
     chapter: 2,
     difficulty: "medium",
-    prompt:
-      "Which statements about best-of-N sampling are correct?",
+    prompt: "Which statements about best-of-N sampling are correct?",
     options: [
       {
         text: "It can be seen as a simple form of test-time search over multiple stochastic outputs.",
@@ -1479,8 +1474,7 @@ export const aieChapter2Questions: Question[] = [
     id: "aie-ch2-q55",
     chapter: 2,
     difficulty: "easy",
-    prompt:
-      "Which statements about model parameters are correct?",
+    prompt: "Which statements about model parameters are correct?",
     options: [
       {
         text: "They are the tunable weights learned during training.",
@@ -1587,8 +1581,7 @@ export const aieChapter2Questions: Question[] = [
     id: "aie-ch2-q59",
     chapter: 2,
     difficulty: "medium",
-    prompt:
-      "Which statements about top-k and compute are correct?",
+    prompt: "Which statements about top-k and compute are correct?",
     options: [
       {
         text: "Top-k can reduce the cost of computing softmax by restricting to the highest-k logits.",
@@ -1695,8 +1688,7 @@ export const aieChapter2Questions: Question[] = [
     id: "aie-ch2-q63",
     chapter: 2,
     difficulty: "easy",
-    prompt:
-      "Which statements about context length are correct?",
+    prompt: "Which statements about context length are correct?",
     options: [
       {
         text: "It specifies how many tokens the model can attend to in one forward pass.",
@@ -2078,8 +2070,7 @@ export const aieChapter2Questions: Question[] = [
     id: "aie-ch2-q77",
     chapter: 2,
     difficulty: "medium",
-    prompt:
-      "Which statement is correct about Common Crawl–style web corpora?",
+    prompt: "Which statement is correct about Common Crawl–style web corpora?",
     options: [
       {
         text: "They contain a mix of high-quality and very low-quality content and must be filtered.",
@@ -2132,8 +2123,7 @@ export const aieChapter2Questions: Question[] = [
     id: "aie-ch2-q79",
     chapter: 2,
     difficulty: "medium",
-    prompt:
-      "Which statement is correct about supervised finetuning (SFT)?",
+    prompt: "Which statement is correct about supervised finetuning (SFT)?",
     options: [
       {
         text: "It trains the model to imitate high-quality responses on (prompt, response) examples.",
@@ -2186,8 +2176,7 @@ export const aieChapter2Questions: Question[] = [
     id: "aie-ch2-q81",
     chapter: 2,
     difficulty: "easy",
-    prompt:
-      "Which statement is correct about temperature in sampling?",
+    prompt: "Which statement is correct about temperature in sampling?",
     options: [
       {
         text: "Lowering temperature makes the distribution more peaked and outputs more deterministic.",
@@ -2213,8 +2202,7 @@ export const aieChapter2Questions: Question[] = [
     id: "aie-ch2-q82",
     chapter: 2,
     difficulty: "medium",
-    prompt:
-      "Which statement is correct about top-p (nucleus) sampling?",
+    prompt: "Which statement is correct about top-p (nucleus) sampling?",
     options: [
       {
         text: "It selects the smallest set of tokens whose cumulative probability exceeds a threshold p.",
@@ -2240,8 +2228,7 @@ export const aieChapter2Questions: Question[] = [
     id: "aie-ch2-q83",
     chapter: 2,
     difficulty: "hard",
-    prompt:
-      "Which statement is correct about hallucinations in factual tasks?",
+    prompt: "Which statement is correct about hallucinations in factual tasks?",
     options: [
       {
         text: "They are dangerous because the model can confidently state incorrect information that users may trust.",
@@ -2267,8 +2254,7 @@ export const aieChapter2Questions: Question[] = [
     id: "aie-ch2-q84",
     chapter: 2,
     difficulty: "medium",
-    prompt:
-      "Which statement is correct about caching in LLM systems?",
+    prompt: "Which statement is correct about caching in LLM systems?",
     options: [
       {
         text: "It can make repeated queries cheaper and more consistent by reusing previous responses.",
@@ -2591,8 +2577,7 @@ export const aieChapter2Questions: Question[] = [
     id: "aie-ch2-q96",
     chapter: 2,
     difficulty: "medium",
-    prompt:
-      "Which statement is correct about how sampling affects user trust?",
+    prompt: "Which statement is correct about how sampling affects user trust?",
     options: [
       {
         text: "Highly unstable or inconsistent outputs can erode user trust, even if the model is powerful.",

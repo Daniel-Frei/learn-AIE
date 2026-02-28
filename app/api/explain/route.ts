@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
     ) {
       return NextResponse.json(
         { error: "Invalid request payload for explanation." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     console.error("Error in /api/explain:", err);
     return NextResponse.json(
       { error: "Failed to generate explanation" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

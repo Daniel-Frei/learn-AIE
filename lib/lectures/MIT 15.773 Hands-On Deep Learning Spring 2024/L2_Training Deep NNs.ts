@@ -99,11 +99,11 @@ export const L2_TrainingDeepNNs: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A hidden dense layer with ReLU can be defined as something like `keras.layers.Dense(16, activation=\"relu\")` and then applied to the prior layer’s output.",
+        text: 'A hidden dense layer with ReLU can be defined as something like `keras.layers.Dense(16, activation="relu")` and then applied to the prior layer’s output.',
         isCorrect: true,
       },
       {
-        text: "A binary classification output can be represented with a single unit using a sigmoid activation, e.g. `Dense(1, activation=\"sigmoid\")`.",
+        text: 'A binary classification output can be represented with a single unit using a sigmoid activation, e.g. `Dense(1, activation="sigmoid")`.',
         isCorrect: true,
       },
       {
@@ -147,8 +147,7 @@ export const L2_TrainingDeepNNs: Question[] = [
     id: "mit15773-l2-q06",
     chapter: 2,
     difficulty: "easy",
-    prompt:
-      "Which statements about loss functions are correct?",
+    prompt: "Which statements about loss functions are correct?",
     options: [
       {
         text: "A loss function quantifies how “bad” a model’s predictions are compared to the actual targets.",
@@ -322,9 +321,18 @@ export const L2_TrainingDeepNNs: Question[] = [
         text: "Gradient descent was introduced in the 19th century (1847) by Augustin-Louis Cauchy.",
         isCorrect: true,
       },
-      { text: "Gradient descent was first invented in 2012 to train AlexNet.", isCorrect: false },
-      { text: "Gradient descent requires GPUs to exist; it could not be defined before modern hardware.", isCorrect: false },
-      { text: "Gradient descent was discovered by Isaac Newton in 1687 as part of universal gravitation.", isCorrect: false },
+      {
+        text: "Gradient descent was first invented in 2012 to train AlexNet.",
+        isCorrect: false,
+      },
+      {
+        text: "Gradient descent requires GPUs to exist; it could not be defined before modern hardware.",
+        isCorrect: false,
+      },
+      {
+        text: "Gradient descent was discovered by Isaac Newton in 1687 as part of universal gravitation.",
+        isCorrect: false,
+      },
     ],
     explanation:
       "The lecture notes that gradient descent dates back to Cauchy in 1847, which is striking given how central it still is in training modern deep learning systems. Modern compute makes it practical at scale, but the core idea predates GPUs by a long time.",
@@ -393,10 +401,22 @@ export const L2_TrainingDeepNNs: Question[] = [
     prompt:
       "When minimizing the Binary Cross-Entropy loss over a dataset, which quantities are the optimization variables?",
     options: [
-      { text: "The neural network parameters (weights and biases) inside \\(\\mathrm{model}(x)\\).", isCorrect: true },
-      { text: "The input features \\(x\\) are optimization variables we update to reduce the loss.", isCorrect: false },
-      { text: "The labels \\(y\\) are optimization variables we adjust so the loss becomes small.", isCorrect: false },
-      { text: "The number of data points \\(n\\) is optimized to minimize the loss; we change \\(n\\) during training.", isCorrect: false },
+      {
+        text: "The neural network parameters (weights and biases) inside \\(\\mathrm{model}(x)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The input features \\(x\\) are optimization variables we update to reduce the loss.",
+        isCorrect: false,
+      },
+      {
+        text: "The labels \\(y\\) are optimization variables we adjust so the loss becomes small.",
+        isCorrect: false,
+      },
+      {
+        text: "The number of data points \\(n\\) is optimized to minimize the loss; we change \\(n\\) during training.",
+        isCorrect: false,
+      },
     ],
     explanation:
       "The dataset \\((x,y)\\) is treated as fixed. The parameters that change during training are the model’s weights and biases, which determine \\(\\mathrm{model}(x)\\) and therefore the loss value.",
@@ -469,9 +489,18 @@ export const L2_TrainingDeepNNs: Question[] = [
         text: "SGD replaces full-dataset gradient computation with minibatch-based gradient approximations to reduce cost per update.",
         isCorrect: true,
       },
-      { text: "SGD requires computing exact gradients on the entire dataset at every iteration.", isCorrect: false },
-      { text: "SGD is only used for convex loss functions and cannot train neural networks.", isCorrect: false },
-      { text: "SGD is a loss function that measures prediction discrepancy.", isCorrect: false },
+      {
+        text: "SGD requires computing exact gradients on the entire dataset at every iteration.",
+        isCorrect: false,
+      },
+      {
+        text: "SGD is only used for convex loss functions and cannot train neural networks.",
+        isCorrect: false,
+      },
+      {
+        text: "SGD is a loss function that measures prediction discrepancy.",
+        isCorrect: false,
+      },
     ],
     explanation:
       "Full gradient descent uses all \\(n\\) points to compute a gradient step, which can be expensive for large datasets. SGD makes training feasible by using minibatches to approximate that gradient, dramatically reducing computation per update.",
@@ -488,9 +517,18 @@ export const L2_TrainingDeepNNs: Question[] = [
         text: "With more parameters, a model can fit idiosyncrasies/noise in the training set more easily, which can hurt generalization to unseen data.",
         isCorrect: true,
       },
-      { text: "A larger model always has lower test error because it is more expressive.", isCorrect: false },
-      { text: "Overfitting refers to when a model is too simple to capture the training patterns.", isCorrect: false },
-      { text: "If a model overfits, training loss must be exactly zero for every dataset.", isCorrect: false },
+      {
+        text: "A larger model always has lower test error because it is more expressive.",
+        isCorrect: false,
+      },
+      {
+        text: "Overfitting refers to when a model is too simple to capture the training patterns.",
+        isCorrect: false,
+      },
+      {
+        text: "If a model overfits, training loss must be exactly zero for every dataset.",
+        isCorrect: false,
+      },
     ],
     explanation:
       "More capacity increases the risk of overfitting: the model may learn patterns that don’t generalize beyond the training data. The lecture mentions this as a reason performance can worsen when the network is made larger than needed, even if training performance improves.",
@@ -728,10 +766,22 @@ export const L2_TrainingDeepNNs: Question[] = [
     prompt:
       "Which statements are correct about what gradient descent actually needs at each iteration?",
     options: [
-      { text: "A current parameter vector \\(\\mathbf{w}\\).", isCorrect: true },
-      { text: "A gradient estimate \\(\\nabla\\ell(\\mathbf{w})\\) (exact or approximate).", isCorrect: true },
-      { text: "A learning rate \\(\\alpha\\) to scale the step size.", isCorrect: true },
-      { text: "An exact closed-form solution for \\(\\arg\\min_{\\mathbf{w}} \\ell(\\mathbf{w})\\) computed symbolically.", isCorrect: false },
+      {
+        text: "A current parameter vector \\(\\mathbf{w}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "A gradient estimate \\(\\nabla\\ell(\\mathbf{w})\\) (exact or approximate).",
+        isCorrect: true,
+      },
+      {
+        text: "A learning rate \\(\\alpha\\) to scale the step size.",
+        isCorrect: true,
+      },
+      {
+        text: "An exact closed-form solution for \\(\\arg\\min_{\\mathbf{w}} \\ell(\\mathbf{w})\\) computed symbolically.",
+        isCorrect: false,
+      },
     ],
     explanation:
       "Gradient descent is an iterative method: it repeatedly updates parameters using a gradient and a step size. It does not require solving the minimization problem in closed form, which is often infeasible for neural networks.",
@@ -888,9 +938,18 @@ export const L2_TrainingDeepNNs: Question[] = [
         text: "Typically, you do one gradient update per minibatch (compute loss/gradient on the minibatch, update weights once, then move to the next minibatch).",
         isCorrect: true,
       },
-      { text: "You must run gradient descent to convergence on a single minibatch before you are allowed to sample a new minibatch.", isCorrect: false },
-      { text: "Minibatches are only used to compute accuracy metrics; gradients are still computed on the full dataset each step.", isCorrect: false },
-      { text: "Minibatch training means you keep the weights separate for each minibatch and average them at the end of training.", isCorrect: false },
+      {
+        text: "You must run gradient descent to convergence on a single minibatch before you are allowed to sample a new minibatch.",
+        isCorrect: false,
+      },
+      {
+        text: "Minibatches are only used to compute accuracy metrics; gradients are still computed on the full dataset each step.",
+        isCorrect: false,
+      },
+      {
+        text: "Minibatch training means you keep the weights separate for each minibatch and average them at the end of training.",
+        isCorrect: false,
+      },
     ],
     explanation:
       "The lecture describes minibatch SGD as a streaming process: each minibatch yields a gradient estimate and you take one update step, then continue with the next minibatch using the updated weights. You do not maintain separate per-minibatch weight sets or 'converge' on a single minibatch.",

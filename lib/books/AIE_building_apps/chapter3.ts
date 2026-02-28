@@ -551,8 +551,7 @@ export const aieChapter3Questions: Question[] = [
     id: "aie-ch3-q21",
     chapter: 3,
     difficulty: "hard",
-    prompt:
-      "Which statements correctly describe known biases of AI judges?",
+    prompt: "Which statements correctly describe known biases of AI judges?",
     options: [
       {
         text: "A model often prefers its own generations over those from other models (self-bias).",
@@ -880,8 +879,7 @@ export const aieChapter3Questions: Question[] = [
     id: "aie-ch3-q33",
     chapter: 3,
     difficulty: "easy",
-    prompt:
-      "Which statements about embeddings in general are correct?",
+    prompt: "Which statements about embeddings in general are correct?",
     options: [
       {
         text: "They represent complex objects (e.g. text, images) as numeric vectors.",
@@ -1042,8 +1040,7 @@ export const aieChapter3Questions: Question[] = [
     id: "aie-ch3-q39",
     chapter: 3,
     difficulty: "hard",
-    prompt:
-      "Which statements about consistency of AI judges are correct?",
+    prompt: "Which statements about consistency of AI judges are correct?",
     options: [
       {
         text: "Sampling randomness can cause the same judge configuration to output different scores on repeated runs.",
@@ -1479,8 +1476,7 @@ export const aieChapter3Questions: Question[] = [
     id: "aie-ch3-q55",
     chapter: 3,
     difficulty: "easy",
-    prompt:
-      "Which statements correctly contrast human vs AI judges?",
+    prompt: "Which statements correctly contrast human vs AI judges?",
     options: [
       {
         text: "Human evaluation is slower and more expensive per sample than AI-based evaluation.",
@@ -1533,8 +1529,7 @@ export const aieChapter3Questions: Question[] = [
     id: "aie-ch3-q57",
     chapter: 3,
     difficulty: "hard",
-    prompt:
-      "Which statements about AI judge self-bias are correct?",
+    prompt: "Which statements about AI judge self-bias are correct?",
     options: [
       {
         text: "A judge tends to prefer answers that look stylistically similar to its own outputs.",
@@ -1560,8 +1555,7 @@ export const aieChapter3Questions: Question[] = [
     id: "aie-ch3-q58",
     chapter: 3,
     difficulty: "medium",
-    prompt:
-      "Which statements about pass@k metrics are correct?",
+    prompt: "Which statements about pass@k metrics are correct?",
     options: [
       {
         text: "For the same model and benchmark, pass@10 should be at least as high as pass@1.",
@@ -2051,8 +2045,7 @@ export const aieChapter3Questions: Question[] = [
     id: "aie-ch3-q76",
     chapter: 3,
     difficulty: "easy",
-    prompt:
-      "Which statement best describes perplexity in intuitive terms?",
+    prompt: "Which statement best describes perplexity in intuitive terms?",
     options: [
       {
         text: "It is the model’s effective average number of choices for the next token.",
@@ -2159,8 +2152,7 @@ export const aieChapter3Questions: Question[] = [
     id: "aie-ch3-q80",
     chapter: 3,
     difficulty: "easy",
-    prompt:
-      "Which statement best defines an embedding in this context?",
+    prompt: "Which statement best defines an embedding in this context?",
     options: [
       {
         text: "A vector representation that captures important features of the original object.",

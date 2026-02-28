@@ -1,14 +1,22 @@
 // lib/useQuiz.ts
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { ALL_SOURCE_IDS, getQuestionsForSources, type SourceId } from "./quiz";
+import { useMemo, useState } from "react";
 import {
-  loadDifficultyMap,
-  saveDifficultyMap,
-  updateStats,
-  computeDifficultyScore,
-  type DifficultyMap,
+  ALL_SOURCE_IDS,
+  allQuestions,
+  getQuestionsForSources,
+  type SourceId,
+} from "./quiz";
+import {
+  loadRatingState,
+  saveRatingState,
+  recordAnswer,
+  computeQuestionDifficultyScore,
+  exportRatingsJson,
+  importRatingsJson,
+  type QuestionMetadataMap,
+  type RatingStateV2,
 } from "./difficultyStore";
 
 // Difficulty filter is now a numeric range [0,100]
@@ -26,13 +34,17 @@ function shuffle<T>(items: T[]): T[] {
   return arr;
 }
 
+const QUESTION_METADATA: QuestionMetadataMap = Object.fromEntries(
+  allQuestions.map((q) => [q.id, { label: q.difficulty }]),
+);
+
 export function useQuiz() {
   const initialSources = ALL_SOURCE_IDS.length ? [ALL_SOURCE_IDS[0]] : [];
   const initialRange: DifficultyRange = { min: 0, max: 100 };
 
-  // persistent difficulty stats (per question)
-  const [difficultyMap, setDifficultyMap] = useState<DifficultyMap>(() =>
-    loadDifficultyMap()
+  // persistent rating state (single user + per-question ratings)
+  const [ratingState, setRatingState] = useState<RatingStateV2>(() =>
+    loadRatingState(QUESTION_METADATA),
   );
 
   const [selectedSources, setSelectedSources] =
@@ -46,11 +58,14 @@ export function useQuiz() {
     const pool = getQuestionsForSources(initialSources);
     return pool
       .filter((q) => {
-        const score = computeDifficultyScore(q.id, q.difficulty, difficultyMap);
+        const score = computeQuestionDifficultyScore(
+          q.id,
+          q.difficulty,
+          ratingState,
+        );
         const scorePercent = Math.round(score * 100);
         return (
-          scorePercent >= initialRange.min &&
-          scorePercent <= initialRange.max
+          scorePercent >= initialRange.min && scorePercent <= initialRange.max
         );
       })
       .map((q) => q.id);
@@ -58,7 +73,7 @@ export function useQuiz() {
 
   const sourcePool = useMemo(
     () => getQuestionsForSources(selectedSources),
-    [selectedSources]
+    [selectedSources],
   );
 
   const questionById = useMemo(() => {
@@ -71,35 +86,16 @@ export function useQuiz() {
       .filter((q): q is NonNullable<typeof q> => Boolean(q));
   }, [appliedQuestionIds, questionById]);
 
-  const [questionOrder, setQuestionOrder] = useState<number[]>([]);
+  const [questionOrder, setQuestionOrder] = useState<number[]>(() =>
+    shuffle(Array.from({ length: appliedQuestionIds.length }, (_, i) => i)),
+  );
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
   const [showResult, setShowResult] = useState<null | { isCorrect: boolean }>(
-    null
+    null,
   );
   const [answeredCount, setAnsweredCount] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
-
-  // --- Reset navigation when the *set* of available questions changes ---
-  // We DO NOT touch answeredCount / correctCount here.
-  // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => {
-    if (availableQuestions.length === 0) {
-      setQuestionOrder([]);
-      setCurrentIndex(0);
-      setSelectedIndexes([]);
-      setShowResult(null);
-      return;
-    }
-
-    const order = shuffle(
-      Array.from({ length: availableQuestions.length }, (_, i) => i)
-    );
-    setQuestionOrder(order);
-    setCurrentIndex(0);
-    setSelectedIndexes([]);
-    setShowResult(null);
-  }, [availableQuestions.length]);
 
   const currentQuestion = useMemo(() => {
     if (!availableQuestions.length || !questionOrder.length) return null;
@@ -115,17 +111,17 @@ export function useQuiz() {
   // current question difficulty score (0–1)
   const currentDifficultyScore = useMemo(() => {
     if (!currentQuestion) return null;
-    return computeDifficultyScore(
+    return computeQuestionDifficultyScore(
       currentQuestion.id,
       currentQuestion.difficulty,
-      difficultyMap
+      ratingState,
     );
-  }, [currentQuestion, difficultyMap]);
+  }, [currentQuestion, ratingState]);
 
   const toggleOption = (idx: number) => {
     if (showResult) return;
     setSelectedIndexes((prev) =>
-      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
+      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx],
     );
   };
 
@@ -140,23 +136,26 @@ export function useQuiz() {
       correctIndexes.length === selectedIndexes.length &&
       correctIndexes.every((idx) => selectedIndexes.includes(idx));
 
-    // Show result & update stats – but do NOT touch difficultyMap here
+    // Show result and update visible quiz counters
     setShowResult({ isCorrect });
     setAnsweredCount((n) => n + 1);
     setCorrectCount((n) => n + (isCorrect ? 1 : 0));
+
+    // Persist rating update immediately on submit
+    setRatingState((prev) => {
+      const updated = recordAnswer(
+        prev,
+        currentQuestion.id,
+        currentQuestion.difficulty,
+        isCorrect,
+      );
+      saveRatingState(updated);
+      return updated;
+    });
   };
 
   const nextQuestion = () => {
     if (!availableQuestions.length) return;
-
-    // Apply difficulty update for the question we just finished viewing
-    setDifficultyMap((prev) => {
-      if (!currentQuestion || !showResult) return prev;
-
-      const updated = updateStats(prev, currentQuestion.id, showResult.isCorrect);
-      saveDifficultyMap(updated);
-      return updated;
-    });
 
     // Clear result & selections for the NEXT question
     setShowResult(null);
@@ -165,7 +164,7 @@ export function useQuiz() {
     const next = currentIndex + 1;
     if (next >= availableQuestions.length) {
       const order = shuffle(
-        Array.from({ length: availableQuestions.length }, (_, i) => i)
+        Array.from({ length: availableQuestions.length }, (_, i) => i),
       );
       setQuestionOrder(order);
       setCurrentIndex(0);
@@ -175,9 +174,7 @@ export function useQuiz() {
   };
 
   const accuracy =
-    answeredCount === 0
-      ? 0
-      : Math.round((100 * correctCount) / answeredCount);
+    answeredCount === 0 ? 0 : Math.round((100 * correctCount) / answeredCount);
 
   const clampRange = (newRange: DifficultyRange) => {
     const min = Math.max(0, Math.min(100, newRange.min));
@@ -198,9 +195,15 @@ export function useQuiz() {
     const pool = getQuestionsForSources(uniqueSources);
     const eligibleIds = pool
       .filter((q) => {
-        const score = computeDifficultyScore(q.id, q.difficulty, difficultyMap);
+        const score = computeQuestionDifficultyScore(
+          q.id,
+          q.difficulty,
+          ratingState,
+        );
         const scorePercent = Math.round(score * 100);
-        return scorePercent >= clampedRange.min && scorePercent <= clampedRange.max;
+        return (
+          scorePercent >= clampedRange.min && scorePercent <= clampedRange.max
+        );
       })
       .map((q) => q.id);
 
@@ -209,7 +212,9 @@ export function useQuiz() {
     setAppliedQuestionIds(eligibleIds);
     setAnsweredCount(0);
     setCorrectCount(0);
-    setQuestionOrder([]);
+    setQuestionOrder(
+      shuffle(Array.from({ length: eligibleIds.length }, (_, i) => i)),
+    );
     setCurrentIndex(0);
     setSelectedIndexes([]);
     setShowResult(null);
@@ -218,18 +223,14 @@ export function useQuiz() {
   // -------- EXPORT / IMPORT HELPERS --------
 
   const exportDifficultyJson = () => {
-    return JSON.stringify(difficultyMap, null, 2);
+    return exportRatingsJson(ratingState);
   };
 
   const importDifficultyFromJson = (json: string) => {
-    try {
-      const parsed = JSON.parse(json) as DifficultyMap;
-      if (!parsed || typeof parsed !== "object") return;
-      setDifficultyMap(parsed);
-      saveDifficultyMap(parsed);
-    } catch (err) {
-      console.error("Failed to import difficulty JSON:", err);
-    }
+    const parsed = importRatingsJson(json, QUESTION_METADATA);
+    if (!parsed) return;
+    setRatingState(parsed);
+    saveRatingState(parsed);
   };
 
   return {
