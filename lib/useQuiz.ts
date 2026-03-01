@@ -1,29 +1,36 @@
 // lib/useQuiz.ts
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
-  ALL_SOURCE_IDS,
+  SOURCE_SERIES,
   allQuestions,
-  getQuestionsForSources,
+  getQuestionsForFilters,
   type SourceId,
+  type SourceSeriesId,
+  type Topic,
 } from "./quiz";
 import {
   loadRatingState,
+  createDefaultRatingState,
   saveRatingState,
   recordAnswer,
   computeQuestionDifficultyScore,
   exportRatingsJson,
   importRatingsJson,
+  getQuestionRatingEstimate,
   type QuestionMetadataMap,
   type RatingStateV2,
 } from "./difficultyStore";
+import type { Question } from "./quiz";
 
 // Difficulty filter is now a numeric range [0,100]
 export type DifficultyRange = {
   min: number; // inclusive, 0 = easiest
   max: number; // inclusive, 100 = hardest
 };
+
+export type QuestionSelectionMode = "standard" | "climb";
 
 function shuffle<T>(items: T[]): T[] {
   const arr = [...items];
@@ -34,47 +41,92 @@ function shuffle<T>(items: T[]): T[] {
   return arr;
 }
 
+const SERIES_TO_SOURCE_IDS = new Map(
+  SOURCE_SERIES.map((series) => [series.id, series.sourceIds]),
+);
+
 const QUESTION_METADATA: QuestionMetadataMap = Object.fromEntries(
   allQuestions.map((q) => [q.id, { label: q.difficulty }]),
 );
 
-export function useQuiz() {
-  const initialSources = ALL_SOURCE_IDS.length ? [ALL_SOURCE_IDS[0]] : [];
-  const initialRange: DifficultyRange = { min: 0, max: 100 };
+function resolveSources(
+  sources: SourceId[],
+  seriesIds: SourceSeriesId[],
+): SourceId[] {
+  const resolved = new Set<SourceId>(sources);
+  for (const seriesId of seriesIds) {
+    const sourceIds = SERIES_TO_SOURCE_IDS.get(seriesId) ?? [];
+    for (const sourceId of sourceIds) {
+      resolved.add(sourceId as SourceId);
+    }
+  }
+  return Array.from(resolved);
+}
 
-  // persistent rating state (single user + per-question ratings)
+function pickClimbQuestionId(
+  pool: Question[],
+  ratingState: RatingStateV2,
+  recentQuestionIds: string[],
+): string | null {
+  if (pool.length === 0) return null;
+
+  const targetRating = ratingState.user.rating;
+  const recent = new Set(recentQuestionIds.slice(-6));
+
+  const scored = pool
+    .map((question) => {
+      const estimate = getQuestionRatingEstimate(
+        question.id,
+        question.difficulty,
+        ratingState,
+      );
+      const distance = Math.abs(estimate.rating - targetRating);
+      const uncertaintyBonus = Math.min(estimate.rd, 250) * 0.25;
+      const randomJitter = Math.random() * 90;
+      const repeatPenalty = recent.has(question.id) ? 180 : 0;
+      return {
+        id: question.id,
+        score: distance - uncertaintyBonus + randomJitter + repeatPenalty,
+      };
+    })
+    .sort((a, b) => a.score - b.score);
+
+  const shortlistSize = Math.min(8, scored.length);
+  const shortlist = scored.slice(0, shortlistSize);
+  const choice = shortlist[Math.floor(Math.random() * shortlist.length)];
+  return choice?.id ?? null;
+}
+
+export function useQuiz() {
+  const initialSources: SourceId[] = [];
+  const initialSeries: SourceSeriesId[] = [];
+  const initialTopics: Topic[] = [];
+  const initialRange: DifficultyRange = { min: 0, max: 100 };
+  const initialMode: QuestionSelectionMode = "standard";
+
+  // Keep initial render deterministic across SSR + hydration.
   const [ratingState, setRatingState] = useState<RatingStateV2>(() =>
-    loadRatingState(QUESTION_METADATA),
+    createDefaultRatingState(),
   );
 
   const [selectedSources, setSelectedSources] =
     useState<SourceId[]>(initialSources);
+  const [selectedSeries, setSelectedSeries] =
+    useState<SourceSeriesId[]>(initialSeries);
+  const [selectedTopics, setSelectedTopics] = useState<Topic[]>(initialTopics);
+  const [selectionMode, setSelectionMode] =
+    useState<QuestionSelectionMode>(initialMode);
 
   // numeric difficulty filter (applied on selection)
   const [difficultyRange, setDifficultyRange] =
     useState<DifficultyRange>(initialRange);
 
-  const [appliedQuestionIds, setAppliedQuestionIds] = useState<string[]>(() => {
-    const pool = getQuestionsForSources(initialSources);
-    return pool
-      .filter((q) => {
-        const score = computeQuestionDifficultyScore(
-          q.id,
-          q.difficulty,
-          ratingState,
-        );
-        const scorePercent = Math.round(score * 100);
-        return (
-          scorePercent >= initialRange.min && scorePercent <= initialRange.max
-        );
-      })
-      .map((q) => q.id);
-  });
+  const [appliedQuestionIds, setAppliedQuestionIds] = useState<string[]>([]);
 
-  const sourcePool = useMemo(
-    () => getQuestionsForSources(selectedSources),
-    [selectedSources],
-  );
+  const sourcePool = useMemo(() => {
+    const resolvedSources = resolveSources(selectedSources, selectedSeries);
+    return getQuestionsForFilters(resolvedSources, selectedTopics);
+  }, [selectedSources, selectedSeries, selectedTopics]);
 
   const questionById = useMemo(() => {
     return new Map(sourcePool.map((q) => [q.id, q]));
@@ -86,9 +138,7 @@ export function useQuiz() {
       .filter((q): q is NonNullable<typeof q> => Boolean(q));
   }, [appliedQuestionIds, questionById]);
 
-  const [questionOrder, setQuestionOrder] = useState<number[]>(() =>
-    shuffle(Array.from({ length: appliedQuestionIds.length }, (_, i) => i)),
-  );
+  const [questionOrder, setQuestionOrder] = useState<number[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedIndexes, setSelectedIndexes] = useState<number[]>([]);
   const [showResult, setShowResult] = useState<null | { isCorrect: boolean }>(
@@ -96,12 +146,38 @@ export function useQuiz() {
   );
   const [answeredCount, setAnsweredCount] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
+  const [climbQuestionId, setClimbQuestionId] = useState<string | null>(null);
+  const [climbRecentIds, setClimbRecentIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      const loaded = loadRatingState(QUESTION_METADATA);
+      setRatingState(loaded);
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   const currentQuestion = useMemo(() => {
-    if (!availableQuestions.length || !questionOrder.length) return null;
+    if (!availableQuestions.length) return null;
+
+    if (selectionMode === "climb") {
+      if (!climbQuestionId) {
+        return availableQuestions[0];
+      }
+      return questionById.get(climbQuestionId) ?? availableQuestions[0];
+    }
+
+    if (!questionOrder.length) return null;
     const idxInArray = questionOrder[currentIndex] ?? questionOrder[0];
     return availableQuestions[idxInArray];
-  }, [availableQuestions, questionOrder, currentIndex]);
+  }, [
+    availableQuestions,
+    selectionMode,
+    climbQuestionId,
+    questionById,
+    questionOrder,
+    currentIndex,
+  ]);
 
   const shuffledOptions = useMemo(() => {
     if (!currentQuestion) return [];
@@ -161,6 +237,27 @@ export function useQuiz() {
     setShowResult(null);
     setSelectedIndexes([]);
 
+    if (selectionMode === "climb") {
+      const previousId = currentQuestion?.id;
+      const nextRecent = previousId
+        ? [...climbRecentIds, previousId].slice(-8)
+        : climbRecentIds;
+      const nextId = pickClimbQuestionId(
+        availableQuestions,
+        ratingState,
+        nextRecent,
+      );
+
+      setClimbRecentIds(nextRecent);
+      setClimbQuestionId(nextId);
+      setCurrentIndex((prev) =>
+        availableQuestions.length > 0
+          ? (prev + 1) % availableQuestions.length
+          : 0,
+      );
+      return;
+    }
+
     const next = currentIndex + 1;
     if (next >= availableQuestions.length) {
       const order = shuffle(
@@ -184,15 +281,18 @@ export function useQuiz() {
 
   const applySelection = (payload: {
     sources: SourceId[];
+    series: SourceSeriesId[];
+    topics: Topic[];
+    mode: QuestionSelectionMode;
     difficultyRange: DifficultyRange;
   }) => {
     const clampedRange = clampRange(payload.difficultyRange);
-    const uniqueSources =
-      payload.sources.length > 0
-        ? Array.from(new Set(payload.sources))
-        : [...ALL_SOURCE_IDS];
+    const uniqueSources = Array.from(new Set(payload.sources));
+    const uniqueSeries = Array.from(new Set(payload.series));
+    const uniqueTopics = Array.from(new Set(payload.topics));
+    const resolvedSources = resolveSources(uniqueSources, uniqueSeries);
 
-    const pool = getQuestionsForSources(uniqueSources);
+    const pool = getQuestionsForFilters(resolvedSources, uniqueTopics);
     const eligibleIds = pool
       .filter((q) => {
         const score = computeQuestionDifficultyScore(
@@ -208,16 +308,36 @@ export function useQuiz() {
       .map((q) => q.id);
 
     setSelectedSources(uniqueSources);
+    setSelectedSeries(uniqueSeries);
+    setSelectedTopics(uniqueTopics);
+    setSelectionMode(payload.mode);
     setDifficultyRange(clampedRange);
     setAppliedQuestionIds(eligibleIds);
     setAnsweredCount(0);
     setCorrectCount(0);
-    setQuestionOrder(
-      shuffle(Array.from({ length: eligibleIds.length }, (_, i) => i)),
-    );
     setCurrentIndex(0);
     setSelectedIndexes([]);
     setShowResult(null);
+
+    if (payload.mode === "climb") {
+      const eligibleSet = new Set(eligibleIds);
+      const eligibleQuestions = pool.filter((q) => eligibleSet.has(q.id));
+      const firstQuestionId = pickClimbQuestionId(
+        eligibleQuestions,
+        ratingState,
+        [],
+      );
+      setClimbQuestionId(firstQuestionId);
+      setClimbRecentIds(firstQuestionId ? [firstQuestionId] : []);
+      setQuestionOrder([]);
+      return;
+    }
+
+    setQuestionOrder(
+      shuffle(Array.from({ length: eligibleIds.length }, (_, i) => i)),
+    );
+    setClimbQuestionId(null);
+    setClimbRecentIds([]);
   };
 
   // -------- EXPORT / IMPORT HELPERS --------
@@ -236,6 +356,9 @@ export function useQuiz() {
   return {
     // configuration
     selectedSources,
+    selectedSeries,
+    selectedTopics,
+    selectionMode,
     difficultyRange,
     applySelection,
 
@@ -257,6 +380,8 @@ export function useQuiz() {
     answeredCount,
     correctCount,
     accuracy,
+    userRating: ratingState.user.rating,
+    userRatingRd: ratingState.user.rd,
 
     // export/import
     exportDifficultyJson,

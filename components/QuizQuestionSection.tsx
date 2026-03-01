@@ -52,7 +52,8 @@ export default function QuizQuestionSection({
             No questions for this selection
           </h2>
           <p className="text-slate-300">
-            Try changing the chapter or adjusting the difficulty range.
+            Try selecting a series, lecture/chapter, or topic, then adjust the
+            difficulty range if needed.
           </p>
         </div>
       ) : (

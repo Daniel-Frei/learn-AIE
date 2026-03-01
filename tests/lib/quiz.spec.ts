@@ -1,8 +1,10 @@
 import { describe, expect, it } from "vitest";
 import {
   ALL_SOURCE_IDS,
+  SOURCE_SERIES,
   QUESTION_SOURCES,
   allQuestions,
+  getQuestionsForFilters,
   getQuestionsForMode,
   getQuestionsForSources,
   getTitleForSelection,
@@ -19,7 +21,7 @@ describe("quiz source registry helpers", () => {
   });
 
   it("uses all sources when source selection is empty", () => {
-    expect(getQuestionsForSources([])).toEqual(allQuestions);
+    expect(getQuestionsForSources([])).toEqual([]);
   });
 
   it("returns the combined set for selected sources only", () => {
@@ -35,13 +37,62 @@ describe("quiz source registry helpers", () => {
     expect(selected.every((q) => allowedIds.has(q.id))).toBe(true);
   });
 
-  it("builds an all-sources title for empty selection", () => {
-    expect(getTitleForSelection([])).toContain("All Chapters Quiz");
+  it("filters questions by topic", () => {
+    const rlQuestions = getQuestionsForFilters([], ["RL"]);
+    expect(rlQuestions.length).toBeGreaterThan(0);
+
+    const rlSourceIds = new Set(
+      QUESTION_SOURCES.filter((s) => s.topic === "RL").map((s) => s.id),
+    );
+    const rlQuestionIds = new Set(
+      QUESTION_SOURCES.filter((s) => s.topic === "RL").flatMap((s) =>
+        s.questions.map((q) => q.id),
+      ),
+    );
+
+    expect(rlSourceIds.size).toBeGreaterThan(0);
+    expect(rlQuestions.every((q) => rlQuestionIds.has(q.id))).toBe(true);
+  });
+
+  it("returns no questions when both source and topic filters are empty", () => {
+    expect(getQuestionsForFilters([], [])).toEqual([]);
+  });
+
+  it("combines source and topic filters using OR semantics", () => {
+    const rlSource = QUESTION_SOURCES.find((s) => s.topic === "RL");
+    const nlpSourceQuestionIds = new Set(
+      QUESTION_SOURCES.filter((s) => s.topic === "NLP").flatMap((s) =>
+        s.questions.map((q) => q.id),
+      ),
+    );
+
+    expect(rlSource).toBeDefined();
+
+    const selected = getQuestionsForFilters([rlSource!.id], ["NLP"]);
+    const rlQuestionIds = new Set(rlSource!.questions.map((q) => q.id));
+
+    expect(selected.some((q) => rlQuestionIds.has(q.id))).toBe(true);
+    expect(selected.some((q) => nlpSourceQuestionIds.has(q.id))).toBe(true);
+  });
+
+  it("builds non-empty series groups for selecting books/lecture series", () => {
+    expect(SOURCE_SERIES.length).toBeGreaterThan(0);
+    expect(SOURCE_SERIES.every((series) => series.sourceIds.length > 0)).toBe(
+      true,
+    );
+  });
+
+  it("builds an explicit empty-filter title when nothing is selected", () => {
+    expect(getTitleForSelection([])).toContain("Select sources");
   });
 
   it("builds a source-specific title for a single source", () => {
     const source = QUESTION_SOURCES[0];
     expect(getTitleForSelection([source.id])).toBe(source.title);
+  });
+
+  it("builds a topic-based title when only topics are selected", () => {
+    expect(getTitleForSelection([], ["NLP"])).toContain("Topic Quiz");
   });
 
   it("builds a custom title summary for multiple sources", () => {

@@ -10,6 +10,9 @@ import QuizFooter from "../components/QuizFooter";
 export default function QuizPage() {
   const {
     selectedSources,
+    selectedSeries,
+    selectedTopics,
+    selectionMode,
     difficultyRange,
     applySelection,
     availableCount,
@@ -25,11 +28,13 @@ export default function QuizPage() {
     answeredCount,
     correctCount,
     accuracy,
+    userRating,
+    userRatingRd,
     exportDifficultyJson,
     importDifficultyFromJson,
   } = useQuiz();
 
-  const title = getTitleForSelection(selectedSources);
+  const title = getTitleForSelection(selectedSources, selectedTopics);
 
   const difficultyPercent =
     currentDifficultyScore != null
@@ -44,11 +49,16 @@ export default function QuizPage() {
         <QuizHeader
           title={title}
           selectedSources={selectedSources}
+          selectedSeries={selectedSeries}
+          selectedTopics={selectedTopics}
+          selectionMode={selectionMode}
           difficultyRange={difficultyRange}
           applySelection={applySelection}
           answeredCount={answeredCount}
           correctCount={correctCount}
           accuracy={accuracy}
+          userRating={userRating}
+          userRatingRd={userRatingRd}
           exportDifficultyJson={exportDifficultyJson}
           importDifficultyFromJson={importDifficultyFromJson}
         />

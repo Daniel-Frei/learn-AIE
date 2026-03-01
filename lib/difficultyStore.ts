@@ -165,6 +165,11 @@ function createInitialState(timestamp = nowMs()): RatingStateV2 {
   };
 }
 
+// Deterministic initial state for SSR/client hydration parity.
+export function createDefaultRatingState(): RatingStateV2 {
+  return createInitialState(0);
+}
+
 function sanitizeConfig(value: unknown): RatingConfig {
   if (!isRecord(value)) return { ...DEFAULT_CONFIG };
 
@@ -717,6 +722,16 @@ export function computeQuestionDifficultyScore(
   const exponent = (anchor - question.rating) / config.difficultyScale;
   const score = 1 / (1 + Math.pow(10, exponent));
   return clamp(score, 0, 1);
+}
+
+export function getQuestionRatingEstimate(
+  questionId: string,
+  label: Difficulty | undefined,
+  state: RatingStateV2,
+): QuestionRating {
+  const config = sanitizeConfig(state.config);
+  const timestamp = nowMs();
+  return getQuestionRating({ ...state, config }, questionId, label, timestamp);
 }
 
 // ---- import / export ----

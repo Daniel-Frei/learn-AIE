@@ -1,20 +1,35 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { DifficultyRange } from "../lib/useQuiz";
-import { QUESTION_SOURCES, type SourceId } from "../lib/quiz";
+import type { DifficultyRange, QuestionSelectionMode } from "../lib/useQuiz";
+import {
+  ALL_TOPICS,
+  QUESTION_SOURCES,
+  SOURCE_SERIES,
+  type SourceId,
+  type SourceSeriesId,
+  type Topic,
+} from "../lib/quiz";
 
 type Props = {
   title: string;
   selectedSources: SourceId[];
+  selectedSeries: SourceSeriesId[];
+  selectedTopics: Topic[];
+  selectionMode: QuestionSelectionMode;
   difficultyRange: DifficultyRange;
   applySelection: (payload: {
     sources: SourceId[];
+    series: SourceSeriesId[];
+    topics: Topic[];
+    mode: QuestionSelectionMode;
     difficultyRange: DifficultyRange;
   }) => void;
   answeredCount: number;
   correctCount: number;
   accuracy: number;
+  userRating: number;
+  userRatingRd: number;
   exportDifficultyJson: () => string;
   importDifficultyFromJson: (json: string) => void;
 };
@@ -22,11 +37,16 @@ type Props = {
 export default function QuizHeader({
   title,
   selectedSources,
+  selectedSeries,
+  selectedTopics,
+  selectionMode,
   difficultyRange,
   applySelection,
   answeredCount,
   correctCount,
   accuracy,
+  userRating,
+  userRatingRd,
   exportDifficultyJson,
   importDifficultyFromJson,
 }: Props) {
@@ -34,12 +54,29 @@ export default function QuizHeader({
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
   const [pendingSources, setPendingSources] =
     useState<SourceId[]>(selectedSources);
+  const [pendingSeries, setPendingSeries] =
+    useState<SourceSeriesId[]>(selectedSeries);
+  const [pendingTopics, setPendingTopics] = useState<Topic[]>(selectedTopics);
+  const [pendingMode, setPendingMode] =
+    useState<QuestionSelectionMode>(selectionMode);
   const [pendingRange, setPendingRange] =
     useState<DifficultyRange>(difficultyRange);
 
   useEffect(() => {
     setPendingSources(selectedSources);
   }, [selectedSources]);
+
+  useEffect(() => {
+    setPendingSeries(selectedSeries);
+  }, [selectedSeries]);
+
+  useEffect(() => {
+    setPendingTopics(selectedTopics);
+  }, [selectedTopics]);
+
+  useEffect(() => {
+    setPendingMode(selectionMode);
+  }, [selectionMode]);
 
   useEffect(() => {
     setPendingRange(difficultyRange);
@@ -57,28 +94,57 @@ export default function QuizHeader({
     );
   };
 
-  const handleSelectAllSources = () => {
-    setPendingSources(QUESTION_SOURCES.map((src) => src.id));
+  const togglePendingSeries = (id: SourceSeriesId) => {
+    setPendingSeries((prev) =>
+      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id],
+    );
+  };
+
+  const togglePendingTopic = (topic: Topic) => {
+    setPendingTopics((prev) =>
+      prev.includes(topic) ? prev.filter((t) => t !== topic) : [...prev, topic],
+    );
+  };
+
+  const handleSelectAllSeries = () => {
+    setPendingSeries(SOURCE_SERIES.map((series) => series.id));
+  };
+
+  const handleSelectAllTopics = () => {
+    setPendingTopics([...ALL_TOPICS]);
+  };
+
+  const handleClearAll = () => {
+    setPendingSources([]);
+    setPendingSeries([]);
+    setPendingTopics([]);
   };
 
   const handleApplySelection = () => {
-    const safeSources =
-      pendingSources.length === 0
-        ? QUESTION_SOURCES.map((src) => src.id)
-        : Array.from(new Set(pendingSources));
+    const safeSources = Array.from(new Set(pendingSources));
+    const safeSeries = Array.from(new Set(pendingSeries));
+    const safeTopics = Array.from(new Set(pendingTopics));
     const clampedRange = clampRange(pendingRange);
 
     applySelection({
       sources: safeSources,
+      series: safeSeries,
+      topics: safeTopics,
+      mode: pendingMode,
       difficultyRange: clampedRange,
     });
     setPendingSources(safeSources);
+    setPendingSeries(safeSeries);
+    setPendingTopics(safeTopics);
     setPendingRange(clampedRange);
     setIsSelectorOpen(false);
   };
 
   const handleCancelSelection = () => {
     setPendingSources(selectedSources);
+    setPendingSeries(selectedSeries);
+    setPendingTopics(selectedTopics);
+    setPendingMode(selectionMode);
     setPendingRange(difficultyRange);
     setIsSelectorOpen(false);
   };
@@ -115,40 +181,30 @@ export default function QuizHeader({
     reader.readAsText(file);
   };
 
-  const selectedLabels = QUESTION_SOURCES.filter((src) =>
-    selectedSources.includes(src.id),
-  ).map((src) => src.label);
-  const allSelected =
-    selectedSources.length === QUESTION_SOURCES.length &&
-    QUESTION_SOURCES.every((src) => selectedSources.includes(src.id));
-  const selectionSummary =
-    allSelected && selectedLabels.length
-      ? "All sources"
-      : selectedLabels.length
-        ? selectedLabels.slice(0, 3).join(", ") +
-          (selectedLabels.length > 3
-            ? ` +${selectedLabels.length - 3} more`
-            : "")
-        : "No sources selected";
-
   return (
     <header className="space-y-3">
       <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-semibold">{title}</h1>
           <p className="text-sm text-slate-400 mt-1">
-            Multi-select questions —{" "}
+            Multi-select questions -{" "}
             <span className="font-semibold">select all TRUE statements</span>{" "}
             and then submit.
           </p>
           <p className="text-xs text-slate-400 mt-2">
-            Current selection:{" "}
+            Filters use OR logic (series/lectures/topics). Current mode:{" "}
             <span className="font-semibold text-slate-100">
-              {selectionSummary}
+              {selectionMode}
+            </span>
+          </p>
+          <p className="text-xs text-slate-400 mt-1">
+            Glicko rating:{" "}
+            <span className="font-semibold text-slate-100">
+              {Math.round(userRating)}
             </span>{" "}
-            Difficulty:{" "}
+            �{" "}
             <span className="font-semibold text-slate-100">
-              {difficultyRange.min}–{difficultyRange.max}
+              {Math.round(userRatingRd)}
             </span>
           </p>
         </div>
@@ -159,7 +215,7 @@ export default function QuizHeader({
             onClick={() => setIsSelectorOpen((open) => !open)}
             className="px-3 py-2 rounded-md bg-slate-100 text-slate-900 text-sm font-semibold w-full md:w-auto"
           >
-            {isSelectorOpen ? "Close selection" : "Choose sources & range"}
+            {isSelectorOpen ? "Close selection" : "Choose filters"}
           </button>
 
           <div className="flex gap-2">
@@ -205,11 +261,11 @@ export default function QuizHeader({
           <div className="flex items-start justify-between gap-4">
             <div>
               <h3 className="text-sm font-semibold text-slate-100">
-                Pick topics and difficulty
+                Pick mode, series, lectures, topics and difficulty
               </h3>
               <p className="text-xs text-slate-400">
-                Tick any mix of chapters or lectures, set your range, then apply
-                to reload the quiz.
+                Keep any combination selected. Questions are included if they
+                match at least one selected filter.
               </p>
             </div>
             <button
@@ -221,33 +277,124 @@ export default function QuizHeader({
             </button>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-3 max-h-72 overflow-y-auto pr-1">
-            {QUESTION_SOURCES.map((src) => {
-              const checked = pendingSources.includes(src.id);
+          <div className="space-y-2">
+            <div className="text-xs font-semibold text-slate-300">Mode</div>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => setPendingMode("standard")}
+                className={`px-3 py-2 rounded-md text-xs border ${
+                  pendingMode === "standard"
+                    ? "border-sky-400 bg-slate-800 text-slate-100"
+                    : "border-slate-700 text-slate-300"
+                }`}
+              >
+                Standard
+              </button>
+              <button
+                type="button"
+                onClick={() => setPendingMode("climb")}
+                className={`px-3 py-2 rounded-md text-xs border ${
+                  pendingMode === "climb"
+                    ? "border-sky-400 bg-slate-800 text-slate-100"
+                    : "border-slate-700 text-slate-300"
+                }`}
+              >
+                Climb
+              </button>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <div className="text-xs font-semibold text-slate-300">Topics</div>
+            <div className="flex flex-wrap gap-2">
+              {ALL_TOPICS.map((topic) => {
+                const checked = pendingTopics.includes(topic);
+                return (
+                  <label
+                    key={topic}
+                    className={`flex items-center gap-2 rounded-md border px-3 py-2 text-xs cursor-pointer ${
+                      checked
+                        ? "border-sky-400 bg-slate-800 text-slate-100"
+                        : "border-slate-700 bg-slate-900/60 text-slate-300"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() => togglePendingTopic(topic)}
+                      className="accent-sky-400 h-4 w-4"
+                    />
+                    {topic}
+                  </label>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="space-y-2 max-h-72 overflow-y-auto pr-1">
+            <div className="text-xs font-semibold text-slate-300">
+              Series and lectures
+            </div>
+            {SOURCE_SERIES.map((series) => {
+              const seriesChecked = pendingSeries.includes(series.id);
+              const seriesSources = QUESTION_SOURCES.filter(
+                (source) => source.seriesId === series.id,
+              );
+
               return (
-                <label
-                  key={src.id}
-                  className={`flex gap-3 items-start rounded-lg border px-3 py-2 cursor-pointer transition-colors ${
-                    checked
-                      ? "border-sky-400 bg-slate-800"
-                      : "border-slate-700 bg-slate-900/60"
-                  }`}
+                <details
+                  key={series.id}
+                  className="rounded-lg border border-slate-700 bg-slate-900/60 px-3 py-2"
                 >
-                  <input
-                    type="checkbox"
-                    checked={checked}
-                    onChange={() => togglePendingSource(src.id)}
-                    className="mt-1 accent-sky-400 h-4 w-4"
-                  />
-                  <div className="space-y-1">
-                    <div className="text-sm font-semibold text-slate-100">
-                      {src.label}
-                    </div>
-                    <div className="text-xs text-slate-400 leading-snug">
-                      {src.title}
-                    </div>
+                  <summary className="flex items-center justify-between gap-3 cursor-pointer list-none">
+                    <label
+                      className="flex items-center gap-2 text-sm font-semibold text-slate-100"
+                      onClick={(e) => e.preventDefault()}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={seriesChecked}
+                        onChange={() => togglePendingSeries(series.id)}
+                        className="accent-sky-400 h-4 w-4"
+                      />
+                      {series.label}
+                    </label>
+                    <span className="text-xs text-slate-400">
+                      {seriesSources.length} lectures/chapters
+                    </span>
+                  </summary>
+
+                  <div className="mt-3 space-y-2">
+                    {seriesSources.map((source) => {
+                      const sourceChecked = pendingSources.includes(source.id);
+                      return (
+                        <label
+                          key={source.id}
+                          className="flex gap-3 items-start rounded-md border border-slate-700 bg-slate-900 px-3 py-2 cursor-pointer"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={sourceChecked}
+                            onChange={() => togglePendingSource(source.id)}
+                            className="mt-1 accent-sky-400 h-4 w-4"
+                          />
+                          <div className="space-y-1">
+                            <div className="text-sm font-semibold text-slate-100">
+                              {source.label}
+                            </div>
+                            <div className="text-xs text-slate-400 leading-snug">
+                              {source.title}
+                            </div>
+                            <div className="text-[11px] text-slate-500">
+                              Topic: {source.topic}
+                            </div>
+                          </div>
+                        </label>
+                      );
+                    })}
                   </div>
-                </label>
+                </details>
               );
             })}
           </div>
@@ -284,13 +431,29 @@ export default function QuizHeader({
           </div>
 
           <div className="flex items-center justify-between gap-3">
-            <button
-              type="button"
-              onClick={handleSelectAllSources}
-              className="text-xs px-3 py-2 rounded-md border border-slate-700 text-slate-200 hover:border-slate-500"
-            >
-              Select all topics
-            </button>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={handleSelectAllSeries}
+                className="text-xs px-3 py-2 rounded-md border border-slate-700 text-slate-200 hover:border-slate-500"
+              >
+                Select all series
+              </button>
+              <button
+                type="button"
+                onClick={handleSelectAllTopics}
+                className="text-xs px-3 py-2 rounded-md border border-slate-700 text-slate-200 hover:border-slate-500"
+              >
+                Select all topics
+              </button>
+              <button
+                type="button"
+                onClick={handleClearAll}
+                className="text-xs px-3 py-2 rounded-md border border-slate-700 text-slate-200 hover:border-slate-500"
+              >
+                Clear all
+              </button>
+            </div>
             <div className="flex gap-2">
               <button
                 type="button"

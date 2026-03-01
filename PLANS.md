@@ -72,3 +72,38 @@
 
 - `make check`: pass.
 - `npm run e2e`: pass when run outside sandbox (inside sandbox, Playwright web server spawn failed with `EPERM`).
+
+---
+
+# Plan: Selection UX + Climb Mode
+
+## Goal
+
+- Improve selection UX and add rating-aware climb mode.
+
+## Steps
+
+- [x] Start with all filters unselected.
+- [x] Change source/topic filtering semantics to OR.
+- [x] Group sources by series/book with collapsible lecture/chapter lists.
+- [x] Add direct series/book selection.
+- [x] Show user Glicko rating and RD in the header.
+- [x] Add a climb mode that biases question selection near user rating with randomness.
+- [x] Add/update tests and verify with `make check`.
+
+---
+
+# Plan: Topic-Based Filtering
+
+## Goal
+
+- Allow users to filter/select quiz questions by topic (`RL`, `DL`, `NLP`, `Math`) in addition to source and difficulty.
+
+## Steps
+
+- [x] Add topic metadata for each source in `lib/quiz.ts`.
+- [x] Add topic-aware question filtering helpers in `lib/quiz.ts`.
+- [x] Wire topic selection state into `lib/useQuiz.ts`.
+- [x] Add topic UI controls to `components/QuizHeader.tsx` and pass state from `app/page.tsx`.
+- [x] Add/update tests for topic filtering behavior.
+- [x] Update docs and run verification.

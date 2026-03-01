@@ -29,12 +29,12 @@ Question Authoring Guide for Math & Formatting
 For math, wrap LaTeX in:
 
 Inline math: \( ... \)
-Example: The ratio is \( \rho*t = \frac{\pi*{\theta'}(a*t\mid s_t)}{\pi*{\theta}(a_t\mid s_t)} \).
+Example: The ratio is \( \rho*t = \frac{\pi*{\theta'}(a*t \mid s_t)}{\pi*\theta(a_t \mid s_t)} \).
 
 Block math: \[ ... \]
 Example:
 The return is
-\[ G*t = \sum*{t'=t}^T r\_{t'} \]
+\[ G*t = \sum*{t'=t}^{T} r\_{t'} \]
 
 Notes:
 
@@ -46,10 +46,66 @@ Example:
 
 prompt: "In off-policy policy gradient, what does the importance ratio \\(\\rho*t\\) represent?",
 options: [
-{ text: "\\(\\rho_t = \\frac{\\pi*{\\theta'}(a*t\\mid s_t)}{\\pi*{\\theta}(a*t\\mid s_t)}\\)", isCorrect: true },
-{ text: "\\(\\rho_t = \\frac{\\pi*{\\theta}(a*t\\mid s_t)}{\\pi*{\\theta'}(a*t\\mid s_t)}\\)", isCorrect: false },
+{ text: "\\(\\rho_t = \\frac{\\pi*{\\theta'}(a*t\\mid s_t)}{\\pi*\\theta(a*t\\mid s_t)}\\)", isCorrect: true },
+{ text: "\\(\\rho_t = \\frac{\\pi*\\theta(a*t\\mid s_t)}{\\pi*{\\theta'}(a*t\\mid s_t)}\\)", isCorrect: false },
 { text: "\\(\\rho_t\\) is the baseline \\(b\\).", isCorrect: false },
-{ text: "\\(\\rho_t\\) is the return \\(G_t = \\sum*{t'=t}^T r*{t'}\\).", isCorrect: false },
+{ text: "\\(\\rho_t\\) is the return \\(G_t = \\sum*{t'=t}^{T} r*{t'}\\).", isCorrect: false },
 ],
 explanation:
-"Off-policy PG reweights samples from behavior policy \\(\\pi*\\theta\\) to estimate gradients for target policy \\(\\pi*{\\theta'}\\). The per-step ratio is \\(\\rho_t = \\pi*{\\theta'}(a*t\\mid s_t) / \\pi*{\\theta}(a_t\\mid s_t)\\)."
+"Off-policy policy gradients reweight samples from behavior policy \\(\\pi*\\theta\\) to estimate gradients for target policy \\(\\pi*{\\theta'}\\). The per-step ratio is \\(\\rho_t = \\pi*{\\theta'}(a*t\\mid s_t) / \\pi*\\theta(a_t\\mid s_t)\\)."
+
+---
+
+## Question File Template (TypeScript)
+
+Use this exact structure for new lecture question files in `lib/lectures/*`.
+
+```ts
+import { Question } from "../../quiz";
+
+export const <LectureExportName>: Question[] = [
+  {
+    id: "<lecture-id>-q01",
+    chapter: 1,
+    difficulty: "easy",
+    prompt: "Question text here.",
+    options: [
+      { text: "Option 1 text", isCorrect: true },
+      { text: "Option 2 text", isCorrect: false },
+      { text: "Option 3 text", isCorrect: true },
+      { text: "Option 4 text", isCorrect: false },
+    ],
+    explanation:
+      "At least two sentences. Explain why correct options are correct and why incorrect options are incorrect.",
+  },
+  {
+    id: "<lecture-id>-q02",
+    chapter: 1,
+    difficulty: "medium",
+    prompt:
+      "Include math when relevant, e.g. \\( y = g(\\mathbf{w}^T\\mathbf{x} + b) \\).",
+    options: [
+      { text: "Option 1 text", isCorrect: false },
+      { text: "Option 2 text", isCorrect: true },
+      { text: "Option 3 text", isCorrect: true },
+      { text: "Option 4 text", isCorrect: false },
+    ],
+    explanation:
+      "Use clear teaching language. Keep options independent and avoid order-dependent wording.",
+  },
+];
+```
+
+### Naming conventions
+
+- File name pattern: `L<number>_<ShortTopic>.ts` (follow existing folder style).
+- Export name pattern: descriptive `PascalCase` ending in `Questions` when possible.
+- Question id pattern: stable prefix + zero-padded index, e.g. `mit6s191-l1-q01`, `mit6s191-l1-q02`.
+
+### Content constraints checklist
+
+- Exactly 4 options per question.
+- Multi-select compatible: any number of correct options (1-4).
+- Difficulty value must be one of: `"easy" | "medium" | "hard"`.
+- Explanations should be at least 2 sentences and teach the concept.
+- Use escaped LaTeX delimiters in strings: `\\(...\\)` and `\\[...\\]`.

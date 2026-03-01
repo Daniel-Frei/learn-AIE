@@ -3,6 +3,9 @@
 ci:
 	npm ci
 
+start:
+	npm run dev
+
 install:
 	npm install
 
