@@ -13,6 +13,7 @@
 
 - Main quiz UI lives in `/app/page.tsx`.
 - Question banks are maintained in `lib/*` and `lib/lectures/*`.
+- Quiz source registry includes MIT 6.S191 2025 lectures L1-L6 and Crash Course Linear Algebra L1 as selectable practice sources.
 - Explanation endpoint exists at `/api/explain` and proxies to an LLM helper in `lib/llm/explain.ts`.
 
 ## Out of Scope (for now)

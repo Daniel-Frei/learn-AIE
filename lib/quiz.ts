@@ -18,8 +18,12 @@ import { OtherRL_introductiontoReinforcementLearning } from "./lectures/Other RL
 import { L5_DeepReinforcementLearning } from "./lectures/MIT 6.S191 Deep Learning 2025/L5_Deep Reinforcement Learning";
 import { L1_IntroductionToNeuralNetworksAndDeepLearning as MIT6S191L1IntroductionQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L1_Introduction";
 import { MIT6S191_L2_DeepSequenceModelingQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L2_RNNs, Transformers and Attention";
+import { MIT6S191_L3_CNNsQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L3_CNNs";
+import { MIT6S191_L4_DeepGenerativeModelingQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L4_Deep Generative Modeling";
+import { MIT6S191_L6_LMsAndFrontiersQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L6_LMs and frontiers";
 import { L1_IntroductionToNeuralNetworksAndDeepLearning } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L1_ Introduction to Neural Networks and Deep Learning";
 import { L2_TrainingDeepNNs } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L2_Training Deep NNs";
+import { CrashCourseLinearAlgebraL1Questions } from "./other/Crash Course Linear Algebra/Lecture 1 — Vectors, Geometry, and Dot Products";
 import { mixedQuestions } from "./other/other";
 
 export type Difficulty = "easy" | "medium" | "hard";
@@ -32,6 +36,7 @@ export type SourceSeriesId =
   | "other-rl"
   | "mit-6s191-2025"
   | "mit-15773-2024"
+  | "crash-course-linear-algebra"
   | "other";
 
 export type Question = {
@@ -229,6 +234,33 @@ export const QUESTION_SOURCES = [
     questions: L5_DeepReinforcementLearning,
   },
   {
+    id: "mit6s191-l3" as const,
+    label: "MIT 6.S191 L3",
+    title: "MIT 6.S191 L3: Convolutional Neural Networks",
+    seriesId: "mit-6s191-2025" as const,
+    seriesLabel: "MIT 6.S191 Deep Learning 2025",
+    topic: "DL" as const,
+    questions: MIT6S191_L3_CNNsQuestions,
+  },
+  {
+    id: "mit6s191-l4" as const,
+    label: "MIT 6.S191 L4",
+    title: "MIT 6.S191 L4: Deep Generative Modeling",
+    seriesId: "mit-6s191-2025" as const,
+    seriesLabel: "MIT 6.S191 Deep Learning 2025",
+    topic: "DL" as const,
+    questions: MIT6S191_L4_DeepGenerativeModelingQuestions,
+  },
+  {
+    id: "mit6s191-l6" as const,
+    label: "MIT 6.S191 L6",
+    title: "MIT 6.S191 L6: LMs and Frontiers",
+    seriesId: "mit-6s191-2025" as const,
+    seriesLabel: "MIT 6.S191 Deep Learning 2025",
+    topic: "NLP" as const,
+    questions: MIT6S191_L6_LMsAndFrontiersQuestions,
+  },
+  {
     id: "mit15773-l1" as const,
     label: "MIT 15.773 L1",
     title: "MIT 15.773 L1: Introduction to Neural Networks and Deep Learning",
@@ -245,6 +277,16 @@ export const QUESTION_SOURCES = [
     seriesLabel: "MIT 15.773 Hands-On Deep Learning 2024",
     topic: "DL" as const,
     questions: L2_TrainingDeepNNs,
+  },
+  {
+    id: "crash-linalg-l1" as const,
+    label: "Crash Course Linear Algebra L1",
+    title:
+      "Crash Course Linear Algebra L1: Vectors, Geometry, and Dot Products",
+    seriesId: "crash-course-linear-algebra" as const,
+    seriesLabel: "Crash Course Linear Algebra",
+    topic: "Math" as const,
+    questions: CrashCourseLinearAlgebraL1Questions,
   },
   {
     id: "other" as const,
@@ -378,6 +420,10 @@ export { OtherRL_introductiontoReinforcementLearning } from "./lectures/Other RL
 export { L5_DeepReinforcementLearning } from "./lectures/MIT 6.S191 Deep Learning 2025/L5_Deep Reinforcement Learning";
 export { L1_IntroductionToNeuralNetworksAndDeepLearning as MIT6S191L1IntroductionQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L1_Introduction";
 export { MIT6S191_L2_DeepSequenceModelingQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L2_RNNs, Transformers and Attention";
+export { MIT6S191_L3_CNNsQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L3_CNNs";
+export { MIT6S191_L4_DeepGenerativeModelingQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L4_Deep Generative Modeling";
+export { MIT6S191_L6_LMsAndFrontiersQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L6_LMs and frontiers";
 export { L1_IntroductionToNeuralNetworksAndDeepLearning } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L1_ Introduction to Neural Networks and Deep Learning";
 export { L2_TrainingDeepNNs } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L2_Training Deep NNs";
+export { CrashCourseLinearAlgebraL1Questions } from "./other/Crash Course Linear Algebra/Lecture 1 — Vectors, Geometry, and Dot Products";
 export { mixedQuestions } from "./other/other";
