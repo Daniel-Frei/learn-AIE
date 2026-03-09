@@ -24,6 +24,9 @@ import { MIT6S191_L6_LMsAndFrontiersQuestions } from "./lectures/MIT 6.S191 Deep
 import { L1_IntroductionToNeuralNetworksAndDeepLearning } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L1_ Introduction to Neural Networks and Deep Learning";
 import { L2_TrainingDeepNNs } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L2_Training Deep NNs";
 import { CrashCourseLinearAlgebraL1Questions } from "./other/Crash Course Linear Algebra/Lecture 1 — Vectors, Geometry, and Dot Products";
+import { MIT15773L3DeepLearningForComputerVisionQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L3_Deep Learning for Computer Vision";
+import { MIT15773L4ComputerVisionTransferLearningQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L4_Computer Vision –Transfer Learning and Fine-Tuning";
+import { L5NLPBasicsQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L5_NLP Basics";
 import { mixedQuestions } from "./other/other";
 
 export type Difficulty = "easy" | "medium" | "hard";
@@ -279,6 +282,33 @@ export const QUESTION_SOURCES = [
     questions: L2_TrainingDeepNNs,
   },
   {
+    id: "mit15773-l3" as const,
+    label: "MIT 15.773 L3",
+    title: "MIT 15.773 L3: Deep Learning for Computer Vision",
+    seriesId: "mit-15773-2024" as const,
+    seriesLabel: "MIT 15.773 Hands-On Deep Learning 2024",
+    topic: "DL" as const,
+    questions: MIT15773L3DeepLearningForComputerVisionQuestions,
+  },
+  {
+    id: "mit15773-l4" as const,
+    label: "MIT 15.773 L4",
+    title: "MIT 15.773 L4: Computer Vision - Transfer Learning and Fine-Tuning",
+    seriesId: "mit-15773-2024" as const,
+    seriesLabel: "MIT 15.773 Hands-On Deep Learning 2024",
+    topic: "DL" as const,
+    questions: MIT15773L4ComputerVisionTransferLearningQuestions,
+  },
+  {
+    id: "mit15773-l5" as const,
+    label: "MIT 15.773 L5",
+    title: "MIT 15.773 L5: NLP Basics",
+    seriesId: "mit-15773-2024" as const,
+    seriesLabel: "MIT 15.773 Hands-On Deep Learning 2024",
+    topic: "NLP" as const,
+    questions: L5NLPBasicsQuestions,
+  },
+  {
     id: "crash-linalg-l1" as const,
     label: "Crash Course Linear Algebra L1",
     title:
@@ -425,5 +455,6 @@ export { MIT6S191_L4_DeepGenerativeModelingQuestions } from "./lectures/MIT 6.S1
 export { MIT6S191_L6_LMsAndFrontiersQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L6_LMs and frontiers";
 export { L1_IntroductionToNeuralNetworksAndDeepLearning } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L1_ Introduction to Neural Networks and Deep Learning";
 export { L2_TrainingDeepNNs } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L2_Training Deep NNs";
+export { L5NLPBasicsQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L5_NLP Basics";
 export { CrashCourseLinearAlgebraL1Questions } from "./other/Crash Course Linear Algebra/Lecture 1 — Vectors, Geometry, and Dot Products";
 export { mixedQuestions } from "./other/other";
