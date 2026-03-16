@@ -79,8 +79,8 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Unstructured data is unusable for Machine Learning because it cannot be represented numerically in a computer.",
-        isCorrect: false,
+        text: "Unstructured data can still be represented numerically and used in Machine Learning.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -107,8 +107,8 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Representations are only needed for images and never for text or audio.",
-        isCorrect: false,
+        text: "Representations can be important for text and audio as well as images.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -135,8 +135,8 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Deep Learning replaces Machine Learning; they are disjoint fields with no overlap.",
-        isCorrect: false,
+        text: "Deep Learning is part of Machine Learning rather than a separate replacement for it.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -188,8 +188,8 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Generative AI is synonymous with traditional rule-based AI from the 1950s.",
-        isCorrect: false,
+        text: "Generative AI is different from traditional rule-based AI.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -216,8 +216,8 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "This pattern only works when the sensor data is already in a clean spreadsheet format.",
-        isCorrect: false,
+        text: "This pattern is useful precisely because sensor data is often unstructured rather than spreadsheet-like.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -244,8 +244,8 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Logistic regression outputs any real number in \\(( -\\infty, \\infty )\\) and does not constrain outputs to probabilities.",
-        isCorrect: false,
+        text: "Before applying the sigmoid, the linear score can take any real value.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -268,8 +268,8 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A model’s learned parameters can be described as its weights and biases (sometimes casually just 'weights').",
-        isCorrect: true,
+        text: "A model’s learned parameters can be described only as weights, never biases.",
+        isCorrect: false,
       },
       {
         text: "A bias must always be zero in a neural network layer to ensure stability.",
@@ -292,8 +292,8 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Without nonlinearities, adding more layers does not increase the class of functions the network can represent beyond linear mappings.",
-        isCorrect: true,
+        text: "Without nonlinearities, adding more layers always increases the class of functions the network can represent.",
+        isCorrect: false,
       },
       {
         text: "Nonlinear activations allow the network to represent more complex input–output relationships than a single linear/logistic model.",
@@ -372,12 +372,12 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
       "In the lecture’s terminology, which statements correctly describe layers and connectivity in a standard feedforward neural network?",
     options: [
       {
-        text: "A vertical stack of neurons is called a layer.",
-        isCorrect: true,
+        text: "A horizontal row of neurons is called a layer.",
+        isCorrect: false,
       },
       {
-        text: "The input 'layer' is often called a layer even though it does not apply a transformation by itself.",
-        isCorrect: true,
+        text: "The input 'layer' is never referred to as a layer in practice.",
+        isCorrect: false,
       },
       {
         text: "If every neuron in one layer connects to every neuron in the next layer, the layer-to-layer connection is called fully connected (dense).",
@@ -428,12 +428,12 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
       "Which statements about the sigmoid activation function are correct?",
     options: [
       {
-        text: "The sigmoid can be written as \\(\\sigma(a)=\\frac{1}{1+e^{-a}}\\).",
-        isCorrect: true,
+        text: "The sigmoid can be written as \\(\\sigma(a)=1+e^{-a}\\).",
+        isCorrect: false,
       },
       {
-        text: "The sigmoid maps any real input \\(a\\in(-\\infty,\\infty)\\) to an output in \\((0,1)\\).",
-        isCorrect: true,
+        text: "The sigmoid maps real inputs to outputs over the entire real line.",
+        isCorrect: false,
       },
       {
         text: "Very negative inputs produce outputs close to 0, and very positive inputs produce outputs close to 1.",
@@ -456,12 +456,12 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
       "A neuron in the lecture is described as a linear function followed by an activation function. Which statements are correct about a typical neuron in a dense feedforward network?",
     options: [
       {
-        text: "A neuron can receive many inputs (one from each connected upstream unit) and produces a single scalar output.",
-        isCorrect: true,
+        text: "A neuron can receive only one input and must produce a full vector output.",
+        isCorrect: false,
       },
       {
-        text: "A common form is \\(a = \\phi(b + \\sum_i w_i x_i)\\), where \\(\\phi\\) is an activation function, \\(w_i\\) are weights, and \\(b\\) is a bias.",
-        isCorrect: true,
+        text: "A common dense neuron form is \\(a = b + \\sum_i w_i x_i\\) with no activation function.",
+        isCorrect: false,
       },
       {
         text: "Even if a neuron outputs a single number, that number can be forwarded (copied) to multiple neurons in the next layer.",
@@ -977,16 +977,16 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
       "Which statements are correct about why Deep Learning dramatically expanded what ML could do with unstructured data?",
     options: [
       {
-        text: "It can learn intermediate representations automatically from raw inputs instead of relying on manual feature engineering.",
-        isCorrect: true,
+        text: "Deep Learning mainly depends on manual feature engineering rather than learning representations automatically.",
+        isCorrect: false,
       },
       {
         text: "It made it practical to attach perception capabilities (detect/recognize/classify) behind sensors that produce unstructured signals.",
         isCorrect: true,
       },
       {
-        text: "It benefited from large datasets and parallel compute, making large-scale training feasible for complex models.",
-        isCorrect: true,
+        text: "It only became practical because datasets got smaller and compute requirements dropped.",
+        isCorrect: false,
       },
       {
         text: "It primarily works by asking experts to write more complete IF–THEN rules than before.",
@@ -1061,12 +1061,12 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
       "Which statements correctly describe the 'deep learning pipeline' idea emphasized in the lecture (raw input → learned representations → simple predictor)?",
     options: [
       {
-        text: "Intermediate layers can learn representations that make the final prediction step easier, often allowing a simple linear/logistic head at the end.",
-        isCorrect: true,
+        text: "Intermediate layers are fixed and do not learn representations.",
+        isCorrect: false,
       },
       {
-        text: "Learning multiple successive transformations gives the network more capacity to discover useful structure in the data than applying only one transformation.",
-        isCorrect: true,
+        text: "Applying only one transformation typically gives more capacity than learning multiple successive transformations.",
+        isCorrect: false,
       },
       {
         text: "The input and output are fixed by the problem; the network’s flexibility largely comes from what it learns in the hidden layers.",

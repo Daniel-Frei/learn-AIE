@@ -67,8 +67,8 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Each time step uses a completely independent set of weights.",
-        isCorrect: false,
+        text: "Each time step does not use a completely independent set of weights.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -94,8 +94,8 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The output at time \\( t \\) must always be used as input at time \\( t+1 \\).",
-        isCorrect: false,
+        text: "The output at time \\( t \\) does not have to be used as input at time \\( t+1 \\).",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -122,8 +122,8 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "BPTT eliminates the need for gradient-based optimization.",
-        isCorrect: false,
+        text: "BPTT does not eliminate the need for gradient-based optimization.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -149,8 +149,8 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They occur only in networks without nonlinearities.",
-        isCorrect: false,
+        text: "They do not occur only in networks without nonlinearities.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -176,8 +176,8 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They remove the need for recurrence entirely.",
-        isCorrect: false,
+        text: "They do not remove the need for recurrence entirely in every sequence model.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -238,7 +238,10 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
     difficulty: "hard",
     prompt: "Which statements about RNN limitations are correct?",
     options: [
-      { text: "The hidden state has fixed dimensionality.", isCorrect: true },
+      {
+        text: "The hidden state has variable dimensionality that automatically grows with sequence length.",
+        isCorrect: false,
+      },
       {
         text: "Processing is inherently sequential and difficult to parallelize.",
         isCorrect: true,
@@ -263,7 +266,10 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
     prompt: "Which tasks are examples of sequence modeling?",
     options: [
       { text: "Sentiment classification from a sentence.", isCorrect: true },
-      { text: "Machine translation.", isCorrect: true },
+      {
+        text: "Machine translation is not a sequence modeling task.",
+        isCorrect: false,
+      },
       { text: "Next-word prediction.", isCorrect: true },
       {
         text: "Predicting a static image label without temporal context.",
@@ -282,8 +288,8 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
       "In scaled dot-product attention, similarity between query and key is computed as \\( \\frac{QK^T}{\\sqrt{d_k}} \\). Which statements are correct?",
     options: [
       {
-        text: "The dot product measures similarity between vectors.",
-        isCorrect: true,
+        text: "The dot product measures only vector length, not similarity.",
+        isCorrect: false,
       },
       {
         text: "Scaling by \\( \\sqrt{d_k} \\) stabilizes gradients.",
@@ -310,8 +316,8 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
       "Which statements describe the role of positional embeddings in Transformers?",
     options: [
       {
-        text: "They encode relative or absolute position information.",
-        isCorrect: true,
+        text: "They erase position information entirely.",
+        isCorrect: false,
       },
       { text: "They compensate for the lack of recurrence.", isCorrect: true },
       {
@@ -331,7 +337,10 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
     prompt:
       "In self-attention, which components are learned linear projections of the input embeddings?",
     options: [
-      { text: "Query matrix \\( Q \\).", isCorrect: true },
+      {
+        text: "Query matrix \\( Q \\) is the only learned matrix used in attention.",
+        isCorrect: false,
+      },
       { text: "Key matrix \\( K \\).", isCorrect: true },
       { text: "Value matrix \\( V \\).", isCorrect: true },
       { text: "Softmax normalization.", isCorrect: false },
@@ -350,7 +359,10 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
         text: "It allows the model to attend to different aspects of the input.",
         isCorrect: true,
       },
-      { text: "Each head has separate learned projections.", isCorrect: true },
+      {
+        text: "Each head must share the same learned projections.",
+        isCorrect: false,
+      },
       { text: "Heads operate in parallel.", isCorrect: true },
       {
         text: "All heads must produce identical attention patterns.",
@@ -389,7 +401,10 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
     prompt: "Why are Transformers more parallelizable than RNNs?",
     options: [
       { text: "They remove explicit recurrence.", isCorrect: true },
-      { text: "All tokens can be processed simultaneously.", isCorrect: true },
+      {
+        text: "Tokens cannot be processed simultaneously in Transformer attention.",
+        isCorrect: false,
+      },
       {
         text: "Attention allows pairwise comparisons without time-step dependence.",
         isCorrect: true,
@@ -411,12 +426,12 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is a foundational objective for language models.",
-        isCorrect: true,
+        text: "It is not a foundational objective for language models.",
+        isCorrect: false,
       },
       {
-        text: "It can be implemented with RNNs or Transformers.",
-        isCorrect: true,
+        text: "It can be implemented only with Transformers and not with RNNs.",
+        isCorrect: false,
       },
       { text: "It requires labeled sentiment annotations.", isCorrect: false },
     ],
@@ -436,12 +451,12 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Entries represent relative importance between tokens.",
-        isCorrect: true,
+        text: "Entries are uniform weights unrelated to token importance.",
+        isCorrect: false,
       },
       {
-        text: "It encodes pairwise relationships in the sequence.",
-        isCorrect: true,
+        text: "It does not encode pairwise relationships in the sequence.",
+        isCorrect: false,
       },
       {
         text: "It directly contains the output representations.",
@@ -463,12 +478,12 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Transformers rely primarily on self-attention mechanisms.",
-        isCorrect: true,
+        text: "Transformers rely primarily on hidden-state recurrence.",
+        isCorrect: false,
       },
       {
-        text: "Transformers avoid sequential dependence in computation.",
-        isCorrect: true,
+        text: "Transformers require sequential dependence in computation.",
+        isCorrect: false,
       },
       {
         text: "RNNs and Transformers are mathematically identical models.",
@@ -491,12 +506,12 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The same weight matrices are involved in all \\( L_t \\).",
-        isCorrect: true,
+        text: "Different independent weight matrices are used for every \\( L_t \\).",
+        isCorrect: false,
       },
       {
-        text: "Gradients accumulate across time due to parameter sharing.",
-        isCorrect: true,
+        text: "Gradients do not accumulate across time from parameter sharing.",
+        isCorrect: false,
       },
       {
         text: "Each time step has independent parameters that are updated separately.",
@@ -519,12 +534,12 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Repeated multiplication of \\( W_h \\) influences gradient stability.",
-        isCorrect: true,
+        text: "Repeated multiplication of \\( W_h \\) has no effect on gradient stability.",
+        isCorrect: false,
       },
       {
-        text: "The activation derivative contributes multiplicatively to gradient flow.",
-        isCorrect: true,
+        text: "The activation derivative does not contribute multiplicatively to gradient flow.",
+        isCorrect: false,
       },
       {
         text: "The recurrence removes all nonlinearities from the model.",
@@ -541,9 +556,18 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
     difficulty: "easy",
     prompt: "Which properties make sequence modeling challenging?",
     options: [
-      { text: "Variable sequence lengths.", isCorrect: true },
-      { text: "Long-range dependencies.", isCorrect: true },
-      { text: "Sensitivity to word order.", isCorrect: true },
+      {
+        text: "Sequence models often must handle variable sequence lengths in practice.",
+        isCorrect: true,
+      },
+      {
+        text: "Long-range dependencies are never a challenge in sequence modeling.",
+        isCorrect: false,
+      },
+      {
+        text: "Sequence models are completely insensitive to word order.",
+        isCorrect: false,
+      },
       {
         text: "All sequences have identical structure and length.",
         isCorrect: false,
@@ -564,10 +588,13 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
         text: "The output is a weighted linear combination of value vectors.",
         isCorrect: true,
       },
-      { text: "The weights depend on query-key similarity.", isCorrect: true },
       {
-        text: "The dimensionality of the output matches that of V.",
-        isCorrect: true,
+        text: "The weights are independent of query-key similarity.",
+        isCorrect: false,
+      },
+      {
+        text: "The dimensionality of the output is unrelated to the value vectors.",
+        isCorrect: false,
       },
       { text: "The output ignores the value matrix.", isCorrect: false },
     ],
@@ -586,10 +613,13 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Scaling prevents softmax from saturating excessively.",
-        isCorrect: true,
+        text: "Scaling makes softmax saturate more aggressively.",
+        isCorrect: false,
       },
-      { text: "It stabilizes gradients during training.", isCorrect: true },
+      {
+        text: "It destabilizes gradients during training.",
+        isCorrect: false,
+      },
       {
         text: "It enforces orthogonality between queries and keys.",
         isCorrect: false,
@@ -609,10 +639,13 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
         text: "Recurrence allows a model to maintain state over time.",
         isCorrect: true,
       },
-      { text: "The hidden state can encode past inputs.", isCorrect: true },
       {
-        text: "Recurrence introduces sequential computation dependency.",
-        isCorrect: true,
+        text: "The hidden state cannot encode past inputs.",
+        isCorrect: false,
+      },
+      {
+        text: "Recurrence removes sequential computation dependency.",
+        isCorrect: false,
       },
       {
         text: "Recurrence guarantees perfect long-term memory.",
@@ -635,12 +668,12 @@ export const MIT6S191_L2_DeepSequenceModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The hidden state acts as a fixed-capacity information bottleneck.",
-        isCorrect: true,
+        text: "The hidden state is not a fixed-capacity information bottleneck.",
+        isCorrect: false,
       },
       {
-        text: "Increasing \\( d_h \\) increases representational capacity.",
-        isCorrect: true,
+        text: "Increasing \\( d_h \\) reduces representational capacity.",
+        isCorrect: false,
       },
       {
         text: "The hidden state size automatically grows with sequence length.",

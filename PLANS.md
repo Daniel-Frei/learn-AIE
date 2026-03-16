@@ -107,3 +107,76 @@
 - [x] Add topic UI controls to `components/QuizHeader.tsx` and pass state from `app/page.tsx`.
 - [x] Add/update tests for topic filtering behavior.
 - [x] Update docs and run verification.
+
+---
+
+# Plan: Rebalance MIT 15.773 Answer Patterns
+
+## Goal
+
+- Rebalance the five `lib/lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/*` question banks so each 40-question file has an even answer-pattern split:
+  - 10 questions with 4 correct answers
+  - 10 questions with 3 correct answers
+  - 10 questions with 2 correct answers
+  - 10 questions with 1 correct answer
+
+## Non-goals
+
+- No source registration changes.
+- No UI or quiz engine behavior changes beyond validating the content constraint.
+
+## Steps
+
+- [x] Document the MIT 15.773 balancing rule in `docs/*`.
+- [x] Make minimal statement edits in the five MIT 15.773 lecture files and update `isCorrect` flags accordingly.
+- [x] Add a regression test for the required per-file distribution.
+- [x] Run targeted verification and record the result.
+
+## Files To Touch
+
+- `PLANS.md`
+- `docs/team-preferences.md`
+- `lib/lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/*`
+- `tests/lib/*`
+
+## Verification
+
+- `npm run test -- tests/lib/mit15773-answer-distribution.spec.ts`
+- `make test`
+- `make check`
+
+## Verification Result
+
+- `npm run test -- tests/lib/mit15773-answer-distribution.spec.ts`: pass.
+- `make test`: pass.
+- `make check`: pass.
+
+---
+
+# Plan: Rebalance MIT 6.S191 2025 + Crash Course Linear Algebra
+
+## Goal
+
+- Rebalance the question banks in:
+  - `lib/lectures/MIT 6.S191 Deep Learning 2025/*`
+  - `lib/other/Crash Course Linear Algebra/*`
+- Bring those files within the current approximate answer-pattern tolerance used by `tests/lib/mit15773-answer-distribution.spec.ts`.
+
+## Non-goals
+
+- Do not rebalance the other already-flagged legacy banks in this task.
+- Do not change quiz engine logic or source registration.
+
+## Steps
+
+- [x] Adjust the targeted MIT 6.S191 2025 files with minimal statement edits and `isCorrect` updates.
+- [x] Adjust the Crash Course Linear Algebra file with minimal statement edits and `isCorrect` updates.
+- [x] Re-run the generalized answer-distribution test and confirm only out-of-scope files remain.
+
+## Verification
+
+- `npm run test -- tests/lib/mit15773-answer-distribution.spec.ts`
+
+## Verification Result
+
+- `npm run test -- tests/lib/mit15773-answer-distribution.spec.ts`: fails only on out-of-scope legacy banks in `lib/chapter1.ts`, `lib/chapter2.ts`, `lib/lectures/Other RL/introduction to Reinforcement Learning.ts`, `lib/lectures/Stanford CME295 Transformers & LLMs/lecture2_models.ts`, and `lib/lectures/Stanford CME295 Transformers & LLMs/lecture4_training.ts`.

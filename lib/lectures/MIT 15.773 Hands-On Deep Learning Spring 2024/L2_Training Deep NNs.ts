@@ -51,8 +51,8 @@ export const L2_TrainingDeepNNs: Question[] = [
         isCorrect: true,
       },
       {
-        text: "One-hot encoding reduces every categorical variable into a single continuous feature, which increases input size.",
-        isCorrect: false,
+        text: "One-hot encoding expands categorical variables into multiple binary features rather than a single continuous feature.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -135,8 +135,8 @@ export const L2_TrainingDeepNNs: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Training means changing the dataset values \\(x\\) and \\(y\\) until the model fits, rather than changing the model parameters.",
-        isCorrect: false,
+        text: "Training changes model parameters rather than the dataset values \\(x\\) and \\(y\\).",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -162,8 +162,8 @@ export const L2_TrainingDeepNNs: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A loss function is only defined for classification and cannot be used for regression.",
-        isCorrect: false,
+        text: "Loss functions are used in both classification and regression.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -274,8 +274,8 @@ export const L2_TrainingDeepNNs: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The derivative tells you the value of \\(w\\) that minimizes \\(g\\) directly without needing any iteration.",
-        isCorrect: false,
+        text: "The derivative indicates a local direction for updating \\(w\\), not the exact minimizer without iteration.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -302,8 +302,8 @@ export const L2_TrainingDeepNNs: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The learning rate is the number of hidden units in the network.",
-        isCorrect: false,
+        text: "The learning rate is a tunable step-size hyperparameter, not the number of hidden units.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -354,8 +354,8 @@ export const L2_TrainingDeepNNs: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Gradient descent in multiple dimensions can be written compactly as \\(\\mathbf{w} \\leftarrow \\mathbf{w} - \\alpha\\nabla g(\\mathbf{w})\\).",
-        isCorrect: true,
+        text: "Gradient descent in multiple dimensions can be written compactly as \\(\\mathbf{w} \\leftarrow \\mathbf{w} + \\alpha\\nabla g(\\mathbf{w})\\).",
+        isCorrect: false,
       },
       {
         text: "The gradient is a single number even when there are billions of parameters; it does not scale with the number of variables.",
@@ -382,8 +382,8 @@ export const L2_TrainingDeepNNs: Question[] = [
         isCorrect: true,
       },
       {
-        text: "In large neural networks, finding a “good enough” solution can still yield excellent predictive performance even if it is not a global minimum.",
-        isCorrect: true,
+        text: "If a solution is not the global minimum, it is guaranteed to be useless.",
+        isCorrect: false,
       },
       {
         text: "If you do not reach the global minimum of training loss, the model is guaranteed to be useless.",
@@ -442,8 +442,8 @@ export const L2_TrainingDeepNNs: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Backprop replaces gradient descent; once you have backprop, you no longer need an optimizer step like \\(w\\leftarrow w-\\alpha\\nabla\\ell\\).",
-        isCorrect: false,
+        text: "Backprop computes gradients, but an optimizer step is still needed to update parameters.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -546,8 +546,8 @@ export const L2_TrainingDeepNNs: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Adam is a widely used optimizer that can be viewed as a particular flavor of minibatch SGD in practice.",
-        isCorrect: true,
+        text: "Adam is a loss function rather than an optimizer flavor.",
+        isCorrect: false,
       },
       {
         text: "Choosing an optimizer is separate from choosing the loss function; you still need both to train a network.",
@@ -571,12 +571,12 @@ export const L2_TrainingDeepNNs: Question[] = [
       "Which statements best reflect the lecture’s rule-of-thumb for choosing model complexity (number of layers/units) during network design?",
     options: [
       {
-        text: "A practical approach is to start with the simplest network that could plausibly work and only increase complexity if needed.",
-        isCorrect: true,
+        text: "A practical approach is to start with the most complex network possible.",
+        isCorrect: false,
       },
       {
-        text: "If a simple network solves the problem well enough, it is reasonable to stop rather than making it more complex.",
-        isCorrect: true,
+        text: "Even if a simple network solves the problem well, you should always keep increasing complexity.",
+        isCorrect: false,
       },
       {
         text: "Adding layers/units indefinitely is always beneficial because more parameters always improve generalization.",
@@ -627,12 +627,12 @@ export const L2_TrainingDeepNNs: Question[] = [
       "For Binary Cross-Entropy loss \\(\\ell(y,p)=-y\\log(p)-(1-y)\\log(1-p)\\), which statements are correct about its behavior?",
     options: [
       {
-        text: "If \\(y=1\\), the loss decreases as \\(p\\) increases toward 1, and grows large as \\(p\\) approaches 0.",
-        isCorrect: true,
+        text: "If \\(y=1\\), the loss decreases as \\(p\\) approaches 0.",
+        isCorrect: false,
       },
       {
-        text: "If \\(y=0\\), the loss decreases as \\(p\\) decreases toward 0, and grows large as \\(p\\) approaches 1.",
-        isCorrect: true,
+        text: "If \\(y=0\\), the loss decreases as \\(p\\) approaches 1.",
+        isCorrect: false,
       },
       {
         text: "BCE strongly penalizes confident wrong predictions (e.g., \\(p\\approx 0\\) when \\(y=1\\)).",
@@ -655,12 +655,12 @@ export const L2_TrainingDeepNNs: Question[] = [
       "The lecture emphasizes using one combined expression for BCE instead of an IF–THEN definition. Which statements explain why that is useful?",
     options: [
       {
-        text: "A single formula \\(-y\\log(p)-(1-y)\\log(1-p)\\) avoids case splits (\\(y=1\\) vs \\(y=0\\)) while still selecting the correct term because \\(y\\in\\{0,1\\}\\).",
-        isCorrect: true,
+        text: "A single BCE formula requires explicit IF–THEN case splits to work.",
+        isCorrect: false,
       },
       {
-        text: "Avoiding explicit IF–THEN cases makes it easier to take derivatives and optimize with gradient-based methods.",
-        isCorrect: true,
+        text: "Avoiding explicit IF–THEN cases makes derivatives harder to compute.",
+        isCorrect: false,
       },
       {
         text: "The combined BCE form guarantees convexity for deep networks, ensuring gradient descent always finds the global minimum.",
@@ -687,8 +687,8 @@ export const L2_TrainingDeepNNs: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Lower loss generally indicates better fit under that loss definition, but it does not automatically guarantee best real-world usefulness or interpretability.",
-        isCorrect: true,
+        text: "Lower loss automatically guarantees the best real-world usefulness and interpretability.",
+        isCorrect: false,
       },
       {
         text: "Accuracy is a task-specific metric (e.g., fraction of correct classifications) and is not necessarily the same objective as the loss being optimized.",
@@ -719,8 +719,8 @@ export const L2_TrainingDeepNNs: Question[] = [
         isCorrect: true,
       },
       {
-        text: "In very high dimensions, it may be unlikely to land at a point where the function slopes upward in every direction, so saddle-like behavior can be common.",
-        isCorrect: true,
+        text: "In very high dimensions, saddle-like behavior is essentially impossible.",
+        isCorrect: false,
       },
       {
         text: "High dimensionality guarantees gradient descent always finds the global minimum because there are no local minima.",
@@ -751,8 +751,8 @@ export const L2_TrainingDeepNNs: Question[] = [
         isCorrect: false,
       },
       {
-        text: "The best solution for training loss may not be the best solution for test loss because they are effectively different objectives (different data).",
-        isCorrect: true,
+        text: "The best solution for training loss is always the best solution for test loss.",
+        isCorrect: false,
       },
     ],
     explanation:
@@ -799,8 +799,8 @@ export const L2_TrainingDeepNNs: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A computational graph helps reuse intermediate quantities so the same derivative components aren’t recomputed redundantly.",
-        isCorrect: true,
+        text: "A computational graph forces the same derivative pieces to be recomputed redundantly.",
+        isCorrect: false,
       },
       {
         text: "Backprop computes gradients for all parameters in one pass backward through the graph (per forward pass), rather than differentiating each parameter independently from scratch.",
@@ -831,8 +831,8 @@ export const L2_TrainingDeepNNs: Question[] = [
         isCorrect: true,
       },
       {
-        text: "GPUs were originally developed for graphics/video game rendering, and their strengths map well to neural network computation.",
-        isCorrect: true,
+        text: "GPUs were originally developed specifically for neural network backpropagation.",
+        isCorrect: false,
       },
       {
         text: "GPUs eliminate the need for optimization; training becomes a single forward pass with no iterative updates.",
@@ -855,8 +855,8 @@ export const L2_TrainingDeepNNs: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Using `shape=` allows the same API pattern to work for images (height × width × channels), sequences, and other structured tensors.",
-        isCorrect: true,
+        text: "Using `shape=` works only for simple vector inputs, not images or sequences.",
+        isCorrect: false,
       },
       {
         text: "In this lecture’s tabular example, the input is a vector so the shape is simply 29.",
@@ -879,12 +879,12 @@ export const L2_TrainingDeepNNs: Question[] = [
       "Which statements correctly distinguish the roles of the loss function and the optimizer in neural network training?",
     options: [
       {
-        text: "The loss function defines what “discrepancy” means between predictions and targets (what you want to minimize).",
-        isCorrect: true,
+        text: "The loss function defines the parameter update rule directly.",
+        isCorrect: false,
       },
       {
-        text: "The optimizer specifies how parameters are updated using gradients (the update rule and related state, such as momentum-like terms).",
-        isCorrect: true,
+        text: "The optimizer defines what counts as prediction discrepancy.",
+        isCorrect: false,
       },
       {
         text: "Backprop is the mechanism for computing gradients needed by the optimizer; it is not itself the update rule.",

@@ -51,8 +51,8 @@ export const L5_DeepReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Discounting is mainly used to ensure the policy is deterministic rather than stochastic.",
-        isCorrect: false,
+        text: "Discounting is not mainly used to ensure the policy is deterministic rather than stochastic.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -135,8 +135,8 @@ export const L5_DeepReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Reinforcement learning requires a pre-collected dataset and cannot learn from interaction.",
-        isCorrect: false,
+        text: "Reinforcement learning does not require a pre-collected dataset and can learn from interaction.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -163,8 +163,8 @@ export const L5_DeepReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Because the network outputs multiple values, the outputs must sum to 1 like probabilities.",
-        isCorrect: false,
+        text: "Because the network outputs multiple values, the outputs do not have to sum to 1 like probabilities.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -190,8 +190,8 @@ export const L5_DeepReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Continuous action spaces cannot be handled by any policy-based method.",
-        isCorrect: false,
+        text: "Continuous action spaces can be handled by policy-based methods.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -246,8 +246,8 @@ export const L5_DeepReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Policy learning always requires computing \\(\\arg\\max_a Q(s,a)\\) at decision time.",
-        isCorrect: false,
+        text: "Policy learning does not always require computing \\(\\arg\\max_a Q(s,a)\\) at decision time.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -274,8 +274,8 @@ export const L5_DeepReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A Gaussian policy can only be used for discrete actions like \\{left,right\\}.",
-        isCorrect: false,
+        text: "A Gaussian policy can be used for continuous actions rather than only discrete ones.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -330,8 +330,8 @@ export const L5_DeepReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Policy learning cannot represent stochastic policies.",
-        isCorrect: false,
+        text: "Policy learning can represent stochastic policies.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -357,8 +357,8 @@ export const L5_DeepReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The Q-loss cannot be optimized with backpropagation because it contains a max operator.",
-        isCorrect: false,
+        text: "The Q-loss can still be optimized with backpropagation.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -440,8 +440,8 @@ export const L5_DeepReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Policy gradient requires computing \\(\\arg\\max_a Q(s,a)\\) at every step.",
-        isCorrect: false,
+        text: "Policy gradient does not require computing \\(\\arg\\max_a Q(s,a)\\) at every step.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -484,8 +484,8 @@ export const L5_DeepReinforcementLearning: Question[] = [
       "Which statements about 'termination' and real-world RL are correct?",
     options: [
       {
-        text: "In real driving, 'run until termination' can be unsafe because termination might correspond to a crash.",
-        isCorrect: true,
+        text: "In real driving, 'run until termination' is always safe because termination never corresponds to a crash.",
+        isCorrect: false,
       },
       {
         text: "High-fidelity simulators can allow safe rollouts where termination is acceptable, and learned policies may later transfer to the real world.",
@@ -512,8 +512,8 @@ export const L5_DeepReinforcementLearning: Question[] = [
       "Which statements about deterministic Q-learning behavior are correct?",
     options: [
       {
-        text: "If a Q-based policy always chooses \\(\\arg\\max_a Q(s,a)\\), it will return the same action for the same state (given the same Q-function).",
-        isCorrect: true,
+        text: "A Q-based greedy policy can return different actions for the same state even with the same Q-function.",
+        isCorrect: false,
       },
       {
         text: "Deterministic greedy action selection can reduce exploration because the agent rarely tries alternatives.",
@@ -596,8 +596,8 @@ export const L5_DeepReinforcementLearning: Question[] = [
       "Which statements about the log-likelihood term in policy gradient are correct?",
     options: [
       {
-        text: "The term \\(\\log \\pi_\\theta(a_t\\mid s_t)\\) increases when the policy assigns higher probability to the taken action.",
-        isCorrect: true,
+        text: "The term \\(\\log \\pi_\\theta(a_t\\mid s_t)\\) decreases when the policy assigns higher probability to the taken action.",
+        isCorrect: false,
       },
       {
         text: "Using \\(-\\log \\pi_\\theta(a_t\\mid s_t)\\,R_t\\) ties probability updates to how good the observed return was.",
@@ -624,8 +624,8 @@ export const L5_DeepReinforcementLearning: Question[] = [
       "Which statements about sparse reward settings (e.g., reward only at game end) are correct?",
     options: [
       {
-        text: "Sparse rewards make credit assignment harder because many actions occur before any reward signal is observed.",
-        isCorrect: true,
+        text: "Sparse rewards make credit assignment easier because many actions occur before any reward signal is observed.",
+        isCorrect: false,
       },
       {
         text: "One motivation for learning state values is to provide a denser learning signal than only final win/loss.",
@@ -652,12 +652,12 @@ export const L5_DeepReinforcementLearning: Question[] = [
       "Which statements about the Go example and scaling RL to complex tasks are correct?",
     options: [
       {
-        text: "A 19x19 Go board leads to an enormous space of possible positions and long-horizon consequences.",
-        isCorrect: true,
+        text: "A 19x19 Go board has a tiny state space with no long-horizon consequences.",
+        isCorrect: false,
       },
       {
-        text: "Self-play allows an agent to generate its own training experience by playing against itself.",
-        isCorrect: true,
+        text: "Self-play does not allow an agent to generate its own training experience.",
+        isCorrect: false,
       },
       {
         text: "A value estimate for a board position helps evaluate 'how good the situation is' without waiting until the end of the game.",
@@ -680,12 +680,12 @@ export const L5_DeepReinforcementLearning: Question[] = [
       "Which statements correctly distinguish reward \\(r_t\\) from return \\(R_t\\)?",
     options: [
       {
-        text: "\\(r_t\\) is typically the immediate feedback received at time \\(t\\) after taking an action.",
-        isCorrect: true,
+        text: "\\(r_t\\) is not the immediate feedback received after taking an action.",
+        isCorrect: false,
       },
       {
-        text: "\\(R_t\\) aggregates multiple future rewards, often with discounting, e.g., \\(R_t = r_t + \\gamma r_{t+1} + \\gamma^2 r_{t+2} + \\dots\\).",
-        isCorrect: true,
+        text: "\\(R_t\\) never aggregates future rewards beyond the current timestep.",
+        isCorrect: false,
       },
       {
         text: "\\(r_t\\) and \\(R_t\\) are always numerically identical in any RL task.",
@@ -708,12 +708,12 @@ export const L5_DeepReinforcementLearning: Question[] = [
       "Which statements about why a probability distribution output needs constraints are correct (in discrete action policy networks)?",
     options: [
       {
-        text: "Each output probability should be non-negative.",
-        isCorrect: true,
+        text: "Output probabilities for a policy can be negative.",
+        isCorrect: false,
       },
       {
-        text: "The probabilities across discrete actions should sum to 1.",
-        isCorrect: true,
+        text: "Probabilities across discrete actions do not need to sum to 1.",
+        isCorrect: false,
       },
       {
         text: "A softmax transformation is a common way to map arbitrary logits to a valid probability distribution.",
@@ -736,12 +736,12 @@ export const L5_DeepReinforcementLearning: Question[] = [
       "Which statements about training with recorded trajectories in policy learning are correct?",
     options: [
       {
-        text: "You can increase the likelihood of actions that were part of high-return trajectories by updating \\(\\theta\\) to increase \\(\\log \\pi_\\theta(a_t\\mid s_t)\\).",
-        isCorrect: true,
+        text: "You cannot increase the likelihood of high-return actions through gradient-based policy updates.",
+        isCorrect: false,
       },
       {
-        text: "You can decrease the likelihood of actions that were part of low-return trajectories by updating \\(\\theta\\) to reduce \\(\\pi_\\theta(a_t\\mid s_t)\\).",
-        isCorrect: true,
+        text: "Low-return actions cannot have their likelihood decreased through policy updates.",
+        isCorrect: false,
       },
       {
         text: "This approach can work even without human demonstrations, relying only on reward signals from the environment.",

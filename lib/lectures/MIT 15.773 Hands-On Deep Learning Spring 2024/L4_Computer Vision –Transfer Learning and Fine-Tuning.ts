@@ -49,8 +49,8 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Filters are usually applied only once to the entire image.",
-        isCorrect: false,
+        text: "Filters are usually applied repeatedly across the entire image.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -68,8 +68,8 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
       { text: "Multiply corresponding values and sum them.", isCorrect: true },
       { text: "Apply an activation function such as ReLU.", isCorrect: true },
       {
-        text: "Normalize the image using softmax at every step.",
-        isCorrect: false,
+        text: "Repeat this operation across many spatial locations as the filter slides over the image.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -112,8 +112,8 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Each color channel is processed independently and never combined.",
-        isCorrect: false,
+        text: "Information from different color channels is combined within each convolutional filter.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -162,8 +162,8 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Max pooling usually increases spatial resolution.",
-        isCorrect: false,
+        text: "Max pooling usually reduces spatial resolution.",
+        isCorrect: true,
       },
       {
         text: "Max pooling is similar to an OR-like operation across nearby activations.",
@@ -190,8 +190,8 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Later layers in CNNs usually have larger spatial dimensions.",
-        isCorrect: false,
+        text: "Later layers in CNNs usually have smaller spatial dimensions.",
+        isCorrect: true,
       },
       {
         text: "CNNs often end with dense layers for classification.",
@@ -217,7 +217,10 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
         text: "CNNs exploit local connectivity between nearby pixels.",
         isCorrect: true,
       },
-      { text: "CNNs ignore spatial structure completely.", isCorrect: false },
+      {
+        text: "CNNs preserve and exploit spatial structure rather than ignoring it.",
+        isCorrect: true,
+      },
       {
         text: "CNNs reduce parameter counts through weight sharing.",
         isCorrect: true,
@@ -243,8 +246,8 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Translation invariance requires flattening the image first.",
-        isCorrect: false,
+        text: "Translation invariance does not require flattening the image first.",
+        isCorrect: true,
       },
       {
         text: "Weight sharing across spatial positions supports translation invariance.",
@@ -267,8 +270,8 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Intermediate layers combine simple features into shapes.",
-        isCorrect: true,
+        text: "Intermediate layers always detect exactly the same low-level edges as the first layer.",
+        isCorrect: false,
       },
       { text: "Deeper layers can represent complex objects.", isCorrect: true },
       {
@@ -292,7 +295,10 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
         isCorrect: true,
       },
       { text: "Each filter produces its own feature map.", isCorrect: true },
-      { text: "The depth of the output tensor will be 32.", isCorrect: true },
+      {
+        text: "The depth of the output tensor will always equal the input image width rather than 32.",
+        isCorrect: false,
+      },
       {
         text: "Each filter produces multiple output tensors independently.",
         isCorrect: false,
@@ -321,8 +327,8 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Data augmentation guarantees perfect generalization.",
-        isCorrect: false,
+        text: "Data augmentation can improve generalization without guaranteeing perfection.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -348,8 +354,8 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Transfer learning always requires training from scratch.",
-        isCorrect: false,
+        text: "Transfer learning often starts from pretrained weights instead of training from scratch.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -374,7 +380,10 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
         text: "Many pretrained CNN models were trained on ImageNet.",
         isCorrect: true,
       },
-      { text: "ImageNet contains only grayscale images.", isCorrect: false },
+      {
+        text: "ImageNet contains large numbers of color images, not only grayscale images.",
+        isCorrect: true,
+      },
     ],
     explanation:
       "ImageNet is a large-scale dataset with millions of labeled images across roughly 1000 object categories. It played a major role in advancing deep learning for computer vision. Many pretrained models such as AlexNet and ResNet were trained on this dataset.",
@@ -391,8 +400,8 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "ResNet models are often pretrained on ImageNet.",
-        isCorrect: true,
+        text: "ResNet models are never pretrained on ImageNet.",
+        isCorrect: false,
       },
       {
         text: "ResNet can be used as a feature extractor for transfer learning.",
@@ -415,10 +424,10 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
       "Which of the following statements about convolutional neural networks are correct?",
     options: [
       {
-        text: "CNNs are particularly effective for image data.",
-        isCorrect: true,
+        text: "CNNs are particularly ineffective for image data.",
+        isCorrect: false,
       },
-      { text: "CNNs exploit spatial structure in images.", isCorrect: true },
+      { text: "CNNs ignore spatial structure in images.", isCorrect: false },
       {
         text: "CNNs typically combine convolutional layers and pooling layers.",
         isCorrect: true,
@@ -464,12 +473,12 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
     prompt: "Which statements about CNN feature maps are correct?",
     options: [
       {
-        text: "Feature maps represent the response of filters applied to the input.",
-        isCorrect: true,
+        text: "Feature maps are random tensors unrelated to convolutional filters.",
+        isCorrect: false,
       },
       {
-        text: "Each filter produces a different feature map.",
-        isCorrect: true,
+        text: "All filters produce the same feature map.",
+        isCorrect: false,
       },
       {
         text: "Feature maps always have the same spatial size as the input.",
@@ -492,12 +501,12 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
       "Which statements about training convolutional neural networks are correct?",
     options: [
       {
-        text: "Filter weights can be learned using backpropagation.",
-        isCorrect: true,
+        text: "Filter weights cannot be learned using backpropagation.",
+        isCorrect: false,
       },
       {
-        text: "Filters are treated as trainable parameters in the network.",
-        isCorrect: true,
+        text: "Filters are fixed, non-trainable parameters in the network.",
+        isCorrect: false,
       },
       {
         text: "Gradient-based optimization algorithms such as stochastic gradient descent can update filter weights.",
@@ -626,12 +635,12 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
       "Which statements about the receptive field of neurons in CNNs are correct?",
     options: [
       {
-        text: "The receptive field refers to the region of the input image that influences a neuron.",
-        isCorrect: true,
+        text: "The receptive field refers only to the output region a neuron produces.",
+        isCorrect: false,
       },
       {
-        text: "Receptive fields grow larger in deeper layers.",
-        isCorrect: true,
+        text: "Receptive fields shrink in deeper layers.",
+        isCorrect: false,
       },
       {
         text: "Pooling layers contribute to increasing the effective receptive field.",
@@ -681,10 +690,10 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
       "Which statements about the parameter efficiency of CNNs compared to fully connected layers are correct?",
     options: [
       {
-        text: "CNNs use weight sharing to reduce parameters.",
-        isCorrect: true,
+        text: "CNNs avoid weight sharing, which is why they need fewer parameters.",
+        isCorrect: false,
       },
-      { text: "CNNs exploit local connectivity patterns.", isCorrect: true },
+      { text: "CNNs ignore local connectivity patterns.", isCorrect: false },
       {
         text: "Fully connected layers typically require far more parameters for image inputs.",
         isCorrect: true,
@@ -705,12 +714,12 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
     prompt: "Which statements about convolutional blocks are correct?",
     options: [
       {
-        text: "A convolutional block often contains convolution layers followed by pooling.",
-        isCorrect: true,
+        text: "A convolutional block usually contains only pooling layers with no convolutions.",
+        isCorrect: false,
       },
       {
-        text: "Convolutional blocks are used to extract hierarchical image features.",
-        isCorrect: true,
+        text: "Convolutional blocks are not used to extract hierarchical image features.",
+        isCorrect: false,
       },
       {
         text: "Pooling layers typically reduce the spatial size of feature maps.",
@@ -757,12 +766,12 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
     prompt: "Which statements about fine-tuning pretrained models are correct?",
     options: [
       {
-        text: "Fine-tuning updates weights of the pretrained network during training.",
-        isCorrect: true,
+        text: "Fine-tuning keeps pretrained weights frozen and never updates them.",
+        isCorrect: false,
       },
       {
-        text: "Fine-tuning typically starts from pretrained weights rather than random initialization.",
-        isCorrect: true,
+        text: "Fine-tuning typically starts from random initialization rather than pretrained weights.",
+        isCorrect: false,
       },
       {
         text: "Fine-tuning can improve performance on new tasks.",
@@ -836,12 +845,12 @@ export const MIT15773L4ComputerVisionTransferLearningQuestions: Question[] = [
       "Which statements about transfer learning with pretrained CNNs are correct?",
     options: [
       {
-        text: "Earlier layers often learn generic features such as edges.",
-        isCorrect: true,
+        text: "Earlier layers often learn highly task-specific output labels.",
+        isCorrect: false,
       },
       {
-        text: "Later layers tend to learn task-specific features.",
-        isCorrect: true,
+        text: "Later layers tend to learn only generic edge detectors.",
+        isCorrect: false,
       },
       {
         text: "Pretrained networks can be reused for new classification tasks.",

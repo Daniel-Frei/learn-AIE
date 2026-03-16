@@ -48,8 +48,8 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Row vectors are mathematically invalid objects in linear algebra.",
-        isCorrect: false,
+        text: "Row vectors are mathematically valid objects in linear algebra.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -76,8 +76,8 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The vector must represent a probability distribution.",
-        isCorrect: false,
+        text: "The vector does not have to represent a probability distribution.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -98,8 +98,8 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is identical to multiplying two matrices element-wise.",
-        isCorrect: false,
+        text: "It is not identical to multiplying two matrices element-wise.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -119,7 +119,10 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         text: "The dot product equals \\(\\|a\\| \\|b\\| \\cos \\theta\\).",
         isCorrect: true,
       },
-      { text: "The dot product must always be positive.", isCorrect: false },
+      {
+        text: "The dot product does not have to be positive.",
+        isCorrect: true,
+      },
     ],
     explanation:
       "The algebraic computation gives \\(1*3 + 2*4 = 11\\). The geometric interpretation expresses the dot product as \\(\\|a\\|\\|b\\|\\cos\\theta\\). However, the dot product can be negative if the vectors point in opposite directions.",
@@ -144,8 +147,8 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Cosine similarity requires the vectors to have exactly the same length.",
-        isCorrect: false,
+        text: "Cosine similarity does not require the vectors to have exactly the same length.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -161,7 +164,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
       { text: "Their dot product equals zero.", isCorrect: true },
       { text: "They are perpendicular in geometric space.", isCorrect: true },
       { text: "Their cosine similarity equals zero.", isCorrect: true },
-      { text: "They must have equal magnitudes.", isCorrect: false },
+      { text: "They do not need to have equal magnitudes.", isCorrect: true },
     ],
     explanation:
       "Orthogonal vectors form a right angle and therefore have cosine of the angle equal to zero. Because the dot product equals \\(\\|a\\|\\|b\\|\\cos\\theta\\), it becomes zero when the cosine is zero. Their magnitudes can differ arbitrarily.",
@@ -184,8 +187,8 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The operation requires \\(W\\) to be a square matrix.",
-        isCorrect: false,
+        text: "The operation does not require \\(W\\) to be a square matrix.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -208,8 +211,8 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The vector must represent a physical geometric object.",
-        isCorrect: false,
+        text: "The vector does not have to represent a physical geometric object.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -223,7 +226,10 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     prompt:
       "Which statements correctly describe Euclidean distance between two vectors \\(x\\) and \\(y\\)?",
     options: [
-      { text: "The distance is \\(\\|x-y\\|\\).", isCorrect: true },
+      {
+        text: "The distance is given by the dot product \\(x^T y\\).",
+        isCorrect: false,
+      },
       {
         text: "It measures the straight-line distance between two points in space.",
         isCorrect: true,
@@ -245,7 +251,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     prompt:
       "Let \\(a=[1,2,3]^T\\) and \\(b=[2,1,0]^T\\). Which statements are correct?",
     options: [
-      { text: "The dot product equals 4.", isCorrect: true },
+      { text: "The dot product equals 0.", isCorrect: false },
       {
         text: "The dot product equals \\(1*2 + 2*1 + 3*0\\).",
         isCorrect: true,
@@ -268,8 +274,8 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
       "Which statements describe how dot products are used in neural networks?",
     options: [
       {
-        text: "Each neuron computes a weighted sum of its inputs.",
-        isCorrect: true,
+        text: "Each neuron computes an unweighted sum of its inputs.",
+        isCorrect: false,
       },
       {
         text: "A neuron output often involves \\(w^T x + b\\).",
@@ -296,8 +302,8 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
       "Which statements correctly describe cosine similarity in embedding spaces?",
     options: [
       {
-        text: "Cosine similarity focuses on direction rather than magnitude.",
-        isCorrect: true,
+        text: "Cosine similarity focuses on magnitude only and ignores direction.",
+        isCorrect: false,
       },
       {
         text: "Vectors representing similar concepts often have high cosine similarity.",
@@ -322,7 +328,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     difficulty: "easy",
     prompt: "Which statements are correct about the L2 norm \\(\\|x\\|_2\\)?",
     options: [
-      { text: "It equals \\(\\sqrt{\\sum_i x_i^2}\\).", isCorrect: true },
+      { text: "It equals \\(\\sum_i x_i\\).", isCorrect: false },
       {
         text: "It represents the length of the vector in Euclidean space.",
         isCorrect: true,
@@ -348,8 +354,8 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
       "Which statements about high-dimensional vectors in machine learning are correct?",
     options: [
       {
-        text: "Word embeddings often contain hundreds or thousands of dimensions.",
-        isCorrect: true,
+        text: "Word embeddings always contain exactly three dimensions.",
+        isCorrect: false,
       },
       {
         text: "High-dimensional vectors can still be analyzed using the same geometric concepts as 2-D vectors.",
@@ -376,8 +382,8 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
       "Which statements about matrix–vector multiplication \\(y = Wx\\) are correct?",
     options: [
       {
-        text: "Each row of \\(W\\) defines a linear detector for patterns in \\(x\\).",
-        isCorrect: true,
+        text: "Each column of \\(W\\) defines the output dimension regardless of input shape.",
+        isCorrect: false,
       },
       {
         text: "The output dimension equals the number of rows in \\(W\\).",
@@ -403,7 +409,10 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     prompt:
       "Which statements about the geometric meaning of the dot product are correct?",
     options: [
-      { text: "It equals \\(\\|a\\|\\|b\\|\\cos\\theta\\).", isCorrect: true },
+      {
+        text: "It equals the Euclidean distance \\(\\|a-b\\|\\).",
+        isCorrect: false,
+      },
       {
         text: "It measures how strongly one vector points in the direction of another.",
         isCorrect: true,
@@ -430,12 +439,12 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     options: [
       { text: "The dot product equals 3.", isCorrect: true },
       {
-        text: "The formula \\(a\\cdot b = \\|a\\|\\|b\\|\\cos\\theta\\) can be used.",
-        isCorrect: true,
+        text: "The formula \\(a\\cdot b = \\|a\\|\\|b\\|\\cos\\theta\\) cannot be used here.",
+        isCorrect: false,
       },
       {
-        text: "Because \\(\\cos 60^\\circ = 0.5\\), the dot product equals \\(2*3*0.5\\).",
-        isCorrect: true,
+        text: "Because \\(\\cos 60^\\circ = 1\\), the dot product equals \\(2*3\\).",
+        isCorrect: false,
       },
       { text: "The vectors are orthogonal.", isCorrect: false },
     ],
@@ -455,12 +464,12 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Reinforcement learning states can be encoded as vectors.",
-        isCorrect: true,
+        text: "Reinforcement learning states cannot be encoded as vectors.",
+        isCorrect: false,
       },
       {
-        text: "Word embeddings are vectors representing semantic meaning.",
-        isCorrect: true,
+        text: "Word embeddings are scalar values rather than vectors.",
+        isCorrect: false,
       },
       {
         text: "Vectors cannot represent categorical information.",
@@ -483,12 +492,12 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Neural network layers compute many dot products in parallel.",
-        isCorrect: true,
+        text: "Neural network layers never compute dot products in parallel.",
+        isCorrect: false,
       },
       {
-        text: "Attention mechanisms rely on dot products between queries and keys.",
-        isCorrect: true,
+        text: "Attention mechanisms do not rely on dot products between queries and keys.",
+        isCorrect: false,
       },
       {
         text: "Dot products can only be used in two-dimensional spaces.",
@@ -507,10 +516,10 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
       "Consider the vectors \\(a=[2,0]^T\\) and \\(b=[0,3]^T\\). Which statements are correct?",
     options: [
       { text: "The dot product \\(a \\cdot b = 0\\).", isCorrect: true },
-      { text: "The vectors are orthogonal.", isCorrect: true },
+      { text: "The vectors are parallel.", isCorrect: false },
       {
-        text: "The angle between the vectors is \\(90^\\circ\\).",
-        isCorrect: true,
+        text: "The angle between the vectors is \\(0^\\circ\\).",
+        isCorrect: false,
       },
       {
         text: "The cosine similarity between them equals 1.",
@@ -533,12 +542,12 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "If \\(a \\cdot b < 0\\), the vectors point in roughly opposite directions.",
-        isCorrect: true,
+        text: "If \\(a \\cdot b < 0\\), the vectors point in roughly the same direction.",
+        isCorrect: false,
       },
       {
-        text: "If \\(a \\cdot b = 0\\), the vectors are orthogonal.",
-        isCorrect: true,
+        text: "If \\(a \\cdot b = 0\\), the vectors are identical.",
+        isCorrect: false,
       },
       {
         text: "The dot product ignores the magnitudes of the vectors.",
@@ -556,8 +565,8 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     prompt: "Let \\(x=[1,1]^T\\). Which statements are correct?",
     options: [
       { text: "The L2 norm equals \\(\\sqrt{2}\\).", isCorrect: true },
-      { text: "The squared norm equals 2.", isCorrect: true },
-      { text: "The vector length is greater than 1.", isCorrect: true },
+      { text: "The squared norm equals \\(\\sqrt{2}\\).", isCorrect: false },
+      { text: "The vector length is less than 1.", isCorrect: false },
       { text: "The norm equals the sum of the elements.", isCorrect: false },
     ],
     explanation:
@@ -572,8 +581,8 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
       "Suppose \\(a=[1,2]^T\\) and \\(b=[2,4]^T\\). Which statements are correct?",
     options: [
       { text: "The vectors point in the same direction.", isCorrect: true },
-      { text: "The cosine similarity equals 1.", isCorrect: true },
-      { text: "The vectors are linearly dependent.", isCorrect: true },
+      { text: "The cosine similarity equals 0.", isCorrect: false },
+      { text: "The vectors are linearly independent.", isCorrect: false },
       { text: "The vectors are orthogonal.", isCorrect: false },
     ],
     explanation:
@@ -589,12 +598,12 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     options: [
       { text: "The term \\(w^T x\\) is a dot product.", isCorrect: true },
       {
-        text: "The weights \\(w\\) determine which directions in input space activate the neuron.",
-        isCorrect: true,
+        text: "The weights \\(w\\) do not determine which directions in input space activate the neuron.",
+        isCorrect: false,
       },
       {
-        text: "The bias \\(b\\) shifts the output independently of the input vector.",
-        isCorrect: true,
+        text: "The bias \\(b\\) is determined entirely by the input vector.",
+        isCorrect: false,
       },
       {
         text: "The neuron output depends only on the length of the input vector.",

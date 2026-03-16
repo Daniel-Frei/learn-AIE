@@ -76,8 +76,8 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Stacking linear layers without nonlinearities increases model expressiveness arbitrarily.",
-        isCorrect: false,
+        text: "Stacking linear layers without nonlinearities does not increase expressiveness beyond a single linear transformation.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -104,8 +104,8 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They guarantee that gradient descent will always converge to the global minimum.",
-        isCorrect: false,
+        text: "They do not guarantee that gradient descent will always converge to the global minimum.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -132,8 +132,8 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A sufficiently large learning rate always speeds up convergence without risk.",
-        isCorrect: false,
+        text: "A sufficiently large learning rate can increase the risk of instability or divergence.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -187,8 +187,8 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It guarantees that the model will not overfit.",
-        isCorrect: false,
+        text: "It does not guarantee that the model will not overfit.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -207,8 +207,8 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "MSE is appropriate for regression tasks.",
-        isCorrect: true,
+        text: "MSE is appropriate only for classification tasks.",
+        isCorrect: false,
       },
       {
         text: "MSE directly models probabilities for binary classification.",
@@ -231,8 +231,8 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
       "Which statements about stochastic gradient descent (SGD) are true?",
     options: [
       {
-        text: "It computes gradients using a single randomly selected data point.",
-        isCorrect: true,
+        text: "It computes gradients using the entire dataset at every update step.",
+        isCorrect: false,
       },
       {
         text: "It is generally noisier than full-batch gradient descent.",
@@ -286,8 +286,8 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
       "Which of the following are true about the empirical loss \\( J(\\mathbf{w}) = \\frac{1}{N} \\sum_{i=1}^N L_i(\\mathbf{w}) \\)?",
     options: [
       {
-        text: "It averages loss across all training samples.",
-        isCorrect: true,
+        text: "It averages loss across only the test samples.",
+        isCorrect: false,
       },
       {
         text: "Minimizing it is equivalent to minimizing each individual sample loss independently.",
@@ -321,8 +321,8 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It typically results in low training loss and high test loss.",
-        isCorrect: true,
+        text: "It typically results in high training loss and low test loss.",
+        isCorrect: false,
       },
       {
         text: "It means the model cannot fit the training data at all.",
@@ -344,8 +344,8 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Dropout reduces model capacity during training.",
-        isCorrect: true,
+        text: "Dropout increases model capacity during training.",
+        isCorrect: false,
       },
       {
         text: "Dropout forces the model to rely on multiple pathways.",
@@ -375,8 +375,8 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Adaptive optimizers adjust learning rates based on gradient information.",
-        isCorrect: true,
+        text: "Adaptive optimizers always use a fixed learning rate with no gradient history.",
+        isCorrect: false,
       },
       {
         text: "The optimal learning rate is always the same across all tasks.",
@@ -394,12 +394,12 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
     prompt: "Why has deep learning become dominant in recent years?",
     options: [
       {
-        text: "Increased availability of large datasets.",
-        isCorrect: true,
+        text: "Decreased availability of large datasets.",
+        isCorrect: false,
       },
       {
-        text: "Advances in GPU hardware enabling parallel computation.",
-        isCorrect: true,
+        text: "Advances in GPU hardware were irrelevant to modern deep learning progress.",
+        isCorrect: false,
       },
       {
         text: "Improved software frameworks like TensorFlow and PyTorch.",
@@ -448,12 +448,12 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
     prompt: "Which statements about hierarchical feature learning are correct?",
     options: [
       {
-        text: "Lower layers often learn simple features like edges.",
-        isCorrect: true,
+        text: "Lower layers often learn complex objects directly rather than simple edges.",
+        isCorrect: false,
       },
       {
-        text: "Higher layers combine simpler features into complex structures.",
-        isCorrect: true,
+        text: "Higher layers only reproduce the same simple edge detectors as lower layers.",
+        isCorrect: false,
       },
       {
         text: "Hierarchical learning reduces the need for hand-engineered features.",
@@ -475,12 +475,12 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
     prompt: "Which statements about loss landscapes are correct?",
     options: [
       {
-        text: "They are typically high-dimensional in deep networks.",
-        isCorrect: true,
+        text: "They are always low-dimensional in deep networks.",
+        isCorrect: false,
       },
       {
-        text: "They can contain multiple local minima and saddle points.",
-        isCorrect: true,
+        text: "They contain no local minima or saddle points.",
+        isCorrect: false,
       },
       {
         text: "Gradient descent follows local gradient information only.",
@@ -502,12 +502,12 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
     prompt: "Which statements about early stopping are correct?",
     options: [
       {
-        text: "It monitors validation performance during training.",
-        isCorrect: true,
+        text: "It monitors training performance alone during training.",
+        isCorrect: false,
       },
       {
-        text: "It selects the model checkpoint with best validation performance.",
-        isCorrect: true,
+        text: "It always selects the final model checkpoint regardless of validation results.",
+        isCorrect: false,
       },
       {
         text: "It prevents the training loss from decreasing.",
@@ -557,12 +557,12 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
       "Consider a perceptron with two inputs and sigmoid activation: \\( y = \\sigma(w_1 x_1 + w_2 x_2 + b) \\). Which statements are correct?",
     options: [
       {
-        text: "The decision boundary before applying the sigmoid is linear in \\(x_1, x_2\\).",
-        isCorrect: true,
+        text: "The decision boundary before applying the sigmoid is nonlinear in \\(x_1, x_2\\).",
+        isCorrect: false,
       },
       {
-        text: "The sigmoid transforms the linear output into a value between 0 and 1.",
-        isCorrect: true,
+        text: "The sigmoid transforms the linear output into an unrestricted real value.",
+        isCorrect: false,
       },
       {
         text: "The decision boundary corresponds to \\( w_1 x_1 + w_2 x_2 + b = 0 \\).",
@@ -584,12 +584,12 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
     prompt: "Which statements correctly describe deep neural networks?",
     options: [
       {
-        text: "They increase expressive capacity by stacking multiple layers.",
-        isCorrect: true,
+        text: "They reduce expressive capacity by stacking multiple layers.",
+        isCorrect: false,
       },
       {
-        text: "Each additional nonlinear layer increases representational power.",
-        isCorrect: true,
+        text: "Each additional nonlinear layer reduces representational power.",
+        isCorrect: false,
       },
       {
         text: "Depth enables hierarchical feature composition.",

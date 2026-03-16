@@ -49,8 +49,8 @@ export const L5NLPBasicsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Transformers were introduced before statistical NLP methods.",
-        isCorrect: false,
+        text: "Transformers were introduced after statistical NLP methods.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -77,8 +77,8 @@ export const L5NLPBasicsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Vectorization guarantees that semantic meaning is perfectly preserved.",
-        isCorrect: false,
+        text: "Vectorization does not guarantee that semantic meaning is perfectly preserved.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -98,7 +98,10 @@ export const L5NLPBasicsQuestions: Question[] = [
         text: "Removing common stop words such as 'the' or 'and'.",
         isCorrect: true,
       },
-      { text: "Assigning integer indices to each token.", isCorrect: false },
+      {
+        text: "Standardization often includes cleaning text before tokenization.",
+        isCorrect: true,
+      },
     ],
     explanation:
       "Standardization prepares raw text by applying transformations like converting text to lowercase, removing punctuation, and sometimes removing stop words. Indexing, however, happens later in the vectorization pipeline after tokenization. It assigns each token a unique integer identifier.",
@@ -123,8 +126,8 @@ export const L5NLPBasicsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Tokenization always guarantees correct handling of compound words across all languages.",
-        isCorrect: false,
+        text: "Tokenization does not always guarantee correct handling of compound words across all languages.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -150,8 +153,8 @@ export const L5NLPBasicsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The vocabulary must contain every possible word in a language.",
-        isCorrect: false,
+        text: "The vocabulary is often limited to tokens seen in a training corpus rather than every possible word in a language.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -169,8 +172,8 @@ export const L5NLPBasicsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The length of the one-hot vector equals the vocabulary size.",
-        isCorrect: true,
+        text: "The length of a one-hot vector equals the number of tokens in the current sentence.",
+        isCorrect: false,
       },
       {
         text: "Two different tokens will produce identical one-hot vectors.",
@@ -205,8 +208,8 @@ export const L5NLPBasicsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It guarantees that unseen words are semantically understood.",
-        isCorrect: false,
+        text: "The \\(<UNK>\\) token handles unseen words without guaranteeing semantic understanding.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -233,8 +236,8 @@ export const L5NLPBasicsQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Extremely long words in some languages may create modeling difficulties.",
-        isCorrect: true,
+        text: "Extremely long words in some languages never create modeling difficulties.",
+        isCorrect: false,
       },
     ],
     explanation:
@@ -253,8 +256,8 @@ export const L5NLPBasicsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Each row contains exactly one value equal to 1.",
-        isCorrect: true,
+        text: "Each row contains several values equal to 1.",
+        isCorrect: false,
       },
       {
         text: "The representation directly preserves semantic similarity between words.",
@@ -285,8 +288,8 @@ export const L5NLPBasicsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It inherently captures long-range contextual meaning between words.",
-        isCorrect: false,
+        text: "It does not inherently capture long-range contextual meaning between words.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -309,8 +312,8 @@ export const L5NLPBasicsQuestions: Question[] = [
       },
       { text: "It records how many times each word occurs.", isCorrect: false },
       {
-        text: "The resulting vector length equals the vocabulary size.",
-        isCorrect: true,
+        text: "The resulting vector length equals the number of tokens in the document.",
+        isCorrect: false,
       },
     ],
     explanation:
@@ -337,8 +340,8 @@ export const L5NLPBasicsQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It is also called term-frequency representation.",
-        isCorrect: true,
+        text: "It is also called a sequence-preserving representation.",
+        isCorrect: false,
       },
     ],
     explanation:
@@ -354,8 +357,8 @@ export const L5NLPBasicsQuestions: Question[] = [
     options: [
       { text: "It ignores sequential information in text.", isCorrect: true },
       {
-        text: "It can produce very high-dimensional vectors when vocabularies are large.",
-        isCorrect: true,
+        text: "It always produces low-dimensional vectors even when vocabularies are large.",
+        isCorrect: false,
       },
       {
         text: "Short and long documents produce vectors of different lengths.",
@@ -387,8 +390,8 @@ export const L5NLPBasicsQuestions: Question[] = [
       },
       { text: "To eliminate the need for unknown tokens.", isCorrect: false },
       {
-        text: "To reduce computational cost and overfitting risk.",
-        isCorrect: true,
+        text: "To eliminate computational cost and overfitting risk entirely.",
+        isCorrect: false,
       },
     ],
     explanation:
@@ -435,8 +438,8 @@ export const L5NLPBasicsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Softmax allows gradients to be computed for backpropagation.",
-        isCorrect: true,
+        text: "Softmax is used mainly because it blocks gradients during backpropagation.",
+        isCorrect: false,
       },
       {
         text: "Selecting the maximum output directly without softmax is usually used during training.",
@@ -467,8 +470,8 @@ export const L5NLPBasicsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They guarantee full understanding of sentence semantics.",
-        isCorrect: false,
+        text: "They provide limited context but do not guarantee full understanding of sentence semantics.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -494,8 +497,8 @@ export const L5NLPBasicsQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Dropout effectively creates many different subnetworks during training.",
-        isCorrect: true,
+        text: "Dropout creates a single fixed subnetwork during training.",
+        isCorrect: false,
       },
     ],
     explanation:
@@ -518,8 +521,8 @@ export const L5NLPBasicsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Reducing vocabulary size can reduce parameter counts.",
-        isCorrect: true,
+        text: "Reducing vocabulary size has no effect on parameter counts.",
+        isCorrect: false,
       },
       {
         text: "Bag-of-Words guarantees parameter efficiency regardless of vocabulary size.",

@@ -48,8 +48,8 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Unsupervised learning requires ground-truth labels.",
-        isCorrect: false,
+        text: "Unsupervised learning does not require ground-truth labels.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -67,16 +67,16 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A directly observed measurement in the dataset.",
-        isCorrect: false,
+        text: "A latent variable is not directly observed in the dataset.",
+        isCorrect: true,
       },
       {
         text: "A variable that governs the distribution of observed samples.",
         isCorrect: true,
       },
       {
-        text: "A label provided during supervised training.",
-        isCorrect: false,
+        text: "A latent variable is not simply a supervised label provided during training.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -98,10 +98,13 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
         text: "To force the model to reconstruct the input from limited information.",
         isCorrect: true,
       },
-      { text: "To guarantee perfect reconstruction.", isCorrect: false },
       {
-        text: "To eliminate the need for a decoder network.",
-        isCorrect: false,
+        text: "Autoencoders do not guarantee perfect reconstruction.",
+        isCorrect: true,
+      },
+      {
+        text: "Autoencoders do not eliminate the need for a decoder network.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -115,7 +118,10 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
     prompt:
       "Which statements about reconstruction loss \\(\\mathcal{L}(x, \\hat{x}) = \\|x - \\hat{x}\\|^2\\) are correct?",
     options: [
-      { text: "It compares the input to its reconstruction.", isCorrect: true },
+      {
+        text: "It ignores the relationship between the input and its reconstruction.",
+        isCorrect: false,
+      },
       { text: "It can be used without labeled data.", isCorrect: true },
       {
         text: "It encourages the latent space to encode useful information.",
@@ -147,8 +153,8 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
       },
       { text: "It always improves reconstruction accuracy.", isCorrect: false },
       {
-        text: "It may prevent the model from encoding fine details.",
-        isCorrect: true,
+        text: "It never prevents the model from encoding fine details.",
+        isCorrect: false,
       },
     ],
     explanation:
@@ -210,8 +216,8 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
       },
       { text: "It is always symmetric in its arguments.", isCorrect: false },
       {
-        text: "It regularizes latent distributions toward a prior.",
-        isCorrect: true,
+        text: "It does not regularize latent distributions toward a prior.",
+        isCorrect: false,
       },
       {
         text: "It ensures continuity and completeness in the latent space.",
@@ -239,8 +245,8 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It centers latent representations around zero.",
-        isCorrect: true,
+        text: "It pushes latent representations arbitrarily far from zero.",
+        isCorrect: false,
       },
     ],
     explanation:
@@ -255,8 +261,8 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
       "Why is direct sampling \\(z \\sim \\mathcal{N}(\\mu, \\sigma^2)\\) problematic for backpropagation?",
     options: [
       {
-        text: "Sampling introduces non-differentiable stochasticity.",
-        isCorrect: true,
+        text: "Sampling is fully differentiable and introduces no stochasticity.",
+        isCorrect: false,
       },
       {
         text: "Gradients cannot pass through random nodes directly.",
@@ -279,8 +285,8 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
     prompt: "The reparameterization trick expresses latent variables as:",
     options: [
       {
-        text: "\\(z = \\mu + \\sigma \\epsilon\\), where \\(\\epsilon \\sim \\mathcal{N}(0, I)\\).",
-        isCorrect: true,
+        text: "\\(z = \\mu \\times \\sigma\\).",
+        isCorrect: false,
       },
       {
         text: "A deterministic transformation of \\(\\mu, \\sigma, \\epsilon\\).",
@@ -361,8 +367,8 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
     prompt: "The GAN objective can be written as:",
     options: [
       {
-        text: "\\(\\max_D \\mathbb{E}_{x \\sim p_{data}}[\\log D(x)] + \\mathbb{E}_{z \\sim p(z)}[\\log(1 - D(G(z)))]\\).",
-        isCorrect: true,
+        text: "GAN training is not based on a minimax objective.",
+        isCorrect: false,
       },
       {
         text: "A minimax game between generator and discriminator.",
@@ -391,10 +397,13 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
         text: "The generator and discriminator objectives compete.",
         isCorrect: true,
       },
-      { text: "The loss landscape can lead to oscillations.", isCorrect: true },
       {
-        text: "The discriminator may overpower the generator.",
-        isCorrect: true,
+        text: "The loss landscape cannot lead to oscillations.",
+        isCorrect: false,
+      },
+      {
+        text: "The discriminator can never overpower the generator.",
+        isCorrect: false,
       },
       { text: "GANs have no differentiable components.", isCorrect: false },
     ],
@@ -409,10 +418,13 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
     prompt: "Which statements describe sampling in generative models?",
     options: [
       {
-        text: "Sampling from \\(p_{model}(x)\\) produces new data instances.",
-        isCorrect: true,
+        text: "Sampling from \\(p_{model}(x)\\) does not produce new data instances.",
+        isCorrect: false,
       },
-      { text: "In GANs, sampling begins from random noise.", isCorrect: true },
+      {
+        text: "In GANs, sampling never begins from random noise.",
+        isCorrect: false,
+      },
       {
         text: "In VAEs, sampling occurs in latent space before decoding.",
         isCorrect: true,
@@ -435,13 +447,13 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Indicates the generator has learned a continuous mapping.",
-        isCorrect: true,
+        text: "Indicates the generator has not learned a continuous mapping.",
+        isCorrect: false,
       },
       { text: "Always results in identical outputs.", isCorrect: false },
       {
-        text: "Suggests structure in the learned data manifold.",
-        isCorrect: true,
+        text: "Suggests there is no structure in the learned data manifold.",
+        isCorrect: false,
       },
     ],
     explanation:
@@ -478,12 +490,12 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "\\(q_\\phi(z|x)\\), the approximate posterior over latent variables.",
+        text: "\\(q_\\phi(z|x)\\), the decoder distribution in a VAE.",
         isCorrect: false,
       },
       {
-        text: "A mapping from latent space back to the data space.",
-        isCorrect: true,
+        text: "A mapping from latent space back to the data space is not part of the decoder.",
+        isCorrect: false,
       },
       {
         text: "A conditional generative distribution parameterized by \\(\\theta\\).",
@@ -503,16 +515,16 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
     options: [
       { text: "It is always non-negative.", isCorrect: true },
       {
-        text: "It equals zero if and only if the two distributions are identical almost everywhere.",
-        isCorrect: true,
+        text: "It can be negative for sufficiently similar distributions.",
+        isCorrect: false,
       },
       {
         text: "It is symmetric: \\(D_{KL}(p\\|q) = D_{KL}(q\\|p)\\).",
         isCorrect: false,
       },
       {
-        text: "It can be interpreted as a measure of information loss when approximating one distribution with another.",
-        isCorrect: true,
+        text: "It cannot be interpreted as information loss when approximating one distribution with another.",
+        isCorrect: false,
       },
     ],
     explanation:
@@ -531,13 +543,13 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It promotes coverage of the latent space (completeness).",
-        isCorrect: true,
+        text: "It discourages coverage of the latent space.",
+        isCorrect: false,
       },
       { text: "It guarantees perfect disentanglement.", isCorrect: false },
       {
-        text: "It prevents large empty gaps in latent space.",
-        isCorrect: true,
+        text: "It creates large empty gaps in latent space.",
+        isCorrect: false,
       },
     ],
     explanation:
@@ -556,10 +568,10 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The generator minimizes the discriminator’s ability to detect fake samples.",
-        isCorrect: true,
+        text: "The generator maximizes the discriminator's ability to detect fake samples.",
+        isCorrect: false,
       },
-      { text: "The objective defines a two-player game.", isCorrect: true },
+      { text: "The objective is not a two-player game.", isCorrect: false },
       {
         text: "Both networks minimize the same objective simultaneously.",
         isCorrect: false,
@@ -580,10 +592,13 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Debiasing datasets by uncovering underrepresented features.",
-        isCorrect: true,
+        text: "Debiasing datasets by uncovering underrepresented features is impossible with generative models.",
+        isCorrect: false,
       },
-      { text: "Generating synthetic images, text, or audio.", isCorrect: true },
+      {
+        text: "Generating synthetic images, text, or audio is not a valid use of generative models.",
+        isCorrect: false,
+      },
       { text: "Replacing all supervised learning tasks.", isCorrect: false },
     ],
     explanation:
@@ -604,7 +619,10 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
         text: "It allows gradients to flow through \\(\\mu\\) and \\(\\sigma\\).",
         isCorrect: true,
       },
-      { text: "It removes all randomness from VAEs.", isCorrect: false },
+      {
+        text: "It does not remove all randomness from VAEs.",
+        isCorrect: true,
+      },
       {
         text: "It rewrites \\(z \\sim \\mathcal{N}(\\mu, \\sigma^2)\\) as \\(z = \\mu + \\sigma \\epsilon\\).",
         isCorrect: true,
@@ -630,8 +648,8 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Performing explicit maximum likelihood estimation of \\(p(x)\\).",
-        isCorrect: false,
+        text: "GANs do not perform explicit maximum likelihood estimation of \\(p(x)\\).",
+        isCorrect: true,
       },
       { text: "Learning a continuous function approximator.", isCorrect: true },
     ],

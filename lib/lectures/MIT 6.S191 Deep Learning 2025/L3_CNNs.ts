@@ -44,7 +44,10 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
         text: "Classification models can output probabilities over classes.",
         isCorrect: true,
       },
-      { text: "Regression requires outputs to sum to one.", isCorrect: false },
+      {
+        text: "Regression does not require outputs to sum to one.",
+        isCorrect: true,
+      },
     ],
     explanation:
       "Regression predicts continuous quantities such as steering angles. Classification predicts discrete labels and often uses a softmax to produce probabilities that sum to one. Regression outputs do not need to sum to one because they are not probability distributions.",
@@ -69,8 +72,8 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Pixel values are always identical for objects of the same class.",
-        isCorrect: false,
+        text: "Pixel values are not always identical for objects of the same class.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -97,8 +100,8 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Flattening prevents the use of nonlinear activations.",
-        isCorrect: false,
+        text: "Flattening does not prevent the use of nonlinear activations.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -125,8 +128,8 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The output will have the same spatial size as the input.",
-        isCorrect: false,
+        text: "The output will not have the same spatial size as the input.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -152,8 +155,8 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Each output neuron connects to all pixels in the image.",
-        isCorrect: false,
+        text: "Each output neuron does not connect to all pixels in the image.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -173,7 +176,10 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
         isCorrect: true,
       },
       { text: "ReLU maps negative values to zero.", isCorrect: true },
-      { text: "They ensure the outputs sum to one.", isCorrect: false },
+      {
+        text: "They do not ensure that the outputs sum to one.",
+        isCorrect: true,
+      },
     ],
     explanation:
       "Nonlinearities allow neural networks to model complex functions beyond linear transformations. ReLU specifically sets negative activations to zero while preserving positive values. Summing to one is a property of softmax, not ReLU.",
@@ -187,8 +193,8 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
       "Why does stacking convolutional layers create hierarchical feature representations?",
     options: [
       {
-        text: "Early layers detect low-level features such as edges.",
-        isCorrect: true,
+        text: "Early layers directly detect whole objects rather than low-level features.",
+        isCorrect: false,
       },
       {
         text: "Deeper layers combine simpler features into more complex ones.",
@@ -213,7 +219,7 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
     difficulty: "medium",
     prompt: "Which statements describe max pooling?",
     options: [
-      { text: "It reduces spatial resolution.", isCorrect: true },
+      { text: "It increases spatial resolution.", isCorrect: false },
       {
         text: "It selects the maximum value in each local region.",
         isCorrect: true,
@@ -238,7 +244,7 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
         text: "It drastically reduces the number of parameters compared to fully connected layers.",
         isCorrect: true,
       },
-      { text: "It enables translation robustness.", isCorrect: true },
+      { text: "It removes translation robustness.", isCorrect: false },
       {
         text: "It enforces that the same feature detector operates across positions.",
         isCorrect: true,
@@ -279,8 +285,8 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
       "Which statements correctly describe object detection compared to classification?",
     options: [
       {
-        text: "It predicts both class labels and bounding box coordinates.",
-        isCorrect: true,
+        text: "It predicts only one class label for the whole image and no boxes.",
+        isCorrect: false,
       },
       {
         text: "The number of detected objects can vary per image.",
@@ -306,8 +312,8 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
     prompt: "Semantic segmentation differs from object detection because:",
     options: [
       {
-        text: "It predicts a class for every pixel in the image.",
-        isCorrect: true,
+        text: "It predicts a single class label for the whole image.",
+        isCorrect: false,
       },
       { text: "It outputs a 2D map with class assignments.", isCorrect: true },
       {
@@ -328,8 +334,8 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
       "Why can convolutional neural networks generalize to unseen roads in autonomous driving?",
     options: [
       {
-        text: "They learn visual patterns correlated with control signals.",
-        isCorrect: true,
+        text: "They rely on explicit hand-engineered maps for every scene.",
+        isCorrect: false,
       },
       {
         text: "They optimize end-to-end from perception to action.",
@@ -407,7 +413,7 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
     difficulty: "medium",
     prompt: "Why is pooling often used between convolutional layers?",
     options: [
-      { text: "To reduce computational cost.", isCorrect: true },
+      { text: "To increase computational cost.", isCorrect: false },
       { text: "To increase effective receptive field.", isCorrect: true },
       { text: "To provide some translation robustness.", isCorrect: true },
       { text: "To increase spatial resolution.", isCorrect: false },
@@ -424,12 +430,12 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
       "In a convolutional neural network used for classification, why is flattening typically applied only after feature extraction?",
     options: [
       {
-        text: "Spatial information has already been encoded into learned features.",
-        isCorrect: true,
+        text: "Spatial information has not been encoded into learned features at all.",
+        isCorrect: false,
       },
       {
-        text: "Flattening early would discard important spatial structure.",
-        isCorrect: true,
+        text: "Flattening early preserves all important spatial structure.",
+        isCorrect: false,
       },
       {
         text: "Classification outputs are typically one-dimensional.",
@@ -448,7 +454,7 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
     prompt:
       "Why is softmax commonly used at the final layer for classification?",
     options: [
-      { text: "It converts logits into probabilities.", isCorrect: true },
+      { text: "It converts probabilities into logits.", isCorrect: false },
       { text: "Its outputs sum to one.", isCorrect: true },
       { text: "It enables multi-class prediction.", isCorrect: true },
       { text: "It introduces spatial locality.", isCorrect: false },
@@ -492,10 +498,13 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
     prompt:
       "Consider multi-channel convolution with an RGB input \\(H \\times W \\times 3\\) and a filter of size \\(3 \\times 3\\). Which statements are correct?",
     options: [
-      { text: "The filter must also have depth 3.", isCorrect: true },
       {
-        text: "The filter contains \\(3 \\times 3 \\times 3 = 27\\) weights (excluding bias).",
-        isCorrect: true,
+        text: "The filter does not need to have depth 3 for an RGB input.",
+        isCorrect: false,
+      },
+      {
+        text: "The filter contains only \\(3 \\times 3 = 9\\) weights regardless of input depth.",
+        isCorrect: false,
       },
       {
         text: "Element-wise multiplication occurs across spatial and channel dimensions.",
@@ -517,10 +526,10 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
     prompt:
       "If two \\(3 \\times 3\\) convolutional layers (stride 1, no pooling) are stacked, what is the effective receptive field size of a neuron in the second layer?",
     options: [
-      { text: "It is \\(5 \\times 5\\).", isCorrect: true },
+      { text: "It stays exactly \\(3 \\times 3\\).", isCorrect: false },
       {
-        text: "It grows beyond the original \\(3 \\times 3\\) size.",
-        isCorrect: true,
+        text: "It never grows beyond the original \\(3 \\times 3\\) size.",
+        isCorrect: false,
       },
       {
         text: "Stacking small filters increases receptive field with fewer parameters than a single large filter.",
@@ -562,12 +571,12 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
       "In object detection using a Region-based Convolutional Neural Network (R-CNN), which statements are correct?",
     options: [
       {
-        text: "The region proposal network learns candidate bounding boxes.",
-        isCorrect: true,
+        text: "There is no region proposal stage in Faster R-CNN-style detection.",
+        isCorrect: false,
       },
       {
-        text: "Feature extraction is shared between region proposal and classification.",
-        isCorrect: true,
+        text: "Feature extraction is never shared between region proposal and classification.",
+        isCorrect: false,
       },
       {
         text: "The network predicts both bounding box coordinates and class labels.",
@@ -590,10 +599,13 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
       "Suppose a convolutional layer has 64 filters of size \\(3 \\times 3\\) applied to an input of depth 32. How many weights does this layer have (excluding bias)?",
     options: [
       {
-        text: "Each filter has \\(3 \\times 3 \\times 32 = 288\\) weights.",
-        isCorrect: true,
+        text: "Each filter has \\(3 \\times 3 = 9\\) weights regardless of input depth.",
+        isCorrect: false,
       },
-      { text: "Total weights equal \\(64 \\times 288\\).", isCorrect: true },
+      {
+        text: "Total weights are independent of the number of filters.",
+        isCorrect: false,
+      },
       {
         text: "Weight count scales linearly with the number of filters.",
         isCorrect: true,
@@ -610,8 +622,14 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
     difficulty: "easy",
     prompt: "Which statements describe semantic segmentation?",
     options: [
-      { text: "It assigns a label to every pixel.", isCorrect: true },
-      { text: "It outputs a 2D classification map.", isCorrect: true },
+      {
+        text: "It predicts exactly one label for the whole image.",
+        isCorrect: false,
+      },
+      {
+        text: "It outputs a single scalar rather than a 2D map.",
+        isCorrect: false,
+      },
       {
         text: "It can be implemented with upsampling layers.",
         isCorrect: true,
@@ -628,8 +646,8 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
     difficulty: "medium",
     prompt: "Why is downsampling useful in convolutional neural networks?",
     options: [
-      { text: "It increases effective receptive field.", isCorrect: true },
-      { text: "It reduces computational cost.", isCorrect: true },
+      { text: "It decreases effective receptive field.", isCorrect: false },
+      { text: "It always increases computational cost.", isCorrect: false },
       { text: "It helps capture multi-scale features.", isCorrect: true },
       { text: "It increases spatial resolution.", isCorrect: false },
     ],

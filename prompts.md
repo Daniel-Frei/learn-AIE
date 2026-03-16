@@ -1,6 +1,6 @@
 I want you to create 40 questions so that I can learn the lecture (see transcript below and attached pdf for the slides). As this often requires a lot of tokens, I think it's best to break this up into two batches (provide 20 questions, then in a next step we can add 20 more questions)
 
-I already created lib\lectures\MIT 15.773 Hands-On Deep Learning Spring 2024\L1\_ Introduction to Neural Networks and Deep Learning.ts for those questions. Note that this is referring to a lecture but the same requirements (below) as for chapters apply. The learning material can be a book, lecture or other sources.
+I already created lib\lectures\MIT 15.773 Hands-On Deep Learning Spring 2024\L1\_ Introduction to Neural Networks and Deep Learning.ts for those questions. Note that this is referring to a lecture but the same requirements (below) as for chapters apply. The learning material can be a book, lecture, slides or other sources.
 
 Requirements:
 
@@ -13,14 +13,14 @@ Requirements:
 - the questions should be a learning experience for students. it should help them recall and practice what was covered in the learning material.
 - easy questions should focus on terminology, simple concept, key concepts including concepts might not be explicitly explained in the chapter but important to understand it... Mastering easy questions should make it easier to understand concepts in medium and hard question. e.g. some medium and hard questions might mention "logits" but what logits are is never asked in an easy question.
 - easy questions can also cover topics where there are no medium or hard questions for.
-- Questions should cover all concepts and terms that what were discussed in the chapter.
+- Questions should cover all concepts and terms that what were discussed in the learning materials.
 - Write out acronyms.
 - it's important that you directly include math in questions when it's heavily covered in the lecture / chapter. Don't avoid mathematical notations if they are covered in the lecture / chapter.
 - Avoid answer / options that are too easy to guess without having knowledge of the topics. E.g. absolute terms like "always", "all cases", "every time", "impossible" and "never" usually make it very likely that a statement is wrong. Try to be smart about answer options, so that incorrect answers still seem somewhat plausible.
 - Options / answers should be independent of each others (not reference each other or not require a specific order).
-- The answer patterns should be equaly destributed: 25% of all questions should where all answers are true, 25% should be where three answers are true, 25% should be where two answers are true, 25% should be where one answer is true (e.g. for 40 questions, ten questions should have all answers as true, 10 questions with three answers true, 10 questions, with two answers true and 10 questions with one answer as true). Note that by true I am referring to the user ticking the box, the statement in the answers doesn't have to be true, e.g. the question could be "which of the following statements are false?" and then the answer "RNNs use transformers" would be a true answer even though the statement by itself is wrong.
+- The answer patterns should be equaly distributed: 25% of all questions should have all answers as true, 25% should have three answers are true, 25% should have two answers are true, 25% should have one answer is true (e.g. for 40 questions, ten questions should have all answers as true, 10 questions with three answers true, 10 questions, with two answers true and 10 questions with one answer as true). Note that by true I am referring to the user ticking the box, the statement in the answers doesn't have to be true, e.g. the question could be "which of the following statements are false?" and then the answer "RNNs use transformers" would be a true answer even though the statement by itself is wrong.
 - There should roughly be the same amount of easy, medium and hard questions.
-- The difficulty (amount of easy, medium and hard) and answer type (25% each) should roughly be true (sometimes it's not possible if the total question number isn't dividable accordingly)
+- The difficulty (amount of easy, medium and hard) and answer type (25% each) should roughly be correct (sometimes it's not possible if the total question number isn't dividable accordingly)
 - When in doubt, it's better for the descriptions (and the explanation) to be a bit longer. They should help the user understand the questions and answers better, so a bit of extra information is usually desired.
 - Especially the explanations (which the user sees after answering the question) should really explain the answers (at least two sentences long). The explanation should explain the issues in simple terms, so that the user can learn from it.
 - provide the questions as code (see example)

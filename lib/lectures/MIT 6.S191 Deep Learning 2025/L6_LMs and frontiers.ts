@@ -13,8 +13,8 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The theorem guarantees efficient training via gradient descent.",
-        isCorrect: false,
+        text: "The theorem does not guarantee efficient training via gradient descent.",
+        isCorrect: true,
       },
       {
         text: "The theorem does not specify how many hidden units are required.",
@@ -41,8 +41,8 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Test accuracy remains high even with completely random labels.",
-        isCorrect: false,
+        text: "Test accuracy does not remain high with completely random labels.",
+        isCorrect: true,
       },
       {
         text: "The model effectively memorizes the training set.",
@@ -67,7 +67,10 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
         text: "Model behavior on inputs far from the training distribution.",
         isCorrect: true,
       },
-      { text: "Performance on the training set.", isCorrect: false },
+      {
+        text: "Out-of-distribution generalization is not just performance on the training set.",
+        isCorrect: true,
+      },
       {
         text: "Regions of input space where the model has limited training support.",
         isCorrect: true,
@@ -92,8 +95,8 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Updating network weights to minimize training loss.",
-        isCorrect: false,
+        text: "Adversarial attacks are not the same as updating network weights to minimize training loss.",
+        isCorrect: true,
       },
       { text: "Using gradients with respect to the input.", isCorrect: true },
       {
@@ -118,8 +121,8 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
       },
       { text: "Adversarial vulnerabilities.", isCorrect: true },
       {
-        text: "Guaranteed robustness across all environments.",
-        isCorrect: false,
+        text: "These concerns do not imply guaranteed robustness across all environments.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -134,8 +137,8 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
     options: [
       { text: "Progressively adds noise to training data.", isCorrect: true },
       {
-        text: "Requires learning parameters via gradient descent.",
-        isCorrect: false,
+        text: "The forward diffusion process does not require learning parameters via gradient descent.",
+        isCorrect: true,
       },
       {
         text: "Eventually transforms data into nearly pure noise.",
@@ -164,7 +167,10 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
         text: "Minimize mean squared error between predicted and true noise.",
         isCorrect: true,
       },
-      { text: "Directly classify images.", isCorrect: false },
+      {
+        text: "Diffusion models do not directly classify images as their main objective here.",
+        isCorrect: true,
+      },
       { text: "Iteratively remove noise to recover data.", isCorrect: true },
     ],
     explanation:
@@ -180,7 +186,10 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
     options: [
       { text: "Generate samples iteratively.", isCorrect: true },
       { text: "Often produce high-fidelity outputs.", isCorrect: true },
-      { text: "Collapse to a single mode by design.", isCorrect: false },
+      {
+        text: "They do not collapse to a single mode by design.",
+        isCorrect: true,
+      },
       {
         text: "Simplify learning by decomposing generation into steps.",
         isCorrect: true,
@@ -201,8 +210,8 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Systems that explicitly store labeled Q&A pairs for all responses.",
-        isCorrect: false,
+        text: "LLMs are not systems that explicitly store labeled Q&A pairs for all responses.",
+        isCorrect: true,
       },
       {
         text: "Models trained using self-supervised learning objectives.",
@@ -233,8 +242,8 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A regression task predicting continuous pixel intensities.",
-        isCorrect: false,
+        text: "Next-token prediction is not a regression task over continuous pixel intensities.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -248,8 +257,8 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
     prompt: "The cross-entropy loss for next-token prediction is:",
     options: [
       {
-        text: "\\( \\mathcal{L} = -\\sum_i y_i \\log \\hat{y}_i \\).",
-        isCorrect: true,
+        text: "\\( \\mathcal{L} = \\sum_i y_i \\hat{y}_i \\).",
+        isCorrect: false,
       },
       {
         text: "Minimized when predicted probabilities match the true one-hot label.",
@@ -275,8 +284,8 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
     prompt: "Self-supervised learning in LLMs refers to:",
     options: [
       {
-        text: "Using the data itself to create training targets.",
-        isCorrect: true,
+        text: "Requiring fully supervised labels for every example.",
+        isCorrect: false,
       },
       {
         text: "Requiring human annotation for every training example.",
@@ -299,8 +308,8 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
     prompt: "Scaling laws in large language models suggest:",
     options: [
       {
-        text: "Performance often improves predictably with model size and data scale.",
-        isCorrect: true,
+        text: "Performance often worsens predictably with model size and data scale.",
+        isCorrect: false,
       },
       {
         text: "Emergent abilities may appear at certain parameter thresholds.",
@@ -325,7 +334,10 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
     difficulty: "easy",
     prompt: "Hallucinations in LLMs refer to:",
     options: [
-      { text: "Fluent outputs that are factually incorrect.", isCorrect: true },
+      {
+        text: "Fluent outputs that are always factually correct.",
+        isCorrect: false,
+      },
       { text: "Guaranteed model failures on every prompt.", isCorrect: false },
       { text: "Confident but ungrounded responses.", isCorrect: true },
       { text: "A challenge in uncertainty estimation.", isCorrect: true },
@@ -340,7 +352,7 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
     difficulty: "medium",
     prompt: "Diffusion models begin sampling by:",
     options: [
-      { text: "Starting from random noise.", isCorrect: true },
+      { text: "Starting from labeled supervision signals.", isCorrect: false },
       { text: "Applying iterative denoising steps.", isCorrect: true },
       {
         text: "Using a trained model to predict noise residuals.",
@@ -362,8 +374,8 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
     prompt: "Why can diffusion models capture high diversity in outputs?",
     options: [
       {
-        text: "They start from maximally variable random noise.",
-        isCorrect: true,
+        text: "They start from a fixed clean image instead of random noise.",
+        isCorrect: false,
       },
       {
         text: "Each noise initialization can lead to a different sample.",
@@ -388,7 +400,7 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
     difficulty: "medium",
     prompt: "Uncertainty estimation in deep learning is important because:",
     options: [
-      { text: "Models may encounter unseen scenarios.", isCorrect: true },
+      { text: "Models never encounter unseen scenarios.", isCorrect: false },
       {
         text: "Confidence calibration impacts safety-critical decisions.",
         isCorrect: true,
@@ -412,7 +424,7 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
     difficulty: "easy",
     prompt: "Neural networks can be viewed fundamentally as:",
     options: [
-      { text: "Function approximators.", isCorrect: true },
+      { text: "Exact symbolic reasoners by definition.", isCorrect: false },
       { text: "Probability distribution estimators.", isCorrect: true },
       { text: "Models mapping data to decisions.", isCorrect: true },
       { text: "Systems guaranteed to generalize perfectly.", isCorrect: false },
@@ -429,8 +441,8 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
       "Why does next-token prediction enable broad language capabilities?",
     options: [
       {
-        text: "Language structure is implicitly encoded in token sequences.",
-        isCorrect: true,
+        text: "Language structure is absent from token sequences.",
+        isCorrect: false,
       },
       {
         text: "Maximizing likelihood over large corpora captures grammar and semantics.",
@@ -456,8 +468,8 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
     prompt: "Which tradeoffs characterize modern AI frontiers?",
     options: [
       {
-        text: "Scaling improves performance but increases compute cost.",
-        isCorrect: true,
+        text: "Scaling reduces compute cost while leaving performance unchanged.",
+        isCorrect: false,
       },
       {
         text: "Greater capability may introduce new safety concerns.",
@@ -485,12 +497,12 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "As \\(t\\) increases, \\(x_t\\) approaches a Gaussian distribution.",
-        isCorrect: true,
+        text: "As \\(t\\) increases, \\(x_t\\) stays near the original data distribution.",
+        isCorrect: false,
       },
       {
-        text: "The forward process is fixed and does not require learning.",
-        isCorrect: true,
+        text: "The forward process requires learning at every timestep.",
+        isCorrect: false,
       },
       {
         text: "The forward process learns parameters \\(\\beta_t\\) during training.",
@@ -512,11 +524,14 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
         text: "The model learns to predict the added noise \\(\\epsilon\\).",
         isCorrect: true,
       },
-      { text: "The objective is a mean squared error loss.", isCorrect: true },
+      {
+        text: "The objective is a cross-entropy classification loss.",
+        isCorrect: false,
+      },
       { text: "The model directly predicts class labels.", isCorrect: false },
       {
-        text: "Minimizing this loss helps approximate the reverse diffusion process.",
-        isCorrect: true,
+        text: "Minimizing this loss does not help approximate the reverse diffusion process.",
+        isCorrect: false,
       },
     ],
     explanation:
@@ -535,12 +550,12 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The perturbation \\(\\delta\\) is constrained to be small.",
-        isCorrect: true,
+        text: "The perturbation \\(\\delta\\) is unconstrained and must be large.",
+        isCorrect: false,
       },
       {
-        text: "This differs from training, where weights are optimized.",
-        isCorrect: true,
+        text: "This is identical to training because weights are optimized instead of inputs.",
+        isCorrect: false,
       },
       {
         text: "The optimization modifies model parameters \\(\\theta\\).",
@@ -562,10 +577,13 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Lack of grounding in external verified sources.",
-        isCorrect: true,
+        text: "Grounding in external verified sources is built into the base objective.",
+        isCorrect: false,
       },
-      { text: "Imperfect uncertainty calibration.", isCorrect: true },
+      {
+        text: "Uncertainty calibration is perfect by default.",
+        isCorrect: false,
+      },
       {
         text: "Explicit symbolic fact-checking built into the base objective.",
         isCorrect: false,
@@ -582,8 +600,11 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
     prompt: "Which are advantages of diffusion models compared to GANs?",
     options: [
       { text: "More stable training dynamics.", isCorrect: true },
-      { text: "Reduced mode collapse.", isCorrect: true },
-      { text: "High-quality image synthesis.", isCorrect: true },
+      { text: "Guaranteed severe mode collapse.", isCorrect: false },
+      {
+        text: "Diffusion models cannot produce high-quality images.",
+        isCorrect: false,
+      },
       { text: "Single forward-pass generation only.", isCorrect: false },
     ],
     explanation:
@@ -602,10 +623,13 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Taking logs yields a sum of log-probabilities.",
-        isCorrect: true,
+        text: "Taking logs does not produce a sum of log-probabilities.",
+        isCorrect: false,
       },
-      { text: "The loss becomes cross-entropy over tokens.", isCorrect: true },
+      {
+        text: "The loss cannot be written as cross-entropy over tokens.",
+        isCorrect: false,
+      },
       { text: "It directly minimizes mean squared error.", isCorrect: false },
     ],
     explanation:
@@ -624,12 +648,12 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Larger models can represent more complex functions.",
-        isCorrect: true,
+        text: "Larger models cannot represent more complex functions.",
+        isCorrect: false,
       },
       {
-        text: "Training on broader data exposes more task structure.",
-        isCorrect: true,
+        text: "Training on broader data exposes less task structure.",
+        isCorrect: false,
       },
       {
         text: "Emergent abilities are mathematically guaranteed by theory.",
@@ -652,16 +676,16 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "OOD inputs can produce high-confidence predictions.",
-        isCorrect: true,
+        text: "OOD inputs cannot produce high-confidence predictions.",
+        isCorrect: false,
       },
       {
         text: "Neural networks inherently model epistemic uncertainty perfectly.",
         isCorrect: false,
       },
       {
-        text: "Training data distribution shapes model beliefs.",
-        isCorrect: true,
+        text: "Training data distribution does not shape model beliefs.",
+        isCorrect: false,
       },
     ],
     explanation:
@@ -678,8 +702,8 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
         text: "Splits raw text into discrete units called tokens.",
         isCorrect: true,
       },
-      { text: "Allows numerical encoding of text.", isCorrect: true },
-      { text: "Defines the vocabulary space.", isCorrect: true },
+      { text: "Prevents numerical encoding of text.", isCorrect: false },
+      { text: "Has nothing to do with vocabulary space.", isCorrect: false },
       { text: "Guarantees semantic understanding.", isCorrect: false },
     ],
     explanation:
@@ -697,12 +721,12 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Each step approximates \\(p(x_{t-1} \\mid x_t)\\).",
-        isCorrect: true,
+        text: "Each step ignores \\(p(x_{t-1} \\mid x_t)\\).",
+        isCorrect: false,
       },
       {
-        text: "Starting from pure noise increases diversity.",
-        isCorrect: true,
+        text: "Starting from pure noise does not affect diversity.",
+        isCorrect: false,
       },
       {
         text: "The process requires ground-truth images at inference.",

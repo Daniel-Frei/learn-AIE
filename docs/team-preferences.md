@@ -34,3 +34,10 @@ This file captures durable process preferences so future tasks can follow them b
 
 - Keep expanding coverage for core functionality, not just smoke tests.
 - Prioritize tests for quiz source selection/title logic, difficulty rating behavior, and API validation/error handling.
+
+## Question Bank Preferences
+
+- For question-bank files under `/lib` (excluding `/lib/llm`), keep answer patterns roughly balanced across 1, 2, 3, and 4 correct-answer questions.
+- Exact quarter splits are preferred when practical, but approximate balance is acceptable when a file size or authoring constraints make exact `25%` buckets awkward.
+- For automated validation, treat a file as acceptably balanced when each answer-count bucket stays within about `10%` of the file’s total question count from the ideal quarter split.
+- When rebalancing question banks, prefer minimal statement edits and corresponding `isCorrect` updates rather than rewriting whole questions.

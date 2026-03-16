@@ -21,8 +21,8 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "An epoch refers to the number of neurons in the hidden layer.",
-        isCorrect: false,
+        text: "An epoch tracks a pass through the dataset rather than the number of neurons.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -49,8 +49,8 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "SGD processes training data in batches or minibatches.",
-        isCorrect: true,
+        text: "SGD processes the entire dataset in a single batch at every step.",
+        isCorrect: false,
       },
     ],
     explanation:
@@ -121,8 +121,8 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
       },
       { text: "Higher values correspond to brighter pixels.", isCorrect: true },
       {
-        text: "Each pixel is represented by three color channels.",
-        isCorrect: false,
+        text: "A grayscale image represents each pixel with a single intensity value rather than three color channels.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -146,8 +146,8 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Flattening is required when using dense layers that expect vector inputs.",
-        isCorrect: true,
+        text: "Flattening is never required before dense layers.",
+        isCorrect: false,
       },
     ],
     explanation:
@@ -166,8 +166,8 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
       },
       { text: "The outputs of softmax sum to 1.", isCorrect: true },
       {
-        text: "Softmax requires each input value to already lie between 0 and 1.",
-        isCorrect: false,
+        text: "Softmax can be applied to arbitrary real-valued logits.",
+        isCorrect: true,
       },
       {
         text: "Softmax often appears in the output layer for multi-class classification.",
@@ -185,12 +185,12 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
     prompt: "Which statements about overfitting are correct?",
     options: [
       {
-        text: "Overfitting occurs when a model learns patterns specific to the training data rather than generalizable patterns.",
-        isCorrect: true,
+        text: "Overfitting occurs when a model learns only generalizable patterns that transfer well.",
+        isCorrect: false,
       },
       {
-        text: "Increasing model complexity can increase the risk of overfitting.",
-        isCorrect: true,
+        text: "Increasing model simplicity always increases the risk of overfitting.",
+        isCorrect: false,
       },
       {
         text: "Overfitting typically results in low training error but higher validation error.",
@@ -221,8 +221,8 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Early stopping requires calculating gradients on the validation set.",
-        isCorrect: false,
+        text: "Early stopping monitors validation performance rather than computing validation gradients.",
+        isCorrect: true,
       },
       { text: "Early stopping can help prevent overfitting.", isCorrect: true },
     ],
@@ -250,8 +250,8 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "TensorFlow requires users to manually compute derivatives for backpropagation.",
-        isCorrect: false,
+        text: "TensorFlow can compute derivatives automatically during backpropagation.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -265,8 +265,8 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
     prompt:
       "Consider the softmax function defined as \\( p_i = \\frac{e^{a_i}}{\\sum_j e^{a_j}} \\). Which statements are correct?",
     options: [
-      { text: "Each \\(p_i\\) is guaranteed to be positive.", isCorrect: true },
-      { text: "The probabilities sum to 1.", isCorrect: true },
+      { text: "Each \\(p_i\\) can be negative.", isCorrect: false },
+      { text: "The probabilities do not need to sum to 1.", isCorrect: false },
       {
         text: "The output distribution is invariant to adding the same constant to all \\(a_i\\).",
         isCorrect: true,
@@ -288,12 +288,12 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
       "Which statements about loss functions for classification tasks are correct?",
     options: [
       {
-        text: "Binary cross-entropy is commonly used for binary classification problems.",
-        isCorrect: true,
+        text: "Binary cross-entropy is commonly used for multi-class problems with 100 classes.",
+        isCorrect: false,
       },
       {
-        text: "Categorical cross-entropy is used when predicting probabilities across multiple classes.",
-        isCorrect: true,
+        text: "Categorical cross-entropy is used for regression targets.",
+        isCorrect: false,
       },
       {
         text: "Sparse categorical cross-entropy is used when class labels are encoded as integers.",
@@ -342,8 +342,8 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
       },
       { text: "Each channel typically ranges from 0 to 255.", isCorrect: true },
       {
-        text: "A color image can be represented as a tensor of rank 3.",
-        isCorrect: true,
+        text: "A color image can be represented as a tensor of rank 1.",
+        isCorrect: false,
       },
       {
         text: "A grayscale image uses the same number of channels as a color image.",
@@ -362,7 +362,10 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
       "Which of the following tasks are common problems in computer vision?",
     options: [
       { text: "Image classification.", isCorrect: true },
-      { text: "Object detection.", isCorrect: true },
+      {
+        text: "Object detection is not a common computer vision problem.",
+        isCorrect: false,
+      },
       { text: "Semantic segmentation.", isCorrect: true },
       { text: "Sorting images alphabetically.", isCorrect: false },
     ],
@@ -382,8 +385,8 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Validation data is used to update model weights.",
-        isCorrect: false,
+        text: "Validation data is not used to update model weights.",
+        isCorrect: true,
       },
       {
         text: "Validation metrics can help detect overfitting.",
@@ -410,8 +413,8 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Accuracy can change dramatically even if predicted probabilities change only slightly.",
-        isCorrect: true,
+        text: "Accuracy is unchanged when predicted probabilities change slightly.",
+        isCorrect: false,
       },
       {
         text: "Accuracy is a continuous differentiable function used for gradient descent.",
@@ -433,12 +436,12 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
     prompt: "Which statements about batch size selection are correct?",
     options: [
       {
-        text: "Common default batch sizes include 32 and 64.",
-        isCorrect: true,
+        text: "Common default batch sizes are always 1 and 2.",
+        isCorrect: false,
       },
       {
-        text: "Batch size determines how many samples are used to compute each gradient update.",
-        isCorrect: true,
+        text: "Batch size determines the number of epochs in training.",
+        isCorrect: false,
       },
       {
         text: "Batch size must equal the size of the entire training dataset.",
@@ -461,12 +464,12 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
       "Which statements correctly describe preprocessing steps commonly applied before training neural networks?",
     options: [
       {
-        text: "Categorical variables are often converted to numeric form using one-hot encoding.",
-        isCorrect: true,
+        text: "Categorical variables must remain as raw strings during training.",
+        isCorrect: false,
       },
       {
-        text: "Numeric features are often standardized by subtracting the mean and dividing by the standard deviation.",
-        isCorrect: true,
+        text: "Numeric features are standardized by multiplying by the mean and adding the standard deviation.",
+        isCorrect: false,
       },
       {
         text: "Test data should influence the normalization parameters used for training.",
@@ -489,10 +492,10 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
       "Which statements correctly describe the relationship between logits and probabilities in multi-class classification?",
     options: [
       {
-        text: "Logits are the raw outputs of the neural network before softmax.",
-        isCorrect: true,
+        text: "Logits are normalized probabilities after softmax.",
+        isCorrect: false,
       },
-      { text: "Softmax converts logits into probabilities.", isCorrect: true },
+      { text: "Softmax converts probabilities into logits.", isCorrect: false },
       {
         text: "The largest logit corresponds to the most likely class after softmax.",
         isCorrect: true,
@@ -554,8 +557,8 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "A baseline accuracy can often be estimated by looking at class distribution.",
-        isCorrect: true,
+        text: "A baseline accuracy cannot be estimated from class distribution.",
+        isCorrect: false,
       },
     ],
     explanation:
@@ -574,8 +577,8 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The gradient \\(\\nabla L(w)\\) indicates the direction of steepest increase in loss.",
-        isCorrect: true,
+        text: "The gradient \\(\\nabla L(w)\\) indicates the direction of steepest decrease in loss.",
+        isCorrect: false,
       },
       {
         text: "Subtracting the gradient moves the parameters toward lower loss.",
@@ -631,8 +634,8 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Deep learning frameworks like TensorFlow automatically use GPUs when available.",
-        isCorrect: true,
+        text: "Deep learning frameworks require users to manage GPUs entirely manually.",
+        isCorrect: false,
       },
       {
         text: "GPUs eliminate the need for optimization algorithms such as Adam.",
@@ -662,8 +665,8 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Binary cross-entropy penalizes confident incorrect predictions heavily.",
-        isCorrect: true,
+        text: "Binary cross-entropy treats confident incorrect predictions lightly.",
+        isCorrect: false,
       },
     ],
     explanation:
