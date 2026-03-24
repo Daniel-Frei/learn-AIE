@@ -101,11 +101,12 @@ describe("quiz source registry helpers", () => {
     expect(title).toContain("+1 more");
   });
 
-  it("registers newly added MIT 6.S191 and linear algebra sources", () => {
+  it("registers newly added MIT 6.S191, linear algebra, and LangChain sources", () => {
     const ids = new Set(QUESTION_SOURCES.map((s) => s.id));
     expect(ids.has("mit6s191-l3")).toBe(true);
     expect(ids.has("mit6s191-l4")).toBe(true);
     expect(ids.has("mit6s191-l6")).toBe(true);
     expect(ids.has("crash-linalg-l1")).toBe(true);
+    expect(ids.has("langchain-deepagents")).toBe(true);
   });
 });

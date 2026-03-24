@@ -32,6 +32,7 @@ type Props = {
   userRatingRd: number;
   exportDifficultyJson: () => string;
   importDifficultyFromJson: (json: string) => void;
+  exportReportsJson: () => string;
 };
 
 export default function QuizHeader({
@@ -49,6 +50,7 @@ export default function QuizHeader({
   userRatingRd,
   exportDifficultyJson,
   importDifficultyFromJson,
+  exportReportsJson,
 }: Props) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
@@ -167,6 +169,20 @@ export default function QuizHeader({
     fileInputRef.current?.click();
   };
 
+  const handleExportReportsClick = () => {
+    const json = exportReportsJson();
+    const blob = new Blob([json], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "quiz-question-reports.json";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  };
+
   const handleFileChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -232,6 +248,13 @@ export default function QuizHeader({
               className="px-3 py-1 rounded-md bg-slate-800 border border-slate-700 text-xs"
             >
               Import ratings
+            </button>
+            <button
+              type="button"
+              onClick={handleExportReportsClick}
+              className="px-3 py-1 rounded-md bg-slate-800 border border-slate-700 text-xs"
+            >
+              Export reports
             </button>
             <input
               ref={fileInputRef}
@@ -348,18 +371,24 @@ export default function QuizHeader({
                   className="rounded-lg border border-slate-700 bg-slate-900/60 px-3 py-2"
                 >
                   <summary className="flex items-center justify-between gap-3 cursor-pointer list-none">
-                    <label
+                    <button
+                      type="button"
                       className="flex items-center gap-2 text-sm font-semibold text-slate-100"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        togglePendingSeries(series.id);
+                      }}
                     >
                       <input
                         type="checkbox"
+                        aria-label={series.label}
                         checked={seriesChecked}
-                        onChange={() => togglePendingSeries(series.id)}
-                        className="accent-sky-400 h-4 w-4"
+                        readOnly
+                        className="pointer-events-none accent-sky-400 h-4 w-4"
                       />
                       {series.label}
-                    </label>
+                    </button>
                     <span className="text-xs text-slate-400">
                       {seriesSources.length} lectures/chapters
                     </span>
@@ -369,15 +398,18 @@ export default function QuizHeader({
                     {seriesSources.map((source) => {
                       const sourceChecked = pendingSources.includes(source.id);
                       return (
-                        <label
+                        <button
+                          type="button"
                           key={source.id}
-                          className="flex gap-3 items-start rounded-md border border-slate-700 bg-slate-900 px-3 py-2 cursor-pointer"
+                          onClick={() => togglePendingSource(source.id)}
+                          className="w-full text-left flex gap-3 items-start rounded-md border border-slate-700 bg-slate-900 px-3 py-2 cursor-pointer"
                         >
                           <input
                             type="checkbox"
+                            aria-label={source.label}
                             checked={sourceChecked}
-                            onChange={() => togglePendingSource(source.id)}
-                            className="mt-1 accent-sky-400 h-4 w-4"
+                            readOnly
+                            className="pointer-events-none mt-1 accent-sky-400 h-4 w-4"
                           />
                           <div className="space-y-1">
                             <div className="text-sm font-semibold text-slate-100">
@@ -390,7 +422,7 @@ export default function QuizHeader({
                               Topic: {source.topic}
                             </div>
                           </div>
-                        </label>
+                        </button>
                       );
                     })}
                   </div>

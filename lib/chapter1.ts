@@ -15,8 +15,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The length of each one-hot vector equals the size of the vocabulary.",
-        isCorrect: true,
+        text: "The length of each one-hot vector equals the number of tokens in the current sentence.",
+        isCorrect: false,
       },
       {
         text: "One-hot vectors naturally encode semantic similarity between words.",
@@ -38,8 +38,8 @@ export const chapter1Questions: Question[] = [
       "Text normalization before tokenization often includes which steps?",
     options: [
       {
-        text: "Converting all characters to lowercase.",
-        isCorrect: true,
+        text: "Converting all characters to lowercase is always required.",
+        isCorrect: false,
       },
       {
         text: "Lemmatization or stemming to group related word forms.",
@@ -76,8 +76,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "BoW explicitly encodes the position of each word in the sentence.",
-        isCorrect: false,
+        text: "BoW does not explicitly encode the position of each word in the sentence.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -91,8 +91,8 @@ export const chapter1Questions: Question[] = [
       "What problems are commonly associated with BoW and one-hot representations?",
     options: [
       {
-        text: "High memory and computation cost due to large vector dimensionality.",
-        isCorrect: true,
+        text: "High memory and computation cost due to large vector dimensionality is never an issue.",
+        isCorrect: false,
       },
       {
         text: "Lack of semantic similarity between words in the vector space.",
@@ -147,8 +147,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Up-weight words that appear only in a few documents.",
-        isCorrect: true,
+        text: "Up-weight words that appear in only one document and ignore all other rare words.",
+        isCorrect: false,
       },
       {
         text: "Give the same weight to every word regardless of frequency.",
@@ -177,8 +177,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "TF-IDF vectors are usually dense low-dimensional embeddings.",
-        isCorrect: false,
+        text: "TF-IDF vectors are usually sparse high-dimensional representations.",
+        isCorrect: true,
       },
       {
         text: "TF-IDF originated in information retrieval for document search.",
@@ -196,8 +196,8 @@ export const chapter1Questions: Question[] = [
       "The “distributional hypothesis” motivating embeddings states which ideas?",
     options: [
       {
-        text: "Words that occur in similar contexts tend to have similar meanings.",
-        isCorrect: true,
+        text: "Words that occur in similar contexts always have identical meanings.",
+        isCorrect: false,
       },
       {
         text: "A single word can have multiple meanings depending on context.",
@@ -234,8 +234,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Very sparse binary vectors whose length grows with the vocabulary.",
-        isCorrect: false,
+        text: "They are not very sparse binary vectors whose length grows with the vocabulary.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -260,8 +260,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Explicitly label each training example with human-annotated semantic tags.",
-        isCorrect: false,
+        text: "It does not require human-annotated semantic tags for each training example.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -282,8 +282,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Binary classification: + for real context words, − for randomly sampled words.",
-        isCorrect: true,
+        text: "Binary classification: + for real context words, − for randomly sampled words, but only after enumerating the full vocabulary.",
+        isCorrect: false,
       },
       {
         text: "Multi-class classification over the entire vocabulary in every step.",
@@ -304,8 +304,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is suitable for binary logistic regression.",
-        isCorrect: true,
+        text: "It is suitable for full-vocabulary multiclass softmax at each training step.",
+        isCorrect: false,
       },
       {
         text: "It forces all dot products to be exactly 0 or 1.",
@@ -335,8 +335,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The dot product is naturally bounded between −1 and 1.",
-        isCorrect: false,
+        text: "The dot product is not naturally bounded between −1 and 1.",
+        isCorrect: true,
       },
       {
         text: "In word2vec, the dot product between w and c feeds into a sigmoid to get P(+|w,c).",
@@ -362,8 +362,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Directly minimizes the Euclidean distance between embeddings.",
-        isCorrect: false,
+        text: "It does not directly minimize the Euclidean distance between embeddings.",
+        isCorrect: true,
       },
       {
         text: "Is optimized so that real (+) and fake (−) examples are correctly classified.",
@@ -389,8 +389,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Embedding dimensionality (e.g., around 300 as a common sweet spot).",
-        isCorrect: true,
+        text: "Embedding dimensionality becomes irrelevant once it exceeds a very small minimum.",
+        isCorrect: false,
       },
       {
         text: "Using only very short context windows of size 1 regardless of task.",
@@ -420,8 +420,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "A window of length 4–5 is often used as a reasonable default.",
-        isCorrect: true,
+        text: "A window of length 4–5 is always optimal regardless of the corpus or task.",
+        isCorrect: false,
       },
     ],
     explanation:
@@ -442,8 +442,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is invariant to rescaling the vectors by positive constants.",
-        isCorrect: true,
+        text: "It is invariant to rescaling the vectors even if the rescaling flips only one vector’s sign.",
+        isCorrect: false,
       },
       {
         text: "It always increases when you multiply both vectors by 10.",
@@ -473,8 +473,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It is more robust to high-dimensional sparse data.",
-        isCorrect: true,
+        text: "It is more robust to high-dimensional sparse data than every other similarity measure.",
+        isCorrect: false,
       },
     ],
     explanation:
@@ -492,8 +492,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They can support analogy operations such as king − man + woman ≈ queen.",
-        isCorrect: true,
+        text: "They can support analogy operations such as king − man + woman ≈ queen without notable failure cases.",
+        isCorrect: false,
       },
       {
         text: "They perfectly distinguish synonyms from antonyms in all cases.",
@@ -523,8 +523,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Operations like analogies can selectively emphasize certain semantic components.",
-        isCorrect: true,
+        text: "Operations like analogies can always isolate and recover a single sense perfectly.",
+        isCorrect: false,
       },
       {
         text: "Each distinct meaning of a word must have a separate embedding vector.",
@@ -577,8 +577,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "y(t) is produced by applying a nonlinearity σ to the output vector o(t).",
-        isCorrect: true,
+        text: "y(t) is produced by applying a nonlinearity σ directly to h(t) without using o(t).",
+        isCorrect: false,
       },
       {
         text: "There is no dependence on h(t−1); RNNs ignore past states.",
@@ -600,8 +600,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Exploding gradients where values grow uncontrollably.",
-        isCorrect: true,
+        text: "Exploding gradients cannot occur in RNNs once hidden states are reused across time steps.",
+        isCorrect: false,
       },
       {
         text: "Difficulty learning long-range dependencies.",
@@ -627,8 +627,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They maintain both a short-term hidden state h and a long-term cell state c.",
-        isCorrect: true,
+        text: "They maintain only a hidden state h and no separate long-term cell state c.",
+        isCorrect: false,
       },
       {
         text: "They can decide to forget or retain information through a forget gate.",
@@ -657,8 +657,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The output gate o(t) controls how much of the cell state influences the hidden state h(t).",
-        isCorrect: true,
+        text: "The output gate o(t) permanently overwrites the cell state c(t) at every step.",
+        isCorrect: false,
       },
       {
         text: "All gates share exactly the same parameters; they differ only in their names.",
@@ -679,8 +679,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They use an update gate z(t) similar in spirit to the forget gate in LSTMs.",
-        isCorrect: true,
+        text: "They use an update gate z(t) that is mathematically identical to the LSTM forget gate.",
+        isCorrect: false,
       },
       {
         text: "They merge the input and forget gates into a reset gate and update gate.",
@@ -705,8 +705,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "GRUs may be more prone to overfitting because of their smaller parameterization.",
-        isCorrect: true,
+        text: "GRUs always overfit more because they have fewer parameters.",
+        isCorrect: false,
       },
       {
         text: "LSTMs generally handle very long-term dependencies better.",
@@ -735,8 +735,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They can operate on embedding vectors instead of raw tokens.",
-        isCorrect: true,
+        text: "They can operate only on raw token indicators rather than embedding vectors.",
+        isCorrect: false,
       },
       {
         text: "They require 2D image-like inputs and cannot process text sequences.",
@@ -762,8 +762,8 @@ export const chapter1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Padding sequences to a fixed length.",
-        isCorrect: true,
+        text: "Padding sequences to a fixed length is never useful for batch training.",
+        isCorrect: false,
       },
       {
         text: "Randomly dropping half of the reviews to simplify the dataset.",

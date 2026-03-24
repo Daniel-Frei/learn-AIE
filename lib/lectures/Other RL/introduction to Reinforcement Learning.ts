@@ -21,8 +21,8 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It requires complete knowledge of physics before training begins.",
-        isCorrect: false,
+        text: "It does not require complete knowledge of physics before training begins.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -49,8 +49,8 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The boundary between agent and environment is fixed and objective.",
-        isCorrect: false,
+        text: "The boundary between agent and environment is a modeling choice rather than a fixed objective fact.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -68,8 +68,8 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       { text: "Joint angles and velocities of a robot.", isCorrect: true },
       { text: "Battery level and temperature readings.", isCorrect: true },
       {
-        text: "A symbolic label such as 'good move' chosen by a human.",
-        isCorrect: false,
+        text: "A state representation can be engineered or learned rather than provided only as a human symbolic judgment.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -93,8 +93,8 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They directly specify the optimal action at each step.",
-        isCorrect: false,
+        text: "They do not directly specify the optimal action at each step.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -120,8 +120,8 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Discounting ensures actions are always deterministic.",
-        isCorrect: false,
+        text: "Discounting does not ensure actions are deterministic.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -147,8 +147,8 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It guarantees fast learning regardless of rewards.",
-        isCorrect: false,
+        text: "It does not guarantee fast learning regardless of rewards.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -183,7 +183,10 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       { text: "They output probabilities over actions.", isCorrect: true },
       { text: "Stochasticity supports exploration.", isCorrect: true },
       { text: "Softmax is often used for discrete policies.", isCorrect: true },
-      { text: "They directly encode environment dynamics.", isCorrect: false },
+      {
+        text: "They do not directly encode environment dynamics.",
+        isCorrect: true,
+      },
     ],
     explanation:
       "Policies decide actions, not transitions. The environment dynamics are modeled separately.",
@@ -205,7 +208,10 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
         text: "It allows optimizing over trajectories instead of single steps.",
         isCorrect: true,
       },
-      { text: "It removes the need for exploration.", isCorrect: false },
+      {
+        text: "It does not remove the need for exploration.",
+        isCorrect: true,
+      },
     ],
     explanation:
       "Return encourages long-term planning. Exploration is still required to discover high-reward strategies.",
@@ -241,7 +247,10 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       { text: "They are sequences \\((s_t,a_t,r_t)\\).", isCorrect: true },
       { text: "They are collected through sampling.", isCorrect: true },
       { text: "Returns can be computed from them.", isCorrect: true },
-      { text: "They are unnecessary in model-free RL.", isCorrect: false },
+      {
+        text: "They are still necessary in model-free RL because returns are estimated from sampled experience.",
+        isCorrect: true,
+      },
     ],
     explanation:
       "Trajectories are fundamental to learning in model-free RL since they provide all observed experience.",
@@ -263,8 +272,8 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They are typically more sample efficient than temporal difference methods.",
-        isCorrect: false,
+        text: "They are often less sample efficient than temporal difference methods.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -278,7 +287,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
     prompt: "Which statements about temporal difference learning are correct?",
     options: [
       { text: "It bootstraps from estimated future values.", isCorrect: true },
-      { text: "It updates after every step.", isCorrect: true },
+      { text: "It updates only after every full episode.", isCorrect: false },
       {
         text: "It reduces dependence on episode termination.",
         isCorrect: true,
@@ -322,12 +331,12 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It prevents premature convergence to suboptimal policies.",
-        isCorrect: true,
+        text: "It always prevents convergence to a suboptimal policy.",
+        isCorrect: false,
       },
       {
-        text: "It gradually shifts from exploration to exploitation.",
-        isCorrect: true,
+        text: "It follows a fixed exploration rate and never shifts toward exploitation.",
+        isCorrect: false,
       },
       {
         text: "It guarantees finding the optimal policy in finite steps.",
@@ -346,12 +355,12 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       "Which statements about sample efficiency from the lecture are correct?",
     options: [
       {
-        text: "Temporal difference methods often outperform Monte Carlo in sample efficiency.",
-        isCorrect: true,
+        text: "Temporal difference methods always outperform Monte Carlo in sample efficiency.",
+        isCorrect: false,
       },
       {
-        text: "In the maze example, Q-learning was more sample efficient than SARSA.",
-        isCorrect: true,
+        text: "In the maze example, Q-learning was always more sample efficient than SARSA in every setting.",
+        isCorrect: false,
       },
       {
         text: "Sample efficiency refers to how many interactions are needed to learn good behavior.",
@@ -374,10 +383,13 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       "Which are advantages of neural networks in reinforcement learning?",
     options: [
       { text: "They approximate continuous state spaces.", isCorrect: true },
-      { text: "They generalize across unseen states.", isCorrect: true },
       {
-        text: "They replace tabular storage with parametric models.",
-        isCorrect: true,
+        text: "They guarantee perfect generalization across all unseen states.",
+        isCorrect: false,
+      },
+      {
+        text: "They eliminate the need for choosing architectures or parameterizations.",
+        isCorrect: false,
       },
       {
         text: "They naturally handle infinite discrete actions in value-based methods.",
@@ -398,8 +410,14 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
         text: "They approximate the action-value function with neural networks.",
         isCorrect: true,
       },
-      { text: "They rely on Q-learning updates.", isCorrect: true },
-      { text: "They operate over discrete actions.", isCorrect: true },
+      {
+        text: "They rely on Q-learning updates without any bootstrapping targets.",
+        isCorrect: false,
+      },
+      {
+        text: "They operate naturally over any continuous action space without modification.",
+        isCorrect: false,
+      },
       { text: "They directly learn stochastic policies.", isCorrect: false },
     ],
     explanation:
@@ -417,8 +435,8 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They increase probability of actions weighted by advantage.",
-        isCorrect: true,
+        text: "They increase probability of actions without weighting by advantage or return.",
+        isCorrect: false,
       },
       {
         text: "They can handle continuous actions via Gaussian policies.",
@@ -439,8 +457,8 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       { text: "The actor updates the policy.", isCorrect: true },
       { text: "The critic estimates value functions.", isCorrect: true },
       {
-        text: "They typically use temporal difference for advantage estimation.",
-        isCorrect: true,
+        text: "They typically avoid temporal-difference-style value estimates altogether.",
+        isCorrect: false,
       },
       { text: "They remove the need for rewards.", isCorrect: false },
     ],
@@ -460,8 +478,8 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Signals shift to earlier predictive cues as learning improves.",
-        isCorrect: true,
+        text: "Signals remain fixed on the primary reward and do not shift to predictive cues.",
+        isCorrect: false,
       },
       {
         text: "Negative prediction errors occur when expected rewards fail to appear.",
@@ -491,8 +509,8 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It avoids manually designing reward functions.",
-        isCorrect: true,
+        text: "It completely removes dependence on expert data once the initial demonstrations are collected.",
+        isCorrect: false,
       },
       {
         text: "It guarantees optimal behavior outside demonstrated states.",
@@ -522,7 +540,10 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
         text: "It eliminates the need for expert demonstrations.",
         isCorrect: false,
       },
-      { text: "Inverse Q-learning is one method used.", isCorrect: true },
+      {
+        text: "Inverse Q-learning is the only method used for inverse reinforcement learning.",
+        isCorrect: false,
+      },
     ],
     explanation:
       "Inverse reinforcement learning deduces objectives from demonstrations rather than copying actions.",

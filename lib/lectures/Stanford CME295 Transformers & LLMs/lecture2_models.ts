@@ -907,7 +907,10 @@ export const stanfordCME295Lecture2Questions: Question[] = [
         text: "They are well suited for classification tasks.",
         isCorrect: true,
       },
-      { text: "They generate text autoregressively.", isCorrect: false },
+      {
+        text: "They are not designed to generate text autoregressively.",
+        isCorrect: true,
+      },
       { text: "They rely on bidirectional self-attention.", isCorrect: true },
       { text: "They include masked causal attention.", isCorrect: false },
     ],
@@ -924,7 +927,10 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "It uses WordPiece tokenization.", isCorrect: true },
       { text: "It operates at the byte level.", isCorrect: false },
       { text: "Its vocabulary size is around 30k.", isCorrect: true },
-      { text: "It avoids subword splitting.", isCorrect: false },
+      {
+        text: "It allows subword splitting for rare words.",
+        isCorrect: true,
+      },
     ],
     explanation:
       "BERT uses WordPiece with a moderately sized subword vocabulary.",
@@ -940,7 +946,10 @@ export const stanfordCME295Lecture2Questions: Question[] = [
         text: "A task-specific head is added on top of pretrained embeddings.",
         isCorrect: true,
       },
-      { text: "The entire model must always be frozen.", isCorrect: false },
+      {
+        text: "The entire model can be updated during fine-tuning.",
+        isCorrect: true,
+      },
       {
         text: "Fine-tuning can require relatively little labeled data.",
         isCorrect: true,

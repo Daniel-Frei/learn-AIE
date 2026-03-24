@@ -34,6 +34,7 @@ This file captures durable process preferences so future tasks can follow them b
 
 - Keep expanding coverage for core functionality, not just smoke tests.
 - Prioritize tests for quiz source selection/title logic, difficulty rating behavior, and API validation/error handling.
+- For question reporting, prefer append-only local report entries and include source/prompt snapshot context in exported files.
 
 ## Question Bank Preferences
 

@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import {
   SOURCE_SERIES,
   allQuestions,
+  getQuestionSourceMetadata,
   getQuestionsForFilters,
   type SourceId,
   type SourceSeriesId,
@@ -22,6 +23,14 @@ import {
   type QuestionMetadataMap,
   type RatingStateV2,
 } from "./difficultyStore";
+import {
+  appendQuestionReport,
+  createDefaultQuestionReportsState,
+  exportQuestionReportsJson,
+  loadQuestionReports,
+  saveQuestionReports,
+  type QuestionReportsStateV1,
+} from "./questionReportsStore";
 import type { Question } from "./quiz";
 
 // Difficulty filter is now a numeric range [0,100]
@@ -108,6 +117,9 @@ export function useQuiz() {
   const [ratingState, setRatingState] = useState<RatingStateV2>(() =>
     createDefaultRatingState(),
   );
+  const [reportState, setReportState] = useState<QuestionReportsStateV1>(() =>
+    createDefaultQuestionReportsState(),
+  );
 
   const [selectedSources, setSelectedSources] =
     useState<SourceId[]>(initialSources);
@@ -153,6 +165,14 @@ export function useQuiz() {
     const timer = window.setTimeout(() => {
       const loaded = loadRatingState(QUESTION_METADATA);
       setRatingState(loaded);
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      const loaded = loadQuestionReports();
+      setReportState(loaded);
     }, 0);
     return () => window.clearTimeout(timer);
   }, []);
@@ -273,6 +293,42 @@ export function useQuiz() {
   const accuracy =
     answeredCount === 0 ? 0 : Math.round((100 * correctCount) / answeredCount);
 
+  const currentQuestionReportCount = useMemo(() => {
+    if (!currentQuestion) return 0;
+    return reportState.reports.filter(
+      (report) => report.questionId === currentQuestion.id,
+    ).length;
+  }, [currentQuestion, reportState.reports]);
+
+  const submitQuestionReport = (comment: string): boolean => {
+    if (!currentQuestion) return false;
+
+    const trimmedComment = comment.trim();
+    if (!trimmedComment) return false;
+
+    const sourceMetadata = getQuestionSourceMetadata(currentQuestion.id);
+    if (!sourceMetadata) return false;
+
+    setReportState((prev) => {
+      const updated = appendQuestionReport(prev, {
+        questionId: currentQuestion.id,
+        comment: trimmedComment,
+        snapshot: {
+          sourceId: sourceMetadata.sourceId,
+          sourceLabel: sourceMetadata.sourceLabel,
+          seriesId: sourceMetadata.seriesId,
+          seriesLabel: sourceMetadata.seriesLabel,
+          topic: sourceMetadata.topic,
+          prompt: currentQuestion.prompt,
+        },
+      });
+      saveQuestionReports(updated);
+      return updated;
+    });
+
+    return true;
+  };
+
   const clampRange = (newRange: DifficultyRange) => {
     const min = Math.max(0, Math.min(100, newRange.min));
     const max = Math.max(min, Math.min(100, newRange.max));
@@ -353,6 +409,10 @@ export function useQuiz() {
     saveRatingState(parsed);
   };
 
+  const exportReportsJson = () => {
+    return exportQuestionReportsJson(reportState);
+  };
+
   return {
     // configuration
     selectedSources,
@@ -382,9 +442,13 @@ export function useQuiz() {
     accuracy,
     userRating: ratingState.user.rating,
     userRatingRd: ratingState.user.rd,
+    totalReportCount: reportState.reports.length,
+    currentQuestionReportCount,
 
     // export/import
     exportDifficultyJson,
     importDifficultyFromJson,
+    exportReportsJson,
+    submitQuestionReport,
   };
 }

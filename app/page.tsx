@@ -32,6 +32,8 @@ export default function QuizPage() {
     userRatingRd,
     exportDifficultyJson,
     importDifficultyFromJson,
+    exportReportsJson,
+    submitQuestionReport,
   } = useQuiz();
 
   const title = getTitleForSelection(selectedSources, selectedTopics);
@@ -61,6 +63,7 @@ export default function QuizPage() {
           userRatingRd={userRatingRd}
           exportDifficultyJson={exportDifficultyJson}
           importDifficultyFromJson={importDifficultyFromJson}
+          exportReportsJson={exportReportsJson}
         />
 
         <QuizQuestionSection
@@ -82,6 +85,7 @@ export default function QuizPage() {
           showResult={showResult}
           submitAnswer={submitAnswer}
           nextQuestion={nextQuestion}
+          submitQuestionReport={submitQuestionReport}
         />
       </div>
     </div>

@@ -16,8 +16,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "To solve alignment issues when input and output sequences have different lengths.",
-        isCorrect: true,
+        text: "To solve alignment issues when input and output sequences have different lengths without using encoder states.",
+        isCorrect: false,
       },
       {
         text: "To completely remove the need for any encoder network.",
@@ -47,8 +47,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It is used together with the decoder state to predict the next output token.",
-        isCorrect: true,
+        text: "It is used by itself, without the decoder state, to predict the next output token.",
+        isCorrect: false,
       },
       {
         text: "It contains only the last encoder hidden state.",
@@ -74,8 +74,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "A scalar that will later be turned into an attention weight via softmax.",
-        isCorrect: true,
+        text: "A scalar that is already normalized across all encoder positions before softmax.",
+        isCorrect: false,
       },
       {
         text: "A probability that already sums to one over all encoder positions.",
@@ -101,8 +101,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Emphasizes relatively larger scores while down-weighting smaller ones.",
-        isCorrect: true,
+        text: "Emphasizes relatively larger scores while forcing every smaller score exactly to zero.",
+        isCorrect: false,
       },
       {
         text: "Outputs values that can be negative or greater than 1.",
@@ -132,8 +132,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It guarantees perfect translations without errors.",
-        isCorrect: false,
+        text: "It can improve translation quality and interpretability, even though it does not guarantee perfect outputs.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -189,8 +189,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "V contains arbitrary random noise that is ignored in the output.",
-        isCorrect: false,
+        text: "V contains value vectors that are mixed according to the attention weights.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -268,8 +268,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It forces all heads to learn identical attention patterns.",
-        isCorrect: false,
+        text: "Different heads can learn different attention patterns rather than identical ones.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -291,8 +291,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The cost is linear in T and independent of d.",
-        isCorrect: false,
+        text: "The cost is not linear in T because building the attention matrix introduces quadratic scaling in sequence length.",
+        isCorrect: true,
       },
       {
         text: "The quadratic cost is a major bottleneck for very long sequences.",
@@ -351,8 +351,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They require retraining if we want to handle longer sequences than in training.",
-        isCorrect: false,
+        text: "They can still be used at inference on positions beyond those seen during training.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -377,8 +377,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A convolutional layer that processes the sequence in 2D.",
-        isCorrect: false,
+        text: "Normalization layers are also typically included around the main sublayers in standard implementations.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -404,8 +404,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It shares the same weights across all layers of the transformer.",
-        isCorrect: false,
+        text: "It does not share the same weights across all layers of the transformer by default.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -431,8 +431,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They prevent the model from ever changing the input representation.",
-        isCorrect: false,
+        text: "They still allow the model to change the representation through the learned sublayer output.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -457,8 +457,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Requires large batch sizes to estimate statistics.",
-        isCorrect: false,
+        text: "It does not require large batch sizes to estimate statistics.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -541,8 +541,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Decoder-only models cannot be used for generation.",
-        isCorrect: false,
+        text: "Decoder-only models can in fact be used for autoregressive text generation.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -598,8 +598,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The true distribution is always uniform over the vocabulary.",
-        isCorrect: false,
+        text: "The true distribution is usually sparse rather than uniform over the vocabulary.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -648,8 +648,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is computationally more expensive than sampling-based methods.",
-        isCorrect: false,
+        text: "It is usually computationally cheaper than sampling-based methods because it just takes the argmax at each step.",
+        isCorrect: true,
       },
       {
         text: "It can get stuck in dull loops like repeating short phrases.",
@@ -675,8 +675,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Temperature scaling divides logits by a temperature before softmax to control sharpness.",
-        isCorrect: true,
+        text: "Temperature scaling always makes generation more diverse regardless of whether the temperature is above or below 1.",
+        isCorrect: false,
       },
       {
         text: "Lower temperature values make the distribution more uniform and random.",
@@ -701,8 +701,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "To exploit repeated morphemes such as prefixes and suffixes.",
-        isCorrect: true,
+        text: "To exploit repeated morphemes such as prefixes and suffixes without ever splitting rare words.",
+        isCorrect: false,
       },
       {
         text: "Because subword vocabularies can balance vocabulary size and expressivity.",
@@ -724,8 +724,8 @@ export const chapter2Questions: Question[] = [
       "Which statements describe Byte-Pair Encoding (BPE) for building a subword vocabulary?",
     options: [
       {
-        text: "It starts from individual characters as initial tokens.",
-        isCorrect: true,
+        text: "It starts from whole words as initial tokens.",
+        isCorrect: false,
       },
       {
         text: "It iteratively merges the most frequent adjacent symbol pairs into new tokens.",
@@ -812,8 +812,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Use the rest of the sequence (left and right context) to infer each masked token.",
-        isCorrect: true,
+        text: "Use only the left context to infer each masked token.",
+        isCorrect: false,
       },
       {
         text: "Mask every token so that no context remains.",
@@ -847,8 +847,8 @@ export const chapter2Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It can still be extended with auxiliary tasks such as next-sentence prediction.",
-        isCorrect: true,
+        text: "Pairing MLM with auxiliary tasks such as next-sentence prediction fully resolves its training–inference mismatch.",
+        isCorrect: false,
       },
     ],
     explanation:

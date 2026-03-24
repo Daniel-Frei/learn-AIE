@@ -27,6 +27,7 @@ import { CrashCourseLinearAlgebraL1Questions } from "./other/Crash Course Linear
 import { MIT15773L3DeepLearningForComputerVisionQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L3_Deep Learning for Computer Vision";
 import { MIT15773L4ComputerVisionTransferLearningQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L4_Computer Vision –Transfer Learning and Fine-Tuning";
 import { L5NLPBasicsQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L5_NLP Basics";
+import { DeepAgentsQuestions } from "./other/Langchain/Deepagents";
 import { mixedQuestions } from "./other/other";
 
 export type Difficulty = "easy" | "medium" | "hard";
@@ -40,6 +41,7 @@ export type SourceSeriesId =
   | "mit-6s191-2025"
   | "mit-15773-2024"
   | "crash-course-linear-algebra"
+  | "langchain"
   | "other";
 
 export type Question = {
@@ -57,6 +59,15 @@ export type Question = {
     isCorrect: boolean;
   }[];
   explanation: string;
+};
+
+export type QuestionSourceMetadata = {
+  sourceId: SourceId;
+  sourceLabel: string;
+  sourceTitle: string;
+  seriesId: SourceSeriesId;
+  seriesLabel: string;
+  topic: Topic;
 };
 
 // ------------------------------
@@ -319,6 +330,15 @@ export const QUESTION_SOURCES = [
     questions: CrashCourseLinearAlgebraL1Questions,
   },
   {
+    id: "langchain-deepagents" as const,
+    label: "LangChain Deep Agents",
+    title: "LangChain Deep Agents",
+    seriesId: "langchain" as const,
+    seriesLabel: "LangChain",
+    topic: "NLP" as const,
+    questions: DeepAgentsQuestions,
+  },
+  {
     id: "other" as const,
     label: "Other",
     title: "Other Questions",
@@ -360,6 +380,22 @@ export const allQuestions: Question[] = QUESTION_SOURCES.flatMap(
 
 export const ALL_SOURCE_IDS: SourceId[] = QUESTION_SOURCES.map((s) => s.id);
 
+const QUESTION_SOURCE_METADATA_BY_ID = new Map<string, QuestionSourceMetadata>(
+  QUESTION_SOURCES.flatMap((source) =>
+    source.questions.map((question) => [
+      question.id,
+      {
+        sourceId: source.id,
+        sourceLabel: source.label,
+        sourceTitle: source.title,
+        seriesId: source.seriesId,
+        seriesLabel: source.seriesLabel,
+        topic: source.topic,
+      },
+    ]),
+  ),
+);
+
 // Helper: get questions for a given mode
 export function getQuestionsForMode(mode: Mode): Question[] {
   if (mode === "all") return allQuestions;
@@ -384,6 +420,12 @@ export function getQuestionsForFilters(
   return QUESTION_SOURCES.filter(
     (s) => activeSources.has(s.id) || activeTopics.has(s.topic),
   ).flatMap((s) => s.questions);
+}
+
+export function getQuestionSourceMetadata(
+  questionId: string,
+): QuestionSourceMetadata | null {
+  return QUESTION_SOURCE_METADATA_BY_ID.get(questionId) ?? null;
 }
 
 // Helper: title for the current mode (for page header)
@@ -457,4 +499,5 @@ export { L1_IntroductionToNeuralNetworksAndDeepLearning } from "./lectures/MIT 1
 export { L2_TrainingDeepNNs } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L2_Training Deep NNs";
 export { L5NLPBasicsQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L5_NLP Basics";
 export { CrashCourseLinearAlgebraL1Questions } from "./other/Crash Course Linear Algebra/Lecture 1 — Vectors, Geometry, and Dot Products";
+export { DeepAgentsQuestions } from "./other/Langchain/Deepagents";
 export { mixedQuestions } from "./other/other";

@@ -9,6 +9,9 @@ start:
 install:
 	npm install
 
+format:
+	npm run format
+
 format-check:
 	npm run format-check
 

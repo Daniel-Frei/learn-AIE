@@ -180,3 +180,53 @@
 ## Verification Result
 
 - `npm run test -- tests/lib/mit15773-answer-distribution.spec.ts`: fails only on out-of-scope legacy banks in `lib/chapter1.ts`, `lib/chapter2.ts`, `lib/lectures/Other RL/introduction to Reinforcement Learning.ts`, `lib/lectures/Stanford CME295 Transformers & LLMs/lecture2_models.ts`, and `lib/lectures/Stanford CME295 Transformers & LLMs/lecture4_training.ts`.
+
+---
+
+# Plan: Local Question Reporting + Export
+
+## Goal
+
+- Add client-side question reporting with local persistence and exportable JSON for manual review.
+
+## Steps
+
+- [x] Add a local report store module with versioned export helpers.
+- [x] Wire report state/actions into the quiz hook and UI.
+- [x] Add docs for the new behavior and export contract.
+- [x] Add Vitest and Playwright coverage.
+- [x] Run `make test`, `npm run e2e`, and `make check`.
+
+## Verification Result
+
+- `make format-check`: pass.
+- `make lint`: pass.
+- `make types-check`: pass.
+- `npm run test -- tests/lib/questionReportsStore.spec.ts`: pass.
+- `npm run e2e`: pass.
+- `make test`: still fails on the pre-existing generalized answer-distribution regression in unrelated legacy banks:
+  - `lib/chapter1.ts`
+  - `lib/chapter2.ts`
+  - `lib/lectures/Other RL/introduction to Reinforcement Learning.ts`
+  - `lib/lectures/Stanford CME295 Transformers & LLMs/lecture2_models.ts`
+  - `lib/lectures/Stanford CME295 Transformers & LLMs/lecture4_training.ts`
+- `make check`: blocked by the same existing `make test` failure.
+
+---
+
+# Plan: Fix Legacy Answer-Pattern Regressions
+
+## Goal
+
+- Rebalance the remaining legacy question-bank files currently failing the generalized answer-pattern test so `make test` and `make check` can pass.
+
+## Steps
+
+- [x] Adjust the flagged question-bank files with minimal option-text and `isCorrect` edits.
+- [x] Re-run `make test` and verify the generalized answer-pattern test passes.
+- [x] Run `make check` and fix any remaining issues until the full gate passes.
+
+## Verification Result
+
+- `make test`: pass.
+- `make check`: pass.

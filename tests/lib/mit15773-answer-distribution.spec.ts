@@ -54,7 +54,7 @@ function listQuestionFiles(dir: string): string[] {
 function getDistributionFromFile(filePath: string) {
   const content = fs.readFileSync(filePath, "utf8");
   const questionBlocks = [
-    ...content.matchAll(/options:\s*\[(.*?)\]\s*,\s*explanation:/gs),
+    ...content.matchAll(/options:\s*\[([\s\S]*?)\]\s*,\s*explanation:/g),
   ];
   const distribution = { 1: 0, 2: 0, 3: 0, 4: 0 } as Record<number, number>;
 

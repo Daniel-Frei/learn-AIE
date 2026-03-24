@@ -350,10 +350,13 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They store additional optimizer state in memory.",
-        isCorrect: true,
+        text: "They store no additional optimizer state in memory.",
+        isCorrect: false,
       },
-      { text: "They adjust learning rates per parameter.", isCorrect: true },
+      {
+        text: "They adjust a single global learning rate identically for every parameter.",
+        isCorrect: false,
+      },
       {
         text: "They eliminate the need to compute gradients.",
         isCorrect: false,
@@ -372,12 +375,12 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     options: [
       { text: "Model parameters occupy memory.", isCorrect: true },
       {
-        text: "Optimizer states can double or triple memory requirements.",
-        isCorrect: true,
+        text: "Optimizer states never dominate memory requirements.",
+        isCorrect: false,
       },
       {
-        text: "Activations scale with batch size and sequence length.",
-        isCorrect: true,
+        text: "Activations are independent of batch size and sequence length.",
+        isCorrect: false,
       },
       {
         text: "Memory usage is independent of context length.",
@@ -399,10 +402,13 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Each device holds a full copy of the model parameters.",
-        isCorrect: true,
+        text: "Each device holds only the layers it computes rather than a full copy of the model parameters.",
+        isCorrect: false,
       },
-      { text: "Gradients must be aggregated across devices.", isCorrect: true },
+      {
+        text: "Gradients never need to be aggregated across devices.",
+        isCorrect: false,
+      },
       {
         text: "It removes all communication overhead between devices.",
         isCorrect: false,
@@ -425,8 +431,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
       { text: "It can shard optimizer states across GPUs.", isCorrect: true },
       {
-        text: "It can shard gradients or parameters depending on the stage.",
-        isCorrect: true,
+        text: "It can shard gradients or parameters without any coordination across devices.",
+        isCorrect: false,
       },
       { text: "It eliminates communication costs entirely.", isCorrect: false },
     ],
@@ -445,8 +451,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It can be applied within a single training batch.",
-        isCorrect: true,
+        text: "It can be applied only across different training batches rather than within one batch.",
+        isCorrect: false,
       },
       {
         text: "It is useful when a model does not fit on one device.",
@@ -473,8 +479,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Only a subset of experts is activated per input.",
-        isCorrect: true,
+        text: "Only a single fixed expert is activated for every input.",
+        isCorrect: false,
       },
       {
         text: "Expert routing decisions affect communication patterns.",
@@ -500,8 +506,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Forward and backward passes can be staged across devices.",
-        isCorrect: true,
+        text: "Forward and backward passes cannot be staged across devices.",
+        isCorrect: false,
       },
       {
         text: "It can improve utilization for very deep models.",
@@ -532,8 +538,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Softmax normalization introduces data dependencies.",
-        isCorrect: true,
+        text: "Softmax normalization removes all data dependencies in attention kernels.",
+        isCorrect: false,
       },
       {
         text: "Attention computation is limited only by arithmetic throughput.",
@@ -554,8 +560,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "HBM is large but slower than on-chip memory.", isCorrect: true },
       { text: "SRAM is much faster but much smaller.", isCorrect: true },
       {
-        text: "Using SRAM effectively can significantly speed up computation.",
-        isCorrect: true,
+        text: "Using SRAM effectively matters only for model storage, not computation speed.",
+        isCorrect: false,
       },
       {
         text: "SRAM capacity is typically measured in gigabytes.",
@@ -581,8 +587,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It computes exact attention, not an approximation.",
-        isCorrect: true,
+        text: "It computes approximate attention by changing the mathematical result slightly.",
+        isCorrect: false,
       },
       {
         text: "It changes the mathematical definition of self-attention.",
@@ -605,8 +611,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Some activations are recomputed during the backward pass.",
-        isCorrect: true,
+        text: "Activations are never recomputed during the backward pass.",
+        isCorrect: false,
       },
       { text: "They can lower peak memory requirements.", isCorrect: true },
       { text: "They always increase overall training time.", isCorrect: false },
@@ -627,7 +633,10 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       { text: "Lower-precision formats use fewer bits.", isCorrect: true },
-      { text: "Precision affects numerical granularity.", isCorrect: true },
+      {
+        text: "Precision has no effect on numerical granularity.",
+        isCorrect: false,
+      },
       {
         text: "All floating point formats have identical dynamic range.",
         isCorrect: false,
@@ -648,8 +657,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Model weights are often stored in higher precision.",
-        isCorrect: true,
+        text: "Model weights are always stored only in lower precision during mixed precision training.",
+        isCorrect: false,
       },
       { text: "Memory usage can be reduced significantly.", isCorrect: true },
       {
@@ -676,7 +685,10 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       { text: "They require labeled task-specific outputs.", isCorrect: false },
-      { text: "They are self-supervised.", isCorrect: true },
+      {
+        text: "They are self-supervised only when paired with labeled task-specific outputs.",
+        isCorrect: false,
+      },
       { text: "They always involve human annotation.", isCorrect: false },
     ],
     explanation:
@@ -696,8 +708,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
       { text: "Batch size has no effect on memory usage.", isCorrect: false },
       {
-        text: "Very large batches can change optimization dynamics.",
-        isCorrect: true,
+        text: "Very large batches never change optimization dynamics when the learning rate is tuned.",
+        isCorrect: false,
       },
       {
         text: "Batch size is unrelated to gradient computation.",
@@ -718,7 +730,10 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         text: "It reduces numerical precision of stored values.",
         isCorrect: true,
       },
-      { text: "It can reduce memory footprint.", isCorrect: true },
+      {
+        text: "It can reduce memory footprint only if model accuracy improves.",
+        isCorrect: false,
+      },
       { text: "It always improves model accuracy.", isCorrect: false },
       {
         text: "It can increase computation speed on suitable hardware.",
@@ -736,7 +751,10 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     prompt: "Which statements about supervised fine-tuning (SFT) are correct?",
     options: [
       { text: "It uses labeled input–output pairs.", isCorrect: true },
-      { text: "It modifies pre-trained model weights.", isCorrect: true },
+      {
+        text: "It modifies only a separate classifier head and leaves all pre-trained model weights unchanged.",
+        isCorrect: false,
+      },
       {
         text: "Loss is computed over both input and output tokens.",
         isCorrect: false,
@@ -758,8 +776,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     options: [
       { text: "It is a form of supervised fine-tuning.", isCorrect: true },
       {
-        text: "It trains models to respond helpfully to user prompts.",
-        isCorrect: true,
+        text: "It trains models to respond helpfully without using user prompts or instructions.",
+        isCorrect: false,
       },
       {
         text: "It requires training on the entire pre-training corpus again.",
@@ -1083,8 +1101,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
       { text: "Human judgment often plays a role.", isCorrect: true },
       {
-        text: "It can capture subjective notions of quality.",
-        isCorrect: true,
+        text: "It captures subjective notions of quality without requiring any human or model judgment.",
+        isCorrect: false,
       },
       { text: "It is completely immune to manipulation.", isCorrect: false },
     ],
@@ -1104,8 +1122,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
       { text: "It typically occurs after pre-training.", isCorrect: true },
       {
-        text: "It includes supervised fine-tuning and preference tuning.",
-        isCorrect: true,
+        text: "It includes supervised fine-tuning and preference tuning, but only during pre-training.",
+        isCorrect: false,
       },
       {
         text: "It guarantees perfect safety and correctness.",
@@ -1128,8 +1146,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It significantly reduces the number of trainable parameters.",
-        isCorrect: true,
+        text: "It significantly reduces the number of trainable parameters without adding any new trainable matrices.",
+        isCorrect: false,
       },
       {
         text: "It requires retraining the entire model from scratch.",
@@ -1151,8 +1169,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "LoRA adapters are typically kept in higher precision.",
-        isCorrect: true,
+        text: "LoRA adapters are typically quantized to the same 4-bit format as the frozen base model during training.",
+        isCorrect: false,
       },
       {
         text: "It enables fine-tuning large models on limited hardware.",
@@ -1177,8 +1195,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
       { text: "It uses non-uniform quantization bins.", isCorrect: true },
       {
-        text: "It improves memory efficiency for frozen weights.",
-        isCorrect: true,
+        text: "It improves memory efficiency for frozen weights without any quantization error.",
+        isCorrect: false,
       },
       {
         text: "It is identical to standard 4-bit linear quantization.",
@@ -1209,8 +1227,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Batch size has no interaction with optimization behavior.",
-        isCorrect: false,
+        text: "Batch size can interact with optimization behavior during LoRA training.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -1235,7 +1253,10 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         text: "Model weights are often maintained in higher precision.",
         isCorrect: true,
       },
-      { text: "It requires changing the loss function.", isCorrect: false },
+      {
+        text: "It can often be used without changing the task loss function itself.",
+        isCorrect: true,
+      },
     ],
     explanation:
       "Mixed-precision training balances speed and stability by using lower precision for most computations while preserving critical values in higher precision.",
@@ -1260,8 +1281,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It requires approximating the attention operation.",
-        isCorrect: false,
+        text: "It still computes exact attention rather than an approximation.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -1281,8 +1302,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
       { text: "They are often domain-specific.", isCorrect: true },
       {
-        text: "They fully eliminate the need for human evaluation.",
-        isCorrect: false,
+        text: "They do not eliminate the need for human evaluation.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -1305,8 +1326,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They are entirely generated without human input.",
-        isCorrect: false,
+        text: "They often rely on some human input or curation.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -1325,7 +1346,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
       { text: "It often follows supervised fine-tuning.", isCorrect: true },
       { text: "It can use pairwise ranking losses.", isCorrect: true },
-      { text: "It replaces pre-training entirely.", isCorrect: false },
+      { text: "It does not replace pre-training entirely.", isCorrect: true },
     ],
     explanation:
       "Preference tuning adjusts models using human or synthetic preference feedback, complementing supervised fine-tuning rather than replacing earlier stages.",
@@ -1347,8 +1368,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
       { text: "Evaluation depends on task distribution.", isCorrect: true },
       {
-        text: "Loss minimization guarantees helpful behavior.",
-        isCorrect: false,
+        text: "Loss minimization alone does not guarantee helpful behavior.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -1374,8 +1395,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They provide exact guarantees for downstream task performance.",
-        isCorrect: false,
+        text: "They do not provide exact guarantees for downstream task performance.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -1396,8 +1417,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
       { text: "They limit feasible model and dataset sizes.", isCorrect: true },
       {
-        text: "They are irrelevant once a model is pre-trained.",
-        isCorrect: false,
+        text: "They still matter after pre-training because they constrain adaptation and deployment.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -1427,7 +1448,10 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         text: "It targets domains closer to downstream use cases.",
         isCorrect: true,
       },
-      { text: "It replaces the need for fine-tuning.", isCorrect: false },
+      {
+        text: "It does not replace the need for later fine-tuning or alignment steps.",
+        isCorrect: true,
+      },
     ],
     explanation:
       "Mid-training keeps the same objective as pre-training but changes the data mixture. It helps align representations toward domains of interest before task-specific fine-tuning.",
@@ -1449,8 +1473,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Teacher forcing is applied to the entire input sequence.",
-        isCorrect: false,
+        text: "Teacher forcing is still used on the generated output tokens even though loss is not applied to the prompt tokens.",
+        isCorrect: true,
       },
       {
         text: "The objective differs from pre-training despite using cross-entropy.",
@@ -1474,8 +1498,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It is a form of supervised fine-tuning.", isCorrect: true },
       { text: "It uses curated instruction–response pairs.", isCorrect: true },
       {
-        text: "It requires retraining from random initialization.",
-        isCorrect: false,
+        text: "It does not require retraining from random initialization.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -1498,7 +1522,10 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         text: "It is usually much smaller than pre-training data.",
         isCorrect: true,
       },
-      { text: "It must match inference prompts exactly.", isCorrect: false },
+      {
+        text: "It does not have to match inference prompts exactly to be useful.",
+        isCorrect: true,
+      },
     ],
     explanation:
       "SFT data mixtures span many task types and are often partially synthetic. Exact matching to inference prompts is unnecessary as long as the distribution is reasonably aligned.",
@@ -1524,8 +1551,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Memorization is completely eliminated by fine-tuning.",
-        isCorrect: false,
+        text: "Memorization is not completely eliminated by fine-tuning.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -1543,8 +1570,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "High benchmark scores guarantee user satisfaction.",
-        isCorrect: false,
+        text: "High benchmark scores do not guarantee user satisfaction.",
+        isCorrect: true,
       },
       {
         text: "Training data overlap can inflate benchmark results.",
@@ -1570,8 +1597,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
       { text: "It reflects broad language competence.", isCorrect: true },
       {
-        text: "It directly measures training compute efficiency.",
-        isCorrect: false,
+        text: "It does not directly measure training compute efficiency.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -1587,7 +1614,10 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Users compare outputs pairwise.", isCorrect: true },
       { text: "It captures subjective quality signals.", isCorrect: true },
       { text: "Early comparisons can bias rankings.", isCorrect: true },
-      { text: "It is immune to adversarial behavior.", isCorrect: false },
+      {
+        text: "It is not immune to adversarial behavior.",
+        isCorrect: true,
+      },
     ],
     explanation:
       "Preference-based systems reflect human judgments but are sensitive to sampling, bias, and strategic manipulation.",
@@ -1606,8 +1636,8 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
       { text: "It occurs after pre-training.", isCorrect: true },
       {
-        text: "It guarantees correct behavior in all cases.",
-        isCorrect: false,
+        text: "It does not guarantee correct behavior in all cases.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -1626,7 +1656,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
       { text: "It often follows supervised fine-tuning.", isCorrect: true },
       { text: "It can optimize for user satisfaction.", isCorrect: true },
-      { text: "It replaces pre-training.", isCorrect: false },
+      { text: "It does not replace pre-training.", isCorrect: true },
     ],
     explanation:
       "Preference tuning refines behavior using rankings or comparisons. It complements but does not replace earlier training stages.",
