@@ -1,5 +1,3 @@
-"use client";
-
 import type { Topic, SourceId, SourceSeriesId } from "./quiz";
 
 export type QuestionReportSnapshot = {
@@ -97,7 +95,9 @@ function sanitizeReport(value: unknown): QuestionReport | null {
   };
 }
 
-function sanitizeState(value: unknown): QuestionReportsStateV1 | null {
+export function sanitizeQuestionReportsState(
+  value: unknown,
+): QuestionReportsStateV1 | null {
   if (
     !isRecord(value) ||
     value.version !== 1 ||
@@ -142,7 +142,10 @@ export function loadQuestionReports(): QuestionReportsStateV1 {
     if (!raw) return createDefaultQuestionReportsState();
 
     const parsed = JSON.parse(raw) as unknown;
-    return sanitizeState(parsed) ?? createDefaultQuestionReportsState();
+    return (
+      sanitizeQuestionReportsState(parsed) ??
+      createDefaultQuestionReportsState()
+    );
   } catch (err) {
     console.error("Failed to load question reports:", err);
     return createDefaultQuestionReportsState();
@@ -154,7 +157,8 @@ export function saveQuestionReports(state: QuestionReportsStateV1): void {
 
   try {
     const normalized =
-      sanitizeState(state) ?? createDefaultQuestionReportsState();
+      sanitizeQuestionReportsState(state) ??
+      createDefaultQuestionReportsState();
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
   } catch (err) {
     console.error("Failed to save question reports:", err);
@@ -170,7 +174,7 @@ export function appendQuestionReport(
   },
 ): QuestionReportsStateV1 {
   const normalized =
-    sanitizeState(state) ?? createDefaultQuestionReportsState();
+    sanitizeQuestionReportsState(state) ?? createDefaultQuestionReportsState();
   const comment = draft.comment.trim();
 
   if (!draft.questionId.trim() || !comment) {
@@ -196,7 +200,7 @@ export function exportQuestionReportsJson(
   exportedAt: string = new Date().toISOString(),
 ): string {
   const normalized =
-    sanitizeState(state) ?? createDefaultQuestionReportsState();
+    sanitizeQuestionReportsState(state) ?? createDefaultQuestionReportsState();
   const envelope: QuestionReportExportV1 = {
     version: 1,
     exportedAt,
@@ -204,4 +208,19 @@ export function exportQuestionReportsJson(
   };
 
   return JSON.stringify(envelope, null, 2);
+}
+
+export function createQuestionReport(
+  draft: QuestionReportDraft,
+  options?: {
+    reportId?: string;
+    reportedAt?: string;
+  },
+): QuestionReport | null {
+  const nextState = appendQuestionReport(
+    createDefaultQuestionReportsState(),
+    draft,
+    options,
+  );
+  return nextState.reports[0] ?? null;
 }

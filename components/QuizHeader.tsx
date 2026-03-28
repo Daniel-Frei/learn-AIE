@@ -31,8 +31,8 @@ type Props = {
   userRating: number;
   userRatingRd: number;
   exportDifficultyJson: () => string;
-  importDifficultyFromJson: (json: string) => void;
-  exportReportsJson: () => string;
+  importDifficultyFromJson: (json: string) => Promise<void>;
+  exportReportsJson: () => Promise<string>;
 };
 
 export default function QuizHeader({
@@ -169,8 +169,8 @@ export default function QuizHeader({
     fileInputRef.current?.click();
   };
 
-  const handleExportReportsClick = () => {
-    const json = exportReportsJson();
+  const handleExportReportsClick = async () => {
+    const json = await exportReportsJson();
     const blob = new Blob([json], { type: "application/json" });
     const url = URL.createObjectURL(blob);
 
@@ -190,7 +190,7 @@ export default function QuizHeader({
     const reader = new FileReader();
     reader.onload = () => {
       if (typeof reader.result === "string") {
-        importDifficultyFromJson(reader.result);
+        void importDifficultyFromJson(reader.result);
       }
       e.target.value = "";
     };
@@ -251,7 +251,9 @@ export default function QuizHeader({
             </button>
             <button
               type="button"
-              onClick={handleExportReportsClick}
+              onClick={() => {
+                void handleExportReportsClick();
+              }}
               className="px-3 py-1 rounded-md bg-slate-800 border border-slate-700 text-xs"
             >
               Export reports

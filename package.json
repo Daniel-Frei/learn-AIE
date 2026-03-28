@@ -17,6 +17,7 @@
     "check": "npm run format-check && npm run lint && npm run types-check && npm run test"
   },
   "dependencies": {
+    "@supabase/supabase-js": "2.100.0",
     "katex": "^0.16.22",
     "next": "16.0.3",
     "openai": "^6.9.1",
@@ -24,8 +25,8 @@
     "react-dom": "19.2.0",
     "react-markdown": "^10.1.0",
     "rehype-katex": "^7.0.1",
-    "remark-math": "^6.0.0",
-    "remark-gfm": "^4.0.1"
+    "remark-gfm": "^4.0.1",
+    "remark-math": "^6.0.0"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.1",
@@ -36,6 +37,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.0.3",
     "prettier": "^3.6.2",
+    "supabase": "2.84.0",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.0.0"

@@ -29,12 +29,18 @@ This file captures durable process preferences so future tasks can follow them b
 
 - Ask before adding runtime dependencies under `dependencies`.
 - Dev dependencies are acceptable when needed for tooling/testing.
+- Current approved shared-storage runtime dependency: `@supabase/supabase-js`.
 
 ## Testing Priorities
 
 - Keep expanding coverage for core functionality, not just smoke tests.
 - Prioritize tests for quiz source selection/title logic, difficulty rating behavior, and API validation/error handling.
-- For question reporting, prefer append-only local report entries and include source/prompt snapshot context in exported files.
+- For question reporting, prefer append-only shared report entries and include source/prompt snapshot context in exported files.
+- For shared quiz data, use anonymous per-device participants in v1: question difficulty is global, but each participant keeps their own rating/climb state.
+
+## Shared Data Operations
+
+- For the initial legacy-to-Supabase backfill, treat `store/manual/quiz-ratings(2).json` as the latest legacy rating export snapshot.
 
 ## Question Bank Preferences
 

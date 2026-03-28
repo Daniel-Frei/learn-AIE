@@ -1,0 +1,15 @@
+export {
+  computeQuestionDifficultyScore,
+  createDefaultRatingState,
+  exportRatingsJson,
+  getQuestionRatingEstimate,
+  importRatingsJson,
+  recordAnswer,
+  type LegacyDifficultyMap,
+  type LegacyQuestionStats,
+  type QuestionMetadataMap,
+  type QuestionRating,
+  type RatingConfig,
+  type RatingEntity,
+  type RatingStateV2,
+} from "./difficultyStore";

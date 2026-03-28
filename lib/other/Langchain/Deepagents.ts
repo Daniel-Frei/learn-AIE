@@ -48,8 +48,8 @@ export const DeepAgentsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They eliminate the need for prompting because the todo list fully determines the agent's behavior.",
-        isCorrect: false,
+        text: "They do not eliminate the need for prompting because the todo list does not fully determine the agent's behavior.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -156,8 +156,8 @@ export const DeepAgentsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Once todos are stored in state, there is no reason for the agent ever to check them again.",
-        isCorrect: false,
+        text: "Even after todos are stored in state, the agent may still need to check them again later in the trajectory.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -263,8 +263,8 @@ export const DeepAgentsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Because the raw content is stored in files, the agent can no longer inspect that content again during the same trajectory.",
-        isCorrect: false,
+        text: "Because the raw content is stored in files, the agent can inspect that content again during the same trajectory when needed.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -370,8 +370,8 @@ export const DeepAgentsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Once an agent has subagents, the supervisor's prompt can usually be reduced to a single sentence with little downside.",
-        isCorrect: false,
+        text: "Even when an agent has subagents, the supervisor's prompt still benefits from more than a single sentence of guidance.",
+        isCorrect: true,
       },
     ],
     explanation:

@@ -17,13 +17,13 @@ type Props = {
   shuffledOptions: Option[];
   selectedIndexes: number[];
   showResult: { isCorrect: boolean } | null;
-  submitAnswer: () => void;
+  submitAnswer: () => Promise<void>;
   nextQuestion: () => void;
-  submitQuestionReport: (comment: string) => boolean;
+  submitQuestionReport: (comment: string) => Promise<boolean>;
 };
 
 type ReportControlsProps = {
-  submitQuestionReport: (comment: string) => boolean;
+  submitQuestionReport: (comment: string) => Promise<boolean>;
 };
 
 function QuestionReportControls({ submitQuestionReport }: ReportControlsProps) {
@@ -95,8 +95,8 @@ function QuestionReportControls({ submitQuestionReport }: ReportControlsProps) {
           <div className="flex gap-2">
             <button
               type="button"
-              onClick={() => {
-                const didSubmit = submitQuestionReport(reportComment);
+              onClick={async () => {
+                const didSubmit = await submitQuestionReport(reportComment);
                 if (!didSubmit) {
                   setReportError(
                     "Enter a comment before submitting the report.",
@@ -107,7 +107,7 @@ function QuestionReportControls({ submitQuestionReport }: ReportControlsProps) {
 
                 setReportComment("");
                 setReportError("");
-                setReportSuccess("Report saved locally.");
+                setReportSuccess("Report saved.");
                 setIsReportOpen(false);
               }}
               className="px-3 py-2 rounded-lg bg-amber-400 text-slate-950 font-semibold text-sm"
@@ -156,7 +156,9 @@ export default function QuizFooter({
       <div className="flex flex-wrap gap-3">
         {!showResult ? (
           <button
-            onClick={submitAnswer}
+            onClick={() => {
+              void submitAnswer();
+            }}
             disabled={selectedIndexes.length === 0}
             className="px-4 py-2 rounded-lg bg-sky-500 text-slate-950 font-semibold text-sm disabled:opacity-50 disabled:cursor-not-allowed"
           >

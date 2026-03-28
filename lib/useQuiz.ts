@@ -3,6 +3,11 @@
 
 import { useEffect, useMemo, useState } from "react";
 import {
+  getOrCreateParticipantId,
+  hasCompletedLegacyMigration,
+  markLegacyMigrationCompleted,
+} from "./client/participantStorage";
+import {
   SOURCE_SERIES,
   allQuestions,
   getQuestionSourceMetadata,
@@ -11,26 +16,24 @@ import {
   type SourceSeriesId,
   type Topic,
 } from "./quiz";
+import { loadRatingState } from "./difficultyStore";
+import { loadQuestionReports } from "./questionReportsStore";
 import {
-  loadRatingState,
-  createDefaultRatingState,
-  saveRatingState,
-  recordAnswer,
   computeQuestionDifficultyScore,
+  createDefaultRatingState,
   exportRatingsJson,
-  importRatingsJson,
   getQuestionRatingEstimate,
+  importRatingsJson,
   type QuestionMetadataMap,
   type RatingStateV2,
-} from "./difficultyStore";
-import {
-  appendQuestionReport,
-  createDefaultQuestionReportsState,
-  exportQuestionReportsJson,
-  loadQuestionReports,
-  saveQuestionReports,
-  type QuestionReportsStateV1,
-} from "./questionReportsStore";
+} from "./ratingEngine";
+import type {
+  LocalMigrationResponse,
+  QuizStateResponse,
+  RecordAnswerResponse,
+  ReportsExportResponse,
+  SubmitQuestionReportResponse,
+} from "./quizSync";
 import type { Question } from "./quiz";
 
 // Difficulty filter is now a numeric range [0,100]
@@ -117,9 +120,11 @@ export function useQuiz() {
   const [ratingState, setRatingState] = useState<RatingStateV2>(() =>
     createDefaultRatingState(),
   );
-  const [reportState, setReportState] = useState<QuestionReportsStateV1>(() =>
-    createDefaultQuestionReportsState(),
-  );
+  const [participantId, setParticipantId] = useState<string | null>(null);
+  const [reportCountsByQuestion, setReportCountsByQuestion] = useState<
+    Record<string, number>
+  >({});
+  const [totalReportCount, setTotalReportCount] = useState(0);
 
   const [selectedSources, setSelectedSources] =
     useState<SourceId[]>(initialSources);
@@ -161,20 +166,93 @@ export function useQuiz() {
   const [climbQuestionId, setClimbQuestionId] = useState<string | null>(null);
   const [climbRecentIds, setClimbRecentIds] = useState<string[]>([]);
 
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      const loaded = loadRatingState(QUESTION_METADATA);
-      setRatingState(loaded);
-    }, 0);
-    return () => window.clearTimeout(timer);
-  }, []);
+  const applyRemoteState = (response: QuizStateResponse) => {
+    setRatingState(response.ratingState);
+    setReportCountsByQuestion(response.reportSummary.countsByQuestion);
+    setTotalReportCount(response.reportSummary.totalReportCount);
+  };
+
+  const fetchJson = async <T>(
+    input: RequestInfo | URL,
+    init?: RequestInit,
+  ): Promise<T> => {
+    const res = await fetch(input, {
+      headers: {
+        "content-type": "application/json",
+        ...(init?.headers ?? {}),
+      },
+      ...init,
+    });
+
+    const body = (await res.json()) as T & { error?: string };
+    if (!res.ok) {
+      throw new Error(body.error ?? `Request failed with status ${res.status}`);
+    }
+    return body;
+  };
 
   useEffect(() => {
-    const timer = window.setTimeout(() => {
-      const loaded = loadQuestionReports();
-      setReportState(loaded);
-    }, 0);
-    return () => window.clearTimeout(timer);
+    let cancelled = false;
+
+    const bootstrap = async () => {
+      const nextParticipantId = getOrCreateParticipantId();
+      if (!nextParticipantId) return;
+
+      setParticipantId(nextParticipantId);
+
+      try {
+        const initial = await fetchJson<QuizStateResponse>(
+          `/api/quiz-state?participantId=${encodeURIComponent(nextParticipantId)}`,
+          { method: "GET" },
+        );
+        if (cancelled) return;
+
+        applyRemoteState(initial);
+        if (initial.legacyMigrationCompleted) {
+          markLegacyMigrationCompleted(nextParticipantId);
+          return;
+        }
+
+        if (hasCompletedLegacyMigration(nextParticipantId)) {
+          return;
+        }
+
+        const localRatingState = loadRatingState(QUESTION_METADATA);
+        const localReportState = loadQuestionReports();
+        const hasLocalRatings =
+          localRatingState.user.gamesPlayed > 0 ||
+          Object.keys(localRatingState.questions).length > 0;
+        const hasLocalReports = localReportState.reports.length > 0;
+
+        if (!hasLocalRatings && !hasLocalReports) {
+          return;
+        }
+
+        const migrated = await fetchJson<LocalMigrationResponse>(
+          "/api/local-migration",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              participantId: nextParticipantId,
+              localRatingState: hasLocalRatings ? localRatingState : undefined,
+              localReportState: hasLocalReports ? localReportState : undefined,
+            }),
+          },
+        );
+        if (cancelled) return;
+
+        applyRemoteState(migrated);
+        markLegacyMigrationCompleted(nextParticipantId);
+      } catch (err) {
+        console.error("Failed to bootstrap remote quiz state:", err);
+      }
+    };
+
+    void bootstrap();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const currentQuestion = useMemo(() => {
@@ -219,35 +297,6 @@ export function useQuiz() {
     setSelectedIndexes((prev) =>
       prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx],
     );
-  };
-
-  const submitAnswer = () => {
-    if (!currentQuestion || showResult) return;
-
-    const correctIndexes = shuffledOptions
-      .map((opt, idx) => (opt.isCorrect ? idx : -1))
-      .filter((idx) => idx !== -1);
-
-    const isCorrect =
-      correctIndexes.length === selectedIndexes.length &&
-      correctIndexes.every((idx) => selectedIndexes.includes(idx));
-
-    // Show result and update visible quiz counters
-    setShowResult({ isCorrect });
-    setAnsweredCount((n) => n + 1);
-    setCorrectCount((n) => n + (isCorrect ? 1 : 0));
-
-    // Persist rating update immediately on submit
-    setRatingState((prev) => {
-      const updated = recordAnswer(
-        prev,
-        currentQuestion.id,
-        currentQuestion.difficulty,
-        isCorrect,
-      );
-      saveRatingState(updated);
-      return updated;
-    });
   };
 
   const nextQuestion = () => {
@@ -295,13 +344,11 @@ export function useQuiz() {
 
   const currentQuestionReportCount = useMemo(() => {
     if (!currentQuestion) return 0;
-    return reportState.reports.filter(
-      (report) => report.questionId === currentQuestion.id,
-    ).length;
-  }, [currentQuestion, reportState.reports]);
+    return reportCountsByQuestion[currentQuestion.id] ?? 0;
+  }, [currentQuestion, reportCountsByQuestion]);
 
-  const submitQuestionReport = (comment: string): boolean => {
-    if (!currentQuestion) return false;
+  const submitQuestionReport = async (comment: string): Promise<boolean> => {
+    if (!currentQuestion || !participantId) return false;
 
     const trimmedComment = comment.trim();
     if (!trimmedComment) return false;
@@ -309,24 +356,39 @@ export function useQuiz() {
     const sourceMetadata = getQuestionSourceMetadata(currentQuestion.id);
     if (!sourceMetadata) return false;
 
-    setReportState((prev) => {
-      const updated = appendQuestionReport(prev, {
-        questionId: currentQuestion.id,
-        comment: trimmedComment,
-        snapshot: {
-          sourceId: sourceMetadata.sourceId,
-          sourceLabel: sourceMetadata.sourceLabel,
-          seriesId: sourceMetadata.seriesId,
-          seriesLabel: sourceMetadata.seriesLabel,
-          topic: sourceMetadata.topic,
-          prompt: currentQuestion.prompt,
+    try {
+      const response = await fetchJson<SubmitQuestionReportResponse>(
+        "/api/question-reports",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            participantId,
+            draft: {
+              questionId: currentQuestion.id,
+              comment: trimmedComment,
+              snapshot: {
+                sourceId: sourceMetadata.sourceId,
+                sourceLabel: sourceMetadata.sourceLabel,
+                seriesId: sourceMetadata.seriesId,
+                seriesLabel: sourceMetadata.seriesLabel,
+                topic: sourceMetadata.topic,
+                prompt: currentQuestion.prompt,
+              },
+            },
+          }),
         },
-      });
-      saveQuestionReports(updated);
-      return updated;
-    });
+      );
 
-    return true;
+      setTotalReportCount(response.totalReportCount);
+      setReportCountsByQuestion((prev) => ({
+        ...prev,
+        [currentQuestion.id]: response.questionReportCount,
+      }));
+      return true;
+    } catch (err) {
+      console.error("Failed to submit question report:", err);
+      return false;
+    }
   };
 
   const clampRange = (newRange: DifficultyRange) => {
@@ -402,15 +464,76 @@ export function useQuiz() {
     return exportRatingsJson(ratingState);
   };
 
-  const importDifficultyFromJson = (json: string) => {
+  const importDifficultyFromJson = async (json: string) => {
+    if (!participantId) return;
     const parsed = importRatingsJson(json, QUESTION_METADATA);
     if (!parsed) return;
-    setRatingState(parsed);
-    saveRatingState(parsed);
+
+    try {
+      const migrated = await fetchJson<LocalMigrationResponse>(
+        "/api/local-migration",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            participantId,
+            localRatingState: parsed,
+          }),
+        },
+      );
+      applyRemoteState(migrated);
+      markLegacyMigrationCompleted(participantId);
+    } catch (err) {
+      console.error("Failed to import rating JSON into remote store:", err);
+    }
   };
 
-  const exportReportsJson = () => {
-    return exportQuestionReportsJson(reportState);
+  const exportReportsJson = async () => {
+    const exported = await fetchJson<ReportsExportResponse>(
+      "/api/question-reports/export",
+      { method: "GET" },
+    );
+    return JSON.stringify(exported, null, 2);
+  };
+
+  const submitAnswer = async () => {
+    if (!currentQuestion || showResult) return;
+
+    const correctIndexes = shuffledOptions
+      .map((opt, idx) => (opt.isCorrect ? idx : -1))
+      .filter((idx) => idx !== -1);
+
+    const isCorrect =
+      correctIndexes.length === selectedIndexes.length &&
+      correctIndexes.every((idx) => selectedIndexes.includes(idx));
+
+    setShowResult({ isCorrect });
+    setAnsweredCount((n) => n + 1);
+    setCorrectCount((n) => n + (isCorrect ? 1 : 0));
+
+    if (!participantId) return;
+
+    try {
+      const response = await fetchJson<RecordAnswerResponse>("/api/answers", {
+        method: "POST",
+        body: JSON.stringify({
+          participantId,
+          questionId: currentQuestion.id,
+          label: currentQuestion.difficulty,
+          isCorrect,
+        }),
+      });
+
+      setRatingState((prev) => ({
+        ...prev,
+        user: response.user,
+        questions: {
+          ...prev.questions,
+          [response.questionId]: response.question,
+        },
+      }));
+    } catch (err) {
+      console.error("Failed to sync answer to remote store:", err);
+    }
   };
 
   return {
@@ -442,7 +565,7 @@ export function useQuiz() {
     accuracy,
     userRating: ratingState.user.rating,
     userRatingRd: ratingState.user.rd,
-    totalReportCount: reportState.reports.length,
+    totalReportCount,
     currentQuestionReportCount,
 
     // export/import

@@ -1,6 +1,4 @@
 // lib/difficultyStore.ts
-"use client";
-
 import type { Difficulty } from "./quiz";
 
 export type LegacyQuestionStats = {

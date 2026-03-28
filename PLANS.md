@@ -230,3 +230,25 @@
 
 - `make test`: pass.
 - `make check`: pass.
+
+---
+
+# Plan: Shared Quiz Data With Anonymous Participants
+
+## Goal
+
+- Replace browser-local answer/report persistence with shared Supabase Postgres storage while keeping anonymous per-device participants.
+
+## Steps
+
+- [x] Extract/share the rating engine so both client and server routes can use the same Glicko logic.
+- [x] Add Next.js API routes for shared quiz-state bootstrap, answer writes, report writes/export, and one-time legacy migration.
+- [x] Add a Supabase-backed storage layer plus a checked-in SQL schema for the required tables.
+- [x] Switch the quiz hook from local persistence to API-backed state, keeping only `participantId` and migration markers in browser storage.
+- [x] Update docs and add route/unit coverage for the new shared-storage behavior.
+- [x] Run `make test` and `make check`, then record exact outcomes.
+
+## Verification Result
+
+- `make test`: pass.
+- `make check`: pass.
