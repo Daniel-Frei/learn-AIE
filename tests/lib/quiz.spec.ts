@@ -106,6 +106,12 @@ describe("quiz source registry helpers", () => {
     expect(ids.has("mit6s191-l3")).toBe(true);
     expect(ids.has("mit6s191-l4")).toBe(true);
     expect(ids.has("mit6s191-l6")).toBe(true);
+    expect(ids.has("mit15773-l6")).toBe(true);
+    expect(ids.has("mit15773-l7")).toBe(true);
+    expect(ids.has("mit15773-l8")).toBe(true);
+    expect(ids.has("mit15773-l9")).toBe(true);
+    expect(ids.has("mit15773-l10")).toBe(true);
+    expect(ids.has("mit15773-l11")).toBe(true);
     expect(ids.has("crash-linalg-l1")).toBe(true);
     expect(ids.has("langchain-deepagents")).toBe(true);
   });

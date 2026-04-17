@@ -18,6 +18,7 @@ This file captures durable process preferences so future tasks can follow them b
 
 - Install (clean): `make ci`
 - Install (dev): `make install`
+- Local Next.js dev and production-preview server default port: `3101` instead of `3000` to reduce localhost conflicts.
 - Full checks: `make check`
 - Format check: `make format-check`
 - Lint: `make lint`

@@ -327,3 +327,4 @@ Import one participant’s legacy local browser data into the shared database.
 - `NEXT_PUBLIC_SUPABASE_URL` (required)
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (required for client configuration / deployment parity)
 - `SUPABASE_SERVICE_ROLE_KEY` (required for server-side route access)
+- In local development, if Supabase is unreachable the server falls back to an in-memory quiz store for the current process so the app can still load. That fallback is not durable and resets on restart.

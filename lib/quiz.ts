@@ -15,14 +15,20 @@ import { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS22
 import { cs224rLecture4ActorCriticQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture4_Actor-Critic Methods";
 import { lecture5_OffPolicyActorCriticQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture5_Off-Policy Actor Critic Methods";
 import { OtherRL_introductiontoReinforcementLearning } from "./lectures/Other RL/introduction to Reinforcement Learning";
-import { L5_DeepReinforcementLearning } from "./lectures/MIT 6.S191 Deep Learning 2025/L5_Deep Reinforcement Learning";
-import { L1_IntroductionToNeuralNetworksAndDeepLearning as MIT6S191L1IntroductionQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L1_Introduction";
-import { MIT6S191_L2_DeepSequenceModelingQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L2_RNNs, Transformers and Attention";
-import { MIT6S191_L3_CNNsQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L3_CNNs";
-import { MIT6S191_L4_DeepGenerativeModelingQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L4_Deep Generative Modeling";
-import { MIT6S191_L6_LMsAndFrontiersQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L6_LMs and frontiers";
+import { L5_DeepReinforcementLearning } from "./lectures/MIT 6.S191 Deep Learning 2026/L5_Deep Reinforcement Learning";
+import { L1_IntroductionToNeuralNetworksAndDeepLearning as MIT6S191L1IntroductionQuestions } from "./lectures/MIT 6.S191 Deep Learning 2026/L1_Introduction";
+import { MIT6S191_L2_DeepSequenceModelingQuestions } from "./lectures/MIT 6.S191 Deep Learning 2026/L2_RNNs, Transformers and Attention";
+import { MIT6S191_L3_CNNsQuestions } from "./lectures/MIT 6.S191 Deep Learning 2026/L3_CNNs";
+import { MIT6S191_L4_DeepGenerativeModelingQuestions } from "./lectures/MIT 6.S191 Deep Learning 2026/L4_Deep Generative Modeling";
+import { MIT6S191_L6_LMsAndFrontiersQuestions } from "./lectures/MIT 6.S191 Deep Learning 2026/L6_LMs and frontiers";
 import { L1_IntroductionToNeuralNetworksAndDeepLearning } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L1_ Introduction to Neural Networks and Deep Learning";
 import { L2_TrainingDeepNNs } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L2_Training Deep NNs";
+import { EmbeddingsQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L6_Embeddings";
+import { TransformersQuestions as MIT15773L7TransformersQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L7_Transformers";
+import { TransformersSelfSupervisedLearningQuestions as MIT15773L8Transformers2Questions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L8_Transformers 2";
+import { LLMsQuestions as MIT15773L9LLMsQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L9_LLMs";
+import { L10LLMs2Questions as MIT15773L10LLMs2Questions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L10_LLMs 2";
+import { MIT15773L11DiffusionQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L11_Diffusion";
 import { CrashCourseLinearAlgebraL1Questions } from "./other/Crash Course Linear Algebra/Lecture 1 — Vectors, Geometry, and Dot Products";
 import { MIT15773L3DeepLearningForComputerVisionQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L3_Deep Learning for Computer Vision";
 import { MIT15773L4ComputerVisionTransferLearningQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L4_Computer Vision –Transfer Learning and Fine-Tuning";
@@ -38,7 +44,7 @@ export type SourceSeriesId =
   | "stanford-cme295"
   | "stanford-cs224r"
   | "other-rl"
-  | "mit-6s191-2025"
+  | "mit-6s191-2026"
   | "mit-15773-2024"
   | "crash-course-linear-algebra"
   | "langchain"
@@ -224,8 +230,8 @@ export const QUESTION_SOURCES = [
     id: "mit6s191-l1" as const,
     label: "MIT 6.S191 L1",
     title: "MIT 6.S191 L1: Introduction to Deep Learning",
-    seriesId: "mit-6s191-2025" as const,
-    seriesLabel: "MIT 6.S191 Deep Learning 2025",
+    seriesId: "mit-6s191-2026" as const,
+    seriesLabel: "MIT 6.S191 Deep Learning 2026",
     topic: "DL" as const,
     questions: MIT6S191L1IntroductionQuestions,
   },
@@ -233,8 +239,8 @@ export const QUESTION_SOURCES = [
     id: "mit6s191-l2" as const,
     label: "MIT 6.S191 L2",
     title: "MIT 6.S191 L2: RNNs, Transformers and Attention",
-    seriesId: "mit-6s191-2025" as const,
-    seriesLabel: "MIT 6.S191 Deep Learning 2025",
+    seriesId: "mit-6s191-2026" as const,
+    seriesLabel: "MIT 6.S191 Deep Learning 2026",
     topic: "NLP" as const,
     questions: MIT6S191_L2_DeepSequenceModelingQuestions,
   },
@@ -242,8 +248,8 @@ export const QUESTION_SOURCES = [
     id: "mit6s191-l5" as const,
     label: "MIT 6.S191 L5",
     title: "MIT 6.S191 L5: Deep Reinforcement Learning",
-    seriesId: "mit-6s191-2025" as const,
-    seriesLabel: "MIT 6.S191 Deep Learning 2025",
+    seriesId: "mit-6s191-2026" as const,
+    seriesLabel: "MIT 6.S191 Deep Learning 2026",
     topic: "RL" as const,
     questions: L5_DeepReinforcementLearning,
   },
@@ -251,8 +257,8 @@ export const QUESTION_SOURCES = [
     id: "mit6s191-l3" as const,
     label: "MIT 6.S191 L3",
     title: "MIT 6.S191 L3: Convolutional Neural Networks",
-    seriesId: "mit-6s191-2025" as const,
-    seriesLabel: "MIT 6.S191 Deep Learning 2025",
+    seriesId: "mit-6s191-2026" as const,
+    seriesLabel: "MIT 6.S191 Deep Learning 2026",
     topic: "DL" as const,
     questions: MIT6S191_L3_CNNsQuestions,
   },
@@ -260,8 +266,8 @@ export const QUESTION_SOURCES = [
     id: "mit6s191-l4" as const,
     label: "MIT 6.S191 L4",
     title: "MIT 6.S191 L4: Deep Generative Modeling",
-    seriesId: "mit-6s191-2025" as const,
-    seriesLabel: "MIT 6.S191 Deep Learning 2025",
+    seriesId: "mit-6s191-2026" as const,
+    seriesLabel: "MIT 6.S191 Deep Learning 2026",
     topic: "DL" as const,
     questions: MIT6S191_L4_DeepGenerativeModelingQuestions,
   },
@@ -269,8 +275,8 @@ export const QUESTION_SOURCES = [
     id: "mit6s191-l6" as const,
     label: "MIT 6.S191 L6",
     title: "MIT 6.S191 L6: LMs and Frontiers",
-    seriesId: "mit-6s191-2025" as const,
-    seriesLabel: "MIT 6.S191 Deep Learning 2025",
+    seriesId: "mit-6s191-2026" as const,
+    seriesLabel: "MIT 6.S191 Deep Learning 2026",
     topic: "NLP" as const,
     questions: MIT6S191_L6_LMsAndFrontiersQuestions,
   },
@@ -318,6 +324,60 @@ export const QUESTION_SOURCES = [
     seriesLabel: "MIT 15.773 Hands-On Deep Learning 2024",
     topic: "NLP" as const,
     questions: L5NLPBasicsQuestions,
+  },
+  {
+    id: "mit15773-l6" as const,
+    label: "MIT 15.773 L6",
+    title: "MIT 15.773 L6: Embeddings",
+    seriesId: "mit-15773-2024" as const,
+    seriesLabel: "MIT 15.773 Hands-On Deep Learning 2024",
+    topic: "NLP" as const,
+    questions: EmbeddingsQuestions,
+  },
+  {
+    id: "mit15773-l7" as const,
+    label: "MIT 15.773 L7",
+    title: "MIT 15.773 L7: Transformers",
+    seriesId: "mit-15773-2024" as const,
+    seriesLabel: "MIT 15.773 Hands-On Deep Learning 2024",
+    topic: "NLP" as const,
+    questions: MIT15773L7TransformersQuestions,
+  },
+  {
+    id: "mit15773-l8" as const,
+    label: "MIT 15.773 L8",
+    title: "MIT 15.773 L8: Transformers 2",
+    seriesId: "mit-15773-2024" as const,
+    seriesLabel: "MIT 15.773 Hands-On Deep Learning 2024",
+    topic: "NLP" as const,
+    questions: MIT15773L8Transformers2Questions,
+  },
+  {
+    id: "mit15773-l9" as const,
+    label: "MIT 15.773 L9",
+    title: "MIT 15.773 L9: LLMs",
+    seriesId: "mit-15773-2024" as const,
+    seriesLabel: "MIT 15.773 Hands-On Deep Learning 2024",
+    topic: "NLP" as const,
+    questions: MIT15773L9LLMsQuestions,
+  },
+  {
+    id: "mit15773-l10" as const,
+    label: "MIT 15.773 L10",
+    title: "MIT 15.773 L10: LLMs 2",
+    seriesId: "mit-15773-2024" as const,
+    seriesLabel: "MIT 15.773 Hands-On Deep Learning 2024",
+    topic: "NLP" as const,
+    questions: MIT15773L10LLMs2Questions,
+  },
+  {
+    id: "mit15773-l11" as const,
+    label: "MIT 15.773 L11",
+    title: "MIT 15.773 L11: Diffusion",
+    seriesId: "mit-15773-2024" as const,
+    seriesLabel: "MIT 15.773 Hands-On Deep Learning 2024",
+    topic: "DL" as const,
+    questions: MIT15773L11DiffusionQuestions,
   },
   {
     id: "crash-linalg-l1" as const,
@@ -489,15 +549,21 @@ export { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS22
 export { cs224rLecture4ActorCriticQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture4_Actor-Critic Methods";
 export { lecture5_OffPolicyActorCriticQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture5_Off-Policy Actor Critic Methods";
 export { OtherRL_introductiontoReinforcementLearning } from "./lectures/Other RL/introduction to Reinforcement Learning";
-export { L5_DeepReinforcementLearning } from "./lectures/MIT 6.S191 Deep Learning 2025/L5_Deep Reinforcement Learning";
-export { L1_IntroductionToNeuralNetworksAndDeepLearning as MIT6S191L1IntroductionQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L1_Introduction";
-export { MIT6S191_L2_DeepSequenceModelingQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L2_RNNs, Transformers and Attention";
-export { MIT6S191_L3_CNNsQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L3_CNNs";
-export { MIT6S191_L4_DeepGenerativeModelingQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L4_Deep Generative Modeling";
-export { MIT6S191_L6_LMsAndFrontiersQuestions } from "./lectures/MIT 6.S191 Deep Learning 2025/L6_LMs and frontiers";
+export { L5_DeepReinforcementLearning } from "./lectures/MIT 6.S191 Deep Learning 2026/L5_Deep Reinforcement Learning";
+export { L1_IntroductionToNeuralNetworksAndDeepLearning as MIT6S191L1IntroductionQuestions } from "./lectures/MIT 6.S191 Deep Learning 2026/L1_Introduction";
+export { MIT6S191_L2_DeepSequenceModelingQuestions } from "./lectures/MIT 6.S191 Deep Learning 2026/L2_RNNs, Transformers and Attention";
+export { MIT6S191_L3_CNNsQuestions } from "./lectures/MIT 6.S191 Deep Learning 2026/L3_CNNs";
+export { MIT6S191_L4_DeepGenerativeModelingQuestions } from "./lectures/MIT 6.S191 Deep Learning 2026/L4_Deep Generative Modeling";
+export { MIT6S191_L6_LMsAndFrontiersQuestions } from "./lectures/MIT 6.S191 Deep Learning 2026/L6_LMs and frontiers";
 export { L1_IntroductionToNeuralNetworksAndDeepLearning } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L1_ Introduction to Neural Networks and Deep Learning";
 export { L2_TrainingDeepNNs } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L2_Training Deep NNs";
 export { L5NLPBasicsQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L5_NLP Basics";
+export { EmbeddingsQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L6_Embeddings";
+export { TransformersQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L7_Transformers";
+export { TransformersSelfSupervisedLearningQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L8_Transformers 2";
+export { LLMsQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L9_LLMs";
+export { L10LLMs2Questions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L10_LLMs 2";
+export { MIT15773L11DiffusionQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L11_Diffusion";
 export { CrashCourseLinearAlgebraL1Questions } from "./other/Crash Course Linear Algebra/Lecture 1 — Vectors, Geometry, and Dot Products";
 export { DeepAgentsQuestions } from "./other/Langchain/Deepagents";
 export { mixedQuestions } from "./other/other";

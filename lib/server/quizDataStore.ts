@@ -134,6 +134,114 @@ async function throwOnError<T>(
   return data;
 }
 
+function isTransientSupabaseError(err: unknown): boolean {
+  if (!(err instanceof Error)) return false;
+
+  const message = `${err.name}: ${err.message}`.toLowerCase();
+  return (
+    message.includes("fetch failed") ||
+    message.includes("missing required supabase environment variable") ||
+    message.includes("econnrefused") ||
+    message.includes("enotfound") ||
+    message.includes("etimedout")
+  );
+}
+
+export class ResilientQuizDataStore implements QuizDataStore {
+  private primaryFailed = false;
+
+  constructor(
+    private readonly primary: QuizDataStore,
+    private readonly fallback: QuizDataStore,
+  ) {}
+
+  private async run<T>(
+    operation: string,
+    work: (store: QuizDataStore) => Promise<T>,
+  ): Promise<T> {
+    if (!this.primaryFailed) {
+      try {
+        return await work(this.primary);
+      } catch (err) {
+        if (!isTransientSupabaseError(err)) {
+          throw err;
+        }
+
+        this.primaryFailed = true;
+        console.warn(
+          `[quiz-data] Supabase unavailable during ${operation}; using in-memory fallback for this session.`,
+        );
+      }
+    }
+
+    return work(this.fallback);
+  }
+
+  async getParticipant(
+    participantId: string,
+  ): Promise<StoredParticipant | null> {
+    return this.run("getParticipant", (store) =>
+      store.getParticipant(participantId),
+    );
+  }
+
+  async upsertParticipant(participant: StoredParticipant): Promise<void> {
+    return this.run("upsertParticipant", (store) =>
+      store.upsertParticipant(participant),
+    );
+  }
+
+  async listQuestionRatings(): Promise<StoredQuestionRating[]> {
+    return this.run("listQuestionRatings", (store) =>
+      store.listQuestionRatings(),
+    );
+  }
+
+  async getQuestionRating(
+    questionId: string,
+  ): Promise<StoredQuestionRating | null> {
+    return this.run("getQuestionRating", (store) =>
+      store.getQuestionRating(questionId),
+    );
+  }
+
+  async upsertQuestionRating(question: StoredQuestionRating): Promise<void> {
+    return this.run("upsertQuestionRating", (store) =>
+      store.upsertQuestionRating(question),
+    );
+  }
+
+  async hasAnswerAttempt(attemptId: string): Promise<boolean> {
+    return this.run("hasAnswerAttempt", (store) =>
+      store.hasAnswerAttempt(attemptId),
+    );
+  }
+
+  async appendAnswerAttempt(attempt: StoredAnswerAttempt): Promise<void> {
+    return this.run("appendAnswerAttempt", (store) =>
+      store.appendAnswerAttempt(attempt),
+    );
+  }
+
+  async listQuestionReports(): Promise<StoredQuestionReport[]> {
+    return this.run("listQuestionReports", (store) =>
+      store.listQuestionReports(),
+    );
+  }
+
+  async hasQuestionReport(reportId: string): Promise<boolean> {
+    return this.run("hasQuestionReport", (store) =>
+      store.hasQuestionReport(reportId),
+    );
+  }
+
+  async appendQuestionReport(report: StoredQuestionReport): Promise<void> {
+    return this.run("appendQuestionReport", (store) =>
+      store.appendQuestionReport(report),
+    );
+  }
+}
+
 class SupabaseQuizDataStore implements QuizDataStore {
   private client = getSupabaseAdminClient();
 
@@ -351,7 +459,21 @@ export function setQuizDataStoreForTests(store: QuizDataStore | null): void {
 export function getQuizDataStore(): QuizDataStore {
   if (storeOverride) return storeOverride;
   if (!cachedStore) {
-    cachedStore = new SupabaseQuizDataStore();
+    try {
+      cachedStore = new ResilientQuizDataStore(
+        new SupabaseQuizDataStore(),
+        new InMemoryQuizDataStore(),
+      );
+    } catch (err) {
+      if (!isTransientSupabaseError(err)) {
+        throw err;
+      }
+
+      console.warn(
+        "[quiz-data] Supabase client could not be created; using in-memory fallback for this session.",
+      );
+      cachedStore = new InMemoryQuizDataStore();
+    }
   }
   return cachedStore;
 }
