@@ -10,7 +10,6 @@ import QuizFooter from "../components/QuizFooter";
 export default function QuizPage() {
   const {
     selectedSources,
-    selectedSeries,
     selectedTopics,
     selectionMode,
     difficultyRange,
@@ -51,7 +50,6 @@ export default function QuizPage() {
         <QuizHeader
           title={title}
           selectedSources={selectedSources}
-          selectedSeries={selectedSeries}
           selectedTopics={selectedTopics}
           selectionMode={selectionMode}
           difficultyRange={difficultyRange}

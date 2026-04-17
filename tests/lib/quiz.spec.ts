@@ -4,9 +4,11 @@ import {
   SOURCE_SERIES,
   QUESTION_SOURCES,
   allQuestions,
+  getSeriesIdsForSources,
   getQuestionsForFilters,
   getQuestionsForMode,
   getQuestionsForSources,
+  getSourceIdsForSeries,
   getTitleForSelection,
 } from "@/lib/quiz";
 
@@ -80,6 +82,27 @@ describe("quiz source registry helpers", () => {
     expect(SOURCE_SERIES.every((series) => series.sourceIds.length > 0)).toBe(
       true,
     );
+  });
+
+  it("maps a series to all of its question sets", () => {
+    const series = SOURCE_SERIES.find(
+      (entry) => entry.id === "stanford-cme295",
+    );
+
+    expect(series).toBeDefined();
+    expect(getSourceIdsForSeries("stanford-cme295")).toEqual(series!.sourceIds);
+  });
+
+  it("derives parent series from selected sources without selecting siblings", () => {
+    const lecture = QUESTION_SOURCES.find(
+      (source) => source.id === "cme295-lect2",
+    );
+
+    expect(lecture).toBeDefined();
+    expect(getSeriesIdsForSources([lecture!.id])).toEqual(["stanford-cme295"]);
+
+    const selectedQuestions = getQuestionsForFilters([lecture!.id], []);
+    expect(selectedQuestions).toEqual(lecture!.questions);
   });
 
   it("builds an explicit empty-filter title when nothing is selected", () => {

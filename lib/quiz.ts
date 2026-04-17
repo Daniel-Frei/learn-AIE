@@ -433,6 +433,22 @@ export const ALL_SOURCE_SERIES_IDS: SourceSeriesId[] = SOURCE_SERIES.map(
   (series) => series.id,
 );
 
+export function getSourceIdsForSeries(seriesId: SourceSeriesId): SourceId[] {
+  return (
+    SOURCE_SERIES.find((series) => series.id === seriesId)?.sourceIds ?? []
+  );
+}
+
+export function getSeriesIdsForSources(
+  sourceIds: SourceId[],
+): SourceSeriesId[] {
+  const activeSources = new Set(sourceIds);
+
+  return SOURCE_SERIES.filter((series) =>
+    series.sourceIds.some((sourceId) => activeSources.has(sourceId)),
+  ).map((series) => series.id);
+}
+
 // All questions across all sources
 export const allQuestions: Question[] = QUESTION_SOURCES.flatMap(
   (s) => s.questions,

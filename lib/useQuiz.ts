@@ -8,12 +8,10 @@ import {
   markLegacyMigrationCompleted,
 } from "./client/participantStorage";
 import {
-  SOURCE_SERIES,
   allQuestions,
   getQuestionSourceMetadata,
   getQuestionsForFilters,
   type SourceId,
-  type SourceSeriesId,
   type Topic,
 } from "./quiz";
 import { loadRatingState } from "./difficultyStore";
@@ -53,27 +51,9 @@ function shuffle<T>(items: T[]): T[] {
   return arr;
 }
 
-const SERIES_TO_SOURCE_IDS = new Map(
-  SOURCE_SERIES.map((series) => [series.id, series.sourceIds]),
-);
-
 const QUESTION_METADATA: QuestionMetadataMap = Object.fromEntries(
   allQuestions.map((q) => [q.id, { label: q.difficulty }]),
 );
-
-function resolveSources(
-  sources: SourceId[],
-  seriesIds: SourceSeriesId[],
-): SourceId[] {
-  const resolved = new Set<SourceId>(sources);
-  for (const seriesId of seriesIds) {
-    const sourceIds = SERIES_TO_SOURCE_IDS.get(seriesId) ?? [];
-    for (const sourceId of sourceIds) {
-      resolved.add(sourceId as SourceId);
-    }
-  }
-  return Array.from(resolved);
-}
 
 function pickClimbQuestionId(
   pool: Question[],
@@ -111,7 +91,6 @@ function pickClimbQuestionId(
 
 export function useQuiz() {
   const initialSources: SourceId[] = [];
-  const initialSeries: SourceSeriesId[] = [];
   const initialTopics: Topic[] = [];
   const initialRange: DifficultyRange = { min: 0, max: 100 };
   const initialMode: QuestionSelectionMode = "standard";
@@ -128,8 +107,6 @@ export function useQuiz() {
 
   const [selectedSources, setSelectedSources] =
     useState<SourceId[]>(initialSources);
-  const [selectedSeries, setSelectedSeries] =
-    useState<SourceSeriesId[]>(initialSeries);
   const [selectedTopics, setSelectedTopics] = useState<Topic[]>(initialTopics);
   const [selectionMode, setSelectionMode] =
     useState<QuestionSelectionMode>(initialMode);
@@ -141,9 +118,8 @@ export function useQuiz() {
   const [appliedQuestionIds, setAppliedQuestionIds] = useState<string[]>([]);
 
   const sourcePool = useMemo(() => {
-    const resolvedSources = resolveSources(selectedSources, selectedSeries);
-    return getQuestionsForFilters(resolvedSources, selectedTopics);
-  }, [selectedSources, selectedSeries, selectedTopics]);
+    return getQuestionsForFilters(selectedSources, selectedTopics);
+  }, [selectedSources, selectedTopics]);
 
   const questionById = useMemo(() => {
     return new Map(sourcePool.map((q) => [q.id, q]));
@@ -399,18 +375,16 @@ export function useQuiz() {
 
   const applySelection = (payload: {
     sources: SourceId[];
-    series: SourceSeriesId[];
+    series: string[];
     topics: Topic[];
     mode: QuestionSelectionMode;
     difficultyRange: DifficultyRange;
   }) => {
     const clampedRange = clampRange(payload.difficultyRange);
     const uniqueSources = Array.from(new Set(payload.sources));
-    const uniqueSeries = Array.from(new Set(payload.series));
     const uniqueTopics = Array.from(new Set(payload.topics));
-    const resolvedSources = resolveSources(uniqueSources, uniqueSeries);
 
-    const pool = getQuestionsForFilters(resolvedSources, uniqueTopics);
+    const pool = getQuestionsForFilters(uniqueSources, uniqueTopics);
     const eligibleIds = pool
       .filter((q) => {
         const score = computeQuestionDifficultyScore(
@@ -426,7 +400,6 @@ export function useQuiz() {
       .map((q) => q.id);
 
     setSelectedSources(uniqueSources);
-    setSelectedSeries(uniqueSeries);
     setSelectedTopics(uniqueTopics);
     setSelectionMode(payload.mode);
     setDifficultyRange(clampedRange);
@@ -539,7 +512,6 @@ export function useQuiz() {
   return {
     // configuration
     selectedSources,
-    selectedSeries,
     selectedTopics,
     selectionMode,
     difficultyRange,

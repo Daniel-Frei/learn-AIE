@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import type { DifficultyRange, QuestionSelectionMode } from "../lib/useQuiz";
 import {
   ALL_TOPICS,
+  ALL_SOURCE_IDS,
   QUESTION_SOURCES,
   SOURCE_SERIES,
+  getSeriesIdsForSources,
   type SourceId,
   type SourceSeriesId,
   type Topic,
@@ -14,7 +16,6 @@ import {
 type Props = {
   title: string;
   selectedSources: SourceId[];
-  selectedSeries: SourceSeriesId[];
   selectedTopics: Topic[];
   selectionMode: QuestionSelectionMode;
   difficultyRange: DifficultyRange;
@@ -38,7 +39,6 @@ type Props = {
 export default function QuizHeader({
   title,
   selectedSources,
-  selectedSeries,
   selectedTopics,
   selectionMode,
   difficultyRange,
@@ -56,21 +56,16 @@ export default function QuizHeader({
   const [isSelectorOpen, setIsSelectorOpen] = useState(false);
   const [pendingSources, setPendingSources] =
     useState<SourceId[]>(selectedSources);
-  const [pendingSeries, setPendingSeries] =
-    useState<SourceSeriesId[]>(selectedSeries);
   const [pendingTopics, setPendingTopics] = useState<Topic[]>(selectedTopics);
   const [pendingMode, setPendingMode] =
     useState<QuestionSelectionMode>(selectionMode);
   const [pendingRange, setPendingRange] =
     useState<DifficultyRange>(difficultyRange);
+  const pendingSeries = getSeriesIdsForSources(pendingSources);
 
   useEffect(() => {
     setPendingSources(selectedSources);
   }, [selectedSources]);
-
-  useEffect(() => {
-    setPendingSeries(selectedSeries);
-  }, [selectedSeries]);
 
   useEffect(() => {
     setPendingTopics(selectedTopics);
@@ -97,9 +92,21 @@ export default function QuizHeader({
   };
 
   const togglePendingSeries = (id: SourceSeriesId) => {
-    setPendingSeries((prev) =>
-      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id],
-    );
+    const series = SOURCE_SERIES.find((entry) => entry.id === id);
+    if (!series) return;
+
+    setPendingSources((prev) => {
+      const selected = new Set(prev);
+      const anySelected = series.sourceIds.some((sourceId) =>
+        selected.has(sourceId),
+      );
+
+      if (anySelected) {
+        return prev.filter((sourceId) => !series.sourceIds.includes(sourceId));
+      }
+
+      return Array.from(new Set([...prev, ...series.sourceIds]));
+    });
   };
 
   const togglePendingTopic = (topic: Topic) => {
@@ -109,7 +116,7 @@ export default function QuizHeader({
   };
 
   const handleSelectAllSeries = () => {
-    setPendingSeries(SOURCE_SERIES.map((series) => series.id));
+    setPendingSources(ALL_SOURCE_IDS);
   };
 
   const handleSelectAllTopics = () => {
@@ -118,7 +125,6 @@ export default function QuizHeader({
 
   const handleClearAll = () => {
     setPendingSources([]);
-    setPendingSeries([]);
     setPendingTopics([]);
   };
 
@@ -136,7 +142,6 @@ export default function QuizHeader({
       difficultyRange: clampedRange,
     });
     setPendingSources(safeSources);
-    setPendingSeries(safeSeries);
     setPendingTopics(safeTopics);
     setPendingRange(clampedRange);
     setIsSelectorOpen(false);
@@ -144,7 +149,6 @@ export default function QuizHeader({
 
   const handleCancelSelection = () => {
     setPendingSources(selectedSources);
-    setPendingSeries(selectedSeries);
     setPendingTopics(selectedTopics);
     setPendingMode(selectionMode);
     setPendingRange(difficultyRange);

@@ -33,7 +33,7 @@ export const EmbeddingsQuestions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Suppose \\(\\mathbf{e}_i\\) and \\(\\mathbf{e}_j\\) are two different one-hot vectors. Which statements are correct?",
+      "Suppose \\(\\mathbf{e}_i\\) and \\(\\mathbf{e}_j\\) are two different one-hot vectors from the same vocabulary. Which statements are correct?",
     options: [
       {
         text: "Their Euclidean distance is \\(\\sqrt{2}\\).",
@@ -251,7 +251,7 @@ export const EmbeddingsQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "In the simplified GloVe-style model discussed in the lecture, which statements are correct?",
+      "In a simplified GloVe-style word embedding model, which statements are correct?",
     options: [
       {
         text: "A co-occurrence quantity is modeled using two word biases plus the dot product of two embedding vectors.",
@@ -266,12 +266,12 @@ export const EmbeddingsQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "The lecture's setup required a deep neural network with many hidden layers in order to fit the embeddings.",
+        text: "This setup required a deep neural network with many hidden layers in order to fit the embeddings.",
         isCorrect: false,
       },
     ],
     explanation:
-      "The lecture presented a simple regression-style objective: the log co-occurrence is approximated by \\(b_i + b_j + \\mathbf{w}_i^T \\mathbf{w}_j\\). This is conceptually simple and can be optimized with gradient descent without needing a deep network architecture.",
+      "In this simplified regression-style objective, the log co-occurrence is approximated by \\(b_i + b_j + \\mathbf{w}_i^T \\mathbf{w}_j\\). The setup is conceptually simple and can be optimized with gradient descent without needing a deep network architecture.",
   },
   {
     id: "mit15773-l6-q11",
@@ -321,12 +321,12 @@ export const EmbeddingsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "If the objective is minimized perfectly, contextual ambiguity such as the multiple meanings of 'bank' is automatically resolved for each sentence occurrence.",
+        text: "Perfectly minimizing the objective would still not resolve contextual ambiguity such as the multiple meanings of 'bank' in different sentence occurrences.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The first three statements are right: this is a regression-style objective, the parameters are the biases and embeddings, and gradient descent can be used to optimize it. The final statement is wrong because the model still produces standalone word embeddings, so context-specific meaning is not automatically resolved for each occurrence.",
+      "This is a regression-style objective over word-pair statistics, the parameters are the biases and embeddings, and gradient descent can be used to optimize it. The final statement is wrong because the model still produces standalone word embeddings, so context-specific meaning is not automatically resolved for each occurrence.",
   },
   {
     id: "mit15773-l6-q13",
@@ -428,12 +428,12 @@ export const EmbeddingsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They eliminate any concern about dataset bias, because the embeddings are trained on large corpora rather than small ones.",
+        text: "They can still be fine-tuned on downstream data even when the original embeddings were pretrained on a different corpus.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The first three statements are correct and explain why pretrained embeddings are helpful but imperfect. The last statement is false: large corpora can still contain social, cultural, and domain biases, and pretrained embeddings can learn and reproduce them.",
+      "Pretrained embeddings are especially useful when labeled task data is limited, they transfer broad language structure, and they may still need adaptation for specialized domains. Large corpora can still contain social, cultural, and domain biases, so pretrained embeddings can reproduce them rather than eliminating them.",
   },
   {
     id: "mit15773-l6-q17",
@@ -522,7 +522,7 @@ export const EmbeddingsQuestions: Question[] = [
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "The lecture compared three approaches for a downstream NLP task: using frozen pretrained embeddings, fine-tuning pretrained embeddings, and learning embeddings from scratch. Which statements are correct?",
+      "For a downstream NLP task, compare three approaches: using frozen pretrained embeddings, fine-tuning pretrained embeddings, and learning embeddings from scratch. Which statements are correct?",
     options: [
       {
         text: "Frozen pretrained embeddings can be a strong starting point when data is limited.",
@@ -538,12 +538,12 @@ export const EmbeddingsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that There is no need to evaluate these choices empirically, because one of them is guaranteed to dominate across all datasets and domains.",
+        text: "You still need to evaluate these choices empirically, because no single approach is guaranteed to dominate across all datasets and domains.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The first three statements reflect the practical tradeoffs emphasized in the lecture. The last statement is false because performance depends on dataset size, domain mismatch, model design, and regularization, so the best approach must be checked empirically rather than assumed.",
+      "Frozen pretrained embeddings can be a strong starting point when data is limited, fine-tuning can help when the task data adds useful signal, and learning from scratch can win when enough task-specific data is available. The best choice depends on dataset size, domain mismatch, model design, and regularization, so it has to be checked empirically.",
   },
   {
     id: "mit15773-l6-q21",
@@ -792,7 +792,7 @@ export const EmbeddingsQuestions: Question[] = [
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "In the lecture's Keras pipeline, what is the purpose of choosing a maximum sequence length such as 300?",
+      "In a Keras text pipeline for variable-length song lyrics, what is the purpose of choosing a maximum sequence length such as 300?",
     options: [
       {
         text: "It allows variable-length input sentences to be represented in a common tensor shape.",

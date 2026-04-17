@@ -1,0 +1,4 @@
+- add clock (first 20 seconds are "free" then up to 3 min for max penalty)
+- add title and short description for each question set (maybe below "submit answer" as context?)
+- The difficulty of the question should be it's elo. also question always seem to jump massively in score after answering (maybe okay due to glicko?).
+- make a dumb LLM answer the questions to gain data to rate them. also allow them to flag questions.

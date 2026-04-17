@@ -6,7 +6,7 @@ export const TransformersQuestions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Which statements correctly describe the kind of natural-language task used to motivate transformers in this lecture?",
+      "Which statements correctly describe the kind of natural-language task used to motivate transformers?",
     options: [
       {
         text: "A natural-language query can be converted into a structured query such as SQL so that a database can be searched more reliably.",
@@ -22,12 +22,12 @@ export const TransformersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that The main example is an image-classification problem in which each pixel is mapped to a travel entity.",
+        text: "The main example is an image-classification problem in which each pixel is mapped to a travel entity.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The lecture used information retrieval, especially travel search, as a concrete example of how natural-language understanding can be turned into structured querying. Accuracy matters because a query like a flight request has a specific intended meaning, unlike open-ended generation where many outputs may be acceptable.",
+      "Information retrieval, especially travel search, is a concrete example of how natural-language understanding can be turned into structured querying. Accuracy matters because a query like a flight request has a specific intended meaning, unlike open-ended generation where many outputs may be acceptable.",
   },
   {
     id: "mit15773-l7-q02",
@@ -46,7 +46,7 @@ export const TransformersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that The entire query is assigned exactly one slot label, and individual words are ignored.",
+        text: "Each word in the input query receives its own slot label, so the output stays token aligned.",
         isCorrect: true,
       },
       {
@@ -118,7 +118,7 @@ export const TransformersQuestions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Which statements capture the three main requirements the lecture emphasized for the architecture?",
+      "Which statements capture the three main requirements for the architecture?",
     options: [
       {
         text: "It should take the surrounding context of each word into account.",
@@ -134,12 +134,12 @@ export const TransformersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that It should force all queries to have exactly the same semantic interpretation regardless of wording.",
+        text: "It should allow the model to output a label for each input token.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The lecture highlighted context, order, and same-length input-output behavior as the key design requirements. These are especially important for token-level labeling tasks, where each input token needs a corresponding output prediction.",
+      "The architecture needs context, order, and same-length input-output behavior to handle token-level labeling tasks. Each input token needs a corresponding output prediction, so preserving sequence structure matters.",
   },
   {
     id: "mit15773-l7-q06",
@@ -202,7 +202,7 @@ export const TransformersQuestions: Question[] = [
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "Let \\(\\hat{\\mathbf{w}}_6\\) denote the contextual embedding of the sixth word in a sentence with standalone embeddings \\(\\mathbf{w}_1, \\dots, \\mathbf{w}_6\\). Which statements are correct about the lecture's basic self-attention intuition?",
+      "Let \\(\\hat{\\mathbf{w}}_6\\) denote the contextual embedding of the sixth word in a sentence with standalone embeddings \\(\\mathbf{w}_1, \\dots, \\mathbf{w}_6\\). Which statements are correct about the basic self-attention intuition for contextual embeddings?",
     options: [
       {
         text: "A contextual embedding can be formed as a weighted average of the standalone embeddings of all words in the sentence.",
@@ -218,7 +218,7 @@ export const TransformersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that Because the weighted sum uses all words, the contextual embedding necessarily has a different dimensionality from the original standalone embeddings.",
+        text: "Because the weighted sum uses all words, the contextual embedding still has the same dimensionality as the original standalone embeddings.",
         isCorrect: true,
       },
     ],
@@ -313,11 +313,10 @@ export const TransformersQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Why does the lecture introduce multi-head attention rather than using only one self-attention head?",
+      "Why does the model use multi-head attention rather than only one self-attention head?",
     options: [
       {
-        text: "It is not the case that Different heads can learn to focus on different kinds of patterns in the same sentence.",
-
+        text: "Different heads are forced to focus on the same pattern in every sentence.",
         isCorrect: false,
       },
       {
@@ -325,8 +324,8 @@ export const TransformersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The idea is loosely analogous to using multiple filters in a convolutional neural network.",
-        isCorrect: true,
+        text: "The analogy to using multiple filters in a convolutional neural network is unrelated to multi-head attention.",
+        isCorrect: false,
       },
       {
         text: "Multi-head attention is used only to reduce the vocabulary size before tokenization.",
@@ -334,7 +333,7 @@ export const TransformersQuestions: Question[] = [
       },
     ],
     explanation:
-      "The lecture's intuition was that language contains several overlapping structures, so one attention mechanism may be too limited. Multiple heads allow the model to learn different relational patterns in parallel, much like different convolutional filters can specialize in different visual features.",
+      "Language contains several overlapping structures, so one attention mechanism may be too limited. Multiple heads allow the model to learn different relational patterns in parallel, much like different convolutional filters can specialize in different visual features.",
   },
   {
     id: "mit15773-l7-q13",
@@ -397,12 +396,11 @@ export const TransformersQuestions: Question[] = [
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "At the point in the lecture before positional encoding is introduced, which statements are correct about the simplified attention-based architecture?",
+      "Before positional encoding is introduced, which statements are correct about the simplified attention-based architecture?",
     options: [
       {
-        text: "It is not the case that It already accounts for surrounding context.",
-
-        isCorrect: false,
+        text: "It already accounts for surrounding context.",
+        isCorrect: true,
       },
       {
         text: "It can already produce an output sequence with the same number of positions as the input sequence.",
@@ -413,8 +411,8 @@ export const TransformersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It can correctly interpret word order solely because dot products are computed pairwise.",
-        isCorrect: false,
+        text: "Without positional information, it cannot reliably distinguish different orderings of the same set of input tokens.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -424,12 +422,11 @@ export const TransformersQuestions: Question[] = [
     id: "mit15773-l7-q16",
     chapter: 1,
     difficulty: "easy",
-    prompt: "What is the main purpose of positional encoding in the lecture?",
+    prompt: "What is the main purpose of positional encoding?",
     options: [
       {
-        text: "It is not the case that It injects information about where a token appears in the sentence.",
-
-        isCorrect: false,
+        text: "It injects information about where a token appears in the sentence.",
+        isCorrect: true,
       },
       {
         text: "It helps the model distinguish sequences that contain the same words in different orders.",
@@ -593,15 +590,14 @@ export const TransformersQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Why was the example query about a Brazilian traveler needing a visa for the USA useful in the lecture's discussion of search?",
+      "Why was the example query about a Brazilian traveler needing a visa for the USA useful in the discussion of search?",
     options: [
       {
-        text: "It is not the case that It illustrated that understanding word order and role assignment can materially change search quality.",
-
+        text: "It showed that search quality is unaffected by word order or role assignment.",
         isCorrect: false,
       },
       {
-        text: "It is not the case that It showed that older search behavior could confuse who is traveling to which country.",
+        text: "It showed that older search behavior could not confuse who is traveling to which country.",
         isCorrect: false,
       },
       {
@@ -624,12 +620,11 @@ export const TransformersQuestions: Question[] = [
       "Which statements are correct about the output structure in the ATIS slot-filling task?",
     options: [
       {
-        text: "It is not the case that If an input query has \\(n\\) tokens, the ideal output also has \\(n\\) token-level predictions.",
-
+        text: "If an input query has \\(n\\) tokens, the ideal output collapses everything into one label.",
         isCorrect: false,
       },
       {
-        text: "It is not the case that A separate softmax can conceptually be attached to each output position to choose among slot labels.",
+        text: "A separate softmax can conceptually be attached to each output position to choose among slot labels.",
         isCorrect: false,
       },
       {
@@ -677,15 +672,14 @@ export const TransformersQuestions: Question[] = [
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "Suppose a sentence has standalone embeddings \\(\\mathbf{w}_1, \\dots, \\mathbf{w}_n\\). In the lecture's intuition for contextualizing token \\(j\\), which statements are correct?",
+      "Suppose a sentence has standalone embeddings \\(\\mathbf{w}_1, \\dots, \\mathbf{w}_n\\). In the intuition for contextualizing token \\(j\\), which statements are correct?",
     options: [
       {
-        text: "It is not the case that The contextual embedding for token \\(j\\) is formed from all token embeddings in the sentence, not only from neighboring words.",
-
+        text: "The contextual embedding for token \\(j\\) is formed only from neighboring words, not from the whole sentence.",
         isCorrect: false,
       },
       {
-        text: "It is not the case that The weights used for token \\(j\\) reflect how much attention token \\(j\\) should pay to each other token.",
+        text: "The weights used for token \\(j\\) are the same for every target token.",
         isCorrect: false,
       },
       {
@@ -708,25 +702,24 @@ export const TransformersQuestions: Question[] = [
       "Which statements correctly reflect the geometric intuition behind using dot products as compatibility scores?",
     options: [
       {
-        text: "It is not the case that If two vectors point in similar directions, their dot product tends to be larger than if they are orthogonal.",
-
-        isCorrect: false,
+        text: "If two vectors point in similar directions, their dot product tends to be larger than if they are orthogonal.",
+        isCorrect: true,
       },
       {
-        text: "It is not the case that If two vectors are orthogonal, their dot product is \\(0\\), which can be interpreted as little directional alignment.",
-        isCorrect: false,
+        text: "If two vectors are orthogonal, their dot product is \\(0\\), which can be interpreted as little directional alignment.",
+        isCorrect: true,
       },
       {
         text: "If vectors point in opposite directions, the dot product can become negative.",
         isCorrect: true,
       },
       {
-        text: "A dot product can only compare vectors when both are probability distributions that already sum to 1.",
-        isCorrect: false,
+        text: "A dot product can compare vectors in any shared embedding space, not only probability distributions that sum to 1.",
+        isCorrect: true,
       },
     ],
     explanation:
-      "The lecture used the angle-based intuition to explain why dot products are a natural similarity or compatibility signal. They do not require the vectors to be probabilities; they only require the vectors to inhabit the same dimensional space so that pairwise products and sums are defined.",
+      "The angle-based intuition explains why dot products are a natural similarity or compatibility signal. They do not require the vectors to be probabilities; they only require the vectors to inhabit the same dimensional space so that pairwise products and sums are defined.",
   },
   {
     id: "mit15773-l7-q27",
@@ -1002,7 +995,7 @@ export const TransformersQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements about the Keras-style setup discussed in the lecture are correct?",
+      "Which statements about the Keras-style setup for ATIS-style sequence labeling are correct?",
     options: [
       {
         text: "The input queries are vectorized into integer token sequences before embeddings are applied.",
@@ -1029,7 +1022,7 @@ export const TransformersQuestions: Question[] = [
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "Why might the lecture choose a maximum query length such as 30 for the ATIS example?",
+      "Why might a maximum query length such as 30 be chosen for the ATIS example?",
     options: [
       {
         text: "It provides a fixed input length so that batches can be formed and processed consistently.",
@@ -1044,8 +1037,8 @@ export const TransformersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Choosing a maximum length mathematically guarantees that no relevant information is ever removed from any long query.",
-        isCorrect: false,
+        text: "Choosing a maximum length does not guarantee that no relevant information is ever removed from any long query.",
+        isCorrect: true,
       },
     ],
     explanation:
@@ -1056,14 +1049,14 @@ export const TransformersQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements about parameters and learning in the lecture's transformer discussion are correct?",
+      "Which statements about parameters and learning in the transformer-based slot-filling model are correct?",
     options: [
       {
         text: "Token embeddings and positional embeddings can both be learned through backpropagation.",
         isCorrect: true,
       },
       {
-        text: "The lecture noted that some deeper internal details of attention, including additional learned projections, would be covered later.",
+        text: "Some deeper internal details of attention, including additional learned projections, would be covered later.",
         isCorrect: true,
       },
       {
@@ -1071,12 +1064,12 @@ export const TransformersQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Because the lecture first explained attention using intuitive weighted averages, no trainable parameters are needed anywhere in the overall model.",
+        text: "Because attention was first explained using intuitive weighted averages, no trainable parameters are needed anywhere in the overall model.",
         isCorrect: false,
       },
     ],
     explanation:
-      "The initial weighted-average explanation was meant to build intuition, not to claim that the full model has no learnable structure. In practice, embeddings, projections, feed-forward layers, and task heads all contain trainable parameters, even if some projection details were postponed to the next lecture.",
+      "The initial weighted-average explanation was meant to build intuition, not to claim that the full model has no learnable structure. In practice, embeddings, projections, feed-forward layers, and task heads all contain trainable parameters, even if some projection details were postponed to a later lesson.",
   },
   {
     id: "mit15773-l7-q40",
