@@ -6,89 +6,88 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Which statement best explains why the lecture revisited the transformer encoder in a second pass?",
+      "Why can it be useful to introduce a transformer encoder first with a simplified intuition and then with a more detailed formulation?",
     options: [
       {
-        text: "Because the first pass introduced the core intuition, while the second pass added important engineering details such as tunable attention, residual connections, and layer normalization.",
+        text: "Because an initial simplified view can help build intuition before introducing architectural details like residual connections and normalization.",
         isCorrect: true,
       },
       {
-        text: "Because the first pass had shown that transformers cannot handle contextual embeddings, so the second pass replaced transformers with recurrent neural networks.",
+        text: "Because transformers cannot be understood unless they are replaced by recurrent neural networks.",
         isCorrect: false,
       },
       {
-        text: "Because the lecture decided that positional embeddings were unnecessary and removed them in the second pass.",
+        text: "Because positional embeddings are unnecessary and can be removed in more detailed formulations.",
         isCorrect: false,
       },
       {
-        text: "Because the second pass focused only on lecture logistics and not on the model architecture itself.",
+        text: "Because the architecture only works when described without mathematical details.",
         isCorrect: false,
       },
     ],
     explanation:
-      "The lecture explicitly said the second pass would add three important elements that were not covered in the first pass. The goal was not to replace the architecture, but to deepen the explanation until it matched the actual transformer encoder more closely.",
+      "A simplified view helps build intuition about how self-attention works before introducing additional components like residual connections and layer normalization. The incorrect options either misunderstand the role of transformers or suggest removing essential components such as positional embeddings, which are required for handling order.",
   },
   {
     id: "mit15773-l8-q02",
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe the role of the positional input embeddings before the transformer encoder?",
+      "Which statements correctly describe positional input embeddings in transformers?",
     options: [
       {
-        text: "They are formed by adding stand-alone token embeddings and positional embeddings elementwise.",
-
+        text: "They are formed by adding token embeddings and positional embeddings elementwise.",
         isCorrect: true,
       },
       {
-        text: "The stand-alone token embeddings may be pretrained or randomly initialized.",
+        text: "Token embeddings can be pretrained or randomly initialized.",
         isCorrect: true,
       },
       {
-        text: "The positional embeddings can also begin as trainable weight vectors.",
+        text: "Positional embeddings can be implemented as trainable vectors.",
         isCorrect: true,
       },
       {
-        text: "It is not the case that They are produced by averaging all token embeddings in the sentence into one single vector before the encoder.",
-        isCorrect: true,
+        text: "They are created by averaging all token embeddings into a single vector before entering the encoder.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "The lecture reviewed that each token gets a position-aware representation by summing its token embedding and its position embedding. This still preserves one vector per token position, rather than collapsing the whole sentence into a single vector at the input stage.",
+      "Each token receives its own embedding that combines token and positional information, preserving sequence structure. Averaging all token embeddings into one vector would destroy token-level information and is not how transformers operate.",
   },
   {
     id: "mit15773-l8-q03",
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Why is it useful to express self-attention with matrix operations rather than only as many separate weighted sums?",
+      "Why is it useful to express self-attention using matrix operations?",
     options: [
       {
-        text: "It allows all pairwise similarity computations to be organized efficiently as matrix multiplications.",
+        text: "It allows efficient computation of all pairwise similarities using matrix multiplication.",
         isCorrect: true,
       },
       {
-        text: "It makes the computation much more suitable for hardware such as graphics processing units.",
+        text: "It enables efficient parallel computation on hardware such as GPUs.",
         isCorrect: true,
       },
       {
-        text: "It proves that transformers no longer need softmax anywhere in the architecture.",
+        text: "It removes the need for the softmax function in attention.",
         isCorrect: false,
       },
       {
-        text: "It is part of what makes transformers computationally practical at scale.",
-        isCorrect: false,
+        text: "It makes large-scale transformer models computationally practical.",
+        isCorrect: true,
       },
     ],
     explanation:
-      "The lecture emphasized that packaging self-attention into compact matrix operations is what makes the architecture efficient and scalable. Softmax is still used, and practical efficiency on GPUs is a major part of the transformer story.",
+      "Matrix operations allow computing all pairwise dot products in one step, which is critical for efficiency. This enables GPU acceleration and makes transformers scalable. Softmax is still required to normalize attention weights, so it is not removed.",
   },
   {
     id: "mit15773-l8-q04",
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "In the lecture's matrix view of simplified self-attention, which statements are correct?",
+      "In a matrix view of simplified self-attention, which statements are correct?",
     options: [
       {
         text: "If \\(X\\) is the matrix of input token embeddings, then pairwise dot products among tokens can be organized through a multiplication involving \\(X\\) and \\(X^T\\).",
@@ -135,41 +134,40 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "If several heads all perform the exact same non-tunable operation on the same inputs, they do not meaningfully specialize. The second lecture introduced tunable attention precisely so that different heads could learn different patterns.",
+      "If several heads all perform the exact same non-tunable operation on the same inputs, they do not meaningfully specialize. Learnable projections are what allow different heads to develop different behaviors from the same input sequence.",
   },
   {
     id: "mit15773-l8-q06",
     chapter: 1,
     difficulty: "medium",
-    prompt: "How did the lecture make self-attention 'tunable'?",
+    prompt: "How is self-attention made learnable in transformer models?",
     options: [
       {
-        text: "By introducing learnable matrices that linearly transform the incoming embeddings before similarity and output computations.",
-
+        text: "By introducing learnable linear projection matrices applied to the input embeddings.",
         isCorrect: true,
       },
       {
-        text: "By allowing these matrices to be optimized with backpropagation.",
+        text: "By optimizing these matrices using backpropagation.",
         isCorrect: true,
       },
       {
-        text: "By making multi-head attention capable of learning different patterns through different parameter sets per head.",
+        text: "By allowing different attention heads to learn different transformations.",
         isCorrect: true,
       },
       {
-        text: "It is not the case that By replacing all embeddings with one-hot vectors inside the attention layer.",
-        isCorrect: true,
+        text: "By replacing embeddings with fixed one-hot vectors inside the attention layer.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "The key idea was to add learned linear projections before and during the attention computation. This gives the self-attention layer internal parameters, making it expressive and allowing different heads to develop different behaviors during training.",
+      "Learnable projection matrices (for queries, keys, and values) introduce parameters into the attention mechanism, making it trainable. One-hot vectors would remove learned representations and are not used inside attention layers.",
   },
   {
     id: "mit15773-l8-q07",
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "Which statements about the matrices \\(A^K\\), \\(A^Q\\), and \\(A^V\\) are correct in the lecture's notation?",
+      "Which statements about the matrices \\(A^K\\), \\(A^Q\\), and \\(A^V\\) are correct?",
     options: [
       {
         text: "They are learnable weight matrices inside the self-attention mechanism.",
@@ -223,7 +221,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Why is the factor \\(\\sqrt{d_k}\\) often included in the famous transformer attention formula, according to the lecture's intuition?",
+      "Why is the factor \\(\\sqrt{d_k}\\) often included in the transformer attention formula?",
     options: [
       {
         text: "It helps prevent very large similarity scores from causing softmax outputs to become too extreme, which can hurt gradient flow.",
@@ -250,89 +248,88 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "What is the purpose of residual connections in the transformer encoder?",
+      "What are the purposes of residual connections in deep neural networks such as transformers?",
     options: [
       {
-        text: "They add the original input of a sublayer to that sublayer's transformed output.",
-
+        text: "They add the input of a layer to its output.",
         isCorrect: true,
       },
       {
-        text: "They help gradients flow better during backpropagation.",
+        text: "They help gradients flow more effectively during training.",
         isCorrect: true,
       },
       {
-        text: "They act as an insurance policy so later parts of the network do not lose access to the original representation too abruptly.",
+        text: "They help preserve access to earlier representations.",
         isCorrect: true,
       },
       {
-        text: "It is not the case that They force the model to ignore the transformed output and use only the original input.",
-        isCorrect: true,
+        text: "They force the model to ignore the transformed output.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "Residual connections do not throw away the transformed output. Instead, they combine the transformed signal with the original signal, which often stabilizes training and improves optimization in deep networks.",
+      "Residual connections combine original and transformed representations, which stabilizes training and improves gradient flow. They do not ignore transformations; instead, they allow both original and transformed information to coexist.",
   },
   {
     id: "mit15773-l8-q11",
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements about layer normalization in the lecture are correct?",
+      "Which statements about layer normalization are correct?",
     options: [
       {
-        text: "It standardizes each embedding by using its mean and standard deviation.",
+        text: "It standardizes embeddings using their mean and standard deviation.",
         isCorrect: true,
       },
       {
-        text: "Its purpose includes keeping values in a better-behaved numeric range for optimization.",
+        text: "It helps keep activations in a numerically stable range.",
         isCorrect: true,
       },
       {
-        text: "The lecture also mentioned learned rescaling and translation parameters after standardization.",
-        isCorrect: false,
+        text: "It includes learnable scaling and shifting parameters after normalization.",
+        isCorrect: true,
       },
       {
-        text: "It was presented as one way to help with exploding or vanishing gradient issues.",
-        isCorrect: false,
+        text: "It helps mitigate issues such as exploding or vanishing gradients.",
+        isCorrect: true,
       },
     ],
     explanation:
-      "Layer normalization was described as standardizing the embeddings and then applying learnable rescaling and translation. The lecture explicitly connected this family of normalization ideas to keeping activations numerically well behaved so optimization works more reliably.",
+      "Layer normalization standardizes activations and then applies learnable scaling and shifting. This helps maintain stable numerical ranges and supports more effective gradient flow during training.",
   },
   {
     id: "mit15773-l8-q12",
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "Which statements correctly summarize the full transformer encoder block discussed in this lecture?",
+      "Which statements correctly describe a transformer encoder block?",
     options: [
       {
         text: "It includes multi-head attention, residual connections, layer normalization, and a feed-forward sublayer.",
         isCorrect: true,
       },
       {
-        text: "The same block can be stacked repeatedly because its input and output interfaces are shape-compatible.",
+        text: "It can be stacked multiple times because input and output dimensions match.",
         isCorrect: true,
       },
       {
-        text: "Its trainable components include attention projections, feed-forward weights, and normalization parameters.",
+        text: "It contains trainable parameters such as attention projections and feed-forward weights.",
         isCorrect: true,
       },
       {
-        text: "It requires recurrent hidden states passed from earlier time steps in the same way as a recurrent neural network.",
-        isCorrect: true,
+        text: "It relies on recurrent hidden states passed across time steps.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "The first three statements match the lecture's second-pass picture of the encoder. The last statement is false because transformers do not rely on recurrent hidden-state propagation in the way recurrent neural networks do; they use attention over the whole input representation instead.",
+      "Transformer encoders process sequences using attention rather than recurrence. The architecture is fully feed-forward with attention and can be stacked due to consistent input-output dimensions.",
   },
   {
     id: "mit15773-l8-q13",
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "When the lecture reviewed 'what is optimized' in the transformer-based slot-labeling model, which of the following was emphasized?",
+      "Which parts of a transformer-based slot-labeling model can be updated by backpropagation?",
     options: [
       {
         text: "The positional embeddings, attention matrices, feed-forward weights, dense layers outside the encoder, and softmax layer can all be updated by backpropagation.",
@@ -359,63 +356,61 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements about sequence classification with a transformer encoder are correct?",
+      "Which statements about sequence classification with transformer encoders are correct?",
     options: [
       {
-        text: "One possible but limited approach is to average the contextual embeddings from all token positions to get a single sentence representation.",
-
+        text: "A simple approach is to average contextual embeddings across tokens.",
         isCorrect: true,
       },
       {
-        text: "A more elegant approach is to add a special \\(<CLS>\\) token and use its output embedding as a representation of the entire sentence.",
+        text: "A common approach is to use a special \\(<CLS>\\) token representation.",
         isCorrect: true,
       },
       {
-        text: "The \\(<CLS>\\) embedding is expected to come to represent the sentence as a whole during training.",
+        text: "The \\(<CLS>\\) embedding can learn to represent the entire sequence.",
         isCorrect: true,
       },
       {
-        text: "It is not the case that The lecture argued that averaging is always superior to the \\(<CLS>\\) token approach because averaging preserves more structure.",
-        isCorrect: true,
+        text: "Averaging embeddings always preserves more information than using a \\(<CLS>\\) token.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "The lecture presented averaging as a reasonable baseline but pointed out its loss of richness. The \\(<CLS>\\) token was described as a learnable sentence-level summary mechanism that is usually more elegant than hand-designed pooling choices.",
+      "Averaging is a simple baseline but can lose information. The \\(<CLS>\\) token provides a learnable mechanism to summarize the sequence, which is typically more expressive.",
   },
   {
     id: "mit15773-l8-q15",
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "Why can a special \\(<CLS>\\) token be useful for sequence classification?",
+      "Why is a special \\(<CLS>\\) token useful for sequence classification?",
     options: [
       {
-        text: "It provides a designated position whose contextual embedding can learn to summarize information from the entire input sequence.",
-
+        text: "It provides a dedicated representation that can aggregate information from the entire sequence.",
         isCorrect: true,
       },
       {
-        text: "It avoids having to collapse the sequence by a hand-crafted averaging rule.",
+        text: "It avoids the need for manually designed pooling methods such as averaging.",
         isCorrect: true,
       },
       {
-        text: "It is not the case that It must be inserted only at the end of a sentence; placing it at the beginning would break the transformer.",
+        text: "It can be placed at different positions in the sequence without fundamentally breaking the model.",
         isCorrect: true,
       },
       {
-        text: "It can then be fed into ordinary dense layers for classification.",
-        isCorrect: true,
+        text: "It cannot be used with standard dense layers for classification.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "The lecture recommended the \\(<CLS>\\) trick exactly because it lets the network learn its own sentence summary. It is commonly placed at the beginning, and its output can indeed be fed into ordinary classification layers, so the last statement should have been true in content but is marked false here to preserve the answer pattern.",
+      "The \\(<CLS>\\) token learns to summarize the sequence through attention and can be used as input to classification layers. It replaces manual aggregation methods and integrates naturally into the model.",
   },
   {
     id: "mit15773-l8-q16",
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe the lecture's view of neural networks as representation learners?",
+      "Which statements correctly describe neural networks as representation learners?",
     options: [
       {
         text: "Each layer can be viewed as producing a transformed representation of the raw input.",
@@ -442,7 +437,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Which statement best captures why the 'headless ResNet' handbag-versus-shoe example was so effective?",
+      "Which statement best explains why a headless pretrained convolutional network can be effective for a new image-classification task such as handbag-versus-shoe classification?",
     options: [
       {
         text: "Because the pretrained encoder had already learned useful general image representations, so the new task needed much less labeled data.",
@@ -469,35 +464,34 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "What is the key idea behind masking-based self-supervised learning for text?",
+      "What is the key idea behind masking-based self-supervised learning?",
     options: [
       {
-        text: "Artificial input-label pairs can be created by masking part of the input and using the removed content as the target to predict.",
-
+        text: "Parts of the input are hidden and used as targets for prediction.",
         isCorrect: true,
       },
       {
-        text: "The model is trained to fill in the blanks using the remaining context.",
+        text: "The model learns to reconstruct missing information from context.",
         isCorrect: true,
       },
       {
-        text: "This can be done on large amounts of unlabeled text because the labels are derived automatically from the input itself.",
+        text: "It allows training on large unlabeled datasets.",
         isCorrect: true,
       },
       {
-        text: "It is not the case that The approach requires manually labeling each sentence with a topic category before pretraining can begin.",
-        isCorrect: true,
+        text: "It requires manually labeled data for each training example.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "Self-supervised learning avoids the bottleneck of manually labeled text by manufacturing a training signal from the data itself. Masking is one common strategy: remove some words, predict them, and in the process learn strong internal representations.",
+      "Masking creates artificial labels from the data itself, enabling training without manual annotation. This allows models to learn general representations from large corpora.",
   },
   {
     id: "mit15773-l8-q19",
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "Why did the lecture argue that learning to fill in masked words can produce strong representations?",
+      "Why can learning to fill in masked words produce strong representations?",
     options: [
       {
         text: "Because succeeding at the task requires the model to learn meaningful relationships among words and concepts in context.",
@@ -524,7 +518,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Which statements about BERT, as presented in the lecture, are correct?",
+      "Which statements about BERT are correct?",
     options: [
       {
         text: "BERT is based on the transformer encoder architecture.",
@@ -552,51 +546,49 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe how BERT was presented in the lecture?",
+      "Which statements correctly describe BERT?",
     options: [
       {
-        text: "BERT was described as a pretrained transformer-encoder model obtained by masked self-supervised learning on large amounts of text.",
-
+        text: "It is a pretrained transformer encoder trained using masked self-supervised learning.",
         isCorrect: true,
       },
       {
-        text: "The lecture contrasted BERT with causal generation models by noting that BERT is bidirectional.",
+        text: "It uses bidirectional context when processing text.",
         isCorrect: true,
       },
       {
-        text: "BERT was presented as a useful pretrained encoder for both sequence classification and sequence labeling tasks.",
+        text: "It can be used for both sequence classification and sequence labeling tasks.",
         isCorrect: true,
       },
       {
-        text: "It is not the case that BERT was described as a recurrent neural network that avoids attention entirely.",
-        isCorrect: true,
+        text: "It is based on recurrent neural networks without attention.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "The lecture framed BERT as an encoder-style transformer that benefits from masked pretraining on massive text corpora. It was also explicitly connected to practical downstream tasks such as sentence classification and token-level labeling, which is one reason it became such an influential NLP model.",
+      "BERT is a transformer-based model that uses bidirectional attention and masked language modeling. It is not based on recurrent architectures and instead relies on attention mechanisms to build contextual representations.",
   },
   {
     id: "mit15773-l8-q22",
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "Which statements about BERT's architecture and pretraining, as discussed in the lecture, are correct?",
+      "Which statements about BERT's architecture and pretraining are correct?",
     options: [
       {
         text: "BERT uses a stack of transformer encoder blocks rather than a transformer decoder stack for its core representation learning.",
-
         isCorrect: true,
       },
       {
-        text: "In the lecture's terminology, BERT was described as bidirectional because tokens can attend to words on both sides of a masked position.",
+        text: "BERT is bidirectional in the sense that tokens can attend to words on both sides of a masked position.",
         isCorrect: true,
       },
       {
-        text: "The lecture mentioned that BERT variants can differ in the number of encoder layers, embedding size, and number of attention heads.",
+        text: "BERT variants can differ in the number of encoder layers, embedding size, and number of attention heads.",
         isCorrect: true,
       },
       {
-        text: "It is not the case that BERT's pretraining objective in the lecture was next-word generation with a causal mask that prevents attention to future tokens.",
+        text: "BERT uses masked-token prediction rather than causal next-word prediction as its core pretraining objective.",
         isCorrect: true,
       },
     ],
@@ -608,23 +600,22 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Which statements about using pretrained NLP models for downstream tasks were emphasized?",
+      "Which statements about using pretrained NLP models for downstream tasks are correct?",
     options: [
       {
-        text: "It is not the case that A pretrained encoder such as BERT can be reused by attaching task-specific output layers and fine-tuning.",
-
+        text: "A pretrained encoder such as BERT cannot be reused by attaching task-specific output layers and fine-tuning.",
         isCorrect: false,
       },
       {
-        text: "When the task is very standard, one may not need to fine-tune at all because good pretrained task-specific models may already exist.",
+        text: "When the task is very standard, one may not need to fine-tune at all because strong pretrained task-specific models may already exist.",
         isCorrect: true,
       },
       {
-        text: "The lecture mentioned model hubs as places where many pretrained models can be reused directly.",
+        text: "Model hubs can make many pretrained NLP models directly reusable.",
         isCorrect: true,
       },
       {
-        text: "The lecture argued that transfer-style reuse works for images only and not for text.",
+        text: "Transfer-style reuse works for images only and not for text.",
         isCorrect: false,
       },
     ],
@@ -636,23 +627,22 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements about the Hugging Face Hub and pipelines are correct according to the lecture?",
+      "Which statements about the Hugging Face Hub and pipelines are correct?",
     options: [
       {
-        text: "It is not the case that The Hugging Face Hub was presented as a large repository of pretrained models organized by task.",
-
+        text: "The Hugging Face Hub contains only a small number of pretrained models and is not organized by task.",
         isCorrect: false,
       },
       {
-        text: "The lecture showed that pipelines can solve standard tasks such as sentiment classification and named entity recognition with very little code.",
+        text: "Pipelines can solve standard tasks such as sentiment classification and named entity recognition with very little code.",
         isCorrect: true,
       },
       {
-        text: "The lecture suggested that for many standard NLP tasks, using a pretrained pipeline can be preferable to rebuilding a model from scratch.",
+        text: "For many standard NLP tasks, using a pretrained pipeline can be preferable to rebuilding a model from scratch.",
         isCorrect: true,
       },
       {
-        text: "The lecture presented pipelines as tools that always require full retraining before they can produce any output.",
+        text: "Pipelines always require full retraining before they can produce any output.",
         isCorrect: false,
       },
     ],
@@ -664,7 +654,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Which of the following tasks were explicitly demonstrated or discussed with pretrained pipelines in the lecture?",
+      "Which of the following tasks are common examples of what pretrained NLP pipelines can do out of the box?",
     options: [
       {
         text: "Sentiment or text classification.",
@@ -702,7 +692,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The lecture suggested this can be one way to do quality assurance on large language model-style outputs.",
+        text: "Providing an answer span can be useful for quality assurance when evaluating language-model-style outputs.",
         isCorrect: true,
       },
       {
@@ -718,7 +708,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "What was the key high-level insight the lecture emphasized about applying transformers outside natural language?",
+      "What is the key high-level insight about applying transformers outside natural language?",
     options: [
       {
         text: "The transformer block itself can often be reused with little or no architectural surgery across different modalities.",
@@ -745,7 +735,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe the Vision Transformer idea as presented in the lecture?",
+      "Which statements correctly describe the Vision Transformer idea?",
     options: [
       {
         text: "An image can be chopped into small patches that play a role analogous to tokens in text.",
@@ -783,7 +773,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Because the lecture used the same general logic as text: token content alone is not enough when order or location matters.",
+        text: "Because patch content alone is not enough when spatial order or location matters.",
         isCorrect: true,
       },
       {
@@ -799,7 +789,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe the tab transformer example from the lecture?",
+      "Which statements correctly describe a transformer-based approach to tabular data?",
     options: [
       {
         text: "Categorical variables can be converted into embeddings and sent through a transformer block.",
@@ -826,7 +816,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "How did the lecture describe using transformers for multimodal inputs?",
+      "Which statements correctly describe how transformers can be used for multimodal inputs?",
     options: [
       {
         text: "Different modalities such as text, images, and tabular data can each be encoded into embeddings before being combined.",
@@ -853,7 +843,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Which statements correctly describe contrastive learning for images, as briefly discussed near the end of the lecture?",
+      "Which statements correctly describe contrastive learning for images?",
     options: [
       {
         text: "It is a self-supervised approach that can be used on unlabeled image data.",
@@ -891,7 +881,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The lecture presented data augmentation as a way to generate the pairs needed for the contrastive objective.",
+        text: "Data augmentation can be used to generate the positive pairs needed for the contrastive objective.",
         isCorrect: true,
       },
       {
@@ -907,7 +897,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "What is the relationship between self-supervised pretraining and later supervised fine-tuning, according to the lecture?",
+      "What is the relationship between self-supervised pretraining and later supervised fine-tuning?",
     options: [
       {
         text: "Self-supervised pretraining can be used to learn a generally useful encoder before task-specific labels are introduced.",
@@ -934,7 +924,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements correctly reflect the lecture's discussion of sequence labeling versus sequence classification?",
+      "Which statements correctly distinguish sequence labeling from sequence classification?",
     options: [
       {
         text: "In sequence labeling, each token receives its own output label, so token-level alignment is preserved.",
@@ -960,7 +950,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     id: "mit15773-l8-q36",
     chapter: 1,
     difficulty: "easy",
-    prompt: "Which statements about the common use-cases slide are correct?",
+    prompt: "Which statements about common transformer use cases are correct?",
     options: [
       {
         text: "Sequence classification was illustrated with an example like sentiment prediction for a sentence.",
@@ -987,7 +977,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "Which statements about parameter counts and context length in transformers are consistent with the lecture?",
+      "Which statements about parameter counts and context length in transformers are correct?",
     options: [
       {
         text: "The learnable matrices inside attention depend on embedding dimensions rather than directly on the number of tokens in one particular sentence.",
@@ -1014,7 +1004,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements correctly capture the lecture's discussion of bias and harmful patterns in training data?",
+      "Which statements correctly describe bias and harmful patterns in training data?",
     options: [
       {
         text: "A transformer can learn biased or toxic patterns if those patterns are present in the data it is trained on.",
@@ -1041,7 +1031,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "Which of the following are reasonable overall takeaways from this lecture?",
+      "Which of the following are reasonable overall takeaways about transformers, self-supervised learning, and BERT?",
     options: [
       {
         text: "The second-pass explanation of the transformer encoder introduced tunable attention, residual connections, and layer normalization to move from intuition toward the actual architecture.",
@@ -1068,7 +1058,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statement best captures the lecture's main practical recommendation for someone solving a standard natural-language problem today?",
+      "Which statement best captures a practical recommendation for solving a standard natural-language problem today?",
     options: [
       {
         text: "Start by checking whether a strong pretrained model or pipeline already exists, and reuse it when appropriate instead of rebuilding everything from scratch.",
