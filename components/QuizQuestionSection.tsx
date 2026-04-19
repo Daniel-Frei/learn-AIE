@@ -12,7 +12,8 @@ type Option = {
 type Props = {
   availableCount: number;
   currentIndex: number;
-  difficultyPercent: number | null;
+  questionRating: number | null;
+  questionElapsedMs: number;
   currentQuestion: Question | null;
   shuffledOptions: Option[];
   selectedIndexes: number[];
@@ -20,10 +21,24 @@ type Props = {
   toggleOption: (idx: number) => void;
 };
 
+function formatElapsedMs(elapsedMs: number): string {
+  const totalSeconds = Math.max(0, Math.floor(elapsedMs / 1000));
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}:${String(seconds).padStart(2, "0")}`;
+}
+
+function formatQuestionRating(rating: number): string {
+  return new Intl.NumberFormat("en-US", {
+    maximumFractionDigits: 0,
+  }).format(rating);
+}
+
 export default function QuizQuestionSection({
   availableCount,
   currentIndex,
-  difficultyPercent,
+  questionRating,
+  questionElapsedMs,
   currentQuestion,
   shuffledOptions,
   selectedIndexes,
@@ -38,10 +53,23 @@ export default function QuizQuestionSection({
         <span>
           Question {hasQuestion ? currentIndex + 1 : 0} of {availableCount}
         </span>
-        {difficultyPercent !== null && hasQuestion && (
-          <span>
-            Difficulty:{" "}
-            <span className="font-semibold">{difficultyPercent}</span>/100
+        {hasQuestion && (
+          <span className="text-right flex flex-col sm:flex-row sm:items-center sm:gap-3">
+            {questionRating !== null && (
+              <span>
+                Question Elo:{" "}
+                <span className="font-semibold text-slate-100">
+                  {formatQuestionRating(questionRating)}
+                </span>
+              </span>
+            )}
+            <span>
+              Time:{" "}
+              <span className="font-semibold text-slate-100">
+                {formatElapsedMs(questionElapsedMs)}
+              </span>{" "}
+              / 3:00
+            </span>
           </span>
         )}
       </div>
@@ -53,7 +81,7 @@ export default function QuizQuestionSection({
           </h2>
           <p className="text-slate-300">
             Try selecting a series, lecture/chapter, or topic, then adjust the
-            difficulty range if needed.
+            question Elo range if needed.
           </p>
         </div>
       ) : (

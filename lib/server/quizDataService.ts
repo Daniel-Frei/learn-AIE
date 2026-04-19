@@ -210,6 +210,8 @@ export async function recordQuizAnswerForParticipant(
     attemptId?: string;
     answeredAt?: string;
     source?: "live" | "migration";
+    elapsedMs?: number;
+    mistakeCount?: number;
   },
   store: QuizDataStore = getQuizDataStore(),
 ): Promise<RecordAnswerResponse> {
@@ -279,6 +281,10 @@ export async function recordQuizAnswerForParticipant(
     params.label,
     params.isCorrect,
     nowTimestamp,
+    {
+      elapsedMs: params.elapsedMs,
+      mistakeCount: params.mistakeCount,
+    },
   );
   const nextQuestion = updated.questions[params.questionId];
   if (!nextQuestion) {
@@ -301,6 +307,8 @@ export async function recordQuizAnswerForParticipant(
     questionId: params.questionId,
     label: params.label,
     isCorrect: params.isCorrect,
+    elapsedMs: params.elapsedMs ?? 0,
+    mistakeCount: params.mistakeCount ?? 0,
     answeredAt: params.answeredAt ?? new Date(nowTimestamp).toISOString(),
     source: params.source ?? "live",
   });
@@ -322,6 +330,17 @@ export async function submitQuestionReportForParticipant(
   },
   store: QuizDataStore = getQuizDataStore(),
 ): Promise<ReportSummary> {
+  const existingParticipant = await store.getParticipant(params.participantId);
+  if (!existingParticipant) {
+    await store.upsertParticipant(
+      toStoredParticipant(
+        params.participantId,
+        makeDefaultUser(Date.now()),
+        null,
+      ),
+    );
+  }
+
   const report = createQuestionReport(params.draft, {
     reportId: params.reportId,
     reportedAt: params.reportedAt,

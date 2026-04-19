@@ -33,6 +33,8 @@ create table if not exists public.answer_attempts (
   question_id text not null,
   label text null check (label in ('easy', 'medium', 'hard')),
   is_correct boolean not null,
+  elapsed_ms bigint not null default 0,
+  mistake_count integer not null default 0,
   answered_at timestamptz not null default timezone('utc', now()),
   source text not null check (source in ('live', 'migration'))
 );

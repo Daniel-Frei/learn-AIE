@@ -3,7 +3,8 @@
 ## Product
 
 - A Next.js + TypeScript quiz web app focused on deep learning, NLP, transformers, and reinforcement learning study content.
-- Users can choose lecture series/books, specific sources, topic categories (`RL`, `DL`, `NLP`, `Math`), and difficulty ranges, answer multi-select quiz questions, and view explanations.
+- Users can choose lecture series/books, specific sources, topic categories (`RL`, `DL`, `NLP`, `Math`), and question Elo ranges, answer multi-select quiz questions, and view explanations.
+- The quiz shows each question's shared raw rating as its visible "Elo" label and shows a per-question timer that starts at zero and caps at 3 minutes.
 - Users can report a visible question with free-text comments; reports are stored centrally in Supabase Postgres and can be exported as JSON for offline review.
 - Users can switch between:
   - `standard` mode (randomized from filtered pool)
@@ -18,8 +19,10 @@
 - Explanation endpoint exists at `/api/explain` and proxies to an LLM helper in `lib/llm/explain.ts`.
 - Shared quiz state now uses an external Supabase Postgres database:
   - Each browser/device is treated as its own anonymous participant via a locally stored `participantId`.
-  - Question difficulty is shared globally across participants.
+  - Question difficulty is shared globally across participants and remains a Glicko-2 style rating under the hood, even though the UI labels it as Elo.
   - Participant rating/climb behavior remains per device.
+- Answer scoring is still binary at the core, but rating updates are weighted by response time and mistake count so fast, clean answers move ratings more than slow or messy ones.
+- Question answer attempts store the elapsed time and mistake count alongside the binary result for later auditability.
 - Question reports are append-only in the shared database:
   - Each submit creates a separate report entry, even for the same question.
   - Each report stores the `questionId`, comment, report date, and a source/prompt snapshot for reviewer context.

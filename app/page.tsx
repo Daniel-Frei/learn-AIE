@@ -17,7 +17,8 @@ export default function QuizPage() {
     availableCount,
     currentIndex,
     currentQuestion,
-    currentDifficultyScore,
+    currentQuestionRating,
+    questionElapsedMs,
     shuffledOptions,
     selectedIndexes,
     showResult,
@@ -36,11 +37,6 @@ export default function QuizPage() {
   } = useQuiz();
 
   const title = getTitleForSelection(selectedSources, selectedTopics);
-
-  const difficultyPercent =
-    currentDifficultyScore != null
-      ? Math.round(currentDifficultyScore * 100)
-      : null;
 
   const hasQuestion = availableCount > 0 && !!currentQuestion;
 
@@ -67,7 +63,8 @@ export default function QuizPage() {
         <QuizQuestionSection
           availableCount={availableCount}
           currentIndex={currentIndex}
-          difficultyPercent={difficultyPercent}
+          questionRating={currentQuestionRating}
+          questionElapsedMs={questionElapsedMs}
           currentQuestion={currentQuestion}
           shuffledOptions={shuffledOptions}
           selectedIndexes={selectedIndexes}

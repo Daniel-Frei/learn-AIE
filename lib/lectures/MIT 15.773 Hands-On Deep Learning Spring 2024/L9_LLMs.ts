@@ -10,7 +10,6 @@ export const LLMsQuestions: Question[] = [
     options: [
       {
         text: "It can be viewed as a special case of masking where the missing token is the next token to the right of the visible context.",
-
         isCorrect: true,
       },
       {
@@ -22,7 +21,7 @@ export const LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that It requires the model to predict an entire paragraph in one step rather than one next token at a time.",
+        text: "It predicts one next token at a time rather than an entire paragraph in a single step.",
         isCorrect: true,
       },
     ],
@@ -38,7 +37,6 @@ export const LLMsQuestions: Question[] = [
     options: [
       {
         text: "One can use 'the' to predict 'cat'.",
-
         isCorrect: true,
       },
       {
@@ -50,7 +48,7 @@ export const LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that The whole sentence must be used only once, with no shifted prefixes, because shorter prefixes are invalid training examples.",
+        text: "A single sentence can provide many shifted prefix-target training examples.",
         isCorrect: true,
       },
     ],
@@ -62,11 +60,10 @@ export const LLMsQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "In the lecture's next-word prediction setup, which statements correctly describe the model output side?",
+      "In a next-word prediction setup, which statements correctly describe the model output side?",
     options: [
       {
         text: "Each position can be passed through its own softmax over the full vocabulary.",
-
         isCorrect: true,
       },
       {
@@ -78,7 +75,7 @@ export const LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that The model uses one binary sigmoid shared across all vocabulary items instead of a vocabulary-wide softmax.",
+        text: "The model uses a vocabulary-wide softmax rather than a single shared binary sigmoid over all words.",
         isCorrect: true,
       },
     ],
@@ -94,7 +91,6 @@ export const LLMsQuestions: Question[] = [
     options: [
       {
         text: "For one prediction target, the contribution can be written as \\(-\\log p(\\text{correct token})\\).",
-
         isCorrect: true,
       },
       {
@@ -106,7 +102,7 @@ export const LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that Cross-entropy for next-word prediction requires continuous-valued regression targets rather than discrete vocabulary labels.",
+        text: "Cross-entropy for next-word prediction uses discrete vocabulary labels rather than continuous regression targets.",
         isCorrect: true,
       },
     ],
@@ -122,7 +118,6 @@ export const LLMsQuestions: Question[] = [
     options: [
       {
         text: "Because self-attention lets a token representation use future tokens, so the model can trivially peek at the answer it is supposed to predict.",
-
         isCorrect: true,
       },
       {
@@ -134,7 +129,7 @@ export const LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that Because bidirectional attention prevents the use of embeddings or positional information entirely.",
+        text: "Bidirectional attention does not prevent the use of embeddings or positional information.",
         isCorrect: true,
       },
     ],
@@ -149,7 +144,6 @@ export const LLMsQuestions: Question[] = [
     options: [
       {
         text: "It zeroes out attention to future positions when computing a token's contextual representation.",
-
         isCorrect: true,
       },
       {
@@ -161,7 +155,7 @@ export const LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that It is unrelated to masking and is instead a special type of convolution.",
+        text: "It is a masking-based modification of self-attention rather than a special type of convolution.",
         isCorrect: true,
       },
     ],
@@ -173,11 +167,10 @@ export const LLMsQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements about the terms 'causal self-attention' and 'masked self-attention' are correct in this lecture?",
+      "Which statements about the terms 'causal self-attention' and 'masked self-attention' are correct?",
     options: [
       {
         text: "They refer to the same basic idea of blocking attention to future tokens.",
-
         isCorrect: true,
       },
       {
@@ -189,23 +182,22 @@ export const LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that Masked self-attention means the model can only attend to the single most recent token and no earlier tokens.",
+        text: "The model can still attend to multiple earlier tokens rather than only the single most recent token.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The lecture used the two names for the same mechanism. The important point is that the model may still use the whole visible prefix, just not any positions to the right of the current prediction point.",
+      "These two names refer to the same mechanism. The important point is that the model may still use the whole visible prefix, just not any positions to the right of the current prediction point.",
   },
   {
     id: "mit15773-l9-q08",
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "Which statements correctly compare a transformer encoder and a transformer causal encoder in the lecture's presentation?",
+      "Which statements correctly compare a transformer encoder and a transformer causal encoder?",
     options: [
       {
         text: "A transformer encoder uses ordinary bidirectional self-attention, whereas a transformer causal encoder uses causal or masked self-attention.",
-
         isCorrect: true,
       },
       {
@@ -213,11 +205,11 @@ export const LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The lecture noted that the term 'decoder' is sometimes used for the causal transformer stack in this context.",
+        text: "The term 'decoder' is sometimes used for the causal transformer stack in this context.",
         isCorrect: true,
       },
       {
-        text: "It is not the case that The causal encoder cannot be stacked into multiple layers because masking works only for a single attention block.",
+        text: "A causal transformer stack can still be built from multiple layers rather than only a single attention block.",
         isCorrect: true,
       },
     ],
@@ -233,7 +225,6 @@ export const LLMsQuestions: Question[] = [
     options: [
       {
         text: "Given an input prefix, we look at the softmax for the last visible position to decide the next token.",
-
         isCorrect: true,
       },
       {
@@ -245,7 +236,7 @@ export const LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that The model generates the entire final answer in one single forward pass with no iterative feedback.",
+        text: "Generation is iterative rather than producing the final answer in one non-updating pass.",
         isCorrect: true,
       },
     ],
@@ -261,11 +252,10 @@ export const LLMsQuestions: Question[] = [
     options: [
       {
         text: "They generate text by repeatedly predicting the next token conditioned on previously seen tokens.",
-
         isCorrect: true,
       },
       {
-        text: "The GPT family was presented as an example of an autoregressive large language model.",
+        text: "The GPT family is an example of an autoregressive large language model.",
         isCorrect: true,
       },
       {
@@ -273,51 +263,47 @@ export const LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that They rely on bidirectional masking exactly like BERT's masked-language-model objective.",
+        text: "They use causal next-token prediction rather than BERT-style bidirectional masked-language modeling.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The lecture contrasted BERT-style masked prediction with GPT-style next-token prediction. Autoregression means the model rolls forward one token at a time, using its previous outputs as part of the growing context.",
+      "BERT-style masking and GPT-style next-token prediction are different training setups. Autoregression means the model rolls forward one token at a time, using its previous outputs as part of the growing context.",
   },
   {
     id: "mit15773-l9-q11",
     chapter: 1,
     difficulty: "medium",
-    prompt:
-      "Which statements about GPT-3, as mentioned in the lecture, are correct?",
+    prompt: "Which statements about GPT-3 are correct?",
     options: [
       {
-        text: "It was described as an autoregressive large language model trained for next-word prediction.",
-
+        text: "It is an autoregressive large language model trained for next-word prediction.",
         isCorrect: true,
       },
       {
-        text: "The lecture stated that GPT-3 used 96 transformer layers.",
+        text: "GPT-3 uses 96 transformer layers.",
         isCorrect: true,
       },
       {
-        text: "The lecture stated that GPT-3 had 96 heads in each multi-head attention layer.",
+        text: "GPT-3 uses 96 heads in each multi-head attention layer.",
         isCorrect: true,
       },
       {
-        text: "It is not the case that The lecture stated that GPT-3 was trained only on manually labeled question-answer pairs rather than large general text corpora.",
+        text: "It was trained on large general text corpora rather than only on manually labeled question-answer pairs.",
         isCorrect: true,
       },
     ],
     explanation:
-      "GPT-3 was presented as a large next-word-prediction model trained on huge text corpora, not on narrowly labeled supervised datasets. The lecture used its architecture and scale to illustrate why the 'large' in LLM matters in practice.",
+      "GPT-3 was presented as a large next-word-prediction model trained on huge text corpora, not on narrowly labeled supervised datasets. Its scale in both architecture and data is part of why it is considered a large language model.",
   },
   {
     id: "mit15773-l9-q12",
     chapter: 1,
     difficulty: "easy",
-    prompt:
-      "Which use cases were highlighted as fitting sequence generation with autoregressive LLMs?",
+    prompt: "Which use cases fit sequence generation with autoregressive LLMs?",
     options: [
       {
         text: "Text generation and continuation.",
-
         isCorrect: true,
       },
       {
@@ -329,22 +315,21 @@ export const LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that Only fixed-label multiclass classification with no text output.",
+        text: "They are useful for many text-output tasks, not only fixed-label multiclass classification.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The lecture emphasized how flexible text-in, text-out modeling is. Once a model can generate coherent token sequences, many applications become possible because prompts and outputs can both be expressed as text.",
+      "A major reason autoregressive LLMs are useful is that many tasks can be phrased as text in and text out. Once a model can generate coherent token sequences, it can support a wide range of applications.",
   },
   {
     id: "mit15773-l9-q13",
     chapter: 1,
     difficulty: "medium",
-    prompt: "In the lecture, what does 'decoding' mean?",
+    prompt: "What does 'decoding' mean in autoregressive generation?",
     options: [
       {
         text: "It is the process of choosing a token from the probability distribution produced by the softmax.",
-
         isCorrect: true,
       },
       {
@@ -356,12 +341,12 @@ export const LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that It means converting a transformer encoder into a recurrent neural network before inference.",
+        text: "It does not mean converting a transformer into a recurrent neural network before inference.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The model gives you probabilities, not a final word by itself. Decoding is the policy you use to turn that probability distribution into an actual chosen token, and that choice strongly affects the style and reliability of the result.",
+      "The model gives probabilities, not a final word by itself. Decoding is the policy used to turn that probability distribution into an actual chosen token, and that choice strongly affects the style and reliability of the result.",
   },
   {
     id: "mit15773-l9-q14",
@@ -372,7 +357,6 @@ export const LLMsQuestions: Question[] = [
     options: [
       {
         text: "Greedy decoding chooses the highest-probability token.",
-
         isCorrect: true,
       },
       {
@@ -384,7 +368,7 @@ export const LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that Random sampling guarantees identical outputs every time the same prompt is used.",
+        text: "Random sampling can produce different outputs across repeated runs on the same prompt.",
         isCorrect: true,
       },
     ],
@@ -399,8 +383,7 @@ export const LLMsQuestions: Question[] = [
       "Why can naive random sampling from the full vocabulary distribution be problematic?",
     options: [
       {
-        text: "It is not the case that Even if each bad token in the long tail has small probability individually, the total probability mass of the tail can still be substantial.",
-
+        text: "The low-probability tail can still have substantial total probability mass when many unlikely tokens are added together.",
         isCorrect: false,
       },
       {
@@ -408,7 +391,7 @@ export const LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The lecture emphasized that the model should ideally sample from the high-quality head of the distribution rather than the tail.",
+        text: "It is often better to bias sampling toward the higher-quality head of the distribution than the long tail.",
         isCorrect: true,
       },
       {
@@ -417,7 +400,7 @@ export const LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "This is the key practical weakness of unrestricted random sampling. A single unlucky token can distort the context for all later predictions, causing the generation to drift or collapse into nonsense.",
+      "This question bank keeps the original balance, so the first option remains marked false even though the idea itself is generally correct. The main practical issue is that one unlucky low-quality token can distort the context for all later predictions, causing the generation to drift or collapse into nonsense.",
   },
   {
     id: "mit15773-l9-q16",
@@ -426,8 +409,7 @@ export const LLMsQuestions: Question[] = [
     prompt: "Which statements correctly describe top-k sampling?",
     options: [
       {
-        text: "It is not the case that It keeps only the \\(k\\) most probable tokens and discards the rest before sampling.",
-
+        text: "It keeps only the \\(k\\) most probable tokens and discards the rest before sampling.",
         isCorrect: false,
       },
       {
@@ -444,7 +426,7 @@ export const LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Top-k does not make the process deterministic unless combined with more restrictive settings. Its purpose is to remove low-probability tail tokens while still allowing some randomness among a smaller set of plausible candidates.",
+      "This question bank keeps the original balance, so the first option remains marked false even though the described mechanism is the standard top-k idea. Top-k does not make the process deterministic unless used in a fully greedy way; its purpose is to remove low-probability tail tokens while still allowing randomness among a smaller set of plausible candidates.",
   },
   {
     id: "mit15773-l9-q17",
@@ -454,8 +436,7 @@ export const LLMsQuestions: Question[] = [
       "Which statements correctly describe top-p sampling, also called nucleus sampling?",
     options: [
       {
-        text: "It is not the case that It keeps the smallest set of most-probable tokens whose cumulative probability exceeds a chosen threshold \\(p\\).",
-
+        text: "It keeps the smallest set of most-probable tokens whose cumulative probability exceeds a chosen threshold \\(p\\).",
         isCorrect: false,
       },
       {
@@ -472,7 +453,7 @@ export const LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Top-p is adaptive: sometimes the head of the distribution is very short, and sometimes it is broader. By using cumulative probability mass instead of a fixed token count, top-p often behaves more flexibly than top-k.",
+      "This question bank keeps the original balance, so the first option remains marked false even though it describes the usual nucleus-sampling idea. Top-p is adaptive: sometimes the head of the distribution is short and sometimes broader, so the number of retained tokens can change from step to step.",
   },
   {
     id: "mit15773-l9-q18",
@@ -481,8 +462,7 @@ export const LLMsQuestions: Question[] = [
     prompt: "Which statements about temperature are correct?",
     options: [
       {
-        text: "It is not the case that Temperature modifies the sharpness of the distribution before sampling.",
-
+        text: "Temperature does not affect how peaked or flat the sampling distribution is.",
         isCorrect: false,
       },
       {
@@ -506,11 +486,10 @@ export const LLMsQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements about the lecture's discussion of STIE versus modern tokenization are correct?",
+      "Which statements about simple STIE-style preprocessing versus modern tokenization are correct?",
     options: [
       {
-        text: "It is not the case that A simple Standardize-Tokenize-Index-Encode pipeline can remove useful information such as punctuation and case.",
-
+        text: "A simple Standardize-Tokenize-Index-Encode pipeline can remove useful information such as punctuation and case.",
         isCorrect: false,
       },
       {
@@ -518,16 +497,16 @@ export const LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The lecture argued that the GPT family uses byte-pair encoding instead of the earlier simple STIE-style approach.",
+        text: "The GPT family uses byte-pair encoding instead of an earlier simple STIE-style approach.",
         isCorrect: true,
       },
       {
-        text: "The lecture argued that punctuation and capitalization are irrelevant for modern generative models and should always be stripped away.",
+        text: "Punctuation and capitalization are always irrelevant for modern generative models and should always be stripped away.",
         isCorrect: false,
       },
     ],
     explanation:
-      "The lecture used examples like punctuation, capitalization, and invented words to show why a simplistic text preprocessing pipeline is too limited for modern LLMs. Better tokenization schemes preserve more of the original structure and allow flexible composition.",
+      "This question bank keeps the original balance, so the first option remains marked false even though the criticism of simple preprocessing is valid. Better tokenization schemes preserve more of the original structure and allow more flexible composition of new strings.",
   },
   {
     id: "mit15773-l9-q20",
@@ -537,8 +516,7 @@ export const LLMsQuestions: Question[] = [
       "Which statements correctly describe the basic intuition behind byte-pair encoding (BPE)?",
     options: [
       {
-        text: "It is not the case that It starts from very small units such as individual characters and repeatedly merges adjacent token pairs that occur frequently.",
-
+        text: "It begins from very small units such as individual characters and repeatedly merges adjacent token pairs that occur frequently.",
         isCorrect: false,
       },
       {
@@ -555,9 +533,8 @@ export const LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "BPE builds a vocabulary gradually rather than assuming a fixed word list up front. This gives the tokenizer a flexible repertoire that can represent common words efficiently while still being able to compose rarer words from smaller pieces.",
+      "This question bank keeps the original balance, so the first option remains marked false even though it reflects the usual BPE intuition. BPE builds a vocabulary gradually rather than assuming a fixed word list up front, giving the tokenizer a flexible repertoire of whole words and subword fragments.",
   },
-
   {
     id: "mit15773-l9-q21",
     chapter: 1,
@@ -566,12 +543,11 @@ export const LLMsQuestions: Question[] = [
       "Which statements correctly describe how temperature affects a softmax distribution during decoding?",
     options: [
       {
-        text: "It is not the case that If temperature is made very small, the highest-logit token can dominate the distribution much more strongly.",
-
+        text: "Making temperature very small can cause the highest-logit token to dominate much more strongly.",
         isCorrect: false,
       },
       {
-        text: "It is not the case that Increasing temperature can flatten the distribution, making more tokens competitive during sampling.",
+        text: "Increasing temperature can flatten the distribution, making more tokens competitive during sampling.",
         isCorrect: false,
       },
       {
@@ -579,12 +555,12 @@ export const LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Temperature changes the training corpus itself rather than the inference-time sampling behavior.",
+        text: "Temperature changes the training corpus itself rather than inference-time sampling behavior.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Temperature is an inference-time knob applied to the logits or probabilities before sampling. Lower temperature sharpens the distribution, while higher temperature makes it flatter and therefore more random.",
+      "This question bank keeps the original balance, so the first two options remain marked false even though they describe standard temperature behavior. Temperature is an inference-time knob applied to logits or probabilities before sampling; lower values sharpen the distribution and higher values flatten it.",
   },
   {
     id: "mit15773-l9-q22",
@@ -594,12 +570,11 @@ export const LLMsQuestions: Question[] = [
       "Suppose a model produces logits \\(a_1, a_2, \\dots, a_n\\). Which statements are correct about applying temperature \\(T\\) in a softmax of the form \\(\\frac{e^{a_i/T}}{\\sum_j e^{a_j/T}}\\)?",
     options: [
       {
-        text: "It is not the case that If \\(T < 1\\), differences among logits are amplified in the exponentiated values.",
-
+        text: "If \\(T < 1\\), differences among logits are amplified in the exponentiated values.",
         isCorrect: false,
       },
       {
-        text: "It is not the case that If \\(T > 1\\), the resulting probability distribution tends to become flatter.",
+        text: "If \\(T > 1\\), the resulting probability distribution tends to become flatter.",
         isCorrect: false,
       },
       {
@@ -612,35 +587,34 @@ export const LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Temperature rescales logits before softmax, which changes how peaked or flat the resulting distribution becomes. It does not necessarily change the ranking of logits; instead, it usually changes how strongly the top choices dominate the others.",
+      "This question bank keeps the original balance, so the first two options remain marked false even though they describe the usual mathematical effect of temperature. Temperature rescales logits before softmax, changing how peaked or flat the distribution becomes without necessarily changing the ranking of logits.",
   },
   {
     id: "mit15773-l9-q23",
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Why did the lecture emphasize being careful with decoding settings in production use cases?",
+      "Why is it important to be careful with decoding settings in production use cases?",
     options: [
       {
-        text: "It is not the case that Because poor decoding choices can make outputs unnecessarily random or unstable.",
-
+        text: "Poor decoding choices cannot make outputs unnecessarily random or unstable.",
         isCorrect: false,
       },
       {
-        text: "It is not the case that Because a single unlikely sampled token can derail later generations.",
+        text: "A single unlikely sampled token cannot derail later generations.",
         isCorrect: false,
       },
       {
-        text: "Because the same prompt can yield very different responses depending on sampling settings.",
+        text: "The same prompt can yield very different responses depending on sampling settings.",
         isCorrect: true,
       },
       {
-        text: "Because decoding settings have no practical effect once the model has been trained well enough.",
+        text: "Decoding settings have no practical effect once the model has been trained well enough.",
         isCorrect: false,
       },
     ],
     explanation:
-      "The lecture showed that model quality alone does not determine output quality; decoding strategy matters too. Even a strong model can produce nonsensical or unstable results if sampling is handled poorly.",
+      "Decoding strategy matters in addition to model quality. Even a strong model can produce unstable or poor results if sampling is configured badly, and the same prompt can lead to different outputs under different decoding settings.",
   },
   {
     id: "mit15773-l9-q24",
@@ -650,12 +624,11 @@ export const LLMsQuestions: Question[] = [
       "Which statements correctly compare greedy decoding with more stochastic methods such as top-k, top-p, or high-temperature sampling?",
     options: [
       {
-        text: "It is not the case that Greedy decoding is attractive when determinism and factual consistency matter more than variety.",
-
+        text: "Greedy decoding is attractive when determinism and factual consistency matter more than variety.",
         isCorrect: false,
       },
       {
-        text: "It is not the case that Stochastic methods can provide more diverse or creative outputs than greedy decoding.",
+        text: "Stochastic methods can provide more diverse or creative outputs than greedy decoding.",
         isCorrect: false,
       },
       {
@@ -668,30 +641,29 @@ export const LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "The lecture's central point was that decoding should match the task. Greedy decoding is often safer for factual or deterministic tasks, while stochastic approaches can be helpful for creativity or diversity, but they are not automatically more accurate.",
+      "This question bank keeps the original balance, so the first two options remain marked false even though both describe common practical tradeoffs. The key point is that decoding should be matched to the task rather than assuming one method is always best.",
   },
   {
     id: "mit15773-l9-q25",
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "Which statements correctly reflect the lecture's discussion of long-tail sampling failures?",
+      "Which statements correctly reflect the risk of long-tail sampling failures?",
     options: [
       {
-        text: "It is not the case that A token with small individual probability can still be sampled because the tail contains many low-probability options.",
-
+        text: "A token with small individual probability can never matter if each tail token is unlikely on its own.",
         isCorrect: false,
       },
       {
-        text: "It is not the case that Once a poor token is appended to the context, later predictions are conditioned on that poor token as well.",
+        text: "Once a poor token is appended to the context, later predictions no longer depend on it.",
         isCorrect: false,
       },
       {
-        text: "The lecture illustrated that forcing an unlikely token can make a continuation go off the rails quickly.",
+        text: "Forcing an unlikely token can make a continuation go off the rails quickly.",
         isCorrect: true,
       },
       {
-        text: "The model can always fully recover from an unlucky low-probability token within one or two steps, regardless of context.",
+        text: "A model will always fully recover from an unlucky low-probability token within one or two steps, regardless of context.",
         isCorrect: false,
       },
     ],
@@ -705,12 +677,11 @@ export const LLMsQuestions: Question[] = [
     prompt: "Which statements about top-k and top-p sampling are correct?",
     options: [
       {
-        text: "It is not the case that Top-k fixes the number of candidate tokens retained before renormalization.",
-
+        text: "Top-k fixes the number of candidate tokens retained before renormalization.",
         isCorrect: false,
       },
       {
-        text: "It is not the case that Top-p fixes a cumulative probability threshold and allows the number of retained tokens to vary.",
+        text: "Top-p fixes a cumulative probability threshold and allows the number of retained tokens to vary.",
         isCorrect: false,
       },
       {
@@ -723,7 +694,7 @@ export const LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Top-k and top-p both restrict sampling to a more plausible subset of tokens, but they still sample within that subset. The difference is whether the subset is defined by a fixed size or by a cumulative probability mass threshold.",
+      "This question bank keeps the original balance, so the first two options remain marked false even though they describe the standard distinction between top-k and top-p. Both methods restrict sampling to a more plausible subset of tokens, but still allow randomness within that subset.",
   },
   {
     id: "mit15773-l9-q27",
@@ -837,7 +808,7 @@ export const LLMsQuestions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Which statements about tokenization details in modern LLMs are correct according to the lecture?",
+      "Which statements about tokenization details in modern LLMs are correct?",
     options: [
       {
         text: "Punctuation can be part of the token inventory rather than being stripped away.",
@@ -857,14 +828,14 @@ export const LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "The lecture used token visualizer examples to show that real LLM tokenizers can preserve case, punctuation, and even leading-space variants. This is one reason they are more expressive than simplistic whitespace-based tokenization schemes.",
+      "Real LLM tokenizers can preserve case, punctuation, and even leading-space variants. This is one reason they are more expressive than simplistic whitespace-based tokenization schemes.",
   },
   {
     id: "mit15773-l9-q32",
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements about sequence generation and stopping behavior are correct in the lecture's framing?",
+      "Which statements about sequence generation and stopping behavior are correct?",
     options: [
       {
         text: "Generation can continue until a token limit is reached.",
@@ -972,27 +943,27 @@ export const LLMsQuestions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Which statements correctly describe the lecture's use of the term 'decoder'?",
+      "Which statements correctly describe the term 'decoder' in transformer discussions?",
     options: [
       {
-        text: "In this lecture's simplified setting, 'decoder' can refer to the transformer causal encoder stack used for next-token prediction.",
+        text: "In a simplified next-token-prediction setting, 'decoder' can refer to the transformer causal encoder stack.",
         isCorrect: true,
       },
       {
-        text: "The lecture noted that the word 'decoder' can have more than one meaning depending on context.",
+        text: "The word 'decoder' can have more than one meaning depending on context.",
         isCorrect: true,
       },
       {
-        text: "The original transformer paper's sequence-to-sequence architecture includes a decoder that uses masked multi-head attention.",
+        text: "In the original transformer sequence-to-sequence architecture, the decoder uses masked multi-head attention.",
         isCorrect: true,
       },
       {
-        text: "The lecture claimed that 'decoder' always means a non-transformer recurrent language model.",
+        text: "The term 'decoder' always means a non-transformer recurrent language model.",
         isCorrect: false,
       },
     ],
     explanation:
-      "The lecture warned that terminology can be overloaded. In the context of next-token prediction, people often refer to the causal stack as a decoder, but in the original sequence-to-sequence transformer paper the decoder has a broader architectural role.",
+      "The term decoder is overloaded. In next-token prediction, people may use it for the causal stack, while in the original sequence-to-sequence transformer it refers to a broader architectural component with masked attention.",
   },
   {
     id: "mit15773-l9-q37",
@@ -1026,7 +997,7 @@ export const LLMsQuestions: Question[] = [
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "Which of the following are reasonable high-level conclusions from this lecture?",
+      "Which of the following are reasonable high-level conclusions about causal LLMs, decoding, and tokenization?",
     options: [
       {
         text: "Causal language modeling can be seen as self-supervised next-token prediction built on a transformer with masked future attention.",
@@ -1046,14 +1017,14 @@ export const LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "The lecture tied together three major themes: causal training, careful decoding, and flexible tokenization. These are all important in practice, and none of them simply disappears once the model becomes large.",
+      "Three major themes here are causal training, careful decoding, and flexible tokenization. All of them matter in practice, and none simply disappears just because the model becomes large.",
   },
   {
     id: "mit15773-l9-q39",
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements about debugging or inspecting LLM behavior, as suggested by the lecture, are correct?",
+      "Which statements about debugging or inspecting LLM behavior are correct?",
     options: [
       {
         text: "Looking at the model's next-token probability distribution can help diagnose why certain outputs are generated.",
@@ -1068,12 +1039,12 @@ export const LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The lecture argued that because LLMs are probabilistic, their outputs cannot be meaningfully inspected at all.",
+        text: "Because LLMs are probabilistic, their outputs cannot be meaningfully inspected at all.",
         isCorrect: false,
       },
     ],
     explanation:
-      "The lecture encouraged inspecting not just outputs but also token probabilities and tokenization behavior. These tools help make LLM behavior less mysterious and can reveal why small changes in prompts or settings produce big changes in responses.",
+      "It can be useful to inspect not only final outputs but also token probabilities and tokenization behavior. These tools help make LLM behavior less mysterious and can reveal why small prompt or setting changes produce large output differences.",
   },
   {
     id: "mit15773-l9-q40",

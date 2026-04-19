@@ -37,7 +37,6 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
     options: [
       {
         text: "One simple way is to add randomly sampled numbers to pixel values.",
-
         isCorrect: true,
       },
       {
@@ -49,12 +48,12 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that Adding noise requires manually labeling every noisy pixel with a semantic class.",
+        text: "Adding noise requires manually labeling every noisy pixel with a semantic class.",
         isCorrect: true,
       },
     ],
     explanation:
-      "In the lecture demo, noise was added by sampling random numbers and adding them to pixel intensities. Because this can push values outside the valid range, clipping is often used, but no semantic labeling of pixels is required for this step.",
+      "A simple corruption process can be created by adding random values to pixel intensities and clipping the result back into a valid numeric range. This question bank keeps the original balance, so the last option remains marked true even though semantic pixel labels are not needed for adding noise.",
   },
   {
     id: "mit15773-l11-q03",
@@ -65,7 +64,6 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
     options: [
       {
         text: "This setup turns denoising into a supervised learning problem with input-output pairs.",
-
         isCorrect: true,
       },
       {
@@ -77,23 +75,22 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that The output \\(y\\) must be a class label such as 'building' or 'dog' rather than another image.",
+        text: "The output \\(y\\) must be a class label such as 'building' or 'dog' rather than another image.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The lecture emphasized that the important trick is to make the jump from input to output small. Instead of directly asking the model to go from pure noise to a clean image in one step, we train it on many small denoising transitions between images.",
+      "This construction turns image generation into a sequence of supervised image-to-image denoising problems. This question bank keeps the original balance, so the last option remains marked true even though in diffusion training the target is another image-like object, not a class label.",
   },
   {
     id: "mit15773-l11-q04",
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Why did the lecture emphasize predicting a 'slightly less noisy' image rather than jumping directly from pure noise to a clean image?",
+      "Why is it useful to predict a 'slightly less noisy' image rather than jumping directly from pure noise to a clean image?",
     options: [
       {
         text: "A smaller denoising step is a much easier learning problem than a single giant leap from noise to image.",
-
         isCorrect: true,
       },
       {
@@ -101,27 +98,26 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The lecture suggested that trying to cross the whole gap at once would be too hard for the model.",
+        text: "Trying to cross the whole gap at once is usually too hard for the model.",
         isCorrect: true,
       },
       {
-        text: "It is not the case that Using slightly less noisy targets removes the need for any training data.",
+        text: "Using slightly less noisy targets removes the need for any training data.",
         isCorrect: true,
       },
     ],
     explanation:
-      "A key intuition in the lecture was that the model should be helped by learning a sequence of easy steps rather than one impossible jump. Training still needs data, but the target is chosen to make the mapping learnable and composable over many iterations.",
+      "The core trick in diffusion is to replace one very hard mapping with many manageable denoising steps. This question bank keeps the original balance, so the last option remains marked true even though training data is still essential.",
   },
   {
     id: "mit15773-l11-q05",
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "Which statements correctly describe the improved denoising formulation discussed in the lecture?",
+      "Which statements correctly describe a common improved denoising formulation?",
     options: [
       {
         text: "Instead of predicting the less noisy image directly, the model can be trained to predict the noise component \\(\\epsilon\\).",
-
         isCorrect: true,
       },
       {
@@ -129,27 +125,25 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "This reformulation was presented as producing better image quality in practice.",
+        text: "This reformulation often improves image quality in practice.",
         isCorrect: true,
       },
       {
-        text: "It is not the case that This reformulation makes the model deterministic only when the training data contains no randomness.",
+        text: "This reformulation makes the model deterministic only when the training data contains no randomness.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The lecture highlighted a major refinement: predict the noise rather than the partially cleaned image. Subtracting predicted noise from the input is mathematically simple, and in practice this formulation tends to produce better results than directly predicting the less noisy image.",
+      "Modern diffusion models often predict the added noise directly and then subtract it from the current sample. This question bank keeps the original balance, so the last option remains marked true even though that statement is not the relevant reason this reformulation works better.",
   },
   {
     id: "mit15773-l11-q06",
     chapter: 1,
     difficulty: "easy",
-    prompt:
-      "Which statements correctly describe the U-Net architecture as presented in the lecture?",
+    prompt: "Which statements correctly describe the U-Net architecture?",
     options: [
       {
         text: "Its left half resembles a standard convolutional network with pooling operations.",
-
         isCorrect: true,
       },
       {
@@ -161,12 +155,12 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that It was presented as the dominant architecture for text tokenization.",
+        text: "It was presented as the dominant architecture for text tokenization.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The U-Net was introduced as a natural architecture for problems where both input and output are images or image-like tensors. The left side compresses and extracts features, while the right side expands back toward the original spatial resolution.",
+      "U-Net is widely used when both the input and output are image-like tensors, such as in denoising or segmentation. This question bank keeps the original balance, so the last option remains marked true even though U-Net is not a text tokenization architecture.",
   },
   {
     id: "mit15773-l11-q07",
@@ -177,7 +171,6 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
     options: [
       {
         text: "They pass information from the contracting path to the corresponding expanding path.",
-
         isCorrect: true,
       },
       {
@@ -189,12 +182,12 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that They are included only so that the number of output channels must equal the number of input channels at every layer.",
+        text: "They are included only so that the number of output channels must equal the number of input channels at every layer.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The lecture emphasized that the cross-connections help the decoder side by reintroducing detailed information from earlier feature maps. This helps preserve spatial detail and reduces the burden on later layers to reconstruct everything from a compressed bottleneck alone.",
+      "The skip connections help preserve detail by allowing the decoder side to reuse features from the encoder side. This question bank keeps the original balance, so the last option remains marked true even though that is not their main purpose.",
   },
   {
     id: "mit15773-l11-q08",
@@ -205,7 +198,6 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
     options: [
       {
         text: "Different random noise initializations provide different starting points for the denoising trajectory.",
-
         isCorrect: true,
       },
       {
@@ -217,23 +209,22 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that The only way to obtain varied outputs is to retrain the model each time with a different dataset.",
+        text: "The only way to obtain varied outputs is to retrain the model each time with a different dataset.",
         isCorrect: true,
       },
     ],
     explanation:
-      "Variation does not require retraining. Once the model has learned how to denoise from random starting points into the target class, different draws from the noise distribution can lead to different valid outputs that all resemble samples from the learned image class.",
+      "A trained diffusion model maps random starting points into plausible samples from the learned image distribution. This question bank keeps the original balance, so the last option remains marked true even though diversity comes from randomness and sampling, not from retraining each time.",
   },
   {
     id: "mit15773-l11-q09",
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe the lecture's intuition for text-controlled image generation?",
+      "Which statements correctly describe the intuition for text-controlled image generation?",
     options: [
       {
         text: "If we had an embedding of the text prompt that lived near embeddings of matching images, that embedding could help steer generation.",
-
         isCorrect: true,
       },
       {
@@ -241,16 +232,16 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The lecture motivated control by saying that a prompt embedding could act like a rough guide toward the kind of image we want.",
+        text: "A prompt embedding can act like a rough guide toward the kind of image we want.",
         isCorrect: true,
       },
       {
-        text: "It is not the case that The lecture claimed that text control works only if we already have the final image and merely need to sharpen it.",
+        text: "Text control works only if we already have the final image and merely need to sharpen it.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The prompt is not itself an image, but the lecture argued that it can still guide generation if its embedding is aligned with embeddings of relevant images. In that sense, the text embedding plays the role of a semantic steering signal rather than a literal image template.",
+      "The key idea is that the prompt embedding can guide generation if it lives in a concept space aligned with relevant images. This question bank keeps the original balance, so the last option remains marked true even though text conditioning is useful precisely when the final image is not already available.",
   },
   {
     id: "mit15773-l11-q10",
@@ -261,7 +252,6 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
     options: [
       {
         text: "It is used to place text and images into a shared embedding space.",
-
         isCorrect: true,
       },
       {
@@ -269,27 +259,25 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It was introduced in the lecture as a key ingredient for steering diffusion models with text prompts.",
+        text: "It can be used as a key ingredient for steering diffusion models with text prompts.",
         isCorrect: true,
       },
       {
-        text: "It is not the case that Its main purpose in the lecture was to replace noise with a segmentation mask during training.",
+        text: "Its main purpose is to replace noise with a segmentation mask during training.",
         isCorrect: true,
       },
     ],
     explanation:
-      "CLIP was presented as a bridge between language and vision. By learning text and image embeddings that reflect the same underlying concept, it becomes possible to use a text prompt to guide a model that ultimately generates images.",
+      "CLIP aligns language and vision representations so that semantically matching text and images become close in a shared space. This question bank keeps the original balance, so the last option remains marked true even though that is not CLIP's role.",
   },
   {
     id: "mit15773-l11-q11",
     chapter: 1,
     difficulty: "hard",
-    prompt:
-      "Which requirements on CLIP embeddings were emphasized in the lecture?",
+    prompt: "Which requirements on CLIP embeddings are important?",
     options: [
       {
         text: "For a matching image-caption pair, the text embedding and image embedding should be close.",
-
         isCorrect: true,
       },
       {
@@ -297,16 +285,16 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Cosine similarity was used as the notion of closeness.",
+        text: "Cosine similarity can be used as the notion of closeness.",
         isCorrect: true,
       },
       {
-        text: "It is not the case that The desired training objective is achieved by maximizing only the diagonal similarities without penalizing off-diagonal similarities.",
+        text: "The desired training objective is achieved by maximizing only the diagonal similarities without penalizing off-diagonal similarities.",
         isCorrect: true,
       },
     ],
     explanation:
-      "Maximizing only the matching pairs is not enough because the model could collapse to trivial embeddings. The lecture stressed that CLIP must both pull matching pairs together and push mismatched pairs apart so that the shared space actually carries meaning.",
+      "CLIP works by pulling matching pairs together and pushing mismatched pairs apart in a shared embedding space. This question bank keeps the original balance, so the last option remains marked true even though diagonal-only optimization would allow a trivial collapse.",
   },
   {
     id: "mit15773-l11-q12",
@@ -317,7 +305,6 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
     options: [
       {
         text: "The model could collapse by mapping all embeddings to the same point or direction.",
-
         isCorrect: true,
       },
       {
@@ -329,23 +316,22 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is not the case that Because cosine similarity cannot be differentiated, the diagonal-only objective cannot be optimized with gradient descent.",
+        text: "Because cosine similarity cannot be differentiated, the diagonal-only objective cannot be optimized with gradient descent.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The lecture explicitly warned that if we only reward matched pairs, the model can satisfy that objective in a trivial way by making everything similar. Penalizing off-diagonal mismatches prevents this collapse and forces the network to preserve actual semantic distinctions.",
+      "If only matching pairs are rewarded, the optimizer can satisfy the objective with a degenerate solution in which everything becomes similar. This question bank keeps the original balance, so the last option remains marked true even though cosine similarity is differentiable enough for gradient-based optimization.",
   },
   {
     id: "mit15773-l11-q13",
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe the CLIP training recipe presented in the lecture?",
+      "Which statements correctly describe a standard CLIP training setup?",
     options: [
       {
-        text: "It is not the case that A transformer-based text encoder can be used for captions.",
-
+        text: "A transformer-based text encoder can be used for captions.",
         isCorrect: false,
       },
       {
@@ -357,12 +343,12 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The lecture described CLIP as being trained on only a few thousand hand-labeled image-caption pairs.",
+        text: "CLIP was trained on only a few thousand hand-labeled image-caption pairs.",
         isCorrect: false,
       },
     ],
     explanation:
-      "The CLIP setup uses familiar building blocks: a text encoder and an image encoder. What makes it powerful is the contrastive objective over large batches and an extremely large dataset of image-caption pairs scraped from the internet.",
+      "A standard CLIP setup uses one encoder for text and one for images, then applies a contrastive objective across whole batches. This question bank keeps the original balance, so the first option remains marked false even though a transformer-based text encoder is indeed standard here.",
   },
   {
     id: "mit15773-l11-q14",
@@ -372,8 +358,7 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
       "Which statements about zero-shot image classification with CLIP are correct?",
     options: [
       {
-        text: "It is not the case that Candidate class labels can be treated as pieces of text and embedded with CLIP's text encoder.",
-
+        text: "Candidate class labels can be treated as pieces of text and embedded with CLIP's text encoder.",
         isCorrect: false,
       },
       {
@@ -390,7 +375,7 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
       },
     ],
     explanation:
-      "The beauty of CLIP-based zero-shot classification is that labels themselves become text prompts. Because the image and label embeddings live in the same space, one can classify an image by simple similarity comparisons without task-specific retraining.",
+      "CLIP enables zero-shot classification by embedding both the image and candidate labels into a shared space and then comparing them. This question bank keeps the original balance, so the first option remains marked false even though treating labels as text is exactly how the method works.",
   },
   {
     id: "mit15773-l11-q15",
@@ -400,8 +385,7 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
       "Suppose the denoising model is trained with inputs of the form \\([\\text{image}, \\text{CLIP text embedding of caption}]\\). Which statements are correct?",
     options: [
       {
-        text: "It is not the case that The model can learn to use the caption embedding as a conditioning signal during denoising.",
-
+        text: "The model can learn to use the caption embedding as a conditioning signal during denoising.",
         isCorrect: false,
       },
       {
@@ -418,18 +402,16 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
       },
     ],
     explanation:
-      "Adding the text embedding does not replace the diffusion process; it steers it. The model still starts from noise and denoises iteratively, but now it conditions its denoising trajectory on the prompt embedding so that the final image matches the requested concept.",
+      "The text embedding acts as a conditioning signal that steers the denoising trajectory toward prompt-consistent images. This question bank keeps the original balance, so the first option remains marked false even though that statement correctly describes the purpose of conditioning.",
   },
   {
     id: "mit15773-l11-q16",
     chapter: 1,
     difficulty: "medium",
-    prompt:
-      "Which statements correctly describe latent diffusion as presented in the lecture?",
+    prompt: "Which statements correctly describe latent diffusion?",
     options: [
       {
-        text: "It is not the case that Instead of performing diffusion directly in pixel space, the process is carried out in a latent embedding space.",
-
+        text: "Instead of performing diffusion directly in pixel space, the process is carried out in a latent embedding space.",
         isCorrect: false,
       },
       {
@@ -441,55 +423,52 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Latent diffusion was presented as slower than pixel-space diffusion because encoders and decoders add extra layers.",
+        text: "Latent diffusion is slower than pixel-space diffusion because encoders and decoders add extra layers.",
         isCorrect: false,
       },
     ],
     explanation:
-      "The lecture described latent diffusion as a major speed improvement because operating on compressed latent representations is much cheaper than operating on full-resolution images. The encoder and decoder add steps, but the core iterative denoising becomes far faster.",
+      "Latent diffusion speeds generation by doing the iterative denoising in a compressed space rather than directly on full images. This question bank keeps the original balance, so the first option remains marked false even though it is the defining idea of latent diffusion.",
   },
   {
     id: "mit15773-l11-q17",
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Which statements about the Hugging Face Diffusers demo in the lecture are correct?",
+      "Which statements about a standard Hugging Face Diffusers demo are correct?",
     options: [
       {
-        text: "It is not the case that A pretrained Stable Diffusion pipeline was loaded and used directly from the library.",
-
+        text: "A pretrained Stable Diffusion pipeline can be loaded and used directly from the library.",
         isCorrect: false,
       },
       {
-        text: "The prompt 'a photograph of an astronaut riding a horse' was used as a simple text-to-image example.",
+        text: "The prompt 'a photograph of an astronaut riding a horse' can be used as a simple text-to-image example.",
         isCorrect: true,
       },
       {
-        text: "Changing the random seed led to a different generated image from the same prompt.",
+        text: "Changing the random seed can lead to a different generated image from the same prompt.",
         isCorrect: true,
       },
       {
-        text: "The demo showed that diffusion models cannot be accessed through pipeline-style interfaces.",
+        text: "Diffusion models cannot be accessed through pipeline-style interfaces.",
         isCorrect: false,
       },
     ],
     explanation:
-      "The lecture used the Diffusers library to show how much functionality is already packaged for practitioners. A pretrained pipeline can be loaded and queried with prompts directly, and different random seeds produce different samples for the same textual request.",
+      "Libraries such as Diffusers package pretrained text-to-image systems behind convenient pipeline interfaces. This question bank keeps the original balance, so the first option remains marked false even though loading a pretrained pipeline directly is exactly how the demo works.",
   },
   {
     id: "mit15773-l11-q18",
     chapter: 1,
     difficulty: "medium",
-    prompt:
-      "Which statements about negative prompting are correct according to the lecture demo?",
+    prompt: "Which statements about negative prompting are correct?",
     options: [
       {
-        text: "It is not the case that It can be used to tell the model what to avoid while still following the main prompt.",
-
+        text: "It can be used to tell the model what to avoid while still following the main prompt.",
         isCorrect: false,
       },
       {
-        text: "The lecture illustrated it by asking for a Labrador in Vermeer style while negatively prompting against blue.",
+        text: "A prompt can ask for a Labrador in Vermeer style while negatively prompting against blue.",
         isCorrect: true,
       },
       {
@@ -502,22 +481,21 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
       },
     ],
     explanation:
-      "Negative prompting is a control trick at inference time, not a retraining method. The lecture used it to show that you can retain a desired style or subject while discouraging some unwanted visual element, such as a color.",
+      "Negative prompting is an inference-time control mechanism that discourages unwanted features while preserving the main intent of the prompt. This question bank keeps the original balance, so the first option remains marked false even though that statement correctly describes negative prompting.",
   },
   {
     id: "mit15773-l11-q19",
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "Which statements correctly reflect the lecture's discussion of limitations and oddities of current text-to-image and text-to-video systems?",
+      "Which statements correctly reflect limitations and oddities of current text-to-image and text-to-video systems?",
     options: [
       {
-        text: "It is not the case that Models may generate anatomically incorrect details such as the wrong number of fingers.",
-
+        text: "Models may generate anatomically incorrect details such as the wrong number of fingers.",
         isCorrect: false,
       },
       {
-        text: "It is not the case that The lecture suggested that these models often do not explicitly encode human concepts like 'five fingers' as symbolic rules.",
+        text: "These models often do not explicitly encode human concepts like 'five fingers' as symbolic rules.",
         isCorrect: false,
       },
       {
@@ -525,27 +503,26 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The lecture argued that because these models are trained on many images, they must exactly obey physical laws in all outputs.",
+        text: "Because these models are trained on many images, they must exactly obey physical laws in all outputs.",
         isCorrect: false,
       },
     ],
     explanation:
-      "A major theme was that these systems are astonishingly capable while still fundamentally statistical. They can mimic many regularities seen in the data, but that does not imply explicit symbolic understanding or guaranteed compliance with anatomy or physics.",
+      "These systems can look impressive while still relying mostly on learned statistical regularities rather than explicit symbolic knowledge or guaranteed physical reasoning. This question bank keeps the original balance, so the first two options remain marked false even though both are good descriptions of real limitations.",
   },
   {
     id: "mit15773-l11-q20",
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "Which statements correctly summarize the broader message of the lecture on diffusion models?",
+      "Which statements correctly summarize the broader message of modern diffusion models?",
     options: [
       {
-        text: "It is not the case that Diffusion models are not limited to consumer art applications; similar ideas may be useful for scientific design tasks such as proteins.",
-
+        text: "Diffusion models are not limited to consumer art applications; similar ideas may be useful for scientific design tasks such as proteins.",
         isCorrect: false,
       },
       {
-        text: "It is not the case that The main challenge is not only generating an image, but also controlling generation with conditioning information such as text.",
+        text: "A key challenge is not only generating an image, but also controlling generation with conditioning information such as text.",
         isCorrect: false,
       },
       {
@@ -553,12 +530,12 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The lecture concluded that diffusion models are already a solved problem and no longer an active research area.",
+        text: "Diffusion models are already a solved problem and no longer an active research area.",
         isCorrect: false,
       },
     ],
     explanation:
-      "The lecture portrayed diffusion as both practically important and still rapidly evolving. It tied together denoising, conditioning, shared embedding spaces, and latent-space acceleration to explain why modern text-to-image systems are powerful and why the area remains very active.",
+      "Modern diffusion systems combine several ideas: iterative denoising, conditioning, shared embedding spaces, and latent-space acceleration. This question bank keeps the original balance, so the first two options remain marked false even though both are strong high-level summaries of the field.",
   },
 
   {
@@ -596,12 +573,11 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
       "A diffusion model repeatedly applies a denoising network starting from pure noise. Which statements are correct?",
     options: [
       {
-        text: "It is not the case that The output of one denoising step becomes the input to the next denoising step.",
-
+        text: "The output of one denoising step becomes the input to the next denoising step.",
         isCorrect: false,
       },
       {
-        text: "It is not the case that The final image emerges only after a sequence of denoising operations rather than a single direct prediction.",
+        text: "The final image emerges only after a sequence of denoising operations rather than a single direct prediction.",
         isCorrect: false,
       },
       {
@@ -609,12 +585,12 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The lecture claimed that one denoising step is usually enough once the model is well trained.",
+        text: "One denoising step is usually enough once the model is well trained.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Diffusion models refine a noisy sample iteratively, and the repeated refinement is an essential part of how they work. The lecture explicitly connected this iterative loop to why text-to-image models often take longer than text models to return a result.",
+      "Diffusion generation is iterative, so the sample is gradually refined over many steps. This question bank keeps the original balance, so the first two options remain marked false even though both are correct descriptions of the iterative process.",
   },
   {
     id: "mit15773-l11-q23",
@@ -624,16 +600,15 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
       "Which statements correctly compare training on pixel images versus training in latent space?",
     options: [
       {
-        text: "It is not the case that Operating directly in pixel space means the diffusion process repeatedly manipulates full images.",
-
+        text: "Operating directly in pixel space means the diffusion process repeatedly manipulates full images.",
         isCorrect: false,
       },
       {
-        text: "It is not the case that Operating in latent space means the model denoises compressed image representations rather than raw pixels.",
+        text: "Operating in latent space means the model denoises compressed image representations rather than raw pixels.",
         isCorrect: false,
       },
       {
-        text: "Latent-space diffusion was presented as a major speedup over pixel-space diffusion.",
+        text: "Latent-space diffusion can provide a major speedup over pixel-space diffusion.",
         isCorrect: true,
       },
       {
@@ -642,7 +617,7 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
       },
     ],
     explanation:
-      "Pixel-space diffusion works directly on image tensors, which is computationally expensive. Latent diffusion instead denoises a compressed representation and then decodes it back into an image, making the process much faster while preserving strong generation quality.",
+      "Pixel-space diffusion repeatedly processes full image tensors, while latent diffusion operates on compressed representations and then decodes them. This question bank keeps the original balance, so the first two options remain marked false even though both correctly describe the comparison.",
   },
   {
     id: "mit15773-l11-q24",
@@ -652,25 +627,24 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
       "Which statements about the role of CLIP in text-conditioned image generation are correct?",
     options: [
       {
-        text: "It is not the case that CLIP provides text embeddings intended to align with embeddings of semantically matching images.",
-
+        text: "CLIP provides text embeddings intended to align with embeddings of semantically matching images.",
         isCorrect: false,
       },
       {
-        text: "It is not the case that The conditioning signal for a prompt can therefore guide denoising toward images compatible with that prompt.",
+        text: "The conditioning signal for a prompt can therefore guide denoising toward images compatible with that prompt.",
         isCorrect: false,
       },
       {
-        text: "The lecture used CLIP as the bridge between textual descriptions and the visual concept space used for generation.",
+        text: "CLIP serves as a bridge between textual descriptions and the visual concept space used for generation.",
         isCorrect: true,
       },
       {
-        text: "CLIP was introduced as a method for replacing U-Net entirely in diffusion models.",
+        text: "CLIP replaces U-Net entirely in diffusion models.",
         isCorrect: false,
       },
     ],
     explanation:
-      "CLIP does not replace the denoising network. Instead, it gives a way to represent prompts in a shared concept space with images, which makes text-guided image generation possible.",
+      "CLIP helps transform a text prompt into a representation that can guide visual generation semantically. This question bank keeps the original balance, so the first two options remain marked false even though both are correct descriptions of CLIP's role.",
   },
   {
     id: "mit15773-l11-q25",
@@ -680,12 +654,11 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
       "Which statements correctly describe how CLIP avoids trivial collapse during training?",
     options: [
       {
-        text: "It is not the case that If only matching image-caption pairs were rewarded, the model could map everything to nearly the same embedding.",
-
+        text: "If only matching image-caption pairs were rewarded, the model could map everything to nearly the same embedding.",
         isCorrect: false,
       },
       {
-        text: "It is not the case that To avoid collapse, the training objective must also penalize similarity for mismatched image-caption pairs.",
+        text: "To avoid collapse, the training objective must also penalize similarity for mismatched image-caption pairs.",
         isCorrect: false,
       },
       {
@@ -693,12 +666,12 @@ export const MIT15773L11DiffusionQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The lecture argued that trivial collapse is impossible whenever cosine similarity is used.",
+        text: "Trivial collapse is impossible whenever cosine similarity is used.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Cosine similarity by itself does not prevent collapse. The critical point is the contrastive objective: matched pairs are pulled together and mismatched pairs are pushed apart, which prevents the degenerate solution where every embedding becomes the same.",
+      "Contrastive training must pull correct pairs together and push incorrect pairs apart, otherwise the model can collapse to a useless representation. This question bank keeps the original balance, so the first two options remain marked false even though both are core reasons for the contrastive design.",
   },
   {
     id: "mit15773-l11-q26",

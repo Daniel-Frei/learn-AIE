@@ -11,7 +11,11 @@ export async function POST(req: NextRequest) {
       !body ||
       !body.participantId?.trim() ||
       !body.questionId?.trim() ||
-      typeof body.isCorrect !== "boolean"
+      typeof body.isCorrect !== "boolean" ||
+      (body.elapsedMs !== undefined &&
+        (!Number.isInteger(body.elapsedMs) || body.elapsedMs < 0)) ||
+      (body.mistakeCount !== undefined &&
+        (!Number.isInteger(body.mistakeCount) || body.mistakeCount < 0))
     ) {
       return NextResponse.json(
         { error: "Invalid request payload for answer submission." },

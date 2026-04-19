@@ -7,6 +7,7 @@ import {
 import { createDefaultRatingState, recordAnswer } from "@/lib/ratingEngine";
 import {
   InMemoryQuizDataStore,
+  type StoredAnswerAttempt,
   setQuizDataStoreForTests,
 } from "@/lib/server/quizDataStore";
 
@@ -23,9 +24,21 @@ function buildRequest(
   return req as NextRequest;
 }
 
+class CapturingQuizDataStore extends InMemoryQuizDataStore {
+  public capturedAnswerAttempts: StoredAnswerAttempt[] = [];
+
+  override async appendAnswerAttempt(attempt: StoredAnswerAttempt) {
+    this.capturedAnswerAttempts.push(attempt);
+    await super.appendAnswerAttempt(attempt);
+  }
+}
+
 describe("shared quiz data routes", () => {
+  let store: CapturingQuizDataStore;
+
   beforeEach(() => {
-    setQuizDataStoreForTests(new InMemoryQuizDataStore());
+    store = new CapturingQuizDataStore();
+    setQuizDataStoreForTests(store);
   });
 
   afterEach(() => {
@@ -62,6 +75,8 @@ describe("shared quiz data routes", () => {
         questionId: "mit15773-l4-q1",
         label: "medium",
         isCorrect: true,
+        elapsedMs: 15000,
+        mistakeCount: 0,
       }),
     );
     const answerBody = await answerRes.json();
@@ -71,6 +86,14 @@ describe("shared quiz data routes", () => {
     expect(answerBody.questionId).toBe("mit15773-l4-q1");
     expect(answerBody.question.legacyCorrect).toBe(1);
     expect(answerBody.question.legacyWrong).toBe(0);
+    expect(store.capturedAnswerAttempts).toHaveLength(1);
+    expect(store.capturedAnswerAttempts[0]).toMatchObject({
+      participantId: "participant-a",
+      questionId: "mit15773-l4-q1",
+      elapsedMs: 15000,
+      mistakeCount: 0,
+      source: "live",
+    });
 
     const stateRes = await GET(
       buildRequest(

@@ -107,7 +107,7 @@ function QuestionReportControls({ submitQuestionReport }: ReportControlsProps) {
 
                 setReportComment("");
                 setReportError("");
-                setReportSuccess("Report saved.");
+                setReportSuccess("Report saved locally.");
                 setIsReportOpen(false);
               }}
               className="px-3 py-2 rounded-lg bg-amber-400 text-slate-950 font-semibold text-sm"

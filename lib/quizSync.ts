@@ -26,6 +26,8 @@ export type RecordAnswerRequest = {
   questionId: string;
   label?: Difficulty;
   isCorrect: boolean;
+  elapsedMs?: number;
+  mistakeCount?: number;
 };
 
 export type RecordAnswerResponse = {

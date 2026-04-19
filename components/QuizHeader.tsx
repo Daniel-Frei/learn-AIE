@@ -36,6 +36,9 @@ type Props = {
   exportReportsJson: () => Promise<string>;
 };
 
+const QUESTION_ELO_FILTER_MIN = 0;
+const QUESTION_ELO_FILTER_MAX = 3000;
+
 export default function QuizHeader({
   title,
   selectedSources,
@@ -80,8 +83,11 @@ export default function QuizHeader({
   }, [difficultyRange]);
 
   const clampRange = (range: DifficultyRange) => {
-    const min = Math.max(0, Math.min(100, range.min));
-    const max = Math.max(min, Math.min(100, range.max));
+    const min = Math.max(
+      QUESTION_ELO_FILTER_MIN,
+      Math.min(QUESTION_ELO_FILTER_MAX, range.min),
+    );
+    const max = Math.max(min, Math.min(QUESTION_ELO_FILTER_MAX, range.max));
     return { min, max };
   };
 
@@ -290,7 +296,7 @@ export default function QuizHeader({
           <div className="flex items-start justify-between gap-4">
             <div>
               <h3 className="text-sm font-semibold text-slate-100">
-                Pick mode, series, lectures, topics and difficulty
+                Pick mode, series, lectures, topics and question Elo range
               </h3>
               <p className="text-xs text-slate-400">
                 Keep any combination selected. Questions are included if they
@@ -438,11 +444,11 @@ export default function QuizHeader({
           </div>
 
           <div className="flex flex-wrap items-center gap-2 text-sm text-slate-200">
-            <span className="text-slate-300">Difficulty range:</span>
+            <span className="text-slate-300">Question Elo range:</span>
             <input
               type="number"
-              min={0}
-              max={100}
+              min={QUESTION_ELO_FILTER_MIN}
+              max={QUESTION_ELO_FILTER_MAX}
               value={pendingRange.min}
               onChange={(e) =>
                 setPendingRange((prev) => ({
@@ -455,8 +461,8 @@ export default function QuizHeader({
             <span className="text-slate-400">to</span>
             <input
               type="number"
-              min={0}
-              max={100}
+              min={QUESTION_ELO_FILTER_MIN}
+              max={QUESTION_ELO_FILTER_MAX}
               value={pendingRange.max}
               onChange={(e) =>
                 setPendingRange((prev) => ({

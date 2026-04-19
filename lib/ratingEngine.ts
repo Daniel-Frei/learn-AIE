@@ -4,6 +4,7 @@ export {
   exportRatingsJson,
   getQuestionRatingEstimate,
   importRatingsJson,
+  QUESTION_TIME_LIMIT_MS,
   recordAnswer,
   type LegacyDifficultyMap,
   type LegacyQuestionStats,

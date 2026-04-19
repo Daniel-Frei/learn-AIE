@@ -21,6 +21,8 @@ export type StoredAnswerAttempt = {
   questionId: string;
   label?: Difficulty;
   isCorrect: boolean;
+  elapsedMs: number;
+  mistakeCount: number;
   answeredAt: string;
   source: "live" | "migration";
 };
@@ -76,6 +78,23 @@ type QuestionReportRow = {
   series_label: string;
   topic: string;
   prompt: string;
+};
+
+type PagedSelectQuery = {
+  select(columns: string): {
+    order(
+      column: string,
+      options: { ascending: boolean },
+    ): {
+      range(
+        from: number,
+        to: number,
+      ): PromiseLike<{
+        data: unknown[] | null;
+        error: { message: string } | null;
+      }>;
+    };
+  };
 };
 
 function mapParticipantRow(row: ParticipantRow): StoredParticipant {
@@ -134,6 +153,32 @@ async function throwOnError<T>(
   return data;
 }
 
+export async function fetchAllRows<T>(
+  query: PagedSelectQuery,
+  columns: string,
+  orderColumn: string,
+): Promise<T[]> {
+  const pageSize = 1000;
+  const rows: T[] = [];
+
+  for (let offset = 0; ; offset += pageSize) {
+    const page = (await throwOnError(
+      query
+        .select(columns)
+        .order(orderColumn, { ascending: true })
+        .range(offset, offset + pageSize - 1),
+    )) as T[] | null;
+    const pageRows = page ?? [];
+    rows.push(...pageRows);
+
+    if (pageRows.length < pageSize) {
+      break;
+    }
+  }
+
+  return rows;
+}
+
 function isTransientSupabaseError(err: unknown): boolean {
   if (!(err instanceof Error)) return false;
 
@@ -144,6 +189,17 @@ function isTransientSupabaseError(err: unknown): boolean {
     message.includes("econnrefused") ||
     message.includes("enotfound") ||
     message.includes("etimedout")
+  );
+}
+
+function isMissingAnswerAttemptMetadataError(err: unknown): boolean {
+  if (!(err instanceof Error)) return false;
+
+  const message = err.message.toLowerCase();
+  return (
+    message.includes("elapsed_ms") ||
+    message.includes("mistake_count") ||
+    message.includes("schema cache")
   );
 }
 
@@ -279,15 +335,13 @@ class SupabaseQuizDataStore implements QuizDataStore {
   }
 
   async listQuestionRatings(): Promise<StoredQuestionRating[]> {
-    const data = await throwOnError(
-      this.client
-        .from("question_ratings")
-        .select(
-          "question_id, rating, rd, sigma, last_updated_at, games_played, legacy_correct, legacy_wrong, label",
-        ),
+    const data = await fetchAllRows<QuestionRatingRow>(
+      this.client.from("question_ratings"),
+      "question_id, rating, rd, sigma, last_updated_at, games_played, legacy_correct, legacy_wrong, label",
+      "question_id",
     );
 
-    return (data as QuestionRatingRow[]).map(mapQuestionRatingRow);
+    return data.map(mapQuestionRatingRow);
   }
 
   async getQuestionRating(
@@ -338,29 +392,50 @@ class SupabaseQuizDataStore implements QuizDataStore {
   }
 
   async appendAnswerAttempt(attempt: StoredAnswerAttempt): Promise<void> {
-    await throwOnError(
-      this.client.from("answer_attempts").insert({
-        attempt_id: attempt.attemptId,
-        participant_id: attempt.participantId,
-        question_id: attempt.questionId,
-        label: attempt.label ?? null,
-        is_correct: attempt.isCorrect,
-        answered_at: attempt.answeredAt,
-        source: attempt.source,
-      }),
-    );
+    const modernPayload = {
+      attempt_id: attempt.attemptId,
+      participant_id: attempt.participantId,
+      question_id: attempt.questionId,
+      label: attempt.label ?? null,
+      is_correct: attempt.isCorrect,
+      elapsed_ms: attempt.elapsedMs,
+      mistake_count: attempt.mistakeCount,
+      answered_at: attempt.answeredAt,
+      source: attempt.source,
+    };
+
+    try {
+      await throwOnError(
+        this.client.from("answer_attempts").insert(modernPayload),
+      );
+      return;
+    } catch (err) {
+      if (!isMissingAnswerAttemptMetadataError(err)) {
+        throw err;
+      }
+
+      await throwOnError(
+        this.client.from("answer_attempts").insert({
+          attempt_id: attempt.attemptId,
+          participant_id: attempt.participantId,
+          question_id: attempt.questionId,
+          label: attempt.label ?? null,
+          is_correct: attempt.isCorrect,
+          answered_at: attempt.answeredAt,
+          source: attempt.source,
+        }),
+      );
+    }
   }
 
   async listQuestionReports(): Promise<StoredQuestionReport[]> {
-    const data = await throwOnError(
-      this.client
-        .from("question_reports")
-        .select(
-          "id, participant_id, question_id, comment, reported_at, source_id, source_label, series_id, series_label, topic, prompt",
-        ),
+    const data = await fetchAllRows<QuestionReportRow>(
+      this.client.from("question_reports"),
+      "id, participant_id, question_id, comment, reported_at, source_id, source_label, series_id, series_label, topic, prompt",
+      "id",
     );
 
-    return (data as QuestionReportRow[]).map(mapQuestionReportRow);
+    return data.map(mapQuestionReportRow);
   }
 
   async hasQuestionReport(reportId: string): Promise<boolean> {

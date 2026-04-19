@@ -156,6 +156,8 @@ Persist one quiz answer for an anonymous participant and update both participant
   questionId: string;
   label?: "easy" | "medium" | "hard";
   isCorrect: boolean;
+  elapsedMs?: number;
+  mistakeCount?: number;
 }
 ```
 
@@ -318,6 +320,9 @@ Import one participant’s legacy local browser data into the shared database.
 ```
 
 ### Notes For Backend Integrators
+
+- If `elapsedMs` or `mistakeCount` is omitted, the server treats the answer like a full-weight binary result, which preserves old callers.
+- The rating engine still uses a Glicko-2 style update internally; the timing and mistake metadata only scale the magnitude of the win/loss exchange.
 
 - Rating migration is approximate because the legacy browser store only contains aggregates, not the original event log.
 - Migration is idempotent per participant for stable report ids and deterministic synthetic answer-attempt ids.

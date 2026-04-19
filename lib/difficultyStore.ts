@@ -52,6 +52,11 @@ const STORAGE_KEY = "aie-quiz-ratings-v2";
 const GLICKO2_SCALE = 173.7178;
 const MAX_VOLATILITY_ITERATIONS = 100;
 const MIN_PROBABILITY = 1e-12;
+export const QUESTION_TIME_LIMIT_MS = 3 * 60 * 1000;
+
+const QUESTION_FAST_RESPONSE_MS = 20 * 1000;
+const QUESTION_MIN_TIME_WEIGHT = 0.85;
+const QUESTION_ONE_MISTAKE_WEIGHT = 0.85;
 
 const LABEL_PRIOR_RATING: Record<Difficulty, number> = {
   easy: 1300,
@@ -103,6 +108,12 @@ function sanitizeFiniteNumber(value: unknown, fallback: number): number {
 }
 
 function sanitizeCount(value: unknown): number {
+  const numeric = sanitizeFiniteNumber(value, 0);
+  if (numeric <= 0) return 0;
+  return Math.floor(numeric);
+}
+
+function sanitizeElapsedMs(value: unknown): number {
   const numeric = sanitizeFiniteNumber(value, 0);
   if (numeric <= 0) return 0;
   return Math.floor(numeric);
@@ -341,6 +352,33 @@ function g(phi: number): number {
   return 1 / Math.sqrt(1 + (3 * phi * phi) / (Math.PI * Math.PI));
 }
 
+function computeTimeWeight(elapsedMs: number): number {
+  if (elapsedMs <= QUESTION_FAST_RESPONSE_MS) {
+    return 1;
+  }
+  if (elapsedMs >= QUESTION_TIME_LIMIT_MS) {
+    return QUESTION_MIN_TIME_WEIGHT;
+  }
+
+  const spanMs = QUESTION_TIME_LIMIT_MS - QUESTION_FAST_RESPONSE_MS;
+  const elapsedPastFastWindow = elapsedMs - QUESTION_FAST_RESPONSE_MS;
+  const progress = elapsedPastFastWindow / spanMs;
+  return 1 - progress * (1 - QUESTION_MIN_TIME_WEIGHT);
+}
+
+function computeMistakeWeight(mistakeCount: number): number {
+  return mistakeCount === 1 ? QUESTION_ONE_MISTAKE_WEIGHT : 1;
+}
+
+function computeAnswerWeight(
+  elapsedMs?: number,
+  mistakeCount?: number,
+): number {
+  const timeWeight = computeTimeWeight(sanitizeElapsedMs(elapsedMs ?? 0));
+  const mistakeWeight = computeMistakeWeight(sanitizeCount(mistakeCount ?? 0));
+  return clamp(timeWeight * mistakeWeight, 0, 1);
+}
+
 function expectedScore(
   mu: number,
   muOpponent: number,
@@ -435,20 +473,23 @@ function rateOneMatch(
   opponent: RatingEntity,
   score: number,
   config: RatingConfig,
+  weight = 1,
 ): RatingEntity {
   const s = clamp(score, 0, 1);
+  const weightFactor = clamp(weight, 0, 1);
   const player = toGlicko2Core(entity, config);
   const rival = toGlicko2Core(opponent, config);
 
   const opponentImpact = g(rival.phi);
   const expected = expectedScore(player.mu, rival.mu, rival.phi);
+  const weightedScore = expected + weightFactor * (s - expected);
   const variance =
     1 /
     Math.max(
       MIN_PROBABILITY,
       opponentImpact * opponentImpact * expected * (1 - expected),
     );
-  const delta = variance * opponentImpact * (s - expected);
+  const delta = variance * opponentImpact * (weightedScore - expected);
   const sigmaPrime = computeSigmaPrime(
     player.phi,
     entity.sigma,
@@ -460,7 +501,8 @@ function rateOneMatch(
   const phiStar = Math.sqrt(player.phi * player.phi + sigmaPrime * sigmaPrime);
   const phiPrime = 1 / Math.sqrt(1 / (phiStar * phiStar) + 1 / variance);
   const muPrime =
-    player.mu + phiPrime * phiPrime * opponentImpact * (s - expected);
+    player.mu +
+    phiPrime * phiPrime * opponentImpact * (weightedScore - expected);
 
   const updated = fromGlicko2Core(
     { mu: muPrime, phi: phiPrime },
@@ -636,6 +678,10 @@ export function recordAnswer(
   label: Difficulty | undefined,
   isCorrect: boolean,
   nowTimestamp: number = nowMs(),
+  meta?: {
+    elapsedMs?: number;
+    mistakeCount?: number;
+  },
 ): RatingStateV2 {
   const config = sanitizeConfig(state.config);
   const normalizedState: RatingStateV2 = {
@@ -668,6 +714,7 @@ export function recordAnswer(
     normalizedState.config,
   );
 
+  const answerWeight = computeAnswerWeight(meta?.elapsedMs, meta?.mistakeCount);
   const userScore = isCorrect ? 1 : 0;
   const questionScore = 1 - userScore;
 
@@ -676,12 +723,14 @@ export function recordAnswer(
     questionBefore,
     userScore,
     normalizedState.config,
+    answerWeight,
   );
   const questionAfterCore = rateOneMatch(
     questionBefore,
     userBefore,
     questionScore,
     normalizedState.config,
+    answerWeight,
   );
 
   const questionAfter: QuestionRating = {

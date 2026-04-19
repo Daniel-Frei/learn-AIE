@@ -30,17 +30,29 @@ test("updates filter checkboxes immediately after clicking", async ({
   await expect(seriesCheckbox).not.toBeChecked();
   await seriesToggle.click();
   await expect(seriesCheckbox).toBeChecked();
+});
 
-  await page
-    .getByText(/3 lectures\/chapters/i)
-    .first()
-    .click();
+test("shows question elo and a per-question timer that resets for the next question", async ({
+  page,
+}) => {
+  await page.goto("/");
 
-  const lectureCheckbox = page.getByRole("checkbox", {
-    name: "Chapter 1 only",
-  });
-  const lectureToggle = page.getByRole("button", { name: /chapter 1 only/i });
-  await expect(lectureCheckbox).not.toBeChecked();
-  await lectureToggle.click();
-  await expect(lectureCheckbox).toBeChecked();
+  await page.getByRole("button", { name: /choose filters/i }).click();
+  await expect(page.getByText(/question elo range:/i)).toBeVisible();
+  await page.getByRole("button", { name: /select all topics/i }).click();
+  await page.getByRole("button", { name: /apply selection/i }).click();
+
+  await expect(page.getByText(/question elo:/i)).toBeVisible();
+  await expect(page.getByText(/difficulty:/i)).toHaveCount(0);
+  await expect(page.getByText(/time:\s*0:00\s*\/\s*3:00/i)).toBeVisible();
+
+  await page.waitForTimeout(1200);
+  await expect(page.getByText(/time:\s*0:0[1-9]\s*\/\s*3:00/i)).toBeVisible();
+
+  await page.locator("section").nth(0).getByRole("button").first().click();
+  await page.getByRole("button", { name: /submit answer/i }).click();
+  await page.getByRole("button", { name: /next question/i }).click();
+
+  await expect(page.getByText(/question elo:/i)).toBeVisible();
+  await expect(page.getByText(/time:\s*0:00\s*\/\s*3:00/i)).toBeVisible();
 });

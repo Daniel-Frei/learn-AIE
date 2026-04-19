@@ -44,8 +44,8 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Positional embeddings can be implemented as trainable vectors.",
-        isCorrect: true,
+        text: "Positional embeddings must always be fixed rather than trainable vectors.",
+        isCorrect: false,
       },
       {
         text: "They are created by averaging all token embeddings into a single vector before entering the encoder.",
@@ -53,7 +53,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "Each token receives its own embedding that combines token and positional information, preserving sequence structure. Averaging all token embeddings into one vector would destroy token-level information and is not how transformers operate.",
+      "Each token receives its own embedding that combines token and positional information, preserving sequence structure. Token embeddings can be pretrained or learned from scratch, and positional embeddings can also be trainable. Averaging all token embeddings into one vector would destroy token-level information and is not how transformers operate.",
   },
   {
     id: "mit15773-l8-q03",
@@ -75,12 +75,12 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It makes large-scale transformer models computationally practical.",
-        isCorrect: true,
+        text: "It guarantees that attention cost grows only linearly with sequence length.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "Matrix operations allow computing all pairwise dot products in one step, which is critical for efficiency. This enables GPU acceleration and makes transformers scalable. Softmax is still required to normalize attention weights, so it is not removed.",
+      "Matrix operations allow computing all pairwise dot products in one step, which is critical for efficiency. This makes GPU acceleration practical and is part of why transformers scale well in practice. Softmax is still needed, and standard self-attention does not scale linearly with sequence length.",
   },
   {
     id: "mit15773-l8-q04",
@@ -151,8 +151,8 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "By allowing different attention heads to learn different transformations.",
-        isCorrect: true,
+        text: "By forcing all attention heads to learn the same transformation.",
+        isCorrect: false,
       },
       {
         text: "By replacing embeddings with fixed one-hot vectors inside the attention layer.",
@@ -160,7 +160,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "Learnable projection matrices (for queries, keys, and values) introduce parameters into the attention mechanism, making it trainable. One-hot vectors would remove learned representations and are not used inside attention layers.",
+      "Learnable projection matrices for queries, keys, and values introduce parameters into the attention mechanism, making it trainable. These matrices are optimized with backpropagation. Different heads are useful precisely because they can learn different transformations, not the same one.",
   },
   {
     id: "mit15773-l8-q07",
@@ -263,19 +263,18 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They force the model to ignore the transformed output.",
-        isCorrect: false,
+        text: "They combine original and transformed information rather than discarding the transformed output.",
+        isCorrect: true,
       },
     ],
     explanation:
-      "Residual connections combine original and transformed representations, which stabilizes training and improves gradient flow. They do not ignore transformations; instead, they allow both original and transformed information to coexist.",
+      "Residual connections add a layer's input back to its transformed output. This helps gradient flow, preserves access to earlier information, and lets the network retain original representations while also benefiting from learned transformations.",
   },
   {
     id: "mit15773-l8-q11",
     chapter: 1,
     difficulty: "medium",
-    prompt:
-      "Which statements about layer normalization are correct?",
+    prompt: "Which statements about layer normalization are correct?",
     options: [
       {
         text: "It standardizes embeddings using their mean and standard deviation.",
@@ -301,8 +300,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     id: "mit15773-l8-q12",
     chapter: 1,
     difficulty: "hard",
-    prompt:
-      "Which statements correctly describe a transformer encoder block?",
+    prompt: "Which statements correctly describe a transformer encoder block?",
     options: [
       {
         text: "It includes multi-head attention, residual connections, layer normalization, and a feed-forward sublayer.",
@@ -313,8 +311,8 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It contains trainable parameters such as attention projections and feed-forward weights.",
-        isCorrect: true,
+        text: "Its trainable parameters are limited to the final output layer outside the encoder.",
+        isCorrect: false,
       },
       {
         text: "It relies on recurrent hidden states passed across time steps.",
@@ -322,7 +320,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "Transformer encoders process sequences using attention rather than recurrence. The architecture is fully feed-forward with attention and can be stacked due to consistent input-output dimensions.",
+      "A transformer encoder block contains multi-head attention, residual connections, layer normalization, and a feed-forward layer, and its shape compatibility makes stacking possible. The encoder itself has many trainable parameters inside it, and it does not rely on recurrent hidden states like a Recurrent Neural Network (RNN).",
   },
   {
     id: "mit15773-l8-q13",
@@ -371,12 +369,12 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Averaging embeddings always preserves more information than using a \\(<CLS>\\) token.",
-        isCorrect: false,
+        text: "Averaging contextual embeddings can lose information compared with a learned sequence representation.",
+        isCorrect: true,
       },
     ],
     explanation:
-      "Averaging is a simple baseline but can lose information. The \\(<CLS>\\) token provides a learnable mechanism to summarize the sequence, which is typically more expressive.",
+      "Averaging token embeddings is a simple baseline, but it can lose some of the richer structure present in the sequence. A special \\(<CLS>\\) token provides a learned sequence-level representation, which is one reason it is widely used for sequence classification.",
   },
   {
     id: "mit15773-l8-q15",
@@ -394,8 +392,8 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It can be placed at different positions in the sequence without fundamentally breaking the model.",
-        isCorrect: true,
+        text: "It must be placed at the beginning of the sequence; placing it elsewhere would fundamentally break the model.",
+        isCorrect: false,
       },
       {
         text: "It cannot be used with standard dense layers for classification.",
@@ -403,7 +401,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "The \\(<CLS>\\) token learns to summarize the sequence through attention and can be used as input to classification layers. It replaces manual aggregation methods and integrates naturally into the model.",
+      "The \\(<CLS>\\) token gives the model a dedicated representation for sequence-level prediction and avoids relying on ad hoc pooling choices. It can be fed into ordinary dense classification layers. Putting it at the beginning is common and convenient, but other positions do not fundamentally break the model.",
   },
   {
     id: "mit15773-l8-q16",
@@ -479,12 +477,12 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It requires manually labeled data for each training example.",
-        isCorrect: false,
+        text: "It creates training targets without requiring manual labels for each example.",
+        isCorrect: true,
       },
     ],
     explanation:
-      "Masking creates artificial labels from the data itself, enabling training without manual annotation. This allows models to learn general representations from large corpora.",
+      "Masking-based self-supervised learning removes part of the input and asks the model to predict it from context. This produces training targets automatically, which makes it possible to train on large unlabeled corpora without manually labeling each example.",
   },
   {
     id: "mit15773-l8-q19",
@@ -517,8 +515,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     id: "mit15773-l8-q20",
     chapter: 1,
     difficulty: "easy",
-    prompt:
-      "Which statements about BERT are correct?",
+    prompt: "Which statements about BERT are correct?",
     options: [
       {
         text: "BERT is based on the transformer encoder architecture.",
@@ -545,8 +542,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     id: "mit15773-l8-q21",
     chapter: 1,
     difficulty: "medium",
-    prompt:
-      "Which statements correctly describe BERT?",
+    prompt: "Which statements correctly describe BERT?",
     options: [
       {
         text: "It is a pretrained transformer encoder trained using masked self-supervised learning.",
@@ -557,8 +553,8 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It can be used for both sequence classification and sequence labeling tasks.",
-        isCorrect: true,
+        text: "It can be used for sequence classification but not sequence labeling tasks.",
+        isCorrect: false,
       },
       {
         text: "It is based on recurrent neural networks without attention.",
@@ -566,7 +562,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "BERT is a transformer-based model that uses bidirectional attention and masked language modeling. It is not based on recurrent architectures and instead relies on attention mechanisms to build contextual representations.",
+      "BERT is a pretrained transformer encoder built with masked self-supervised learning and bidirectional attention. It can be used for both sequence classification and sequence labeling, and it is not based on recurrent architectures.",
   },
   {
     id: "mit15773-l8-q22",
@@ -711,12 +707,12 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
       "What is the key high-level insight about applying transformers outside natural language?",
     options: [
       {
-        text: "The transformer block itself can often be reused with little or no architectural surgery across different modalities.",
-        isCorrect: true,
+        text: "The transformer block itself usually has to be redesigned substantially for each new modality.",
+        isCorrect: false,
       },
       {
-        text: "What usually changes from application to application is how the raw inputs are tokenized or encoded into embeddings.",
-        isCorrect: true,
+        text: "What usually changes from application to application is the internal attention formula rather than the input encoding.",
+        isCorrect: false,
       },
       {
         text: "Once inputs are turned into a common language of embeddings, the same core transformer machinery can process them.",
@@ -728,14 +724,13 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "This was one of the broadest themes of the lecture: transformers are surprisingly modality-agnostic once inputs are expressed as embeddings. The main design challenge shifts from the block itself to how the particular type of data is represented before entering the transformer.",
+      "The central idea is that transformers are relatively modality-agnostic once the inputs are represented as embeddings. What usually changes across applications is how the raw inputs are encoded into embeddings, not the fundamental transformer block itself.",
   },
   {
     id: "mit15773-l8-q28",
     chapter: 1,
     difficulty: "medium",
-    prompt:
-      "Which statements correctly describe the Vision Transformer idea?",
+    prompt: "Which statements correctly describe the Vision Transformer idea?",
     options: [
       {
         text: "An image can be chopped into small patches that play a role analogous to tokens in text.",
@@ -796,20 +791,20 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Continuous variables can be handled differently, for example by concatenating them later with transformed categorical representations.",
-        isCorrect: true,
+        text: "Continuous variables must also be converted into token embeddings and cannot be handled separately later.",
+        isCorrect: false,
       },
       {
-        text: "The lecture suggested that transformers can be tried for tabular data even though other approaches such as gradient boosting can also be very strong.",
-        isCorrect: true,
+        text: "Transformers remove the need to compare against strong tabular baselines such as gradient boosting.",
+        isCorrect: false,
       },
       {
-        text: "The lecture claimed that transformers always dominate gradient boosting on tabular data and therefore no comparison is needed.",
+        text: "Transformers always dominate gradient boosting on tabular data and therefore no comparison is needed.",
         isCorrect: false,
       },
     ],
     explanation:
-      "The lecture was nuanced about tabular data: transformers can be used, but they are not automatically superior to strong baselines such as gradient boosting. The main architectural insight was that categorical features fit naturally into an embedding-based transformer pipeline.",
+      "Categorical variables fit naturally into an embedding-based transformer pipeline. Continuous variables can be handled differently, such as by concatenating them later. Strong baselines like gradient boosting still matter for tabular problems, so comparison remains important.",
   },
   {
     id: "mit15773-l8-q31",
@@ -931,20 +926,20 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "In sequence classification, the goal is often to summarize a full sequence into one representation for a single output decision.",
-        isCorrect: true,
+        text: "In sequence classification, the model must output one label for every token before making a sequence-level decision.",
+        isCorrect: false,
       },
       {
-        text: "The lecture used transformer encoders for both of these cases, with different output heads.",
-        isCorrect: true,
+        text: "Sequence labeling and sequence classification generally use the same type of output head.",
+        isCorrect: false,
       },
       {
-        text: "The lecture claimed that sequence classification is impossible with transformers because they always output one vector per token.",
+        text: "Sequence classification is impossible with transformers because they always output one vector per token.",
         isCorrect: false,
       },
     ],
     explanation:
-      "The difference is largely in what happens after the encoder. For token labeling, you classify each output position; for sentence-level classification, you summarize or use a dedicated sentence token representation and feed that into a classifier head.",
+      "Sequence labeling keeps token-level alignment by predicting a label for each token. Sequence classification instead summarizes the sequence into a representation used for a single decision. These tasks typically use different output heads, and transformers can handle both.",
   },
   {
     id: "mit15773-l8-q36",
@@ -1011,20 +1006,20 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The model does not automatically know which learned patterns are desirable and which are undesirable.",
-        isCorrect: true,
+        text: "A model automatically separates desirable from undesirable patterns as long as it is trained on enough data.",
+        isCorrect: false,
       },
       {
-        text: "The lecture suggested that mitigating such issues is a larger topic that goes beyond the scope of this specific session.",
-        isCorrect: true,
+        text: "Bias and toxicity are fully solved once labels are generated from the input itself.",
+        isCorrect: false,
       },
       {
-        text: "The lecture argued that self-supervised learning automatically removes all harmful bias because labels are generated from the input itself.",
+        text: "Self-supervised learning automatically removes all harmful bias because labels are generated from the input itself.",
         isCorrect: false,
       },
     ],
     explanation:
-      "The lecture was clear that the model will faithfully learn patterns in the training data, including problematic ones. Self-supervision changes where labels come from, but it does not magically sanitize the underlying corpus or eliminate harmful patterns.",
+      "A model can absorb harmful patterns that are present in its training data. Generating labels from the input does not automatically solve bias or toxicity problems, because the underlying data can still contain undesirable patterns.",
   },
   {
     id: "mit15773-l8-q39",
