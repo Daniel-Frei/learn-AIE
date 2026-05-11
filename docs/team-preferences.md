@@ -7,6 +7,7 @@ This file captures durable process preferences so future tasks can follow them b
 - Source of truth for scope and behavior is `docs/*`.
 - Keep changes small and reviewable; avoid large refactors unless requested.
 - When behavior changes, add or update tests.
+- This repository is intended to be public on GitHub. Do not commit real credentials, local `.env*` files, generated server logs, participant identifiers, or other machine/user-specific data.
 
 ## Project Structure
 

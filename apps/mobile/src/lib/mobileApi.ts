@@ -40,7 +40,9 @@ async function fetchJson<T>(
 
   const body = (await response.json()) as T & { error?: string };
   if (!response.ok) {
-    throw new Error(body.error ?? `Request failed with status ${response.status}`);
+    throw new Error(
+      body.error ?? `Request failed with status ${response.status}`,
+    );
   }
   return body;
 }

@@ -1,5 +1,17 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Public Repository Safety
+
+This repository is intended to be safe to publish publicly. Keep real credentials in local or deployment environment variables only; do not commit `.env.local`, generated server logs, Supabase service-role keys, OpenAI keys, or participant-specific exports.
+
+Required server-side secrets for deployed API behavior:
+
+- `OPENAI_API_KEY` for detailed explanation chat.
+- `SUPABASE_SERVICE_ROLE_KEY` for server-side shared quiz data routes.
+- `QUESTION_REPORT_EXPORT_TOKEN` to enable production question-report export.
+
+Client-exposed Supabase publishable keys are expected for web/mobile clients, but they are only safe with the committed Supabase RLS policies applied.
+
 ## Getting Started
 
 First, run the development server:

@@ -447,10 +447,17 @@ export function useQuiz() {
     }
   };
 
-  const exportReportsJson = async () => {
+  const exportReportsJson = async (exportToken?: string) => {
     const exported = await fetchJson<ReportsExportResponse>(
       "/api/question-reports/export",
-      { method: "GET" },
+      {
+        method: "GET",
+        headers: exportToken
+          ? {
+              authorization: `Bearer ${exportToken}`,
+            }
+          : undefined,
+      },
     );
     return JSON.stringify(exported, null, 2);
   };

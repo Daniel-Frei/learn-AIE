@@ -15,10 +15,14 @@ function buildRequest(
   url: string,
   method: "GET" | "POST",
   body?: unknown,
+  headers?: HeadersInit,
 ): NextRequest {
   const req = new Request(url, {
     method,
-    headers: body ? { "content-type": "application/json" } : undefined,
+    headers: {
+      ...(body ? { "content-type": "application/json" } : {}),
+      ...(headers ?? {}),
+    },
     body: body ? JSON.stringify(body) : undefined,
   });
   return req as NextRequest;
@@ -35,14 +39,30 @@ class CapturingQuizDataStore extends InMemoryQuizDataStore {
 
 describe("shared quiz data routes", () => {
   let store: CapturingQuizDataStore;
+  const originalQuestionReportExportToken =
+    process.env.QUESTION_REPORT_EXPORT_TOKEN;
+  const originalVercelEnv = process.env.VERCEL_ENV;
 
   beforeEach(() => {
     store = new CapturingQuizDataStore();
     setQuizDataStoreForTests(store);
+    delete process.env.QUESTION_REPORT_EXPORT_TOKEN;
+    delete process.env.VERCEL_ENV;
   });
 
   afterEach(() => {
     setQuizDataStoreForTests(null);
+    if (originalQuestionReportExportToken === undefined) {
+      delete process.env.QUESTION_REPORT_EXPORT_TOKEN;
+    } else {
+      process.env.QUESTION_REPORT_EXPORT_TOKEN =
+        originalQuestionReportExportToken;
+    }
+    if (originalVercelEnv === undefined) {
+      delete process.env.VERCEL_ENV;
+    } else {
+      process.env.VERCEL_ENV = originalVercelEnv;
+    }
     vi.restoreAllMocks();
   });
 
@@ -148,12 +168,67 @@ describe("shared quiz data routes", () => {
     expect(secondBody.totalReportCount).toBe(2);
     expect(secondBody.questionReportCount).toBe(2);
 
-    const exportRes = await GET();
+    const exportRes = await GET(
+      buildRequest("http://localhost/api/question-reports/export", "GET"),
+    );
     const exportBody = await exportRes.json();
 
     expect(exportRes.status).toBe(200);
     expect(exportBody.version).toBe(1);
     expect(exportBody.reports).toHaveLength(2);
+  });
+
+  it("requires a bearer token for configured question report exports", async () => {
+    const { POST } = await import("@/app/api/question-reports/route");
+    const { GET } = await import("@/app/api/question-reports/export/route");
+    process.env.QUESTION_REPORT_EXPORT_TOKEN = "report-export-secret";
+
+    await POST(
+      buildRequest("http://localhost/api/question-reports", "POST", {
+        participantId: "participant-a",
+        draft: {
+          questionId: "mit15773-l4-q1",
+          comment: "Prompt is ambiguous.",
+          snapshot: {
+            sourceId: "mit15773-l4",
+            sourceLabel: "MIT 15.773 L4",
+            seriesId: "mit-15773-2024",
+            seriesLabel: "MIT 15.773 Hands-On Deep Learning 2024",
+            topic: "DL",
+            prompt: "What does transfer learning reuse?",
+          },
+        },
+      }),
+    );
+
+    const unauthorized = await GET(
+      buildRequest("http://localhost/api/question-reports/export", "GET"),
+    );
+    const authorized = await GET(
+      buildRequest(
+        "http://localhost/api/question-reports/export",
+        "GET",
+        undefined,
+        { authorization: "Bearer report-export-secret" },
+      ),
+    );
+
+    expect(unauthorized.status).toBe(401);
+    expect(authorized.status).toBe(200);
+    expect((await authorized.json()).reports).toHaveLength(1);
+  });
+
+  it("disables production question report export when no token is configured", async () => {
+    const { GET } = await import("@/app/api/question-reports/export/route");
+    process.env.VERCEL_ENV = "production";
+
+    const res = await GET(
+      buildRequest("http://localhost/api/question-reports/export", "GET"),
+    );
+    const body = await res.json();
+
+    expect(res.status).toBe(403);
+    expect(body.error).toContain("QUESTION_REPORT_EXPORT_TOKEN");
   });
 
   it("migrates local rating/report state once without double-counting", async () => {
@@ -228,6 +303,34 @@ describe("shared quiz data routes", () => {
     expect(res.status).toBe(400);
     expect(body).toEqual({
       error: "Invalid request payload for answer submission.",
+    });
+  });
+
+  it("returns 400 for oversized question report comments", async () => {
+    const { POST } = await import("@/app/api/question-reports/route");
+
+    const res = await POST(
+      buildRequest("http://localhost/api/question-reports", "POST", {
+        participantId: "participant-a",
+        draft: {
+          questionId: "mit15773-l4-q1",
+          comment: "x".repeat(2001),
+          snapshot: {
+            sourceId: "mit15773-l4",
+            sourceLabel: "MIT 15.773 L4",
+            seriesId: "mit-15773-2024",
+            seriesLabel: "MIT 15.773 Hands-On Deep Learning 2024",
+            topic: "DL",
+            prompt: "What does transfer learning reuse?",
+          },
+        },
+      }),
+    );
+    const body = await res.json();
+
+    expect(res.status).toBe(400);
+    expect(body).toEqual({
+      error: "Invalid request payload for question report.",
     });
   });
 });

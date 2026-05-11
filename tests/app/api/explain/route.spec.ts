@@ -70,15 +70,49 @@ describe("POST /api/explain", () => {
     expect(body.reply).toContain("OpenAI API key is not configured");
   });
 
-  it("returns 500 when body is not valid JSON", async () => {
-    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+  it("returns 400 when body is not valid JSON", async () => {
     const { POST } = await import("@/app/api/explain/route");
 
     const res = await POST(buildMalformedJsonRequest());
     const body = await res.json();
 
-    expect(res.status).toBe(500);
-    expect(body).toEqual({ error: "Failed to generate explanation" });
-    expect(errorSpy).toHaveBeenCalled();
+    expect(res.status).toBe(400);
+    expect(body).toEqual({ error: "Invalid request payload for explanation." });
+  });
+
+  it("rejects oversized explanation payloads before parsing", async () => {
+    const { POST } = await import("@/app/api/explain/route");
+    const req = new Request("http://localhost/api/explain", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        "content-length": "32001",
+      },
+      body: JSON.stringify(validPayload),
+    }) as NextRequest;
+
+    const res = await POST(req);
+    const body = await res.json();
+
+    expect(res.status).toBe(413);
+    expect(body).toEqual({ error: "Explanation request is too large." });
+  });
+
+  it("rejects unbounded chat history", async () => {
+    const { POST } = await import("@/app/api/explain/route");
+
+    const res = await POST(
+      buildJsonRequest({
+        ...validPayload,
+        chatHistory: Array.from({ length: 13 }, () => ({
+          role: "user",
+          content: "Why?",
+        })),
+      }),
+    );
+    const body = await res.json();
+
+    expect(res.status).toBe(400);
+    expect(body).toEqual({ error: "Invalid request payload for explanation." });
   });
 });

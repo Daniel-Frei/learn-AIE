@@ -33,7 +33,8 @@
 - Question reports are append-only in the shared database:
   - Each submit creates a separate report entry, even for the same question.
   - Each report stores the `questionId`, comment, report date, and a source/prompt snapshot for reviewer context.
-  - Reports can be exported from the main UI as `quiz-question-reports.json`.
+  - Reports can be exported as `quiz-question-reports.json`; production export requires a server-side `QUESTION_REPORT_EXPORT_TOKEN`.
+  - Mobile clients can read only report ids and question ids for counts, not report comments or prompt snapshots.
 - Legacy local rating/report data is migrated once per participant into the shared database on first load, using an approximate replay for historical answer counts.
 
 ## Out of Scope (for now)

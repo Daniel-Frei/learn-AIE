@@ -33,7 +33,7 @@ type Props = {
   userRatingRd: number;
   exportDifficultyJson: () => string;
   importDifficultyFromJson: (json: string) => Promise<void>;
-  exportReportsJson: () => Promise<string>;
+  exportReportsJson: (exportToken?: string) => Promise<string>;
 };
 
 const QUESTION_ELO_FILTER_MIN = 0;
@@ -179,18 +179,41 @@ export default function QuizHeader({
     fileInputRef.current?.click();
   };
 
-  const handleExportReportsClick = async () => {
-    const json = await exportReportsJson();
+  const downloadJson = (json: string, filename: string) => {
     const blob = new Blob([json], { type: "application/json" });
     const url = URL.createObjectURL(blob);
 
     const a = document.createElement("a");
     a.href = url;
-    a.download = "quiz-question-reports.json";
+    a.download = filename;
     document.body.appendChild(a);
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
+  };
+
+  const handleExportReportsClick = async () => {
+    try {
+      downloadJson(await exportReportsJson(), "quiz-question-reports.json");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "";
+      if (!message.toLowerCase().includes("bearer token")) {
+        console.error("Failed to export question reports:", err);
+        return;
+      }
+
+      const token = window.prompt("Question report export token");
+      if (!token?.trim()) return;
+
+      try {
+        downloadJson(
+          await exportReportsJson(token.trim()),
+          "quiz-question-reports.json",
+        );
+      } catch (retryErr) {
+        console.error("Failed to export question reports:", retryErr);
+      }
+    }
   };
 
   const handleFileChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {

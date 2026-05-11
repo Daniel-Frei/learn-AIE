@@ -38,16 +38,7 @@ type QuestionRatingRow = {
 
 type QuestionReportRow = {
   id: string;
-  participant_id: string;
   question_id: string;
-  comment: string;
-  reported_at: string;
-  source_id: string;
-  source_label: string;
-  series_id: string;
-  series_label: string;
-  topic: string;
-  prompt: string;
 };
 
 function participantToRow(
@@ -288,7 +279,7 @@ export async function pullRemoteMobileState(participantId: string): Promise<{
     fetchAllRows<QuestionReportRow>(
       supabase,
       "question_reports",
-      "id, participant_id, question_id, comment, reported_at, source_id, source_label, series_id, series_label, topic, prompt",
+      "id, question_id",
       "id",
     ),
   ]);

@@ -91,6 +91,9 @@ create policy "question_reports_select_authenticated"
   to authenticated
   using (true);
 
+revoke select on table public.question_reports from anon, authenticated;
+grant select (id, question_id) on table public.question_reports to authenticated;
+
 drop policy if exists "question_reports_insert_own" on public.question_reports;
 create policy "question_reports_insert_own"
   on public.question_reports for insert

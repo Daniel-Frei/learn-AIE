@@ -7,16 +7,48 @@ import { submitQuestionReportForParticipant } from "@/lib/server/quizDataService
 
 export const runtime = "nodejs";
 
+const MAX_REPORT_COMMENT_CHARS = 2_000;
+const MAX_REPORT_PROMPT_CHARS = 4_000;
+const MAX_LABEL_CHARS = 200;
+const VALID_TOPICS = new Set(["RL", "DL", "NLP", "Math"]);
+
+function isBoundedString(value: unknown, maxLength: number): value is string {
+  return (
+    typeof value === "string" &&
+    value.trim().length > 0 &&
+    value.length <= maxLength
+  );
+}
+
+function isValidQuestionReportPayload(
+  body: unknown,
+): body is SubmitQuestionReportRequest {
+  if (!body || typeof body !== "object" || Array.isArray(body)) return false;
+
+  const value = body as Partial<SubmitQuestionReportRequest>;
+  const draft = value.draft;
+  const snapshot = draft?.snapshot;
+
+  return (
+    isBoundedString(value.participantId, MAX_LABEL_CHARS) &&
+    Boolean(draft) &&
+    isBoundedString(draft?.questionId, MAX_LABEL_CHARS) &&
+    isBoundedString(draft?.comment, MAX_REPORT_COMMENT_CHARS) &&
+    Boolean(snapshot) &&
+    isBoundedString(snapshot?.sourceId, MAX_LABEL_CHARS) &&
+    isBoundedString(snapshot?.sourceLabel, MAX_LABEL_CHARS) &&
+    isBoundedString(snapshot?.seriesId, MAX_LABEL_CHARS) &&
+    isBoundedString(snapshot?.seriesLabel, MAX_LABEL_CHARS) &&
+    isBoundedString(snapshot?.topic, MAX_LABEL_CHARS) &&
+    VALID_TOPICS.has(snapshot?.topic ?? "") &&
+    isBoundedString(snapshot?.prompt, MAX_REPORT_PROMPT_CHARS)
+  );
+}
+
 export async function POST(req: NextRequest) {
   try {
-    const body = (await req.json()) as SubmitQuestionReportRequest;
-    if (
-      !body ||
-      !body.participantId?.trim() ||
-      !body.draft?.questionId?.trim() ||
-      !body.draft?.comment?.trim() ||
-      !body.draft?.snapshot
-    ) {
+    const body = (await req.json()) as unknown;
+    if (!isValidQuestionReportPayload(body)) {
       return NextResponse.json(
         { error: "Invalid request payload for question report." },
         { status: 400 },
