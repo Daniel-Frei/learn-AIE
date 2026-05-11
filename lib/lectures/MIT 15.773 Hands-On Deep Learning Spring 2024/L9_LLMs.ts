@@ -383,7 +383,7 @@ export const LLMsQuestions: Question[] = [
       "Why can naive random sampling from the full vocabulary distribution be problematic?",
     options: [
       {
-        text: "The low-probability tail can still have substantial total probability mass when many unlikely tokens are added together.",
+        text: "The total probability mass in the low-probability tail can still be substantial when many unlikely tokens are considered together.",
         isCorrect: false,
       },
       {
@@ -400,7 +400,7 @@ export const LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "This question bank keeps the original balance, so the first option remains marked false even though the idea itself is generally correct. The main practical issue is that one unlucky low-quality token can distort the context for all later predictions, causing the generation to drift or collapse into nonsense.",
+      "Naive random sampling can be risky because one bad token can become part of the context and distort everything that follows. Biasing sampling toward the head of the distribution is often safer, while it is wrong to say that softmax outputs are not probabilities or that the low-probability tail is irrelevant.",
   },
   {
     id: "mit15773-l9-q16",
@@ -409,7 +409,7 @@ export const LLMsQuestions: Question[] = [
     prompt: "Which statements correctly describe top-k sampling?",
     options: [
       {
-        text: "It keeps only the \\(k\\) most probable tokens and discards the rest before sampling.",
+        text: "It keeps all tokens whose cumulative probability exceeds a threshold rather than fixing a number of candidates.",
         isCorrect: false,
       },
       {
@@ -426,7 +426,7 @@ export const LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "This question bank keeps the original balance, so the first option remains marked false even though the described mechanism is the standard top-k idea. Top-k does not make the process deterministic unless used in a fully greedy way; its purpose is to remove low-probability tail tokens while still allowing randomness among a smaller set of plausible candidates.",
+      "Top-k sampling keeps only a limited high-probability set and then renormalizes within that set before sampling. It is useful because it reduces exposure to the long tail, but it is still stochastic, and the statement about cumulative probability describes top-p rather than top-k.",
   },
   {
     id: "mit15773-l9-q17",
@@ -436,7 +436,7 @@ export const LLMsQuestions: Question[] = [
       "Which statements correctly describe top-p sampling, also called nucleus sampling?",
     options: [
       {
-        text: "It keeps the smallest set of most-probable tokens whose cumulative probability exceeds a chosen threshold \\(p\\).",
+        text: "It keeps a fixed number of top tokens at every step, regardless of the shape of the probability distribution.",
         isCorrect: false,
       },
       {
@@ -453,7 +453,7 @@ export const LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "This question bank keeps the original balance, so the first option remains marked false even though it describes the usual nucleus-sampling idea. Top-p is adaptive: sometimes the head of the distribution is short and sometimes broader, so the number of retained tokens can change from step to step.",
+      "Top-p sampling keeps the smallest set of tokens whose cumulative probability passes a threshold, so the number of retained tokens can change from step to step. The retained probabilities are renormalized before sampling, and it is incorrect to describe top-p as keeping a fixed number of tokens or exactly \\(p\\) tokens.",
   },
   {
     id: "mit15773-l9-q18",
@@ -489,7 +489,7 @@ export const LLMsQuestions: Question[] = [
       "Which statements about simple STIE-style preprocessing versus modern tokenization are correct?",
     options: [
       {
-        text: "A simple Standardize-Tokenize-Index-Encode pipeline can remove useful information such as punctuation and case.",
+        text: "A simple Standardize-Tokenize-Index-Encode pipeline always preserves punctuation, capitalization, and other surface details exactly as they appear.",
         isCorrect: false,
       },
       {
@@ -506,7 +506,7 @@ export const LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "This question bank keeps the original balance, so the first option remains marked false even though the criticism of simple preprocessing is valid. Better tokenization schemes preserve more of the original structure and allow more flexible composition of new strings.",
+      "Simple preprocessing pipelines often throw away useful information such as case or punctuation, while modern tokenizers keep much richer structure. GPT-style models use BPE-like tokenization for exactly that reason, and it is wrong to claim that punctuation and capitalization are always unimportant.",
   },
   {
     id: "mit15773-l9-q20",
@@ -516,7 +516,7 @@ export const LLMsQuestions: Question[] = [
       "Which statements correctly describe the basic intuition behind byte-pair encoding (BPE)?",
     options: [
       {
-        text: "It begins from very small units such as individual characters and repeatedly merges adjacent token pairs that occur frequently.",
+        text: "It starts from full words only and never builds larger tokens by merging smaller units.",
         isCorrect: false,
       },
       {
@@ -533,7 +533,7 @@ export const LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "This question bank keeps the original balance, so the first option remains marked false even though it reflects the usual BPE intuition. BPE builds a vocabulary gradually rather than assuming a fixed word list up front, giving the tokenizer a flexible repertoire of whole words and subword fragments.",
+      "BPE builds a vocabulary gradually by merging frequently occurring smaller units into larger ones. That is why it can represent both common whole words and useful subword pieces, and why it does not require every possible word to be included from the start.",
   },
   {
     id: "mit15773-l9-q21",
@@ -543,7 +543,7 @@ export const LLMsQuestions: Question[] = [
       "Which statements correctly describe how temperature affects a softmax distribution during decoding?",
     options: [
       {
-        text: "Making temperature very small can cause the highest-logit token to dominate much more strongly.",
+        text: "Making temperature very large makes the distribution more peaked and pushes behavior toward greedy decoding.",
         isCorrect: false,
       },
       {
@@ -560,7 +560,7 @@ export const LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "This question bank keeps the original balance, so the first two options remain marked false even though they describe standard temperature behavior. Temperature is an inference-time knob applied to logits or probabilities before sampling; lower values sharpen the distribution and higher values flatten it.",
+      "Temperature is an inference-time control that changes how sharp or flat the token distribution becomes. Lower temperature makes the model behave more greedily, higher temperature makes more alternatives competitive, and it does not change the training data or the model weights.",
   },
   {
     id: "mit15773-l9-q22",
@@ -570,7 +570,7 @@ export const LLMsQuestions: Question[] = [
       "Suppose a model produces logits \\(a_1, a_2, \\dots, a_n\\). Which statements are correct about applying temperature \\(T\\) in a softmax of the form \\(\\frac{e^{a_i/T}}{\\sum_j e^{a_j/T}}\\)?",
     options: [
       {
-        text: "If \\(T < 1\\), differences among logits are amplified in the exponentiated values.",
+        text: "If \\(T < 1\\), differences among logits are compressed so the distribution becomes flatter.",
         isCorrect: false,
       },
       {
@@ -587,7 +587,7 @@ export const LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "This question bank keeps the original balance, so the first two options remain marked false even though they describe the usual mathematical effect of temperature. Temperature rescales logits before softmax, changing how peaked or flat the distribution becomes without necessarily changing the ranking of logits.",
+      "Temperature rescales logits before softmax, which changes how strongly the model favors the largest values. Very small temperature concentrates probability on the top logit, while it is wrong to say that low temperature flattens the distribution or that temperature always changes which logit is largest.",
   },
   {
     id: "mit15773-l9-q23",
@@ -641,7 +641,7 @@ export const LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "This question bank keeps the original balance, so the first two options remain marked false even though both describe common practical tradeoffs. The key point is that decoding should be matched to the task rather than assuming one method is always best.",
+      "Greedy decoding is often preferred when stability and determinism matter, while stochastic decoding is often used when more variety is useful. It is reasonable to view greedy decoding as an extreme case of peaked sampling, but it is wrong to claim that stochastic decoding is always more factually accurate.",
   },
   {
     id: "mit15773-l9-q25",
@@ -694,7 +694,7 @@ export const LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "This question bank keeps the original balance, so the first two options remain marked false even though they describe the standard distinction between top-k and top-p. Both methods restrict sampling to a more plausible subset of tokens, but still allow randomness within that subset.",
+      "Top-k and top-p are both designed to avoid the low-probability tail by restricting sampling to a more plausible subset of tokens. Top-k uses a fixed number of candidates and top-p uses a cumulative probability threshold, while neither method removes randomness completely unless you choose tokens greedily afterward.",
   },
   {
     id: "mit15773-l9-q27",

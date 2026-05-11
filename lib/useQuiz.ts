@@ -25,6 +25,18 @@ import {
   type QuestionMetadataMap,
   type RatingStateV2,
 } from "./ratingEngine";
+import {
+  DEFAULT_DIFFICULTY_RANGE,
+  DEFAULT_QUESTION_SELECTION_MODE,
+  clampDifficultyRange,
+  evaluateAnswer,
+  getEligibleQuestionIds,
+  pickClimbQuestionId,
+  QUESTION_TIMER_TICK_MS,
+  shuffleItems,
+  type DifficultyRange,
+  type QuestionSelectionMode,
+} from "./quizSession";
 import type {
   LocalMigrationResponse,
   QuizStateResponse,
@@ -32,72 +44,17 @@ import type {
   ReportsExportResponse,
   SubmitQuestionReportResponse,
 } from "./quizSync";
-import type { Question } from "./quiz";
-
-// Question Elo filter is a numeric range over raw ratings.
-export type DifficultyRange = {
-  min: number;
-  max: number;
-};
-
-export type QuestionSelectionMode = "standard" | "climb";
-
-const QUESTION_TIMER_TICK_MS = 1000;
-const QUESTION_ELO_FILTER_MIN = 0;
-const QUESTION_ELO_FILTER_MAX = 3000;
-
-function shuffle<T>(items: T[]): T[] {
-  const arr = [...items];
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
+export type { DifficultyRange, QuestionSelectionMode } from "./quizSession";
 
 const QUESTION_METADATA: QuestionMetadataMap = Object.fromEntries(
   allQuestions.map((q) => [q.id, { label: q.difficulty }]),
 );
 
-function pickClimbQuestionId(
-  pool: Question[],
-  ratingState: RatingStateV2,
-  recentQuestionIds: string[],
-): string | null {
-  if (pool.length === 0) return null;
-
-  const targetRating = ratingState.user.rating;
-  const recent = new Set(recentQuestionIds.slice(-6));
-
-  const scored = pool
-    .map((question) => {
-      const estimate = getQuestionRatingEstimate(
-        question.id,
-        question.difficulty,
-        ratingState,
-      );
-      const distance = Math.abs(estimate.rating - targetRating);
-      const uncertaintyBonus = Math.min(estimate.rd, 250) * 0.25;
-      const randomJitter = Math.random() * 90;
-      const repeatPenalty = recent.has(question.id) ? 180 : 0;
-      return {
-        id: question.id,
-        score: distance - uncertaintyBonus + randomJitter + repeatPenalty,
-      };
-    })
-    .sort((a, b) => a.score - b.score);
-
-  const shortlistSize = Math.min(8, scored.length);
-  const shortlist = scored.slice(0, shortlistSize);
-  const choice = shortlist[Math.floor(Math.random() * shortlist.length)];
-  return choice?.id ?? null;
-}
-
 export function useQuiz() {
   const initialSources: SourceId[] = [];
   const initialTopics: Topic[] = [];
-  const initialRange: DifficultyRange = { min: 1000, max: 2000 };
-  const initialMode: QuestionSelectionMode = "standard";
+  const initialRange: DifficultyRange = DEFAULT_DIFFICULTY_RANGE;
+  const initialMode: QuestionSelectionMode = DEFAULT_QUESTION_SELECTION_MODE;
 
   // Keep initial render deterministic across SSR + hydration.
   const [ratingState, setRatingState] = useState<RatingStateV2>(() =>
@@ -286,7 +243,7 @@ export function useQuiz() {
 
   const shuffledOptions = useMemo(() => {
     if (!currentQuestion) return [];
-    return shuffle(currentQuestion.options);
+    return shuffleItems(currentQuestion.options);
   }, [currentQuestion]);
 
   const currentQuestionRating = useMemo(() => {
@@ -344,7 +301,7 @@ export function useQuiz() {
 
     const next = currentIndex + 1;
     if (next >= availableQuestions.length) {
-      const order = shuffle(
+      const order = shuffleItems(
         Array.from({ length: availableQuestions.length }, (_, i) => i),
       );
       setQuestionOrder(order);
@@ -406,15 +363,6 @@ export function useQuiz() {
     }
   };
 
-  const clampRange = (newRange: DifficultyRange) => {
-    const min = Math.max(
-      QUESTION_ELO_FILTER_MIN,
-      Math.min(QUESTION_ELO_FILTER_MAX, newRange.min),
-    );
-    const max = Math.max(min, Math.min(QUESTION_ELO_FILTER_MAX, newRange.max));
-    return { min, max };
-  };
-
   const applySelection = (payload: {
     sources: SourceId[];
     series: string[];
@@ -422,21 +370,17 @@ export function useQuiz() {
     mode: QuestionSelectionMode;
     difficultyRange: DifficultyRange;
   }) => {
-    const clampedRange = clampRange(payload.difficultyRange);
+    const clampedRange = clampDifficultyRange(payload.difficultyRange);
     const uniqueSources = Array.from(new Set(payload.sources));
     const uniqueTopics = Array.from(new Set(payload.topics));
 
     const pool = getQuestionsForFilters(uniqueSources, uniqueTopics);
-    const eligibleIds = pool
-      .filter((q) => {
-        const rating = getQuestionRatingEstimate(
-          q.id,
-          q.difficulty,
-          ratingState,
-        ).rating;
-        return rating >= clampedRange.min && rating <= clampedRange.max;
-      })
-      .map((q) => q.id);
+    const eligibleIds = getEligibleQuestionIds({
+      sources: uniqueSources,
+      topics: uniqueTopics,
+      difficultyRange: clampedRange,
+      ratingState,
+    });
 
     setSelectedSources(uniqueSources);
     setSelectedTopics(uniqueTopics);
@@ -468,7 +412,7 @@ export function useQuiz() {
     }
 
     setQuestionOrder(
-      shuffle(Array.from({ length: eligibleIds.length }, (_, i) => i)),
+      shuffleItems(Array.from({ length: eligibleIds.length }, (_, i) => i)),
     );
     setClimbQuestionId(null);
     setClimbRecentIds([]);
@@ -514,26 +458,14 @@ export function useQuiz() {
   const submitAnswer = async () => {
     if (!currentQuestion || showResult) return;
 
-    const correctIndexes = shuffledOptions
-      .map((opt, idx) => (opt.isCorrect ? idx : -1))
-      .filter((idx) => idx !== -1);
-    const selectedSet = new Set(selectedIndexes);
-    const incorrectSelections = shuffledOptions.filter(
-      (opt, idx) => selectedSet.has(idx) && !opt.isCorrect,
-    ).length;
-    const missedCorrectOptions = shuffledOptions.filter(
-      (opt, idx) => opt.isCorrect && !selectedSet.has(idx),
-    ).length;
-    const mistakeCount = incorrectSelections + missedCorrectOptions;
+    const evaluation = evaluateAnswer(shuffledOptions, selectedIndexes);
     const startedAt = questionStartedAtRef.current ?? Date.now();
     const elapsedMs = Math.min(
       Math.max(0, Date.now() - startedAt),
       QUESTION_TIME_LIMIT_MS,
     );
 
-    const isCorrect =
-      correctIndexes.length === selectedIndexes.length &&
-      correctIndexes.every((idx) => selectedIndexes.includes(idx));
+    const { isCorrect, mistakeCount } = evaluation;
 
     setFrozenQuestionTimerMs(elapsedMs);
     setShowResult({ isCorrect });

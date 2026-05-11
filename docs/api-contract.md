@@ -333,3 +333,14 @@ Import one participant’s legacy local browser data into the shared database.
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (required for client configuration / deployment parity)
 - `SUPABASE_SERVICE_ROLE_KEY` (required for server-side route access)
 - In local development, if Supabase is unreachable the server falls back to an in-memory quiz store for the current process so the app can still load. That fallback is not durable and resets on restart.
+
+## Mobile Client Configuration
+
+- `EXPO_PUBLIC_SUPABASE_URL` (mobile required for profile sync): Supabase project URL.
+- `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (mobile required for profile sync): Supabase publishable/anon key. This is safe to ship only with Row Level Security enabled.
+- `EXPO_PUBLIC_QUIZ_API_BASE_URL` (mobile optional): absolute base URL for the Next.js API host, for example `http://192.168.1.20:3101` during LAN testing or the deployed web app URL in production. Mobile uses this only for detailed AI explanation chat because the OpenAI key remains server-side.
+- Mobile profile sync uses Supabase Auth directly:
+  - Auth user id is used as `participants.participant_id`.
+  - `participants`, `question_ratings`, `answer_attempts`, and `question_reports` are accessed with RLS policies from `supabase/migrations/20260511160000_mobile_profiles_rls.sql`.
+  - Answers and reports are queued locally when offline, then flushed to Supabase when the user signs in and sync is reachable.
+- Question content is still bundled from the repository question bank; Supabase sync currently covers ratings, attempts, reports, and profile state, not remote question-bank content.

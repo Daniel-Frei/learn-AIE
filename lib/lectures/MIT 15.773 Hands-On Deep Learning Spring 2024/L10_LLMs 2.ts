@@ -21,12 +21,12 @@ export const L10LLMs2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The final hidden vector before the Softmax can be a single scalar because the Softmax will expand it to the vocabulary size automatically.",
+        text: "The final hidden representation is typically mapped through a learned linear projection so the model produces one logit per vocabulary item.",
         isCorrect: true,
       },
     ],
     explanation:
-      "A causal language model needs vocabulary-sized logits before the Softmax so that it can assign a probability to every possible next token. This question bank keeps the original balance, so the last option remains marked true even though that statement is not correct in the actual architecture.",
+      "A causal language model must produce one score for each token in the vocabulary before applying Softmax. That is why a linear projection from the hidden state to vocabulary-sized logits is required, and all four statements describe that same basic output idea in compatible ways.",
   },
   {
     id: "mit15773-l10-q02",
@@ -47,12 +47,12 @@ export const L10LLMs2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "GPT-2 was instruction tuned with reinforcement learning from human feedback in the same way as ChatGPT.",
+        text: "GPT, GPT-2, and GPT-3 all stayed within the same general autoregressive transformer family rather than switching to a ChatGPT-style RLHF recipe at the GPT-2 stage.",
         isCorrect: true,
       },
     ],
     explanation:
-      "GPT, GPT-2, and GPT-3 share the same basic autoregressive idea, but GPT-3 was much larger and trained on more data. This question bank keeps the original balance, so the last option remains marked true even though that statement is not correct historically.",
+      "GPT, GPT-2, and GPT-3 all shared the same core idea of autoregressive next-token prediction with transformer-based models. The big difference was scale, and GPT-3’s larger size and training data led to behavior that felt much more capable than a small step forward.",
   },
   {
     id: "mit15773-l10-q03",
@@ -73,12 +73,12 @@ export const L10LLMs2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It was the first language model ever to use the transformer architecture.",
+        text: "It showed much stronger in-context and few-shot behavior than earlier GPT models, which made it feel more generally useful.",
         isCorrect: true,
       },
     ],
     explanation:
-      "GPT-3 stood out because its completions were far more coherent and stylistically convincing than those of earlier GPT models. This question bank keeps the original balance, so the last option remains marked true even though transformers were used before GPT-3.",
+      "GPT-3 impressed people because it did not just get a little better at text generation. Its outputs were often more coherent, more adaptable to prompts, and more stylistically convincing, so the improvement felt like a real jump in capability.",
   },
   {
     id: "mit15773-l10-q04",
@@ -100,12 +100,12 @@ export const L10LLMs2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Its main problem was that it had never been trained on any text from the internet.",
+        text: "Its base objective rewarded plausible continuation, not reliable helpfulness, honesty, or safe behavior toward a user.",
         isCorrect: true,
       },
     ],
     explanation:
-      "A plain next-token predictor does not automatically understand that a user wants a helpful answer rather than just a plausible continuation. This question bank keeps the original balance, so the last option remains marked true even though GPT-3 was in fact trained on large internet-scale text corpora.",
+      "Before instruction tuning, GPT-3 was mainly a powerful pattern completer. That means it often continued text in a plausible way, but it was not directly optimized to be helpful, truthful, or safe when responding to a user request.",
   },
   {
     id: "mit15773-l10-q05",
@@ -152,12 +152,12 @@ export const L10LLMs2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "SFT eliminated the need for any later ranking or preference data.",
+        text: "SFT was an important alignment step even though later preference-based stages could still improve the model further.",
         isCorrect: true,
       },
     ],
     explanation:
-      "SFT helps a base model follow instructions much better, but it depends on expensive human-written examples. This question bank keeps the original balance, so the last option remains marked true even though later preference-ranking stages were still important.",
+      "SFT helps a base model follow instructions by training it on human-written examples of good responses. It works well, but creating many high-quality examples is expensive, which is one reason later preference-based methods are also useful.",
   },
   {
     id: "mit15773-l10-q07",
@@ -179,12 +179,12 @@ export const L10LLMs2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Skipping humans entirely and assuming the longest answer is always the best one.",
+        text: "Collecting pairwise preference judgments is often easier and cheaper than asking humans to author ideal answers from scratch.",
         isCorrect: true,
       },
     ],
     explanation:
-      "A key idea behind preference-based training is that ranking answers is usually cheaper than writing them from scratch. This question bank keeps the original balance, so the last option remains marked true even though answer quality clearly cannot be reduced to answer length alone.",
+      "A central idea in preference-based alignment is that ranking answers is often easier than writing perfect answers yourself. Once a model can generate multiple candidates, humans can compare them relatively quickly, which makes data collection more scalable.",
   },
   {
     id: "mit15773-l10-q08",
@@ -206,12 +206,12 @@ export const L10LLMs2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The reward model is trained to predict the next token in the answer sequence exactly like a standard language model.",
+        text: "The reward model is trained on preference comparisons so that preferred answers get higher scores than less preferred ones.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The reward model is meant to learn human preferences over whole instruction-answer pairs, not to act as the chatbot itself. This question bank keeps the original balance, so the last option remains marked true even though reward modeling is different from ordinary next-token prediction.",
+      "A reward model is a learned judge for instruction-answer pairs. It is trained from human preference data so that better answers receive higher scalar scores, and those scores can later guide reinforcement learning on the language model.",
   },
   {
     id: "mit15773-l10-q09",
@@ -233,12 +233,12 @@ export const L10LLMs2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The loss is minimized when \\(r_P\\) is much smaller than \\(r_O\\).",
+        text: "The loss is minimized when \\(r_P\\) is much larger than \\(r_O\\).",
         isCorrect: true,
       },
     ],
     explanation:
-      "This loss depends on the score difference between the preferred and non-preferred answers. This question bank keeps the original balance, so the last option remains marked true even though making the preferred score much smaller would move the optimization in the wrong direction.",
+      "This loss depends on the difference between the preferred score and the other score. It gets smaller when the preferred answer is scored higher, and if both scores are equal then the sigmoid sees zero and outputs 0.5.",
   },
   {
     id: "mit15773-l10-q10",
@@ -260,12 +260,12 @@ export const L10LLMs2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It directly replaces the language model and becomes the chatbot shown to end users.",
+        text: "It serves as a scoring function for training the chatbot rather than as the model that directly generates user-facing answers.",
         isCorrect: true,
       },
     ],
     explanation:
-      "A trained reward model acts like a learned judge that scores responses, which can then be used to shape the main language model. This question bank keeps the original balance, so the last option remains marked true even though the reward model is not the end-user chatbot.",
+      "After training, the reward model acts like a learned evaluator of response quality. It does not replace the language model as the chatbot, but it provides the training signal that helps push the chatbot toward responses people prefer.",
   },
   {
     id: "mit15773-l10-q11",
@@ -287,12 +287,12 @@ export const L10LLMs2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "RLHF means directly editing model weights by hand for each bad answer.",
+        text: "RLHF is an alignment pipeline that uses learned reward signals rather than manually editing weights for each individual bad answer.",
         isCorrect: true,
       },
     ],
     explanation:
-      "RLHF combines preference data and reinforcement learning so that the model is pushed toward responses humans prefer. This question bank keeps the original balance, so the last option remains marked true even though RLHF is not manual per-answer weight editing.",
+      "RLHF combines human preference data, a trained reward model, and a reinforcement learning algorithm such as PPO. The key idea is to move the language model toward answers humans prefer by optimizing against a learned reward signal, not by hand-editing weights example by example.",
   },
   {
     id: "mit15773-l10-q12",
@@ -314,12 +314,12 @@ export const L10LLMs2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "ChatGPT was a completely different non-transformer architecture unrelated to GPT-3.5.",
+        text: "ChatGPT remained part of the same general GPT-style transformer lineage, but it was adapted more strongly for multi-turn dialogue.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The key change from GPT-3 to InstructGPT was better instruction following, while ChatGPT extended the same idea to conversational data. This question bank keeps the original balance, so the last option remains marked true even though ChatGPT remains part of the same general transformer family.",
+      "InstructGPT improved GPT-3 by making it follow instructions better, and ChatGPT extended that idea to multi-turn conversations. The underlying family remained GPT-style transformers, but the training data and alignment process made the model far more conversational.",
   },
   {
     id: "mit15773-l10-q13",
@@ -367,12 +367,12 @@ export const L10LLMs2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Zero-shot prompting requires further gradient-based training of the base model before any answer can be produced.",
+        text: "Zero-shot prompting uses the pretrained model directly at inference time without additional task-specific gradient updates.",
         isCorrect: true,
       },
     ],
     explanation:
-      "Zero-shot prompting means using the model as-is and relying on the prompt itself to specify the task. This question bank keeps the original balance, so the last option remains marked true even though zero-shot use does not require additional training.",
+      "Zero-shot prompting means you give the model a task description but no worked examples. It can still work well because the pretrained model already knows a lot, but the wording of the prompt often matters a great deal.",
   },
   {
     id: "mit15773-l10-q15",
@@ -381,7 +381,7 @@ export const L10LLMs2Questions: Question[] = [
     prompt: "Which statements about prompt engineering are correct?",
     options: [
       {
-        text: "Prompt engineering means carefully designing the prompt so the LLM is more likely to produce the desired behavior.",
+        text: "Prompt engineering always means changing the model weights through gradient-based training.",
         isCorrect: false,
       },
       {
@@ -398,7 +398,7 @@ export const L10LLMs2Questions: Question[] = [
       },
     ],
     explanation:
-      "Prompt engineering can matter a lot even for instruction-tuned models, especially on tasks where explicit structure helps. This question bank keeps the original balance, so the first option remains marked false even though that statement is a correct description of prompt engineering.",
+      "Prompt engineering means designing the input text so the model is more likely to behave in the way you want, not changing the model weights. It still matters even for instruction-tuned models, and step-by-step structure can make some tasks much more reliable.",
   },
   {
     id: "mit15773-l10-q16",
@@ -407,7 +407,7 @@ export const L10LLMs2Questions: Question[] = [
     prompt: "Which statements correctly describe few-shot prompting?",
     options: [
       {
-        text: "It provides a few worked examples inside the prompt itself.",
+        text: "It requires updating the model weights on a small labeled dataset before inference.",
         isCorrect: false,
       },
       {
@@ -424,7 +424,7 @@ export const L10LLMs2Questions: Question[] = [
       },
     ],
     explanation:
-      "Few-shot prompting teaches the model through examples in the prompt rather than through weight updates. This question bank keeps the original balance, so the first option remains marked false even though that statement is a correct definition of few-shot prompting.",
+      "Few-shot prompting teaches the model through examples placed inside the prompt itself. That is different from fine-tuning, because the model weights stay fixed and the model learns the task pattern only from context at inference time.",
   },
   {
     id: "mit15773-l10-q17",
@@ -434,7 +434,7 @@ export const L10LLMs2Questions: Question[] = [
       "Which statements correctly describe retrieval-augmented generation (RAG)?",
     options: [
       {
-        text: "RAG is useful when we want the LLM to leverage proprietary or custom information relevant to a specific question.",
+        text: "RAG mainly works by permanently changing model weights to bake in new private knowledge.",
         isCorrect: false,
       },
       {
@@ -451,7 +451,7 @@ export const L10LLMs2Questions: Question[] = [
       },
     ],
     explanation:
-      "RAG solves a context-selection problem by retrieving relevant external information and placing it into the prompt. This question bank keeps the original balance, so the first option remains marked false even though that statement correctly describes a major use case for RAG.",
+      "RAG works by retrieving useful external information and placing it into the prompt, not by changing the model weights for each query. It is helpful because context windows are limited, so the system must select only the most relevant pieces of outside information.",
   },
   {
     id: "mit15773-l10-q18",
@@ -460,7 +460,7 @@ export const L10LLMs2Questions: Question[] = [
     prompt: "Which statements about the context window are correct?",
     options: [
       {
-        text: "For an LLM, the prompt plus output must fit within a predefined limit called the context window.",
+        text: "Only the input prompt counts toward the context window, while generated output does not.",
         isCorrect: false,
       },
       {
@@ -477,7 +477,7 @@ export const L10LLMs2Questions: Question[] = [
       },
     ],
     explanation:
-      "The context window limits how much text the model can handle at once, including both what goes in and what comes out. This question bank keeps the original balance, so the first option remains marked false even though it is the correct definition of the context window.",
+      "The context window limits the total amount of text the model can handle in one interaction, including both the input and the generated output. That is why chat history and retrieved documents use up space, and why the limit matters during real chatbot use, not just during training.",
   },
   {
     id: "mit15773-l10-q19",
@@ -487,7 +487,7 @@ export const L10LLMs2Questions: Question[] = [
       "Which statements correctly describe a typical retrieval pipeline for RAG?",
     options: [
       {
-        text: "Text chunks from documents can be embedded into contextual vectors using a pretrained embedding model.",
+        text: "A typical RAG system relies only on exact keyword overlap and does not embed chunks into vectors.",
         isCorrect: false,
       },
       {
@@ -504,7 +504,7 @@ export const L10LLMs2Questions: Question[] = [
       },
     ],
     explanation:
-      "A standard RAG pipeline embeds document chunks and queries, compares them, and retrieves the most relevant pieces for prompting. This question bank keeps the original balance, so the first option remains marked false even though embedding chunks is exactly how such systems commonly work.",
+      "A standard RAG pipeline usually embeds both document chunks and the user query into vector representations. Retrieval then compares those vectors, often with cosine similarity, and the best chunks are added to the prompt without requiring manual labels on every chunk.",
   },
   {
     id: "mit15773-l10-q20",
@@ -513,7 +513,7 @@ export const L10LLMs2Questions: Question[] = [
     prompt: "Which statements correctly describe fine-tuning and LoRA?",
     options: [
       {
-        text: "Standard fine-tuning updates model weights using domain-specific input-output examples.",
+        text: "Standard fine-tuning leaves the pretrained weights frozen and changes only the prompt text at inference time.",
         isCorrect: false,
       },
       {
@@ -530,7 +530,7 @@ export const L10LLMs2Questions: Question[] = [
       },
     ],
     explanation:
-      "LoRA is attractive because it keeps the base model frozen and learns a compact low-rank correction instead of updating all weights. This question bank keeps the original balance, so the first option remains marked false even though standard fine-tuning does update model weights on domain-specific examples.",
+      "Standard fine-tuning changes trainable model weights using gradient-based learning, so it is not the same as prompt-only adaptation. LoRA is attractive because it freezes the base model and learns a compact low-rank update, which can greatly reduce training cost compared with full fine-tuning.",
   },
   {
     id: "mit15773-l10-q21",
@@ -540,11 +540,11 @@ export const L10LLMs2Questions: Question[] = [
       "Which statements about using retrieval-augmented generation in practice are correct?",
     options: [
       {
-        text: "It is one of the most prevalent business applications of large language models.",
+        text: "RAG is a rare niche method and is not one of the main practical business uses of LLMs.",
         isCorrect: false,
       },
       {
-        text: "It can work reasonably well even when source text is messy or imperfectly formatted.",
+        text: "RAG only works well when the source material is perfectly clean and consistently formatted.",
         isCorrect: false,
       },
       {
@@ -557,7 +557,7 @@ export const L10LLMs2Questions: Question[] = [
       },
     ],
     explanation:
-      "RAG is useful because it can bring external context into the prompt, but it still requires careful prompting and evaluation. This question bank keeps the original balance, so the first two options remain marked false even though both are broadly correct in practice.",
+      "RAG is one of the most common practical uses of LLMs because many companies want answers grounded in their own documents. It can still work with messy data, but it does not guarantee perfect truth, so good prompting and human oversight still matter.",
   },
   {
     id: "mit15773-l10-q22",
@@ -567,11 +567,11 @@ export const L10LLMs2Questions: Question[] = [
       "Which statements correctly describe why fine-tuning can be valuable even when zero-shot, few-shot, and retrieval-augmented prompting exist?",
     options: [
       {
-        text: "Fine-tuning can alter the style and behavior of the model for a narrow use case rather than only changing the prompt.",
+        text: "Fine-tuning cannot meaningfully change style or behavior and only affects factual recall.",
         isCorrect: false,
       },
       {
-        text: "Fine-tuning can help a model produce outputs that better match a specific domain, such as realistic customer reviews.",
+        text: "Fine-tuning is useless for helping outputs match the language or style of a specific domain.",
         isCorrect: false,
       },
       {
@@ -584,7 +584,7 @@ export const L10LLMs2Questions: Question[] = [
       },
     ],
     explanation:
-      "Fine-tuning changes the model itself, which can matter when repeated domain-specific behavior is needed. This question bank keeps the original balance, so the first two options remain marked false even though both are legitimate reasons to fine-tune.",
+      "Fine-tuning can change how the model behaves, including style, tone, and recurring task patterns, so it can be valuable even when prompting and RAG are available. It is not limited to cases where the base model knows nothing; often it is used to specialize an already capable model for a narrower job.",
   },
   {
     id: "mit15773-l10-q23",
@@ -594,11 +594,11 @@ export const L10LLMs2Questions: Question[] = [
       "Which statements correctly describe the product-review example used to motivate fine-tuning?",
     options: [
       {
-        text: "A base model could generate text that sounded more like marketing copy than like a real customer review.",
+        text: "A base model already guaranteed realistic customer-review style, so there was no style mismatch to fix.",
         isCorrect: false,
       },
       {
-        text: "Fine-tuning with instruction, product description, and product review examples improved the realism of generated reviews.",
+        text: "Providing product-review training examples could not improve how realistic the generated reviews sounded.",
         isCorrect: false,
       },
       {
@@ -611,7 +611,7 @@ export const L10LLMs2Questions: Question[] = [
       },
     ],
     explanation:
-      "The review example shows that a base model may understand the topic but still produce the wrong style, such as polished marketing language instead of realistic user reviews. This question bank keeps the original balance, so the first two options remain marked false even though they accurately describe the example.",
+      "The product-review example showed that a base model may know the topic but still produce the wrong style, such as polished marketing language instead of genuine customer feedback. Fine-tuning on realistic review examples helped the model produce outputs that sounded more like real reviews, which is exactly why the third statement is correct.",
   },
   {
     id: "mit15773-l10-q24",
@@ -621,11 +621,11 @@ export const L10LLMs2Questions: Question[] = [
       "Which statements correctly describe standard supervised fine-tuning of a causal LLM?",
     options: [
       {
-        text: "It can be viewed as continuing next-token training on domain-specific input-output examples.",
+        text: "Supervised fine-tuning of a causal LLM abandons autoregressive next-token prediction and turns the model into a pure classifier.",
         isCorrect: false,
       },
       {
-        text: "The desired output sequence is shifted relative to the input so that prediction remains autoregressive.",
+        text: "In standard causal fine-tuning, the model predicts all output tokens simultaneously rather than using a shifted next-token setup.",
         isCorrect: false,
       },
       {
@@ -638,7 +638,7 @@ export const L10LLMs2Questions: Question[] = [
       },
     ],
     explanation:
-      "Supervised fine-tuning is still gradient-based learning, just on new task-specific data rather than the original pretraining corpus. This question bank keeps the original balance, so the first two options remain marked false even though both accurately describe the usual causal fine-tuning setup.",
+      "Standard supervised fine-tuning of a causal LLM still keeps the autoregressive next-token prediction setup. What changes is the data and the learned weights: the model is further trained with backpropagation on task-specific examples, and there is no need to replace the transformer architecture.",
   },
   {
     id: "mit15773-l10-q25",
@@ -648,11 +648,11 @@ export const L10LLMs2Questions: Question[] = [
       "Which statements correctly describe the computational challenge of naively fine-tuning a very large model such as Llama-2-70B?",
     options: [
       {
-        text: "The raw parameter count alone already implies a very large memory footprint.",
+        text: "A huge parameter count has little effect on memory because only activations matter during fine-tuning.",
         isCorrect: false,
       },
       {
-        text: "Gradients and optimizer state substantially increase memory needs beyond just storing the parameters.",
+        text: "Gradients and optimizer state add almost no extra memory beyond storing the parameters themselves.",
         isCorrect: false,
       },
       {
@@ -665,7 +665,7 @@ export const L10LLMs2Questions: Question[] = [
       },
     ],
     explanation:
-      "The main difficulty is that the model remains huge even if the fine-tuning dataset is modest. This question bank keeps the original balance, so the first two options remain marked false even though both correctly describe why naive fine-tuning can be memory-intensive.",
+      "The model itself can already be so large that memory becomes a serious problem before you even think about dataset size. On top of the parameters, gradients and optimizer state can add a lot more memory, so a smaller fine-tuning dataset does not make the hardware problem disappear.",
   },
   {
     id: "mit15773-l10-q26",
@@ -675,11 +675,11 @@ export const L10LLMs2Questions: Question[] = [
       "Which statements correctly describe rough memory accounting for very large-model fine-tuning?",
     options: [
       {
-        text: "Memory use includes model parameters, gradient-related storage, and optimizer state.",
+        text: "Memory use during fine-tuning is basically just the model parameters, while gradients and optimizer state contribute very little.",
         isCorrect: false,
       },
       {
-        text: "Using \\(\\text{fp16}\\) storage means roughly 2 bytes per parameter for the model weights themselves.",
+        text: "Using \\(\\text{fp16}\\) storage means roughly 16 bytes per parameter for the model weights themselves.",
         isCorrect: false,
       },
       {
@@ -692,7 +692,7 @@ export const L10LLMs2Questions: Question[] = [
       },
     ],
     explanation:
-      "For large models, parameter memory is only part of the story because gradients and optimizer state can add a lot more. This question bank keeps the original balance, so the first two options remain marked false even though they correctly describe standard memory accounting.",
+      "Rough memory accounting for large-model training includes more than just the stored weights. Parameters, gradients, activations, and optimizer state can all matter, and fp16 weight storage is about 2 bytes per parameter rather than 16, which is why the second statement is false.",
   },
   {
     id: "mit15773-l10-q27",

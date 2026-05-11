@@ -11,6 +11,7 @@ This file captures durable process preferences so future tasks can follow them b
 ## Project Structure
 
 - App code: `/app`
+- Mobile app code: `/apps/mobile` (Expo React Native).
 - Vitest tests: `/tests`
 - Playwright tests: `/e2e`
 
@@ -25,12 +26,18 @@ This file captures durable process preferences so future tasks can follow them b
 - Type check: `make types-check`
 - Unit tests: `make test`
 - E2E tests: `npm run e2e` or `npm run e2e:ui`
+- Mobile dev server: `npm run mobile:start`
+- Mobile Android/iOS/web launchers: `npm run mobile:android`, `npm run mobile:ios`, `npm run mobile:web`
+- Mobile checks: `npm run mobile:lint`, `npm run mobile:types-check`
 
 ## Dependency Policy
 
 - Ask before adding runtime dependencies under `dependencies`.
 - Dev dependencies are acceptable when needed for tooling/testing.
 - Current approved shared-storage runtime dependency: `@supabase/supabase-js`.
+- Current approved mobile runtime stack: Expo SDK 55 template dependencies plus `@react-native-async-storage/async-storage` for anonymous participant persistence.
+- Mobile profile sync should use Supabase Auth with RLS and the publishable/anon key, not the service-role key or a developer machine on the LAN.
+- Mobile should remain local-first: answer/rating/report changes are saved on-device first and synced when Supabase is reachable.
 
 ## Testing Priorities
 

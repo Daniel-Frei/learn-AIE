@@ -2,6 +2,9 @@
   "name": "book-quiz",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
     "dev": "next dev --port 3101",
     "build": "next build",
@@ -14,7 +17,13 @@
     "test:watch": "vitest --config vitest.config.ts",
     "e2e": "playwright test",
     "e2e:ui": "playwright test --ui",
-    "check": "npm run format-check && npm run lint && npm run types-check && npm run test"
+    "mobile:start": "npm --workspace apps/mobile run start",
+    "mobile:android": "npm --workspace apps/mobile run android",
+    "mobile:ios": "npm --workspace apps/mobile run ios",
+    "mobile:web": "npm --workspace apps/mobile run web",
+    "mobile:lint": "npm --workspace apps/mobile run lint",
+    "mobile:types-check": "npm --workspace apps/mobile run types-check",
+    "check": "npm run format-check && npm run lint && npm run types-check && npm run test && npm run mobile:lint && npm run mobile:types-check"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.100.0",

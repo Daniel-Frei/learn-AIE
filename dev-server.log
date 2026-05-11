@@ -1,0 +1,25 @@
+
+> book-quiz@0.1.0 dev
+> next dev --port 3101
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+   ▲ Next.js 16.0.3 (Turbopack)
+   - Local:         http://localhost:3101
+   - Network:       http://192.168.1.57:3101
+   - Environments: .env.local
+
+ ✓ Starting...
+Creating turbopack project {
+  dir: 'C:\\WebDev\\Learning\\LLM and agent books and lectures\\book-quiz',
+  testMode: true
+}
+ ✓ Ready in 9.3s
+ ○ Compiling / ...
+ GET / 200 in 11.6s (compile: 11.1s, render: 428ms)
+ GET /api/quiz-state?participantId=347f753d-2c27-4761-bff2-d58f85ba3c42 200 in 1565ms (compile: 1088ms, render: 477ms)
+ GET / 200 in 51ms (compile: 4ms, render: 47ms)
+ GET /api/quiz-state?participantId=04cdca8d-4996-483d-bf43-4b7f2ea645f0 200 in 312ms (compile: 3ms, render: 310ms)
+ GET / 200 in 64ms (compile: 5ms, render: 59ms)
+ GET /api/quiz-state?participantId=351f1059-ee8f-44d9-b98c-1d2f4ebd3545 200 in 300ms (compile: 3ms, render: 298ms)
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[?25h

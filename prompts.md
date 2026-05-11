@@ -15,7 +15,7 @@ I already created `lib\lectures\MIT 15.773 Hands-On Deep Learning Spring 2024\L1
 - Include math-related questions when math is part of the lecture. The amount of math should be proportional to how much it is covered and how important it is.
 - Do NOT include questions about logistics or admin (e.g. exams, course structure, resources).
 - Do NOT refer to the lecture, transcript, or chapter directly in the questions (e.g. avoid phrases like "in the lecture", "the equation above", etc.). Questions must be answerable based on knowledge alone.
-- Questions should be a learning experience and help recall and reinforce concepts.
+- Questions should test user but also be a learning experience and help recall and reinforce concepts.
 
 ---
 
@@ -59,6 +59,7 @@ I already created `lib\lectures\MIT 15.773 Hands-On Deep Learning Spring 2024\L1
 
 ## Explanations:
 
+- Explanations are for users to better understand the topics covered in the question and answer statements.
 - Each explanation must be at least two sentences.
 - Explanations should clearly explain why the correct options are correct and why the incorrect options are incorrect.
 - Do NOT refer to answer order (e.g. avoid "option A", "the second answer", etc.).
