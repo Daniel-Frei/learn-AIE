@@ -398,7 +398,7 @@ Import one participant’s legacy local browser data into the shared database.
 
 - `EXPO_PUBLIC_SUPABASE_URL` (mobile required for profile sync): Supabase project URL.
 - `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (mobile required for profile sync): Supabase publishable/anon key. This is safe to ship only with Row Level Security enabled.
-- `EXPO_PUBLIC_QUIZ_API_BASE_URL` (mobile optional): absolute base URL for the Next.js API host, for example `http://192.168.1.20:3101` during LAN testing or the deployed web app URL in production. Mobile uses this only for detailed AI explanation chat because the OpenAI key remains server-side.
+- `EXPO_PUBLIC_QUIZ_API_BASE_URL` (mobile optional): absolute base URL for the Next.js API host, for example `http://192.168.1.20:43191` during LAN testing or the deployed web app URL in production. Mobile uses this only for detailed AI explanation chat because the OpenAI key remains server-side.
 - Mobile profile sync uses Supabase Auth directly:
   - Auth user id is used as `participants.participant_id`.
   - `participants`, `question_ratings`, `answer_attempts`, and `question_reports` are accessed with RLS policies from `supabase/migrations/20260511160000_mobile_profiles_rls.sql`.

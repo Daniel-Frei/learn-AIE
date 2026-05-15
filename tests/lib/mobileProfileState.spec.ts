@@ -41,6 +41,15 @@ describe("mobile profile state helpers", () => {
         guest,
       ),
     ).toBe(false);
+    expect(
+      shouldMigrateGuestState(makeState("profile-a"), makeState("guest")),
+    ).toBe(false);
+    expect(
+      shouldMigrateGuestState(
+        makeState("profile-a"),
+        makeState("profile-b", { queuedReports: [{} as never] }),
+      ),
+    ).toBe(false);
   });
 
   it("rewrites queued writes to the signed-in profile id", () => {

@@ -1,11 +1,28 @@
-import { expect, test } from "@playwright/test";
+import { expect, type Page, test } from "@playwright/test";
+
+async function openFilters(page: Page) {
+  const panelHeading = page.getByText(
+    /pick mode, series, lectures, topics and question elo range/i,
+  );
+  const toggle = page.getByRole("button", {
+    name: /choose filters|close selection/i,
+  });
+
+  await expect(toggle).toBeVisible();
+  await expect(async () => {
+    if (!(await panelHeading.isVisible())) {
+      await toggle.click();
+    }
+    await expect(panelHeading).toBeVisible({ timeout: 1000 });
+  }).toPass({ timeout: 10000 });
+}
 
 test("reports a question locally and exports the report file", async ({
   page,
 }) => {
   await page.goto("/");
 
-  await page.getByRole("button", { name: /choose filters/i }).click();
+  await openFilters(page);
   await page.getByRole("button", { name: /select all topics/i }).click();
   await page.getByRole("button", { name: /apply selection/i }).click();
 

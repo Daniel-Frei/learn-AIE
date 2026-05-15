@@ -47,6 +47,7 @@ describe("POST /api/explain", () => {
 
   afterEach(() => {
     process.env.OPENAI_API_KEY = originalApiKey;
+    vi.doUnmock("openai");
     vi.restoreAllMocks();
   });
 
@@ -60,10 +61,35 @@ describe("POST /api/explain", () => {
     expect(body).toEqual({ error: "Invalid request payload for explanation." });
   });
 
+  it("returns 400 for array payloads", async () => {
+    const { POST } = await import("@/app/api/explain/route");
+
+    const res = await POST(buildJsonRequest([]));
+    const body = await res.json();
+
+    expect(res.status).toBe(400);
+    expect(body).toEqual({ error: "Invalid request payload for explanation." });
+  });
+
   it("returns 200 and fallback reply when API key is missing", async () => {
     const { POST } = await import("@/app/api/explain/route");
 
     const res = await POST(buildJsonRequest(validPayload));
+    const body = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(body.reply).toContain("OpenAI API key is not configured");
+  });
+
+  it("accepts bounded follow-up chat turns", async () => {
+    const { POST } = await import("@/app/api/explain/route");
+
+    const res = await POST(
+      buildJsonRequest({
+        ...validPayload,
+        chatHistory: [{ role: "assistant", content: "Previous hint" }],
+      }),
+    );
     const body = await res.json();
 
     expect(res.status).toBe(200);
@@ -114,5 +140,49 @@ describe("POST /api/explain", () => {
 
     expect(res.status).toBe(400);
     expect(body).toEqual({ error: "Invalid request payload for explanation." });
+  });
+
+  it("rejects malformed chat turns", async () => {
+    const { POST } = await import("@/app/api/explain/route");
+
+    for (const chatHistory of [
+      [null],
+      ["not-an-object"],
+      [{ role: "system", content: "Nope" }],
+      [{ role: "user", content: " " }],
+    ]) {
+      const res = await POST(
+        buildJsonRequest({
+          ...validPayload,
+          chatHistory,
+        }),
+      );
+      const body = await res.json();
+
+      expect(res.status).toBe(400);
+      expect(body).toEqual({
+        error: "Invalid request payload for explanation.",
+      });
+    }
+  });
+
+  it("returns 500 when the upstream explanation call fails", async () => {
+    process.env.OPENAI_API_KEY = "test-api-key";
+    const create = vi.fn().mockRejectedValue(new Error("upstream failure"));
+    vi.doMock("openai", () => ({
+      default: vi.fn(function MockOpenAI() {
+        return {
+          chat: { completions: { create } },
+        };
+      }),
+    }));
+    vi.spyOn(console, "error").mockImplementation(() => {});
+    const { POST } = await import("@/app/api/explain/route");
+
+    const res = await POST(buildJsonRequest(validPayload));
+    const body = await res.json();
+
+    expect(res.status).toBe(500);
+    expect(body).toEqual({ error: "Failed to generate explanation" });
   });
 });

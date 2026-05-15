@@ -35,6 +35,13 @@ afterEach(() => {
 });
 
 describe("participant storage", () => {
+  it("returns null or false when browser storage is unavailable", () => {
+    expect(getOrCreateParticipantId()).toBeNull();
+    expect(hasCompletedLegacyMigration("participant-a")).toBe(false);
+
+    markLegacyMigrationCompleted("participant-a");
+  });
+
   it("creates and reuses an anonymous participant id", () => {
     vi.stubGlobal("window", { localStorage: createLocalStorageMock() });
 
@@ -43,6 +50,15 @@ describe("participant storage", () => {
 
     expect(first).toBeTruthy();
     expect(second).toBe(first);
+  });
+
+  it("falls back to a timestamp participant id when randomUUID is unavailable", () => {
+    vi.stubGlobal("crypto", undefined);
+    vi.spyOn(Date, "now").mockReturnValue(12345);
+    vi.spyOn(Math, "random").mockReturnValue(0.5);
+    vi.stubGlobal("window", { localStorage: createLocalStorageMock() });
+
+    expect(getOrCreateParticipantId()).toMatch(/^participant-12345-/);
   });
 
   it("tracks local legacy migration completion per participant", () => {

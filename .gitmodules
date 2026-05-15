@@ -1,0 +1,4 @@
+[submodule ".codex/skills/elenthos"]
+	path = .codex/skills/elenthos
+	url = https://github.com/Elenthos/elenthos-skills.git
+	branch = main

@@ -1,0 +1,21 @@
+[settings]
+cache_dir = ".codex/skill-cache"
+
+# Add copy-synced skill bundles here. Keep Elenthos skills out of this file
+# when they are installed as the .codex/skills/elenthos submodule.
+#
+# Example for a repo that stores skills under config/skills:
+# [[bundles]]
+# name = "langchain"
+# repository = "https://github.com/langchain-ai/langchain-skills.git"
+# ref = "main"
+# source = "config/skills"
+# target = ".codex/skills/langchain/config/skills"
+#
+# Example for a repo that stores skills under its repository root:
+# [[bundles]]
+# name = "humanizer"
+# repository = "https://github.com/blader/humanizer.git"
+# ref = "main"
+# source = "."
+# target = ".codex/skills/humanizer"

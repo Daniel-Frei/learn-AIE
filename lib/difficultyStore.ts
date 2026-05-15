@@ -527,11 +527,7 @@ function getQuestionRating(
   if (!existing) {
     return createDefaultQuestion(label, timestamp, state.config);
   }
-  const sanitized = sanitizeQuestion(existing, label, timestamp, state.config);
-  if (!sanitized.label && label) {
-    return { ...sanitized, label };
-  }
-  return sanitized;
+  return sanitizeQuestion(existing, label, timestamp, state.config);
 }
 
 function buildLegacyCounts(state: RatingStateV2): LegacyDifficultyMap {

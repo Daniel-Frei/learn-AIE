@@ -1,10 +1,12 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   appendQuestionReport,
+  createQuestionReport,
   createDefaultQuestionReportsState,
   exportQuestionReportsJson,
   loadQuestionReports,
   saveQuestionReports,
+  sanitizeQuestionReportsState,
 } from "@/lib/questionReportsStore";
 
 type StorageMock = {
@@ -133,8 +135,25 @@ describe("question report store", () => {
 
     vi.spyOn(console, "error").mockImplementation(() => {});
     vi.stubGlobal("window", {
+      localStorage: createLocalStorageMock(),
+    });
+
+    expect(loadQuestionReports()).toEqual(createDefaultQuestionReportsState());
+
+    vi.stubGlobal("window", {
       localStorage: createLocalStorageMock({
         "aie-quiz-question-reports-v1": "{not-valid-json",
+      }),
+    });
+
+    expect(loadQuestionReports()).toEqual(createDefaultQuestionReportsState());
+
+    vi.stubGlobal("window", {
+      localStorage: createLocalStorageMock({
+        "aie-quiz-question-reports-v1": JSON.stringify({
+          version: 1,
+          reports: "not-an-array",
+        }),
       }),
     });
 
@@ -166,5 +185,144 @@ describe("question report store", () => {
     expect(loaded.reports[0]?.comment).toBe(
       "Explanation contradicts the marked answer.",
     );
+  });
+
+  it("drops malformed persisted reports while keeping valid entries", () => {
+    const sanitized = sanitizeQuestionReportsState({
+      version: 1,
+      reports: [
+        {
+          id: "r-valid",
+          questionId: "q-valid",
+          comment: "  Keep me  ",
+          reportedAt: "2026-03-16T13:00:00.000Z",
+          snapshot: sampleSnapshot,
+        },
+        null,
+        {
+          id: "r-missing-snapshot",
+          questionId: "q-invalid",
+          comment: "Missing snapshot",
+          reportedAt: "2026-03-16T13:00:00.000Z",
+        },
+        {
+          id: "r-empty-comment",
+          questionId: "q-invalid",
+          comment: "   ",
+          reportedAt: "2026-03-16T13:00:00.000Z",
+          snapshot: sampleSnapshot,
+        },
+        {
+          id: "r-empty-snapshot-field",
+          questionId: "q-invalid",
+          comment: "Missing prompt",
+          reportedAt: "2026-03-16T13:00:00.000Z",
+          snapshot: { ...sampleSnapshot, prompt: "", sourceId: 123 },
+        },
+      ],
+    });
+
+    expect(sanitized).toEqual({
+      version: 1,
+      reports: [
+        expect.objectContaining({
+          id: "r-valid",
+          comment: "Keep me",
+        }),
+      ],
+    });
+    expect(sanitizeQuestionReportsState({ version: 1 })).toBeNull();
+  });
+
+  it("ignores invalid drafts and can generate ids without crypto", () => {
+    vi.stubGlobal("crypto", undefined);
+    vi.spyOn(Date, "now").mockReturnValue(12345);
+    vi.spyOn(Math, "random").mockReturnValue(0.5);
+
+    const unchanged = appendQuestionReport(
+      createDefaultQuestionReportsState(),
+      {
+        questionId: " ",
+        comment: " ",
+        snapshot: sampleSnapshot,
+      },
+    );
+    const generated = createQuestionReport({
+      questionId: "q-generated",
+      comment: " Generated report ",
+      snapshot: sampleSnapshot,
+    });
+
+    expect(unchanged.reports).toEqual([]);
+    expect(generated).toMatchObject({
+      id: expect.stringMatching(/^report-12345-/),
+      questionId: "q-generated",
+      comment: "Generated report",
+    });
+    expect(
+      createQuestionReport({
+        questionId: " ",
+        comment: "No question",
+        snapshot: sampleSnapshot,
+      }),
+    ).toBeNull();
+  });
+
+  it("logs when report saving fails", () => {
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    vi.stubGlobal("window", {
+      localStorage: {
+        getItem: () => null,
+        setItem: () => {
+          throw new Error("quota exceeded");
+        },
+        removeItem: () => {},
+      },
+    });
+
+    saveQuestionReports(createDefaultQuestionReportsState());
+
+    expect(error).toHaveBeenCalledWith(
+      "Failed to save question reports:",
+      expect.any(Error),
+    );
+  });
+
+  it("falls back for server-side or malformed report save/export inputs", () => {
+    expect(() =>
+      saveQuestionReports(createDefaultQuestionReportsState()),
+    ).not.toThrow();
+
+    const writes: string[] = [];
+    vi.stubGlobal("window", {
+      localStorage: {
+        getItem: () => null,
+        setItem: (_key: string, value: string) => {
+          writes.push(value);
+        },
+        removeItem: () => {},
+      },
+    });
+
+    saveQuestionReports({ version: 2 } as never);
+    const appended = appendQuestionReport(
+      { version: 2 } as never,
+      {
+        questionId: "q-valid",
+        comment: "Valid comment",
+        snapshot: sampleSnapshot,
+      },
+      {
+        reportId: "r-valid",
+        reportedAt: "2026-05-01T00:00:00.000Z",
+      },
+    );
+    const exported = JSON.parse(
+      exportQuestionReportsJson({ version: 2 } as never),
+    ) as { version: number; reports: unknown[] };
+
+    expect(JSON.parse(writes[0])).toEqual(createDefaultQuestionReportsState());
+    expect(appended.reports).toHaveLength(1);
+    expect(exported).toMatchObject({ version: 1, reports: [] });
   });
 });

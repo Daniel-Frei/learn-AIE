@@ -3,7 +3,7 @@ import { fetchAllRows } from "@/lib/server/quizDataStore";
 
 type FakePage = { question_id: string };
 
-function makePagedQuery(pages: FakePage[][]) {
+function makePagedQuery(pages: Array<FakePage[] | null>) {
   const ranges: Array<[number, number]> = [];
   let pageIndex = 0;
 
@@ -16,7 +16,7 @@ function makePagedQuery(pages: FakePage[][]) {
             return {
               range(from: number, to: number) {
                 ranges.push([from, to]);
-                const data = pages[pageIndex] ?? [];
+                const data = pages[pageIndex] ?? null;
                 pageIndex += 1;
                 return Promise.resolve({ data, error: null });
               },
@@ -51,5 +51,14 @@ describe("fetchAllRows", () => {
       [0, 999],
       [1000, 1999],
     ]);
+  });
+
+  it("treats a null Supabase page as an empty result", async () => {
+    const { query, ranges } = makePagedQuery([null as never]);
+
+    await expect(
+      fetchAllRows<FakePage>(query, "question_id", "question_id"),
+    ).resolves.toEqual([]);
+    expect(ranges).toEqual([[0, 999]]);
   });
 });

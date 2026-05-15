@@ -44,3 +44,23 @@ mobile-types-check:
 
 check:
 	npm run check
+
+# BEGIN ELENTHOS SKILLS
+.PHONY: skill-update skill-update-sources skill-update-elenthos skill-publish-elenthos skill-publish-elenthos-dry-run
+PYTHON ?= python
+SKILL_PUBLISH_MESSAGE ?= Update Elenthos skills
+
+skill-update-sources:
+	$(PYTHON) .codex/skills/elenthos/elenthos-skills/elenthos-skills-update/scripts/update_skill_bundles.py update
+
+skill-update-elenthos:
+	$(PYTHON) .codex/skills/elenthos/elenthos-skills/elenthos-skills-sync/scripts/sync_elenthos_skills.py update
+
+skill-update: skill-update-sources skill-update-elenthos
+
+skill-publish-elenthos:
+	$(PYTHON) .codex/skills/elenthos/elenthos-skills/elenthos-skills-sync/scripts/sync_elenthos_skills.py publish --stage-parent --message "$(SKILL_PUBLISH_MESSAGE)"
+
+skill-publish-elenthos-dry-run:
+	$(PYTHON) .codex/skills/elenthos/elenthos-skills/elenthos-skills-sync/scripts/sync_elenthos_skills.py publish --dry-run --message "$(SKILL_PUBLISH_MESSAGE)"
+# END ELENTHOS SKILLS

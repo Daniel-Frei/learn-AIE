@@ -1,4 +1,21 @@
-import { expect, test } from "@playwright/test";
+import { expect, type Page, test } from "@playwright/test";
+
+async function openFilters(page: Page) {
+  const panelHeading = page.getByText(
+    /pick mode, series, lectures, topics and question elo range/i,
+  );
+  const toggle = page.getByRole("button", {
+    name: /choose filters|close selection/i,
+  });
+
+  await expect(toggle).toBeVisible();
+  await expect(async () => {
+    if (!(await panelHeading.isVisible())) {
+      await toggle.click();
+    }
+    await expect(panelHeading).toBeVisible({ timeout: 1000 });
+  }).toPass({ timeout: 10000 });
+}
 
 test("renders core quiz controls on the home page", async ({ page }) => {
   await page.goto("/");
@@ -19,7 +36,7 @@ test("updates filter checkboxes immediately after clicking", async ({
 }) => {
   await page.goto("/");
 
-  await page.getByRole("button", { name: /choose filters/i }).click();
+  await openFilters(page);
 
   const seriesCheckbox = page.getByRole("checkbox", {
     name: "AIE Foundations Book",
@@ -37,7 +54,7 @@ test("shows question elo and a per-question timer that resets for the next quest
 }) => {
   await page.goto("/");
 
-  await page.getByRole("button", { name: /choose filters/i }).click();
+  await openFilters(page);
   await expect(page.getByText(/question elo range:/i)).toBeVisible();
   await page.getByRole("button", { name: /select all topics/i }).click();
   await page.getByRole("button", { name: /apply selection/i }).click();

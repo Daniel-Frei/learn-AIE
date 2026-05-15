@@ -26,6 +26,13 @@ export async function POST(req: NextRequest) {
     const response = await recordQuizAnswerForParticipant(body);
     return NextResponse.json(response);
   } catch (err) {
+    if (err instanceof SyntaxError) {
+      return NextResponse.json(
+        { error: "Invalid request payload for answer submission." },
+        { status: 400 },
+      );
+    }
+
     console.error("Error in /api/answers:", err);
     return NextResponse.json(
       { error: "Failed to record answer" },

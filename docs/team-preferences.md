@@ -8,6 +8,7 @@ This file captures durable process preferences so future tasks can follow them b
 - Keep changes small and reviewable; avoid large refactors unless requested.
 - When behavior changes, add or update tests.
 - This repository is intended to be public on GitHub. Do not commit real credentials, local `.env*` files, generated server logs, participant identifiers, or other machine/user-specific data.
+- Elenthos skills are installed as a Git submodule at `.codex/skills/elenthos`; use the `skill-*` Makefile targets to update or publish them.
 
 ## Project Structure
 
@@ -20,7 +21,7 @@ This file captures durable process preferences so future tasks can follow them b
 
 - Install (clean): `make ci`
 - Install (dev): `make install`
-- Local Next.js dev and production-preview server default port: `3101` instead of `3000` to reduce localhost conflicts.
+- Local Next.js dev, production-preview, and Playwright web-server default port: `43191` instead of common framework ports to reduce localhost conflicts.
 - Full checks: `make check`
 - Format check: `make format-check`
 - Lint: `make lint`
@@ -43,6 +44,7 @@ This file captures durable process preferences so future tasks can follow them b
 ## Testing Priorities
 
 - Keep expanding coverage for core functionality, not just smoke tests.
+- The unit-test command enforces at least 95% statements, branches, functions, and lines for the configured core logic/API coverage scope.
 - Prioritize tests for quiz source selection/title logic, difficulty rating behavior, and API validation/error handling.
 - For question reporting, prefer append-only shared report entries and include source/prompt snapshot context in exported files.
 - For shared quiz data, use anonymous per-device participants in v1: question difficulty is global, but each participant keeps their own rating/climb state.

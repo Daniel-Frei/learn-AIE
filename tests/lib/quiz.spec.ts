@@ -5,9 +5,11 @@ import {
   QUESTION_SOURCES,
   allQuestions,
   getSeriesIdsForSources,
+  getQuestionSourceMetadata,
   getQuestionsForFilters,
   getQuestionsForMode,
   getQuestionsForSources,
+  getTitleForMode,
   getSourceIdsForSeries,
   getTitleForSelection,
 } from "@/lib/quiz";
@@ -20,6 +22,12 @@ describe("quiz source registry helpers", () => {
   it("returns only source questions for an explicit source mode", () => {
     const first = QUESTION_SOURCES[0];
     expect(getQuestionsForMode(first.id)).toEqual(first.questions);
+  });
+
+  it("falls back to all questions for unknown legacy modes", () => {
+    expect(getQuestionsForMode("missing-source" as never)).toEqual(
+      allQuestions,
+    );
   });
 
   it("uses all sources when source selection is empty", () => {
@@ -91,6 +99,7 @@ describe("quiz source registry helpers", () => {
 
     expect(series).toBeDefined();
     expect(getSourceIdsForSeries("stanford-cme295")).toEqual(series!.sourceIds);
+    expect(getSourceIdsForSeries("missing-series" as never)).toEqual([]);
   });
 
   it("derives parent series from selected sources without selecting siblings", () => {
@@ -109,9 +118,19 @@ describe("quiz source registry helpers", () => {
     expect(getTitleForSelection([])).toContain("Select sources");
   });
 
+  it("builds titles for all, unknown, and complete source selections", () => {
+    expect(getTitleForMode("all")).toContain("All Chapters Quiz");
+    expect(getTitleForMode(QUESTION_SOURCES[0].id)).toBe(
+      QUESTION_SOURCES[0].title,
+    );
+    expect(getTitleForMode("missing-source" as never)).toBe("Quiz");
+    expect(getTitleForSelection(ALL_SOURCE_IDS)).toContain("All Chapters Quiz");
+  });
+
   it("builds a source-specific title for a single source", () => {
     const source = QUESTION_SOURCES[0];
     expect(getTitleForSelection([source.id])).toBe(source.title);
+    expect(getTitleForSelection(["missing-source" as never])).toBe("Quiz");
   });
 
   it("builds a topic-based title when only topics are selected", () => {
@@ -122,6 +141,22 @@ describe("quiz source registry helpers", () => {
     const title = getTitleForSelection(ALL_SOURCE_IDS.slice(0, 3));
     expect(title).toContain("Custom Quiz");
     expect(title).toContain("+1 more");
+    expect(getTitleForSelection(ALL_SOURCE_IDS.slice(0, 2))).not.toContain(
+      "more",
+    );
+  });
+
+  it("looks up source metadata for registered question ids", () => {
+    const source = QUESTION_SOURCES[0];
+    const firstQuestion = source.questions[0];
+
+    expect(getQuestionSourceMetadata(firstQuestion.id)).toMatchObject({
+      sourceId: source.id,
+      sourceLabel: source.label,
+      seriesId: source.seriesId,
+      topic: source.topic,
+    });
+    expect(getQuestionSourceMetadata("missing-question")).toBeNull();
   });
 
   it("registers newly added MIT 6.S191, linear algebra, and LangChain sources", () => {

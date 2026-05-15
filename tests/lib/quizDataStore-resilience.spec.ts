@@ -9,9 +9,28 @@ import {
   recordQuizAnswerForParticipant,
 } from "@/lib/server/quizDataService";
 
-function makeFailingStore(): QuizDataStore {
+function makeFailingStore(message = "fetch failed"): QuizDataStore {
   const fail = async (): Promise<never> => {
-    throw new Error("fetch failed");
+    throw new Error(message);
+  };
+
+  return {
+    getParticipant: fail,
+    upsertParticipant: fail,
+    listQuestionRatings: fail,
+    getQuestionRating: fail,
+    upsertQuestionRating: fail,
+    hasAnswerAttempt: fail,
+    appendAnswerAttempt: fail,
+    listQuestionReports: fail,
+    hasQuestionReport: fail,
+    appendQuestionReport: fail,
+  };
+}
+
+function makeStringThrowingStore(): QuizDataStore {
+  const fail = async (): Promise<never> => {
+    throw "fetch failed";
   };
 
   return {
@@ -41,6 +60,7 @@ describe("resilient quiz data store", () => {
     expect(state.ratingState.user.gamesPlayed).toBe(0);
     expect(state.reportSummary.totalReportCount).toBe(0);
     expect(state.legacyMigrationCompleted).toBe(false);
+    await expect(store.getParticipant("participant-a")).resolves.toBeNull();
   });
 
   it("keeps answer writes working after a transient Supabase failure", async () => {
@@ -68,5 +88,27 @@ describe("resilient quiz data store", () => {
     expect(
       nextState.ratingState.questions["mit15773-l4-q1"]?.legacyCorrect,
     ).toBe(1);
+  });
+
+  it("rethrows non-transient primary store failures", async () => {
+    const store = new ResilientQuizDataStore(
+      makeFailingStore("permission denied"),
+      new InMemoryQuizDataStore(),
+    );
+
+    await expect(store.getParticipant("participant-a")).rejects.toThrow(
+      "permission denied",
+    );
+  });
+
+  it("treats non-Error throws as non-transient failures", async () => {
+    const store = new ResilientQuizDataStore(
+      makeStringThrowingStore(),
+      new InMemoryQuizDataStore(),
+    );
+
+    await expect(store.getParticipant("participant-a")).rejects.toBe(
+      "fetch failed",
+    );
   });
 });

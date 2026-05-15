@@ -7,9 +7,18 @@ import {
   evaluateAnswer,
   getEligibleQuestionIds,
   pickClimbQuestionId,
+  shuffleItems,
 } from "@/lib/quizSession";
 
 describe("quiz session helpers", () => {
+  it("shuffles items without mutating the original array", () => {
+    const original = ["a", "b", "c"];
+    const shuffled = shuffleItems(original, () => 0);
+
+    expect(shuffled).toEqual(["b", "c", "a"]);
+    expect(original).toEqual(["a", "b", "c"]);
+  });
+
   it("evaluates multi-select answers and mistake counts", () => {
     const options = [
       { text: "A", isCorrect: true },
@@ -95,11 +104,67 @@ describe("quiz session helpers", () => {
     );
   });
 
+  it("returns no climb question when the filtered pool is empty", () => {
+    expect(pickClimbQuestionId([], createDefaultRatingState(), [])).toBeNull();
+  });
+
+  it("returns null if random selection falls outside the climb shortlist", () => {
+    const pool: Question[] = [
+      {
+        id: "medium-question",
+        chapter: 1,
+        difficulty: "medium",
+        prompt: "Medium",
+        options: [],
+        explanation: "",
+      },
+    ];
+
+    expect(
+      pickClimbQuestionId(pool, createDefaultRatingState(), [], () => 1),
+    ).toBe(null);
+  });
+
+  it("penalizes recently seen climb questions", () => {
+    const ratingState = {
+      ...createDefaultRatingState(),
+      user: { ...createDefaultRatingState().user, rating: 1600 },
+    };
+    const pool: Question[] = [
+      {
+        id: "medium-question",
+        chapter: 1,
+        difficulty: "medium",
+        prompt: "Medium",
+        options: [],
+        explanation: "",
+      },
+      {
+        id: "hard-question",
+        chapter: 1,
+        difficulty: "hard",
+        prompt: "Hard",
+        options: [],
+        explanation: "",
+      },
+    ];
+
+    expect(
+      pickClimbQuestionId(pool, ratingState, ["medium-question"], () => 0),
+    ).toBe("hard-question");
+  });
+
   it("builds absolute mobile API URLs", () => {
     expect(
       buildQuizApiUrl("http://localhost:3101", "/api/quiz-state", {
         participantId: "abc 123",
       }),
     ).toBe("http://localhost:3101/api/quiz-state?participantId=abc+123");
+    expect(buildQuizApiUrl("http://localhost:3101/", "/api/quiz-state")).toBe(
+      "http://localhost:3101/api/quiz-state",
+    );
+    expect(() => buildQuizApiUrl(" ", "/api/quiz-state")).toThrow(
+      "API base URL is required.",
+    );
   });
 });
