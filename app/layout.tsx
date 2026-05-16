@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AIE Quiz",
-  description: "Quiz for Artificial Intelligence Engineering",
+  title: "Learning AI",
+  description: "Quiz for learning artificial intelligence concepts",
 };
 
 export default function RootLayout({

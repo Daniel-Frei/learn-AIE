@@ -9,6 +9,7 @@ This file captures durable process preferences so future tasks can follow them b
 - When behavior changes, add or update tests.
 - This repository is intended to be public on GitHub. Do not commit real credentials, local `.env*` files, generated server logs, participant identifiers, or other machine/user-specific data.
 - Elenthos skills are installed as a Git submodule at `.codex/skills/elenthos`; use the `skill-*` Makefile targets to update or publish them.
+- Formatting should not rewrite local agent state or skill submodules under `.codex`; keep those paths out of app formatting scope.
 
 ## Project Structure
 
@@ -27,7 +28,9 @@ This file captures durable process preferences so future tasks can follow them b
 - Lint: `make lint`
 - Type check: `make types-check`
 - Unit tests: `make test`
+- Focused Vitest runs: `npm run test:focused -- path/to/file.spec.ts` to avoid misleading global coverage failures when running only one test file.
 - E2E tests: `npm run e2e` or `npm run e2e:ui`
+- Windows Start Menu launcher install/uninstall: `make install-windows-start-menu` / `make uninstall-windows-start-menu`
 - Mobile dev server: `npm run mobile:start`
 - Mobile Android/iOS/web launchers: `npm run mobile:android`, `npm run mobile:ios`, `npm run mobile:web`
 - Mobile checks: `npm run mobile:lint`, `npm run mobile:types-check`

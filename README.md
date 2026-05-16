@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Learning AI
+
+Learning AI is a Next.js + TypeScript quiz app for studying artificial intelligence concepts.
 
 ## Public Repository Safety
 
@@ -14,19 +16,37 @@ Client-exposed Supabase publishable keys are expected for web/mobile clients, bu
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies and run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+make ci
+make start
 ```
 
 Open [http://localhost:43191](http://localhost:43191) with your browser to see the result.
+
+## Windows Start Menu Launcher
+
+On Windows, install a per-user Start Menu shortcut named `Learning AI` from a cloned checkout:
+
+```powershell
+make install-windows-start-menu
+```
+
+If you prefer npm for setup, run the equivalent script:
+
+```powershell
+npm run windows:start-menu:install
+```
+
+After installation, press Windows, search for `Learning AI`, and press Enter. The shortcut opens a PowerShell window in this repository and runs `make start`.
+The installed shortcut expects `make` to be available on `PATH`.
+
+To remove the shortcut:
+
+```powershell
+make uninstall-windows-start-menu
+```
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 

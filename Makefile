@@ -1,4 +1,4 @@
-.PHONY: ci install check format-check lint types-check test mobile-start mobile-android mobile-ios mobile-web mobile-lint mobile-types-check
+.PHONY: ci install check format-check lint types-check test install-windows-start-menu uninstall-windows-start-menu mobile-start mobile-android mobile-ios mobile-web mobile-lint mobile-types-check
 
 ci:
 	npm ci
@@ -23,6 +23,12 @@ types-check:
 
 test:
 	npm run test
+
+install-windows-start-menu:
+	powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/install-windows-start-menu.ps1
+
+uninstall-windows-start-menu:
+	powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/install-windows-start-menu.ps1 -Uninstall
 
 mobile-start:
 	npm run mobile:start

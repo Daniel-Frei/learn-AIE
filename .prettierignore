@@ -1,0 +1,15 @@
+# Dependencies and generated output
+node_modules/
+.next/
+out/
+build/
+coverage/
+playwright-report*/
+test-results*/
+.tmp/
+
+# Local agent state and skill submodules
+.codex/
+
+# Expo generated state
+apps/mobile/.expo/

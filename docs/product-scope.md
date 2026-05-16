@@ -2,6 +2,7 @@
 
 ## Product
 
+- The user-facing app name is `Learning AI`.
 - A Next.js + TypeScript quiz web app focused on deep learning, NLP, transformers, and reinforcement learning study content.
 - An Expo React Native mobile app under `apps/mobile` lets users practice the same bundled question bank on iOS/Android while away from the desktop web UI.
 - Users can choose lecture series/books, specific sources, topic categories (`RL`, `DL`, `NLP`, `Math`), and question Elo ranges, answer multi-select quiz questions, and view explanations.
@@ -15,6 +16,7 @@
 ## Current Behavior
 
 - Main quiz UI lives in `/app/page.tsx`.
+- On Windows, users can install a per-user Start Menu shortcut named `Learning AI`; launching it runs `make start` from the cloned repository.
 - Question banks are maintained in `lib/*` and `lib/lectures/*`.
 - Quiz source registry includes MIT 6.S191 2025 lectures L1-L6, Crash Course Linear Algebra L1, and LangChain Deep Agents as selectable practice sources.
 - Explanation endpoint exists at `/api/explain` and proxies to an LLM helper in `lib/llm/explain.ts`.
