@@ -5,6 +5,7 @@ This file captures durable process preferences so future tasks can follow them b
 ## Repo Conventions
 
 - Source of truth for scope and behavior is `docs/*`.
+- The public README should market the project to both learners and potential open-source contributors while staying grounded in documented product behavior.
 - Keep changes small and reviewable; avoid large refactors unless requested.
 - When behavior changes, add or update tests.
 - This repository is intended to be public on GitHub. Do not commit real credentials, local `.env*` files, generated server logs, participant identifiers, or other machine/user-specific data.
