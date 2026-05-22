@@ -326,16 +326,26 @@ export default function QuizScreen() {
   };
 
   const submitReport = async () => {
-    const didSubmit = await quiz.submitQuestionReport(reportComment);
-    if (!didSubmit) {
+    if (!reportComment.trim()) {
       setReportStatus("Enter a comment before submitting.");
       return;
     }
 
+    if (!quiz.profile) {
+      setReportStatus("Sign in to submit question reports.");
+      return;
+    }
+
+    const didSubmit = await quiz.submitQuestionReport(reportComment);
+    if (!didSubmit) {
+      setReportStatus(
+        "Report could not be submitted. Check sync and try again.",
+      );
+      return;
+    }
+
     setReportComment("");
-    setReportStatus(
-      quiz.profile ? "Report saved for sync." : "Report saved locally.",
-    );
+    setReportStatus("Report submitted.");
     setIsReportOpen(false);
   };
 
@@ -367,9 +377,6 @@ export default function QuizScreen() {
         <View style={styles.header}>
           <Text style={styles.eyebrow}>Book Quiz Mobile</Text>
           <Text style={styles.title}>{title}</Text>
-          <Text style={styles.helperText}>
-            Select all true statements, then submit.
-          </Text>
 
           <View style={styles.statsGrid}>
             <View style={styles.statBox}>
@@ -393,8 +400,7 @@ export default function QuizScreen() {
               Profile: {quiz.profile?.email ?? "local guest"}
             </Text>
             <Text style={styles.statusMessage}>
-              Queued: {quiz.queuedAnswerCount} answers, {quiz.queuedReportCount}{" "}
-              reports
+              Queued answers: {quiz.queuedAnswerCount}
             </Text>
             {quiz.syncMessage ? (
               <Text style={styles.statusMessage}>{quiz.syncMessage}</Text>
@@ -547,22 +553,34 @@ export default function QuizScreen() {
               );
               return (
                 <View key={series.id} style={styles.seriesBlock}>
-                  <Pressable
-                    onPress={() => toggleSeries(series.id)}
+                  <View
                     style={[styles.seriesButton, active && styles.seriesActive]}
                   >
-                    <Text
-                      style={[
-                        styles.seriesTitle,
-                        active && styles.seriesTitleActive,
-                      ]}
-                    >
-                      {active ? "[x]" : "[ ]"} {series.label}
-                    </Text>
+                    <View style={styles.seriesTitleRow}>
+                      <Pressable
+                        accessibilityRole="checkbox"
+                        accessibilityState={{ checked: active }}
+                        accessibilityLabel={series.label}
+                        onPress={() => toggleSeries(series.id)}
+                        style={styles.seriesCheckbox}
+                      >
+                        <Text style={styles.optionCheck}>
+                          {active ? "[x]" : "[ ]"}
+                        </Text>
+                      </Pressable>
+                      <Text
+                        style={[
+                          styles.seriesTitle,
+                          active && styles.seriesTitleActive,
+                        ]}
+                      >
+                        {series.label}
+                      </Text>
+                    </View>
                     <Text style={styles.seriesCount}>
                       {sources.length} lectures/chapters
                     </Text>
-                  </Pressable>
+                  </View>
                   {sources.map((source) => {
                     const sourceActive = pendingSources.includes(source.id);
                     return (
@@ -644,6 +662,13 @@ export default function QuizScreen() {
               <Text style={styles.questionPrompt}>
                 {formatStudyText(quiz.currentQuestion.prompt)}
               </Text>
+
+              {quiz.currentQuestionContext ? (
+                <Text style={styles.questionContext}>
+                  <Text style={styles.questionContextLabel}>Context: </Text>
+                  {quiz.currentQuestionContext}
+                </Text>
+              ) : null}
 
               <View style={styles.optionsBlock}>
                 {quiz.shuffledOptions.map((option, index) => {
@@ -956,6 +981,14 @@ const styles = StyleSheet.create({
     borderColor: "#38bdf8",
     backgroundColor: "#082f49",
   },
+  seriesTitleRow: {
+    alignItems: "center",
+    flexDirection: "row",
+    gap: 8,
+  },
+  seriesCheckbox: {
+    paddingVertical: 2,
+  },
   seriesTitle: {
     color: "#e2e8f0",
     fontSize: 14,
@@ -1059,6 +1092,15 @@ const styles = StyleSheet.create({
     fontSize: 19,
     fontWeight: "700",
     lineHeight: 26,
+  },
+  questionContext: {
+    color: "#64748b",
+    fontSize: 12,
+    lineHeight: 18,
+  },
+  questionContextLabel: {
+    color: "#475569",
+    fontWeight: "700",
   },
   optionsBlock: {
     gap: 10,

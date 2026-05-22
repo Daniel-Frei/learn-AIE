@@ -7,7 +7,8 @@
 - An Expo React Native mobile app under `apps/mobile` lets users practice the same bundled question bank on iOS/Android while away from the desktop web UI.
 - Users can choose lecture series/books, specific sources, topic categories (`RL`, `DL`, `NLP`, `Math`), and question Elo ranges, answer multi-select quiz questions, and view explanations.
 - The quiz shows each question's shared raw rating as its visible "Elo" label and shows a per-question timer that starts at zero and caps at 3 minutes.
-- Users can report a visible question with free-text comments; reports are stored centrally in Supabase Postgres and can be exported as JSON for offline review.
+- Users can report a visible question with free-text comments; new reports are stored centrally in Supabase Postgres.
+- Each question displays a short source-context sentence so randomized mixed-source practice still shows the lecture/chapter context behind the prompt.
 - Users can switch between:
   - `standard` mode (randomized from filtered pool)
   - `climb` mode (questions are biased toward current user Glicko rating with some randomness)
@@ -21,9 +22,9 @@
 - Quiz source registry includes MIT 6.S191 2025 lectures L1-L6, Crash Course Linear Algebra L1, and LangChain Deep Agents as selectable practice sources.
 - Explanation endpoint exists at `/api/explain` and proxies to an LLM helper in `lib/llm/explain.ts`.
 - Mobile uses local-first profile sync:
-  - Bundled questions, filters, timers, answer checking, generic explanations, local rating updates, and report drafting work without network.
+  - Bundled questions, filters, timers, answer checking, generic explanations, and local rating updates work without network.
   - Supabase Auth user ids are used as durable `participant_id` values for profile-linked ratings and reports.
-  - Participant Glicko rating, shared question ratings, answer attempts, and question reports sync directly with Supabase when signed in and online.
+  - Participant Glicko rating, shared question ratings, answer attempts, and signed-in question reports sync directly with Supabase when online.
   - Mobile does not depend on a developer PC or home-network server for ratings/report sync.
   - Detailed AI explanation chat still requires a reachable API host because the OpenAI key must not ship in the mobile app.
 - Shared quiz state now uses an external Supabase Postgres database:
@@ -35,9 +36,9 @@
 - Question reports are append-only in the shared database:
   - Each submit creates a separate report entry, even for the same question.
   - Each report stores the `questionId`, comment, report date, and a source/prompt snapshot for reviewer context.
-  - Reports can be exported as `quiz-question-reports.json`; production export requires a server-side `QUESTION_REPORT_EXPORT_TOKEN`.
   - Mobile clients can read only report ids and question ids for counts, not report comments or prompt snapshots.
-- Legacy local rating/report data is migrated once per participant into the shared database on first load, using an approximate replay for historical answer counts.
+- Legacy local rating data is migrated once per participant into the shared database on first load, using an approximate replay for historical answer counts.
+- Legacy browser-local question reports and old mobile queued local reports are ignored so reporting starts from the shared database state.
 
 ## Out of Scope (for now)
 

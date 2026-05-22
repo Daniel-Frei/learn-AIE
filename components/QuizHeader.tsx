@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import type { DifficultyRange, QuestionSelectionMode } from "../lib/useQuiz";
 import {
   ALL_TOPICS,
@@ -31,9 +31,6 @@ type Props = {
   accuracy: number;
   userRating: number;
   userRatingRd: number;
-  exportDifficultyJson: () => string;
-  importDifficultyFromJson: (json: string) => Promise<void>;
-  exportReportsJson: (exportToken?: string) => Promise<string>;
 };
 
 const QUESTION_ELO_FILTER_MIN = 0;
@@ -51,12 +48,8 @@ export default function QuizHeader({
   accuracy,
   userRating,
   userRatingRd,
-  exportDifficultyJson,
-  importDifficultyFromJson,
-  exportReportsJson,
 }: Props) {
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [isSelectorOpen, setIsSelectorOpen] = useState(false);
+  const [isSelectorOpen, setIsSelectorOpen] = useState(true);
   const [pendingSources, setPendingSources] =
     useState<SourceId[]>(selectedSources);
   const [pendingTopics, setPendingTopics] = useState<Topic[]>(selectedTopics);
@@ -161,97 +154,17 @@ export default function QuizHeader({
     setIsSelectorOpen(false);
   };
 
-  const handleExportClick = () => {
-    const json = exportDifficultyJson();
-    const blob = new Blob([json], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "quiz-ratings.json";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-  };
-
-  const handleImportClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const downloadJson = (json: string, filename: string) => {
-    const blob = new Blob([json], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
-  };
-
-  const handleExportReportsClick = async () => {
-    try {
-      downloadJson(await exportReportsJson(), "quiz-question-reports.json");
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "";
-      if (!message.toLowerCase().includes("bearer token")) {
-        console.error("Failed to export question reports:", err);
-        return;
-      }
-
-      const token = window.prompt("Question report export token");
-      if (!token?.trim()) return;
-
-      try {
-        downloadJson(
-          await exportReportsJson(token.trim()),
-          "quiz-question-reports.json",
-        );
-      } catch (retryErr) {
-        console.error("Failed to export question reports:", retryErr);
-      }
-    }
-  };
-
-  const handleFileChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === "string") {
-        void importDifficultyFromJson(reader.result);
-      }
-      e.target.value = "";
-    };
-    reader.readAsText(file);
-  };
-
   return (
     <header className="space-y-3">
       <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-semibold">{title}</h1>
-          <p className="text-sm text-slate-400 mt-1">
-            Multi-select questions -{" "}
-            <span className="font-semibold">select all TRUE statements</span>{" "}
-            and then submit.
-          </p>
           <p className="text-xs text-slate-400 mt-2">
-            Filters use OR logic (series/lectures/topics). Current mode:{" "}
-            <span className="font-semibold text-slate-100">
-              {selectionMode}
-            </span>
-          </p>
-          <p className="text-xs text-slate-400 mt-1">
             Glicko rating:{" "}
             <span className="font-semibold text-slate-100">
               {Math.round(userRating)}
             </span>{" "}
-            �{" "}
+            +/-{" "}
             <span className="font-semibold text-slate-100">
               {Math.round(userRatingRd)}
             </span>
@@ -266,39 +179,6 @@ export default function QuizHeader({
           >
             {isSelectorOpen ? "Close selection" : "Choose filters"}
           </button>
-
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={handleExportClick}
-              className="px-3 py-1 rounded-md bg-slate-800 border border-slate-700 text-xs"
-            >
-              Export ratings
-            </button>
-            <button
-              type="button"
-              onClick={handleImportClick}
-              className="px-3 py-1 rounded-md bg-slate-800 border border-slate-700 text-xs"
-            >
-              Import ratings
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                void handleExportReportsClick();
-              }}
-              className="px-3 py-1 rounded-md bg-slate-800 border border-slate-700 text-xs"
-            >
-              Export reports
-            </button>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="application/json"
-              className="hidden"
-              onChange={handleFileChange}
-            />
-          </div>
 
           <div className="text-xs text-slate-400">
             Answered:{" "}
@@ -406,24 +286,20 @@ export default function QuizHeader({
                   className="rounded-lg border border-slate-700 bg-slate-900/60 px-3 py-2"
                 >
                   <summary className="flex items-center justify-between gap-3 cursor-pointer list-none">
-                    <button
-                      type="button"
-                      className="flex items-center gap-2 text-sm font-semibold text-slate-100"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        togglePendingSeries(series.id);
-                      }}
-                    >
+                    <div className="flex items-center gap-2 text-sm font-semibold text-slate-100">
                       <input
                         type="checkbox"
                         aria-label={series.label}
                         checked={seriesChecked}
-                        readOnly
-                        className="pointer-events-none accent-sky-400 h-4 w-4"
+                        onClick={(e) => e.stopPropagation()}
+                        onChange={(e) => {
+                          e.stopPropagation();
+                          togglePendingSeries(series.id);
+                        }}
+                        className="accent-sky-400 h-4 w-4"
                       />
                       {series.label}
-                    </button>
+                    </div>
                     <span className="text-xs text-slate-400">
                       {seriesSources.length} lectures/chapters
                     </span>

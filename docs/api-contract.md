@@ -271,102 +271,16 @@ Persist a shared append-only question-quality report.
 }
 ```
 
-## Endpoint: `GET /api/question-reports/export`
+### Notes For Backend Integrators
 
-### Purpose
-
-Export all shared question reports as versioned JSON.
-
-### Authorization
-
-- In local development, export is allowed without a token when `QUESTION_REPORT_EXPORT_TOKEN` is not configured.
-- If `QUESTION_REPORT_EXPORT_TOKEN` is configured, callers must send `Authorization: Bearer <token>`.
-- In production (`NODE_ENV=production` or `VERCEL_ENV=production`), export is disabled unless `QUESTION_REPORT_EXPORT_TOKEN` is configured.
-
-### Success Response
-
-- Status: `200`
-
-```ts
-{
-  version: 1;
-  exportedAt: string;
-  reports: Array<{
-    id: string;
-    questionId: string;
-    comment: string;
-    reportedAt: string;
-    snapshot: {
-      sourceId: string;
-      sourceLabel: string;
-      seriesId: string;
-      seriesLabel: string;
-      topic: "RL" | "DL" | "NLP" | "Math";
-      prompt: string;
-    };
-  }>;
-}
-```
-
-### Error Responses
-
-- Status: `401`
-
-```ts
-{
-  error: "Question report export requires a valid bearer token.";
-}
-```
-
-- Status: `403`
-
-```ts
-{
-  error: "Question report export is disabled until QUESTION_REPORT_EXPORT_TOKEN is configured.";
-}
-```
-
-## Client Export: Question Reports JSON
-
-### Purpose
-
-Export locally saved question-quality reports so a reviewer can inspect flagged questions outside the app.
-
-### File Shape
-
-```ts
-{
-  version: 1;
-  exportedAt: string;
-  reports: Array<{
-    id: string;
-    questionId: string;
-    comment: string;
-    reportedAt: string;
-    snapshot: {
-      sourceId: string;
-      sourceLabel: string;
-      seriesId: string;
-      seriesLabel: string;
-      topic: "RL" | "DL" | "NLP" | "Math";
-      prompt: string;
-    };
-  }>;
-}
-```
-
-### Notes For Future Backend Work
-
-- Reports are append-only in the shared database implementation; multiple reports for the same `questionId` remain separate entries.
-- The export intentionally includes a question snapshot for offline triage without exporting answer options or correctness metadata.
-- Export is now sourced from the server rather than browser-local storage.
+- Reports are append-only in the shared database; multiple reports for the same `questionId` remain separate entries.
 - Report submission rejects empty fields, comments over `2,000` characters, prompt snapshots over `4,000` characters, labels/ids over `200` characters, and topics outside `RL`, `DL`, `NLP`, or `Math`.
 
 ## Endpoint: `POST /api/local-migration`
 
 ### Purpose
 
-Import one participant’s legacy local browser data into the shared database.
+Import one participant's legacy local browser rating data into the shared database.
 
 ### Request Body
 
@@ -374,7 +288,6 @@ Import one participant’s legacy local browser data into the shared database.
 {
   participantId: string;
   localRatingState?: unknown;
-  localReportState?: unknown;
 }
 ```
 
@@ -384,14 +297,14 @@ Import one participant’s legacy local browser data into the shared database.
 - The rating engine still uses a Glicko-2 style update internally; the timing and mistake metadata only scale the magnitude of the win/loss exchange.
 
 - Rating migration is approximate because the legacy browser store only contains aggregates, not the original event log.
-- Migration is idempotent per participant for stable report ids and deterministic synthetic answer-attempt ids.
+- Migration is idempotent per participant for deterministic synthetic answer-attempt ids.
+- Legacy local question reports are intentionally ignored; report state starts from the shared database.
 
 ## Shared Storage Environment Variables
 
 - `NEXT_PUBLIC_SUPABASE_URL` (required)
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (required for client configuration / deployment parity)
 - `SUPABASE_SERVICE_ROLE_KEY` (required for server-side route access)
-- `QUESTION_REPORT_EXPORT_TOKEN` (required in production if question report export should be enabled; keep server-side only)
 - In local development, if Supabase is unreachable the server falls back to an in-memory quiz store for the current process so the app can still load. That fallback is not durable and resets on restart.
 
 ## Mobile Client Configuration
@@ -402,6 +315,7 @@ Import one participant’s legacy local browser data into the shared database.
 - Mobile profile sync uses Supabase Auth directly:
   - Auth user id is used as `participants.participant_id`.
   - `participants`, `question_ratings`, `answer_attempts`, and `question_reports` are accessed with RLS policies from `supabase/migrations/20260511160000_mobile_profiles_rls.sql`.
-  - Mobile clients can read only `id` and `question_id` from shared question reports for counts; report comments and prompt snapshots remain server-export-only.
-  - Answers and reports are queued locally when offline, then flushed to Supabase when the user signs in and sync is reachable.
+  - Mobile clients can read only `id` and `question_id` from shared question reports for counts; report comments and prompt snapshots remain server-side.
+  - Answers are queued locally when offline, then flushed to Supabase when the user signs in and sync is reachable.
+  - Question reports require a signed-in profile and are submitted to Supabase; old locally queued mobile reports are ignored.
 - Question content is still bundled from the repository question bank; Supabase sync currently covers ratings, attempts, reports, and profile state, not remote question-bank content.

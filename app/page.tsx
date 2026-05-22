@@ -17,6 +17,7 @@ export default function QuizPage() {
     availableCount,
     currentIndex,
     currentQuestion,
+    currentQuestionContext,
     currentQuestionRating,
     questionElapsedMs,
     shuffledOptions,
@@ -30,9 +31,6 @@ export default function QuizPage() {
     accuracy,
     userRating,
     userRatingRd,
-    exportDifficultyJson,
-    importDifficultyFromJson,
-    exportReportsJson,
     submitQuestionReport,
   } = useQuiz();
 
@@ -55,9 +53,6 @@ export default function QuizPage() {
           accuracy={accuracy}
           userRating={userRating}
           userRatingRd={userRatingRd}
-          exportDifficultyJson={exportDifficultyJson}
-          importDifficultyFromJson={importDifficultyFromJson}
-          exportReportsJson={exportReportsJson}
         />
 
         <QuizQuestionSection
@@ -65,6 +60,7 @@ export default function QuizPage() {
           currentIndex={currentIndex}
           questionRating={currentQuestionRating}
           questionElapsedMs={questionElapsedMs}
+          questionContext={currentQuestionContext}
           currentQuestion={currentQuestion}
           shuffledOptions={shuffledOptions}
           selectedIndexes={selectedIndexes}

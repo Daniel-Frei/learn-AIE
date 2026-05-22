@@ -1,8 +1,5 @@
 import type { Difficulty } from "./quiz";
-import type {
-  QuestionReportDraft,
-  QuestionReportExportV1,
-} from "./questionReportsStore";
+import type { QuestionReportDraft } from "./questionReportsStore";
 import type {
   QuestionRating,
   RatingEntity,
@@ -50,9 +47,6 @@ export type SubmitQuestionReportResponse = {
 export type LocalMigrationRequest = {
   participantId: string;
   localRatingState?: unknown;
-  localReportState?: unknown;
 };
 
 export type LocalMigrationResponse = QuizStateResponse;
-
-export type ReportsExportResponse = QuestionReportExportV1;

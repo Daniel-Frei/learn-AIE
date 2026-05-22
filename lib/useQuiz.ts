@@ -9,18 +9,16 @@ import {
 } from "./client/participantStorage";
 import {
   allQuestions,
+  getQuestionSourceContext,
   getQuestionSourceMetadata,
   getQuestionsForFilters,
   type SourceId,
   type Topic,
 } from "./quiz";
 import { loadRatingState } from "./difficultyStore";
-import { loadQuestionReports } from "./questionReportsStore";
 import {
   createDefaultRatingState,
-  exportRatingsJson,
   getQuestionRatingEstimate,
-  importRatingsJson,
   QUESTION_TIME_LIMIT_MS,
   type QuestionMetadataMap,
   type RatingStateV2,
@@ -41,7 +39,6 @@ import type {
   LocalMigrationResponse,
   QuizStateResponse,
   RecordAnswerResponse,
-  ReportsExportResponse,
   SubmitQuestionReportResponse,
 } from "./quizSync";
 export type { DifficultyRange, QuestionSelectionMode } from "./quizSession";
@@ -161,13 +158,11 @@ export function useQuiz() {
         }
 
         const localRatingState = loadRatingState(QUESTION_METADATA);
-        const localReportState = loadQuestionReports();
         const hasLocalRatings =
           localRatingState.user.gamesPlayed > 0 ||
           Object.keys(localRatingState.questions).length > 0;
-        const hasLocalReports = localReportState.reports.length > 0;
 
-        if (!hasLocalRatings && !hasLocalReports) {
+        if (!hasLocalRatings) {
           return;
         }
 
@@ -177,8 +172,7 @@ export function useQuiz() {
             method: "POST",
             body: JSON.stringify({
               participantId: nextParticipantId,
-              localRatingState: hasLocalRatings ? localRatingState : undefined,
-              localReportState: hasLocalReports ? localReportState : undefined,
+              localRatingState,
             }),
           },
         );
@@ -221,6 +215,11 @@ export function useQuiz() {
   ]);
 
   const currentQuestionId = currentQuestion?.id ?? null;
+
+  const currentQuestionContext = useMemo(() => {
+    if (!currentQuestion) return null;
+    return getQuestionSourceContext(currentQuestion.id);
+  }, [currentQuestion]);
 
   useEffect(() => {
     if (!currentQuestionId) {
@@ -418,50 +417,6 @@ export function useQuiz() {
     setClimbRecentIds([]);
   };
 
-  // -------- EXPORT / IMPORT HELPERS --------
-
-  const exportDifficultyJson = () => {
-    return exportRatingsJson(ratingState);
-  };
-
-  const importDifficultyFromJson = async (json: string) => {
-    if (!participantId) return;
-    const parsed = importRatingsJson(json, QUESTION_METADATA);
-    if (!parsed) return;
-
-    try {
-      const migrated = await fetchJson<LocalMigrationResponse>(
-        "/api/local-migration",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            participantId,
-            localRatingState: parsed,
-          }),
-        },
-      );
-      applyRemoteState(migrated);
-      markLegacyMigrationCompleted(participantId);
-    } catch (err) {
-      console.error("Failed to import rating JSON into remote store:", err);
-    }
-  };
-
-  const exportReportsJson = async (exportToken?: string) => {
-    const exported = await fetchJson<ReportsExportResponse>(
-      "/api/question-reports/export",
-      {
-        method: "GET",
-        headers: exportToken
-          ? {
-              authorization: `Bearer ${exportToken}`,
-            }
-          : undefined,
-      },
-    );
-    return JSON.stringify(exported, null, 2);
-  };
-
   const submitAnswer = async () => {
     if (!currentQuestion || showResult) return;
 
@@ -519,6 +474,7 @@ export function useQuiz() {
     availableCount: availableQuestions.length,
     currentIndex,
     currentQuestion,
+    currentQuestionContext,
     currentQuestionRating,
     questionElapsedMs: displayedQuestionTimerMs,
     shuffledOptions,
@@ -539,10 +495,6 @@ export function useQuiz() {
     totalReportCount,
     currentQuestionReportCount,
 
-    // export/import
-    exportDifficultyJson,
-    importDifficultyFromJson,
-    exportReportsJson,
     submitQuestionReport,
   };
 }

@@ -28,12 +28,6 @@ export type QuestionReportsStateV1 = {
   reports: QuestionReport[];
 };
 
-export type QuestionReportExportV1 = QuestionReportsStateV1 & {
-  exportedAt: string;
-};
-
-const STORAGE_KEY = "aie-quiz-question-reports-v1";
-
 function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === "object" && !Array.isArray(value);
 }
@@ -132,39 +126,6 @@ export function createDefaultQuestionReportsState(): QuestionReportsStateV1 {
   };
 }
 
-export function loadQuestionReports(): QuestionReportsStateV1 {
-  if (typeof window === "undefined") {
-    return createDefaultQuestionReportsState();
-  }
-
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return createDefaultQuestionReportsState();
-
-    const parsed = JSON.parse(raw) as unknown;
-    return (
-      sanitizeQuestionReportsState(parsed) ??
-      createDefaultQuestionReportsState()
-    );
-  } catch (err) {
-    console.error("Failed to load question reports:", err);
-    return createDefaultQuestionReportsState();
-  }
-}
-
-export function saveQuestionReports(state: QuestionReportsStateV1): void {
-  if (typeof window === "undefined") return;
-
-  try {
-    const normalized =
-      sanitizeQuestionReportsState(state) ??
-      createDefaultQuestionReportsState();
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(normalized));
-  } catch (err) {
-    console.error("Failed to save question reports:", err);
-  }
-}
-
 export function appendQuestionReport(
   state: QuestionReportsStateV1,
   draft: QuestionReportDraft,
@@ -193,21 +154,6 @@ export function appendQuestionReport(
     version: 1,
     reports: [...normalized.reports, nextReport],
   };
-}
-
-export function exportQuestionReportsJson(
-  state: QuestionReportsStateV1,
-  exportedAt: string = new Date().toISOString(),
-): string {
-  const normalized =
-    sanitizeQuestionReportsState(state) ?? createDefaultQuestionReportsState();
-  const envelope: QuestionReportExportV1 = {
-    version: 1,
-    exportedAt,
-    reports: normalized.reports,
-  };
-
-  return JSON.stringify(envelope, null, 2);
 }
 
 export function createQuestionReport(

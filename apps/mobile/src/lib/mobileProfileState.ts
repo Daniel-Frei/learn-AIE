@@ -13,10 +13,7 @@ export function rewriteQueuedParticipantIds(
       ...answer,
       participantId: profileId,
     })),
-    queuedReports: state.queuedReports.map((report) => ({
-      ...report,
-      participantId: profileId,
-    })),
+    queuedReports: [],
   };
 }
 
@@ -26,13 +23,11 @@ export function shouldMigrateGuestState(
 ): boolean {
   const profileHasProgress =
     profileState.ratingState.user.gamesPlayed > 0 ||
-    profileState.queuedAnswers.length > 0 ||
-    profileState.queuedReports.length > 0;
+    profileState.queuedAnswers.length > 0;
   const guestHasProgress =
     guestState.profileId === GUEST_PROFILE_ID &&
     (guestState.ratingState.user.gamesPlayed > 0 ||
-      guestState.queuedAnswers.length > 0 ||
-      guestState.queuedReports.length > 0);
+      guestState.queuedAnswers.length > 0);
 
   return !profileHasProgress && guestHasProgress;
 }

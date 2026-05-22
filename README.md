@@ -46,7 +46,7 @@ Useful contribution areas include:
 - Tightening explanations and prompt wording.
 - Improving quiz UX, filters, and mobile practice flows.
 - Expanding tests around rating behavior, API validation, reporting, and source selection.
-- Hardening Supabase sync and export workflows.
+- Hardening Supabase sync workflows.
 - Keeping `docs/*` accurate as product behavior evolves.
 
 The product source of truth is the `docs/` folder. If a code change alters behavior, update the relevant doc in the same change.
@@ -94,7 +94,6 @@ Core variables:
 - `OPENAI_API_KEY` enables detailed explanation chat.
 - `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` configure client Supabase access.
 - `SUPABASE_SERVICE_ROLE_KEY` enables server-side shared quiz data routes.
-- `QUESTION_REPORT_EXPORT_TOKEN` protects production question-report export.
 - `EXPO_PUBLIC_SUPABASE_URL` and `EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY` configure mobile profile sync.
 - `EXPO_PUBLIC_QUIZ_API_BASE_URL` points mobile explanation chat at a reachable Next.js API host.
 

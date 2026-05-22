@@ -14,6 +14,7 @@ type Props = {
   currentIndex: number;
   questionRating: number | null;
   questionElapsedMs: number;
+  questionContext: string | null;
   currentQuestion: Question | null;
   shuffledOptions: Option[];
   selectedIndexes: number[];
@@ -39,6 +40,7 @@ export default function QuizQuestionSection({
   currentIndex,
   questionRating,
   questionElapsedMs,
+  questionContext,
   currentQuestion,
   shuffledOptions,
   selectedIndexes,
@@ -86,10 +88,19 @@ export default function QuizQuestionSection({
         </div>
       ) : (
         <>
-          <MathText
-            text={currentQuestion!.prompt}
-            className="text-lg md:text-xl font-semibold"
-          />
+          <div className="space-y-2">
+            <MathText
+              text={currentQuestion!.prompt}
+              className="text-lg md:text-xl font-semibold"
+            />
+
+            {questionContext && (
+              <p className="text-xs leading-5 text-slate-500">
+                <span className="font-semibold text-slate-600">Context:</span>{" "}
+                {questionContext}
+              </p>
+            )}
+          </div>
 
           <div className="space-y-3">
             {shuffledOptions.map((opt, idx) => {

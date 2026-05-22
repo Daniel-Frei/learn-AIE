@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
   ALL_SOURCE_IDS,
+  QUESTION_SOURCE_CONTEXT,
   SOURCE_SERIES,
   QUESTION_SOURCES,
   allQuestions,
   getSeriesIdsForSources,
+  getQuestionSourceContext,
   getQuestionSourceMetadata,
   getQuestionsForFilters,
   getQuestionsForMode,
@@ -115,7 +117,7 @@ describe("quiz source registry helpers", () => {
   });
 
   it("builds an explicit empty-filter title when nothing is selected", () => {
-    expect(getTitleForSelection([])).toContain("Select sources");
+    expect(getTitleForSelection([])).toBe("Learning AI");
   });
 
   it("builds titles for all, unknown, and complete source selections", () => {
@@ -153,10 +155,26 @@ describe("quiz source registry helpers", () => {
     expect(getQuestionSourceMetadata(firstQuestion.id)).toMatchObject({
       sourceId: source.id,
       sourceLabel: source.label,
+      sourceContext: QUESTION_SOURCE_CONTEXT[source.id],
       seriesId: source.seriesId,
       topic: source.topic,
     });
+    expect(getQuestionSourceContext(firstQuestion.id)).toBe(
+      QUESTION_SOURCE_CONTEXT[source.id],
+    );
     expect(getQuestionSourceMetadata("missing-question")).toBeNull();
+    expect(getQuestionSourceContext("missing-question")).toBeNull();
+  });
+
+  it("defines short context text for every registered source", () => {
+    expect(Object.keys(QUESTION_SOURCE_CONTEXT).sort()).toEqual(
+      QUESTION_SOURCES.map((source) => source.id).sort(),
+    );
+    expect(
+      Object.values(QUESTION_SOURCE_CONTEXT).every(
+        (context) => context.length > 20 && context.length < 180,
+      ),
+    ).toBe(true);
   });
 
   it("registers newly added MIT 6.S191, linear algebra, and LangChain sources", () => {

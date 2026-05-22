@@ -17,9 +17,7 @@ async function openFilters(page: Page) {
   }).toPass({ timeout: 10000 });
 }
 
-test("reports a question locally and exports the report file", async ({
-  page,
-}) => {
+test("reports a question through the shared report flow", async ({ page }) => {
   await page.goto("/");
 
   await openFilters(page);
@@ -40,13 +38,10 @@ test("reports a question locally and exports the report file", async ({
     .fill("Prompt is too vague and needs clarification.");
   await page.getByRole("button", { name: /submit report/i }).click();
 
-  await expect(page.getByRole("status")).toHaveText(/report saved locally/i);
+  await expect(page.getByRole("status")).toHaveText(/report submitted/i);
   await expect(page.getByText(/reports for this question:/i)).toHaveCount(0);
   await expect(page.getByText(/reports saved locally:/i)).toHaveCount(0);
-
-  const downloadPromise = page.waitForEvent("download");
-  await page.getByRole("button", { name: /export reports/i }).click();
-  const download = await downloadPromise;
-
-  expect(download.suggestedFilename()).toBe("quiz-question-reports.json");
+  await expect(
+    page.getByRole("button", { name: /export reports/i }),
+  ).toHaveCount(0);
 });

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
+  getQuestionSourceContext,
   getQuestionSourceMetadata,
   getQuestionsForFilters,
   type Question,
@@ -329,6 +330,11 @@ export function useMobileQuiz() {
 
   const currentQuestionId = currentQuestion?.id ?? null;
 
+  const currentQuestionContext = useMemo(() => {
+    if (!currentQuestion) return null;
+    return getQuestionSourceContext(currentQuestion.id);
+  }, [currentQuestion]);
+
   useEffect(() => {
     if (!currentQuestionId) {
       questionStartedAtRef.current = null;
@@ -530,7 +536,11 @@ export function useMobileQuiz() {
   };
 
   const submitQuestionReport = async (comment: string): Promise<boolean> => {
-    if (!currentQuestion) return false;
+    if (!currentQuestion || !profile) {
+      setSyncStatus("local");
+      setSyncMessage("Sign in to submit question reports.");
+      return false;
+    }
 
     const trimmedComment = comment.trim();
     if (!trimmedComment) return false;
@@ -538,7 +548,7 @@ export function useMobileQuiz() {
     const sourceMetadata = getQuestionSourceMetadata(currentQuestion.id);
     if (!sourceMetadata) return false;
 
-    const participantId = profile?.id ?? GUEST_PROFILE_ID;
+    const participantId = profile.id;
     const reportId = makeId("report");
     const reportedAt = new Date().toISOString();
     const queuedReport: QueuedQuestionReport = {
@@ -563,23 +573,34 @@ export function useMobileQuiz() {
     const nextState: MobilePersistedQuizState = {
       ...persistedState,
       profileId: participantId,
-      reportCountsByQuestion: {
-        ...persistedState.reportCountsByQuestion,
-        [currentQuestion.id]: nextQuestionReportCount,
-      },
-      totalReportCount: persistedState.totalReportCount + 1,
       queuedReports: [...persistedState.queuedReports, queuedReport],
     };
 
-    await applyPersistedState(nextState);
-
-    if (profile) {
-      void syncNow(nextState);
-    } else {
-      setSyncStatus("local");
-      setSyncMessage("Report saved locally. Sign in to sync it.");
+    setSyncStatus("syncing");
+    try {
+      const syncedState = await syncMobileQuizState(nextState);
+      await applyPersistedState({
+        ...syncedState,
+        reportCountsByQuestion: {
+          ...syncedState.reportCountsByQuestion,
+          [currentQuestion.id]:
+            syncedState.reportCountsByQuestion[currentQuestion.id] ??
+            nextQuestionReportCount,
+        },
+        totalReportCount: Math.max(
+          syncedState.totalReportCount,
+          persistedState.totalReportCount + 1,
+        ),
+      });
+      setSyncStatus("synced");
+      setSyncMessage("");
+      return true;
+    } catch (error) {
+      console.error("Failed to submit mobile question report:", error);
+      setSyncStatus("sync-error");
+      setSyncMessage("Report was not submitted. Check sync and try again.");
+      return false;
     }
-    return true;
   };
 
   return {
@@ -591,6 +612,7 @@ export function useMobileQuiz() {
     availableCount: availableQuestions.length,
     currentIndex,
     currentQuestion,
+    currentQuestionContext,
     currentQuestionRating,
     currentQuestionReportCount,
     questionElapsedMs: displayedQuestionTimerMs,
@@ -607,7 +629,6 @@ export function useMobileQuiz() {
     userRatingRd: ratingState.user.rd,
     totalReportCount,
     queuedAnswerCount: persistedState.queuedAnswers.length,
-    queuedReportCount: persistedState.queuedReports.length,
     submitQuestionReport,
     participantId: profile?.id ?? GUEST_PROFILE_ID,
     profile,

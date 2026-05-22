@@ -21,7 +21,15 @@ test("renders core quiz controls on the home page", async ({ page }) => {
   await page.goto("/");
 
   await expect(
-    page.getByRole("button", { name: /choose filters/i }),
+    page.getByRole("heading", { name: "Learning AI" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /close selection/i }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      /pick mode, series, lectures, topics and question elo range/i,
+    ),
   ).toBeVisible();
   await expect(
     page.getByText(/no questions for this selection/i),
@@ -41,11 +49,14 @@ test("updates filter checkboxes immediately after clicking", async ({
   const seriesCheckbox = page.getByRole("checkbox", {
     name: "AIE Foundations Book",
   });
-  const seriesToggle = page
-    .locator("summary button")
-    .filter({ hasText: "AIE Foundations Book" });
+  const seriesLabel = page
+    .locator("summary")
+    .filter({ hasText: "AIE Foundations Book" })
+    .getByText("AIE Foundations Book");
   await expect(seriesCheckbox).not.toBeChecked();
-  await seriesToggle.click();
+  await seriesLabel.click();
+  await expect(seriesCheckbox).not.toBeChecked();
+  await seriesCheckbox.click();
   await expect(seriesCheckbox).toBeChecked();
 });
 

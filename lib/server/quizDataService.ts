@@ -1,10 +1,7 @@
 import { randomUUID } from "node:crypto";
 import {
   createQuestionReport,
-  exportQuestionReportsJson,
-  sanitizeQuestionReportsState,
   type QuestionReportDraft,
-  type QuestionReportExportV1,
 } from "../questionReportsStore";
 import {
   createDefaultRatingState,
@@ -359,32 +356,10 @@ export async function submitQuestionReportForParticipant(
   return buildReportSummary(await store.listQuestionReports());
 }
 
-export async function exportQuestionReportsFromStore(
-  store: QuizDataStore = getQuizDataStore(),
-): Promise<QuestionReportExportV1> {
-  const reports = await store.listQuestionReports();
-  const json = exportQuestionReportsJson(
-    {
-      version: 1,
-      reports: reports.map((report) => ({
-        id: report.id,
-        questionId: report.questionId,
-        comment: report.comment,
-        reportedAt: report.reportedAt,
-        snapshot: report.snapshot,
-      })),
-    },
-    new Date().toISOString(),
-  );
-
-  return JSON.parse(json) as QuestionReportExportV1;
-}
-
 export async function migrateLocalStateForParticipant(
   params: {
     participantId: string;
     localRatingState?: unknown;
-    localReportState?: unknown;
     questionMetadata: QuestionMetadataMap;
   },
   store: QuizDataStore = getQuizDataStore(),
@@ -440,27 +415,6 @@ export async function migrateLocalStateForParticipant(
         );
         tick += 1;
       }
-    }
-  }
-
-  const localReports = params.localReportState
-    ? sanitizeQuestionReportsState(params.localReportState)
-    : null;
-  if (localReports) {
-    for (const report of localReports.reports) {
-      await submitQuestionReportForParticipant(
-        {
-          participantId: params.participantId,
-          draft: {
-            questionId: report.questionId,
-            comment: report.comment,
-            snapshot: report.snapshot,
-          },
-          reportId: report.id,
-          reportedAt: report.reportedAt,
-        },
-        store,
-      );
     }
   }
 

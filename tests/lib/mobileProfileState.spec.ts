@@ -47,6 +47,12 @@ describe("mobile profile state helpers", () => {
     expect(
       shouldMigrateGuestState(
         makeState("profile-a"),
+        makeState("guest", { queuedReports: [{} as never] }),
+      ),
+    ).toBe(false);
+    expect(
+      shouldMigrateGuestState(
+        makeState("profile-a"),
         makeState("profile-b", { queuedReports: [{} as never] }),
       ),
     ).toBe(false);
@@ -91,6 +97,6 @@ describe("mobile profile state helpers", () => {
 
     expect(migrated.profileId).toBe("profile-a");
     expect(migrated.queuedAnswers[0].participantId).toBe("profile-a");
-    expect(migrated.queuedReports[0].participantId).toBe("profile-a");
+    expect(migrated.queuedReports).toEqual([]);
   });
 });

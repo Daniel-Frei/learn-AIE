@@ -96,8 +96,7 @@ function QuestionReportControls({ submitQuestionReport }: ReportControlsProps) {
             <button
               type="button"
               onClick={async () => {
-                const didSubmit = await submitQuestionReport(reportComment);
-                if (!didSubmit) {
+                if (!reportComment.trim()) {
                   setReportError(
                     "Enter a comment before submitting the report.",
                   );
@@ -105,9 +104,16 @@ function QuestionReportControls({ submitQuestionReport }: ReportControlsProps) {
                   return;
                 }
 
+                const didSubmit = await submitQuestionReport(reportComment);
+                if (!didSubmit) {
+                  setReportError("Report could not be submitted. Try again.");
+                  setReportSuccess("");
+                  return;
+                }
+
                 setReportComment("");
                 setReportError("");
-                setReportSuccess("Report saved locally.");
+                setReportSuccess("Report submitted.");
                 setIsReportOpen(false);
               }}
               className="px-3 py-2 rounded-lg bg-amber-400 text-slate-950 font-semibold text-sm"

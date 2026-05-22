@@ -50,7 +50,8 @@ This file captures durable process preferences so future tasks can follow them b
 - Keep expanding coverage for core functionality, not just smoke tests.
 - The unit-test command enforces at least 95% statements, branches, functions, and lines for the configured core logic/API coverage scope.
 - Prioritize tests for quiz source selection/title logic, difficulty rating behavior, and API validation/error handling.
-- For question reporting, prefer append-only shared report entries and include source/prompt snapshot context in exported files.
+- For question reporting, prefer append-only shared database entries and include source/prompt snapshot context for reviewer triage.
+- Do not revive browser-local report storage or report export/import UI; legacy local reports should be ignored.
 - For shared quiz data, use anonymous per-device participants in v1: question difficulty is global, but each participant keeps their own rating/climb state.
 
 ## Shared Data Operations

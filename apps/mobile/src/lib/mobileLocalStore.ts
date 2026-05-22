@@ -64,20 +64,6 @@ function sanitizeQueuedAnswers(value: unknown): QueuedAnswerAttempt[] {
   });
 }
 
-function sanitizeQueuedReports(value: unknown): QueuedQuestionReport[] {
-  if (!Array.isArray(value)) return [];
-
-  return value.filter((item): item is QueuedQuestionReport => {
-    return (
-      isRecord(item) &&
-      typeof item.reportId === "string" &&
-      typeof item.participantId === "string" &&
-      typeof item.reportedAt === "string" &&
-      isRecord(item.draft)
-    );
-  });
-}
-
 export function createDefaultMobileQuizState(
   profileId = GUEST_PROFILE_ID,
 ): MobilePersistedQuizState {
@@ -118,7 +104,7 @@ export async function loadMobileQuizState(
           ? parsed.totalReportCount
           : 0,
       queuedAnswers: sanitizeQueuedAnswers(parsed.queuedAnswers),
-      queuedReports: sanitizeQueuedReports(parsed.queuedReports),
+      queuedReports: [],
     };
   } catch (error) {
     console.error("Failed to load mobile quiz state:", error);

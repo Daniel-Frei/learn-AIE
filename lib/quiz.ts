@@ -71,6 +71,7 @@ export type QuestionSourceMetadata = {
   sourceId: SourceId;
   sourceLabel: string;
   sourceTitle: string;
+  sourceContext: string;
   seriesId: SourceSeriesId;
   seriesLabel: string;
   topic: Topic;
@@ -410,6 +411,80 @@ export const QUESTION_SOURCES = [
 ];
 
 export type SourceId = (typeof QUESTION_SOURCES)[number]["id"];
+export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
+  "chapter-1":
+    "NLP foundations chapter about text data, tokens, embeddings, and basic neural language-model concepts.",
+  "chapter-2":
+    "Transformer chapter about attention, positional information, encoder-decoder structure, and modern NLP model behavior.",
+  "chapter-3":
+    "LLM and prompting chapter about scaling, instruction following, context use, and practical prompt design.",
+  "aie-build-app-ch2":
+    "Foundation-model chapter about model capabilities, embeddings, tokenization, prompting, and application fit.",
+  "aie-build-app-ch3":
+    "Evaluation chapter about measuring foundation-model applications, test sets, metrics, and failure analysis.",
+  "aie-build-app-ch4":
+    "Agent-building chapter about tool use, planning loops, retrieval, memory, and production agent behavior.",
+  "cme295-lect1":
+    "Transformer introduction covering attention, positional encoding, sequence modeling, and why transformers scale well.",
+  "cme295-lect2":
+    "Transformer-models lecture about architectural variants, training tricks, tokenization, and efficient inference considerations.",
+  "cme295-lect3":
+    "LLM lecture about scaling, mixture-of-experts, inference, decoding, and deployment tradeoffs.",
+  "cme295-lect4":
+    "LLM training lecture about pretraining, post-training, alignment, data mixtures, and scaling laws.",
+  "cs224r-lect1":
+    "Deep reinforcement learning introduction about MDPs, value functions, policies, and the RL problem setup.",
+  "cs224r-lect2":
+    "Reinforcement learning lecture about imitation learning, behavior cloning, distribution shift, and expressive policies.",
+  "cs224r-lect3":
+    "Policy-gradient lecture about stochastic policies, score-function estimators, variance reduction, and optimization.",
+  "cs224r-lect4":
+    "Actor-critic lecture about value baselines, advantage estimation, bootstrapping, and policy updates.",
+  "cs224r-lect5":
+    "Off-policy actor-critic lecture about replay data, importance sampling, Q-learning links, and stability challenges.",
+  "other-rl-intro":
+    "Introductory reinforcement learning material about agents, rewards, environments, and value-based learning.",
+  "mit6s191-l1":
+    "Deep learning introduction about neural networks, representation learning, optimization, and core model families.",
+  "mit6s191-l2":
+    "Sequence-modeling lecture about RNNs, attention, transformers, and temporal data.",
+  "mit6s191-l5":
+    "Deep reinforcement learning lecture about RL objectives, Q-learning, policy gradients, and neural control.",
+  "mit6s191-l3":
+    "Computer vision lecture about convolutional neural networks, image features, pooling, and visual recognition.",
+  "mit6s191-l4":
+    "Generative modeling lecture about latent variables, VAEs, GANs, diffusion, and sampling.",
+  "mit6s191-l6":
+    "Language-model frontiers lecture about modern LMs, multimodal systems, agents, and emerging capabilities.",
+  "mit15773-l1":
+    "Hands-on deep learning lecture introducing neural networks, training loops, activations, and practical ML workflows.",
+  "mit15773-l2":
+    "Training deep networks lecture about optimization, regularization, initialization, normalization, and debugging training.",
+  "mit15773-l3":
+    "Computer vision lecture about CNNs, image classification, feature hierarchies, and visual model evaluation.",
+  "mit15773-l4":
+    "Transfer learning lecture about fine-tuning, pretrained vision models, limited data, and adaptation choices.",
+  "mit15773-l5":
+    "NLP basics lecture about text preprocessing, embeddings, language modeling, and sequence representations.",
+  "mit15773-l6":
+    "Embeddings lecture about vector representations, similarity, retrieval, and learned semantic spaces.",
+  "mit15773-l7":
+    "Transformers lecture about self-attention, positional information, encoder-decoder designs, and NLP applications.",
+  "mit15773-l8":
+    "Advanced transformers lecture about self-supervised learning, pretraining objectives, transfer, and representation reuse.",
+  "mit15773-l9":
+    "LLM lecture about transformer language models, prompting, scaling, and generation behavior.",
+  "mit15773-l10":
+    "Advanced LLM lecture about instruction tuning, alignment, retrieval/tool use, and deployment constraints.",
+  "mit15773-l11":
+    "Diffusion lecture about denoising objectives, score-based generation, sampling schedules, and image synthesis.",
+  "crash-linalg-l1":
+    "Linear algebra lesson about vectors, geometry, dot products, projections, and how they support ML intuition.",
+  "langchain-deepagents":
+    "LangChain Deep Agents material about planning, tools, subagents, memory, and agent orchestration.",
+  other:
+    "Mixed AI question set covering general deep learning and machine-learning concepts from miscellaneous sources.",
+};
 export type Mode = SourceId | "all";
 export const ALL_TOPICS: Topic[] = ["RL", "DL", "NLP", "Math"];
 export const SOURCE_SERIES: {
@@ -464,6 +539,7 @@ const QUESTION_SOURCE_METADATA_BY_ID = new Map<string, QuestionSourceMetadata>(
         sourceId: source.id,
         sourceLabel: source.label,
         sourceTitle: source.title,
+        sourceContext: QUESTION_SOURCE_CONTEXT[source.id],
         seriesId: source.seriesId,
         seriesLabel: source.seriesLabel,
         topic: source.topic,
@@ -504,6 +580,10 @@ export function getQuestionSourceMetadata(
   return QUESTION_SOURCE_METADATA_BY_ID.get(questionId) ?? null;
 }
 
+export function getQuestionSourceContext(questionId: string): string | null {
+  return getQuestionSourceMetadata(questionId)?.sourceContext ?? null;
+}
+
 // Helper: title for the current mode (for page header)
 export function getTitleForMode(mode: Mode): string {
   if (mode === "all") {
@@ -519,11 +599,11 @@ export function getTitleForSelection(
   topics: Topic[] = [],
 ): string {
   if (sourceIds.length === 0 && topics.length === 0) {
-    return "Custom Quiz â€“ Select sources, topics, or both";
+    return "Learning AI";
   }
 
   if (sourceIds.length === 0 && topics.length > 0) {
-    return `Topic Quiz â€“ ${topics.join(", ")}`;
+    return `Topic Quiz - ${topics.join(", ")}`;
   }
 
   const allSelected =

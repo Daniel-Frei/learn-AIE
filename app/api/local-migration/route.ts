@@ -18,7 +18,6 @@ export async function POST(req: NextRequest) {
     const state = await migrateLocalStateForParticipant({
       participantId: body.participantId,
       localRatingState: body.localRatingState,
-      localReportState: body.localReportState,
       questionMetadata: QUESTION_METADATA,
     });
 
