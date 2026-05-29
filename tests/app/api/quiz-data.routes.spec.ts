@@ -335,6 +335,36 @@ describe("shared quiz data routes", () => {
     });
   });
 
+  it("accepts Life Science question report payloads", async () => {
+    const { POST } = await import("@/app/api/question-reports/route");
+
+    const res = await POST(
+      buildRequest("http://localhost/api/question-reports", "POST", {
+        participantId: "participant-a",
+        draft: {
+          questionId: "bio-chem-life-l0-q01",
+          comment: "This distractor is too easy to guess.",
+          snapshot: {
+            sourceId: "bio-chem-life-l0",
+            sourceLabel: "Biology & Chemistry L0",
+            seriesId: "biology-chemistry-life-science",
+            seriesLabel: "Biology & Chemistry for Life Science",
+            topic: "Life Science",
+            prompt:
+              "Which statements describe useful starting assumptions for studying living systems?",
+          },
+        },
+      }),
+    );
+    const body = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(body).toEqual({
+      totalReportCount: 1,
+      questionReportCount: 1,
+    });
+  });
+
   it("returns 400 for non-object question report payloads", async () => {
     const { POST } = await import("@/app/api/question-reports/route");
 

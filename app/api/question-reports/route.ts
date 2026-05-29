@@ -10,7 +10,7 @@ export const runtime = "nodejs";
 const MAX_REPORT_COMMENT_CHARS = 2_000;
 const MAX_REPORT_PROMPT_CHARS = 4_000;
 const MAX_LABEL_CHARS = 200;
-const VALID_TOPICS = new Set(["RL", "DL", "NLP", "Math"]);
+const VALID_TOPICS = new Set(["RL", "DL", "NLP", "Math", "Life Science"]);
 
 function isBoundedString(value: unknown, maxLength: number): value is string {
   return (

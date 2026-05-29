@@ -31,6 +31,8 @@ test("renders core quiz controls on the home page", async ({ page }) => {
       /pick mode, series, lectures, topics and question elo range/i,
     ),
   ).toBeVisible();
+  await expect(page.getByRole("spinbutton").nth(0)).toHaveValue("0");
+  await expect(page.getByRole("spinbutton").nth(1)).toHaveValue("3000");
   await expect(
     page.getByText(/no questions for this selection/i),
   ).toBeVisible();
@@ -60,7 +62,7 @@ test("updates filter checkboxes immediately after clicking", async ({
   await expect(seriesCheckbox).toBeChecked();
 });
 
-test("shows question elo and a per-question timer that resets for the next question", async ({
+test("reveals question elo after answering and resets the timer for the next question", async ({
   page,
 }) => {
   await page.goto("/");
@@ -70,7 +72,20 @@ test("shows question elo and a per-question timer that resets for the next quest
   await page.getByRole("button", { name: /select all topics/i }).click();
   await page.getByRole("button", { name: /apply selection/i }).click();
 
-  await expect(page.getByText(/question elo:/i)).toBeVisible();
+  const contextIcon = page.locator('[aria-label^="Question context:"]').first();
+  await expect(contextIcon).toBeVisible();
+  await expect(page.getByText(/^Context:/i)).toHaveCount(0);
+  const contextText = (
+    (await contextIcon.getAttribute("aria-label")) ?? ""
+  ).replace(/^Question context:\s*/, "");
+  const contextTooltip = page
+    .locator('[role="tooltip"]')
+    .filter({ hasText: contextText });
+  await expect(contextTooltip).toBeHidden();
+  await contextIcon.hover();
+  await expect(contextTooltip).toBeVisible();
+
+  await expect(page.getByText(/question elo:/i)).toHaveCount(0);
   await expect(page.getByText(/difficulty:/i)).toHaveCount(0);
   await expect(page.getByText(/time:\s*0:00\s*\/\s*3:00/i)).toBeVisible();
 
@@ -79,8 +94,10 @@ test("shows question elo and a per-question timer that resets for the next quest
 
   await page.locator("section").nth(0).getByRole("button").first().click();
   await page.getByRole("button", { name: /submit answer/i }).click();
+  await expect(page.getByText(/question elo:/i)).toBeVisible();
+
   await page.getByRole("button", { name: /next question/i }).click();
 
-  await expect(page.getByText(/question elo:/i)).toBeVisible();
+  await expect(page.getByText(/question elo:/i)).toHaveCount(0);
   await expect(page.getByText(/time:\s*0:00\s*\/\s*3:00/i)).toBeVisible();
 });

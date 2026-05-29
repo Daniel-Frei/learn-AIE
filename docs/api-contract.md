@@ -235,7 +235,7 @@ Persist a shared append-only question-quality report.
       sourceLabel: string;
       seriesId: string;
       seriesLabel: string;
-      topic: "RL" | "DL" | "NLP" | "Math";
+      topic: "RL" | "DL" | "NLP" | "Math" | "Life Science";
       prompt: string;
     }
   }
@@ -274,7 +274,7 @@ Persist a shared append-only question-quality report.
 ### Notes For Backend Integrators
 
 - Reports are append-only in the shared database; multiple reports for the same `questionId` remain separate entries.
-- Report submission rejects empty fields, comments over `2,000` characters, prompt snapshots over `4,000` characters, labels/ids over `200` characters, and topics outside `RL`, `DL`, `NLP`, or `Math`.
+- Report submission rejects empty fields, comments over `2,000` characters, prompt snapshots over `4,000` characters, labels/ids over `200` characters, and topics outside `RL`, `DL`, `NLP`, `Math`, or `Life Science`.
 
 ## Endpoint: `POST /api/local-migration`
 
@@ -294,7 +294,8 @@ Import one participant's legacy local browser rating data into the shared databa
 ### Notes For Backend Integrators
 
 - If `elapsedMs` or `mistakeCount` is omitted, the server treats the answer like a full-weight binary result, which preserves old callers.
-- The rating engine still uses a Glicko-2 style update internally; the timing and mistake metadata only scale the magnitude of the win/loss exchange.
+- The rating engine still uses a Glicko-2 style update internally; the timing and mistake metadata only scale the magnitude of the win/loss exchange. `elapsedMs` keeps full weight through the first 20 seconds, then scales linearly to a 25% maximum reduction at 3 minutes or slower.
+- For a question with no persisted rating yet, the `label` seeds the initial question rating as easy `1400`, medium `1500`, or hard `1600`; subsequent answer data updates and persists the question rating from that starting point.
 
 - Rating migration is approximate because the legacy browser store only contains aggregates, not the original event log.
 - Migration is idempotent per participant for deterministic synthetic answer-attempt ids.

@@ -35,6 +35,33 @@ function formatQuestionRating(rating: number): string {
   }).format(rating);
 }
 
+function QuestionContextTooltip({ context }: { context: string }) {
+  return (
+    <span
+      tabIndex={0}
+      aria-label={`Question context: ${context}`}
+      className="group ml-2 inline-flex h-5 w-5 align-middle items-center justify-center rounded-full text-slate-400 transition-colors hover:text-sky-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
+    >
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 20 20"
+        className="h-5 w-5"
+        fill="none"
+      >
+        <circle cx="10" cy="10" r="8.25" stroke="currentColor" />
+        <path d="M10 9.25v4.25" stroke="currentColor" strokeLinecap="round" />
+        <circle cx="10" cy="6.5" r="0.75" fill="currentColor" />
+      </svg>
+      <span
+        role="tooltip"
+        className="pointer-events-none invisible absolute left-0 right-0 top-full z-20 mt-2 rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-left text-xs font-normal leading-5 text-slate-200 opacity-0 shadow-xl transition-opacity group-hover:visible group-hover:opacity-100 group-focus:visible group-focus:opacity-100"
+      >
+        {context}
+      </span>
+    </span>
+  );
+}
+
 export default function QuizQuestionSection({
   availableCount,
   currentIndex,
@@ -57,7 +84,7 @@ export default function QuizQuestionSection({
         </span>
         {hasQuestion && (
           <span className="text-right flex flex-col sm:flex-row sm:items-center sm:gap-3">
-            {questionRating !== null && (
+            {showResult && questionRating !== null && (
               <span>
                 Question Elo:{" "}
                 <span className="font-semibold text-slate-100">
@@ -88,17 +115,14 @@ export default function QuizQuestionSection({
         </div>
       ) : (
         <>
-          <div className="space-y-2">
+          <div className="relative">
             <MathText
               text={currentQuestion!.prompt}
-              className="text-lg md:text-xl font-semibold"
+              inline
+              className="text-lg md:text-xl font-semibold leading-relaxed"
             />
-
             {questionContext && (
-              <p className="text-xs leading-5 text-slate-500">
-                <span className="font-semibold text-slate-600">Context:</span>{" "}
-                {questionContext}
-              </p>
+              <QuestionContextTooltip context={questionContext} />
             )}
           </div>
 

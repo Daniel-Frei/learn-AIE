@@ -3,12 +3,12 @@
 ## Product
 
 - The user-facing app name is `Learning AI`.
-- A Next.js + TypeScript quiz web app focused on deep learning, NLP, transformers, and reinforcement learning study content.
+- A Next.js + TypeScript quiz web app focused on deep learning, NLP, transformers, reinforcement learning, supporting math, and selected life-science study content.
 - An Expo React Native mobile app under `apps/mobile` lets users practice the same bundled question bank on iOS/Android while away from the desktop web UI.
-- Users can choose lecture series/books, specific sources, topic categories (`RL`, `DL`, `NLP`, `Math`), and question Elo ranges, answer multi-select quiz questions, and view explanations.
-- The quiz shows each question's shared raw rating as its visible "Elo" label and shows a per-question timer that starts at zero and caps at 3 minutes.
+- Users can choose lecture series/books, specific sources, topic categories (`RL`, `DL`, `NLP`, `Math`, `Life Science`), and question Elo ranges, answer multi-select quiz questions, and view explanations. The default question Elo filter range is the full supported `0` to `3000` range.
+- The quiz reveals each question's shared raw rating as its visible "Elo" label only after the user submits an answer, and shows a per-question timer that starts at zero and caps at 3 minutes.
 - Users can report a visible question with free-text comments; new reports are stored centrally in Supabase Postgres.
-- Each question displays a short source-context sentence so randomized mixed-source practice still shows the lecture/chapter context behind the prompt.
+- Each question has an info icon after the prompt; hovering or focusing it shows the short source-context sentence so randomized mixed-source practice still exposes the lecture/chapter context without taking persistent vertical space.
 - Users can switch between:
   - `standard` mode (randomized from filtered pool)
   - `climb` mode (questions are biased toward current user Glicko rating with some randomness)
@@ -19,7 +19,19 @@
 - Main quiz UI lives in `/app/page.tsx`.
 - On Windows, users can install a per-user Start Menu shortcut named `Learning AI`; launching it runs `make start` from the cloned repository.
 - Question banks are maintained in `lib/*` and `lib/lectures/*`.
-- Quiz source registry includes MIT 6.S191 2025 lectures L1-L6, Crash Course Linear Algebra L1, and LangChain Deep Agents as selectable practice sources.
+- Quiz source registry includes MIT 6.S191 2025 lectures L1-L6, Crash Course Linear Algebra L0-L5, Biology & Chemistry for Life Science L0-L5, and LangChain Deep Agents as selectable practice sources.
+- Crash Course Linear Algebra L0 provides prerequisite AP/A-level-style linear algebra practice on notation and terminology, coordinates, vector magnitude and direction, unit vectors, dot products, projection, span, basis, matrices, determinants, systems, and rank.
+- Crash Course Linear Algebra L1 includes supplemental applied math practice on vectors, norms, dot products, cosine similarity, and matrix-vector multiplication for A-level/AP-style reinforcement.
+- Crash Course Linear Algebra L2 includes applied matrix-transformation practice on composition, shape reasoning, geometric transformations, rank, LoRA, transpose, symmetry, and attention.
+- Crash Course Linear Algebra L3 covers derivatives, partial derivatives, gradients, gradient descent, learning rates, chain rule, backpropagation, and matrix-gradient shape intuition.
+- Crash Course Linear Algebra L4 covers eigenvectors, eigenvalues, covariance, PCA, dimensionality reduction, SVD, low-rank approximation, embeddings, attention compression, and LoRA.
+- Crash Course Linear Algebra L5 synthesizes attention, Q/K/V projections, neural networks as matrix stacks, RL value functions, optimization landscapes, and why linear algebra dominates modern AI systems.
+- Biology & Chemistry for Life Science L0 provides 81 prerequisite questions on core biology, chemistry, and AP/A-level basics needed before the course, with equal easy/medium/hard difficulty labels: atoms, molecules, bonds, pH, water, macromolecules, cells, membranes, metabolism, genetics, evolution, immunity, disease, drugs, clinical trials, and biomedical evidence.
+- Biology & Chemistry for Life Science L1 covers chemistry-of-life fundamentals: atoms, bonds, water, hydrophobic effects, biological macromolecules, proteins, enzymes, ATP, metabolism, and structure-function reasoning.
+- Biology & Chemistry for Life Science L2 covers cells as organized information-processing systems: organelles, membranes, transport, gradients, signaling, feedback, division, apoptosis, cancer, and immunity.
+- Biology & Chemistry for Life Science L3 covers genetics, proteins, and regulation: DNA, genes, central dogma, gene expression, transcription factors, epigenetics, mutation, evolution, CRISPR, mRNA, gene therapy, and synthetic biology.
+- Biology & Chemistry for Life Science L4 covers physiology, disease, and pharmacology: homeostasis, nervous/cardiovascular/endocrine coordination, disease as disrupted regulation, receptors, agonists/antagonists, dose response, PK/PD, side effects, biomarkers, and precision medicine.
+- Biology & Chemistry for Life Science L5 covers clinical trials and biomedical evidence: placebo effects, confounding, bias, randomization, controls, blinding, endpoints, trial phases, medical statistics, drug development, reproducibility, and AI in biomedicine.
 - Explanation endpoint exists at `/api/explain` and proxies to an LLM helper in `lib/llm/explain.ts`.
 - Mobile uses local-first profile sync:
   - Bundled questions, filters, timers, answer checking, generic explanations, and local rating updates work without network.
@@ -30,8 +42,9 @@
 - Shared quiz state now uses an external Supabase Postgres database:
   - Each browser/device is treated as its own anonymous participant via a locally stored `participantId`.
   - Question difficulty is shared globally across participants and remains a Glicko-2 style rating under the hood, even though the UI labels it as Elo.
+  - New unanswered question ratings are seeded from difficulty labels close to the neutral rating: easy `1400`, medium `1500`, and hard `1600`. Once answer data exists for a question, the persisted rating is used and the initial seed only remains as the starting point whose influence fades as more answers accumulate.
   - Participant rating/climb behavior remains per device.
-- Answer scoring is still binary at the core, but rating updates are weighted by response time and mistake count so fast, clean answers move ratings more than slow or messy ones.
+- Answer scoring is still binary at the core, but rating updates are weighted by response time and mistake count so fast, clean answers move ratings more than slow or messy ones. The response-time weight stays full through the first 20 seconds, then scales down linearly to a 25% maximum reduction at the 3-minute timer cap.
 - Question answer attempts store the elapsed time and mistake count alongside the binary result for later auditability.
 - Question reports are append-only in the shared database:
   - Each submit creates a separate report entry, even for the same question.

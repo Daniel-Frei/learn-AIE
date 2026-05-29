@@ -4,6 +4,7 @@ import { createDefaultRatingState } from "@/lib/ratingEngine";
 import {
   buildQuizApiUrl,
   clampDifficultyRange,
+  DEFAULT_DIFFICULTY_RANGE,
   evaluateAnswer,
   getEligibleQuestionIds,
   pickClimbQuestionId,
@@ -52,6 +53,10 @@ describe("quiz session helpers", () => {
       min: 1800,
       max: 1800,
     });
+  });
+
+  it("defaults to the full supported question Elo range", () => {
+    expect(DEFAULT_DIFFICULTY_RANGE).toEqual({ min: 0, max: 3000 });
   });
 
   it("returns eligible questions for selected source and Elo range", () => {

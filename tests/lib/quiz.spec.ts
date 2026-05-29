@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
   ALL_SOURCE_IDS,
+  ALL_TOPICS,
+  BiologyChemistryLifeScienceL0Questions,
   QUESTION_SOURCE_CONTEXT,
   SOURCE_SERIES,
   QUESTION_SOURCES,
@@ -137,6 +139,7 @@ describe("quiz source registry helpers", () => {
 
   it("builds a topic-based title when only topics are selected", () => {
     expect(getTitleForSelection([], ["NLP"])).toContain("Topic Quiz");
+    expect(ALL_TOPICS).toContain("Life Science");
   });
 
   it("builds a custom title summary for multiple sources", () => {
@@ -189,6 +192,40 @@ describe("quiz source registry helpers", () => {
     expect(ids.has("mit15773-l10")).toBe(true);
     expect(ids.has("mit15773-l11")).toBe(true);
     expect(ids.has("crash-linalg-l1")).toBe(true);
+    expect(ids.has("crash-linalg-l3")).toBe(true);
+    expect(ids.has("crash-linalg-l4")).toBe(true);
+    expect(ids.has("crash-linalg-l5")).toBe(true);
+    expect(ids.has("bio-chem-life-l0")).toBe(true);
+    expect(ids.has("bio-chem-life-l1")).toBe(true);
+    expect(ids.has("bio-chem-life-l2")).toBe(true);
+    expect(ids.has("bio-chem-life-l3")).toBe(true);
+    expect(ids.has("bio-chem-life-l4")).toBe(true);
+    expect(ids.has("bio-chem-life-l5")).toBe(true);
     expect(ids.has("langchain-deepagents")).toBe(true);
+  });
+
+  it("keeps Biology & Chemistry Lecture 0 balanced as preparation practice", () => {
+    const difficultyCounts = BiologyChemistryLifeScienceL0Questions.reduce(
+      (counts, question) => {
+        counts[question.difficulty] += 1;
+        return counts;
+      },
+      { easy: 0, medium: 0, hard: 0 },
+    );
+    const answerBuckets = [0, 0, 0, 0, 0];
+
+    for (const question of BiologyChemistryLifeScienceL0Questions) {
+      expect(question.options).toHaveLength(4);
+      const correctCount = question.options.filter(
+        (option) => option.isCorrect,
+      ).length;
+      expect(correctCount).toBeGreaterThanOrEqual(1);
+      expect(correctCount).toBeLessThanOrEqual(4);
+      answerBuckets[correctCount] += 1;
+    }
+
+    expect(BiologyChemistryLifeScienceL0Questions).toHaveLength(81);
+    expect(difficultyCounts).toEqual({ easy: 27, medium: 27, hard: 27 });
+    expect(answerBuckets.slice(1)).toEqual([21, 20, 20, 20]);
   });
 });

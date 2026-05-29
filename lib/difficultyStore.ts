@@ -55,13 +55,13 @@ const MIN_PROBABILITY = 1e-12;
 export const QUESTION_TIME_LIMIT_MS = 3 * 60 * 1000;
 
 const QUESTION_FAST_RESPONSE_MS = 20 * 1000;
-const QUESTION_MIN_TIME_WEIGHT = 0.85;
+const QUESTION_MIN_TIME_WEIGHT = 0.75;
 const QUESTION_ONE_MISTAKE_WEIGHT = 0.85;
 
 const LABEL_PRIOR_RATING: Record<Difficulty, number> = {
-  easy: 1300,
+  easy: 1400,
   medium: 1500,
-  hard: 1700,
+  hard: 1600,
 };
 
 const DEFAULT_CONFIG: RatingConfig = {

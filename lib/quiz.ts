@@ -29,7 +29,18 @@ import { TransformersSelfSupervisedLearningQuestions as MIT15773L8Transformers2Q
 import { LLMsQuestions as MIT15773L9LLMsQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L9_LLMs";
 import { L10LLMs2Questions as MIT15773L10LLMs2Questions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L10_LLMs 2";
 import { MIT15773L11DiffusionQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L11_Diffusion";
+import { CrashCourseLinearAlgebraL0Questions } from "./other/Crash Course Linear Algebra/Lecture 0 - Linear Algebra Foundations";
 import { CrashCourseLinearAlgebraL1Questions } from "./other/Crash Course Linear Algebra/Lecture 1 — Vectors, Geometry, and Dot Products";
+import { CrashCourseLinearAlgebraL2Questions } from "./other/Crash Course Linear Algebra/Lecture 2 - Matrices as Transformations";
+import { CrashCourseLinearAlgebraL3Questions } from "./other/Crash Course Linear Algebra/Lecture 3 - Derivatives and Gradients";
+import { CrashCourseLinearAlgebraL4Questions } from "./other/Crash Course Linear Algebra/Lecture 4 - Eigenvectors, SVD, and Representation Learning";
+import { CrashCourseLinearAlgebraL5Questions } from "./other/Crash Course Linear Algebra/Lecture 5 - Linear Algebra in LLMs and RL";
+import { BiologyChemistryLifeScienceL0Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 0 - preparation";
+import { BiologyChemistryLifeScienceL1Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 1 - Chemistry of Life";
+import { BiologyChemistryLifeScienceL2Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 2 - Cells as Information-Processing Systems";
+import { BiologyChemistryLifeScienceL3Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 3 - Genetics, Proteins, and Biological Regulation";
+import { BiologyChemistryLifeScienceL4Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 4 - Physiology, Disease, and Pharmacology";
+import { BiologyChemistryLifeScienceL5Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 5 - Clinical Trials, Evidence, and Modern Biomedical Research";
 import { MIT15773L3DeepLearningForComputerVisionQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L3_Deep Learning for Computer Vision";
 import { MIT15773L4ComputerVisionTransferLearningQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L4_Computer Vision –Transfer Learning and Fine-Tuning";
 import { L5NLPBasicsQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L5_NLP Basics";
@@ -37,7 +48,7 @@ import { DeepAgentsQuestions } from "./other/Langchain/Deepagents";
 import { mixedQuestions } from "./other/other";
 
 export type Difficulty = "easy" | "medium" | "hard";
-export type Topic = "RL" | "DL" | "NLP" | "Math";
+export type Topic = "RL" | "DL" | "NLP" | "Math" | "Life Science";
 export type SourceSeriesId =
   | "aie-foundations"
   | "aie-building-apps"
@@ -47,6 +58,7 @@ export type SourceSeriesId =
   | "mit-6s191-2026"
   | "mit-15773-2024"
   | "crash-course-linear-algebra"
+  | "biology-chemistry-life-science"
   | "langchain"
   | "other";
 
@@ -381,6 +393,15 @@ export const QUESTION_SOURCES = [
     questions: MIT15773L11DiffusionQuestions,
   },
   {
+    id: "crash-linalg-l0" as const,
+    label: "Crash Course Linear Algebra L0",
+    title: "Crash Course Linear Algebra L0: Linear Algebra Foundations",
+    seriesId: "crash-course-linear-algebra" as const,
+    seriesLabel: "Crash Course Linear Algebra",
+    topic: "Math" as const,
+    questions: CrashCourseLinearAlgebraL0Questions,
+  },
+  {
     id: "crash-linalg-l1" as const,
     label: "Crash Course Linear Algebra L1",
     title:
@@ -389,6 +410,101 @@ export const QUESTION_SOURCES = [
     seriesLabel: "Crash Course Linear Algebra",
     topic: "Math" as const,
     questions: CrashCourseLinearAlgebraL1Questions,
+  },
+  {
+    id: "crash-linalg-l2" as const,
+    label: "Crash Course Linear Algebra L2",
+    title: "Crash Course Linear Algebra L2: Matrices as Transformations",
+    seriesId: "crash-course-linear-algebra" as const,
+    seriesLabel: "Crash Course Linear Algebra",
+    topic: "Math" as const,
+    questions: CrashCourseLinearAlgebraL2Questions,
+  },
+  {
+    id: "crash-linalg-l3" as const,
+    label: "Crash Course Linear Algebra L3",
+    title: "Crash Course Linear Algebra L3: Derivatives and Gradients",
+    seriesId: "crash-course-linear-algebra" as const,
+    seriesLabel: "Crash Course Linear Algebra",
+    topic: "Math" as const,
+    questions: CrashCourseLinearAlgebraL3Questions,
+  },
+  {
+    id: "crash-linalg-l4" as const,
+    label: "Crash Course Linear Algebra L4",
+    title:
+      "Crash Course Linear Algebra L4: Eigenvectors, SVD, and Representation Learning",
+    seriesId: "crash-course-linear-algebra" as const,
+    seriesLabel: "Crash Course Linear Algebra",
+    topic: "Math" as const,
+    questions: CrashCourseLinearAlgebraL4Questions,
+  },
+  {
+    id: "crash-linalg-l5" as const,
+    label: "Crash Course Linear Algebra L5",
+    title: "Crash Course Linear Algebra L5: Linear Algebra in LLMs and RL",
+    seriesId: "crash-course-linear-algebra" as const,
+    seriesLabel: "Crash Course Linear Algebra",
+    topic: "Math" as const,
+    questions: CrashCourseLinearAlgebraL5Questions,
+  },
+  {
+    id: "bio-chem-life-l0" as const,
+    label: "Biology & Chemistry L0",
+    title: "Biology & Chemistry for Life Science L0: Preparation",
+    seriesId: "biology-chemistry-life-science" as const,
+    seriesLabel: "Biology & Chemistry for Life Science",
+    topic: "Life Science" as const,
+    questions: BiologyChemistryLifeScienceL0Questions,
+  },
+  {
+    id: "bio-chem-life-l1" as const,
+    label: "Biology & Chemistry L1",
+    title: "Biology & Chemistry for Life Science L1: Chemistry of Life",
+    seriesId: "biology-chemistry-life-science" as const,
+    seriesLabel: "Biology & Chemistry for Life Science",
+    topic: "Life Science" as const,
+    questions: BiologyChemistryLifeScienceL1Questions,
+  },
+  {
+    id: "bio-chem-life-l2" as const,
+    label: "Biology & Chemistry L2",
+    title:
+      "Biology & Chemistry for Life Science L2: Cells as Information-Processing Systems",
+    seriesId: "biology-chemistry-life-science" as const,
+    seriesLabel: "Biology & Chemistry for Life Science",
+    topic: "Life Science" as const,
+    questions: BiologyChemistryLifeScienceL2Questions,
+  },
+  {
+    id: "bio-chem-life-l3" as const,
+    label: "Biology & Chemistry L3",
+    title:
+      "Biology & Chemistry for Life Science L3: Genetics, Proteins, and Biological Regulation",
+    seriesId: "biology-chemistry-life-science" as const,
+    seriesLabel: "Biology & Chemistry for Life Science",
+    topic: "Life Science" as const,
+    questions: BiologyChemistryLifeScienceL3Questions,
+  },
+  {
+    id: "bio-chem-life-l4" as const,
+    label: "Biology & Chemistry L4",
+    title:
+      "Biology & Chemistry for Life Science L4: Physiology, Disease, and Pharmacology",
+    seriesId: "biology-chemistry-life-science" as const,
+    seriesLabel: "Biology & Chemistry for Life Science",
+    topic: "Life Science" as const,
+    questions: BiologyChemistryLifeScienceL4Questions,
+  },
+  {
+    id: "bio-chem-life-l5" as const,
+    label: "Biology & Chemistry L5",
+    title:
+      "Biology & Chemistry for Life Science L5: Clinical Trials, Evidence, and Modern Biomedical Research",
+    seriesId: "biology-chemistry-life-science" as const,
+    seriesLabel: "Biology & Chemistry for Life Science",
+    topic: "Life Science" as const,
+    questions: BiologyChemistryLifeScienceL5Questions,
   },
   {
     id: "langchain-deepagents" as const,
@@ -478,15 +594,37 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
     "Advanced LLM lecture about instruction tuning, alignment, retrieval/tool use, and deployment constraints.",
   "mit15773-l11":
     "Diffusion lecture about denoising objectives, score-based generation, sampling schedules, and image synthesis.",
+  "crash-linalg-l0":
+    "Linear algebra foundations practice covering coordinates, magnitude, unit vectors, dot products, projection, span, basis, matrices, determinants, systems, and rank.",
   "crash-linalg-l1":
     "Linear algebra lesson about vectors, geometry, dot products, projections, and how they support ML intuition.",
+  "crash-linalg-l2":
+    "Linear algebra lesson about matrices as transformations, composition, shape reasoning, rank, LoRA, transpose, symmetry, and attention.",
+  "crash-linalg-l3":
+    "Linear algebra lesson about derivatives, gradients, gradient descent, chain rule, backpropagation, matrix gradients, and optimization.",
+  "crash-linalg-l4":
+    "Linear algebra lesson about eigenvectors, covariance, PCA, SVD, low-rank structure, embeddings, LoRA, and representation learning.",
+  "crash-linalg-l5":
+    "Linear algebra synthesis lesson about attention, matrix stacks, RL value functions, optimization landscapes, and AI geometry.",
+  "bio-chem-life-l0":
+    "Life-science preparation practice covering core biology and chemistry vocabulary for cells, genes, disease, drugs, trials, and evidence.",
+  "bio-chem-life-l1":
+    "Life-science lesson about atoms, bonds, water, macromolecules, proteins, enzymes, ATP, metabolism, and structure-function reasoning.",
+  "bio-chem-life-l2":
+    "Life-science lesson about cells as organized information-processing systems, organelles, membranes, gradients, signaling, division, cancer, and immunity.",
+  "bio-chem-life-l3":
+    "Life-science lesson about DNA, genes, central dogma, gene expression, regulation, mutation, evolution, CRISPR, mRNA, and biotechnology.",
+  "bio-chem-life-l4":
+    "Life-science lesson about physiology, homeostasis, disease as disrupted regulation, pharmacology, dose response, PK/PD, biomarkers, and precision medicine.",
+  "bio-chem-life-l5":
+    "Life-science lesson about clinical trials, bias, randomization, endpoints, medical statistics, drug development, evidence generation, and AI in biomedicine.",
   "langchain-deepagents":
     "LangChain Deep Agents material about planning, tools, subagents, memory, and agent orchestration.",
   other:
     "Mixed AI question set covering general deep learning and machine-learning concepts from miscellaneous sources.",
 };
 export type Mode = SourceId | "all";
-export const ALL_TOPICS: Topic[] = ["RL", "DL", "NLP", "Math"];
+export const ALL_TOPICS: Topic[] = ["RL", "DL", "NLP", "Math", "Life Science"];
 export const SOURCE_SERIES: {
   id: SourceSeriesId;
   label: string;
@@ -660,6 +798,17 @@ export { TransformersSelfSupervisedLearningQuestions } from "./lectures/MIT 15.7
 export { LLMsQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L9_LLMs";
 export { L10LLMs2Questions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L10_LLMs 2";
 export { MIT15773L11DiffusionQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L11_Diffusion";
+export { CrashCourseLinearAlgebraL0Questions } from "./other/Crash Course Linear Algebra/Lecture 0 - Linear Algebra Foundations";
 export { CrashCourseLinearAlgebraL1Questions } from "./other/Crash Course Linear Algebra/Lecture 1 — Vectors, Geometry, and Dot Products";
+export { CrashCourseLinearAlgebraL2Questions } from "./other/Crash Course Linear Algebra/Lecture 2 - Matrices as Transformations";
+export { CrashCourseLinearAlgebraL3Questions } from "./other/Crash Course Linear Algebra/Lecture 3 - Derivatives and Gradients";
+export { CrashCourseLinearAlgebraL4Questions } from "./other/Crash Course Linear Algebra/Lecture 4 - Eigenvectors, SVD, and Representation Learning";
+export { CrashCourseLinearAlgebraL5Questions } from "./other/Crash Course Linear Algebra/Lecture 5 - Linear Algebra in LLMs and RL";
+export { BiologyChemistryLifeScienceL0Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 0 - preparation";
+export { BiologyChemistryLifeScienceL1Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 1 - Chemistry of Life";
+export { BiologyChemistryLifeScienceL2Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 2 - Cells as Information-Processing Systems";
+export { BiologyChemistryLifeScienceL3Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 3 - Genetics, Proteins, and Biological Regulation";
+export { BiologyChemistryLifeScienceL4Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 4 - Physiology, Disease, and Pharmacology";
+export { BiologyChemistryLifeScienceL5Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 5 - Clinical Trials, Evidence, and Modern Biomedical Research";
 export { DeepAgentsQuestions } from "./other/Langchain/Deepagents";
 export { mixedQuestions } from "./other/other";

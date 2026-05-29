@@ -31,8 +31,8 @@ export const QUESTION_ELO_FILTER_MIN = 0;
 export const QUESTION_ELO_FILTER_MAX = 3000;
 
 export const DEFAULT_DIFFICULTY_RANGE: DifficultyRange = {
-  min: 1000,
-  max: 2000,
+  min: QUESTION_ELO_FILTER_MIN,
+  max: QUESTION_ELO_FILTER_MAX,
 };
 
 export const DEFAULT_QUESTION_SELECTION_MODE: QuestionSelectionMode =

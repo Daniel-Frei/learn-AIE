@@ -3,8 +3,10 @@ import {
   createDefaultRatingState,
   computeQuestionDifficultyScore,
   exportRatingsJson,
+  getQuestionRatingEstimate,
   importRatingsJson,
   loadRatingState,
+  QUESTION_TIME_LIMIT_MS,
   recordAnswer,
   saveRatingState,
 } from "@/lib/difficultyStore";
@@ -51,7 +53,7 @@ describe("difficulty store core behavior", () => {
     expect(afterWrong.questions["q-counter"]?.legacyWrong).toBe(1);
   });
 
-  it("gives a faster correct answer a larger rating gain than a slow one", () => {
+  it("caps the slow-answer rating movement at 75% of a fast clean answer", () => {
     const base = createDefaultRatingState();
     const fast = recordAnswer(base, "q-fast", "medium", true, 1000, {
       elapsedMs: 1000,
@@ -62,9 +64,15 @@ describe("difficulty store core behavior", () => {
       mistakeCount: 0,
     });
     const slow = recordAnswer(base, "q-slow", "medium", true, 1000, {
-      elapsedMs: 180000,
+      elapsedMs: QUESTION_TIME_LIMIT_MS,
       mistakeCount: 0,
     });
+    const fastUserGain = fast.user.rating - base.user.rating;
+    const slowUserGain = slow.user.rating - base.user.rating;
+    const fastQuestionLoss =
+      base.config.defaultRating - fast.questions["q-fast"]!.rating;
+    const slowQuestionLoss =
+      base.config.defaultRating - slow.questions["q-slow"]!.rating;
 
     expect(fast.questions["q-fast"]).toBeDefined();
     expect(middle.questions["q-middle"]).toBeDefined();
@@ -75,6 +83,8 @@ describe("difficulty store core behavior", () => {
     expect(fast.questions["q-fast"]!.rating).toBeLessThan(
       slow.questions["q-slow"]!.rating,
     );
+    expect(slowUserGain / fastUserGain).toBeCloseTo(0.75, 2);
+    expect(slowQuestionLoss / fastQuestionLoss).toBeCloseTo(0.75, 2);
   });
 
   it("reduces the penalty for a single mistake compared with multiple mistakes", () => {
@@ -154,6 +164,20 @@ describe("difficulty store core behavior", () => {
     expect(hardScore).toBeGreaterThan(easyScore);
     expect(easyScore).toBeGreaterThanOrEqual(0);
     expect(hardScore).toBeLessThanOrEqual(1);
+  });
+
+  it("seeds new question ratings close to 1500 by difficulty label", () => {
+    const state = createDefaultRatingState();
+
+    expect(getQuestionRatingEstimate("q-easy", "easy", state).rating).toBe(
+      1400,
+    );
+    expect(getQuestionRatingEstimate("q-medium", "medium", state).rating).toBe(
+      1500,
+    );
+    expect(getQuestionRatingEstimate("q-hard", "hard", state).rating).toBe(
+      1600,
+    );
   });
 
   it("round-trips ratings through export/import json", () => {

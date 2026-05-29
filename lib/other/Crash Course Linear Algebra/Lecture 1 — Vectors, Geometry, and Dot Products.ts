@@ -962,6 +962,229 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     explanation:
       "Vectors are the fundamental representation of data in most machine learning systems. Neural networks perform computations through dot products and matrix multiplications. These operations enable models to measure similarity, combine features, and transform representations across layers.",
   },
+
+  {
+    id: "la-crash-l1-q41",
+    chapter: 1,
+    difficulty: "easy",
+    prompt:
+      "A displacement vector is \\(x=[6,8]^T\\). Which statement correctly describes its L2 norm?",
+    options: [
+      {
+        text: "The L2 norm is 14 because the components add to 14.",
+        isCorrect: false,
+      },
+      {
+        text: "The squared L2 norm is 10.",
+        isCorrect: false,
+      },
+      { text: "The L2 norm is 10.", isCorrect: true },
+      { text: "The vector is already a unit vector.", isCorrect: false },
+    ],
+    explanation:
+      "The L2 norm is computed with the Pythagorean theorem: \\(\\sqrt{6^2+8^2}=\\sqrt{100}=10\\). Adding components gives 14, which is not the Euclidean length, and the squared norm is 100 rather than 10. A unit vector would have length 1, so this vector is not a unit vector.",
+  },
+
+  {
+    id: "la-crash-l1-q42",
+    chapter: 1,
+    difficulty: "easy",
+    prompt:
+      "Two points are represented by \\(x=[2,5]^T\\) and \\(y=[-1,1]^T\\). Which statement gives their Euclidean distance?",
+    options: [
+      { text: "The distance is 4.", isCorrect: false },
+      { text: "The distance is 5.", isCorrect: true },
+      { text: "The distance is \\(\\sqrt{41}\\).", isCorrect: false },
+      { text: "The distance is 9.", isCorrect: false },
+    ],
+    explanation:
+      "The difference vector is \\(x-y=[3,4]^T\\), so the Euclidean distance is \\(\\sqrt{3^2+4^2}=5\\). The values 4 and 9 come from using only part of the displacement or adding components instead of using squared differences. The value \\(\\sqrt{41}\\) would come from a different pair of component differences.",
+  },
+
+  {
+    id: "la-crash-l1-q43",
+    chapter: 1,
+    difficulty: "medium",
+    prompt:
+      "Let \\(a=[3,0]^T\\) and \\(b=[0,4]^T\\). Which statement correctly describes their cosine similarity?",
+    options: [
+      { text: "The cosine similarity is 1.", isCorrect: false },
+      { text: "The cosine similarity is -1.", isCorrect: false },
+      {
+        text: "The cosine similarity is undefined because both vectors are nonzero.",
+        isCorrect: false,
+      },
+      { text: "The cosine similarity is 0.", isCorrect: true },
+    ],
+    explanation:
+      "The dot product is \\(3\\cdot0+0\\cdot4=0\\), while both vectors have nonzero length. Therefore \\(\\frac{a\\cdot b}{\\|a\\|\\|b\\|}=0\\), which means the vectors are orthogonal. Cosine similarity would be 1 for the same direction and -1 for opposite directions.",
+  },
+
+  {
+    id: "la-crash-l1-q44",
+    chapter: 1,
+    difficulty: "medium",
+    prompt:
+      "A simple neuron computes \\(y=w^T x+b\\), where \\(w=[2,-1]^T\\), \\(x=[3,4]^T\\), and \\(b=5\\). Which value of \\(y\\) is correct?",
+    options: [
+      { text: "\\(y=6\\)", isCorrect: false },
+      { text: "\\(y=15\\)", isCorrect: false },
+      { text: "\\(y=7\\)", isCorrect: true },
+      { text: "\\(y=-3\\)", isCorrect: false },
+    ],
+    explanation:
+      "The dot product is \\(w^Tx=2\\cdot3+(-1)\\cdot4=2\\). Adding the bias gives \\(y=2+5=7\\). The other values come from ignoring the negative weight, omitting the bias, or combining the terms incorrectly.",
+  },
+
+  {
+    id: "la-crash-l1-q45",
+    chapter: 1,
+    difficulty: "easy",
+    prompt:
+      "Which statements correctly describe normalizing \\(v=[3,4]^T\\) to unit length?",
+    options: [
+      {
+        text: "The normalized vector is \\([\\frac{3}{5},\\frac{4}{5}]^T\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The normalized vector points in a perpendicular direction to \\(v\\).",
+        isCorrect: false,
+      },
+      {
+        text: "The normalized vector has L2 norm 1.",
+        isCorrect: true,
+      },
+      {
+        text: "The normalized vector has the same length as \\(v\\).",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The vector \\(v\\) has length 5, so dividing each component by 5 gives \\([\\frac{3}{5},\\frac{4}{5}]^T\\). Normalization preserves direction but changes length to 1. It does not rotate the vector or leave its original length unchanged.",
+  },
+
+  {
+    id: "la-crash-l1-q46",
+    chapter: 1,
+    difficulty: "medium",
+    prompt:
+      "Let \\(a=[2,1]^T\\) and \\(b=[-3,-1]^T\\). Which statements are correct?",
+    options: [
+      { text: "The dot product \\(a\\cdot b\\) equals -7.", isCorrect: true },
+      {
+        text: "The angle between the vectors is obtuse.",
+        isCorrect: true,
+      },
+      {
+        text: "The cosine similarity between the vectors is positive.",
+        isCorrect: false,
+      },
+      { text: "The vectors are orthogonal.", isCorrect: false },
+    ],
+    explanation:
+      "The dot product is \\(2\\cdot(-3)+1\\cdot(-1)=-7\\). A negative dot product means the angle is greater than 90 degrees, so the cosine similarity is negative rather than positive. Orthogonal vectors would have dot product zero, not -7.",
+  },
+
+  {
+    id: "la-crash-l1-q47",
+    chapter: 1,
+    difficulty: "medium",
+    prompt:
+      "Let \\(a=[2,0]^T\\) and \\(b=[3,4]^T\\). Which statements are correct?",
+    options: [
+      { text: "\\(a\\cdot b=6\\).", isCorrect: true },
+      {
+        text: "All of \\(b\\) lies in the direction of \\(a\\).",
+        isCorrect: false,
+      },
+      {
+        text: "The component of \\(b\\) along the positive x-axis is 3.",
+        isCorrect: true,
+      },
+      { text: "\\(a\\) and \\(b\\) are orthogonal.", isCorrect: false },
+    ],
+    explanation:
+      "The dot product is \\(2\\cdot3+0\\cdot4=6\\). Since \\(a\\) points along the positive x-axis, the x-component of \\(b\\) is the part aligned with that direction, which is 3. The y-component of \\(b\\) is nonzero, so not all of \\(b\\) lies along \\(a\\), and the dot product is not zero.",
+  },
+
+  {
+    id: "la-crash-l1-q48",
+    chapter: 1,
+    difficulty: "hard",
+    prompt:
+      "Suppose \\(W=\\begin{bmatrix}1&2\\\\-1&3\\\\0&4\\end{bmatrix}\\) and \\(x=[2,1]^T\\). Which statements are correct about \\(y=Wx\\)?",
+    options: [
+      { text: "The output vector has 3 components.", isCorrect: true },
+      {
+        text: "The multiplication is invalid because \\(W\\) is not square.",
+        isCorrect: false,
+      },
+      { text: "\\(y=[4,1,4]^T\\).", isCorrect: true },
+      {
+        text: "Each output component is the dot product of \\(x\\) with a column of \\(W\\).",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The matrix has shape \\(3\\times2\\), so multiplying by a 2-component vector is valid and produces a 3-component output. The row dot products are \\(1\\cdot2+2\\cdot1=4\\), \\((-1)\\cdot2+3\\cdot1=1\\), and \\(0\\cdot2+4\\cdot1=4\\). Matrix-vector multiplication uses rows of the matrix for output components, not columns.",
+  },
+
+  {
+    id: "la-crash-l1-q49",
+    chapter: 1,
+    difficulty: "medium",
+    prompt:
+      "A small scoring model uses a feature vector \\(x=[\\text{size},\\text{bedrooms},\\text{age}]^T\\) and weights \\(w=[0.4,0.2,-0.1]^T\\). Which statements are correct?",
+    options: [
+      {
+        text: "The feature vector can be interpreted as a point in \\(\\mathbb{R}^3\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(w^Tx\\) is a weighted sum of the three input features.",
+        isCorrect: true,
+      },
+      {
+        text: "The negative age weight lowers the score as age increases, holding the other features fixed.",
+        isCorrect: true,
+      },
+      {
+        text: "Before adding any bias, the score depends on alignment between \\(w\\) and \\(x\\).",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "The feature vector has three numerical components, so it can be viewed geometrically in \\(\\mathbb{R}^3\\). The expression \\(w^Tx\\) computes a weighted sum, and the negative weight on age subtracts from the score when age increases. Geometrically, the dot product is larger when the input vector aligns more strongly with the weight vector.",
+  },
+
+  {
+    id: "la-crash-l1-q50",
+    chapter: 1,
+    difficulty: "hard",
+    prompt:
+      "Let \\(c>0\\), and let \\(x\\) and \\(z\\) be nonzero vectors. Which statements about replacing \\(x\\) with \\(cx\\) are correct?",
+    options: [
+      {
+        text: "The direction of \\(x\\) is unchanged.",
+        isCorrect: true,
+      },
+      {
+        text: "The L2 norm is multiplied by \\(c\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The dot product with \\(z\\) is multiplied by \\(c\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The cosine similarity with \\(z\\) stays the same.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Multiplying a nonzero vector by a positive scalar changes its length but preserves its direction. The norm becomes \\(\\|cx\\|=c\\|x\\|\\), and the dot product becomes \\((cx)\\cdot z=c(x\\cdot z)\\). In cosine similarity, that same positive factor appears in both the numerator and denominator, so it cancels out.",
+  },
 ];
 
 export const CrashCourseLinearAlgebraL1Questions =

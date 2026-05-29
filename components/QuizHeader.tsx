@@ -158,7 +158,9 @@ export default function QuizHeader({
     <header className="space-y-3">
       <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-semibold">{title}</h1>
+          <h1 className="text-base md:text-lg font-medium text-slate-300">
+            {title}
+          </h1>
           <p className="text-xs text-slate-400 mt-2">
             Glicko rating:{" "}
             <span className="font-semibold text-slate-100">
