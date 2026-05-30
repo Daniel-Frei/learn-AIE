@@ -1,988 +1,609 @@
 import { Question } from "../../../quiz";
 
+type QuestionDifficulty = "easy" | "medium" | "hard";
+type OptionSeed = readonly [text: string, isCorrect: boolean];
+
+function makeQuestion(
+  number: number,
+  difficulty: QuestionDifficulty,
+  prompt: string,
+  optionSeeds: readonly OptionSeed[],
+  explanation: string,
+): Question {
+  if (optionSeeds.length !== 4) {
+    throw new Error(`Lecture 3 question ${number} must have four options.`);
+  }
+
+  return {
+    id: `bio-chem-life-l3-q${String(number).padStart(2, "0")}`,
+    chapter: 3,
+    difficulty,
+    prompt,
+    options: optionSeeds.map(([text, isCorrect]) => ({ text, isCorrect })),
+    explanation,
+  };
+}
+
 export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
-  {
-    id: "bio-chem-life-l3-q01",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly describe DNA as biological information storage?",
-    options: [
-      {
-        text: "DNA stores information in sequences of bases.",
-        isCorrect: true,
-      },
-      {
-        text: "The four DNA bases are adenine, thymine, guanine, and cytosine.",
-        isCorrect: true,
-      },
-      {
-        text: "DNA can be copied because base pairing provides a template-like mechanism.",
-        isCorrect: true,
-      },
-      {
-        text: "DNA primarily solves the information-storage problem for cells.",
-        isCorrect: true,
-      },
+  makeQuestion(
+    1,
+    "easy",
+    "Which statements correctly describe DNA as an information molecule?",
+    [
+      ["DNA stores information in nucleotide sequence.", true],
+      ["Complementary base pairing helps DNA be copied and repaired.", true],
+      ["DNA is chemically stable enough to support inheritance.", true],
+      [
+        "DNA influences cellular work through RNA, proteins, and regulated information use.",
+        true,
+      ],
     ],
-    explanation:
-      "DNA stores biological information in ordered base sequences. Complementary base pairing makes replication, repair, and inheritance possible because each strand can guide reconstruction of the other.",
-  },
-  {
-    id: "bio-chem-life-l3-q02",
-    chapter: 3,
-    difficulty: "easy",
-    prompt: "Which statements correctly describe complementary base pairing?",
-    options: [
-      { text: "A pairs with T in DNA.", isCorrect: true },
-      { text: "G pairs with C in DNA.", isCorrect: true },
-      {
-        text: "Complementary pairing helps DNA act as a copyable information molecule.",
-        isCorrect: true,
-      },
-      {
-        text: "Complementary pairing means every base pairs with every other base equally.",
-        isCorrect: false,
-      },
+    "DNA is central because it stores inheritable sequence information. Most cellular execution is performed by proteins and RNAs whose production and regulation depend on how DNA information is accessed and used.",
+  ),
+  makeQuestion(
+    2,
+    "easy",
+    "Which statement best describes a gene?",
+    [
+      [
+        "A DNA sequence that can be used to produce a functional product, often a protein or functional RNA.",
+        true,
+      ],
+      ["A finished protein that has already folded in the cytoplasm.", false],
+      [
+        "A lipid bilayer that controls transport across the cell membrane.",
+        false,
+      ],
+      ["A clinical-trial endpoint used to measure patient survival.", false],
     ],
-    explanation:
-      "Specific base pairing is what lets DNA strands carry recoverable information. If every base paired equally with every other base, the template-copying logic would break down.",
-  },
-  {
-    id: "bio-chem-life-l3-q03",
-    chapter: 3,
-    difficulty: "easy",
-    prompt: "Which statements correctly describe genes?",
-    options: [
-      {
-        text: "A gene is a DNA sequence that can be used to produce a functional product.",
-        isCorrect: true,
-      },
-      {
-        text: "A gene can encode a protein or functional RNA.",
-        isCorrect: true,
-      },
-      {
-        text: "A gene directly and deterministically causes one trait in every context.",
-        isCorrect: false,
-      },
-      {
-        text: "Genes function outside larger cellular systems and regulation.",
-        isCorrect: false,
-      },
+    "A gene is a usable information segment within DNA, not the final protein or the whole biological outcome. Genes influence traits through regulated expression, RNA, protein function, environment, and interaction with other systems.",
+  ),
+  makeQuestion(
+    3,
+    "easy",
+    "Which pairings in the central dogma are correct?",
+    [
+      ["Transcription: DNA information is copied into RNA.", true],
+      [
+        "Translation: ribosomes use messenger RNA to build an amino acid chain.",
+        true,
+      ],
+      ["Codon: a lipid bilayer that stores ATP in mitochondria.", false],
+      [
+        "Replication: proteins are converted directly into DNA sequence by ribosomes.",
+        false,
+      ],
     ],
-    explanation:
-      "Genes are functional information units, but their effects depend on context and regulation. Treating a gene as a one-trait blueprint ignores networks, expression levels, environment, and protein function.",
-  },
-  {
-    id: "bio-chem-life-l3-q04",
-    chapter: 3,
-    difficulty: "easy",
-    prompt: "Which statement best describes a genome?",
-    options: [
-      {
-        text: "A genome is the full genetic information set of an organism or cell.",
-        isCorrect: true,
-      },
-      {
-        text: "A genome is a single protein produced by a ribosome.",
-        isCorrect: false,
-      },
-      {
-        text: "A genome is only the blood glucose level of an organism.",
-        isCorrect: false,
-      },
-      { text: "A genome is the same thing as one codon.", isCorrect: false },
+    "The central dogma is DNA -> RNA -> protein, with replication copying DNA. Codons are three-nucleotide information units, not lipid bilayers, and later questions use that vocabulary directly.",
+  ),
+  makeQuestion(
+    4,
+    "easy",
+    "Which statements correctly describe RNA?",
+    [
+      [
+        "Messenger RNA can carry protein-coding instructions from DNA to ribosomes.",
+        true,
+      ],
+      [
+        "RNA can be shorter-lived and more context-dependent than genomic DNA.",
+        true,
+      ],
+      [
+        "Some RNAs have regulatory or functional roles beyond carrying protein instructions.",
+        true,
+      ],
+      ["Some viruses use RNA as their genetic material.", true],
     ],
-    explanation:
-      "A genome is the complete set of genetic information, organized across chromosomes or similar genetic structures. It is not a protein, a metabolic measurement, or a single three-base codon.",
-  },
-  {
-    id: "bio-chem-life-l3-q05",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly describe why DNA is not a simple blueprint?",
-    options: [
-      {
-        text: "DNA contains potential instructions that cells selectively access.",
-        isCorrect: true,
-      },
-      {
-        text: "Gene execution is regulated and context-dependent.",
-        isCorrect: true,
-      },
-      {
-        text: "Cellular behavior depends on networks of genes, proteins, signals, and environment.",
-        isCorrect: true,
-      },
-      {
-        text: "The same genome can support different cell types through different regulation.",
-        isCorrect: true,
-      },
+    "RNA is a versatile working layer in biology. Messenger RNA is especially important for protein production and mRNA medicines, but other RNAs can regulate, catalyze, process, or support cellular information flow.",
+  ),
+  makeQuestion(
+    5,
+    "easy",
+    "Which statement best corrects the phrase DNA is a blueprint?",
+    [
+      [
+        "DNA is better understood as an inherited information library that cells regulate and interpret in context.",
+        true,
+      ],
+      [
+        "DNA is irrelevant because proteins appear without sequence information.",
+        false,
+      ],
+      [
+        "DNA contains one deterministic switch for every complex trait with no environmental effects.",
+        false,
+      ],
+      [
+        "DNA is a clinical drug dose table rather than a biological information molecule.",
+        false,
+      ],
     ],
-    explanation:
-      "A blueprint metaphor is too rigid because DNA is not executed uniformly in every cell. Cells regulate which instructions are active, and biological behavior emerges from dynamic networks rather than raw sequence alone.",
-  },
-  {
-    id: "bio-chem-life-l3-q06",
-    chapter: 3,
-    difficulty: "easy",
-    prompt: "Which statements correctly describe the central dogma?",
-    options: [
-      {
-        text: "A common information flow is DNA to RNA to protein.",
-        isCorrect: true,
-      },
-      { text: "Transcription produces RNA from DNA.", isCorrect: true },
-      { text: "Translation produces protein from RNA.", isCorrect: true },
-      {
-        text: "The central dogma means proteins are copied directly into DNA for every cell function.",
-        isCorrect: false,
-      },
+    "The blueprint metaphor hides regulation, context, environment, and networks. DNA provides information, but cell behavior depends on which genes are expressed, how products function, and what signals and environments are present.",
+  ),
+  makeQuestion(
+    6,
+    "easy",
+    "Which statements correctly describe gene expression?",
+    [
+      [
+        "Gene expression refers to how much or when a gene product is made.",
+        true,
+      ],
+      [
+        "Cells can change gene expression without changing the underlying DNA sequence.",
+        true,
+      ],
+      [
+        "Different cell types must express exactly the same genes at exactly the same levels.",
+        false,
+      ],
+      [
+        "Gene expression means every gene is active at the same level in every cell.",
+        false,
+      ],
     ],
-    explanation:
-      "The central dogma summarizes a core biological information flow: stored DNA information is transcribed into RNA and translated into protein. It does not mean proteins are simply copied back into DNA to perform every function.",
-  },
-  {
-    id: "bio-chem-life-l3-q07",
-    chapter: 3,
-    difficulty: "easy",
-    prompt: "Which statements correctly describe RNA?",
-    options: [
-      {
-        text: "RNA can act as a working copy of genetic information.",
-        isCorrect: true,
-      },
-      {
-        text: "Messenger RNA can carry instructions to ribosomes.",
-        isCorrect: true,
-      },
-      {
-        text: "RNA is always the permanent genome storage molecule in human cells.",
-        isCorrect: false,
-      },
-      {
-        text: "RNA cannot participate in biotechnology or therapeutics.",
-        isCorrect: false,
-      },
+    "Gene expression is regulated use of genetic information. It explains why different cells can behave differently even when their DNA sequence is mostly the same, because expression levels and active programs differ.",
+  ),
+  makeQuestion(
+    7,
+    "easy",
+    "Which statements correctly describe transcription factors?",
+    [
+      ["They are often proteins that help regulate gene transcription.", true],
+      ["They can help turn genes on or off in particular contexts.", true],
+      [
+        "They cannot be influenced by signals or other regulatory proteins.",
+        false,
+      ],
+      [
+        "They are the same thing as carbohydrates used only for short-term energy storage.",
+        false,
+      ],
     ],
-    explanation:
-      "RNA often acts as a temporary or working information molecule, with messenger RNA carrying instructions for protein production. RNA is not the main permanent genome store in human cells, and RNA technologies are important in modern medicine.",
-  },
-  {
-    id: "bio-chem-life-l3-q08",
-    chapter: 3,
-    difficulty: "easy",
-    prompt: "Which statement best describes RNA polymerase?",
-    options: [
-      {
-        text: "RNA polymerase reads DNA and produces RNA during transcription.",
-        isCorrect: true,
-      },
-      {
-        text: "RNA polymerase is an antibody that neutralizes viruses.",
-        isCorrect: false,
-      },
-      { text: "RNA polymerase is a lipid bilayer.", isCorrect: false },
-      {
-        text: "RNA polymerase translates codons into amino acids inside the ribosome.",
-        isCorrect: false,
-      },
+    "Transcription factors are part of the control logic of gene expression. They can connect signals and cell state to DNA regulatory regions, so the claim that they cannot be influenced by regulatory context is wrong.",
+  ),
+  makeQuestion(
+    8,
+    "easy",
+    "Which statements correctly describe mutation and evolution?",
+    [
+      ["A mutation is a change in DNA sequence.", true],
+      [
+        "Evolution can occur when inherited variation affects survival or reproduction.",
+        true,
+      ],
+      ["Genetic drift can change variant frequencies by chance.", true],
+      ["Selection can act in pathogens, cancers, and populations.", true],
     ],
-    explanation:
-      "RNA polymerase is the enzyme that transcribes DNA into RNA. Ribosomes handle translation, while antibodies and lipid bilayers serve very different biological roles.",
-  },
-  {
-    id: "bio-chem-life-l3-q09",
-    chapter: 3,
-    difficulty: "easy",
-    prompt: "Which statements correctly describe translation?",
-    options: [
-      { text: "Ribosomes read RNA and build proteins.", isCorrect: true },
-      {
-        text: "RNA is read in groups of three bases called codons.",
-        isCorrect: true,
-      },
-      {
-        text: "Codons specify amino acids or translation signals.",
-        isCorrect: true,
-      },
-      {
-        text: "Translation connects genetic instructions to protein execution.",
-        isCorrect: true,
-      },
+    "Evolution is not only a historical topic. Mutation, selection, drift, and inherited variation are active in medicine through infectious disease, cancer, resistance, and inherited risk.",
+  ),
+  makeQuestion(
+    9,
+    "easy",
+    "Which statement best describes epigenetic regulation?",
+    [
+      [
+        "Regulation of access to genetic information without changing the underlying DNA sequence.",
+        true,
+      ],
+      ["Replacement of every nucleotide with an amino acid.", false],
+      [
+        "A process that makes all genes impossible to transcribe forever.",
+        false,
+      ],
+      ["The same process as bacterial cell-wall synthesis.", false],
     ],
-    explanation:
-      "Translation turns RNA information into amino-acid sequences that become proteins. Codons provide the mapping from sequence information to the protein-building process.",
-  },
-  {
-    id: "bio-chem-life-l3-q10",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly explain why codons use triplets conceptually?",
-    options: [
-      {
-        text: "Four bases read two at a time would give only \\(4^2=16\\) combinations.",
-        isCorrect: true,
-      },
-      {
-        text: "Four bases read three at a time give \\(4^3=64\\) combinations.",
-        isCorrect: true,
-      },
-      {
-        text: "Triplets provide enough combinations to encode the standard amino acids plus signals.",
-        isCorrect: true,
-      },
-      {
-        text: "Triplets are used because a single base has infinite possible meanings.",
-        isCorrect: false,
-      },
+    "Epigenetic regulation affects how genetic information is packaged, accessed, and inherited across cell states. It should not be treated as mystical rewriting of the genome or as a synonym for mutation.",
+  ),
+  makeQuestion(
+    10,
+    "easy",
+    "Which statements correctly describe biotechnology tools at a high level?",
+    [
+      ["Sequencing reads DNA order.", true],
+      ["CRISPR-based tools can target DNA using guide sequences.", true],
+      [
+        "mRNA medicines can deliver temporary instructions for protein production.",
+        true,
+      ],
+      [
+        "Gene therapy can aim to add, replace, silence, or edit genetic information.",
+        true,
+      ],
     ],
-    explanation:
-      "The triplet code is enough to represent the amino acid vocabulary and translation signals. A two-base code would be too small, while a single base has only four possibilities, not infinite meanings.",
-  },
-  {
-    id: "bio-chem-life-l3-q11",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly describe proteins as biological executors?",
-    options: [
-      {
-        text: "Proteins perform much of the active work inside cells.",
-        isCorrect: true,
-      },
-      {
-        text: "Genes influence traits partly through the proteins they help produce.",
-        isCorrect: true,
-      },
-      {
-        text: "Proteins cannot act as enzymes, receptors, transporters, or structural components.",
-        isCorrect: false,
-      },
-      { text: "Proteins are irrelevant once DNA exists.", isCorrect: false },
+    "Modern biotechnology is powerful because biological information is readable, writable, editable, and expressible. Each tool has limits, but each depends on the core DNA, RNA, protein, and regulation concepts in this lecture.",
+  ),
+  makeQuestion(
+    11,
+    "medium",
+    "A neuron and a liver cell contain nearly the same genome but perform very different functions. Which explanations are correct?",
+    [
+      ["They express different sets of genes.", true],
+      ["They maintain different regulatory states and protein networks.", true],
+      [
+        "Their differentiation history cannot affect which programs are accessible.",
+        false,
+      ],
+      [
+        "Their difference requires every gene sequence to be replaced in one of the cell types.",
+        false,
+      ],
     ],
-    explanation:
-      "Proteins perform many functions, including catalysis, signaling, transport, and structure. Genes influence traits through regulated protein production, so proteins are not irrelevant to biological behavior.",
-  },
-  {
-    id: "bio-chem-life-l3-q12",
-    chapter: 3,
-    difficulty: "easy",
-    prompt: "Which statement best summarizes DNA, RNA, and protein roles?",
-    options: [
-      {
-        text: "DNA stores information, RNA communicates working instructions, and proteins execute many cellular functions.",
-        isCorrect: true,
-      },
-      {
-        text: "DNA executes every function directly without RNA or proteins.",
-        isCorrect: false,
-      },
-      { text: "RNA is only a membrane lipid.", isCorrect: false },
-      {
-        text: "Proteins are only passive copies of chromosomes.",
-        isCorrect: false,
-      },
+    "Cell identity depends strongly on regulation rather than wholesale genome replacement. Differentiated cells use different transcription factors, chromatin states, signaling contexts, and protein networks to produce different behavior.",
+  ),
+  makeQuestion(
+    12,
+    "medium",
+    "Which interpretation best explains why codons contain three nucleotides?",
+    [
+      [
+        "Four bases read two at a time give only 16 combinations, while three at a time gives 64, enough to encode 20 amino acids plus stop signals.",
+        true,
+      ],
+      [
+        "Three nucleotides are required because proteins contain exactly three amino acids.",
+        false,
+      ],
+      [
+        "Codons contain three nucleotides because DNA has three total bases.",
+        false,
+      ],
+      ["A codon is three proteins arranged in a lipid membrane.", false],
     ],
-    explanation:
-      "A useful mental model is storage, communication, and execution. DNA stores, RNA carries or regulates information, and proteins perform many active molecular functions.",
-  },
-  {
-    id: "bio-chem-life-l3-q13",
-    chapter: 3,
-    difficulty: "easy",
-    prompt: "Which statements correctly describe gene expression?",
-    options: [
-      {
-        text: "Gene expression means how much or whether a gene is used.",
-        isCorrect: true,
-      },
-      {
-        text: "Cells can activate some genes and suppress others.",
-        isCorrect: true,
-      },
-      {
-        text: "Regulated expression helps different cell types behave differently.",
-        isCorrect: true,
-      },
-      {
-        text: "Not every gene is active all the time in every cell.",
-        isCorrect: true,
-      },
+    "The triplet code is an information-capacity solution. With four possible bases, three-position codons provide enough combinations to encode the amino acid alphabet and stop signals with redundancy.",
+  ),
+  makeQuestion(
+    13,
+    "medium",
+    "Which statements correctly connect DNA sequence to protein function?",
+    [
+      [
+        "DNA can be transcribed into RNA that is translated into amino acid sequence.",
+        true,
+      ],
+      [
+        "Amino acid sequence can influence folding, binding, and catalysis.",
+        true,
+      ],
+      [
+        "DNA affects traits only through direct electrical signals sent from chromosomes to organs.",
+        false,
+      ],
+      [
+        "Every DNA sequence is automatically translated into a functional protein in every cell.",
+        false,
+      ],
     ],
-    explanation:
-      "Gene expression is about which genetic instructions are actually being used and at what level. This regulated access is crucial for cell identity, development, and adaptation.",
-  },
-  {
-    id: "bio-chem-life-l3-q14",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe transcription factors?",
-    options: [
-      {
-        text: "They are proteins that help regulate gene activity.",
-        isCorrect: true,
-      },
-      {
-        text: "They can influence when genes turn on or off.",
-        isCorrect: true,
-      },
-      {
-        text: "They can act like cellular workflow controllers for gene expression.",
-        isCorrect: true,
-      },
-      {
-        text: "They are random DNA damage events rather than regulatory molecules.",
-        isCorrect: false,
-      },
+    "DNA can influence protein function through the central dogma, but only if the sequence is expressed and processed in the relevant context. Expression, RNA handling, translation, folding, modification, and cellular environment all matter.",
+  ),
+  makeQuestion(
+    14,
+    "medium",
+    "Which statements correctly describe plasmids in bacteria and biotechnology?",
+    [
+      ["Plasmids are small DNA molecules that can carry genes.", true],
+      ["Plasmids cannot carry antibiotic resistance genes.", false],
+      [
+        "Engineered plasmids can be used to introduce genes into bacteria for cloning or expression.",
+        true,
+      ],
+      ["Plasmids are the same as human red blood cells.", false],
     ],
-    explanation:
-      "Transcription factors are regulatory proteins that influence gene expression. They are not random damage events; they are part of the control machinery that determines which instructions get executed.",
-  },
-  {
-    id: "bio-chem-life-l3-q15",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe gene regulatory networks?",
-    options: [
-      {
-        text: "Genes, proteins, and signals can regulate one another.",
-        isCorrect: true,
-      },
-      {
-        text: "Individual genes rarely act in complete isolation.",
-        isCorrect: true,
-      },
-      {
-        text: "Regulatory networks are irrelevant to cell identity.",
-        isCorrect: false,
-      },
-      {
-        text: "Biology is best understood as one gene acting alone with no interactions.",
-        isCorrect: false,
-      },
+    "Plasmids matter medically and technologically because they can carry genes and can be engineered as vectors. Some plasmids do carry antibiotic resistance genes, so saying they cannot do so is incorrect.",
+  ),
+  makeQuestion(
+    15,
+    "medium",
+    "Which statements correctly explain recombinant insulin production?",
+    [
+      ["A human insulin gene can be inserted into a DNA vector.", true],
+      [
+        "Production cells can express the inserted instructions and make insulin protein.",
+        true,
+      ],
+      [
+        "The protein can be used as medicine without purification or quality checks.",
+        false,
+      ],
+      [
+        "The process works because bacteria naturally contain finished human pancreas tissue.",
+        false,
+      ],
     ],
-    explanation:
-      "Biological behavior often emerges from networks of interacting genes, proteins, and signals. Cell identity depends strongly on these networks, so single-gene isolation is usually an oversimplified model.",
-  },
-  {
-    id: "bio-chem-life-l3-q16",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statement best describes epigenetics?",
-    options: [
-      {
-        text: "Epigenetics involves chemical or structural changes that influence access to DNA without changing the underlying sequence.",
-        isCorrect: true,
-      },
-      {
-        text: "Epigenetics always means the DNA base sequence has been rewritten.",
-        isCorrect: false,
-      },
-      { text: "Epigenetics proves genes do not exist.", isCorrect: false },
-      {
-        text: "Epigenetics prevents regulation from affecting cells.",
-        isCorrect: false,
-      },
+    "Recombinant insulin is a clear example of using biological information and cellular machinery. Cells read inserted genetic instructions and produce a protein, but medicine production still requires purification and quality control.",
+  ),
+  makeQuestion(
+    16,
+    "medium",
+    "Which statement best distinguishes mutation from epigenetic regulation?",
+    [
+      [
+        "Mutation changes DNA sequence, while epigenetic regulation changes access or usage of DNA without changing the sequence.",
+        true,
+      ],
+      [
+        "Mutation means messenger RNA is translated, while epigenetic regulation means proteins are hydrolyzed.",
+        false,
+      ],
+      [
+        "Mutation and epigenetic regulation are both names for ATP production in mitochondria.",
+        false,
+      ],
+      [
+        "Epigenetic regulation always deletes chromosomes, while mutation never affects sequence.",
+        false,
+      ],
     ],
-    explanation:
-      "Epigenetic mechanisms affect whether parts of the genome are accessible or active. They influence expression without necessarily changing the DNA letters themselves.",
-  },
-  {
-    id: "bio-chem-life-l3-q17",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly explain how different cell types can share the same genome?",
-    options: [
-      { text: "Different cells can express different genes.", isCorrect: true },
-      {
-        text: "Different regulatory programs can run in different cells.",
-        isCorrect: true,
-      },
-      {
-        text: "Transcription factors and epigenetic state can shape cell identity.",
-        isCorrect: true,
-      },
-      {
-        text: "A neuron and a liver cell can behave differently despite nearly identical DNA.",
-        isCorrect: true,
-      },
+    "Mutation and epigenetic regulation can both affect biology, but through different mechanisms. One changes the stored sequence, while the other changes how information is packaged, accessed, or maintained in cell states.",
+  ),
+  makeQuestion(
+    17,
+    "medium",
+    "Which statements correctly describe antibiotic resistance as evolution?",
+    [
+      [
+        "Bacterial populations can contain variants with different susceptibility.",
+        true,
+      ],
+      ["Antibiotic exposure can select for resistant variants.", true],
+      [
+        "Resistance genes cannot spread through plasmids or horizontal gene transfer.",
+        false,
+      ],
+      [
+        "Resistance appears because individual bacteria intentionally decide to become immune after seeing a drug.",
+        false,
+      ],
     ],
-    explanation:
-      "Different cell types usually contain the same genetic library but use different parts of it. Cell identity comes from regulated execution of information, not from every cell needing a completely different genome.",
-  },
-  {
-    id: "bio-chem-life-l3-q18",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe mutation?",
-    options: [
-      { text: "A mutation is a change in DNA sequence.", isCorrect: true },
-      {
-        text: "Mutations can arise from replication errors, radiation, chemicals, or viruses.",
-        isCorrect: true,
-      },
-      {
-        text: "Most mutations are neutral or harmful rather than strongly beneficial.",
-        isCorrect: true,
-      },
-      {
-        text: "Every mutation is immediately beneficial and adaptive.",
-        isCorrect: false,
-      },
+    "Resistance is population-level evolution under selection pressure. Gene transfer can spread resistance, so the option denying plasmids and horizontal transfer is the misconception.",
+  ),
+  makeQuestion(
+    18,
+    "medium",
+    "Which statements correctly describe mRNA medicines?",
+    [
+      [
+        "They can provide temporary instructions for cells to make a protein.",
+        true,
+      ],
+      ["They do not use the cell's translation machinery.", false],
+      [
+        "They cannot be used in vaccine strategies that encode an antigen.",
+        false,
+      ],
+      [
+        "They must permanently replace the entire genome in every treated cell to work.",
+        false,
+      ],
     ],
-    explanation:
-      "Mutation creates genetic variation by changing DNA sequence. Some mutations matter strongly, but many are neutral or harmful, and only a minority are beneficial in a given environment.",
-  },
-  {
-    id: "bio-chem-life-l3-q19",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe natural selection and evolution?",
-    options: [
-      {
-        text: "Variation, inheritance, and selection can produce evolution.",
-        isCorrect: true,
-      },
-      {
-        text: "Variants that improve survival or reproduction can spread.",
-        isCorrect: true,
-      },
-      {
-        text: "Evolution requires all changes to be intentional.",
-        isCorrect: false,
-      },
-      { text: "Selection has no relevance to medicine.", isCorrect: false },
+    "Messenger RNA approaches use a temporary information molecule, not permanent replacement of all genomic DNA. They rely on translation machinery, and some vaccine strategies use mRNA to encode an antigen.",
+  ),
+  makeQuestion(
+    19,
+    "medium",
+    "Which statements correctly describe genetic drift?",
+    [
+      ["It is random change in variant frequencies.", true],
+      ["It is especially important in small populations.", true],
+      ["It can change populations without improving adaptation.", true],
+      ["It is identical to deliberate genome editing with CRISPR.", false],
     ],
-    explanation:
-      "Evolution occurs when heritable variation affects survival or reproduction across generations. It does not require intention, and it remains medically relevant in cancer, viruses, and antibiotic resistance.",
-  },
-  {
-    id: "bio-chem-life-l3-q20",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statement best describes genetic drift?",
-    options: [
-      {
-        text: "Genetic drift is random change in variant frequencies, especially important in small populations.",
-        isCorrect: true,
-      },
-      {
-        text: "Genetic drift means every evolutionary change is adaptive.",
-        isCorrect: false,
-      },
-      {
-        text: "Genetic drift is transcription from DNA to RNA.",
-        isCorrect: false,
-      },
-      { text: "Genetic drift is a ribosome reading codons.", isCorrect: false },
+    "Genetic drift reminds students that evolution is not always directed improvement. Chance events can change variant frequencies, especially when populations are small or pass through bottlenecks.",
+  ),
+  makeQuestion(
+    20,
+    "medium",
+    "Which statement best describes gene therapy?",
+    [
+      [
+        "A treatment strategy that aims to add, replace, silence, or edit genetic information to alter disease-relevant biology.",
+        true,
+      ],
+      ["Any drug that blocks a receptor for ten minutes.", false],
+      ["A diagnostic test that only measures blood pressure.", false],
+      ["The process by which ribosomes digest carbohydrates.", false],
     ],
-    explanation:
-      "Genetic drift is random fluctuation in genetic variants, not adaptive selection or gene expression. It matters most when populations are small enough for chance to strongly influence outcomes.",
-  },
-  {
-    id: "bio-chem-life-l3-q21",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements correctly connect evolution to medicine?",
-    options: [
-      {
-        text: "Antibiotic resistance can evolve under drug pressure.",
-        isCorrect: true,
-      },
-      { text: "Viruses can evolve in populations over time.", isCorrect: true },
-      { text: "Cancer can involve evolution inside tissues.", isCorrect: true },
-      {
-        text: "Pathogen and tumor evolution can affect treatment success.",
-        isCorrect: true,
-      },
+    "Gene therapy intervenes at the genetic-information layer, but it still must solve delivery, durability, safety, tissue targeting, and patient-selection problems. It is not a synonym for all drugs or all diagnostics.",
+  ),
+  makeQuestion(
+    21,
+    "hard",
+    "A DNA variant is associated with higher disease risk, but most carriers never develop the disease. Which interpretations are reasonable?",
+    [
+      [
+        "The variant may increase probability rather than deterministically cause disease.",
+        true,
+      ],
+      ["Environment, regulation, other genes, and time may modify risk.", true],
+      [
+        "The association could require further validation in different populations.",
+        true,
+      ],
+      [
+        "The variant proves that every carrier must have identical symptoms at birth.",
+        false,
+      ],
     ],
-    explanation:
-      "Evolution is not just historical; it actively shapes medical problems. Drug pressure, immune pressure, and cellular competition can select resistant microbes, viral variants, or cancer cell populations.",
-  },
-  {
-    id: "bio-chem-life-l3-q22",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe DNA sequencing and genomics?",
-    options: [
-      { text: "Sequencing reads DNA information.", isCorrect: true },
-      {
-        text: "Falling sequencing costs enabled large-scale genomics.",
-        isCorrect: true,
-      },
-      {
-        text: "Genomics can support precision medicine and population studies.",
-        isCorrect: true,
-      },
-      {
-        text: "Sequencing requires destroying all biological information before reading it.",
-        isCorrect: false,
-      },
+    "Genetic risk is often probabilistic. Penetrance, modifier genes, environment, measurement, population structure, and disease definition can all affect whether an associated variant predicts actual disease.",
+  ),
+  makeQuestion(
+    22,
+    "hard",
+    "A CRISPR edit cuts the intended DNA site, but treated cells show mixed outcomes. Which explanations are plausible?",
+    [
+      [
+        "Different repair pathways can produce different final sequence changes.",
+        true,
+      ],
+      ["Editing and delivery may not occur in every target cell.", true],
+      ["Off-target or unintended effects may need to be checked.", true],
+      [
+        "A guide sequence guarantees a perfectly identical outcome in every cell and patient.",
+        false,
+      ],
     ],
-    explanation:
-      "DNA sequencing lets researchers read genetic information at scale. This supports genomics, disease studies, ancestry and population analysis, and increasingly precision medicine.",
-  },
-  {
-    id: "bio-chem-life-l3-q23",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe CRISPR and genome editing?",
-    options: [
-      {
-        text: "CRISPR can be thought of as a programmable DNA editing tool.",
-        isCorrect: true,
-      },
-      {
-        text: "Genome editing can target specific DNA sequences.",
-        isCorrect: true,
-      },
-      {
-        text: "CRISPR is perfect and never has off-target or delivery challenges.",
-        isCorrect: false,
-      },
-      {
-        text: "Genome editing cannot affect biological function.",
-        isCorrect: false,
-      },
+    "Genome editing involves targeting plus cellular repair, delivery, and biological context. A successful cut is not the same as a uniform therapeutic result, which is why editing outcomes and safety need careful validation.",
+  ),
+  makeQuestion(
+    23,
+    "hard",
+    "Which statements correctly synthesize gene regulation with signaling?",
+    [
+      ["External signals can change transcription factor activity.", true],
+      ["Transcription factors can alter gene expression programs.", true],
+      ["Gene-expression changes can alter future signaling responses.", true],
+      [
+        "Regulatory networks can include feedback loops across proteins, RNA, and DNA accessibility.",
+        true,
+      ],
     ],
-    explanation:
-      "CRISPR made genome editing more programmable, but it is not magic or perfect. Targeting, delivery, specificity, and biological consequences still matter.",
-  },
-  {
-    id: "bio-chem-life-l3-q24",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statement best describes mRNA technology?",
-    options: [
-      {
-        text: "mRNA technology can deliver instructions so cells make a protein.",
-        isCorrect: true,
-      },
-      {
-        text: "mRNA technology works by delivering a finished chromosome to every cell.",
-        isCorrect: false,
-      },
-      {
-        text: "mRNA technology is unrelated to the DNA to RNA to protein information flow.",
-        isCorrect: false,
-      },
-      {
-        text: "mRNA technology means proteins are never produced.",
-        isCorrect: false,
-      },
+    "Regulation is networked and dynamic. Signals can change gene expression, gene-expression programs can change receptor levels or pathway components, and feedback can stabilize, amplify, or switch cell states.",
+  ),
+  makeQuestion(
+    24,
+    "hard",
+    "A tumor shrinks during targeted therapy and then later regrows with resistant cells. Which interpretation is best?",
+    [
+      [
+        "Therapy can impose selection pressure that favors resistant tumor subclones.",
+        true,
+      ],
+      [
+        "The initial shrinkage proves evolution cannot occur inside a tumor.",
+        false,
+      ],
+      [
+        "Resistance means no genetic or regulatory diversity existed before treatment.",
+        false,
+      ],
+      [
+        "Regrowth proves the drug never interacted with a biological target.",
+        false,
+      ],
     ],
-    explanation:
-      "mRNA technologies exploit the cell's translation machinery by delivering instructions rather than a finished protein in every case. This directly relies on the central-dogma idea that RNA can guide protein production.",
-  },
-  {
-    id: "bio-chem-life-l3-q25",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe gene therapy and synthetic biology?",
-    options: [
-      {
-        text: "Gene therapy can aim to replace, supplement, or modify defective genetic function.",
-        isCorrect: true,
-      },
-      {
-        text: "Synthetic biology treats cells and molecular systems as engineerable platforms.",
-        isCorrect: true,
-      },
-      {
-        text: "Both fields depend on understanding biological information flow.",
-        isCorrect: true,
-      },
-      {
-        text: "Both fields reflect the ability to read, write, or edit biological information.",
-        isCorrect: true,
-      },
+    "Tumors can contain diverse cell populations. A treatment may kill sensitive cells while resistant cells survive, expand, or acquire additional adaptations, making cancer evolution clinically important.",
+  ),
+  makeQuestion(
+    25,
+    "hard",
+    "Which statements correctly identify limitations of one-gene one-trait reasoning?",
+    [
+      ["Many traits depend on multiple genes and environmental context.", true],
+      [
+        "A gene product can participate in networks with other molecules.",
+        true,
+      ],
+      [
+        "One gene always maps to one visible trait with no regulation or interaction.",
+        false,
+      ],
+      [
+        "Changing expression level can matter even when protein sequence is unchanged.",
+        true,
+      ],
     ],
-    explanation:
-      "Gene therapy and synthetic biology became possible because biology can increasingly be read, edited, and programmed. They depend on understanding how DNA, RNA, proteins, and regulation connect to function.",
-  },
-  {
-    id: "bio-chem-life-l3-q26",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly explain why gene count alone does not explain organism complexity?",
-    options: [
-      {
-        text: "Regulation affects when and where genes are used.",
-        isCorrect: true,
-      },
-      {
-        text: "Interactions among genes and proteins create networks.",
-        isCorrect: true,
-      },
-      {
-        text: "The same gene can participate in different contexts.",
-        isCorrect: true,
-      },
-      {
-        text: "More complex organisms must always have millions more protein-coding genes.",
-        isCorrect: false,
-      },
+    "Simple Mendelian examples are useful, but many biomedical traits are networked, regulated, and context-dependent. Expression level, timing, cell type, environment, and interacting pathways can matter as much as coding sequence.",
+  ),
+  makeQuestion(
+    26,
+    "hard",
+    "Which statements correctly describe why sequencing is powerful but not sufficient by itself?",
+    [
+      [
+        "Sequencing can identify variants, pathogens, or gene-expression-related information depending on method.",
+        true,
+      ],
+      [
+        "Interpreting a sequence often requires functional, clinical, or population context.",
+        true,
+      ],
+      [
+        "A sequence difference does not automatically prove disease causation.",
+        true,
+      ],
+      [
+        "Sequencing alone directly measures every protein activity, metabolite, and clinical outcome without additional data.",
+        false,
+      ],
     ],
-    explanation:
-      "Complexity comes from regulation, interaction, context, and network behavior, not just raw gene count. A relatively modest number of genes can support many cell types and behaviors through controlled expression.",
-  },
-  {
-    id: "bio-chem-life-l3-q27",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe the software analogy for DNA?",
-    options: [
-      {
-        text: "DNA can resemble source code or stored procedures as an analogy.",
-        isCorrect: true,
-      },
-      {
-        text: "The analogy is limited because biological execution is noisy and distributed.",
-        isCorrect: true,
-      },
-      {
-        text: "The analogy means cells run deterministic code with no regulation or context.",
-        isCorrect: false,
-      },
-      {
-        text: "The analogy means evolution never modifies biological instructions.",
-        isCorrect: false,
-      },
+    "Sequencing is foundational, but raw sequence is not the same as mechanism or clinical meaning. Interpretation requires annotation, validation, biological context, and often other measurements.",
+  ),
+  makeQuestion(
+    27,
+    "hard",
+    "Which statements correctly explain why protein-coding gene count does not fully explain organism complexity?",
+    [
+      ["Regulatory networks can reuse genes in different contexts.", true],
+      [
+        "Alternative RNA processing and protein regulation can diversify outcomes.",
+        true,
+      ],
+      ["Interactions among cells and tissues create emergent behavior.", true],
+      [
+        "Organism complexity is determined only by the number of protein-coding genes and nothing else.",
+        false,
+      ],
     ],
-    explanation:
-      "The software analogy helps technically minded learners think about stored instructions, but biology is messier than ordinary software. Execution is noisy, context-dependent, distributed, and continuously shaped by evolution.",
-  },
-  {
-    id: "bio-chem-life-l3-q28",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statement best explains why regulation can matter more than raw DNA sequence for cell behavior?",
-    options: [
-      {
-        text: "Cells with similar DNA can behave differently because they execute different gene-expression programs.",
-        isCorrect: true,
-      },
-      {
-        text: "Raw DNA sequence has no informational role in biology.",
-        isCorrect: false,
-      },
-      {
-        text: "Regulation means every gene is active equally in every cell.",
-        isCorrect: false,
-      },
-      {
-        text: "Cell behavior is independent of proteins and signals.",
-        isCorrect: false,
-      },
+    "Complexity comes from regulation, networks, interactions, timing, and context, not simply a larger list of protein-coding genes. This is why gene count alone is a weak measure of biological sophistication.",
+  ),
+  makeQuestion(
+    28,
+    "hard",
+    "Which statements correctly compare mRNA therapy and genome editing?",
+    [
+      ["mRNA therapy usually provides temporary instructions.", true],
+      [
+        "Genome editing aims to change DNA sequence or regulation more durably.",
+        true,
+      ],
+      ["Both require delivery to relevant cells.", true],
+      [
+        "Both need safety and efficacy evidence in the biological context where they are used.",
+        true,
+      ],
     ],
-    explanation:
-      "DNA provides the library, but regulation controls which instructions are used and when. Raw sequence matters, but cellular behavior depends on expression programs, proteins, signals, and environment.",
-  },
-  {
-    id: "bio-chem-life-l3-q29",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly explain why proteins connect genes to traits?",
-    options: [
-      { text: "Genes can influence which proteins are made.", isCorrect: true },
-      {
-        text: "Proteins perform molecular functions that affect cell behavior.",
-        isCorrect: true,
-      },
-      {
-        text: "Protein amount, location, structure, and regulation all matter.",
-        isCorrect: true,
-      },
-      {
-        text: "Traits often emerge from protein networks rather than one isolated molecule.",
-        isCorrect: true,
-      },
+    "mRNA and genome editing both intervene in biological information flow, but at different layers and with different durability. Delivery, immune response, dose, expression level, target tissue, and evidence all matter.",
+  ),
+  makeQuestion(
+    29,
+    "hard",
+    "Which statements correctly describe horizontal gene transfer in bacteria?",
+    [
+      [
+        "Genes can move between bacteria outside parent-to-offspring inheritance.",
+        true,
+      ],
+      ["Plasmids can be one vehicle for transferable traits.", true],
+      ["Horizontal transfer can spread antibiotic resistance.", true],
+      [
+        "Horizontal gene transfer is the same as human meiosis producing eggs and sperm.",
+        false,
+      ],
     ],
-    explanation:
-      "Genes influence traits through the proteins and functional RNAs they help produce, but traits emerge through systems. Protein structure, abundance, location, and interactions all affect biological outcomes.",
-  },
-  {
-    id: "bio-chem-life-l3-q30",
-    chapter: 3,
-    difficulty: "hard",
-    prompt: "Which statements correctly connect epigenetics to cell identity?",
-    options: [
-      {
-        text: "Epigenetic state can affect which DNA regions are accessible.",
-        isCorrect: true,
-      },
-      { text: "Accessibility can influence gene expression.", isCorrect: true },
-      {
-        text: "Different cell types can maintain different regulatory states.",
-        isCorrect: true,
-      },
-      {
-        text: "Epigenetics always changes A into T or G into C in the DNA sequence.",
-        isCorrect: false,
-      },
+    "Horizontal gene transfer is one reason bacterial evolution can be rapid and clinically important. It differs from vertical inheritance and can move traits such as resistance across bacterial lineages.",
+  ),
+  makeQuestion(
+    30,
+    "hard",
+    "Which statements correctly connect Lecture 3 to modern medicine and biotechnology?",
+    [
+      ["Genetic information can be read through sequencing.", true],
+      [
+        "Gene products can be manufactured through recombinant expression.",
+        true,
+      ],
+      [
+        "Gene regulation helps explain cell identity, disease state, and therapy response.",
+        true,
+      ],
+      [
+        "Evolution helps explain pathogen, tumor, and resistance dynamics.",
+        true,
+      ],
     ],
-    explanation:
-      "Epigenetic mechanisms can help maintain different expression patterns without rewriting the DNA letters. That makes them important for cell identity, development, and regulation.",
-  },
-  {
-    id: "bio-chem-life-l3-q31",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly describe mutation and selection in cancer?",
-    options: [
-      {
-        text: "Cancer cells can acquire genetic or regulatory changes.",
-        isCorrect: true,
-      },
-      {
-        text: "Cell variants with growth or survival advantages can expand.",
-        isCorrect: true,
-      },
-      { text: "Therapy cannot create selection pressure.", isCorrect: false },
-      {
-        text: "Cancer evolution stops once a tumor begins growing.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Cancer can evolve as cell populations acquire changes and compete inside tissues. Therapy can create selection pressure, and tumor evolution can continue during progression and treatment.",
-  },
-  {
-    id: "bio-chem-life-l3-q32",
-    chapter: 3,
-    difficulty: "hard",
-    prompt: "Which statement best explains antibiotic resistance evolution?",
-    options: [
-      {
-        text: "Antibiotics can select for microbes carrying variants that survive treatment.",
-        isCorrect: true,
-      },
-      {
-        text: "Antibiotics make every microbe equally sensitive forever.",
-        isCorrect: false,
-      },
-      {
-        text: "Resistance evolution requires microbes to plan future drug exposure.",
-        isCorrect: false,
-      },
-      {
-        text: "Resistance is impossible when genetic variation exists.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Antibiotic resistance evolves when heritable variation affects survival under drug pressure. Microbes do not need to plan; selection changes population composition over time.",
-  },
-  {
-    id: "bio-chem-life-l3-q33",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly describe biotechnology as programming biology?",
-    options: [
-      {
-        text: "Sequencing helps read biological information.",
-        isCorrect: true,
-      },
-      {
-        text: "Genome editing helps write or modify biological information.",
-        isCorrect: true,
-      },
-      {
-        text: "mRNA technology can deliver executable instructions to cells.",
-        isCorrect: true,
-      },
-      {
-        text: "Synthetic biology designs biological systems using engineering principles.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Modern biotechnology increasingly treats biological information as something that can be read, edited, delivered, and engineered. This is why the language of programming is useful, even though biological systems remain noisy and regulated.",
-  },
-  {
-    id: "bio-chem-life-l3-q34",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly identify misconceptions about genetics?",
-    options: [
-      {
-        text: "Genes are not deterministic blueprints acting alone.",
-        isCorrect: true,
-      },
-      {
-        text: "Regulation is central to biological behavior.",
-        isCorrect: true,
-      },
-      {
-        text: "DNA sequence matters, but context matters too.",
-        isCorrect: true,
-      },
-      {
-        text: "One gene always maps cleanly to one complex trait in every environment.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Genes matter, but they operate in regulatory and environmental contexts. The one-gene, one-trait mental model is often misleading for complex traits and diseases.",
-  },
-  {
-    id: "bio-chem-life-l3-q35",
-    chapter: 3,
-    difficulty: "hard",
-    prompt: "Which statements correctly connect genetics to AI for biology?",
-    options: [
-      {
-        text: "Sequence data can be represented and modeled computationally.",
-        isCorrect: true,
-      },
-      {
-        text: "Protein sequence to structure to function is a learnable mapping problem.",
-        isCorrect: true,
-      },
-      {
-        text: "Gene regulation cannot create context-dependent outputs from similar inputs.",
-        isCorrect: false,
-      },
-      {
-        text: "AI for biology can ignore biological regulation entirely.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "AI for biology often models sequences, structures, regulatory context, and molecular function. Gene regulation can create context-dependent outputs, so denying regulation would make biological modeling weaker.",
-  },
-  {
-    id: "bio-chem-life-l3-q36",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statement best explains why mRNA therapies differ from many traditional drugs?",
-    options: [
-      {
-        text: "They can deliver instructions that cells translate into a protein rather than only delivering a small molecule that binds a target.",
-        isCorrect: true,
-      },
-      { text: "They require cells to stop using ribosomes.", isCorrect: false },
-      {
-        text: "They have no relationship to genetic information flow.",
-        isCorrect: false,
-      },
-      {
-        text: "They work only by deleting every gene in the genome.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "mRNA therapies use the cell's translation system to produce a protein from delivered instructions. They rely on ribosomes and the information-flow logic from RNA to protein.",
-  },
-  {
-    id: "bio-chem-life-l3-q37",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly describe why central dogma is not the whole story?",
-    options: [
-      { text: "Regulation controls when information flows.", isCorrect: true },
-      { text: "Epigenetics can affect access to DNA.", isCorrect: true },
-      {
-        text: "Proteins and signals can feed back into gene expression.",
-        isCorrect: true,
-      },
-      {
-        text: "Evolution can change the information over time.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "DNA to RNA to protein is a crucial core pathway, but cells regulate that pathway extensively. Feedback, epigenetic accessibility, signaling, and evolution all shape what information is used and what it becomes.",
-  },
-  {
-    id: "bio-chem-life-l3-q38",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly describe why modern biology became programmable?",
-    options: [
-      {
-        text: "Scientists learned to read DNA with sequencing.",
-        isCorrect: true,
-      },
-      {
-        text: "Scientists learned to edit DNA with tools such as CRISPR.",
-        isCorrect: true,
-      },
-      {
-        text: "Scientists learned to deliver instructions with technologies such as mRNA.",
-        isCorrect: true,
-      },
-      {
-        text: "Biology became programmable because regulation stopped existing.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Biology became more programmable because information could be read, modified, and delivered more precisely. Regulation still exists and remains one of the main reasons biological programming is hard.",
-  },
-  {
-    id: "bio-chem-life-l3-q39",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly connect genetic variation to disease risk?",
-    options: [
-      { text: "Some variants can increase disease risk.", isCorrect: true },
-      { text: "Some variants can affect drug response.", isCorrect: true },
-      {
-        text: "Disease risk cannot depend on interactions among genes, environment, and time.",
-        isCorrect: false,
-      },
-      {
-        text: "All diseases are purely genetic and independent of environment.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Genetic variation can influence disease risk and treatment response, but most disease risk is contextual. Genes, environment, and time can interact, so pure genetic determinism is usually misleading.",
-  },
-  {
-    id: "bio-chem-life-l3-q40",
-    chapter: 3,
-    difficulty: "hard",
-    prompt: "Which statement best summarizes biological regulation?",
-    options: [
-      {
-        text: "Cells use regulated information flow from DNA, RNA, proteins, signals, and networks to produce context-dependent behavior.",
-        isCorrect: true,
-      },
-      {
-        text: "Cells execute every gene equally at all times.",
-        isCorrect: false,
-      },
-      {
-        text: "DNA sequence alone directly determines every outcome without regulation.",
-        isCorrect: false,
-      },
-      {
-        text: "Evolution, mutation, and biotechnology are unrelated to biological information.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Biological behavior emerges from controlled expression and execution of information. DNA matters, but RNA, proteins, regulatory networks, signals, evolution, and biotechnology all shape how that information is used.",
-  },
+    "Genetics is not just heredity vocabulary. It provides the information layer for biotechnology, diagnostics, cancer, infection, pharmacology, evolution, and AI models of biological systems.",
+  ),
 ];
 
 export const BiologyChemistryLifeScienceL3Questions =

@@ -226,8 +226,8 @@ describe("quiz source registry helpers", () => {
       answerBuckets[correctCount] += 1;
     }
 
-    expect(BiologyChemistryLifeScienceL0Questions).toHaveLength(81);
-    expect(difficultyCounts).toEqual({ easy: 27, medium: 27, hard: 27 });
-    expect(answerBuckets.slice(1)).toEqual([21, 20, 20, 20]);
+    expect(BiologyChemistryLifeScienceL0Questions).toHaveLength(60);
+    expect(difficultyCounts).toEqual({ easy: 20, medium: 20, hard: 20 });
+    expect(answerBuckets.slice(1)).toEqual([15, 15, 15, 15]);
   });
 });

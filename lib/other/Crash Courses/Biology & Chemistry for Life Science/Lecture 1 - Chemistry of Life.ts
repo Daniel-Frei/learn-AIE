@@ -1,1054 +1,660 @@
 import { Question } from "../../../quiz";
 
+type QuestionDifficulty = "easy" | "medium" | "hard";
+type OptionSeed = readonly [text: string, isCorrect: boolean];
+
+function makeQuestion(
+  number: number,
+  difficulty: QuestionDifficulty,
+  prompt: string,
+  optionSeeds: readonly OptionSeed[],
+  explanation: string,
+): Question {
+  if (optionSeeds.length !== 4) {
+    throw new Error(`Lecture 1 question ${number} must have four options.`);
+  }
+
+  return {
+    id: `bio-chem-life-l1-q${String(number).padStart(2, "0")}`,
+    chapter: 1,
+    difficulty,
+    prompt,
+    options: optionSeeds.map(([text, isCorrect]) => ({ text, isCorrect })),
+    explanation,
+  };
+}
+
 export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
-  {
-    id: "bio-chem-life-l1-q01",
-    chapter: 1,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly describe the relationship between biology and chemistry?",
-    options: [
-      {
-        text: "Living systems are made of molecules interacting under physical and chemical constraints.",
-        isCorrect: true,
-      },
-      {
-        text: "Cells, drugs, proteins, and signaling depend on molecular interactions.",
-        isCorrect: true,
-      },
-      {
-        text: "Biological complexity can emerge from chemistry rather than from magic.",
-        isCorrect: true,
-      },
-      {
-        text: "Understanding chemistry helps explain disease, treatment, and biotechnology.",
-        isCorrect: true,
-      },
+  makeQuestion(
+    1,
+    "easy",
+    "Which statements give a mechanistic reason chemistry is foundational for biology?",
+    [
+      [
+        "Proteins, membranes, DNA, and drugs all depend on molecular interactions.",
+        true,
+      ],
+      ["Cells can be understood partly as organized reaction networks.", true],
+      [
+        "Biological specificity depends on shape, charge, polarity, and dynamics.",
+        true,
+      ],
+      [
+        "Living systems are exempt from chemical and physical constraints once they evolve regulation.",
+        false,
+      ],
     ],
-    explanation:
-      "Biology is implemented through molecules that bind, react, fold, signal, and exchange energy. Chemistry does not make biology simple, but it gives a mechanistic foundation for understanding cells, disease, drugs, and modern biotechnology.",
-  },
-  {
-    id: "bio-chem-life-l1-q02",
-    chapter: 1,
-    difficulty: "easy",
-    prompt: "Which statements correctly describe why biology can feel complex?",
-    options: [
-      {
-        text: "Living systems are noisy and probabilistic.",
-        isCorrect: true,
-      },
-      {
-        text: "Living systems are adaptive and evolved rather than cleanly engineered.",
-        isCorrect: true,
-      },
-      {
-        text: "Biological systems often contain redundancy and feedback.",
-        isCorrect: true,
-      },
-      {
-        text: "Biology is always centrally controlled by one simple master switch.",
-        isCorrect: false,
-      },
+    "Biology is implemented through molecules that bind, fold, react, and exchange energy. Regulation and evolution make the systems complex, but they do not remove the chemical constraints that determine what molecules can do.",
+  ),
+  makeQuestion(
+    2,
+    "easy",
+    "A student says carbon is central to life because it is simply the most reactive element. Which correction is most accurate?",
+    [
+      [
+        "Carbon is useful because it can form four stable covalent bonds, supporting chains, branches, rings, and isomers.",
+        true,
+      ],
+      [
+        "Carbon is useful because it cannot form covalent bonds with hydrogen, oxygen, or nitrogen.",
+        false,
+      ],
+      [
+        "Carbon is useful because it dissolves all biological molecules in water by itself.",
+        false,
+      ],
+      [
+        "Carbon is useful because it stores genetic information without needing other elements.",
+        false,
+      ],
     ],
-    explanation:
-      "Biological systems are decentralized, stochastic, redundant, and shaped by evolution. That makes them harder to reason about than a neatly designed machine with one central controller.",
-  },
-  {
-    id: "bio-chem-life-l1-q03",
-    chapter: 1,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly describe atoms in biological chemistry?",
-    options: [
-      {
-        text: "Atoms contain protons, neutrons, and electrons.",
-        isCorrect: true,
-      },
-      {
-        text: "Electrons strongly influence bonding, reactivity, and charge.",
-        isCorrect: true,
-      },
-      {
-        text: "Only neutrons determine whether molecules can bind biologically.",
-        isCorrect: false,
-      },
-      {
-        text: "Atoms are irrelevant once molecules form.",
-        isCorrect: false,
-      },
+    "Carbon's importance comes from bonding flexibility, not from being generically the most reactive element. Its four covalent bonds let organic molecules form diverse backbones that can include hydrogen, oxygen, nitrogen, phosphorus, sulfur, and other atoms.",
+  ),
+  makeQuestion(
+    3,
+    "easy",
+    "Which pairings correctly connect a CHNOPS element to a high-yield biological role?",
+    [
+      [
+        "Phosphorus: DNA/RNA backbones, ATP, phospholipids, and phosphorylation.",
+        true,
+      ],
+      [
+        "Sulfur: some amino acids, protein structure, and redox chemistry.",
+        true,
+      ],
+      [
+        "Oxygen: genetic code storage through base pairing by itself, without carbon or nitrogen.",
+        false,
+      ],
+      ["Nitrogen: hydrophobic lipid tails as its main role in cells.", false],
     ],
-    explanation:
-      "Electrons are especially important for biology because they determine how atoms bond, react, and carry charge. Molecules inherit their behavior from the atoms and electron arrangements that compose them.",
-  },
-  {
-    id: "bio-chem-life-l1-q04",
-    chapter: 1,
-    difficulty: "easy",
-    prompt: "Which statement best describes the CHNOPS elements in biology?",
-    options: [
-      {
-        text: "Carbon, hydrogen, nitrogen, oxygen, phosphorus, and sulfur are especially important elements in living systems.",
-        isCorrect: true,
-      },
-      {
-        text: "CHNOPS names the four major macromolecule classes.",
-        isCorrect: false,
-      },
-      {
-        text: "CHNOPS means only oxygen matters for life.",
-        isCorrect: false,
-      },
-      {
-        text: "CHNOPS elements cannot form biological molecules.",
-        isCorrect: false,
-      },
+    "Phosphorus and sulfur have specific roles that recur throughout biology, especially in information molecules, energy transfer, membranes, and protein chemistry. Oxygen and nitrogen are also essential, but the incorrect pairings assign them roles that belong to larger molecular systems or to different atoms.",
+  ),
+  makeQuestion(
+    4,
+    "easy",
+    "Which statements correctly distinguish major biological interactions?",
+    [
+      ["Covalent bonds often create stable molecular skeletons.", true],
+      ["Ionic interactions involve attraction between opposite charges.", true],
+      [
+        "Hydrogen bonds use partial charges and can strongly matter when many act together.",
+        true,
+      ],
+      [
+        "Hydrophobic effects help nonpolar groups cluster away from water.",
+        true,
+      ],
     ],
-    explanation:
-      "CHNOPS is a shorthand for six elements that appear repeatedly in biological molecules. These elements help build proteins, DNA, ATP, membranes, water, carbohydrates, and other core structures.",
-  },
-  {
-    id: "bio-chem-life-l1-q05",
-    chapter: 1,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly explain why carbon is foundational to biology?",
-    options: [
-      {
-        text: "Carbon can form four covalent bonds.",
-        isCorrect: true,
-      },
-      {
-        text: "Carbon can form chains and rings.",
-        isCorrect: true,
-      },
-      {
-        text: "Carbon supports stable yet flexible molecular architectures.",
-        isCorrect: true,
-      },
-      {
-        text: "Carbon chemistry enables complex biological molecules such as proteins, lipids, carbohydrates, and nucleic acids.",
-        isCorrect: true,
-      },
+    "These interaction types explain different layers of biological structure. Stable covalent skeletons define molecules, while ionic interactions, hydrogen bonds, and hydrophobic effects often control folding, binding, membranes, and regulation.",
+  ),
+  makeQuestion(
+    5,
+    "easy",
+    "Which explanation best connects water polarity to solubility?",
+    [
+      [
+        "Water's partial charges can stabilize ions and polar groups, so many charged or polar substances dissolve well in water.",
+        true,
+      ],
+      [
+        "Water dissolves nonpolar oils best because hydrogen bonds form most strongly with hydrocarbon chains.",
+        false,
+      ],
+      [
+        "Water polarity matters only for ice, not for chemical reactions inside cells.",
+        false,
+      ],
+      [
+        "Water dissolves molecules only according to molecular mass, not charge or polarity.",
+        false,
+      ],
     ],
-    explanation:
-      "Carbon's bonding flexibility allows it to form many stable structures with varied shapes and chemical properties. This versatility is a major reason organic molecules can support biological complexity.",
-  },
-  {
-    id: "bio-chem-life-l1-q06",
-    chapter: 1,
-    difficulty: "easy",
-    prompt: "Which statements correctly describe covalent bonds?",
-    options: [
-      {
-        text: "They involve sharing electrons.",
-        isCorrect: true,
-      },
-      {
-        text: "They help create stable molecular backbones.",
-        isCorrect: true,
-      },
-      {
-        text: "They are important in DNA and proteins.",
-        isCorrect: true,
-      },
-      {
-        text: "They are always weaker than every hydrogen bond.",
-        isCorrect: false,
-      },
+    "Water is polar, so it interacts favorably with charged and polar groups. Nonpolar hydrocarbon-rich molecules interact poorly with water, which helps explain why lipids form membranes instead of simply dissolving like salts or sugars.",
+  ),
+  makeQuestion(
+    6,
+    "easy",
+    "Which statements correctly describe the hydrophobic effect in biology?",
+    [
+      ["It helps drive phospholipid bilayer formation in water.", true],
+      [
+        "It often helps bury nonpolar amino acid side chains inside folded proteins.",
+        true,
+      ],
+      [
+        "It means nonpolar molecules form strong covalent bonds with water.",
+        false,
+      ],
+      [
+        "It means polar molecules cannot ever cross membranes by any route.",
+        false,
+      ],
     ],
-    explanation:
-      "Covalent bonds share electrons and are generally strong compared with many noncovalent interactions. They form stable molecular frameworks such as protein chains and DNA backbones.",
-  },
-  {
-    id: "bio-chem-life-l1-q07",
-    chapter: 1,
-    difficulty: "easy",
-    prompt: "Which statements correctly describe ionic interactions?",
-    options: [
-      {
-        text: "They involve attraction between opposite charges.",
-        isCorrect: true,
-      },
-      {
-        text: "They matter for ion gradients and membrane potentials.",
-        isCorrect: true,
-      },
-      {
-        text: "They cannot influence nerve signaling.",
-        isCorrect: false,
-      },
-      {
-        text: "They require molecules to be completely nonpolar.",
-        isCorrect: false,
-      },
+    "The hydrophobic effect is a major organizing force because water interacts better with itself and polar groups than with nonpolar surfaces. It does not mean water covalently reacts with nonpolar molecules, and it does not eliminate membrane transport mechanisms for polar substances.",
+  ),
+  makeQuestion(
+    7,
+    "easy",
+    "Which statements correctly connect monomers, polymers, hydrolysis, and dehydration reactions?",
+    [
+      ["A polymer is built from repeated smaller building blocks.", true],
+      ["Hydrolysis uses water to break bonds in larger molecules.", true],
+      [
+        "Dehydration reactions join building blocks while releasing water.",
+        true,
+      ],
+      [
+        "Hydrolysis is the same as translating messenger RNA into protein.",
+        false,
+      ],
     ],
-    explanation:
-      "Ionic interactions arise from charge attraction, such as between positive and negative ions. Biological systems use charged ions and gradients for signaling, transport, electrical behavior, and nerve signaling.",
-  },
-  {
-    id: "bio-chem-life-l1-q08",
-    chapter: 1,
-    difficulty: "easy",
-    prompt: "Which statement best describes hydrogen bonds in biology?",
-    options: [
-      {
-        text: "They are weak individually but powerful collectively in water, DNA, and protein structure.",
-        isCorrect: true,
-      },
-      {
-        text: "They are irrelevant because they are not covalent bonds.",
-        isCorrect: false,
-      },
-      {
-        text: "They prevent water from having unusual biological properties.",
-        isCorrect: false,
-      },
-      {
-        text: "They only occur inside metals.",
-        isCorrect: false,
-      },
+    "Macromolecule chemistry depends on building and breaking bonds between smaller units. Hydrolysis and dehydration reactions are chemical processes, while translation is an information-to-protein process that uses amino acids but is not itself the definition of hydrolysis.",
+  ),
+  makeQuestion(
+    8,
+    "easy",
+    "Which statements correctly describe the four major classes of biological macromolecules?",
+    [
+      [
+        "Carbohydrates can provide fuel, storage, structure, or cell-recognition roles.",
+        true,
+      ],
+      [
+        "Lipids support membranes, energy storage, and some signaling molecules.",
+        true,
+      ],
+      [
+        "Proteins perform many active cellular jobs such as catalysis, transport, signaling, and structure.",
+        true,
+      ],
+      [
+        "Nucleic acids store or transfer biological sequence information.",
+        true,
+      ],
     ],
-    explanation:
-      "Hydrogen bonds are weaker than covalent bonds one at a time, but many hydrogen bonds together can strongly shape biological structures. They help explain water's properties, DNA base pairing, and aspects of protein folding.",
-  },
-  {
-    id: "bio-chem-life-l1-q09",
-    chapter: 1,
-    difficulty: "easy",
-    prompt: "Which statements correctly describe hydrophobic interactions?",
-    options: [
-      {
-        text: "Nonpolar molecules tend to avoid water.",
-        isCorrect: true,
-      },
-      {
-        text: "They help drive membrane formation.",
-        isCorrect: true,
-      },
-      {
-        text: "They help drive protein folding.",
-        isCorrect: true,
-      },
-      {
-        text: "They contribute to molecular organization in water.",
-        isCorrect: true,
-      },
+    "The macromolecule classes are not just labels; they map to recurring biological functions. Each class has characteristic chemistry and building blocks that make it suited for particular roles in cells and organisms.",
+  ),
+  makeQuestion(
+    9,
+    "easy",
+    "Which statement most accurately describes an amino acid?",
+    [
+      [
+        "An amino acid is a protein building block with shared backbone features and a side chain that gives it distinct properties.",
+        true,
+      ],
+      ["An amino acid is a nucleotide that stores one DNA base.", false],
+      [
+        "An amino acid is always a lipid with a hydrophobic tail and hydrophilic head.",
+        false,
+      ],
+      [
+        "An amino acid is a sugar monomer used only for short-term energy.",
+        false,
+      ],
     ],
-    explanation:
-      "Hydrophobic interactions arise because nonpolar surfaces are poorly accommodated by water. This effect helps lipids self-assemble into membranes and helps proteins bury hydrophobic residues inside folded structures.",
-  },
-  {
-    id: "bio-chem-life-l1-q10",
-    chapter: 1,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly describe the phrase 'structure determines function'?",
-    options: [
-      {
-        text: "Molecular shape can influence what a molecule binds.",
-        isCorrect: true,
-      },
-      {
-        text: "Charge and chemistry can affect molecular specificity.",
-        isCorrect: true,
-      },
-      {
-        text: "Protein shape can affect catalysis, transport, and signaling.",
-        isCorrect: true,
-      },
-      {
-        text: "A molecule's shape is never relevant to its biological role.",
-        isCorrect: false,
-      },
+    "Amino acids are the monomers of proteins. Their shared backbone lets cells link them into chains, while side chains create differences in charge, polarity, hydrophobicity, size, and reactivity that affect folding and function.",
+  ),
+  makeQuestion(
+    10,
+    "easy",
+    "Which statements correctly describe ATP in cellular metabolism?",
+    [
+      [
+        "ATP can couple energy-releasing processes to energy-requiring cellular work.",
+        true,
+      ],
+      [
+        "ATP is regenerated continuously because cells keep consuming it.",
+        true,
+      ],
+      [
+        "ATP is the long-term hereditary molecule that stores chromosome sequence.",
+        false,
+      ],
+      [
+        "ATP makes enzymes unnecessary by forcing every reaction to happen instantly.",
+        false,
+      ],
     ],
-    explanation:
-      "Biological molecules interact through shape, charge, chemistry, and motion. A molecule's structure determines what it can recognize, bind, catalyze, transport, or regulate.",
-  },
-  {
-    id: "bio-chem-life-l1-q11",
-    chapter: 1,
-    difficulty: "easy",
-    prompt: "Which statements correctly describe drug-target binding?",
-    options: [
-      {
-        text: "A drug can work by binding a biological target.",
-        isCorrect: true,
-      },
-      {
-        text: "Binding depends on fit, charge, chemistry, and dynamics.",
-        isCorrect: true,
-      },
-      {
-        text: "Binding cannot alter target function.",
-        isCorrect: false,
-      },
-      {
-        text: "Drug action is unrelated to molecular specificity.",
-        isCorrect: false,
-      },
+    "ATP is a short-term usable energy currency, not the molecule of heredity. Cells use ATP to drive transport, biosynthesis, movement, and regulation, but enzymes are still needed to make reaction rates compatible with life.",
+  ),
+  makeQuestion(
+    11,
+    "medium",
+    "A folded protein loses function after a single amino acid substitution. Which explanations are plausible?",
+    [
+      [
+        "The substitution could disrupt local charge or hydrogen bonding near an active site.",
+        true,
+      ],
+      [
+        "The substitution could alter hydrophobic packing and destabilize the folded structure.",
+        true,
+      ],
+      [
+        "The substitution could change a binding surface used to recognize another molecule.",
+        true,
+      ],
+      [
+        "A single amino acid substitution cannot matter unless the protein's entire gene is deleted.",
+        false,
+      ],
     ],
-    explanation:
-      "Many drugs act by binding proteins or other molecular targets and changing their behavior. Binding can alter target function, and specificity comes from molecular compatibility rather than from a target being chosen by name alone.",
-  },
-  {
-    id: "bio-chem-life-l1-q12",
-    chapter: 1,
-    difficulty: "easy",
-    prompt: "Which statement best describes why water is central to life?",
-    options: [
-      {
-        text: "Water is the polar medium in which many biological molecules dissolve, fold, move, and interact.",
-        isCorrect: true,
-      },
-      {
-        text: "Water is biologically irrelevant because cells are dry.",
-        isCorrect: false,
-      },
-      {
-        text: "Water prevents all molecular interactions.",
-        isCorrect: false,
-      },
-      {
-        text: "Water is nonpolar and cannot form hydrogen bonds.",
-        isCorrect: false,
-      },
+    "Protein function can depend on local chemistry and global folding. A single substitution can matter if it changes an active site, a binding interface, folding stability, or regulation, even though many substitutions are neutral or mild.",
+  ),
+  makeQuestion(
+    12,
+    "medium",
+    "Which interpretation best explains why phospholipids self-assemble into bilayers in water?",
+    [
+      [
+        "Hydrophilic heads interact with water while hydrophobic tails are shielded from water in the bilayer interior.",
+        true,
+      ],
+      [
+        "Phospholipids form bilayers because all parts of the molecule are equally charged.",
+        false,
+      ],
+      [
+        "Bilayers require a ribosome to place every lipid into position one at a time.",
+        false,
+      ],
+      [
+        "Bilayers form because covalent bonds link every lipid tail to every neighboring lipid tail.",
+        false,
+      ],
     ],
-    explanation:
-      "Cells are aqueous systems, and water's polarity and hydrogen bonding shape solubility, folding, transport, and organization. Treating water as passive background misses one of the main constraints of biological chemistry.",
-  },
-  {
-    id: "bio-chem-life-l1-q13",
-    chapter: 1,
-    difficulty: "easy",
-    prompt: "Which statements correctly describe water polarity?",
-    options: [
-      {
-        text: "Oxygen pulls electrons more strongly than hydrogen in water.",
-        isCorrect: true,
-      },
-      {
-        text: "Water has partial charges.",
-        isCorrect: true,
-      },
-      {
-        text: "Water can form hydrogen bonds.",
-        isCorrect: true,
-      },
-      {
-        text: "Water's polarity helps explain why polar substances often dissolve well.",
-        isCorrect: true,
-      },
+    "Phospholipids are amphipathic, meaning they contain both water-interacting and water-avoiding regions. Bilayers can self-assemble from these chemical properties, though cells also regulate membrane composition and organization.",
+  ),
+  makeQuestion(
+    13,
+    "medium",
+    "Which statements correctly distinguish enzyme catalysis from changes in reaction thermodynamics?",
+    [
+      ["Enzymes lower activation energy and speed reactions.", true],
+      [
+        "Enzymes do not make an energetically unfavorable overall reaction favorable by catalysis alone.",
+        true,
+      ],
+      [
+        "Enzymes are consumed as the required fuel for every reaction they catalyze.",
+        false,
+      ],
+      ["Enzymes work by changing the genetic code of their substrates.", false],
     ],
-    explanation:
-      "Water is polar because electron density is unevenly distributed, giving oxygen and hydrogen partial charges. Those partial charges allow hydrogen bonding and make water a powerful solvent for many polar and charged molecules.",
-  },
-  {
-    id: "bio-chem-life-l1-q14",
-    chapter: 1,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe solubility in water?",
-    options: [
-      {
-        text: "Polar and charged molecules often dissolve well in water.",
-        isCorrect: true,
-      },
-      {
-        text: "Nonpolar molecules tend to dissolve poorly in water.",
-        isCorrect: true,
-      },
-      {
-        text: "Solubility helps organize biological compartments and interactions.",
-        isCorrect: true,
-      },
-      {
-        text: "Water dissolves every biological molecule equally well.",
-        isCorrect: false,
-      },
+    "Enzymes alter reaction rates by stabilizing transition states or productive molecular arrangements. They do not by themselves change the overall free-energy difference of a reaction, and they are not consumed like fuel in each catalytic cycle.",
+  ),
+  makeQuestion(
+    14,
+    "medium",
+    "Which statements correctly connect water's properties to biological function?",
+    [
+      ["Hydrogen bonding contributes to cohesion and surface tension.", true],
+      ["Water's high heat capacity helps buffer temperature changes.", true],
+      [
+        "Water's polarity helps ions and polar molecules participate in reactions.",
+        true,
+      ],
+      ["Ice floating can protect liquid-water environments underneath.", true],
     ],
-    explanation:
-      "Water interacts well with polar or charged molecules but poorly with many nonpolar surfaces. This difference helps drive compartment formation, protein folding, and selective molecular organization.",
-  },
-  {
-    id: "bio-chem-life-l1-q15",
-    chapter: 1,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe spontaneous membrane formation?",
-    options: [
-      {
-        text: "Phospholipids have hydrophilic heads and hydrophobic tails.",
-        isCorrect: true,
-      },
-      {
-        text: "Hydrophobic tails tend to avoid water.",
-        isCorrect: true,
-      },
-      {
-        text: "Lipid bilayers cannot form boundaries or compartments.",
-        isCorrect: false,
-      },
-      {
-        text: "Membranes require every lipid tail to dissolve freely in water.",
-        isCorrect: false,
-      },
+    "Water's unusual properties are consequences of polarity and hydrogen bonding. Not every property is equally important in every medical context, but together they help explain why water is such a powerful medium for life.",
+  ),
+  makeQuestion(
+    15,
+    "medium",
+    "Which statements correctly describe pH as a biological variable?",
+    [
+      ["pH reflects hydrogen ion concentration.", true],
+      ["Changing pH can alter charge states of amino acid side chains.", true],
+      ["Enzyme function can depend strongly on pH.", true],
+      [
+        "pH matters only in pure water and has no effect in cells or blood.",
+        false,
+      ],
     ],
-    explanation:
-      "Phospholipids self-organize because their heads interact with water while their tails avoid it. This chemistry makes bilayers, boundaries, and compartments a natural outcome rather than an arbitrary design choice.",
-  },
-  {
-    id: "bio-chem-life-l1-q16",
-    chapter: 1,
-    difficulty: "medium",
-    prompt:
-      "Which statement best describes why hydrophobic amino acids often hide inside folded proteins?",
-    options: [
-      {
-        text: "Burying hydrophobic residues reduces their exposure to water and helps stabilize the folded structure.",
-        isCorrect: true,
-      },
-      {
-        text: "Hydrophobic residues must always remain on the outside to maximize water contact.",
-        isCorrect: false,
-      },
-      {
-        text: "Protein folding is unrelated to water.",
-        isCorrect: false,
-      },
-      {
-        text: "Amino acid chemistry cannot affect folding.",
-        isCorrect: false,
-      },
+    "Many biological molecules contain groups that can gain or lose protons. Those charge changes can alter binding, folding, catalysis, and physiology, which is why blood pH and compartment pH are tightly regulated.",
+  ),
+  makeQuestion(
+    16,
+    "medium",
+    "A molecule has the same chemical formula as another molecule but a different atom arrangement. Which term best applies?",
+    [
+      ["Isomer.", true],
+      ["Polymer.", false],
+      ["Ribosome.", false],
+      ["Gradient.", false],
     ],
-    explanation:
-      "Protein folding is strongly shaped by the aqueous environment. Hydrophobic residues often pack into the interior while polar or charged residues remain more exposed, helping produce stable three-dimensional structure.",
-  },
-  {
-    id: "bio-chem-life-l1-q17",
-    chapter: 1,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe entropy and living systems?",
-    options: [
-      {
-        text: "Systems tend toward energy spreading and disorder.",
-        isCorrect: true,
-      },
-      {
-        text: "Life maintains local order by consuming energy.",
-        isCorrect: true,
-      },
-      {
-        text: "Living systems export entropy to their surroundings.",
-        isCorrect: true,
-      },
-      {
-        text: "Cells are dynamic, energy-consuming, and not truly at equilibrium.",
-        isCorrect: true,
-      },
+    "Isomers have the same formula but different arrangements, which can lead to different shapes and biological effects. This matters because molecular function depends on structure, not only on which atoms are present.",
+  ),
+  makeQuestion(
+    17,
+    "medium",
+    "Which statements correctly compare carbohydrates and lipids?",
+    [
+      [
+        "Carbohydrates are often more polar and can serve as readily mobilized fuels or structural polymers.",
+        true,
+      ],
+      [
+        "Lipids are often hydrophobic or amphipathic and are important in membranes and energy storage.",
+        true,
+      ],
+      ["Carbohydrates are always genetic polymers read by ribosomes.", false],
+      ["Lipids are always enzymes that lower activation energy.", false],
     ],
-    explanation:
-      "Life does not violate thermodynamics; it maintains local organization by taking in energy and exporting disorder. Cells are active nonequilibrium systems, constantly building, repairing, transporting, and regulating.",
-  },
-  {
-    id: "bio-chem-life-l1-q18",
-    chapter: 1,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly identify the four major biological macromolecule classes?",
-    options: [
-      { text: "Carbohydrates.", isCorrect: true },
-      { text: "Lipids.", isCorrect: true },
-      { text: "Proteins.", isCorrect: true },
-      { text: "Photons.", isCorrect: false },
+    "Carbohydrates and lipids differ in chemistry and typical biological roles. Some carbohydrates are structural or recognition molecules, while lipids often form membranes, store energy, or act as signals because of their hydrophobic chemistry.",
+  ),
+  makeQuestion(
+    18,
+    "medium",
+    "Which statements correctly describe biological specificity?",
+    [
+      [
+        "Specificity can arise from complementary shape between molecules.",
+        true,
+      ],
+      ["Specificity can depend on charge and polarity patterns.", true],
+      ["Specificity can involve many weak interactions acting together.", true],
+      ["Specificity can change when a protein changes conformation.", true],
     ],
-    explanation:
-      "Carbohydrates, lipids, proteins, and nucleic acids are the major classes of biological macromolecules. Photons matter in contexts such as photosynthesis and imaging, but they are not a macromolecule class.",
-  },
-  {
-    id: "bio-chem-life-l1-q19",
-    chapter: 1,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly match macromolecules with common functions?",
-    options: [
-      {
-        text: "Carbohydrates can provide energy and structure.",
-        isCorrect: true,
-      },
-      {
-        text: "Lipids can form membranes and store energy.",
-        isCorrect: true,
-      },
-      {
-        text: "Proteins are never used as molecular machines.",
-        isCorrect: false,
-      },
-      {
-        text: "Nucleic acids cannot store information.",
-        isCorrect: false,
-      },
+    "Specificity is rarely one simple lock-and-key feature. Shape, charge, polarity, hydrophobic surfaces, flexibility, and conformational change can all contribute to whether two biological molecules bind or react productively.",
+  ),
+  makeQuestion(
+    19,
+    "medium",
+    "Which statements correctly describe why life is non-equilibrium chemistry?",
+    [
+      [
+        "Cells constantly consume energy to build, repair, transport, and regulate.",
+        true,
+      ],
+      [
+        "Cells maintain gradients and ordered structures that would dissipate without energy input.",
+        true,
+      ],
+      [
+        "Cells export entropy to their environment while maintaining local order.",
+        true,
+      ],
+      [
+        "Cells become alive only when all reactions reach permanent chemical equilibrium.",
+        false,
+      ],
     ],
-    explanation:
-      "Carbohydrates can support energy storage and structure, while lipids are central to membranes, energy storage, and signaling. Proteins perform much of the active work in cells, and nucleic acids store and transfer biological information.",
-  },
-  {
-    id: "bio-chem-life-l1-q20",
-    chapter: 1,
-    difficulty: "medium",
-    prompt: "Which statement best describes proteins in cells?",
-    options: [
-      {
-        text: "Proteins are folded amino-acid chains that perform much of the active molecular work in cells.",
-        isCorrect: true,
-      },
-      {
-        text: "Proteins are only passive storage molecules with no shape-dependent function.",
-        isCorrect: false,
-      },
-      {
-        text: "Proteins are made from nucleotides rather than amino acids.",
-        isCorrect: false,
-      },
-      {
-        text: "Proteins cannot bind other molecules.",
-        isCorrect: false,
-      },
+    "Living systems maintain organization through continuous flux of matter and energy. Equilibrium would erase many gradients and dynamic processes that cells need for transport, signaling, metabolism, and survival.",
+  ),
+  makeQuestion(
+    20,
+    "medium",
+    "Which statement best describes the relationship between a protein sequence and protein function?",
+    [
+      [
+        "Sequence influences folding and chemical surfaces, which influence dynamics, binding, catalysis, and regulation.",
+        true,
+      ],
+      [
+        "Sequence matters only for DNA, while proteins work independently of their amino acid order.",
+        false,
+      ],
+      [
+        "Any amino acid sequence will fold into the same structure if ATP is present.",
+        false,
+      ],
+      [
+        "Protein function is determined only by total molecular mass, not by side-chain chemistry.",
+        false,
+      ],
     ],
-    explanation:
-      "Proteins are chains of amino acids that fold into structures capable of catalysis, transport, signaling, movement, and recognition. Their functions depend heavily on their sequence, chemistry, and three-dimensional shape.",
-  },
-  {
-    id: "bio-chem-life-l1-q21",
-    chapter: 1,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe amino acids and folding?",
-    options: [
-      {
-        text: "Amino acids can differ in hydrophobic, charged, and polar properties.",
-        isCorrect: true,
-      },
-      {
-        text: "A protein sequence influences its folded structure.",
-        isCorrect: true,
-      },
-      {
-        text: "Folded structure influences binding and function.",
-        isCorrect: true,
-      },
-      {
-        text: "The sequence to structure to function relationship is central to modern biology.",
-        isCorrect: true,
-      },
+    "A protein's amino acid sequence constrains the structures and conformations it can adopt. Function emerges from the resulting surfaces, active sites, binding interfaces, and regulation in a cellular context.",
+  ),
+  makeQuestion(
+    21,
+    "hard",
+    "A membrane protein stops functioning when charged residues lining its pore are replaced by hydrophobic residues. Which explanations are most plausible?",
+    [
+      [
+        "The pore may no longer stabilize polar or charged molecules passing through it.",
+        true,
+      ],
+      [
+        "The change could alter folding or localization in the lipid bilayer.",
+        true,
+      ],
+      [
+        "The protein must now become a carbohydrate because it contains hydrophobic residues.",
+        false,
+      ],
+      [
+        "The change proves covalent bonds are irrelevant to membrane proteins.",
+        false,
+      ],
     ],
-    explanation:
-      "Amino acid chemistry affects how a protein folds, and the resulting structure affects what the protein can do. This sequence to structure to function mapping is central to protein biology, disease, drug discovery, and AI-for-biology work.",
-  },
-  {
-    id: "bio-chem-life-l1-q22",
-    chapter: 1,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe enzymes?",
-    options: [
-      {
-        text: "Enzymes are biological catalysts.",
-        isCorrect: true,
-      },
-      {
-        text: "They accelerate reactions that would otherwise be too slow for life.",
-        isCorrect: true,
-      },
-      {
-        text: "They can be selective for particular substrates or reactions.",
-        isCorrect: true,
-      },
-      {
-        text: "They are consumed as fuel in every reaction they catalyze.",
-        isCorrect: false,
-      },
+    "Channels and transporters depend on both membrane compatibility and a suitable internal path for the transported substance. Replacing charged residues with hydrophobic ones can disrupt selectivity, conductance, folding, or placement without changing the molecule into a different macromolecule class.",
+  ),
+  makeQuestion(
+    22,
+    "hard",
+    "A drug binds tightly to a purified enzyme in water but fails in cells. Which explanations are scientifically reasonable?",
+    [
+      [
+        "The drug may not cross the cell membrane or reach the enzyme at sufficient concentration.",
+        true,
+      ],
+      [
+        "The enzyme's cellular partners, pH, modifications, or compartment could change binding or activity.",
+        true,
+      ],
+      [
+        "The purified assay may omit competing molecules or regulatory states present in cells.",
+        true,
+      ],
+      [
+        "Tight binding in purified water proves the drug must work in every biological context.",
+        false,
+      ],
     ],
-    explanation:
-      "Enzymes speed up reactions by lowering activation barriers while remaining catalysts rather than simple fuel molecules. Their selectivity enables regulation and organized metabolic pathways.",
-  },
-  {
-    id: "bio-chem-life-l1-q23",
-    chapter: 1,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe enzyme specificity?",
-    options: [
-      {
-        text: "Specificity helps regulate metabolic pathways.",
-        isCorrect: true,
-      },
-      {
-        text: "Specificity depends on molecular structure and chemistry.",
-        isCorrect: true,
-      },
-      {
-        text: "Specificity means enzymes randomly catalyze all reactions equally.",
-        isCorrect: false,
-      },
-      {
-        text: "Specificity is irrelevant to drug design.",
-        isCorrect: false,
-      },
+    "Biological function depends on context as well as molecular affinity. Cellular access, compartmentalization, competing interactions, regulation, pH, and protein state can all explain why a purified biochemical result does not automatically transfer to cells.",
+  ),
+  makeQuestion(
+    23,
+    "hard",
+    "Which statements correctly connect food macromolecules to the molecules a cell builds for itself?",
+    [
+      ["Digestion can hydrolyze polymers into smaller building blocks.", true],
+      [
+        "Cells can reuse absorbed building blocks to synthesize their own macromolecules.",
+        true,
+      ],
+      [
+        "Dehydration reactions can help assemble new polymers from monomers.",
+        true,
+      ],
+      [
+        "The same broad building-block logic applies across many organisms because of shared evolutionary chemistry.",
+        true,
+      ],
     ],
-    explanation:
-      "Enzyme specificity comes from the match between enzyme structure and substrate chemistry. It matters for regulation, pathway control, and drug design because targeting depends on selective molecular interactions.",
-  },
-  {
-    id: "bio-chem-life-l1-q24",
-    chapter: 1,
-    difficulty: "medium",
-    prompt: "Which statement best describes nucleic acids?",
-    options: [
-      {
-        text: "DNA and RNA store and transfer sequence-based biological information.",
-        isCorrect: true,
-      },
-      {
-        text: "Nucleic acids are primarily used as membrane fats.",
-        isCorrect: false,
-      },
-      {
-        text: "Nucleic acids are made from amino acids.",
-        isCorrect: false,
-      },
-      {
-        text: "Nucleic acids cannot participate in information flow.",
-        isCorrect: false,
-      },
+    "Food is not simply burned as intact pasta, meat, or fat. Digestion and metabolism break molecules into usable pieces, and cells rebuild molecules according to their own needs using shared biochemical strategies.",
+  ),
+  makeQuestion(
+    24,
+    "hard",
+    "A protein has a strong binding pocket for a molecule but no catalytic residues near the bound chemical group. Which interpretation is best?",
+    [
+      [
+        "Binding alone does not prove the protein is an enzyme for that molecule.",
+        true,
+      ],
+      [
+        "Any molecule that binds a protein must be chemically converted by that protein.",
+        false,
+      ],
+      [
+        "The protein must be DNA because only DNA can bind molecules specifically.",
+        false,
+      ],
+      [
+        "The binding pocket proves the reaction is thermodynamically favorable.",
+        false,
+      ],
     ],
-    explanation:
-      "DNA stores genetic information, and RNA participates in information transfer and regulation. They are built from nucleotides, not amino acids, and they are not membrane fats.",
-  },
-  {
-    id: "bio-chem-life-l1-q25",
-    chapter: 1,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe ATP and metabolism?",
-    options: [
-      {
-        text: "ATP is a cellular energy currency.",
-        isCorrect: true,
-      },
-      {
-        text: "Cells use ATP to drive reactions, transport, and movement.",
-        isCorrect: true,
-      },
-      {
-        text: "Catabolism breaks down molecules to release usable energy or building blocks.",
-        isCorrect: true,
-      },
-      {
-        text: "Anabolism builds molecules and requires energy input.",
-        isCorrect: true,
-      },
+    "Specific binding and catalysis are related but distinct. A protein can bind a ligand for signaling, transport, inhibition, or regulation without catalyzing a chemical transformation of that ligand.",
+  ),
+  makeQuestion(
+    25,
+    "hard",
+    "Which statements correctly describe gradients as biological energy stores?",
+    [
+      [
+        "A concentration gradient can drive passive movement down the gradient.",
+        true,
+      ],
+      [
+        "An electrochemical gradient can combine concentration difference and charge separation.",
+        true,
+      ],
+      [
+        "A gradient means molecules are evenly distributed and no work can be extracted.",
+        false,
+      ],
+      ["A gradient can only be built by changing DNA sequence.", false],
     ],
-    explanation:
-      "ATP provides usable chemical energy for cellular work. Metabolism includes catabolic processes that break molecules down and anabolic processes that build molecules up, both of which are part of continuous cellular energy flow.",
-  },
-  {
-    id: "bio-chem-life-l1-q26",
-    chapter: 1,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe energy gradients in biology?",
-    options: [
-      {
-        text: "Cells can use chemical and electrical gradients to perform work.",
-        isCorrect: true,
-      },
-      {
-        text: "Maintaining gradients requires energy and regulation.",
-        isCorrect: true,
-      },
-      {
-        text: "Gradients are important for transport and signaling.",
-        isCorrect: true,
-      },
-      {
-        text: "Living cells never rely on gradients.",
-        isCorrect: false,
-      },
+    "Gradients represent separations that can drive movement or work. Cells build and maintain gradients using pumps, metabolism, and membranes, not by changing DNA sequence every time a transport process is needed.",
+  ),
+  makeQuestion(
+    26,
+    "hard",
+    "A mutation changes a hydrophobic amino acid in a protein core to a charged amino acid. Which consequences are plausible?",
+    [
+      [
+        "The folded structure could become less stable because a buried charge is unfavorable.",
+        true,
+      ],
+      [
+        "The protein might misfold or be degraded by quality-control systems.",
+        true,
+      ],
+      [
+        "The effect could be small if the residue is not actually buried or the structure compensates.",
+        true,
+      ],
+      [
+        "The mutation must improve function because charged residues are always better than hydrophobic residues.",
+        false,
+      ],
     ],
-    explanation:
-      "Gradients store usable differences across space, such as concentration or charge differences. Cells spend energy to create and maintain gradients because they power transport, signaling, and other work.",
-  },
-  {
-    id: "bio-chem-life-l1-q27",
-    chapter: 1,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe molecular modularity in biology?",
-    options: [
-      {
-        text: "Biology reuses building blocks such as amino acids, nucleotides, sugars, and lipids.",
-        isCorrect: true,
-      },
-      {
-        text: "Different arrangements of building blocks can produce different functions.",
-        isCorrect: true,
-      },
-      {
-        text: "Modularity means every biological molecule has the same function.",
-        isCorrect: false,
-      },
-      {
-        text: "Modularity prevents evolution from reusing molecular parts.",
-        isCorrect: false,
-      },
+    "The impact of a substitution depends on structural context. A charged residue in a hydrophobic core can be disruptive, but proteins can sometimes compensate or the residue may not be buried in the relevant state.",
+  ),
+  makeQuestion(
+    27,
+    "hard",
+    "Which statements correctly describe why weak interactions are central to life?",
+    [
+      ["Weak interactions allow reversible binding and regulation.", true],
+      ["Many weak interactions together can create high specificity.", true],
+      [
+        "Weak interactions support dynamic protein conformations and molecular recognition.",
+        true,
+      ],
+      [
+        "Weak interactions can be tuned by pH, concentration, charge state, and environment.",
+        true,
+      ],
     ],
-    explanation:
-      "Biology often builds complex structures by arranging recurring molecular units in different ways. Reusing building blocks increases flexibility; it does not force every molecule to do the same job.",
-  },
-  {
-    id: "bio-chem-life-l1-q28",
-    chapter: 1,
-    difficulty: "hard",
-    prompt:
-      "Which statement best explains why weak interactions are powerful in biology?",
-    options: [
-      {
-        text: "Many weak interactions together can create stable, reversible, and specific molecular organization.",
-        isCorrect: true,
-      },
-      {
-        text: "Weak interactions matter only if no water is present.",
-        isCorrect: false,
-      },
-      {
-        text: "Weak interactions cannot influence protein folding or DNA structure.",
-        isCorrect: false,
-      },
-      {
-        text: "Weak interactions are useful only when they are individually stronger than covalent bonds.",
-        isCorrect: false,
-      },
+    "Life depends on interactions that are strong enough to organize molecules but flexible enough to reverse and regulate. Weak interactions are especially useful because cells can tune them through local chemistry, concentration, modification, and compartment conditions.",
+  ),
+  makeQuestion(
+    28,
+    "hard",
+    "A protein unfolds when temperature rises above a narrow range. Which explanation is most accurate?",
+    [
+      [
+        "Higher temperature can disrupt the balance of weak interactions that stabilize the folded state.",
+        true,
+      ],
+      [
+        "Temperature changes rewrite the amino acid sequence into a different genetic code.",
+        false,
+      ],
+      [
+        "Unfolding proves covalent bonds in the backbone cannot exist in proteins.",
+        false,
+      ],
+      ["Proteins only fold when no water is present.", false],
     ],
-    explanation:
-      "Biology uses many weak interactions together to create structures that are stable enough to function but reversible enough to regulate. Hydrogen bonds, hydrophobic effects, ionic attractions, and other noncovalent interactions are central to folding, binding, and organization.",
-  },
-  {
-    id: "bio-chem-life-l1-q29",
-    chapter: 1,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly connect water to membranes and proteins?",
-    options: [
-      {
-        text: "Water's polarity helps separate hydrophilic and hydrophobic behavior.",
-        isCorrect: true,
-      },
-      {
-        text: "Membranes form partly because hydrophobic lipid tails avoid water.",
-        isCorrect: true,
-      },
-      {
-        text: "Protein folding is shaped by which residues prefer or avoid water.",
-        isCorrect: true,
-      },
-      {
-        text: "Water is an active constraint on biological organization.",
-        isCorrect: true,
-      },
+    "Protein folding depends on a balance of many weak interactions and the surrounding solvent. Heat can disrupt that balance without necessarily breaking every covalent bond in the backbone or changing the underlying sequence.",
+  ),
+  makeQuestion(
+    29,
+    "hard",
+    "Which statements correctly identify limits of the phrase structure determines function?",
+    [
+      [
+        "Protein function can depend on dynamics and conformational changes, not only one static shape.",
+        true,
+      ],
+      [
+        "Cellular context, binding partners, and modifications can change what a structure does.",
+        true,
+      ],
+      [
+        "The phrase means sequence, environment, and regulation never matter.",
+        false,
+      ],
+      [
+        "The phrase applies only to proteins and never to membranes, nucleic acids, or small molecules.",
+        false,
+      ],
     ],
-    explanation:
-      "Water's polarity makes hydrophilic and hydrophobic chemistry matter. Membranes and protein structures both emerge partly from how molecular surfaces interact with the aqueous environment.",
-  },
-  {
-    id: "bio-chem-life-l1-q30",
-    chapter: 1,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly describe why proteins are central to disease and medicine?",
-    options: [
-      {
-        text: "Many drugs target proteins.",
-        isCorrect: true,
-      },
-      {
-        text: "Many diseases involve altered protein function, expression, or regulation.",
-        isCorrect: true,
-      },
-      {
-        text: "Protein structure can determine binding and catalysis.",
-        isCorrect: true,
-      },
-      {
-        text: "Proteins are never involved in signaling or immunity.",
-        isCorrect: false,
-      },
+    "Structure-function reasoning is central, but structure should not be treated as one frozen image. Dynamics, modifications, partners, concentration, compartment, and environment all affect what a molecule can do.",
+  ),
+  makeQuestion(
+    30,
+    "hard",
+    "Which statements correctly synthesize Lecture 1 into a model useful for later medicine and biotechnology?",
+    [
+      [
+        "Drug effects can often be traced to molecular binding and downstream system response.",
+        true,
+      ],
+      [
+        "Disease mechanisms can involve altered protein folding, enzyme activity, transport, or signaling.",
+        true,
+      ],
+      [
+        "Biotechnology often exploits the fact that biological molecules are modular and chemically constrained.",
+        true,
+      ],
+      [
+        "AI protein tools are useful partly because sequence, structure, and function are connected.",
+        true,
+      ],
     ],
-    explanation:
-      "Proteins perform many active cellular roles, so altered protein behavior can cause or contribute to disease. Their structures make them common drug targets and central objects in signaling, metabolism, transport, and immunity.",
-  },
-  {
-    id: "bio-chem-life-l1-q31",
-    chapter: 1,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly describe AI connections to molecular biology?",
-    options: [
-      {
-        text: "Protein structure prediction connects sequence to structure.",
-        isCorrect: true,
-      },
-      {
-        text: "Protein design and drug discovery depend on molecular structure and function.",
-        isCorrect: true,
-      },
-      {
-        text: "AI for biology can ignore chemistry because biology has no molecular basis.",
-        isCorrect: false,
-      },
-      {
-        text: "Computational biology never uses representations of molecules.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "AI methods in biology often work with sequences, structures, interactions, and molecular representations. Chemistry remains important because the predictions must map onto physical molecules that fold, bind, and react.",
-  },
-  {
-    id: "bio-chem-life-l1-q32",
-    chapter: 1,
-    difficulty: "hard",
-    prompt:
-      "Which statement best explains why life is not at thermodynamic equilibrium?",
-    options: [
-      {
-        text: "Cells continuously consume energy to build, repair, transport, communicate, and maintain organization.",
-        isCorrect: true,
-      },
-      {
-        text: "Cells are at equilibrium because no reactions occur inside them.",
-        isCorrect: false,
-      },
-      {
-        text: "Equilibrium means maximum cellular control and activity.",
-        isCorrect: false,
-      },
-      {
-        text: "Energy flow is irrelevant to metabolism.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Living cells are dynamic systems with continuous chemical flux. They maintain local order and function by consuming energy rather than settling into passive equilibrium.",
-  },
-  {
-    id: "bio-chem-life-l1-q33",
-    chapter: 1,
-    difficulty: "hard",
-    prompt: "Which statements correctly describe biological specificity?",
-    options: [
-      {
-        text: "Shape contributes to which molecules bind.",
-        isCorrect: true,
-      },
-      {
-        text: "Charge contributes to which molecules bind.",
-        isCorrect: true,
-      },
-      {
-        text: "Chemical groups and flexibility can affect recognition.",
-        isCorrect: true,
-      },
-      {
-        text: "Specificity allows cells to regulate pathways and signaling.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Specificity emerges from multiple molecular features, including shape, charge, chemistry, and dynamics. Cells rely on specificity so that signals, enzymes, receptors, antibodies, and drugs interact with appropriate targets more often than inappropriate ones.",
-  },
-  {
-    id: "bio-chem-life-l1-q34",
-    chapter: 1,
-    difficulty: "hard",
-    prompt: "Which statements correctly describe common conceptual mistakes?",
-    options: [
-      {
-        text: "Biology is not cleanly deterministic in the way a simple script is deterministic.",
-        isCorrect: true,
-      },
-      {
-        text: "Proteins are dynamic structures rather than rigid static objects.",
-        isCorrect: true,
-      },
-      {
-        text: "Drugs perturb systems rather than magically fixing isolated components.",
-        isCorrect: true,
-      },
-      {
-        text: "Cells are dry machines unaffected by water chemistry.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Biology is probabilistic, dynamic, and system-level, even when it has mechanistic structure. Water chemistry, protein motion, and network effects all matter, so overly rigid or isolated mental models are misleading.",
-  },
-  {
-    id: "bio-chem-life-l1-q35",
-    chapter: 1,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly connect molecules to systems-level biology?",
-    options: [
-      {
-        text: "Molecular binding can drive cell signaling.",
-        isCorrect: true,
-      },
-      {
-        text: "Protein folding can affect disease mechanisms.",
-        isCorrect: true,
-      },
-      {
-        text: "Membranes cannot create boundaries that support cellular organization.",
-        isCorrect: false,
-      },
-      {
-        text: "Systems-level behavior is independent of molecular interactions.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Large-scale biological behavior emerges from many molecular events: binding, folding, signaling, transport, and compartmentalization. Membranes create boundaries that support organization, so systems-level explanations still need molecular mechanisms underneath them.",
-  },
-  {
-    id: "bio-chem-life-l1-q36",
-    chapter: 1,
-    difficulty: "hard",
-    prompt:
-      "Which statement best explains why cells can self-organize from chemical principles?",
-    options: [
-      {
-        text: "Molecular interactions in water can spontaneously create structures such as membranes and folded proteins.",
-        isCorrect: true,
-      },
-      {
-        text: "Self-organization means molecules ignore physical constraints.",
-        isCorrect: false,
-      },
-      {
-        text: "Cells form only through central command by a single molecule.",
-        isCorrect: false,
-      },
-      {
-        text: "Hydrophobic effects prevent any organized structure from forming.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Self-organization can arise when many molecules follow local physical and chemical rules. Hydrophobic effects, charge interactions, hydrogen bonding, and shape complementarity can produce organized structures without a central controller.",
-  },
-  {
-    id: "bio-chem-life-l1-q37",
-    chapter: 1,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly describe metabolism as continuous chemical flux?",
-    options: [
-      {
-        text: "Cells constantly build and break down molecules.",
-        isCorrect: true,
-      },
-      {
-        text: "Energy is transferred through coupled reactions and molecules such as ATP.",
-        isCorrect: true,
-      },
-      {
-        text: "Metabolism supports repair, transport, communication, and replication.",
-        isCorrect: true,
-      },
-      {
-        text: "Metabolism depends on regulated pathways rather than isolated single reactions only.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Metabolism is a network of chemical processes that keeps cells functioning over time. It involves continuous energy transfer and regulated pathways, not just one isolated reaction.",
-  },
-  {
-    id: "bio-chem-life-l1-q38",
-    chapter: 1,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly describe why molecular shape matters for medicine?",
-    options: [
-      {
-        text: "A drug's shape affects whether it fits a target.",
-        isCorrect: true,
-      },
-      {
-        text: "Protein shape affects active sites and binding pockets.",
-        isCorrect: true,
-      },
-      {
-        text: "Changes in molecular shape can alter function.",
-        isCorrect: true,
-      },
-      {
-        text: "Shape never affects affinity or specificity.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Medicine often depends on changing molecular interactions, and those interactions are shape-dependent. A protein's binding pocket, a drug's geometry, and conformational changes can all influence affinity, specificity, and biological effect.",
-  },
-  {
-    id: "bio-chem-life-l1-q39",
-    chapter: 1,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly explain why memorizing molecule names is less important than mechanistic intuition?",
-    options: [
-      {
-        text: "Mechanistic intuition helps explain new biological examples later.",
-        isCorrect: true,
-      },
-      {
-        text: "Concepts such as bonding, water, structure, and energy transfer across many systems.",
-        isCorrect: true,
-      },
-      {
-        text: "Understanding mechanisms prevents biomedical papers or clinical reasoning from being useful.",
-        isCorrect: false,
-      },
-      {
-        text: "Mechanistic understanding makes chemistry irrelevant.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "A mechanistic framework transfers across many topics, from protein folding to drug action to disease. It helps with biomedical papers and clinical reasoning; it does not make chemistry irrelevant, but makes chemistry usable rather than just memorized.",
-  },
-  {
-    id: "bio-chem-life-l1-q40",
-    chapter: 1,
-    difficulty: "hard",
-    prompt:
-      "Which statement best summarizes the chemistry-of-life mental model?",
-    options: [
-      {
-        text: "Living systems are dynamic molecular systems shaped by water, weak interactions, structure-function relationships, and energy flow.",
-        isCorrect: true,
-      },
-      {
-        text: "Living systems are best understood as dry, static, centrally controlled machines.",
-        isCorrect: false,
-      },
-      {
-        text: "Protein structure, membranes, and metabolism are unrelated to chemistry.",
-        isCorrect: false,
-      },
-      {
-        text: "Biology cannot be reasoned about mechanistically.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "The chemistry-of-life view treats cells as dynamic molecular systems constrained by water, interactions, structure, and energy. This mental model supports later reasoning about cells, disease, pharmacology, clinical research, and AI-for-biology.",
-  },
+    "The chemistry of life is not isolated background material. It provides the mechanistic basis for pharmacology, disease, biotechnology, diagnostics, and computational biology, where molecular structure and interaction determine larger-scale outcomes.",
+  ),
 ];
 
 export const BiologyChemistryLifeScienceL1Questions =

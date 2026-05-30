@@ -29,1706 +29,1061 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
     makeQuestion(
       1,
       "easy",
-      "Which statements describe useful starting assumptions for studying living systems?",
+      "Which statements are useful starting assumptions for studying biology and chemistry for medicine?",
       [
         ["Cells are made from atoms and molecules.", true],
+        ["Living systems use energy to maintain organization.", true],
+        ["Molecular information can affect cell behavior.", true],
         [
-          "Living systems use energy to maintain organization and do work.",
-          true,
-        ],
-        [
-          "Information stored in molecules can affect cell structure and behavior.",
-          true,
-        ],
-        [
-          "Visible traits and diseases often have explanations at molecular or cellular levels.",
+          "Visible disease can have molecular, cellular, and physiological causes.",
           true,
         ],
       ],
-      "Life science connects molecules, cells, tissues, and whole organisms. These starting assumptions help students link vocabulary such as gene, protein, energy, and disease to mechanisms rather than memorizing isolated words.",
+      "The course repeatedly connects molecules to cells, tissues, organisms, and medicine. These assumptions help learners treat biology as mechanism and regulation rather than as isolated vocabulary.",
     ),
     makeQuestion(
       2,
       "easy",
       "Which statements correctly distinguish atoms, elements, and molecules?",
       [
-        ["An element is a substance defined by one kind of atom.", true],
+        ["An element is defined by one kind of atom.", true],
+        ["A molecule contains atoms held together by chemical bonds.", true],
+        ["A molecule must contain every element in the periodic table.", false],
         [
-          "A molecule contains two or more atoms held together by chemical bonds.",
-          true,
-        ],
-        [
-          "Carbon dioxide is a molecule because it contains bonded atoms.",
-          true,
-        ],
-        [
-          "An element is defined by the number of different molecules in a sample.",
+          "An element is defined by how many different molecules are mixed together.",
           false,
         ],
       ],
-      "Elements are defined by atom identity, while molecules are built from bonded atoms. Confusing elements with mixtures or samples makes later chemistry terms harder to use correctly.",
+      "Atoms are the basic units, elements are atom types, and molecules are bonded atom groups. Keeping these terms separate makes later ideas such as carbon compounds, water, salts, proteins, and DNA easier to understand.",
     ),
     makeQuestion(
       3,
       "easy",
-      "Which statements correctly describe subatomic particles and isotopes?",
+      "Which statements correctly describe ions and polarity?",
       [
-        ["Protons help determine which element an atom is.", true],
+        ["An ion has a net electrical charge.", true],
         [
-          "Isotopes of the same element have different numbers of neutrons.",
-          true,
-        ],
-        [
-          "Electrons account for almost all of an atom's mass in basic chemistry calculations.",
+          "A polar molecule has perfectly even charge distribution everywhere.",
           false,
         ],
-        [
-          "Changing the number of protons leaves the element identity unchanged.",
-          false,
-        ],
+        ["Charge and polarity never affect solubility in water.", false],
+        ["A charged molecule is always a lipid bilayer.", false],
       ],
-      "The number of protons identifies the element, while neutrons can vary among isotopes. Electrons strongly affect bonding, but they do not contribute most of the atom's mass.",
+      "An ion is defined by net charge. Polarity and solubility are related ideas that students will use soon, but the incorrect options here reverse their definitions or confuse charged molecules with membranes.",
     ),
     makeQuestion(
       4,
       "easy",
       "Which statement best describes a covalent bond?",
       [
-        ["Atoms share pairs of electrons.", true],
+        ["Atoms share electrons to form a relatively stable bond.", true],
         [
-          "Oppositely charged ions attract after one atom transfers electrons to another.",
+          "Water moves across a membrane toward higher solute concentration.",
           false,
         ],
-        [
-          "A weak attraction forms between a partially positive hydrogen and a partially negative atom nearby.",
-          false,
-        ],
-        [
-          "Nonpolar molecules cluster away from water without sharing electrons with each other.",
-          false,
-        ],
+        ["A receptor detects a hormone and triggers signaling.", false],
+        ["A ribosome reads messenger RNA to build protein.", false],
       ],
-      "A covalent bond forms when atoms share electrons. The other statements describe ionic bonding, hydrogen bonding, or hydrophobic interactions, which are different kinds of chemical interactions.",
+      "A covalent bond is a chemical bond based on shared electrons. The other choices describe osmosis, signaling, and translation, which are important later but are not definitions of covalent bonding.",
     ),
     makeQuestion(
       5,
       "easy",
-      "Which statements correctly describe ionic and polar interactions?",
+      "Which statements correctly describe water as a biological solvent?",
       [
-        [
-          "An ion has a net electrical charge because it has gained or lost electrons.",
-          true,
-        ],
-        [
-          "Ionic bonds or attractions can form between oppositely charged ions.",
-          true,
-        ],
-        ["A polar bond has an uneven distribution of electron density.", true],
-        [
-          "Charged and polar groups often affect how a molecule behaves in water.",
-          true,
-        ],
+        ["Water is polar.", true],
+        ["Water often dissolves charged or polar substances well.", true],
+        ["Water dissolves all nonpolar oils better than salts.", false],
+        ["Water's polarity is unrelated to biological organization.", false],
       ],
-      "Ions and polar bonds are central to solubility, protein structure, membranes, and signaling. Charge and uneven electron sharing help explain why some molecules interact strongly with water or with charged parts of proteins.",
+      "Water's polarity helps it interact with ions and polar groups. Nonpolar molecules interact poorly with water, which helps explain membranes, protein folding, and why cells need organized compartments.",
     ),
     makeQuestion(
       6,
       "easy",
-      "Which statements correctly describe hydrogen bonds and water?",
+      "Which statement best describes pH?",
       [
-        ["Water molecules can form hydrogen bonds with each other.", true],
-        [
-          "Hydrogen bonds are important for the behavior of DNA and proteins.",
-          true,
-        ],
-        [
-          "Many weak hydrogen bonds together can strongly influence molecular shape.",
-          true,
-        ],
-        [
-          "Hydrogen bonds require complete transfer of electrons from hydrogen to oxygen.",
-          false,
-        ],
+        ["A measure related to hydrogen ion concentration.", true],
+        ["A count of amino acids in a protein.", false],
+        ["The number of genes in a chromosome.", false],
+        ["The rate at which a virus enters a cell.", false],
       ],
-      "Hydrogen bonds are weaker than covalent bonds but very important when many occur together. They are based on partial charges, not complete electron transfer.",
+      "pH is basic acid-base vocabulary needed for enzymes, blood chemistry, lysosomes, and protein charge. It is not a protein length, gene count, or viral entry rate.",
     ),
     makeQuestion(
       7,
       "easy",
-      "Which statements correctly connect polarity and solubility?",
+      "Which statements correctly describe organic molecules in biology?",
       [
-        ["Polar or charged substances often dissolve well in water.", true],
+        ["They contain carbon in their structure.", true],
         [
-          "Nonpolar substances often dissolve better in nonpolar environments than in water.",
+          "Carbon can form four covalent bonds, supporting complex structures.",
           true,
         ],
         [
-          "A molecule's solubility is determined only by its molecular mass.",
+          "Proteins, carbohydrates, lipids, and nucleic acids are unrelated to carbon-based biological chemistry.",
           false,
         ],
         [
-          "Water dissolves all lipids easily because water and lipids have the same polarity.",
+          "Organic molecule means the same thing as food marketed without synthetic additives.",
           false,
         ],
       ],
-      "Water is polar, so polar and charged substances often interact with it well. Lipids are often partly or mostly nonpolar, which helps explain why membranes form rather than simply dissolving into the watery cell environment.",
+      "In chemistry, organic molecules are carbon-containing compounds, not grocery-label categories. The major biological molecule classes rely heavily on carbon chemistry, so saying they are unrelated to it is backwards.",
     ),
     makeQuestion(
       8,
       "easy",
-      "Which statement best describes pH?",
+      "Which statements correctly describe monomers and polymers?",
       [
-        [
-          "pH is a measure related to hydrogen ion concentration in a solution.",
-          true,
-        ],
-        [
-          "pH is higher in more acidic solutions under the same conditions.",
-          false,
-        ],
-        [
-          "pH directly tells you the concentration of every dissolved ion.",
-          false,
-        ],
-        [
-          "pH is unrelated to enzyme activity because enzymes work equally well under all acid-base conditions.",
-          false,
-        ],
+        ["A monomer is a smaller building block.", true],
+        ["A polymer is built from repeated building blocks.", true],
+        ["A polymer is always a whole organ such as a lung.", false],
+        ["A monomer is the same thing as a clinical endpoint.", false],
       ],
-      "pH is a chemistry measure connected to acidity and hydrogen ion concentration. It matters in biology because enzyme activity, protein shape, and cellular conditions can depend strongly on pH.",
+      "Macromolecules such as proteins, nucleic acids, and many carbohydrates are built from smaller units. This vocabulary helps students understand digestion, biosynthesis, DNA, RNA, and proteins.",
     ),
     makeQuestion(
       9,
       "easy",
-      "Which statements correctly describe acids, bases, buffers, and biological stability?",
+      "Which statements correctly describe hydrolysis and dehydration reactions?",
       [
-        ["Acids increase hydrogen ion availability in solution.", true],
+        ["Hydrolysis uses water to break bonds.", true],
         [
-          "Bases reduce hydrogen ion availability or accept hydrogen ions.",
+          "Dehydration reactions join building blocks while releasing water.",
           true,
         ],
-        [
-          "Buffers help resist large pH changes when acid or base is added.",
-          true,
-        ],
-        [
-          "Stable pH can matter because many proteins work best over a limited pH range.",
-          true,
-        ],
+        ["Hydrolysis is the process of reading codons at a ribosome.", false],
+        ["Dehydration reactions mean all cells lose their membranes.", false],
       ],
-      "Acid-base chemistry is not just laboratory vocabulary; it affects living systems. Buffers help organisms maintain conditions in which proteins and reactions can function.",
+      "Hydrolysis and dehydration reactions are basic ways to break and build biological molecules. They prepare students to understand digestion, polymer assembly, and molecular recycling.",
     ),
     makeQuestion(
       10,
       "easy",
-      "Which statements correctly describe carbon and organic molecules?",
+      "Which statement best describes carbohydrates in introductory biology?",
       [
-        ["Carbon can form chains, rings, and branched structures.", true],
-        ["Carbon commonly forms covalent bonds in biological molecules.", true],
         [
-          "Carbon skeletons can support many different functional groups.",
+          "They often serve as fuel, energy storage, structure, or cell-recognition molecules.",
           true,
         ],
         [
-          "Carbon is biologically important because it cannot bond to other carbon atoms.",
+          "They are always membrane receptors that bind neurotransmitters.",
           false,
         ],
+        [
+          "They are the only molecules that can store inherited genetic information.",
+          false,
+        ],
+        ["They are antibiotics that block bacterial ribosomes.", false],
       ],
-      "Carbon's bonding flexibility supports the diversity of biological molecules. If carbon could not bond to itself, many large organic structures would be impossible.",
+      "Carbohydrates include simple sugars and larger polysaccharides. They are important for energy and structure, but they are not the same as receptors, DNA, RNA, or antibiotics.",
     ),
     makeQuestion(
       11,
       "easy",
-      "Which statements correctly describe functional groups and macromolecules?",
+      "Which statements correctly describe lipids and phospholipids?",
       [
+        ["Many lipids are partly or mostly hydrophobic.", true],
         [
-          "Functional groups can change a molecule's charge, polarity, or reactivity.",
+          "Phospholipids can form bilayers with hydrophilic heads and hydrophobic tails.",
           true,
         ],
         [
-          "Macromolecules such as proteins and nucleic acids are built from smaller subunits.",
-          true,
-        ],
-        ["A functional group is the full set of chromosomes in a cell.", false],
-        [
-          "Macromolecules are defined by being unable to interact with water or ions.",
+          "Lipids are never used in membranes, energy storage, or signaling.",
           false,
         ],
+        ["All lipids are nucleotides that encode codons.", false],
       ],
-      "Functional groups help explain why molecules with similar carbon skeletons can behave differently. Macromolecules are large biological molecules, often assembled from repeated smaller building blocks.",
+      "Lipids are essential for boundaries and signaling because of their hydrophobic or amphipathic chemistry. They are not nucleotides, and the claim that they never support membranes or signaling reverses important introductory biology.",
     ),
     makeQuestion(
       12,
       "easy",
-      "Which statement best describes carbohydrates?",
+      "Which statement best describes an amino acid?",
       [
         [
-          "Carbohydrates include sugars and polymers that can store energy or provide structure.",
+          "A building block of proteins with a shared backbone and a variable side chain.",
           true,
         ],
-        ["Carbohydrates are genetic polymers built from nucleotides.", false],
         [
-          "Carbohydrates are made only from amino acids joined by peptide bonds.",
+          "A molecule made only of glucose units for short-term energy storage.",
           false,
         ],
+        ["A viral envelope used to enter a host cell.", false],
         [
-          "Carbohydrates are the same class of molecule as steroid hormones and fats.",
+          "A clinical-trial design feature that prevents selection bias.",
           false,
         ],
       ],
-      "Carbohydrates include simple sugars, starch, glycogen, and cellulose. Nucleic acids, proteins, and many lipids use different building blocks and have different roles.",
+      "Amino acids are the basic units of proteins. The variable side chain is crucial because it gives each amino acid different chemical properties that affect protein folding and function.",
     ),
     makeQuestion(
       13,
       "easy",
-      "Which statements correctly describe lipids?",
+      "Which statements correctly describe proteins at a beginner level?",
       [
         [
-          "Many lipids contain large nonpolar regions that do not mix well with water.",
+          "Proteins are chains of amino acids that fold into functional structures.",
+          true,
+        ],
+        ["Protein function can depend on shape and chemical properties.", true],
+        [
+          "Proteins can act as enzymes, signals, receptors, transporters, antibodies, or structural materials.",
           true,
         ],
         [
-          "Phospholipids help form the basic structure of cell membranes.",
+          "Proteins are distinct from DNA chromosomes even though genes can encode protein sequences.",
           true,
         ],
-        ["Some lipids store energy or act as signaling molecules.", true],
-        ["Steroid hormones are lipid-related molecules.", true],
       ],
-      "Lipids are a diverse group rather than one single structure. Their nonpolar character helps explain membranes, energy storage, and some forms of signaling.",
+      "Proteins perform much of the active work in cells, while DNA stores sequence information. Understanding amino acids and folding prepares students for enzymes, receptors, antibodies, drug targets, disease mechanisms, and biotechnology.",
     ),
     makeQuestion(
       14,
       "easy",
-      "Which statements correctly describe proteins and amino acids?",
+      "Which statements correctly describe enzymes?",
       [
-        ["Proteins are polymers made from amino acids.", true],
+        ["Enzymes are catalysts.", true],
+        ["Enzymes can speed reactions by lowering activation energy.", true],
         [
-          "Amino-acid side chains help determine how a protein folds and functions.",
-          true,
+          "Enzymes work by permanently changing the genetic code of every substrate.",
+          false,
         ],
         [
-          "Proteins can act as enzymes, receptors, transporters, or structural components.",
-          true,
-        ],
-        [
-          "Proteins store hereditary information using base pairing between nucleotides.",
+          "Enzymes are consumed as the only fuel in every reaction they catalyze.",
           false,
         ],
       ],
-      "Proteins are built from amino acids and perform many jobs in cells. Hereditary base-pair information is mainly associated with nucleic acids such as Deoxyribonucleic acid (DNA), not proteins.",
+      "Enzymes make biological reaction rates compatible with life by catalysis. They do not act by rewriting substrate genomes, and they are not simply burned as fuel in each reaction cycle.",
     ),
     makeQuestion(
       15,
       "easy",
-      "Which statements correctly connect protein shape and denaturation?",
+      "Which statements correctly describe ATP and metabolism?",
       [
+        ["ATP is a short-term usable energy currency in cells.", true],
         [
-          "A protein's three-dimensional shape can affect which molecules it binds.",
+          "Metabolism includes chemical pathways that build and break molecules.",
           true,
         ],
-        [
-          "Heat or pH changes can denature some proteins by disrupting their shape.",
-          true,
-        ],
-        [
-          "Denaturation always improves enzyme activity by making the active site more flexible.",
-          false,
-        ],
-        [
-          "Protein shape is determined only by the number of chromosomes in the cell.",
-          false,
-        ],
+        ["ATP is the same thing as a chromosome.", false],
+        ["Metabolism means all molecules stop reacting.", false],
       ],
-      "Protein function often depends on shape, especially at binding sites and active sites. Denaturation usually reduces or destroys function because the original structure is disrupted.",
+      "ATP and metabolism are needed because cells constantly do chemical work. They build, break, transport, signal, repair, and maintain order rather than remaining static.",
     ),
     makeQuestion(
       16,
       "easy",
-      "Which statement best describes an enzyme?",
+      "Which statements correctly describe cells and membranes?",
       [
-        [
-          "An enzyme is a biological catalyst that speeds a reaction without being consumed as a reactant.",
-          true,
-        ],
-        [
-          "An enzyme raises activation energy so reactions occur only at high temperature.",
-          false,
-        ],
-        [
-          "An enzyme is consumed stoichiometrically each time product forms.",
-          false,
-        ],
-        [
-          "An enzyme speeds a reaction mainly by changing the final equilibrium ratio.",
-          false,
-        ],
+        ["Cells are bounded systems.", true],
+        ["Membranes help regulate what enters and leaves.", true],
+        ["Membranes help cells maintain internal conditions.", true],
+        ["Membranes can contain proteins for transport or signaling.", true],
       ],
-      "Enzymes lower activation energy and make reactions proceed faster under biological conditions. Membranes, DNA sequences, and clinical measurements are different concepts that may interact with enzymes but do not define them.",
+      "Membranes let cells organize chemistry and information. They are selective boundaries with embedded proteins, not inert bags, and they make gradients and signaling possible.",
     ),
     makeQuestion(
       17,
       "easy",
-      "Which statements correctly describe nucleic acids?",
+      "Which organelle-function pairings are correct?",
       [
-        ["DNA and Ribonucleic acid (RNA) are nucleic acids.", true],
-        ["Nucleic acids are built from nucleotide subunits.", true],
+        ["Nucleus: stores genomic DNA in eukaryotic cells.", true],
+        ["Ribosome: builds proteins from messenger RNA instructions.", true],
         [
-          "Nucleotide sequence can store or transmit biological information.",
-          true,
+          "Mitochondrion: stores the entire nuclear genome as its primary role.",
+          false,
         ],
         [
-          "Base pairing helps explain how nucleic-acid information can be copied or used.",
-          true,
+          "Golgi apparatus: stores the entire hereditary genome as its primary role.",
+          false,
         ],
       ],
-      "Nucleic acids are information-rich molecules. Their nucleotide sequences and base-pairing properties are central to inheritance, gene expression, and biotechnology.",
+      "These pairings prepare students for cellular organization without requiring memorization of every organelle detail. Mitochondria help with ATP production, but whole-genome storage in eukaryotic cells is primarily associated with the nucleus.",
     ),
     makeQuestion(
       18,
       "easy",
-      "Which statements correctly compare DNA and RNA?",
+      "Which statements correctly describe gradients, channels, and pumps?",
       [
-        ["DNA commonly stores long-term genetic information.", true],
         [
-          "Messenger RNA can carry information from DNA toward protein synthesis.",
+          "A gradient is a difference across space, such as concentration or charge.",
           true,
         ],
-        ["RNA can have roles in translation and gene regulation.", true],
-        [
-          "DNA and RNA are both built from amino acids rather than nucleotides.",
-          false,
-        ],
+        ["Channels often allow movement down gradients.", true],
+        ["Pumps can use energy to move substances against gradients.", true],
+        ["Gradients can store usable energy for cells.", true],
       ],
-      "DNA and RNA are nucleic acids, so they are built from nucleotides. RNA is especially important for moving and using genetic information, while DNA is usually the long-term information store.",
+      "Gradients are central to membranes, neurons, mitochondria, muscles, and physiology. Channels and pumps help cells use and maintain these differences, which is why gradients are treated as both chemistry and control mechanisms.",
     ),
     makeQuestion(
       19,
       "easy",
-      "Which statements correctly describe Adenosine triphosphate (ATP)?",
+      "Which statements correctly describe receptors and ligands?",
       [
-        ["ATP is a common energy carrier in cells.", true],
         [
-          "ATP can help couple energy-releasing processes to energy-requiring work.",
+          "A ligand is a molecule that can bind a target such as a receptor.",
           true,
         ],
+        ["A receptor can detect a signal and trigger a response.", true],
+        ["Receptor binding can depend on molecular shape and chemistry.", true],
         [
-          "ATP is the hereditary polymer that stores chromosomes in the nucleus.",
-          false,
-        ],
-        [
-          "ATP is a membrane channel that moves sodium ions across lipid bilayers.",
+          "A receptor is always a sugar polymer used only for energy storage.",
           false,
         ],
       ],
-      "ATP is often used to power chemical work, transport, and movement. It is not DNA and it is not itself a transport protein, though ATP can provide energy for some transport processes.",
+      "Receptors and ligands are basic signaling vocabulary. They connect chemistry to cell behavior and later help explain hormones, neurotransmitters, immune recognition, and drug action.",
     ),
     makeQuestion(
       20,
       "easy",
-      "Which statement best describes metabolism?",
+      "Which statement best describes negative feedback?",
       [
         [
-          "Metabolism is the network of chemical reactions that transforms matter and energy in living systems.",
+          "A response that tends to counteract a change and stabilize a system.",
           true,
         ],
-        [
-          "Metabolism includes only reactions that release energy, not reactions that build molecules.",
-          false,
-        ],
-        [
-          "Metabolism is limited to digestion in the stomach and does not occur inside cells.",
-          false,
-        ],
-        [
-          "Metabolism refers only to movement of molecules across membranes.",
-          false,
-        ],
+        ["A response that always amplifies a change forever.", false],
+        ["A chemical bond formed by sharing electrons.", false],
+        ["A DNA sequence that always encodes only one amino acid.", false],
       ],
-      "Metabolism includes building molecules, breaking molecules down, and transferring energy. Osmosis, randomization, and transcription are specific concepts, not the whole metabolic network.",
+      "Negative feedback is a control concept used throughout physiology. It helps students reason about homeostasis, blood glucose, temperature, hormones, and drug compensation.",
     ),
     makeQuestion(
       21,
-      "easy",
-      "Which statements correctly describe cells and cell theory?",
+      "medium",
+      "Which statements correctly describe the DNA -> RNA -> protein flow?",
       [
-        ["Cells are basic units of life.", true],
-        ["All known living organisms are made of one or more cells.", true],
-        ["Cells arise from pre-existing cells through cell division.", true],
+        ["DNA can be transcribed into RNA.", true],
         [
-          "A cell can maintain an internal environment different from its surroundings.",
+          "Messenger RNA can be translated by ribosomes into amino acid chains.",
+          true,
+        ],
+        ["Proteins can perform many cellular functions.", true],
+        [
+          "The flow is a core way genetic information can influence protein function.",
           true,
         ],
       ],
-      "Cell theory provides a foundation for biology before moving into organelles or molecular details. Cells are organized units that can grow, divide, regulate conditions, and interact with their environment.",
+      "The central dogma is a foundation for later genetics and biotechnology. It explains how stored DNA sequence can influence cellular function through RNA and proteins.",
     ),
     makeQuestion(
       22,
-      "easy",
-      "Which statements correctly compare prokaryotic and eukaryotic cells?",
+      "medium",
+      "Which statements correctly distinguish genes, chromosomes, and genomes?",
       [
         [
-          "Bacteria are prokaryotes and do not have a membrane-bound nucleus.",
+          "A gene is a DNA sequence that can produce a functional product.",
           true,
         ],
-        ["Human cells are eukaryotic and usually contain a nucleus.", true],
-        ["Eukaryotic cells can contain membrane-bound organelles.", true],
         [
-          "Prokaryotic cells lack DNA and therefore cannot pass information to offspring.",
-          false,
+          "A chromosome is a large DNA-containing structure with many genetic regions.",
+          true,
+        ],
+        [
+          "A genome is the complete genetic information of an organism or cell.",
+          true,
+        ],
+        [
+          "A gene can encode a protein such as an antibody chain when expressed in the right cells.",
+          true,
         ],
       ],
-      "Prokaryotes and eukaryotes differ in internal organization, especially the nucleus and organelles. Prokaryotes still have genetic material and can reproduce.",
+      "These terms form the basic hierarchy of genetic information. Genes are usable segments, chromosomes are larger structures, and the genome refers to the complete set of genetic information.",
     ),
     makeQuestion(
       23,
-      "easy",
-      "Which statements correctly describe the basic structure of cell membranes?",
+      "medium",
+      "Which statement best describes a codon?",
       [
         [
-          "Phospholipid bilayers have hydrophilic surfaces and hydrophobic interiors.",
+          "A three-nucleotide unit in RNA or DNA sequence that corresponds to an amino acid or stop signal during translation.",
           true,
         ],
-        [
-          "Membrane proteins can help with transport, signaling, or cell recognition.",
-          true,
-        ],
-        ["Membranes are rigid sheets made only of DNA and cellulose.", false],
-        [
-          "A membrane's selective permeability means every molecule crosses at the same rate.",
-          false,
-        ],
+        ["A lipid bilayer surrounding a bacterial cell.", false],
+        ["A hormone that lowers blood glucose.", false],
+        ["A clinical endpoint that measures survival.", false],
       ],
-      "Membranes are built largely from lipids and proteins, giving them selective permeability. The hydrophobic interior makes it easier for some substances to cross than others.",
+      "Codons connect nucleotide sequence to amino acid sequence. Students do not need to memorize the codon table, but they need to understand how triplets carry protein-building information.",
     ),
     makeQuestion(
       24,
-      "easy",
-      "Which statement best describes diffusion?",
+      "medium",
+      "Which statements correctly describe gene expression and cell identity?",
       [
         [
-          "Particles tend to spread from higher concentration toward lower concentration.",
+          "Gene expression means how much or when a gene product is made.",
           true,
         ],
         [
-          "Particles diffuse from lower concentration to higher concentration when no energy is supplied.",
-          false,
+          "Different cell types can share nearly the same DNA but express different genes.",
+          true,
         ],
         [
-          "Diffusion requires a membrane transport protein in every case.",
-          false,
+          "Signals can change gene expression without changing DNA sequence.",
+          true,
         ],
         [
-          "Diffusion stops because molecules stop moving once a concentration gradient exists.",
-          false,
+          "Gene expression can change during development, immune responses, or disease.",
+          true,
         ],
       ],
-      "Diffusion is movement down a concentration gradient caused by random molecular motion. It does not require direct ATP spending for each particle moving down the gradient.",
+      "Gene expression explains why cell types can behave differently without each having a completely different genome. It also connects signaling, development, disease, and drug response.",
     ),
     makeQuestion(
       25,
-      "easy",
-      "Which statements correctly describe osmosis and tonicity?",
+      "medium",
+      "Which statements correctly describe mutation and evolution?",
       [
+        ["A mutation is a change in DNA sequence.", true],
         [
-          "Osmosis is the movement of water across a selectively permeable membrane.",
+          "Natural selection can change which variants become more common.",
           true,
         ],
+        ["Genetic drift can change variant frequencies by chance.", true],
         [
-          "Solute concentration differences can affect the direction of net water movement.",
+          "Evolution can matter in infection, cancer, and drug resistance.",
           true,
         ],
-        ["A hypotonic environment can cause some cells to gain water.", true],
-        ["A hypertonic environment can cause some cells to lose water.", true],
       ],
-      "Osmosis depends on water movement and solute concentration differences. Tonicity vocabulary helps explain why cells swell or shrink in different solutions.",
+      "Evolution is a practical medical idea, not just ancient history. Variation, inheritance, selection, and chance help explain pathogens, tumors, resistance, and inherited risk.",
     ),
     makeQuestion(
       26,
-      "easy",
-      "Which statements correctly describe active transport?",
+      "medium",
+      "Which statements correctly compare innate and adaptive immunity?",
       [
+        ["Innate immunity is fast and broad.", true],
+        ["Adaptive immunity is more specific and can form memory.", true],
+        ["Adaptive immunity includes B cells and T cells.", true],
         [
-          "Active transport can move substances against a concentration gradient.",
+          "Innate and adaptive immunity can interact during immune responses.",
           true,
         ],
-        ["Active transport often uses energy directly or indirectly.", true],
-        ["Protein pumps are one way cells perform active transport.", true],
-        [
-          "Active transport is the same as simple diffusion through the lipid bilayer.",
-          false,
-        ],
       ],
-      "Active transport differs from passive movement because it can move substances uphill against a gradient. Protein pumps and energy coupling make this possible.",
+      "Innate and adaptive immunity are complementary. The distinction prepares students for vaccines, inflammation, autoimmune disease, infection, and immunotherapy.",
     ),
     makeQuestion(
       27,
-      "easy",
-      "Which statements correctly match organelles with common functions?",
+      "medium",
+      "Which statements correctly describe antibodies, T cells, and vaccines?",
       [
-        ["The nucleus stores most DNA in many eukaryotic cells.", true],
+        ["Antibodies can bind specific molecular targets.", true],
         [
-          "Mitochondria are involved in ATP production in many eukaryotic cells.",
+          "T cells can help coordinate immune responses or kill infected or abnormal cells.",
           true,
         ],
         [
-          "Ribosomes package and modify proteins for secretion in the same way the Golgi apparatus does.",
-          false,
+          "Vaccines can train immune recognition before dangerous infection.",
+          true,
         ],
-        [
-          "Chloroplasts are the main site of cellular respiration in animal cells.",
-          false,
-        ],
+        ["Vaccines and antibodies depend on molecular recognition.", true],
       ],
-      "Organelles divide cellular work into specialized locations. Ribosomes build proteins, the Golgi apparatus modifies and sorts many proteins, and chloroplasts are photosynthetic organelles found in plants and algae rather than animal cells.",
+      "Adaptive immunity uses molecular recognition and memory. Vaccines exploit these features by training recognition, while antibodies and T cells help connect target recognition to immune action.",
     ),
     makeQuestion(
       28,
       "medium",
-      "Which statement best describes ribosomes?",
+      "Which statements correctly distinguish bacteria and viruses?",
       [
+        ["Bacteria are cells with their own ribosomes and metabolism.", true],
+        ["Viruses require host cells to reproduce.", true],
         [
-          "Ribosomes are molecular machines that build proteins from RNA instructions.",
+          "Antibiotics commonly target bacterial processes rather than viral life cycles.",
           true,
         ],
-        ["Ribosomes copy DNA into RNA during transcription.", false],
-        ["Ribosomes synthesize membrane lipids from fatty acids.", false],
-        [
-          "Ribosomes chemically digest proteins into amino acids for energy.",
-          false,
-        ],
+        ["Viruses are the same thing as eukaryotic cells with nuclei.", false],
       ],
-      "Ribosomes carry out translation by linking amino acids according to RNA information. DNA storage, lipid storage, and ion pumping are different cellular functions.",
+      "Bacteria and viruses can both cause disease, but their biology differs sharply. This distinction is required for understanding antibiotics, antivirals, vaccines, and resistance.",
     ),
     makeQuestion(
       29,
       "medium",
-      "Which statements correctly describe mitochondria and cellular respiration?",
+      "Which statements correctly describe homeostasis?",
       [
-        ["Mitochondria help convert energy from nutrients into ATP.", true],
+        ["It maintains internal variables within functional ranges.", true],
+        ["It often uses sensors, comparison, effectors, and feedback.", true],
         [
-          "Cellular respiration can use oxygen as a final electron acceptor in many cells.",
+          "It can apply to blood glucose, temperature, pH, and blood pressure.",
           true,
         ],
         [
-          "Carbon dioxide can be produced during aerobic breakdown of glucose.",
-          true,
-        ],
-        [
-          "ATP production is connected to gradients across mitochondrial membranes.",
-          true,
+          "It means the body never changes any variable under any condition.",
+          false,
         ],
       ],
-      "Mitochondria connect food molecules, oxygen use, electron transfer, gradients, and ATP production. These ideas support later topics such as metabolism, physiology, and disease.",
+      "Homeostasis is regulated stability, not absolute sameness. The body adjusts variables continuously to keep them within ranges compatible with life, so change and stability can coexist in a healthy system.",
     ),
     makeQuestion(
       30,
       "medium",
-      "Which statements correctly describe photosynthesis?",
+      "Which statements correctly describe broad disease categories?",
       [
+        ["Infection involves host-pathogen interaction.", true],
+        ["Cancer involves dysregulated cell growth and evolution.", true],
         [
-          "Photosynthesis converts light energy into chemical energy in plants, algae, and some bacteria.",
+          "Autoimmune disease involves immune response against self tissues.",
           true,
         ],
         [
-          "Carbon dioxide can be used to build sugars during photosynthesis.",
-          true,
-        ],
-        ["Photosynthesis is linked to chloroplasts in plant cells.", true],
-        [
-          "Photosynthesis is the same pathway as aerobic cellular respiration in animal mitochondria.",
+          "Metabolic disease is always caused by a single viral receptor.",
           false,
         ],
       ],
-      "Photosynthesis and cellular respiration are connected in ecosystems but are not the same pathway. Photosynthesis stores energy in chemical bonds, while respiration releases usable energy from molecules such as glucose.",
+      "Disease categories are useful when they point to mechanisms. Infection, cancer, autoimmune disease, metabolic disease, genetic disease, and neurodegeneration involve different but sometimes interacting failures.",
     ),
     makeQuestion(
       31,
       "medium",
-      "Which statements correctly describe the cell cycle and mitosis?",
+      "Which statements correctly describe drugs, receptors, agonists, and antagonists?",
       [
+        ["Many drugs work by binding proteins or changing pathways.", true],
+        ["An agonist activates a receptor or pathway.", true],
         [
-          "DNA is copied before a typical mitotic division produces daughter cells.",
+          "An antagonist blocks activation or prevents a signal's usual effect.",
           true,
         ],
         [
-          "Mitosis helps eukaryotic cells distribute copied chromosomes to daughter cells.",
-          true,
-        ],
-        [
-          "Mitosis halves the chromosome number to make gametes in animals.",
+          "All drugs work by permanently replacing every gene in the body.",
           false,
         ],
-        ["The cell cycle has no checkpoints or regulatory controls.", false],
       ],
-      "Mitosis supports growth, repair, and asexual cell division by distributing copied chromosomes. Meiosis, not mitosis, is the division process that produces gametes with reduced chromosome number in animals.",
+      "Introductory pharmacology builds on receptors, ligands, proteins, and signaling. Agonists and antagonists are basic ways drugs can perturb biological systems.",
     ),
     makeQuestion(
       32,
       "medium",
-      "Which statement best describes meiosis?",
+      "Which statement best describes a therapeutic window?",
       [
         [
-          "Meiosis produces gametes with half the usual chromosome number in sexually reproducing organisms.",
+          "A dose or exposure range where expected benefit outweighs expected harm.",
           true,
         ],
-        [
-          "Meiosis produces two genetically identical diploid daughter cells for tissue repair.",
-          false,
-        ],
-        [
-          "Meiosis occurs in all body cells whenever damaged proteins need replacement.",
-          false,
-        ],
-        [
-          "Meiosis maintains chromosome number by skipping chromosome separation.",
-          false,
-        ],
+        ["The exact number of chromosomes in a human cell.", false],
+        ["A receptor that can bind only water.", false],
+        ["A guarantee that higher dose is always safer.", false],
       ],
-      "Meiosis is tied to sexual reproduction and chromosome-number reduction. It should not be confused with protein synthesis, membrane transport, or bacterial binary fission.",
+      "A therapeutic window helps students reason about benefit and toxicity together. It prepares them for dose-response curves, patient variation, monitoring, and side effects.",
     ),
     makeQuestion(
       33,
       "medium",
-      "Which statements correctly describe genes, genomes, and chromosomes?",
+      "Which statements correctly distinguish pharmacokinetics and pharmacodynamics?",
       [
-        ["A gene is a DNA sequence with biological information.", true],
+        ["Pharmacokinetics asks what the body does to the drug.", true],
+        ["Pharmacodynamics asks what the drug does to the body.", true],
         [
-          "A genome is the full set of genetic information in an organism or cell.",
+          "ADME stands for absorption, distribution, metabolism, and excretion.",
           true,
         ],
-        ["A chromosome is an organized DNA-containing structure.", true],
-        [
-          "Genes can influence traits by affecting RNA and protein production.",
-          true,
-        ],
+        ["Pharmacodynamics is the same thing as DNA replication.", false],
       ],
-      "These genetics terms describe different levels of biological information organization. They prepare students for gene expression, inheritance, mutations, and biotechnology.",
+      "PK and PD are core vocabulary for understanding medicines. PK describes exposure over time, while PD describes biological effect at targets, pathways, tissues, and patients.",
     ),
     makeQuestion(
       34,
       "medium",
-      "Which statements correctly describe gene expression?",
+      "Which statements correctly describe biomarkers?",
       [
+        ["A biomarker is a measurable indicator of biological state.", true],
         [
-          "Gene expression includes using genetic information to make functional products such as RNA or protein.",
+          "A biomarker can support diagnosis, prognosis, monitoring, or treatment selection.",
           true,
         ],
-        ["Transcription makes RNA from a DNA template.", true],
-        ["Translation builds a protein from messenger RNA instructions.", true],
+        ["Every biomarker automatically proves disease causation.", false],
         [
-          "Gene expression means every gene in every cell is active at the same level.",
+          "A biomarker is always a full organ transplanted between patients.",
           false,
         ],
       ],
-      "Gene expression is regulated, so different cells can use different genes at different times. Transcription and translation are core vocabulary for understanding how DNA information affects cell function.",
+      "Biomarkers are measurements, not automatic proof of mechanism. They become useful when validated for the decision they support, such as diagnosis, monitoring, prognosis, or treatment selection.",
     ),
     makeQuestion(
       35,
       "medium",
-      "Which statements correctly describe codons and the genetic code?",
+      "Which statements correctly describe basic biomedical evidence reasoning?",
       [
-        ["A codon is a three-nucleotide sequence in messenger RNA.", true],
-        ["Many codons specify amino acids during translation.", true],
-        ["Codons are the lipid tails that make membranes hydrophobic.", false],
-        [
-          "The genetic code means each protein can be made without RNA or ribosomes.",
-          false,
-        ],
+        ["A control group helps answer compared to what.", true],
+        ["Randomization can reduce confounding in expectation.", true],
+        ["An endpoint is the outcome used to judge an intervention.", true],
+        ["A plausible mechanism alone proves patient benefit.", false],
       ],
-      "Codons connect nucleotide sequences to amino-acid sequences. They are part of translation, not membrane structure, and ribosomes are needed to read messenger RNA into protein.",
+      "Students need enough evidence vocabulary to interpret claims without making clinical trials the core course topic. Controls, randomization, and endpoints help separate mechanism, association, and patient outcomes.",
     ),
     makeQuestion(
       36,
       "medium",
-      "Which statement best describes a mutation?",
+      "Which statements correctly describe model systems in biomedical research?",
       [
-        ["A mutation is a change in genetic sequence.", true],
         [
-          "A mutation is any change in protein shape caused by heat, even when DNA sequence is unchanged.",
-          false,
+          "Cell culture can help study mechanisms under controlled conditions.",
+          true,
         ],
         [
-          "A mutation is a planned change in gene expression that never alters sequence.",
-          false,
+          "Animal models can reveal organism-level effects but may not match humans perfectly.",
+          true,
         ],
         [
-          "A mutation must remove an entire chromosome to count as genetic change.",
+          "Organoids can model some tissue-like features while remaining simplified.",
+          true,
+        ],
+        [
+          "A model system is guaranteed to predict every human outcome exactly.",
           false,
         ],
       ],
-      "A mutation is a change in DNA or another genetic sequence. It may affect a protein, regulation, or no obvious trait at all depending on where it occurs and what changes.",
+      "Model systems are valuable because they simplify complex biology enough to study it. Their limitations matter because simplification can omit immune, vascular, endocrine, behavioral, or disease context.",
     ),
     makeQuestion(
       37,
       "medium",
-      "Which statements correctly describe genotype, phenotype, and alleles?",
+      "Which statements correctly describe biotechnology at a beginner level?",
       [
+        ["Sequencing reads genetic information.", true],
         [
-          "A genotype is an organism's genetic makeup at one or more loci.",
+          "Plasmids can carry genes in bacteria and biotechnology systems.",
           true,
         ],
-        ["A phenotype is an observable trait or characteristic.", true],
-        ["Alleles are different versions of a gene.", true],
+        ["CRISPR-based tools can target genetic sequences.", true],
         [
-          "Phenotypes can be influenced by genes, environment, and their interaction.",
+          "mRNA technologies can deliver temporary protein-making instructions.",
           true,
         ],
       ],
-      "Genotype and phenotype are connected but not identical. Alleles can influence traits, and environmental context can also shape what is observed. Select the statements that keep those distinctions clear: genotype refers to genetic makeup, phenotype refers to observable traits, alleles are gene versions, and phenotype can reflect both genes and environment.",
+      "Biotechnology depends on the ability to read, move, express, or modify biological information. These tools build directly on DNA, RNA, proteins, cells, and regulation.",
     ),
     makeQuestion(
       38,
       "medium",
-      "Which statements correctly describe basic Mendelian inheritance?",
+      "Which statement best describes careful use of AI in biomedical data?",
       [
         [
-          "Diploid organisms can carry two alleles for a gene, one from each parent.",
+          "AI outputs should be validated with appropriate data and interpreted in biological or clinical context.",
           true,
         ],
-        ["Gametes carry one allele for each gene after meiosis.", true],
-        ["Punnett squares can organize possible allele combinations.", true],
         [
-          "Mendelian inheritance requires acquired traits from exercise to be copied directly into DNA.",
+          "AI predictions eliminate the need for measurements, controls, or validation.",
           false,
         ],
+        ["AI proves causation whenever it finds a correlation.", false],
+        ["AI is unaffected by biased or incomplete data.", false],
       ],
-      "Mendelian inheritance tracks allele transmission across generations. Acquired body changes are not automatically written into the DNA sequence passed to offspring.",
+      "AI can help find patterns, but biomedical use still depends on data quality, biological interpretation, workflow fit, and evidence. Prediction is not automatically causation or patient benefit.",
     ),
     makeQuestion(
       39,
       "medium",
-      "Which statements correctly describe dominant, recessive, and carrier vocabulary?",
+      "Which statements correctly describe precision medicine?",
       [
         [
-          "A dominant allele can affect phenotype when one copy is present.",
+          "It uses biological or clinical differences to guide treatment decisions.",
+          true,
+        ],
+        ["It can use biomarkers, genomics, imaging, or disease subtype.", true],
+        [
+          "It aims to identify groups more likely to benefit or be harmed.",
           true,
         ],
         [
-          "A recessive phenotype often appears only when two recessive alleles are present.",
-          true,
-        ],
-        [
-          "A carrier for a recessive condition usually has two copies of the recessive allele.",
-          false,
-        ],
-        [
-          "Dominant alleles are always more common in the population than recessive alleles.",
+          "It means every patient always receives a completely unique custom molecule.",
           false,
         ],
       ],
-      "Dominance describes phenotype relationships, not how common or beneficial an allele is. A carrier for a recessive condition usually has one recessive allele and one allele that masks it.",
+      "Precision medicine is about meaningful stratification, not a guarantee of one custom drug per person. It connects measurement, biology, and treatment choice.",
     ),
     makeQuestion(
       40,
       "medium",
-      "Which statement best describes natural selection?",
+      "Which statements correctly describe systems thinking in biology?",
       [
         [
-          "Heritable traits that improve reproductive success can become more common in a population over generations.",
+          "Molecules, cells, tissues, organs, and environments can influence one another.",
           true,
         ],
-        [
-          "Individuals evolve new traits because they need them during their lifetime.",
-          false,
-        ],
-        [
-          "Natural selection changes all individuals in a population in exactly the same way.",
-          false,
-        ],
-        ["Natural selection requires every mutation to be harmful.", false],
+        ["Disease can emerge from failed regulation across scales.", true],
+        ["Systems thinking means molecular mechanisms do not matter.", false],
+        ["A systems view requires ignoring feedback loops.", false],
       ],
-      "Natural selection acts on heritable variation and changes populations over generations. It is not a conscious process and does not guarantee that every individual changes or that every mutation is harmful.",
+      "Systems thinking connects mechanisms across scales. It does not replace molecular biology; it explains how molecular changes can propagate through cells, tissues, organisms, and patients.",
     ),
     makeQuestion(
       41,
-      "medium",
-      "Which statements correctly describe evolution in populations?",
+      "hard",
+      "An enzyme works well near neutral pH but poorly in a very acidic compartment. Which explanations are plausible?",
       [
-        [
-          "Evolution can be described as changes in heritable traits or allele frequencies over generations.",
-          true,
-        ],
-        ["Mutation can introduce new genetic variation.", true],
-        [
-          "Selection, genetic drift, and gene flow can change populations.",
-          true,
-        ],
-        [
-          "Evolutionary reasoning helps explain antibiotic resistance and viral variants.",
-          true,
-        ],
+        ["pH can change charge states of amino acid side chains.", true],
+        ["pH can disrupt folding or active-site chemistry.", true],
+        ["pH directly changes the number of chromosomes in every cell.", false],
+        ["pH matters only outside living systems.", false],
       ],
-      "Evolution is a population-level process based on heritable variation. It is useful in medicine because pathogens and cancer cell populations can change under selection pressures.",
+      "This is still prerequisite-level reasoning: pH can change molecular charge and protein behavior. Students do not need advanced enzyme kinetics to see why a different chemical environment can alter activity.",
     ),
     makeQuestion(
       42,
-      "medium",
-      "Which statements correctly compare bacteria and viruses?",
+      "hard",
+      "A red blood cell placed in a solution with much lower solute concentration swells. Which concept best explains the swelling?",
       [
         [
-          "Bacteria are cells that can often reproduce independently under suitable conditions.",
+          "Osmosis moves water into the cell because the outside solution is effectively more dilute.",
           true,
         ],
-        [
-          "Viruses require host-cell machinery to make more virus particles.",
-          true,
-        ],
-        [
-          "Antibiotics generally target bacterial processes rather than viral replication.",
-          true,
-        ],
-        ["Viruses and bacteria are both eukaryotic cells with nuclei.", false],
+        ["Translation turns water into amino acids inside the cell.", false],
+        ["CRISPR edits the cell membrane instantly.", false],
+        ["Antibodies become ATP pumps.", false],
       ],
-      "Bacteria and viruses differ in structure and replication. This difference matters because treatments that affect bacterial cell processes may not work against viruses.",
+      "Osmosis links water movement to solute concentration across a membrane. The scenario prepares students for membrane transport and physiology without requiring advanced kidney or fluid-balance details.",
     ),
     makeQuestion(
       43,
-      "medium",
-      "Which statements correctly describe immune responses?",
+      "hard",
+      "A protein mutation replaces a charged amino acid near a binding site with a hydrophobic amino acid. Which outcomes are plausible?",
       [
-        ["Innate immunity provides rapid, general defense mechanisms.", true],
         [
-          "Adaptive immunity can produce highly specific responses and memory.",
+          "Binding could weaken if the charge helped recognize the ligand.",
           true,
         ],
+        ["Folding or local structure could change.", true],
+        ["The protein automatically becomes DNA.", false],
         [
-          "Adaptive immunity has no connection to antibodies or lymphocytes.",
-          false,
-        ],
-        [
-          "The immune system responds only to viruses and cannot respond to bacteria.",
+          "The mutation must have no effect because only whole-gene deletion matters.",
           false,
         ],
       ],
-      "Innate and adaptive immunity work together to defend the body. Antibodies and lymphocytes are major parts of adaptive immunity, and immune responses can target many kinds of threats.",
+      "This question checks whether students understand what an amino acid is and why side chains matter. A single substitution can matter if it changes charge, hydrophobicity, folding, or binding chemistry.",
     ),
     makeQuestion(
       44,
-      "medium",
-      "Which statement best describes an antibody?",
+      "hard",
+      "The same hormone circulates through the body but affects some tissues more than others. Which explanations are plausible?",
       [
-        ["An antibody is a protein that can bind a specific antigen.", true],
+        ["Some tissues may express more of the relevant receptor.", true],
         [
-          "An antibody is an immune cell that engulfs bacteria directly.",
+          "Downstream signaling machinery must be identical in every cell type.",
           false,
         ],
-        ["An antibody is the antigen displayed by a pathogen.", false],
-        ["An antibody is a receptor found only inside mitochondria.", false],
+        ["Gene-expression state cannot affect how a cell responds.", false],
+        [
+          "The hormone must contain different DNA sequences for each tissue.",
+          false,
+        ],
       ],
-      "Antibodies are proteins used by the immune system to recognize specific molecular targets. They are not genetic code, energy storage lipids, or clinical trial design methods.",
+      "Hormone specificity can depend on receptor expression and cellular context. The false options reverse that idea by denying cell-type differences or by confusing a circulating hormone with DNA carried for each tissue.",
     ),
     makeQuestion(
       45,
-      "medium",
-      "Which statements correctly describe nervous and endocrine signaling?",
+      "hard",
+      "Which statements correctly explain antibiotic resistance using basic evolution?",
       [
         [
-          "Neurons can transmit signals rapidly using electrical and chemical processes.",
+          "A bacterial population can contain variants with different drug susceptibility.",
+          true,
+        ],
+        ["Treatment can select for variants that survive.", true],
+        [
+          "Surviving resistant bacteria can reproduce or pass resistance genes.",
           true,
         ],
         [
-          "Hormones are chemical signals that can travel through the blood.",
-          true,
-        ],
-        [
-          "Target cells must have appropriate receptors to respond to many signals.",
-          true,
-        ],
-        [
-          "Both nervous and endocrine signaling help coordinate body functions.",
+          "Resistance can spread through plasmids or other gene-transfer mechanisms.",
           true,
         ],
       ],
-      "Body systems coordinate through signals, receptors, and responses. Neural signals are often rapid and localized, while hormones can travel through circulation to affect target tissues.",
+      "Resistance follows from variation, selection, inheritance, and sometimes gene transfer. This is high-quality prerequisite reasoning because it connects genetics, evolution, microbes, and medicine.",
     ),
     makeQuestion(
       46,
-      "medium",
-      "Which statements correctly describe feedback and homeostasis?",
-      [
-        [
-          "Homeostasis means maintaining internal conditions within a useful range.",
-          true,
-        ],
-        [
-          "Negative feedback often reduces deviations from a set point or range.",
-          true,
-        ],
-        [
-          "Positive feedback can amplify a process in some biological situations.",
-          true,
-        ],
-        [
-          "Feedback regulation means internal conditions never change at all.",
-          false,
-        ],
-      ],
-      "Homeostasis is regulated stability, not complete absence of change. Feedback loops help biological systems respond to disturbances and maintain useful operating ranges.",
-    ),
-    makeQuestion(
-      47,
-      "medium",
-      "Which statements correctly describe blood glucose regulation?",
-      [
-        [
-          "Insulin helps many cells take up glucose or store energy after blood glucose rises.",
-          true,
-        ],
-        ["Glucagon helps raise blood glucose when it becomes too low.", true],
-        [
-          "Insulin and glucagon are digestive enzymes that cut DNA into nucleotides.",
-          false,
-        ],
-        [
-          "Blood glucose is regulated only by random diffusion with no hormonal control.",
-          false,
-        ],
-      ],
-      "Insulin and glucagon are hormones involved in glucose homeostasis. They are useful examples of signaling, feedback, metabolism, and disease relevance. Select the hormone-regulation statements and reject claims that turn hormones into DNA-cutting enzymes or remove hormonal control entirely, because those confuse endocrine feedback with unrelated molecular processes.",
-    ),
-    makeQuestion(
-      48,
-      "medium",
-      "Which statement best describes a receptor-ligand interaction?",
-      [
-        [
-          "A ligand binds to a receptor and can change receptor activity or cell response.",
-          true,
-        ],
-        ["A receptor copies the ligand's genetic sequence into RNA.", false],
-        ["A ligand must be a whole cell rather than a molecule.", false],
-        [
-          "A receptor-ligand interaction can occur only when both partners are DNA.",
-          false,
-        ],
-      ],
-      "Receptors and ligands are central to cell signaling and drug action. They should not be confused with transcription, inheritance, or polymer chemistry.",
-    ),
-    makeQuestion(
-      49,
-      "medium",
-      "Which statements correctly describe drugs and biological targets?",
-      [
-        [
-          "Many drugs act by binding proteins such as receptors, enzymes, channels, or transporters.",
-          true,
-        ],
-        [
-          "A drug's effect can depend on dose, target tissue, and patient biology.",
-          true,
-        ],
-        ["A treatment can have intended effects and unintended effects.", true],
-        [
-          "Understanding molecular targets can help explain why a medicine works.",
-          true,
-        ],
-      ],
-      "Drug action is based on interactions with biological systems, not just memorizing drug names. Target, dose, exposure, and context all help explain benefits and risks.",
-    ),
-    makeQuestion(
-      50,
-      "medium",
-      "Which statements correctly describe agonists and antagonists?",
-      [
-        [
-          "An agonist activates a receptor or mimics the effect of a signal.",
-          true,
-        ],
-        ["An antagonist blocks or reduces receptor activation.", true],
-        [
-          "These terms are useful for describing some drug effects on signaling pathways.",
-          true,
-        ],
-        [
-          "An antagonist is defined as any molecule that increases DNA mutation rate.",
-          false,
-        ],
-      ],
-      "Agonists and antagonists describe effects on receptor activity. Mutation rate is a separate genetics concept and is not what defines antagonist action.",
-    ),
-    makeQuestion(
-      51,
-      "medium",
-      "Which statements correctly describe dose-response relationships?",
-      [
-        [
-          "A dose-response curve can show how an effect changes as dose changes.",
-          true,
-        ],
-        [
-          "Higher dose can increase benefits, side effects, or both depending on the drug.",
-          true,
-        ],
-        [
-          "Dose-response curves are used only for inherited traits and not for medicines.",
-          false,
-        ],
-        ["Dose has no relevance once a molecule can bind a receptor.", false],
-      ],
-      "Dose-response thinking helps connect chemistry, physiology, and pharmacology. Binding is important, but the amount of drug and the size of the response also matter.",
-    ),
-    makeQuestion(
-      52,
-      "medium",
-      "Which statement best describes a side effect?",
-      [
-        [
-          "A side effect is an unintended effect of a treatment or intervention.",
-          true,
-        ],
-        [
-          "A side effect is the main beneficial effect for which a treatment is prescribed.",
-          false,
-        ],
-        [
-          "A side effect is any outcome measured in a study, whether intended or unintended.",
-          false,
-        ],
-        [
-          "A side effect can occur only when a drug misses every biological target.",
-          false,
-        ],
-      ],
-      "Side effects are unintended outcomes, which may be mild, serious, predictable, or rare. They are not the same as trial endpoints, DNA replication, or transport proteins.",
-    ),
-    makeQuestion(
-      53,
-      "medium",
-      "Which statements correctly describe pharmacokinetics?",
-      [
-        [
-          "Pharmacokinetics describes what the body does to a drug over time.",
-          true,
-        ],
-        ["Absorption affects how a drug enters the body.", true],
-        ["Metabolism can chemically modify a drug, often in the liver.", true],
-        ["Excretion removes drug or drug products from the body.", true],
-      ],
-      "Pharmacokinetics is often summarized as absorption, distribution, metabolism, and excretion. These processes shape drug exposure and help explain timing, dosing, and variability between patients.",
-    ),
-    makeQuestion(
-      54,
-      "medium",
-      "Which statements correctly describe biomarkers and diagnosis?",
-      [
-        [
-          "A biomarker is a measurable biological sign related to a process, condition, or response.",
-          true,
-        ],
-        ["Blood glucose can be a biomarker relevant to diabetes.", true],
-        [
-          "Some biomarkers help monitor whether a treatment is having an effect.",
-          true,
-        ],
-        [
-          "A biomarker must always be a gene sequence and can never be a protein or physiological measurement.",
-          false,
-        ],
-      ],
-      "Biomarkers can be molecules, physiological measurements, imaging findings, or genetic variants. They are useful for diagnosis, monitoring, risk assessment, and treatment decisions.",
-    ),
-    makeQuestion(
-      55,
       "hard",
-      "Which statements correctly describe broad disease categories?",
-      [
-        [
-          "Infectious diseases involve pathogens such as bacteria, viruses, fungi, or parasites.",
-          true,
-        ],
-        [
-          "Autoimmune diseases involve immune responses against the body's own components.",
-          true,
-        ],
-        [
-          "Metabolic disease is defined by the absence of any chemical reactions in cells.",
-          false,
-        ],
-        ["All diseases are inherited single-gene disorders.", false],
-      ],
-      "Diseases can be infectious, autoimmune, metabolic, genetic, degenerative, malignant, or multifactorial. No single category explains all disease. Select statements that name real broad categories such as pathogen-driven infection or immune self-attack, and reject claims that erase cellular chemistry or reduce every disease to one inherited single-gene pattern.",
-    ),
-    makeQuestion(
-      56,
-      "hard",
-      "Which statement best describes cancer at a basic level?",
-      [
-        [
-          "Cancer involves abnormal cell growth and division caused by disrupted regulation.",
-          true,
-        ],
-        [
-          "Cancer is controlled cell division that stops normally after tissue repair.",
-          false,
-        ],
-        [
-          "Cancer requires all cells in the body to divide at the same rate.",
-          false,
-        ],
-        [
-          "Cancer is defined by infection alone, regardless of cell growth regulation.",
-          false,
-        ],
-      ],
-      "Cancer is tied to failures in controls over growth, division, survival, and tissue behavior. Infections, meiosis, and mutation-free cell division are different concepts.",
-    ),
-    makeQuestion(
-      57,
-      "hard",
-      "Which statements correctly describe inflammation and immunity?",
-      [
-        [
-          "Inflammation can increase blood flow and immune activity in affected tissue.",
-          true,
-        ],
-        ["Inflammation can help fight infection or repair damage.", true],
-        ["Excessive or chronic inflammation can contribute to disease.", true],
-        [
-          "Immune signaling molecules can coordinate responses between cells.",
-          true,
-        ],
-      ],
-      "Inflammation can be protective, but it can also cause harm when poorly regulated. This makes it a useful bridge between cell signaling, physiology, and disease.",
-    ),
-    makeQuestion(
-      58,
-      "hard",
-      "Which statements correctly describe vaccines?",
-      [
-        [
-          "Vaccines train the immune system to recognize a pathogen or pathogen component.",
-          true,
-        ],
-        [
-          "Vaccination can create immune memory before a dangerous exposure occurs.",
-          true,
-        ],
-        [
-          "Some vaccines use proteins, weakened pathogens, inactivated pathogens, or genetic instructions.",
-          true,
-        ],
-        [
-          "Vaccines work by directly killing every pathogen already present in the body within seconds.",
-          false,
-        ],
-      ],
-      "Vaccines prepare immune responses rather than acting like instant pathogen-killing chemicals. Different vaccine designs present antigens or instructions in different ways.",
-    ),
-    makeQuestion(
-      59,
-      "hard",
-      "Which statements correctly compare antibiotics and antivirals?",
-      [
-        ["Antibiotics often target bacterial structures or processes.", true],
-        [
-          "Antivirals often target steps in viral entry, replication, or release.",
-          true,
-        ],
-        [
-          "Antibiotics usually treat viral infections by blocking viral capsid assembly.",
-          false,
-        ],
-        [
-          "Antivirals are defined by killing only human cells and never affecting viruses.",
-          false,
-        ],
-      ],
-      "Antibiotics and antivirals differ because bacteria and viruses differ. A treatment must match the biology of the pathogen and the infection. Select statements that connect each drug class to the relevant pathogen biology, and reject claims that antibiotics usually treat viruses or that antivirals are defined by killing only human cells.",
-    ),
-    makeQuestion(
-      60,
-      "hard",
-      "Which statement best describes an independent variable in an experiment?",
-      [
-        [
-          "The independent variable is the factor the investigator changes or compares to test its effect.",
-          true,
-        ],
-        [
-          "The independent variable is the outcome measured after the experiment.",
-          false,
-        ],
-        [
-          "The independent variable is any uncontrolled difference between two groups.",
-          false,
-        ],
-        [
-          "The independent variable is the random error caused by measuring instruments.",
-          false,
-        ],
-      ],
-      "The independent variable is the input, treatment, or condition being tested. The measured outcome is the dependent variable, while uncontrolled differences and measurement error are separate design issues.",
-    ),
-    makeQuestion(
-      61,
-      "hard",
-      "Which statements correctly describe controls and reproducibility in experiments?",
-      [
-        [
-          "A control group helps provide a comparison for the experimental group.",
-          true,
-        ],
-        [
-          "A negative control can show what happens when the expected active factor is absent.",
-          true,
-        ],
-        [
-          "Reproducibility is stronger when independent investigators can obtain similar results under comparable conditions.",
-          true,
-        ],
-        [
-          "Controls help identify whether a result might be due to the tested factor or some other part of the setup.",
-          true,
-        ],
-      ],
-      "Controls make experimental interpretation more precise by separating the tested factor from background effects. Reproducibility matters because a result is more trustworthy when it does not depend on one fragile setup.",
-    ),
-    makeQuestion(
-      62,
-      "hard",
-      "Which statements correctly describe sample size and variability?",
-      [
-        [
-          "Larger sample sizes can reduce the influence of random variation when the design is sound.",
-          true,
-        ],
-        [
-          "Biological measurements often vary between individuals even without a treatment effect.",
-          true,
-        ],
-        [
-          "High variability can make it harder to detect a real difference.",
-          true,
-        ],
-        [
-          "A large sample size removes the need for a comparison group or clear endpoint.",
-          false,
-        ],
-      ],
-      "Sample size helps with random noise, but it does not fix every design problem. A large poorly controlled study can still be misleading. Select the statements about random variation, person-to-person variability, and difficulty detecting real effects, while rejecting the idea that size alone replaces comparison groups, clear endpoints, or sound design.",
-    ),
-    makeQuestion(
-      63,
-      "hard",
-      "Which statements correctly describe randomization, blinding, and placebo controls?",
-      [
-        [
-          "Randomization helps distribute known and unknown participant differences across groups.",
-          true,
-        ],
-        [
-          "Blinding can reduce bias from expectations by participants or investigators.",
-          true,
-        ],
-        [
-          "A placebo control guarantees that the active treatment has no biological effect.",
-          false,
-        ],
-        [
-          "Randomization means participants choose the group they believe will help them most.",
-          false,
-        ],
-      ],
-      "Randomization and blinding strengthen causal interpretation by reducing systematic differences and expectation effects. A placebo is a comparison tool, not proof about the active treatment by itself.",
-    ),
-    makeQuestion(
-      64,
-      "hard",
-      "Which statement best describes a clinical trial endpoint?",
-      [
-        [
-          "An endpoint is a pre-defined outcome used to evaluate an intervention.",
-          true,
-        ],
-        [
-          "An endpoint is any result a researcher notices after looking at the data, whether or not it was planned.",
-          false,
-        ],
-        [
-          "An endpoint is a baseline variable controlled to make groups comparable.",
-          false,
-        ],
-        [
-          "An endpoint is a subgroup created after randomization to improve the result.",
-          false,
-        ],
-      ],
-      "Endpoints should be defined clearly so the study has an interpretable target. Choosing outcomes only after seeing data can inflate misleading findings.",
-    ),
-    makeQuestion(
-      65,
-      "hard",
-      "Which statements correctly distinguish correlation, causation, and confounding?",
-      [
-        ["Correlation means two variables tend to vary together.", true],
-        [
-          "Causation means one factor contributes to producing an effect.",
-          true,
-        ],
-        ["A confounder is related to both the exposure and the outcome.", true],
-        [
-          "Randomized experiments can help reduce confounding when they are designed and executed well.",
-          true,
-        ],
-      ],
-      "Associations are common in biomedical data, but not every association is causal. Confounding is one reason observational patterns can point in the wrong direction.",
-    ),
-    makeQuestion(
-      66,
-      "hard",
-      "Which statements correctly compare statistical and clinical significance?",
-      [
-        [
-          "Statistical significance depends on a specified analysis and chance model.",
-          true,
-        ],
-        [
-          "Clinical significance asks whether the effect is meaningful for health or decisions.",
-          true,
-        ],
-        [
-          "A very small effect can be statistically significant in a large study.",
-          true,
-        ],
-        [
-          "Statistical significance proves the study had no bias or confounding.",
-          false,
-        ],
-      ],
-      "Statistical significance and practical importance are related but different. Bias, confounding, and measurement choices still matter even when a p-value looks impressive.",
-    ),
-    makeQuestion(
-      67,
-      "hard",
-      "Which statements correctly describe sensitivity and specificity?",
-      [
-        [
-          "Sensitivity measures how well a test identifies people who truly have a condition.",
-          true,
-        ],
-        [
-          "Specificity measures how well a test identifies people who truly do not have a condition.",
-          true,
-        ],
-        [
-          "A highly sensitive test necessarily has perfect specificity in every population.",
-          false,
-        ],
-        [
-          "Sensitivity and specificity are the same as treatment efficacy and side-effect rate.",
-          false,
-        ],
-      ],
-      "Sensitivity and specificity describe diagnostic test performance from different angles. They do not automatically move together and should not be confused with treatment outcomes.",
-    ),
-    makeQuestion(
-      68,
-      "hard",
-      "A graph shows enzyme activity rising with temperature up to 37 degrees C and then falling at higher temperatures. Which interpretation is best supported?",
-      [
-        [
-          "The enzyme has an activity optimum near 37 degrees C under the tested conditions.",
-          true,
-        ],
-        [
-          "The enzyme's DNA sequence must be changing at each temperature point.",
-          false,
-        ],
-        [
-          "The enzyme is equally active at all temperatures because enzymes are catalysts.",
-          false,
-        ],
-        ["Temperature cannot affect protein shape or reaction rate.", false],
-      ],
-      "The graph supports an optimum under the tested conditions, not a claim that DNA sequence changes with temperature. Enzymes are catalysts, but their activity can still depend on temperature and protein structure.",
-    ),
-    makeQuestion(
-      69,
-      "hard",
-      "Which statements correctly describe concentration, moles, and solutions?",
-      [
-        [
-          "A mole is a counting unit for particles such as atoms or molecules.",
-          true,
-        ],
-        ["Molarity describes moles of solute per liter of solution.", true],
-        [
-          "Concentration affects how often dissolved molecules may encounter each other.",
-          true,
-        ],
-        [
-          "Changing concentration can affect diffusion, reaction rates, and dose.",
-          true,
-        ],
-      ],
-      "Concentration vocabulary connects basic chemistry to biology and medicine. Cells, enzymes, gradients, and drug dosing all depend on how much substance is present in a given volume.",
-    ),
-    makeQuestion(
-      70,
-      "hard",
-      "Which statements correctly describe dilutions?",
-      [
-        [
-          "Dilution lowers solute concentration by adding solvent or increasing total volume.",
-          true,
-        ],
-        [
-          "If solute amount stays the same and volume increases, concentration decreases.",
-          true,
-        ],
-        ["Serial dilutions can create a range of known concentrations.", true],
-        [
-          "Diluting a solution increases concentration because the solute becomes more chemically active.",
-          false,
-        ],
-      ],
-      "Dilution changes concentration by changing the ratio of solute to total volume. This is basic but important for lab assays, dose preparation, and interpreting concentration-response data.",
-    ),
-    makeQuestion(
-      71,
-      "hard",
-      "Which statements correctly describe reaction rates and equilibrium?",
-      [
-        [
-          "Reaction rate describes how quickly reactants are converted to products.",
-          true,
-        ],
-        [
-          "At dynamic equilibrium, forward and reverse reactions occur at equal rates.",
-          true,
-        ],
-        ["Equilibrium means every molecule has stopped moving.", false],
-        [
-          "A catalyst changes the final equilibrium ratio by being consumed in the reaction.",
-          false,
-        ],
-      ],
-      "Equilibrium is dynamic, so molecules still move and reactions can still occur. Catalysts speed approach to equilibrium but do not get consumed as ordinary reactants.",
-    ),
-    makeQuestion(
-      72,
-      "hard",
-      "Which statement best describes activation energy?",
-      [
-        [
-          "Activation energy is the energy barrier that must be overcome for a reaction to proceed.",
-          true,
-        ],
-        [
-          "Activation energy is the total heat released after products form.",
-          false,
-        ],
-        [
-          "Activation energy is the final concentration of product at equilibrium.",
-          false,
-        ],
-        [
-          "Activation energy is the volume of solvent added during a dilution.",
-          false,
-        ],
-      ],
-      "Activation energy explains why many reactions need a push to proceed at useful rates. Enzymes help by lowering this barrier rather than by changing DNA amount or dilution volume.",
-    ),
-    makeQuestion(
-      73,
-      "hard",
-      "Which statements correctly describe oxidation and reduction?",
-      [
-        [
-          "Oxidation involves loss of electrons or increased oxidation state.",
-          true,
-        ],
-        [
-          "Reduction involves gain of electrons or decreased oxidation state.",
-          true,
-        ],
-        ["Redox reactions are important in cellular respiration.", true],
-        ["Electron carriers can transfer electrons between reactions.", true],
-      ],
-      "Redox vocabulary helps explain energy transfer in metabolism. Cellular respiration depends on controlled electron movement, which is why electron carriers matter.",
-    ),
-    makeQuestion(
-      74,
-      "hard",
-      "Which statements correctly describe dehydration synthesis and hydrolysis?",
-      [
-        [
-          "Dehydration synthesis can join monomers while releasing water.",
-          true,
-        ],
-        ["Hydrolysis can break polymers by adding water.", true],
-        [
-          "These reactions are relevant to building and breaking biological macromolecules.",
-          true,
-        ],
-        [
-          "Hydrolysis always joins amino acids into longer chains without using water.",
-          false,
-        ],
-      ],
-      "Dehydration and hydrolysis are opposite patterns often used for polymers. They help students understand how cells assemble and break down carbohydrates, proteins, and nucleic acids.",
-    ),
-    makeQuestion(
-      75,
-      "hard",
-      "Which statements correctly describe ions and membrane potentials?",
-      [
-        [
-          "Unequal ion distributions across a membrane can create an electrical potential.",
-          true,
-        ],
-        [
-          "Ion channels can allow specific ions to move across membranes.",
-          true,
-        ],
-        [
-          "Membrane potentials require chromosomes to move across the plasma membrane.",
-          false,
-        ],
-        [
-          "Sodium and potassium ions are irrelevant to nerve and muscle cell signaling.",
-          false,
-        ],
-      ],
-      "Membrane potentials depend on ion gradients and selective permeability. They are especially important for excitable cells such as neurons and muscle cells.",
-    ),
-    makeQuestion(
-      76,
-      "hard",
-      "A red blood cell is placed in pure water and swells. Which explanation is best?",
-      [
-        [
-          "Water enters the cell by osmosis because the outside solution is hypotonic relative to the cytoplasm.",
-          true,
-        ],
-        [
-          "The cell swells because water leaves the cell faster than it enters.",
-          false,
-        ],
-        [
-          "The cell swells because the membrane becomes completely impermeable to water.",
-          false,
-        ],
-        [
-          "The cell swells because pure water has a higher solute concentration than cytoplasm.",
-          false,
-        ],
-      ],
-      "Pure water has very low solute concentration compared with the inside of a red blood cell. Net water entry by osmosis can cause swelling and, if extreme, lysis.",
-    ),
-    makeQuestion(
-      77,
-      "hard",
-      "Which statements correctly describe cell communication pathways?",
-      [
-        ["A signal can be received by a receptor.", true],
-        [
-          "Signal transduction can convert receptor activation into intracellular changes.",
-          true,
-        ],
-        [
-          "A cellular response might involve enzyme activity, gene expression, secretion, or movement.",
-          true,
-        ],
-        [
-          "Feedback can adjust the strength or duration of a signaling response.",
-          true,
-        ],
-      ],
-      "Cell communication often involves reception, transduction, and response. This vocabulary prepares students for hormones, neurotransmitters, immune signals, and drug effects.",
-    ),
-    makeQuestion(
-      78,
-      "hard",
-      "Which statements correctly describe transcription factors and epigenetic regulation?",
-      [
-        [
-          "Transcription factors are proteins that can affect transcription of genes.",
-          true,
-        ],
-        [
-          "Epigenetic changes can influence gene expression without changing the DNA sequence.",
-          true,
-        ],
-        [
-          "Cell type differences can partly reflect different patterns of gene regulation.",
-          true,
-        ],
-        [
-          "Epigenetic regulation means every nucleotide in DNA is replaced by an amino acid.",
-          false,
-        ],
-      ],
-      "Gene regulation helps explain how cells with the same genome can behave differently. Epigenetic regulation changes how information is used, not the basic DNA sequence itself.",
-    ),
-    makeQuestion(
-      79,
-      "hard",
-      "Which statements correctly describe gene therapy, messenger RNA medicines, and CRISPR at a basic level?",
-      [
-        [
-          "Gene therapy aims to treat disease by adding, replacing, or modifying genetic information.",
-          true,
-        ],
-        [
-          "Messenger RNA medicines can provide temporary instructions for cells to make a protein.",
-          true,
-        ],
-        [
-          "CRISPR-based treatments are best described as ordinary antibiotics that block bacterial cell wall synthesis.",
-          false,
-        ],
-        [
-          "Gene therapy and messenger RNA medicines work without interacting with cells or molecules.",
-          false,
-        ],
-      ],
-      "Modern biotechnology builds on basic ideas about DNA, RNA, proteins, and cells. CRISPR is associated with targeted genome editing, while messenger RNA approaches use RNA instructions rather than changing every cell permanently.",
-    ),
-    makeQuestion(
-      80,
-      "hard",
-      "Which statement best describes a careful use of AI in biomedical data?",
-      [
-        [
-          "AI model outputs should be validated with appropriate data and interpreted using biological or clinical context.",
-          true,
-        ],
-        [
-          "AI predictions remove the need for controls, measurements, or independent validation.",
-          false,
-        ],
-        [
-          "AI models prove causation whenever they find a correlation in patient data.",
-          false,
-        ],
-        [
-          "AI systems are unaffected by biased, incomplete, or poorly measured training data.",
-          false,
-        ],
-      ],
-      "AI can help find patterns, but biomedical interpretation still depends on data quality and evidence. Validation, bias checks, and domain knowledge remain necessary.",
-    ),
-    makeQuestion(
-      81,
-      "hard",
-      "A student reads that a biomarker is higher in patients with a disease than in healthy controls. Which interpretation is best supported by that statement alone?",
+      "A biomarker is higher in people with a disease than in healthy controls. Which conclusion is best supported by that fact alone?",
       [
         [
           "The biomarker is associated with the disease in the compared groups.",
           true,
         ],
-        ["The biomarker must be the cause of the disease.", false],
+        ["The biomarker must be the root cause of the disease.", false],
+        ["Lowering the biomarker must improve patient survival.", false],
+        ["The biomarker must be perfectly sensitive and specific.", false],
+      ],
+      "Association is not the same as causation, prediction, or treatment value. This distinction prepares students to interpret diagnostics, biomarkers, surrogate endpoints, and AI predictions carefully.",
+    ),
+    makeQuestion(
+      47,
+      "hard",
+      "A drug lowers a laboratory marker but patients do not feel better or live longer. Which interpretations are reasonable?",
+      [
         [
-          "Changing the biomarker with a drug must improve patient outcomes.",
-          false,
+          "The marker may not be a valid surrogate for the patient-relevant outcome.",
+          true,
         ],
         [
-          "The biomarker must be perfectly sensitive and perfectly specific.",
+          "The drug may affect biology without producing meaningful clinical benefit.",
+          true,
+        ],
+        ["Any marker change automatically proves clinical success.", false],
+        ["Laboratory markers can never be useful in medicine.", false],
+      ],
+      "Markers can be useful, but only when their relationship to meaningful outcomes is validated. This prepares students for the revised Lecture 5 treatment of evidence as context rather than as the course core.",
+    ),
+    makeQuestion(
+      48,
+      "hard",
+      "Which statements correctly describe an mRNA vaccine at a basic level?",
+      [
+        ["It can deliver instructions for cells to make an antigen.", true],
+        ["The antigen can train immune recognition.", true],
+        [
+          "The mRNA is intended as a temporary instruction rather than a full permanent genome replacement.",
+          true,
+        ],
+        [
+          "It works because ribosomes translate lipids into chromosomes.",
           false,
         ],
       ],
-      "An observed difference supports an association, but it does not by itself prove causation or treatment value. Biomarkers also need validation before they can be treated as reliable diagnostic or clinical-decision tools.",
+      "mRNA vaccines depend on central dogma vocabulary and immune recognition. Students should understand that mRNA can instruct protein production without needing to permanently replace the genome.",
+    ),
+    makeQuestion(
+      49,
+      "hard",
+      "Which statements correctly describe recombinant insulin production?",
+      [
+        [
+          "A human insulin gene can be inserted into a production system.",
+          true,
+        ],
+        [
+          "Cells can use the inserted information to make insulin protein.",
+          true,
+        ],
+        ["The insulin must be purified and quality-controlled.", true],
+        [
+          "The method depends on DNA, RNA, protein production, and biotechnology principles.",
+          true,
+        ],
+      ],
+      "This example connects many prerequisites: genes, plasmids or vectors, expression, proteins, purification, and medicine. It is a useful bridge from molecular biology to therapeutics.",
+    ),
+    makeQuestion(
+      50,
+      "hard",
+      "Which statements correctly compare mRNA medicine, gene therapy, and CRISPR at a basic level?",
+      [
+        ["mRNA medicine usually provides temporary instructions.", true],
+        [
+          "Gene therapy can aim to add, replace, silence, or edit genetic information.",
+          true,
+        ],
+        [
+          "CRISPR-based tools are associated with targeted genome editing.",
+          true,
+        ],
+        [
+          "All three are ordinary antibiotics that block bacterial cell walls.",
+          false,
+        ],
+      ],
+      "These technologies all relate to biological information but at different layers. The comparison prepares students for Lecture 3 and Lecture 5 without expecting advanced delivery or regulatory details.",
+    ),
+    makeQuestion(
+      51,
+      "hard",
+      "Two patients receive the same oral drug dose, but one has much higher blood levels. Which explanations are plausible?",
+      [
+        ["Absorption could differ.", true],
+        ["Metabolism or excretion could differ.", true],
+        ["Drug interactions or organ function could differ.", true],
+        [
+          "The tablets must contain different genes because dose is the only factor in exposure.",
+          false,
+        ],
+      ],
+      "This is prerequisite PK reasoning. The same dose can produce different exposure because the body handles the drug differently across patients through absorption, metabolism, excretion, interactions, and organ function.",
+    ),
+    makeQuestion(
+      52,
+      "hard",
+      "Which statement best describes type 2 diabetes as a systems problem?",
+      [
+        [
+          "It can involve disrupted glucose regulation across hormones, tissues, metabolism, genetics, environment, and time.",
+          true,
+        ],
+        ["It is always caused only by a virus entering one cell.", false],
+        ["It is identical to a single covalent bond forming in water.", false],
+        ["It proves homeostasis cannot exist in any organism.", false],
+      ],
+      "The point is not to teach diabetes in depth, but to prepare systems reasoning. Disease can emerge from interactions across scales rather than from one isolated molecule.",
+    ),
+    makeQuestion(
+      53,
+      "hard",
+      "Which statement best distinguishes autoimmune disease from ordinary immune defense against a pathogen?",
+      [
+        [
+          "Autoimmune disease involves immune responses against self tissues, while pathogen defense targets non-self or danger-associated threats.",
+          true,
+        ],
+        [
+          "Autoimmune disease means the immune system is completely absent.",
+          false,
+        ],
+        [
+          "Autoimmune disease is the same thing as antibiotic resistance.",
+          false,
+        ],
+        [
+          "Autoimmune disease happens only when proteins cannot fold in water.",
+          false,
+        ],
+      ],
+      "Autoimmunity is misdirected or poorly regulated immunity, not simply no immunity. This distinction prepares students for immunity, disease categories, biologic drugs, and side effects.",
+    ),
+    makeQuestion(
+      54,
+      "hard",
+      "Which statements correctly describe why viruses depend on host cells?",
+      [
+        [
+          "Viruses lack the full cellular machinery needed for independent reproduction.",
+          true,
+        ],
+        [
+          "Viruses can use host ribosomes or other host machinery during infection.",
+          true,
+        ],
+        [
+          "Viral replication can damage cells or disrupt normal function.",
+          true,
+        ],
+        [
+          "Viruses maintain their own complete metabolism like mitochondria outside cells.",
+          false,
+        ],
+      ],
+      "Viruses are not free-living cells. Their dependence on host machinery explains both pathogenesis and why antiviral strategies often target entry, replication, viral enzymes, or host-virus interactions.",
+    ),
+    makeQuestion(
+      55,
+      "hard",
+      "A drug blocks an ion pump that maintains a sodium gradient. Which consequences are plausible?",
+      [
+        ["The gradient may dissipate over time.", true],
+        ["Processes depending on that gradient can be disrupted.", true],
+        [
+          "The drug may affect multiple tissues if the pump is widely used.",
+          true,
+        ],
+        [
+          "Blocking the pump directly rewrites all codons in the genome.",
+          false,
+        ],
+      ],
+      "This scenario links gradients, pumps, drugs, and side effects. It prepares students to reason from a molecular target to cell physiology and tissue-level consequences.",
+    ),
+    makeQuestion(
+      56,
+      "hard",
+      "Which statements correctly explain why controls and randomization are useful in human studies?",
+      [
+        [
+          "Patients can improve or worsen for reasons unrelated to treatment.",
+          true,
+        ],
+        [
+          "A control group helps separate treatment effects from background change.",
+          true,
+        ],
+        [
+          "Randomization helps balance known and unknown factors in expectation.",
+          true,
+        ],
+        [
+          "They reduce the risk of being misled by confounding or selection bias.",
+          true,
+        ],
+      ],
+      "Clinical evidence remains contextual in this course, but students need basic reasoning about trustworthy claims. Human outcomes are noisy, and controls plus randomization help distinguish causation from misleading observation.",
+    ),
+    makeQuestion(
+      57,
+      "hard",
+      "An AI model predicts disease from images, but the images came from one hospital with a special scanner. Which concerns are reasonable?",
+      [
+        [
+          "The model may have learned scanner or site artifacts instead of disease biology.",
+          true,
+        ],
+        ["Performance may drop in other hospitals or populations.", true],
+        [
+          "High accuracy on the original data proves the model learned causation.",
+          false,
+        ],
+        ["Validation is unnecessary if the model uses many parameters.", false],
+      ],
+      "AI questions in this course should test evidence and biology, not hype. Data source, labels, distribution shift, and validation all matter before a prediction can be trusted in biomedical practice.",
+    ),
+    makeQuestion(
+      58,
+      "hard",
+      "Which statements correctly connect cancer, apoptosis, and evolution?",
+      [
+        ["Failure to undergo apoptosis can help abnormal cells survive.", true],
+        [
+          "Tumor cell populations can evolve under immune or treatment pressure.",
+          true,
+        ],
+        [
+          "Cancer can involve disrupted regulation of division and survival.",
+          true,
+        ],
+        [
+          "Cancer is best described as every cell in the body dividing normally and dying on schedule.",
+          false,
+        ],
+      ],
+      "This prepares students for cancer as dysregulated cellular evolution. It connects cell division, cell death, mutation, selection, immune pressure, and therapy resistance.",
+    ),
+    makeQuestion(
+      59,
+      "hard",
+      "Which statements correctly describe why a treatment can work in a model system but fail in humans?",
+      [
+        [
+          "The model may omit immune, vascular, endocrine, or tissue context.",
+          true,
+        ],
+        ["Human disease may be more heterogeneous than the model.", true],
+        [
+          "Drug exposure or toxicity can differ between model and patient.",
+          true,
+        ],
+        [
+          "The measured model outcome may not match a patient-relevant endpoint.",
+          true,
+        ],
+      ],
+      "Model systems are essential, but translation is hard. The purpose of this question is to prepare learners for evidence reasoning without making clinical research the dominant subject.",
+    ),
+    makeQuestion(
+      60,
+      "hard",
+      "Which statement best summarizes the prerequisite mindset for Lectures 1-5?",
+      [
+        [
+          "Reason from molecules to cells, regulation, disease, treatment, measurement, and evidence while keeping uncertainty in view.",
+          true,
+        ],
+        ["Memorize terms as isolated facts and ignore mechanisms.", false],
+        [
+          "Assume every biological claim is proven by one plausible story.",
+          false,
+        ],
+        [
+          "Treat clinical-trial operations as the core of biology and chemistry.",
+          false,
+        ],
+      ],
+      "Lecture 0 prepares students for the course by building a bridge from basic vocabulary to mechanistic reasoning. The later lectures require understanding chemistry, cells, genes, physiology, biotechnology, and evidence as connected layers.",
     ),
   ];
 

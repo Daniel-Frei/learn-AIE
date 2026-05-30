@@ -41,12 +41,13 @@ import { BiologyChemistryLifeScienceL1Questions } from "./other/Crash Courses/Bi
 import { BiologyChemistryLifeScienceL2Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 2 - Cells as Information-Processing Systems";
 import { BiologyChemistryLifeScienceL3Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 3 - Genetics, Proteins, and Biological Regulation";
 import { BiologyChemistryLifeScienceL4Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 4 - Physiology, Disease, and Pharmacology";
-import { BiologyChemistryLifeScienceL5Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 5 - Clinical Trials, Evidence, and Modern Biomedical Research";
+import { BiologyChemistryLifeScienceL5Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 5 - Biomedical Systems, Biotechnology, and Evidence";
 import { ClinicalTrialsLecture1Questions } from "./other/Crash Courses/Clinical Trials/Lecture 1 - Why Clinical Trials Exist";
 import { ClinicalTrialsLecture2Questions } from "./other/Crash Courses/Clinical Trials/Lecture 2 - Designing Clinical Trials";
 import { MIT15773L3DeepLearningForComputerVisionQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L3_Deep Learning for Computer Vision";
 import { MIT15773L4ComputerVisionTransferLearningQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L4_Computer Vision –Transfer Learning and Fine-Tuning";
 import { L5NLPBasicsQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L5_NLP Basics";
+import { CodeAsAgentHarnessQuestions } from "./other/AI agents/Code as Agent Harness";
 import { DeepAgentsQuestions } from "./other/Langchain/Deepagents";
 import { mixedQuestions } from "./other/other";
 
@@ -64,6 +65,7 @@ export type SourceSeriesId =
   | "crash-course-linear-algebra"
   | "biology-chemistry-life-science"
   | "clinical-trials"
+  | "ai-agents"
   | "langchain"
   | "other";
 
@@ -505,7 +507,7 @@ export const QUESTION_SOURCES = [
     id: "bio-chem-life-l5" as const,
     label: "Biology & Chemistry L5",
     title:
-      "Biology & Chemistry for Life Science L5: Clinical Trials, Evidence, and Modern Biomedical Research",
+      "Biology & Chemistry for Life Science L5: Biomedical Systems, Biotechnology, and Evidence",
     seriesId: "biology-chemistry-life-science" as const,
     seriesLabel: "Biology & Chemistry for Life Science",
     topic: "Life Science" as const,
@@ -528,6 +530,15 @@ export const QUESTION_SOURCES = [
     seriesLabel: "Clinical Trials Crash Course",
     topic: "Life Science" as const,
     questions: ClinicalTrialsLecture2Questions,
+  },
+  {
+    id: "ai-agents-code-harness" as const,
+    label: "AI Agents Harness",
+    title: "AI Agents: Code as Agent Harness",
+    seriesId: "ai-agents" as const,
+    seriesLabel: "AI Agents",
+    topic: "NLP" as const,
+    questions: CodeAsAgentHarnessQuestions,
   },
   {
     id: "langchain-deepagents" as const,
@@ -630,7 +641,7 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
   "crash-linalg-l5":
     "Linear algebra synthesis lesson about attention, matrix stacks, RL value functions, optimization landscapes, and AI geometry.",
   "bio-chem-life-l0":
-    "Life-science preparation practice covering core biology and chemistry vocabulary for cells, genes, disease, drugs, trials, and evidence.",
+    "Life-science preparation practice covering prerequisite chemistry, cells, genes, disease, drugs, biomarkers, biotech, and evidence vocabulary.",
   "bio-chem-life-l1":
     "Life-science lesson about atoms, bonds, water, macromolecules, proteins, enzymes, ATP, metabolism, and structure-function reasoning.",
   "bio-chem-life-l2":
@@ -640,11 +651,13 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
   "bio-chem-life-l4":
     "Life-science lesson about physiology, homeostasis, disease as disrupted regulation, pharmacology, dose response, PK/PD, biomarkers, and precision medicine.",
   "bio-chem-life-l5":
-    "Life-science lesson about clinical trials, bias, randomization, endpoints, medical statistics, drug development, evidence generation, and AI in biomedicine.",
+    "Life-science lesson about infection, immunity, vaccines, therapeutic modalities, diagnostics, translational evidence, and AI in biomedicine.",
   "clinical-trials-l1":
     "Clinical trials crash course lesson about why trials exist, bias, placebo effects, causal inference, evidence hierarchy, and the modern trial ecosystem.",
   "clinical-trials-l2":
     "Clinical trials crash course lesson about PICO(T), randomization, blinding, endpoints, development phases, and internal versus external validity.",
+  "ai-agents-code-harness":
+    "AI agents material about code as executable, inspectable, stateful harness infrastructure for reasoning, action, memory, verification, and multi-agent coordination.",
   "langchain-deepagents":
     "LangChain Deep Agents material about planning, tools, subagents, memory, and agent orchestration.",
   other:
@@ -835,8 +848,9 @@ export { BiologyChemistryLifeScienceL1Questions } from "./other/Crash Courses/Bi
 export { BiologyChemistryLifeScienceL2Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 2 - Cells as Information-Processing Systems";
 export { BiologyChemistryLifeScienceL3Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 3 - Genetics, Proteins, and Biological Regulation";
 export { BiologyChemistryLifeScienceL4Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 4 - Physiology, Disease, and Pharmacology";
-export { BiologyChemistryLifeScienceL5Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 5 - Clinical Trials, Evidence, and Modern Biomedical Research";
+export { BiologyChemistryLifeScienceL5Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 5 - Biomedical Systems, Biotechnology, and Evidence";
 export { ClinicalTrialsLecture1Questions } from "./other/Crash Courses/Clinical Trials/Lecture 1 - Why Clinical Trials Exist";
 export { ClinicalTrialsLecture2Questions } from "./other/Crash Courses/Clinical Trials/Lecture 2 - Designing Clinical Trials";
+export { CodeAsAgentHarnessQuestions } from "./other/AI agents/Code as Agent Harness";
 export { DeepAgentsQuestions } from "./other/Langchain/Deepagents";
 export { mixedQuestions } from "./other/other";
