@@ -135,7 +135,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "It is an on-policy algorithm.", isCorrect: true },
     ],
     explanation:
-      "REINFORCE computes an unbiased gradient estimate using sampled rollouts. Because samples must come from the current policy, it is strictly on-policy.",
+      'REINFORCE computes an unbiased gradient estimate using sampled rollouts. Because samples must come from the current policy, it is strictly on-policy. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It estimates gradients using sampled trajectories."; "It applies gradient ascent to policy parameters."; "It uses the log-probability of actions."; "It is an on-policy algorithm.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -189,7 +189,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       },
     ],
     explanation:
-      "After applying the log trick, gradients of dynamics cancel out. This allows policy gradients to be computed without a model of the environment.",
+      'After applying the log trick, gradients of dynamics cancel out. This allows policy gradients to be computed without a model of the environment. To reason through the choices, select every statement because each one matches the criterion in the prompt: "\\(\\nabla_\\theta J(\\theta) = \\mathbb{E}_{\\tau}[\\nabla_\\theta \\log p_\\theta(\\tau) r(\\tau)]\\)."; "Only the policy terms contribute to the gradient."; "The gradient does not require knowing environment dynamics."; "The expectation can be estimated with Monte Carlo samples.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -264,7 +264,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Initialization influences early learning dynamics and exploration but does not uniquely determine the final optimum if learning proceeds correctly.",
+      'Initialization influences early learning dynamics and exploration but does not uniquely determine the final optimum if learning proceeds correctly. To reason through the choices, select the statements that match the criterion in the prompt: "Policies can be initialized randomly."; "Policies can be initialized via imitation learning."; "Initialization affects early exploration.". Do not select statements that miss that criterion: "Initialization determines the optimal final policy.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -292,7 +292,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Monte Carlo estimates rely on sampling and averaging. They are unbiased but can suffer from high variance with small sample sizes.",
+      'Monte Carlo estimates rely on sampling and averaging. They are unbiased but can suffer from high variance with small sample sizes. To reason through the choices, select the statements that match the criterion in the prompt: "It approximates expectations using sampled trajectories."; "Variance decreases as the number of samples increases."; "It provides an unbiased estimate of expected return.". Do not select statements that miss that criterion: "It requires differentiating through the environment.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -314,7 +314,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Rewards directly weight gradient contributions, affecting both direction and variance. Poorly scaled rewards can destabilize learning.",
+      'Rewards directly weight gradient contributions, affecting both direction and variance. Poorly scaled rewards can destabilize learning. To reason through the choices, select the statements that match the criterion in the prompt: "Higher rewards scale gradients upward."; "Negative rewards can reverse gradient direction."; "Reward scaling affects variance.". Do not select statements that miss that criterion: "Reward scaling does not affect learning dynamics.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -338,7 +338,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Restricting credit assignment to future rewards respects causality and reduces variance without introducing bias.",
+      'Restricting credit assignment to future rewards respects causality and reduces variance without introducing bias. To reason through the choices, select the statements that match the criterion in the prompt: "Actions cannot influence past rewards."; "Using future rewards reduces gradient variance."; "Returns are often defined as \\(G_t = \\sum_{t\'=t}^T r_{t\'}\\).". Do not select statements that miss that criterion: "Causality introduces bias into the gradient.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -359,7 +359,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "Average reward is a common baseline choice.", isCorrect: true },
     ],
     explanation:
-      "A baseline independent of actions preserves unbiasedness while reducing variance. Average reward is a simple and effective choice.",
+      'A baseline independent of actions preserves unbiasedness while reducing variance. Average reward is a simple and effective choice. To reason through the choices, select the statements that match the criterion in the prompt: "Baselines reduce variance of gradient estimates."; "Baselines must not depend on the action."; "Average reward is a common baseline choice.". Do not select statements that miss that criterion: "Subtracting a constant baseline biases the gradient.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -380,7 +380,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "Baselines eliminate all gradient variance.", isCorrect: false },
     ],
     explanation:
-      "Subtracting a constant baseline leaves the expected gradient unchanged. While variance is reduced, it is not eliminated entirely.",
+      'Subtracting a constant baseline leaves the expected gradient unchanged. While variance is reduced, it is not eliminated entirely. To reason through the choices, select the statements that match the criterion in the prompt: "\\(\\mathbb{E}[\\nabla_\\theta \\log p_\\theta(\\tau) b] = 0\\)."; "This follows from \\(\\int p_\\theta(\\tau) d\\tau = 1\\)."; "The gradient of a constant is zero.". Do not select statements that miss that criterion: "Baselines eliminate all gradient variance.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -401,7 +401,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Sparse rewards provide little feedback, making gradient estimates noisy. Dense rewards improve learning stability.",
+      'Sparse rewards provide little feedback, making gradient estimates noisy. Dense rewards improve learning stability. To reason through the choices, select the statements that match the criterion in the prompt: "Sparse rewards increase gradient variance."; "Dense rewards provide more learning signal."; "Policy gradients work best with dense rewards.". Do not select statements that miss that criterion: "Sparse rewards guarantee faster convergence.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -443,7 +443,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "Variance affects learning speed.", isCorrect: true },
     ],
     explanation:
-      "High variance slows convergence and destabilizes learning. Larger batches and better baselines reduce variance.",
+      'High variance slows convergence and destabilizes learning. Larger batches and better baselines reduce variance. To reason through the choices, select the statements that match the criterion in the prompt: "Variance decreases with larger batch sizes."; "Variance depends on reward scale."; "Variance affects learning speed.". Do not select statements that miss that criterion: "Variance is zero for deterministic policies.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -469,7 +469,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Policy gradients improve by interacting with the environment, while imitation learning simply copies demonstrations.",
+      'Policy gradients improve by interacting with the environment, while imitation learning simply copies demonstrations. To reason through the choices, select the statements that match the criterion in the prompt: "Policy gradients can outperform demonstrators."; "Policy gradients require online interaction.". Do not select statements that miss that criterion: "Imitation learning uses reward signals."; "Imitation learning improves through trial and error.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -484,7 +484,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "They eliminate distribution shift entirely.", isCorrect: false },
     ],
     explanation:
-      "On-policy methods rely on samples from the current policy. Old data becomes invalid once the policy changes.",
+      'On-policy methods rely on samples from the current policy. Old data becomes invalid once the policy changes. To reason through the choices, select the statements that match the criterion in the prompt: "They require fresh data after each update."; "REINFORCE is an on-policy algorithm.". Do not select statements that miss that criterion: "They can reuse old data indefinitely."; "They eliminate distribution shift entirely.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -505,7 +505,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "It guarantees stable learning.", isCorrect: false },
     ],
     explanation:
-      "Importance sampling corrects for distribution mismatch but can increase variance if weights explode or vanish.",
+      'Importance sampling corrects for distribution mismatch but can increase variance if weights explode or vanish. To reason through the choices, select the statements that match the criterion in the prompt: "It reweights samples from a proposal distribution."; "It requires \\(q(x) > 0\\) whenever \\(p(x) > 0\\).". Do not select statements that miss that criterion: "It always reduces variance."; "It guarantees stable learning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -523,7 +523,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "They remove the need for baselines.", isCorrect: false },
     ],
     explanation:
-      "Off-policy gradients trade bias and variance to improve sample efficiency. Importance sampling is required to correct for policy mismatch.",
+      'Off-policy gradients trade bias and variance to improve sample efficiency. Importance sampling is required to correct for policy mismatch. To reason through the choices, select the statements that match the criterion in the prompt: "They allow multiple gradient steps per batch."; "They require importance sampling ratios.". Do not select statements that miss that criterion: "They are always unbiased in practice."; "They remove the need for baselines.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -542,7 +542,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "It avoids distribution mismatch entirely.", isCorrect: false },
     ],
     explanation:
-      "Multiplying many probability ratios leads to numerical instability. This motivates per-timestep approximations.",
+      'Multiplying many probability ratios leads to numerical instability. This motivates per-timestep approximations. To reason through the choices, select the statements that match the criterion in the prompt: "It involves a product of per-step probability ratios."; "It can explode or vanish for long horizons.". Do not select statements that miss that criterion: "It is numerically stable for large \\(T\\)."; "It avoids distribution mismatch entirely.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -564,7 +564,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "It is commonly used in practice.", isCorrect: false },
     ],
     explanation:
-      "Per-timestep importance sampling sacrifices theoretical correctness for numerical stability.",
+      'Per-timestep importance sampling sacrifices theoretical correctness for numerical stability. To reason through the choices, select the statements that match the criterion in the prompt: "It approximates trajectory-level importance sampling."; "It reduces variance compared to full products.". Do not select statements that miss that criterion: "It is always theoretically exact."; "It is commonly used in practice.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -579,7 +579,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "Reward scaling has no practical impact.", isCorrect: false },
     ],
     explanation:
-      "The scale of rewards directly impacts gradient updates and stability.",
+      'The scale of rewards directly impacts gradient updates and stability. To reason through the choices, select the statements that match the criterion in the prompt: "Reward scaling affects gradient magnitude."; "Reward scaling affects variance.". Do not select statements that miss that criterion: "Reward scaling leaves learning unchanged."; "Reward scaling has no practical impact.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -594,7 +594,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "Noise makes convergence slower.", isCorrect: false },
     ],
     explanation:
-      "Multiple sources contribute to gradient noise. Baselines reduce but do not eliminate it.",
+      'Multiple sources contribute to gradient noise. Baselines reduce but do not eliminate it. To reason through the choices, select the statements that match the criterion in the prompt: "Noise arises from stochastic policies."; "Noise arises from stochastic environments.". Do not select statements that miss that criterion: "Noise disappears with baselines."; "Noise makes convergence slower.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -612,7 +612,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "\\(G_t\\) guarantees low variance.", isCorrect: false },
     ],
     explanation:
-      "Returns focus credit assignment on future rewards, aligning with causal influence.",
+      'Returns focus credit assignment on future rewards, aligning with causal influence. To reason through the choices, select the statements that match the criterion in the prompt: "\\(G_t\\) sums rewards from time \\(t\\) onward."; "\\(G_t\\) respects causality.". Do not select statements that miss that criterion: "\\(G_t\\) includes past rewards."; "\\(G_t\\) guarantees low variance.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -634,7 +634,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "It requires a value function.", isCorrect: false },
     ],
     explanation:
-      "REINFORCE relies exclusively on samples from the current policy.",
+      'REINFORCE relies exclusively on samples from the current policy. To reason through the choices, select the statements that match the criterion in the prompt: "It estimates gradients from on-policy rollouts.". Do not select statements that miss that criterion: "It is an off-policy algorithm."; "It reuses data from old policies."; "It requires a value function.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -652,7 +652,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "They eliminate stochasticity.", isCorrect: false },
     ],
     explanation:
-      "Baselines are designed to reduce variance while keeping the expected gradient unchanged.",
+      'Baselines are designed to reduce variance while keeping the expected gradient unchanged. To reason through the choices, select the statements that match the criterion in the prompt: "They reduce variance without changing expectation.". Do not select statements that miss that criterion: "They bias the gradient."; "They change the optimal policy."; "They eliminate stochasticity.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -670,7 +670,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "They eliminate distribution shift.", isCorrect: false },
     ],
     explanation:
-      "Importance sampling ratios reweight samples to account for differences between old and new policies.",
+      'Importance sampling ratios reweight samples to account for differences between old and new policies. To reason through the choices, select the statements that match the criterion in the prompt: "They correct for policy mismatch.". Do not select statements that miss that criterion: "They are always close to 1."; "They are unnecessary in off-policy learning."; "They eliminate distribution shift.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -691,7 +691,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       },
     ],
     explanation:
-      "High variance is a central challenge in policy gradient methods and motivates variance-reduction techniques.",
+      'High variance is a central challenge in policy gradient methods and motivates variance-reduction techniques. To reason through the choices, select the statements that match the criterion in the prompt: "Variance is a major practical challenge.". Do not select statements that miss that criterion: "Variance decreases with smaller batch sizes."; "Variance is unaffected by reward design."; "Variance disappears in continuous action spaces.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -709,7 +709,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "They require no assumptions.", isCorrect: false },
     ],
     explanation:
-      "Off-policy methods improve sample efficiency but introduce new stability challenges.",
+      'Off-policy methods improve sample efficiency but introduce new stability challenges. To reason through the choices, select the statements that match the criterion in the prompt: "They allow more gradient updates per batch.". Do not select statements that miss that criterion: "They are always more stable than on-policy methods."; "They avoid importance sampling."; "They require no assumptions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -728,7 +728,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "Optimize environment dynamics.", isCorrect: false },
     ],
     explanation:
-      "Policy gradients reinforce actions that lead to good outcomes and suppress poor ones.",
+      'Policy gradients reinforce actions that lead to good outcomes and suppress poor ones. To reason through the choices, select the statements that match the criterion in the prompt: "Do more high-reward actions and less low-reward actions.". Do not select statements that miss that criterion: "Copy expert demonstrations."; "Predict rewards directly."; "Optimize environment dynamics.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -752,7 +752,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "Gradients are deterministic.", isCorrect: false },
     ],
     explanation:
-      "Policy gradients rely on Monte Carlo estimates from sampled rollouts.",
+      'Policy gradients rely on Monte Carlo estimates from sampled rollouts. To reason through the choices, select the statements that match the criterion in the prompt: "Gradients are estimated using sampled trajectories.". Do not select statements that miss that criterion: "Exact gradients can be computed analytically."; "Gradients require differentiating through the environment."; "Gradients are deterministic.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -770,6 +770,6 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "They are unsuitable for continuous control.", isCorrect: false },
     ],
     explanation:
-      "Actor-critic methods build directly on policy gradient ideas while addressing variance and sample efficiency.",
+      'Actor-critic methods build directly on policy gradient ideas while addressing variance and sample efficiency. To reason through the choices, select the statements that match the criterion in the prompt: "They form the foundation of actor-critic methods.". Do not select statements that miss that criterion: "They are low-variance by default."; "They eliminate the need for exploration."; "They are unsuitable for continuous control.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 ];

@@ -570,7 +570,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
       { text: "The norm equals the sum of the elements.", isCorrect: false },
     ],
     explanation:
-      "The L2 norm is \\(\\sqrt{1^2 + 1^2} = \\sqrt{2}\\). The squared norm equals 2. Norms measure geometric length and are not simply the sum of components.",
+      'The L2 norm is \\(\\sqrt{1^2 + 1^2} = \\sqrt{2}\\). The squared norm equals 2. Norms measure geometric length and are not simply the sum of components. To reason through the choices, select the statements that match the criterion in the prompt: "The L2 norm equals \\(\\sqrt{2}\\).". Do not select statements that miss that criterion: "The squared norm equals \\(\\sqrt{2}\\)."; "The vector length is less than 1."; "The norm equals the sum of the elements.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {

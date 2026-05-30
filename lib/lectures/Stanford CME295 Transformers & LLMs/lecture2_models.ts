@@ -36,7 +36,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Because self-attention connects all tokens directly, transformers need explicit mechanisms to encode order and relative positions.",
+      'Because self-attention connects all tokens directly, transformers need explicit mechanisms to encode order and relative positions. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Self-attention allows tokens to interact without an inherent notion of order."; "Unlike recurrent neural networks, transformers do not process tokens sequentially."; "Without position information, token representations would be permutation-invariant."; "Injecting position information helps the model reason about relative and absolute order.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -64,7 +64,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Learned absolute embeddings treat positions like tokens, but they do not extrapolate beyond trained sequence lengths.",
+      'Learned absolute embeddings treat positions like tokens, but they do not extrapolate beyond trained sequence lengths. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Each position index is associated with a trainable embedding vector."; "Position embeddings are added to token embeddings before attention."; "The maximum usable position is limited by the range seen during training."; "The embeddings are optimized via gradient descent together with other parameters.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -92,7 +92,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Sinusoidal embeddings encode position using fixed trigonometric functions that naturally reflect relative distances.",
+      'Sinusoidal embeddings encode position using fixed trigonometric functions that naturally reflect relative distances. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They use sine and cosine functions with different frequencies across dimensions."; "They allow extrapolation to sequence lengths not seen during training."; "Their dot products depend on the relative distance between positions."; "They match the embedding dimensionality of token representations.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -120,7 +120,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Since attention relies on similarity scores, encoding relative distance directly in those scores is often more natural.",
+      'Since attention relies on similarity scores, encoding relative distance directly in those scores is often more natural. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Relative position information can be injected directly into attention score computation."; "Bias terms added to query–key scores can encode distance information."; "Relative approaches focus on how far apart tokens are rather than their absolute indices."; "Relative formulations align more directly with how similarity is used in attention.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -148,7 +148,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "T5 introduces learnable relative biases per head, enabling flexible distance-aware attention.",
+      'T5 introduces learnable relative biases per head, enabling flexible distance-aware attention. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It adds a learned bias term to the attention logits."; "Distances between positions are bucketized before bias lookup."; "The bias is added inside the softmax normalization."; "Different attention heads can learn different bias values.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -176,7 +176,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "ALiBi encodes distance with simple linear penalties, avoiding learned embeddings while enabling long-context generalization.",
+      'ALiBi encodes distance with simple linear penalties, avoiding learned embeddings while enabling long-context generalization. To reason through the choices, select every statement because each one matches the criterion in the prompt: "ALiBi uses a deterministic linear function of relative distance."; "It does not rely on learned position embeddings."; "The bias grows linearly as positions become farther apart."; "It is designed to support length extrapolation at inference time.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -204,7 +204,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "RoPE integrates positional information directly into attention via rotations, making similarity depend on relative offsets.",
+      'RoPE integrates positional information directly into attention via rotations, making similarity depend on relative offsets. To reason through the choices, select every statement because each one matches the criterion in the prompt: "RoPE rotates query and key vectors as a function of position."; "Rotations are implemented using block-wise 2D rotation matrices."; "The resulting attention scores depend on relative position differences."; "RoPE is widely used in modern large language models.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -232,7 +232,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "RoPE extends sinusoidal ideas by embedding them directly into query–key interactions via rotations.",
+      'RoPE extends sinusoidal ideas by embedding them directly into query–key interactions via rotations. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Rotating both queries and keys preserves vector norms."; "Dot products after rotation encode relative position through angle differences."; "Higher-frequency dimensions vary faster across positions."; "The construction generalizes sinusoidal embeddings into the attention space.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -260,7 +260,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "RoPE yields attention behaviors where similarity weakens with distance, matching linguistic intuition.",
+      'RoPE yields attention behaviors where similarity weakens with distance, matching linguistic intuition. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Attention scores exhibit a long-term decay as distance increases."; "The decay is not strictly monotonic due to oscillatory trigonometric components."; "Closer tokens tend to have higher similarity than distant ones."; "Upper bounds on similarity can be derived analytically.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -288,7 +288,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Layer normalization standardizes activations per token, improving numerical stability and training dynamics.",
+      'Layer normalization standardizes activations per token, improving numerical stability and training dynamics. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It stabilizes training by normalizing activations."; "It reduces sensitivity to scale variations across dimensions."; "It improves convergence speed during optimization."; "It introduces learnable scaling and shifting parameters.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   // ============================================================
@@ -320,7 +320,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Learned absolute position embeddings are tied to the training distribution and sequence length, limiting generalization.",
+      'Learned absolute position embeddings are tied to the training distribution and sequence length, limiting generalization. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They cannot naturally extrapolate to sequence lengths unseen during training."; "They may encode dataset-specific positional biases."; "They require a fixed maximum sequence length during training."; "They are learned jointly with token embeddings via gradient descent.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -348,7 +348,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Attention fundamentally operates on token pairs, making relative position information a better inductive bias.",
+      'Attention fundamentally operates on token pairs, making relative position information a better inductive bias. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Attention compares pairs of tokens via similarity scores."; "Relative distance directly affects query–key interactions."; "Absolute indices are less relevant than pairwise offsets."; "Injecting position info into attention aligns with the dot-product formulation.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -376,7 +376,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Sinusoidal embeddings are constructed so that similarity reflects relative position via trigonometric structure.",
+      'Sinusoidal embeddings are constructed so that similarity reflects relative position via trigonometric structure. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Dot products between embeddings depend on position differences."; "Trigonometric identities link cosine and sine of offsets."; "Multiple frequencies encode both short- and long-range structure."; "Cosine similarity peaks when positions are identical.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -404,7 +404,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Original positional encodings are added to inputs, influencing attention only indirectly.",
+      'Original positional encodings are added to inputs, influencing attention only indirectly. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They are added to token embeddings before entering attention layers."; "They have the same dimensionality as token embeddings."; "They affect attention indirectly via input representations."; "They are applied identically across all attention heads.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -429,7 +429,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "They preserve vector norms under rotation.", isCorrect: true },
     ],
     explanation:
-      "RoPE rotates queries and keys so that attention scores naturally depend on relative positions.",
+      'RoPE rotates queries and keys so that attention scores naturally depend on relative positions. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They inject positional information directly into attention computation."; "They encode relative position through query–key interactions."; "They avoid learning explicit position embeddings."; "They preserve vector norms under rotation.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -457,7 +457,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "RoPE extends 2D rotations to higher dimensions by applying block-wise rotations with varying frequencies.",
+      'RoPE extends 2D rotations to higher dimensions by applying block-wise rotations with varying frequencies. To reason through the choices, select every statement because each one matches the criterion in the prompt: "The embedding dimension is partitioned into 2D blocks."; "Each block is rotated independently using a rotation matrix."; "Rotation angles vary across dimensions via different frequencies."; "The construction generalizes 2D rotations to higher-dimensional spaces.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -484,7 +484,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "RoPE induces a distance-aware similarity structure with long-term decay and oscillations.",
+      'RoPE induces a distance-aware similarity structure with long-term decay and oscillations. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Attention similarity has an upper bound that decays with distance."; "The decay is oscillatory due to trigonometric functions."; "Nearby tokens are generally more similar than distant ones."; "The decay behavior can be analyzed mathematically.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -512,7 +512,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Residual connections stabilize deep transformer training and work closely with normalization layers.",
+      'Residual connections stabilize deep transformer training and work closely with normalization layers. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They help preserve gradient flow in deep networks."; "They combine sublayer outputs with the original input."; "They are used together with normalization for stability."; "They reduce training degradation as depth increases.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -540,7 +540,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Pre-norm Transformers are more stable at scale and are now the standard choice.",
+      'Pre-norm Transformers are more stable at scale and are now the standard choice. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Post-norm applies normalization after the residual addition."; "Pre-norm applies normalization before the sublayer."; "Pre-norm improves training stability for deep models."; "Modern large models typically prefer pre-norm.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -561,7 +561,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "RMSNorm simplifies normalization while preserving performance and reducing parameters.",
+      'RMSNorm simplifies normalization while preserving performance and reducing parameters. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It normalizes activations using root mean square."; "It omits the mean subtraction step."; "It learns a scaling parameter but no bias."; "It reduces parameter count compared to LayerNorm.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -589,7 +589,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Sparse attention limits interactions to improve scalability while preserving performance.",
+      'Sparse attention limits interactions to improve scalability while preserving performance. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They reduce quadratic complexity by restricting attention patterns."; "They combine local and global attention mechanisms."; "They enable longer context lengths at lower cost."; "They trade off full connectivity for efficiency.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -617,7 +617,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Sliding window attention behaves similarly to receptive fields in convolutional networks.",
+      'Sliding window attention behaves similarly to receptive fields in convolutional networks. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Local attention defines which tokens influence a given token."; "Stacking layers expands the effective receptive field."; "Information propagates across layers beyond the local window."; "The analogy mirrors how CNNs aggregate spatial context.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -639,7 +639,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "Sharing improves inference efficiency.", isCorrect: true },
     ],
     explanation:
-      "Sharing K/V projections lowers memory and compute costs while keeping expressive queries.",
+      'Sharing K/V projections lowers memory and compute costs while keeping expressive queries. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It reduces memory usage of the KV cache."; "Keys and values are reused during autoregressive decoding."; "Queries benefit from retaining head-specific diversity."; "Sharing improves inference efficiency.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -663,7 +663,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "It is an extreme case of projection sharing.", isCorrect: true },
     ],
     explanation:
-      "MQA aggressively shares K/V projections to reduce memory while keeping query diversity.",
+      'MQA aggressively shares K/V projections to reduce memory while keeping query diversity. To reason through the choices, select every statement because each one matches the criterion in the prompt: "All heads share the same key and value projections."; "Each head still has its own query projection."; "It minimizes memory usage for key/value caches."; "It is an extreme case of projection sharing.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -685,7 +685,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "GQA offers a compromise between full multi-head attention and full K/V sharing.",
+      'GQA offers a compromise between full multi-head attention and full K/V sharing. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It groups heads to share key/value projections."; "It interpolates between MHA and MQA."; "It balances efficiency and expressivity."; "It is widely used in modern decoder-only LLMs.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   // ============================================================
@@ -704,7 +704,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "They require cross-attention layers.", isCorrect: false },
     ],
     explanation:
-      "Decoder-only models use masked self-attention and do not include cross-attention.",
+      'Decoder-only models use masked self-attention and do not include cross-attention. To reason through the choices, select the statements that match the criterion in the prompt: "They remove the encoder entirely."; "They rely on masked self-attention."; "They are well suited for text generation.". Do not select statements that miss that criterion: "They require cross-attention layers.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -725,7 +725,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "T5 reformulates tasks into text-to-text using span corruption rather than pure next-token prediction.",
+      'T5 reformulates tasks into text-to-text using span corruption rather than pure next-token prediction. To reason through the choices, select the statements that match the criterion in the prompt: "They use an encoder–decoder architecture."; "They frame all tasks as text-to-text."; "They use span corruption as a pretraining objective.". Do not select statements that miss that criterion: "They rely exclusively on next-token prediction.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -749,7 +749,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "BERT is bidirectional but not suitable for autoregressive generation.",
+      'BERT is bidirectional but not suitable for autoregressive generation. To reason through the choices, select the statements that match the criterion in the prompt: "Each token can attend to tokens on both sides."; "Bidirectionality is enabled by unmasked self-attention."; "BERT lacks causal masking.". Do not select statements that miss that criterion: "Bidirectionality enables autoregressive generation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -770,7 +770,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "It is ignored during pretraining.", isCorrect: false },
     ],
     explanation:
-      "The CLS token is fully integrated into attention and used for downstream classification.",
+      'The CLS token is fully integrated into attention and used for downstream classification. To reason through the choices, select the statements that match the criterion in the prompt: "It aggregates information from the entire sequence."; "It is used as input to classification heads."; "It participates in self-attention like any other token.". Do not select statements that miss that criterion: "It is ignored during pretraining.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -791,7 +791,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "They encode word order within a sentence.", isCorrect: false },
     ],
     explanation:
-      "Segment embeddings identify sentence membership, not token order.",
+      'Segment embeddings identify sentence membership, not token order. To reason through the choices, select the statements that match the criterion in the prompt: "They distinguish between sentence A and sentence B."; "They are added to token and position embeddings."; "They are learned parameters.". Do not select statements that miss that criterion: "They encode word order within a sentence.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -817,7 +817,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "All tokens are masked during training.", isCorrect: false },
     ],
     explanation:
-      "MLM uses a mixture of masking, random replacement, and unchanged tokens.",
+      'MLM uses a mixture of masking, random replacement, and unchanged tokens. To reason through the choices, select the statements that match the criterion in the prompt: "Only a subset of tokens contribute to the MLM loss."; "Some masked tokens are replaced with random words."; "Some selected tokens are left unchanged.". Do not select statements that miss that criterion: "All tokens are masked during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -836,7 +836,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "NSP was later removed in models like RoBERTa with little performance loss.",
+      'NSP was later removed in models like RoBERTa with little performance loss. To reason through the choices, select the statements that match the criterion in the prompt: "It is a binary classification task."; "It uses sentence pairs as input."; "It was later shown to be unnecessary.". Do not select statements that miss that criterion: "It directly improves text generation quality.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -854,7 +854,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "It introduces a new attention mechanism.", isCorrect: false },
     ],
     explanation:
-      "RoBERTa improves performance through training strategy changes, not architectural ones.",
+      'RoBERTa improves performance through training strategy changes, not architectural ones. To reason through the choices, select the statements that match the criterion in the prompt: "It removes the NSP objective."; "It uses dynamic masking across epochs."; "It increases pretraining data size substantially.". Do not select statements that miss that criterion: "It introduces a new attention mechanism.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -869,7 +869,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "It increases model size.", isCorrect: false },
     ],
     explanation:
-      "DistilBERT trades depth for efficiency while preserving performance.",
+      'DistilBERT trades depth for efficiency while preserving performance. To reason through the choices, select the statements that match the criterion in the prompt: "It uses knowledge distillation."; "It has fewer layers than BERT-base."; "It retains most of BERT’s performance.". Do not select statements that miss that criterion: "It increases model size.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -890,7 +890,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "It requires labeled downstream data.", isCorrect: false },
     ],
     explanation:
-      "Distillation transfers knowledge via output distributions, not labeled data.",
+      'Distillation transfers knowledge via output distributions, not labeled data. To reason through the choices, select the statements that match the criterion in the prompt: "It trains a student model to match a teacher’s output distribution."; "It often uses KL divergence as a loss."; "It leverages soft targets rather than hard labels.". Do not select statements that miss that criterion: "It requires labeled downstream data.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -915,7 +915,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "They include masked causal attention.", isCorrect: false },
     ],
     explanation:
-      "Encoder-only models are bidirectional and optimized for representation learning.",
+      'Encoder-only models are bidirectional and optimized for representation learning. To reason through the choices, select the statements that match the criterion in the prompt: "They are well suited for classification tasks."; "They are not designed to generate text autoregressively."; "They rely on bidirectional self-attention.". Do not select statements that miss that criterion: "They include masked causal attention.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -933,7 +933,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "BERT uses WordPiece with a moderately sized subword vocabulary.",
+      'BERT uses WordPiece with a moderately sized subword vocabulary. To reason through the choices, select the statements that match the criterion in the prompt: "It uses WordPiece tokenization."; "Its vocabulary size is around 30k."; "It allows subword splitting for rare words.". Do not select statements that miss that criterion: "It operates at the byte level.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -957,7 +957,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "It replaces the MLM objective.", isCorrect: false },
     ],
     explanation:
-      "Fine-tuning adapts pretrained representations to downstream tasks.",
+      'Fine-tuning adapts pretrained representations to downstream tasks. To reason through the choices, select the statements that match the criterion in the prompt: "A task-specific head is added on top of pretrained embeddings."; "The entire model can be updated during fine-tuning."; "Fine-tuning can require relatively little labeled data.". Do not select statements that miss that criterion: "It replaces the MLM objective.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -981,7 +981,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Sparse attention reduces complexity but requires multiple layers for global context.",
+      'Sparse attention reduces complexity but requires multiple layers for global context. To reason through the choices, select the statements that match the criterion in the prompt: "Full self-attention has O(n²) complexity."; "Sparse attention reduces worst-case complexity.". Do not select statements that miss that criterion: "Local attention preserves global connectivity in a single layer."; "Sliding window attention increases memory usage.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -999,7 +999,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "LayerNorm cannot be used in Transformers.", isCorrect: false },
     ],
     explanation:
-      "RMSNorm simplifies normalization while retaining similar performance.",
+      'RMSNorm simplifies normalization while retaining similar performance. To reason through the choices, select the statements that match the criterion in the prompt: "RMSNorm removes mean subtraction."; "RMSNorm keeps performance comparable in practice.". Do not select statements that miss that criterion: "LayerNorm has fewer parameters."; "LayerNorm cannot be used in Transformers.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1014,7 +1014,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "GQA eliminates query diversity.", isCorrect: false },
     ],
     explanation:
-      "Both methods reduce K/V redundancy while preserving query diversity.",
+      'Both methods reduce K/V redundancy while preserving query diversity. To reason through the choices, select the statements that match the criterion in the prompt: "GQA shares K/V projections within groups."; "MQA shares K/V projections across all heads.". Do not select statements that miss that criterion: "MQA increases memory usage."; "GQA eliminates query diversity.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1036,7 +1036,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "T5 relative bias cannot be extended.", isCorrect: false },
     ],
     explanation:
-      "Hardcoded and relative methods generalize better to unseen lengths.",
+      'Hardcoded and relative methods generalize better to unseen lengths. To reason through the choices, select the statements that match the criterion in the prompt: "Sinusoidal encodings extrapolate naturally to longer sequences."; "RoPE supports length extrapolation.". Do not select statements that miss that criterion: "Learned absolute embeddings extrapolate automatically."; "T5 relative bias cannot be extended.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1054,7 +1054,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "They use bidirectional attention.", isCorrect: false },
     ],
     explanation:
-      "Decoder-only models scale well with simple objectives and causal attention.",
+      'Decoder-only models scale well with simple objectives and causal attention. To reason through the choices, select the statements that match the criterion in the prompt: "They are easier to scale with next-token prediction."; "They dominate modern LLM architectures.". Do not select statements that miss that criterion: "They require NSP-style objectives."; "They use bidirectional attention.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1072,7 +1072,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "It replaces MLM entirely in BERT.", isCorrect: false },
     ],
     explanation:
-      "Span corruption replaces contiguous spans and predicts them sequentially.",
+      'Span corruption replaces contiguous spans and predicts them sequentially. To reason through the choices, select the statements that match the criterion in the prompt: "It masks contiguous spans of tokens."; "It uses sentinel tokens to mark masked spans.". Do not select statements that miss that criterion: "It predicts tokens independently of order."; "It replaces MLM entirely in BERT.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1099,7 +1099,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Different Transformer families specialize in different task regimes.",
+      'Different Transformer families specialize in different task regimes. To reason through the choices, select the statements that match the criterion in the prompt: "Encoder–decoder models are well suited for translation."; "Encoder-only models excel at representation learning.". Do not select statements that miss that criterion: "Decoder-only models require cross-attention."; "All Transformer variants use identical objectives.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -1128,7 +1128,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "It requires a separate encoder to work.", isCorrect: false },
     ],
     explanation:
-      "Causal masking enforces an autoregressive constraint: each position can only use information from earlier (and itself) positions.",
+      'Causal masking enforces an autoregressive constraint: each position can only use information from earlier (and itself) positions. To reason through the choices, select the statements that match the criterion in the prompt: "It prevents a token from attending to future tokens."; "It is typically used in decoder-only language models for generation.". Do not select statements that miss that criterion: "It makes the model bidirectional during training."; "It requires a separate encoder to work.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1152,7 +1152,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "During autoregressive decoding, past keys/values are reused at every step; caching avoids recomputing them and reduces latency.",
+      'During autoregressive decoding, past keys/values are reused at every step; caching avoids recomputing them and reduces latency. To reason through the choices, select the statements that match the criterion in the prompt: "It stores previously computed key and value tensors to speed up decoding."; "Its memory cost grows with sequence length and the number of key/value heads.". Do not select statements that miss that criterion: "It is only useful for encoder-only models."; "It removes the need to compute attention scores.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1207,7 +1207,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "RoPE uses deterministic rotations (sine/cosine structure) to inject position into query–key interactions while preserving norms.",
+      'RoPE uses deterministic rotations (sine/cosine structure) to inject position into query–key interactions while preserving norms. To reason through the choices, select the statements that match the criterion in the prompt: "A 2D rotation matrix preserves vector length (norm)."; "A 2D rotation matrix is built from sine and cosine of an angle.". Do not select statements that miss that criterion: "A rotation matrix changes dot products in a way that removes all positional information."; "RoPE requires learning a separate embedding vector for each absolute position index.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1235,7 +1235,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Padding is mainly a batching convenience; models typically mask pads to avoid learning from artificial tokens.",
+      'Padding is mainly a batching convenience; models typically mask pads to avoid learning from artificial tokens. To reason through the choices, select the statements that match the criterion in the prompt: "Padding helps batch sequences to a fixed length for efficient matrix operations."; "Padding tokens are often masked so they do not affect attention or loss.". Do not select statements that miss that criterion: "Padding is required at inference for all models and all deployments."; "Padding tokens are used to enforce causal masking.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1262,7 +1262,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Distillation is an architecture-agnostic training strategy: compress a model by learning from a stronger teacher’s outputs.",
+      'Distillation is an architecture-agnostic training strategy: compress a model by learning from a stronger teacher’s outputs. To reason through the choices, select the statements that match the criterion in the prompt: "Distillation often trains the student to match the teacher’s probability distribution, not just the argmax label."; "KL divergence is a common loss for matching teacher and student distributions.". Do not select statements that miss that criterion: "Distillation always increases the number of layers in the student."; "Distillation requires a decoder-only architecture to work.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1317,7 +1317,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "RMSNorm is a streamlined alternative to LayerNorm: it rescales using RMS and often omits mean-centering and bias.",
+      'RMSNorm is a streamlined alternative to LayerNorm: it rescales using RMS and often omits mean-centering and bias. To reason through the choices, select the statements that match the criterion in the prompt: "It normalizes by the root mean square of the activation components."; "It typically uses a learned scaling parameter (gamma) but no learned bias (beta).". Do not select statements that miss that criterion: "It subtracts the mean of the activation vector as a required step."; "It cannot be used with residual connections.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1342,7 +1342,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "It forces the model to use causal masking.", isCorrect: false },
     ],
     explanation:
-      "[SEP] is a structural delimiter; classification is typically done via the [CLS] representation, not [SEP].",
+      '[SEP] is a structural delimiter; classification is typically done via the [CLS] representation, not [SEP]. To reason through the choices, select the statements that match the criterion in the prompt: "It is used to separate sentence A and sentence B in paired inputs."; "It helps mark boundaries that are useful for tasks like next sentence prediction.". Do not select statements that miss that criterion: "It is the only token used for classification."; "It forces the model to use causal masking.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1370,7 +1370,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "BERT-style MLM typically mixes: mask replacement, random replacement, and leaving some selected tokens unchanged.",
+      'BERT-style MLM typically mixes: mask replacement, random replacement, and leaving some selected tokens unchanged. To reason through the choices, select the statements that match the criterion in the prompt: "A portion of selected tokens are replaced by a special [MASK] token."; "Some selected tokens are replaced by a random vocabulary token.". Do not select statements that miss that criterion: "Every token in the sequence is selected for masking."; "Selected tokens are always replaced; leaving them unchanged is not allowed.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1397,7 +1397,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "RoPE is a rotation-based relative method; T5 relative bias is a learned bias lookup over bucketized distances.",
+      'RoPE is a rotation-based relative method; T5 relative bias is a learned bias lookup over bucketized distances. To reason through the choices, select the statements that match the criterion in the prompt: "After applying RoPE, the query–key dot product can be expressed to depend on relative offsets (m − n) rather than absolute positions alone."; "RoPE can be implemented by applying independent 2D rotations to pairs of embedding dimensions.". Do not select statements that miss that criterion: "RoPE encodes position by adding a learned vector to each token embedding at the input."; "RoPE requires bucketizing distances into discrete bins, as in T5 relative bias.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1425,7 +1425,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Local attention limits direct connections per layer, but deeper stacks allow signals to travel farther—similar to receptive field growth.",
+      'Local attention limits direct connections per layer, but deeper stacks allow signals to travel farther—similar to receptive field growth. To reason through the choices, select the statements that match the criterion in the prompt: "Even with local windows, information can propagate across long distances by stacking layers."; "The effective receptive field can expand as depth increases.". Do not select statements that miss that criterion: "A single local-attention layer gives every token direct access to every other token."; "Stacking local-attention layers reduces context mixing compared to a single layer.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1452,7 +1452,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Vocabulary size trades off sequence length, representation granularity, and model capacity; byte-level approaches drastically reduce vocab size.",
+      'Vocabulary size trades off sequence length, representation granularity, and model capacity; byte-level approaches drastically reduce vocab size. To reason through the choices, select the statements that match the criterion in the prompt: "Subword tokenizers commonly have vocabularies on the order of tens of thousands of tokens."; "A byte-level vocabulary can be as small as 256 symbols (2^8).". Do not select statements that miss that criterion: "All modern tokenizers must be strictly word-level (no subwords)."; "A smaller vocabulary always guarantees better model accuracy.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1479,7 +1479,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Span corruption replaces spans with sentinel markers; the decoder reconstructs the missing spans as sequences.",
+      'Span corruption replaces spans with sentinel markers; the decoder reconstructs the missing spans as sequences. To reason through the choices, select the statements that match the criterion in the prompt: "It masks contiguous spans (one or more tokens) rather than masking isolated tokens only."; "Sentinel tokens act as placeholders that indicate where spans were removed.". Do not select statements that miss that criterion: "It requires causal masking in the encoder to work."; "The decoder output is restricted to a single token per sentinel span.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1507,7 +1507,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Pre-norm improves gradient flow in deep stacks; post-norm normalizes after residual addition and can be less stable at large depth.",
+      'Pre-norm improves gradient flow in deep stacks; post-norm normalizes after residual addition and can be less stable at large depth. To reason through the choices, select the statements that match the criterion in the prompt: "Pre-norm applies normalization before the attention or feed-forward sublayer."; "Pre-norm is often preferred for stability when training deeper transformers.". Do not select statements that miss that criterion: "Post-norm places normalization before every residual addition."; "Post-norm eliminates the need for residual connections.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -1539,7 +1539,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "The [CLS] embedding is designed as an aggregate sequence representation and is often used for sentence/sequence classification.",
+      'The [CLS] embedding is designed as an aggregate sequence representation and is often used for sentence/sequence classification. To reason through the choices, select the statements that match the criterion in the prompt: "It is commonly fed into a classification head for sequence-level prediction.". Do not select statements that miss that criterion: "It is a special token that enforces causal masking in the encoder."; "It is only used to separate sentence A from sentence B."; "It is ignored by self-attention and only used during fine-tuning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1567,7 +1567,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Encoder-only models attend both left and right; decoder-only models use causal masking for autoregressive generation.",
+      'Encoder-only models attend both left and right; decoder-only models use causal masking for autoregressive generation. To reason through the choices, select the statements that match the criterion in the prompt: "Encoder-only models are typically bidirectional, while decoder-only models are typically causal.". Do not select statements that miss that criterion: "Encoder-only models require cross-attention layers by definition."; "Decoder-only models cannot be trained with next-token prediction."; "Decoder-only models always include a separate encoder for inputs.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1594,7 +1594,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Sinusoidal encodings use sine/cosine waves at different frequencies across dimensions to represent positions and can extrapolate.",
+      'Sinusoidal encodings use sine/cosine waves at different frequencies across dimensions to represent positions and can extrapolate. To reason through the choices, select the statements that match the criterion in the prompt: "They use multiple frequencies so some dimensions vary quickly with position while others vary slowly.". Do not select statements that miss that criterion: "They require learning one trainable embedding vector for every possible position."; "They encode position by adding a learned bias term inside the attention softmax."; "They prevent extrapolation to longer sequences by construction.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1621,7 +1621,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "T5-style relative position bias modifies the attention score computation with learned distance-dependent terms.",
+      'T5-style relative position bias modifies the attention score computation with learned distance-dependent terms. To reason through the choices, select the statements that match the criterion in the prompt: "It adds a learnable bias (often via bucketized distances) directly to attention logits.". Do not select statements that miss that criterion: "It rotates queries and keys using deterministic trigonometric matrices."; "It encodes position only by modifying token embeddings at the input layer."; "It forces attention to be local (sliding window) in every layer.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1649,7 +1649,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "ALiBi introduces a simple, fixed linear bias into attention scores to encourage distance-aware behavior and extrapolation.",
+      'ALiBi introduces a simple, fixed linear bias into attention scores to encourage distance-aware behavior and extrapolation. To reason through the choices, select the statements that match the criterion in the prompt: "It uses a deterministic linear bias based on relative position distance.". Do not select statements that miss that criterion: "It requires an encoder–decoder architecture to function."; "It learns a separate embedding vector for each absolute position."; "It replaces the softmax normalization with a sigmoid.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1676,7 +1676,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "RoPE is a rotation-based positional method that encodes relative position into the dot products used by attention.",
+      'RoPE is a rotation-based positional method that encodes relative position into the dot products used by attention. To reason through the choices, select the statements that match the criterion in the prompt: "It injects position by rotating query and key vectors so attention depends on relative offsets.". Do not select statements that miss that criterion: "It injects position by learning an embedding per absolute position and adding it only to values."; "It works by masking future tokens to enforce causality."; "It encodes relative distance only by discretizing offsets into buckets.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1703,7 +1703,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "GQA reduces key/value redundancy (memory) by grouping heads to share K/V while keeping multiple query heads.",
+      'GQA reduces key/value redundancy (memory) by grouping heads to share K/V while keeping multiple query heads. To reason through the choices, select the statements that match the criterion in the prompt: "It shares key/value projections within groups of heads to reduce KV cache size.". Do not select statements that miss that criterion: "It removes multi-head attention and replaces it with a single head."; "It shares query projections across all heads while keeping distinct keys/values."; "It requires an encoder and decoder to share attention weights.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1730,7 +1730,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "MQA minimizes K/V memory by sharing them across all heads, while queries typically remain per-head.",
+      'MQA minimizes K/V memory by sharing them across all heads, while queries typically remain per-head. To reason through the choices, select the statements that match the criterion in the prompt: "It is the extreme case where all heads share the same key and value projections.". Do not select statements that miss that criterion: "It increases the KV cache memory compared to standard multi-head attention."; "It forces all heads to share the same query projection as well."; "It can only be used in encoder-only transformers.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1757,7 +1757,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "WordPiece is a subword tokenizer: it learns a vocabulary of pieces that can compose many words efficiently.",
+      'WordPiece is a subword tokenizer: it learns a vocabulary of pieces that can compose many words efficiently. To reason through the choices, select the statements that match the criterion in the prompt: "It represents text using subword units learned from data rather than only whole words.". Do not select statements that miss that criterion: "It is a byte-level method with exactly 256 tokens."; "It guarantees one token per word in all languages."; "It avoids using any merge rules or vocabulary learning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1785,7 +1785,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "NSP classifies if a pair of sentences is consecutive; it is not an autoregressive generation objective.",
+      'NSP classifies if a pair of sentences is consecutive; it is not an autoregressive generation objective. To reason through the choices, select the statements that match the criterion in the prompt: "It is a binary classification task that predicts whether sentence B follows sentence A in the corpus.". Do not select statements that miss that criterion: "It is required for BERT to perform masked language modeling."; "It directly trains the model to generate the next sentence autoregressively."; "It is implemented by adding causal masking to the encoder.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1813,7 +1813,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "RoBERTa’s gains primarily come from better pretraining procedures (data, masking, schedule), not a fundamentally new architecture.",
+      'RoBERTa’s gains primarily come from better pretraining procedures (data, masking, schedule), not a fundamentally new architecture. To reason through the choices, select the statements that match the criterion in the prompt: "It removes NSP and uses training strategy improvements like dynamic masking and more data.". Do not select statements that miss that criterion: "It replaces self-attention with convolutional layers for efficiency."; "It requires an encoder–decoder architecture to work."; "It enforces causal masking to enable text generation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1840,7 +1840,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "DistilBERT is a smaller student trained to mimic a larger teacher’s behavior (often BERT), improving efficiency.",
+      'DistilBERT is a smaller student trained to mimic a larger teacher’s behavior (often BERT), improving efficiency. To reason through the choices, select the statements that match the criterion in the prompt: "It compresses BERT using knowledge distillation to keep performance while reducing size/latency.". Do not select statements that miss that criterion: "It expands BERT by doubling the number of layers."; "It replaces attention with recurrence to improve scaling."; "It can only be trained with labeled downstream datasets.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1867,7 +1867,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "KL divergence compares probability distributions; distillation often matches the teacher’s soft probabilities (soft targets).",
+      'KL divergence compares probability distributions; distillation often matches the teacher’s soft probabilities (soft targets). To reason through the choices, select the statements that match the criterion in the prompt: "It measures how well the student distribution approximates the teacher distribution.". Do not select statements that miss that criterion: "It is only defined when the teacher outputs hard one-hot labels."; "It is the same as mean squared error on logits in all cases."; "It eliminates the need for any probability normalization like softmax.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1895,7 +1895,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "MLM is self-supervised and leverages both sides of context because the encoder attention is not causal.",
+      'MLM is self-supervised and leverages both sides of context because the encoder attention is not causal. To reason through the choices, select the statements that match the criterion in the prompt: "Predicting a masked token encourages using both left and right context, yielding bidirectional representations.". Do not select statements that miss that criterion: "MLM forces the model to use only left context to predict the next token."; "MLM is a supervised task requiring human labels for each masked token."; "MLM makes the attention matrix strictly lower-triangular.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1920,7 +1920,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "It is only used for encoder-only models.", isCorrect: false },
     ],
     explanation:
-      "Teacher forcing stabilizes sequence training by conditioning on the true previous outputs rather than the model’s own sampled outputs.",
+      'Teacher forcing stabilizes sequence training by conditioning on the true previous outputs rather than the model’s own sampled outputs. To reason through the choices, select the statements that match the criterion in the prompt: "It feeds the ground-truth previous tokens to the decoder during training to predict the next output tokens.". Do not select statements that miss that criterion: "It removes the need for an attention mechanism in the decoder."; "It means the model only trains on single-token sequences."; "It is only used for encoder-only models.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1944,7 +1944,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Encoder–decoder models (classic transformer) encode a source sequence and decode a target sequence using cross-attention.",
+      'Encoder–decoder models (classic transformer) encode a source sequence and decode a target sequence using cross-attention. To reason through the choices, select the statements that match the criterion in the prompt: "They commonly use cross-attention from decoder states to encoder outputs.". Do not select statements that miss that criterion: "They remove the decoder entirely and only keep encoders."; "They cannot be used for translation tasks."; "They require causal masking in the encoder self-attention.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2000,7 +2000,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Stacking layers lets information hop across windows, gradually expanding the effective context.",
+      'Stacking layers lets information hop across windows, gradually expanding the effective context. To reason through the choices, select the statements that match the criterion in the prompt: "Local attention can still yield long-range influence after multiple layers because intermediate tokens relay information.". Do not select statements that miss that criterion: "Local attention prevents any information from traveling beyond the window even with many layers."; "Local attention makes complexity worse than full attention for long sequences."; "Local attention is identical to adding sinusoidal positional encodings.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2027,7 +2027,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Segment embeddings are a learned ‘sentence ID’ signal added to token representations to help with paired-sentence tasks.",
+      'Segment embeddings are a learned ‘sentence ID’ signal added to token representations to help with paired-sentence tasks. To reason through the choices, select the statements that match the criterion in the prompt: "They indicate whether a token belongs to sentence A or sentence B in paired inputs.". Do not select statements that miss that criterion: "They uniquely encode each token’s absolute position index."; "They replace the need for positional embeddings entirely."; "They are fixed sinusoidal vectors, not learned parameters.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2055,7 +2055,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Caching makes K/V memory the bottleneck at long contexts; sharing K/V reduces cache size while keeping multi-head query diversity.",
+      'Caching makes K/V memory the bottleneck at long contexts; sharing K/V reduces cache size while keeping multi-head query diversity. To reason through the choices, select the statements that match the criterion in the prompt: "During autoregressive decoding, past keys/values are reused at every step, so reducing their head count shrinks the KV cache significantly.". Do not select statements that miss that criterion: "Queries are reused across decoding steps in exactly the same way as keys/values, so sharing queries yields the biggest memory savings."; "Sharing keys/values forces attention to become local rather than global."; "Sharing keys/values removes the need for output projection after concatenating heads.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2083,7 +2083,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Decoder-only training on next-token prediction is simple, scalable, and directly matches many generation-style applications.",
+      'Decoder-only training on next-token prediction is simple, scalable, and directly matches many generation-style applications. To reason through the choices, select the statements that match the criterion in the prompt: "They scale well with a simple next-token prediction objective aligned with text generation.". Do not select statements that miss that criterion: "They require span corruption to work effectively."; "They are inherently better at bidirectional sentence understanding than encoder-only models."; "They eliminate attention complexity by removing the softmax.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2111,7 +2111,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Casing is a data/tokenization choice, not an architectural constraint; it can matter depending on downstream tasks.",
+      'Casing is a data/tokenization choice, not an architectural constraint; it can matter depending on downstream tasks. To reason through the choices, select the statements that match the criterion in the prompt: "A cased model preserves capitalization distinctions (e.g., \'US\' vs \'us\'), while an uncased model typically lowercases inputs.". Do not select statements that miss that criterion: "A cased model always has a byte-level tokenizer, while an uncased model always uses WordPiece."; "Casing changes the transformer architecture (encoder vs decoder)."; "Uncased models cannot be fine-tuned on classification tasks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2164,7 +2164,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       { text: "They eliminate the need for tokenization.", isCorrect: false },
     ],
     explanation:
-      "MLM and NSP are self-supervised objectives: the “labels” come from the text itself (original tokens and known sentence adjacency).",
+      'MLM and NSP are self-supervised objectives: the “labels” come from the text itself (original tokens and known sentence adjacency). To reason through the choices, select the statements that match the criterion in the prompt: "They can be constructed from unlabeled corpora using self-supervision (masking tokens and forming sentence pairs).". Do not select statements that miss that criterion: "They require manual human labeling of the correct token for each masked position."; "They directly train the model to generate long-form text autoregressively."; "They eliminate the need for tokenization.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2192,6 +2192,6 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Because sinusoidal encodings are formula-based, you can compute them for positions beyond those seen during training.",
+      'Because sinusoidal encodings are formula-based, you can compute them for positions beyond those seen during training. To reason through the choices, select the statements that match the criterion in the prompt: "They are defined by a fixed analytic function of position, so you can compute embeddings for unseen positions without learning new parameters.". Do not select statements that miss that criterion: "They store a separate trainable vector for every possible position up to infinity."; "They rely on bucketizing distances into a finite set of learned bins."; "They require the model to be encoder–decoder rather than decoder-only.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 ];

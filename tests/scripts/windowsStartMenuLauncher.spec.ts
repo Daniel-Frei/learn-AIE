@@ -20,7 +20,14 @@ describe("Windows Start Menu launcher contract", () => {
     const launcher = readRepoFile("scripts/start-learning-ai.ps1");
 
     expect(launcher).toContain("Set-Location -LiteralPath $repoRoot");
+    expect(launcher).toContain("Refreshing local Next.js dev cache");
+    expect(launcher).toContain(
+      "Remove-Item -LiteralPath $resolvedNextDevCache -Recurse -Force",
+    );
     expect(launcher).toContain("Command: make start");
     expect(launcher).toContain("& make start");
+    expect(launcher.indexOf("Remove-Item")).toBeLessThan(
+      launcher.indexOf("& make start"),
+    );
   });
 });

@@ -31,6 +31,7 @@ type Props = {
   accuracy: number;
   userRating: number;
   userRatingRd: number;
+  resetParticipantRating: () => Promise<boolean>;
 };
 
 const QUESTION_ELO_FILTER_MIN = 0;
@@ -48,8 +49,13 @@ export default function QuizHeader({
   accuracy,
   userRating,
   userRatingRd,
+  resetParticipantRating,
 }: Props) {
   const [isSelectorOpen, setIsSelectorOpen] = useState(true);
+  const [isResettingRating, setIsResettingRating] = useState(false);
+  const [resetRatingStatus, setResetRatingStatus] = useState<string | null>(
+    null,
+  );
   const [pendingSources, setPendingSources] =
     useState<SourceId[]>(selectedSources);
   const [pendingTopics, setPendingTopics] = useState<Topic[]>(selectedTopics);
@@ -154,6 +160,14 @@ export default function QuizHeader({
     setIsSelectorOpen(false);
   };
 
+  const handleResetRating = async () => {
+    setIsResettingRating(true);
+    setResetRatingStatus(null);
+    const didReset = await resetParticipantRating();
+    setResetRatingStatus(didReset ? "Rating reset" : "Reset failed");
+    setIsResettingRating(false);
+  };
+
   return (
     <header className="space-y-3">
       <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
@@ -242,6 +256,31 @@ export default function QuizHeader({
               >
                 Climb
               </button>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <div className="text-xs font-semibold text-slate-300">
+              Glicko rating
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                onClick={handleResetRating}
+                disabled={isResettingRating}
+                className="text-xs px-3 py-2 rounded-md border border-slate-700 text-slate-200 hover:border-slate-500 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {isResettingRating ? "Resetting..." : "Reset Glicko rating"}
+              </button>
+              {resetRatingStatus && (
+                <span
+                  role="status"
+                  className="text-xs text-slate-400"
+                  aria-live="polite"
+                >
+                  {resetRatingStatus}
+                </span>
+              )}
             </div>
           </div>
 

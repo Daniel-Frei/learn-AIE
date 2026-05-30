@@ -464,7 +464,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Model parallelism distributes parts of the model itself across devices. This enables training of models larger than single-device memory limits.",
+      'Model parallelism distributes parts of the model itself across devices. This enables training of models larger than single-device memory limits. To reason through the choices, select the statements that match the criterion in the prompt: "It splits computation of a single model across devices."; "It is useful when a model does not fit on one device.". Do not select statements that miss that criterion: "It can be applied only across different training batches rather than within one batch."; "It requires duplicating all parameters on each device.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -519,7 +519,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Pipeline parallelism slices the model depth-wise. While it helps with memory limits, it introduces pipeline bubbles and scheduling complexity.",
+      'Pipeline parallelism slices the model depth-wise. While it helps with memory limits, it introduces pipeline bubbles and scheduling complexity. To reason through the choices, select the statements that match the criterion in the prompt: "Different layers of the model can be assigned to different devices."; "It can improve utilization for very deep models.". Do not select statements that miss that criterion: "Forward and backward passes cannot be staged across devices."; "It requires all layers to run on a single device.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -569,7 +569,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "GPUs combine large, slower HBM with small, fast SRAM. Optimizations often aim to keep computation within SRAM to reduce costly memory transfers.",
+      'GPUs combine large, slower HBM with small, fast SRAM. Optimizations often aim to keep computation within SRAM to reduce costly memory transfers. To reason through the choices, select the statements that match the criterion in the prompt: "HBM is large but slower than on-chip memory."; "SRAM is much faster but much smaller.". Do not select statements that miss that criterion: "Using SRAM effectively matters only for model storage, not computation speed."; "SRAM capacity is typically measured in gigabytes.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -643,7 +643,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Different floating point formats trade off precision and range. Fewer bits reduce memory and speed up computation but can introduce numerical error.",
+      'Different floating point formats trade off precision and range. Fewer bits reduce memory and speed up computation but can introduce numerical error. To reason through the choices, select the statements that match the criterion in the prompt: "They allocate bits to represent sign, exponent, and mantissa."; "Lower-precision formats use fewer bits.". Do not select statements that miss that criterion: "Precision has no effect on numerical granularity."; "All floating point formats have identical dynamic range.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -692,7 +692,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "They always involve human annotation.", isCorrect: false },
     ],
     explanation:
-      "Pre-training uses self-supervision: the text itself provides targets. This differs from supervised fine-tuning, which uses labeled input–output pairs.",
+      'Pre-training uses self-supervision: the text itself provides targets. This differs from supervised fine-tuning, which uses labeled input–output pairs. To reason through the choices, select the statements that match the criterion in the prompt: "They typically involve predicting the next token.". Do not select statements that miss that criterion: "They require labeled task-specific outputs."; "They are self-supervised only when paired with labeled task-specific outputs."; "They always involve human annotation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -741,7 +741,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Quantization trades precision for efficiency. While it often reduces memory and can improve speed, it may also degrade accuracy if applied carelessly.",
+      'Quantization trades precision for efficiency. While it often reduces memory and can improve speed, it may also degrade accuracy if applied carelessly. To reason through the choices, select the statements that match the criterion in the prompt: "It reduces numerical precision of stored values.". Do not select statements that miss that criterion: "It can reduce memory footprint only if model accuracy improves."; "It always improves model accuracy."; "It can increase computation speed on suitable hardware.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -765,7 +765,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "SFT adapts a pre-trained model using labeled examples. Loss is applied only to the output portion, keeping the conditioning input fixed.",
+      'SFT adapts a pre-trained model using labeled examples. Loss is applied only to the output portion, keeping the conditioning input fixed. To reason through the choices, select the statements that match the criterion in the prompt: "It uses labeled input–output pairs.". Do not select statements that miss that criterion: "It modifies only a separate classifier head and leaves all pre-trained model weights unchanged."; "Loss is computed over both input and output tokens."; "It replaces the pre-training objective entirely.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -789,7 +789,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Instruction tuning teaches models how to act as assistants. It improves helpfulness but does not guarantee correctness or eliminate hallucinations.",
+      'Instruction tuning teaches models how to act as assistants. It improves helpfulness but does not guarantee correctness or eliminate hallucinations. To reason through the choices, select the statements that match the criterion in the prompt: "It is a form of supervised fine-tuning.". Do not select statements that miss that criterion: "It trains models to respond helpfully without using user prompts or instructions."; "It requires training on the entire pre-training corpus again."; "It guarantees factual correctness of all outputs.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -1007,7 +1007,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "SFT uses carefully curated examples to shape model behavior. Compared to pre-training, the datasets are smaller but higher quality and task-focused.",
+      'SFT uses carefully curated examples to shape model behavior. Compared to pre-training, the datasets are smaller but higher quality and task-focused. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It consists of input–output pairs."; "It is much smaller than pre-training datasets."; "It aims to align model behavior with desired outputs."; "It typically focuses on higher-quality curated data.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -1034,7 +1034,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Instruction tuning conditions the model on user prompts and applies loss only to the response, making the model behave more like a helpful assistant.",
+      'Instruction tuning conditions the model on user prompts and applies loss only to the response, making the model behave more like a helpful assistant. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It trains models to follow natural language instructions."; "It is a special case of supervised fine-tuning."; "Loss is applied only to the generated response."; "It improves usefulness in interactive settings.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -1084,7 +1084,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It reflects only next-token prediction loss.", isCorrect: true },
     ],
     explanation:
-      "MMLU evaluates models across diverse tasks to approximate general language competence. It goes beyond raw loss by testing downstream abilities.",
+      'MMLU evaluates models across diverse tasks to approximate general language competence. It goes beyond raw loss by testing downstream abilities. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It aggregates performance across many different tasks."; "It aims to measure broad language understanding."; "It is commonly used to compare general-purpose models."; "It reflects only next-token prediction loss.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   // ================= EXACTLY 3 TRUE =================
@@ -1131,7 +1131,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Alignment aims to make models helpful and safe. While SFT and preference tuning improve alignment, they do not eliminate all risks or errors.",
+      'Alignment aims to make models helpful and safe. While SFT and preference tuning improve alignment, they do not eliminate all risks or errors. To reason through the choices, select the statements that match the criterion in the prompt: "It refers to shaping model behavior toward human goals."; "It typically occurs after pre-training.". Do not select statements that miss that criterion: "It includes supervised fine-tuning and preference tuning, but only during pre-training."; "It guarantees perfect safety and correctness.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1155,7 +1155,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "LoRA fine-tunes models efficiently by learning low-rank updates while keeping base weights fixed, reducing memory and compute costs.",
+      'LoRA fine-tunes models efficiently by learning low-rank updates while keeping base weights fixed, reducing memory and compute costs. To reason through the choices, select the statements that match the criterion in the prompt: "It freezes the original pre-trained weights."; "It introduces additional low-rank trainable matrices.". Do not select statements that miss that criterion: "It significantly reduces the number of trainable parameters without adding any new trainable matrices."; "It requires retraining the entire model from scratch.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1204,7 +1204,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "NF4 is designed for normally distributed weights and uses quantiles rather than uniform bins, yielding better accuracy at very low bit-widths.",
+      'NF4 is designed for normally distributed weights and uses quantiles rather than uniform bins, yielding better accuracy at very low bit-widths. To reason through the choices, select the statements that match the criterion in the prompt: "It assumes weights follow an approximately normal distribution."; "It uses non-uniform quantization bins.". Do not select statements that miss that criterion: "It improves memory efficiency for frozen weights without any quantization error."; "It is identical to standard 4-bit linear quantization.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1286,7 +1286,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "FlashAttention leverages fast on-chip memory to recompute activations cheaply, reducing memory traffic and sometimes even improving overall runtime.",
+      'FlashAttention leverages fast on-chip memory to recompute activations cheaply, reducing memory traffic and sometimes even improving overall runtime. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Activations may be recomputed during the backward pass."; "It trades additional computation for lower memory usage."; "It can reduce overall runtime despite recomputation."; "It still computes exact attention rather than an approximation.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -1307,7 +1307,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Benchmarks guide progress but are imperfect proxies for real-world usefulness. Human judgment remains important for many aspects of model quality.",
+      'Benchmarks guide progress but are imperfect proxies for real-world usefulness. Human judgment remains important for many aspects of model quality. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They can shape model training incentives."; "They may fail to capture real user satisfaction."; "They are often domain-specific."; "They do not eliminate the need for human evaluation.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -1331,7 +1331,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Alignment datasets are curated to shape behavior and safety. While model-generated data can assist, human oversight is still common.",
+      'Alignment datasets are curated to shape behavior and safety. While model-generated data can assist, human oversight is still common. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They often include safety-focused examples."; "They aim to discourage harmful or unsafe outputs."; "They are typically much smaller than pre-training data."; "They often rely on some human input or curation.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -1400,7 +1400,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Scaling laws capture smooth empirical trends but do not provide strict guarantees, especially for downstream or aligned behaviors.",
+      'Scaling laws capture smooth empirical trends but do not provide strict guarantees, especially for downstream or aligned behaviors. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They describe empirical relationships between model size, data, and loss."; "They motivated increasing model and dataset sizes."; "They suggest diminishing returns at fixed compute."; "They do not provide exact guarantees for downstream task performance.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -1422,7 +1422,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Compute constraints affect all stages of training and deployment. They drive innovation in parallelism, efficiency, and model design.",
+      'Compute constraints affect all stages of training and deployment. They drive innovation in parallelism, efficiency, and model design. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They motivate parallelism strategies."; "They influence architecture and optimization choices."; "They limit feasible model and dataset sizes."; "They still matter after pre-training because they constrain adaptation and deployment.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   // ============================================================
@@ -1503,7 +1503,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Instruction tuning is supervised fine-tuning focused on user-facing tasks. It adapts a pre-trained model rather than training from scratch.",
+      'Instruction tuning is supervised fine-tuning focused on user-facing tasks. It adapts a pre-trained model rather than training from scratch. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It teaches the model to respond helpfully to prompts."; "It is a form of supervised fine-tuning."; "It uses curated instruction–response pairs."; "It does not require retraining from random initialization.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -1556,7 +1556,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Large models can memorize rare or repeated samples. Fine-tuning and decoding choices can reduce but not eliminate this risk.",
+      'Large models can memorize rare or repeated samples. Fine-tuning and decoding choices can reduce but not eliminate this risk. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Models can reproduce rare training examples verbatim."; "Memorization risk increases with repeated exposure to data."; "Sampling temperature can affect surface-level repetition."; "Memorization is not completely eliminated by fine-tuning.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -1602,7 +1602,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "MMLU focuses on task performance rather than likelihood. It does not directly capture training efficiency or compute usage.",
+      'MMLU focuses on task performance rather than likelihood. It does not directly capture training efficiency or compute usage. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It aggregates results across many tasks."; "It evaluates downstream capabilities rather than raw loss."; "It reflects broad language competence."; "It does not directly measure training compute efficiency.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -1620,7 +1620,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Preference-based systems reflect human judgments but are sensitive to sampling, bias, and strategic manipulation.",
+      'Preference-based systems reflect human judgments but are sensitive to sampling, bias, and strategic manipulation. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Users compare outputs pairwise."; "It captures subjective quality signals."; "Early comparisons can bias rankings."; "It is not immune to adversarial behavior.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -1641,7 +1641,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Alignment shapes behavior but does not eliminate errors or misuse. It is a post-pretraining process involving multiple techniques.",
+      'Alignment shapes behavior but does not eliminate errors or misuse. It is a post-pretraining process involving multiple techniques. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It aims to make models helpful and harmless."; "It includes supervised fine-tuning and preference tuning."; "It occurs after pre-training."; "It does not guarantee correct behavior in all cases.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -1659,7 +1659,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It does not replace pre-training.", isCorrect: true },
     ],
     explanation:
-      "Preference tuning refines behavior using rankings or comparisons. It complements but does not replace earlier training stages.",
+      'Preference tuning refines behavior using rankings or comparisons. It complements but does not replace earlier training stages. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It uses relative judgments rather than absolute labels."; "It often follows supervised fine-tuning."; "It can optimize for user satisfaction."; "It does not replace pre-training.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -1677,7 +1677,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "LoRA adds trainable low-rank matrices without altering the base architecture. This yields large efficiency gains during fine-tuning.",
+      'LoRA adds trainable low-rank matrices without altering the base architecture. This yields large efficiency gains during fine-tuning. To reason through the choices, select the statements that match the criterion in the prompt: "Base model weights remain frozen."; "Only low-rank matrices are trained."; "It reduces memory and compute cost.". Do not select statements that miss that criterion: "It requires modifying the model architecture.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1695,7 +1695,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "The rank trades off capacity and efficiency. Increasing it can help but often yields diminishing returns.",
+      'The rank trades off capacity and efficiency. Increasing it can help but often yields diminishing returns. To reason through the choices, select the statements that match the criterion in the prompt: "It controls the capacity of the adaptation."; "Lower rank reduces trainable parameters."; "It is typically much smaller than the original weight dimension.". Do not select statements that miss that criterion: "Higher rank always improves performance.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1713,7 +1713,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Training is identical to dense fine-tuning.", isCorrect: false },
     ],
     explanation:
-      "Empirical results show LoRA benefits from different hyperparameters. Its low-rank structure alters optimization behavior.",
+      'Empirical results show LoRA benefits from different hyperparameters. Its low-rank structure alters optimization behavior. To reason through the choices, select the statements that match the criterion in the prompt: "Higher learning rates are often used."; "Very large batch sizes can degrade performance."; "Optimization differs from full fine-tuning.". Do not select statements that miss that criterion: "Training is identical to dense fine-tuning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1732,7 +1732,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It must be applied to every layer to work.", isCorrect: false },
     ],
     explanation:
-      "LoRA can be inserted in multiple components. Empirical work shows feedforward layers are especially effective.",
+      'LoRA can be inserted in multiple components. Empirical work shows feedforward layers are especially effective. To reason through the choices, select the statements that match the criterion in the prompt: "It can be applied to attention projections."; "It can be applied to feedforward layers."; "Feedforward placement often yields strong gains.". Do not select statements that miss that criterion: "It must be applied to every layer to work.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1747,7 +1747,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It eliminates quantization error.", isCorrect: false },
     ],
     explanation:
-      "QLoRA combines aggressive quantization with LoRA adapters to drastically reduce memory usage while maintaining training stability.",
+      'QLoRA combines aggressive quantization with LoRA adapters to drastically reduce memory usage while maintaining training stability. To reason through the choices, select the statements that match the criterion in the prompt: "Frozen base weights are quantized."; "LoRA adapters remain high precision."; "It enables fine-tuning on limited hardware.". Do not select statements that miss that criterion: "It eliminates quantization error.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1766,7 +1766,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "NF4 exploits weight distribution structure to minimize error at very low precision. It differs fundamentally from uniform quantization.",
+      'NF4 exploits weight distribution structure to minimize error at very low precision. It differs fundamentally from uniform quantization. To reason through the choices, select the statements that match the criterion in the prompt: "It assumes normally distributed weights."; "It uses quantiles rather than uniform bins."; "It is designed for frozen model weights.". Do not select statements that miss that criterion: "It is identical to standard 4-bit quantization.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1784,7 +1784,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "All formats behave identically numerically.", isCorrect: false },
     ],
     explanation:
-      "Different formats balance range and granularity differently. These trade-offs directly affect training stability and efficiency.",
+      'Different formats balance range and granularity differently. These trade-offs directly affect training stability and efficiency. To reason through the choices, select the statements that match the criterion in the prompt: "They trade precision for range."; "Brain Float 16 keeps a larger exponent range."; "Lower precision reduces memory usage.". Do not select statements that miss that criterion: "All formats behave identically numerically.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1802,7 +1802,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It removes the need for numerical care.", isCorrect: false },
     ],
     explanation:
-      "Mixed precision exploits hardware capabilities but still requires care to avoid instability and overflow.",
+      'Mixed precision exploits hardware capabilities but still requires care to avoid instability and overflow. To reason through the choices, select the statements that match the criterion in the prompt: "Weights are often kept in higher precision."; "Forward and backward passes may use lower precision."; "It can improve throughput and reduce memory.". Do not select statements that miss that criterion: "It removes the need for numerical care.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1817,7 +1817,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Range choice is irrelevant to performance.", isCorrect: false },
     ],
     explanation:
-      "Quantization accuracy depends strongly on how ranges are chosen. Poor calibration can severely degrade model quality.",
+      'Quantization accuracy depends strongly on how ranges are chosen. Poor calibration can severely degrade model quality. To reason through the choices, select the statements that match the criterion in the prompt: "Range affects representable values."; "Zero-point and scale can define mapping."; "Poor range selection increases error.". Do not select statements that miss that criterion: "Range choice is irrelevant to performance.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1832,7 +1832,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It approximates softmax.", isCorrect: false },
     ],
     explanation:
-      "FlashAttention reorganizes computation without changing the mathematical result. Its speedups come from IO efficiency.",
+      'FlashAttention reorganizes computation without changing the mathematical result. Its speedups come from IO efficiency. To reason through the choices, select the statements that match the criterion in the prompt: "It reduces high-bandwidth memory traffic."; "It uses tiling into fast on-chip memory."; "It computes exact attention.". Do not select statements that miss that criterion: "It approximates softmax.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1854,7 +1854,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It always increases runtime.", isCorrect: false },
     ],
     explanation:
-      "Recomputation trades compute for memory. With fast kernels, it can reduce runtime by minimizing memory traffic.",
+      'Recomputation trades compute for memory. With fast kernels, it can reduce runtime by minimizing memory traffic. To reason through the choices, select the statements that match the criterion in the prompt: "Some activations are discarded during the forward pass."; "They are recomputed during the backward pass."; "This can reduce peak memory usage.". Do not select statements that miss that criterion: "It always increases runtime.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1875,7 +1875,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "All GPU memory has equal speed.", isCorrect: false },
     ],
     explanation:
-      "GPUs rely on multiple memory tiers. Efficient kernels minimize access to slower memory.",
+      'GPUs rely on multiple memory tiers. Efficient kernels minimize access to slower memory. To reason through the choices, select the statements that match the criterion in the prompt: "High-bandwidth memory is larger but slower than SRAM."; "Static random-access memory is close to compute units."; "Memory access often dominates runtime.". Do not select statements that miss that criterion: "All GPU memory has equal speed.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1890,7 +1890,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Models are partitioned across devices.", isCorrect: false },
     ],
     explanation:
-      "Data parallelism replicates the model and splits data. Synchronization costs limit scaling.",
+      'Data parallelism replicates the model and splits data. Synchronization costs limit scaling. To reason through the choices, select the statements that match the criterion in the prompt: "Each device processes different data."; "Gradients must be synchronized."; "Communication introduces overhead.". Do not select statements that miss that criterion: "Models are partitioned across devices.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1906,7 +1906,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It removes communication entirely.", isCorrect: false },
     ],
     explanation:
-      "ZeRO reduces memory duplication but increases coordination between devices.",
+      'ZeRO reduces memory duplication but increases coordination between devices. To reason through the choices, select the statements that match the criterion in the prompt: "It shards optimizer states."; "It can shard gradients and parameters."; "It reduces per-device memory.". Do not select statements that miss that criterion: "It removes communication entirely.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1924,7 +1924,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It duplicates all parameters everywhere.", isCorrect: false },
     ],
     explanation:
-      "Model parallelism partitions the model itself. This enables scale but adds coordination overhead.",
+      'Model parallelism partitions the model itself. This enables scale but adds coordination overhead. To reason through the choices, select the statements that match the criterion in the prompt: "It splits model computation across devices."; "It allows training models larger than one GPU."; "It can increase communication complexity.". Do not select statements that miss that criterion: "It duplicates all parameters everywhere.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1942,7 +1942,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "All layers execute simultaneously.", isCorrect: false },
     ],
     explanation:
-      "Pipeline parallelism trades latency and scheduling complexity for memory scalability.",
+      'Pipeline parallelism trades latency and scheduling complexity for memory scalability. To reason through the choices, select the statements that match the criterion in the prompt: "Different layers are assigned to different devices."; "It can improve memory utilization."; "Pipeline bubbles can reduce efficiency.". Do not select statements that miss that criterion: "All layers execute simultaneously.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1957,7 +1957,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "All experts are always active.", isCorrect: false },
     ],
     explanation:
-      "Expert parallelism exploits sparsity but introduces routing and load-balancing challenges.",
+      'Expert parallelism exploits sparsity but introduces routing and load-balancing challenges. To reason through the choices, select the statements that match the criterion in the prompt: "Experts can reside on different devices."; "Only selected experts run per token."; "Routing affects communication.". Do not select statements that miss that criterion: "All experts are always active.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1975,7 +1975,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Empirical results show scale dominates architecture choice within common transformer families.",
+      'Empirical results show scale dominates architecture choice within common transformer families. To reason through the choices, select the statements that match the criterion in the prompt: "Performance improves predictably with scale."; "Model size, data size, and compute interact."; "Optimal scaling depends on compute budget.". Do not select statements that miss that criterion: "Architecture choice dominates scaling behavior.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1993,7 +1993,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Compute-optimal scaling guides design but still relies on empirical validation.",
+      'Compute-optimal scaling guides design but still relies on empirical validation. To reason through the choices, select the statements that match the criterion in the prompt: "It balances parameters and data."; "Undertraining wastes model capacity."; "Overtraining small models wastes compute.". Do not select statements that miss that criterion: "It eliminates the need for scaling experiments.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2011,7 +2011,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Knowledge cutoff limits what the model can know intrinsically. External tools are required to overcome it.",
+      'Knowledge cutoff limits what the model can know intrinsically. External tools are required to overcome it. To reason through the choices, select the statements that match the criterion in the prompt: "It reflects the latest training data date."; "Models lack direct knowledge beyond it."; "It is usually documented.". Do not select statements that miss that criterion: "It can be bypassed without updating weights.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2026,7 +2026,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It is a solved problem.", isCorrect: false },
     ],
     explanation:
-      "Editing model knowledge remains an open challenge due to entangled representations.",
+      'Editing model knowledge remains an open challenge due to entangled representations. To reason through the choices, select the statements that match the criterion in the prompt: "It is difficult without side effects."; "Knowledge is distributed across parameters."; "Local edits can cause global regressions.". Do not select statements that miss that criterion: "It is a solved problem.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2041,7 +2041,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Sampling increases output diversity.", isCorrect: true },
     ],
     explanation:
-      "Sampling trades determinism for diversity. It does not ensure correctness.",
+      'Sampling trades determinism for diversity. It does not ensure correctness. To reason through the choices, select the statements that match the criterion in the prompt: "Temperature controls randomness."; "Sampling explores lower-probability tokens."; "Sampling increases output diversity.". Do not select statements that miss that criterion: "Sampling guarantees factual correctness.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2056,7 +2056,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It maximizes sequence-level diversity.", isCorrect: false },
     ],
     explanation:
-      "Greedy decoding is fast and simple but often suboptimal for long sequences.",
+      'Greedy decoding is fast and simple but often suboptimal for long sequences. To reason through the choices, select the statements that match the criterion in the prompt: "It selects the highest-probability token."; "It is deterministic."; "It can lead to repetitive outputs.". Do not select statements that miss that criterion: "It maximizes sequence-level diversity.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2074,7 +2074,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It samples stochastically.", isCorrect: false },
     ],
     explanation:
-      "Beam search balances exploration and likelihood but is deterministic.",
+      'Beam search balances exploration and likelihood but is deterministic. To reason through the choices, select the statements that match the criterion in the prompt: "It tracks multiple candidate sequences."; "It approximates global likelihood maximization."; "It often reduces diversity.". Do not select statements that miss that criterion: "It samples stochastically.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2092,7 +2092,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It affects training loss.", isCorrect: false },
     ],
     explanation:
-      "KV caching trades memory for speed during inference. It does not affect training objectives.",
+      'KV caching trades memory for speed during inference. It does not affect training objectives. To reason through the choices, select the statements that match the criterion in the prompt: "It avoids recomputing past attention."; "It reduces inference cost for long sequences."; "It increases memory usage.". Do not select statements that miss that criterion: "It affects training loss.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2107,7 +2107,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Cost is independent of data size.", isCorrect: false },
     ],
     explanation:
-      "Compute cost scales strongly with data and model size. Optimization techniques target this bottleneck.",
+      'Compute cost scales strongly with data and model size. Optimization techniques target this bottleneck. To reason through the choices, select the statements that match the criterion in the prompt: "Pre-training dominates total cost."; "Fine-tuning is comparatively cheap."; "Hardware efficiency matters significantly.". Do not select statements that miss that criterion: "Cost is independent of data size.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2122,7 +2122,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Environmental cost is negligible.", isCorrect: false },
     ],
     explanation:
-      "Energy use is a growing concern in large-scale training. Efficiency directly affects sustainability.",
+      'Energy use is a growing concern in large-scale training. Efficiency directly affects sustainability. To reason through the choices, select the statements that match the criterion in the prompt: "Training consumes significant energy."; "Reporting carbon cost is becoming common."; "Efficiency improvements reduce impact.". Do not select statements that miss that criterion: "Environmental cost is negligible.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2137,7 +2137,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "One score captures everything.", isCorrect: false },
     ],
     explanation:
-      "Evaluation requires multiple perspectives. Single metrics rarely suffice.",
+      'Evaluation requires multiple perspectives. Single metrics rarely suffice. To reason through the choices, select the statements that match the criterion in the prompt: "Benchmarks may not reflect real use."; "Optimization can overfit metrics."; "User satisfaction is multifaceted.". Do not select statements that miss that criterion: "One score captures everything.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2152,7 +2152,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Preferences are always aligned with truth.", isCorrect: false },
     ],
     explanation:
-      "Preference-based metrics reflect subjective tastes, which can conflict with factuality or safety goals.",
+      'Preference-based metrics reflect subjective tastes, which can conflict with factuality or safety goals. To reason through the choices, select the statements that match the criterion in the prompt: "Users may value style over correctness."; "Preferences vary across populations."; "Preference signals can conflict with safety.". Do not select statements that miss that criterion: "Preferences are always aligned with truth.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2170,7 +2170,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Assistants emerge without supervision.", isCorrect: false },
     ],
     explanation:
-      "Assistant behavior arises from post-training alignment, not from raw next-token prediction.",
+      'Assistant behavior arises from post-training alignment, not from raw next-token prediction. To reason through the choices, select the statements that match the criterion in the prompt: "Helpfulness is shaped during fine-tuning."; "Pre-training alone does not produce assistants."; "Safety behaviors can be learned.". Do not select statements that miss that criterion: "Assistants emerge without supervision.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2185,7 +2185,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It is implemented purely via rules.", isCorrect: false },
     ],
     explanation:
-      "Rejection behavior is often learned, not rule-based. It balances safety against usability.",
+      'Rejection behavior is often learned, not rule-based. It balances safety against usability. To reason through the choices, select the statements that match the criterion in the prompt: "It can be learned via training data."; "It may reduce user satisfaction."; "It supports safety goals.". Do not select statements that miss that criterion: "It is implemented purely via rules.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2203,7 +2203,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Data quality matters more than size in SFT.", isCorrect: true },
     ],
     explanation:
-      "SFT emphasizes quality over scale. Reuse helps but does not solve alignment fully.",
+      'SFT emphasizes quality over scale. Reuse helps but does not solve alignment fully. To reason through the choices, select the statements that match the criterion in the prompt: "High-quality datasets are reused across models."; "Curation cost is amortized."; "Data quality matters more than size in SFT.". Do not select statements that miss that criterion: "Reuse guarantees perfect alignment.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2221,7 +2221,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Distribution shift is irrelevant in LLMs.", isCorrect: false },
     ],
     explanation:
-      "Mismatch between training and inference distributions is a core generalization challenge.",
+      'Mismatch between training and inference distributions is a core generalization challenge. To reason through the choices, select the statements that match the criterion in the prompt: "Inference prompts may differ from training prompts."; "Shift affects generalization."; "Better data coverage reduces risk.". Do not select statements that miss that criterion: "Distribution shift is irrelevant in LLMs.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2237,7 +2237,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Learning rate is irrelevant.", isCorrect: false },
     ],
     explanation:
-      "Learning rate is a critical hyperparameter, especially in low-rank adaptation.",
+      'Learning rate is a critical hyperparameter, especially in low-rank adaptation. To reason through the choices, select the statements that match the criterion in the prompt: "It affects convergence speed."; "LoRA often uses higher learning rates."; "Too high values can destabilize training.". Do not select statements that miss that criterion: "Learning rate is irrelevant.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2253,6 +2253,6 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "All stages have equal cost.", isCorrect: false },
     ],
     explanation:
-      "LLM training is staged. Pre-training is dominant in cost, while later stages refine usefulness and alignment.",
+      'LLM training is staged. Pre-training is dominant in cost, while later stages refine usefulness and alignment. To reason through the choices, select the statements that match the criterion in the prompt: "Pre-training learns general representations."; "Fine-tuning aligns models to tasks."; "Preference tuning refines behavior.". Do not select statements that miss that criterion: "All stages have equal cost.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 ];

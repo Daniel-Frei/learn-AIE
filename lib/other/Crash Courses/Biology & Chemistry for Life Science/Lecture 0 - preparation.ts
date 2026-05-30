@@ -774,7 +774,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
       ],
-      "Genotype and phenotype are connected but not identical. Alleles can influence traits, and environmental context can also shape what is observed.",
+      "Genotype and phenotype are connected but not identical. Alleles can influence traits, and environmental context can also shape what is observed. Select the statements that keep those distinctions clear: genotype refers to genetic makeup, phenotype refers to observable traits, alleles are gene versions, and phenotype can reflect both genes and environment.",
     ),
     makeQuestion(
       38,
@@ -984,7 +984,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           false,
         ],
       ],
-      "Insulin and glucagon are hormones involved in glucose homeostasis. They are useful examples of signaling, feedback, metabolism, and disease relevance.",
+      "Insulin and glucagon are hormones involved in glucose homeostasis. They are useful examples of signaling, feedback, metabolism, and disease relevance. Select the hormone-regulation statements and reject claims that turn hormones into DNA-cutting enzymes or remove hormonal control entirely, because those confuse endocrine feedback with unrelated molecular processes.",
     ),
     makeQuestion(
       48,
@@ -1146,7 +1146,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
         ],
         ["All diseases are inherited single-gene disorders.", false],
       ],
-      "Diseases can be infectious, autoimmune, metabolic, genetic, degenerative, malignant, or multifactorial. No single category explains all disease.",
+      "Diseases can be infectious, autoimmune, metabolic, genetic, degenerative, malignant, or multifactorial. No single category explains all disease. Select statements that name real broad categories such as pathogen-driven infection or immune self-attack, and reject claims that erase cellular chemistry or reduce every disease to one inherited single-gene pattern.",
     ),
     makeQuestion(
       56,
@@ -1233,7 +1233,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           false,
         ],
       ],
-      "Antibiotics and antivirals differ because bacteria and viruses differ. A treatment must match the biology of the pathogen and the infection.",
+      "Antibiotics and antivirals differ because bacteria and viruses differ. A treatment must match the biology of the pathogen and the infection. Select statements that connect each drug class to the relevant pathogen biology, and reject claims that antibiotics usually treat viruses or that antivirals are defined by killing only human cells.",
     ),
     makeQuestion(
       60,
@@ -1305,7 +1305,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           false,
         ],
       ],
-      "Sample size helps with random noise, but it does not fix every design problem. A large poorly controlled study can still be misleading.",
+      "Sample size helps with random noise, but it does not fix every design problem. A large poorly controlled study can still be misleading. Select the statements about random variation, person-to-person variability, and difficulty detecting real effects, while rejecting the idea that size alone replaces comparison groups, clear endpoints, or sound design.",
     ),
     makeQuestion(
       63,

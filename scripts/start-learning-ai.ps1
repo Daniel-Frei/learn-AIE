@@ -20,6 +20,19 @@ if ($DryRun) {
   return
 }
 
+$nextDevCache = Join-Path (Join-Path $repoRoot ".next") "dev"
+if (Test-Path -LiteralPath $nextDevCache) {
+  $resolvedNextDevCache = (Resolve-Path -LiteralPath $nextDevCache).Path
+  $expectedNextDevCache = [System.IO.Path]::GetFullPath($nextDevCache)
+
+  if (-not [string]::Equals($resolvedNextDevCache, $expectedNextDevCache, [System.StringComparison]::OrdinalIgnoreCase)) {
+    throw "Refusing to remove unexpected Next.js cache path: $resolvedNextDevCache"
+  }
+
+  Write-Host "Refreshing local Next.js dev cache"
+  Remove-Item -LiteralPath $resolvedNextDevCache -Recurse -Force
+}
+
 Write-Host "Starting Learning AI"
 Write-Host "Repository: $repoRoot"
 Write-Host "Command: make start"

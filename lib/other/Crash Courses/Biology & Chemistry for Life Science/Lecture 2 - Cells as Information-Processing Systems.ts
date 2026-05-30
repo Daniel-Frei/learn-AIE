@@ -475,7 +475,7 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
       { text: "Mitosis is a neurotransmitter signal.", isCorrect: false },
     ],
     explanation:
-      "Mitosis is cell division that produces new cells and requires accurate DNA copying and segregation. Programmed cell death is apoptosis, not mitosis.",
+      'Mitosis is cell division that produces new cells and requires accurate DNA copying and segregation. Programmed cell death is apoptosis, not mitosis. To reason through the choices, select the statements that match the criterion in the prompt: "Mitosis creates new cells for growth, repair, and tissue maintenance.". Do not select statements that miss that criterion: "Mitosis is programmed cell death."; "Mitosis destroys DNA before a cell can divide."; "Mitosis is a neurotransmitter signal.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "bio-chem-life-l2-q21",

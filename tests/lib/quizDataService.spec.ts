@@ -5,6 +5,7 @@ import {
   exportCurrentRatingState,
   migrateLocalStateForParticipant,
   recordQuizAnswerForParticipant,
+  resetParticipantRatingForParticipant,
   submitQuestionReportForParticipant,
 } from "@/lib/server/quizDataService";
 import {
@@ -189,6 +190,47 @@ describe("quiz data service", () => {
         store,
       ),
     ).rejects.toThrow("Invalid report payload.");
+  });
+
+  it("resets only the participant rating while preserving shared question data", async () => {
+    const store = new InMemoryQuizDataStore();
+    await store.upsertParticipant(participant);
+    await store.upsertQuestionRating(question);
+    await store.appendQuestionReport({
+      id: "report-a",
+      participantId: participant.id,
+      questionId: question.questionId,
+      comment: "Needs review",
+      reportedAt: "2026-05-02T00:00:00.000Z",
+      snapshot: reportDraft.snapshot,
+    });
+
+    const response = await resetParticipantRatingForParticipant(
+      participant.id,
+      store,
+    );
+
+    expect(response.ratingState.user).toMatchObject({
+      rating: 1500,
+      rd: 350,
+      sigma: 0.06,
+      gamesPlayed: 0,
+    });
+    expect(response.ratingState.questions[question.questionId]).toMatchObject({
+      rating: question.rating,
+      rd: question.rd,
+      sigma: question.sigma,
+      gamesPlayed: question.gamesPlayed,
+      legacyCorrect: question.legacyCorrect,
+      legacyWrong: question.legacyWrong,
+      label: question.label,
+    });
+    expect(response.reportSummary.countsByQuestion[question.questionId]).toBe(
+      1,
+    );
+    await expect(store.getParticipant(participant.id)).resolves.toMatchObject({
+      legacyMigratedAt: participant.legacyMigratedAt,
+    });
   });
 
   it("marks a participant migrated even when there is no local state", async () => {

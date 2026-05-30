@@ -356,6 +356,22 @@ export async function submitQuestionReportForParticipant(
   return buildReportSummary(await store.listQuestionReports());
 }
 
+export async function resetParticipantRatingForParticipant(
+  participantId: string,
+  store: QuizDataStore = getQuizDataStore(),
+): Promise<QuizStateResponse> {
+  const existingParticipant = await store.getParticipant(participantId);
+  await store.upsertParticipant(
+    toStoredParticipant(
+      participantId,
+      makeDefaultUser(Date.now()),
+      existingParticipant?.legacyMigratedAt ?? new Date().toISOString(),
+    ),
+  );
+
+  return getQuizState(participantId, store);
+}
+
 export async function migrateLocalStateForParticipant(
   params: {
     participantId: string;

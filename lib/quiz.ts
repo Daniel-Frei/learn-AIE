@@ -1,4 +1,5 @@
 // lib/quiz.ts
+import type { Topic } from "./questionTopics";
 import { chapter1Questions } from "./chapter1";
 import { chapter2Questions } from "./chapter2";
 import { chapter3Questions } from "./chapter3";
@@ -41,6 +42,8 @@ import { BiologyChemistryLifeScienceL2Questions } from "./other/Crash Courses/Bi
 import { BiologyChemistryLifeScienceL3Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 3 - Genetics, Proteins, and Biological Regulation";
 import { BiologyChemistryLifeScienceL4Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 4 - Physiology, Disease, and Pharmacology";
 import { BiologyChemistryLifeScienceL5Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 5 - Clinical Trials, Evidence, and Modern Biomedical Research";
+import { ClinicalTrialsLecture1Questions } from "./other/Crash Courses/Clinical Trials/Lecture 1 - Why Clinical Trials Exist";
+import { ClinicalTrialsLecture2Questions } from "./other/Crash Courses/Clinical Trials/Lecture 2 - Designing Clinical Trials";
 import { MIT15773L3DeepLearningForComputerVisionQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L3_Deep Learning for Computer Vision";
 import { MIT15773L4ComputerVisionTransferLearningQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L4_Computer Vision –Transfer Learning and Fine-Tuning";
 import { L5NLPBasicsQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L5_NLP Basics";
@@ -48,7 +51,8 @@ import { DeepAgentsQuestions } from "./other/Langchain/Deepagents";
 import { mixedQuestions } from "./other/other";
 
 export type Difficulty = "easy" | "medium" | "hard";
-export type Topic = "RL" | "DL" | "NLP" | "Math" | "Life Science";
+export { ALL_TOPICS } from "./questionTopics";
+export type { Topic } from "./questionTopics";
 export type SourceSeriesId =
   | "aie-foundations"
   | "aie-building-apps"
@@ -59,6 +63,7 @@ export type SourceSeriesId =
   | "mit-15773-2024"
   | "crash-course-linear-algebra"
   | "biology-chemistry-life-science"
+  | "clinical-trials"
   | "langchain"
   | "other";
 
@@ -507,6 +512,24 @@ export const QUESTION_SOURCES = [
     questions: BiologyChemistryLifeScienceL5Questions,
   },
   {
+    id: "clinical-trials-l1" as const,
+    label: "Clinical Trials L1",
+    title: "Clinical Trials Crash Course L1: Why Clinical Trials Exist",
+    seriesId: "clinical-trials" as const,
+    seriesLabel: "Clinical Trials Crash Course",
+    topic: "Life Science" as const,
+    questions: ClinicalTrialsLecture1Questions,
+  },
+  {
+    id: "clinical-trials-l2" as const,
+    label: "Clinical Trials L2",
+    title: "Clinical Trials Crash Course L2: Designing Clinical Trials",
+    seriesId: "clinical-trials" as const,
+    seriesLabel: "Clinical Trials Crash Course",
+    topic: "Life Science" as const,
+    questions: ClinicalTrialsLecture2Questions,
+  },
+  {
     id: "langchain-deepagents" as const,
     label: "LangChain Deep Agents",
     title: "LangChain Deep Agents",
@@ -618,13 +641,16 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
     "Life-science lesson about physiology, homeostasis, disease as disrupted regulation, pharmacology, dose response, PK/PD, biomarkers, and precision medicine.",
   "bio-chem-life-l5":
     "Life-science lesson about clinical trials, bias, randomization, endpoints, medical statistics, drug development, evidence generation, and AI in biomedicine.",
+  "clinical-trials-l1":
+    "Clinical trials crash course lesson about why trials exist, bias, placebo effects, causal inference, evidence hierarchy, and the modern trial ecosystem.",
+  "clinical-trials-l2":
+    "Clinical trials crash course lesson about PICO(T), randomization, blinding, endpoints, development phases, and internal versus external validity.",
   "langchain-deepagents":
     "LangChain Deep Agents material about planning, tools, subagents, memory, and agent orchestration.",
   other:
     "Mixed AI question set covering general deep learning and machine-learning concepts from miscellaneous sources.",
 };
 export type Mode = SourceId | "all";
-export const ALL_TOPICS: Topic[] = ["RL", "DL", "NLP", "Math", "Life Science"];
 export const SOURCE_SERIES: {
   id: SourceSeriesId;
   label: string;
@@ -810,5 +836,7 @@ export { BiologyChemistryLifeScienceL2Questions } from "./other/Crash Courses/Bi
 export { BiologyChemistryLifeScienceL3Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 3 - Genetics, Proteins, and Biological Regulation";
 export { BiologyChemistryLifeScienceL4Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 4 - Physiology, Disease, and Pharmacology";
 export { BiologyChemistryLifeScienceL5Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 5 - Clinical Trials, Evidence, and Modern Biomedical Research";
+export { ClinicalTrialsLecture1Questions } from "./other/Crash Courses/Clinical Trials/Lecture 1 - Why Clinical Trials Exist";
+export { ClinicalTrialsLecture2Questions } from "./other/Crash Courses/Clinical Trials/Lecture 2 - Designing Clinical Trials";
 export { DeepAgentsQuestions } from "./other/Langchain/Deepagents";
 export { mixedQuestions } from "./other/other";

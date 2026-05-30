@@ -30,7 +30,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Autonomy, reactivity, pro-activeness, and social ability are widely accepted as the four fundamental properties of AI agents.",
+      'Autonomy, reactivity, pro-activeness, and social ability are widely accepted as the four fundamental properties of AI agents. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It should operate with autonomy rather than requiring step-by-step instructions."; "It should react to environmental changes in a timely and appropriate way."; "It should pursue goals proactively rather than only answering queries."; "It should interact socially with humans or other agents when needed.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -86,7 +86,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "LLMs lack persistent memory, real-time knowledge, and multimodal perception unless augmented with external components.",
+      'LLMs lack persistent memory, real-time knowledge, and multimodal perception unless augmented with external components. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Its knowledge is frozen at pre-training time."; "It cannot natively store new long-term memories across sessions."; "It does not inherently perceive non-textual input without additional modules."; "It has no built-in access to real-time information without tools.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -114,7 +114,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Perception systems translate sensory signals into representations that LLMs can analyze.",
+      'Perception systems translate sensory signals into representations that LLMs can analyze. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They allow an agent to process sensory inputs such as images, audio, or video."; "They often involve converting non-textual data into embeddings usable by the LLM."; "They may rely on specialized models such as Whisper, BLIP-2, or PaLM-E."; "They extend the LLM’s ability to interpret environmental states.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -142,7 +142,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Tools/actions enable an agent to go beyond text output and interact with the environment.",
+      'Tools/actions enable an agent to go beyond text output and interact with the environment. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They enable an agent to execute tasks beyond text generation."; "They provide tool use capability such as search, code execution, or API calls."; "They allow the agent to modify its environment virtually or physically."; "They extend the LLM’s functionality similarly to how tools extend human capability.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -170,7 +170,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Web interaction is messy and requires decision-making about context, relevance, and further exploration.",
+      'Web interaction is messy and requires decision-making about context, relevance, and further exploration. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Long pages can overwhelm the model, producing hallucinations or planning failures."; "Irrelevant text may bury important signals in noisy HTML."; "Sites may change layouts, requiring robust generalization."; "The agent must decide whether more browsing actions are needed.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -197,7 +197,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "LLM planning strategies often mix decomposition, iterative refinement, and multi-path reasoning.",
+      'LLM planning strategies often mix decomposition, iterative refinement, and multi-path reasoning. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It involves decomposition of tasks into manageable subtasks."; "It may involve interleaving reasoning and action execution."; "It may incorporate feedback loops for refinement."; "It can rely on multiple candidate plans for difficult tasks.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -224,7 +224,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Memory-augmented systems use external stores to enable better planning, reuse, and continuity across tasks.",
+      'Memory-augmented systems use external stores to enable better planning, reuse, and continuity across tasks. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It compensates for limited context windows by retrieving past experience."; "It may involve RAG systems to fetch previously stored knowledge relevant to the task."; "It allows reuse of prior plans or solutions for similar tasks."; "It can reduce redundant reasoning by allowing the agent to recall past computations.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -251,7 +251,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Embodiment requires perception, physical feasibility, and robust interpretation of real-world dynamics.",
+      'Embodiment requires perception, physical feasibility, and robust interpretation of real-world dynamics. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They must interpret physical sensor signals like vision, audio, and spatial cues."; "They must perform feasible physical actions that obey real-world constraints."; "They require common-sense priors to avoid unrealistic behaviors."; "They must adapt to continuous and unpredictable environments.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -279,7 +279,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Multi-agent systems allow cooperation, evaluation, competition, and NL-based coordination.",
+      'Multi-agent systems allow cooperation, evaluation, competition, and NL-based coordination. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Agents can cooperate to solve tasks a single agent cannot solve."; "Agents can critique, evaluate, or refine each other’s work."; "Agents can adopt competitive or adversarial roles to improve performance."; "Agents can communicate using natural language to coordinate plans.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -307,7 +307,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Human–agent systems rely on natural-language instructions, feedback, multi-turn dialogue, and intent modeling.",
+      'Human–agent systems rely on natural-language instructions, feedback, multi-turn dialogue, and intent modeling. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Humans may provide instructions and feedback in natural language."; "Agents can produce intermediate reasoning visible to the user."; "Interaction can be single-turn or multi-turn."; "Agents may need to model user goals and preferences.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -335,7 +335,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "ReAct prompting structures reasoning and action steps for tool-using agents.",
+      'ReAct prompting structures reasoning and action steps for tool-using agents. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It encourages explicit reasoning before tool invocation."; "It helps the model choose appropriate tools for each step."; "It allows the model to track intermediate reasoning traces."; "It supports iterative cycles of thinking and acting.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -363,7 +363,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Interleaving planning and execution creates adaptive task-solving loops that incorporate feedback.",
+      'Interleaving planning and execution creates adaptive task-solving loops that incorporate feedback. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It alternates between breaking down tasks and executing subtasks."; "It adapts dynamically based on intermediate results."; "It reduces error propagation by incorporating feedback early."; "It may generate longer reasoning chains but more adaptable behavior.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -390,7 +390,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Multi-plan selection expands search over reasoning paths, improving robustness at computational cost.",
+      'Multi-plan selection expands search over reasoning paths, improving robustness at computational cost. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Several candidate plans may be generated for the same task."; "A voting or selection algorithm chooses the best plan."; "It allows exploration of multiple reasoning paths when the task is ambiguous."; "It trades more computation for higher reliability on difficult problems.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -417,7 +417,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Multimodality introduces specialized encoders, alignment layers, and temporal structure preservation.",
+      'Multimodality introduces specialized encoders, alignment layers, and temporal structure preservation. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Image embeddings can be inserted directly into the transformer input stream."; "Audio can be converted into text or spectrogram embeddings."; "Video must preserve temporal ordering when encoded."; "Multimodal modules often require alignment training or bridging models.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -444,7 +444,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Innovation-oriented agents operate in exploratory domains with open-ended goals and high complexity.",
+      'Innovation-oriented agents operate in exploratory domains with open-ended goals and high complexity. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They require deep domain knowledge and the ability to extrapolate."; "They may involve scientific discovery or software design."; "They demand nontrivial reasoning skills beyond simple task execution."; "They involve multi-step, exploratory tasks that cannot be reduced to fixed templates.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -471,7 +471,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Agent libraries help orchestrate LLMs, tools, retrieval systems, and evaluation workflows.",
+      'Agent libraries help orchestrate LLMs, tools, retrieval systems, and evaluation workflows. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They provide abstractions to connect LLMs with tools, memory, and perception modules."; "They standardize workflows for agent planning and execution."; "They often include built-in integrations for search, retrieval, or APIs."; "They support monitoring, evaluation, or production deployment.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -499,7 +499,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "AI-enhanced search involves NL understanding, personalization, reasoning, and actionable workflows.",
+      'AI-enhanced search involves NL understanding, personalization, reasoning, and actionable workflows. To reason through the choices, select every statement because each one matches the criterion in the prompt: "The model can understand natural-language queries."; "It can incorporate user preferences and history for ranking."; "It can summarize or extract relevant passages."; "It can chain actions to refine the search iteratively.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   // ============================================================
@@ -530,7 +530,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Common-sense priors help but do not guarantee perfect reasoning.",
+      'Common-sense priors help but do not guarantee perfect reasoning. To reason through the choices, select the statements that match the criterion in the prompt: "It captures everyday facts humans consider obvious."; "It helps prevent misinterpretation of simple instructions."; "It is often implicit and emerges from training corpora.". Do not select statements that miss that criterion: "It guarantees flawless reasoning in all situations.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -557,7 +557,8 @@ export const aieChapter4Questions: Question[] = [
         isCorrect: false,
       },
     ],
-    explanation: "Static plans lack adaptability and may propagate mistakes.",
+    explanation:
+      'Static plans lack adaptability and may propagate mistakes. To reason through the choices, select the statements that match the criterion in the prompt: "The initial plan may contain errors the model cannot correct."; "The model may hallucinate unrealistic or infeasible steps."; "The plan cannot adapt to unexpected intermediate results.". Do not select statements that miss that criterion: "It ensures maximum efficiency in all scenarios.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -582,7 +583,7 @@ export const aieChapter4Questions: Question[] = [
       { text: "They inherently require robotics hardware.", isCorrect: false },
     ],
     explanation:
-      "Digital agents act in virtual spaces without physical embodiment.",
+      'Digital agents act in virtual spaces without physical embodiment. To reason through the choices, select the statements that match the criterion in the prompt: "They operate entirely within virtual environments."; "Their actions may include browsing, coding, or text-based navigation."; "Their environment dynamics are typically symbolic or textual.". Do not select statements that miss that criterion: "They inherently require robotics hardware.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -609,7 +610,8 @@ export const aieChapter4Questions: Question[] = [
         isCorrect: false,
       },
     ],
-    explanation: "NL interfaces help usability but still involve ambiguity.",
+    explanation:
+      'NL interfaces help usability but still involve ambiguity. To reason through the choices, select the statements that match the criterion in the prompt: "They allow users to express goals with minimal structure."; "They increase interpretability of agent decisions."; "They reduce the need for domain-specific query languages.". Do not select statements that miss that criterion: "They eliminate all ambiguity in user intent.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -634,7 +636,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Refinement increases adaptability but cannot guarantee convergence or optimality.",
+      'Refinement increases adaptability but cannot guarantee convergence or optimality. To reason through the choices, select the statements that match the criterion in the prompt: "The model may repeatedly revise its plan without converging."; "Refinement loops may become computationally expensive."; "Refinement cannot guarantee an optimal plan.". Do not select statements that miss that criterion: "Refinement ensures deterministic convergence.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -662,7 +664,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Multimodality adds grounding but does not eliminate the role of textual context.",
+      'Multimodality adds grounding but does not eliminate the role of textual context. To reason through the choices, select the statements that match the criterion in the prompt: "They can integrate information across several sensory channels."; "They enable agents to interpret images, audio, or video."; "They reduce hallucination by grounding perception.". Do not select statements that miss that criterion: "They remove the need for textual context entirely.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -690,7 +692,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Tool descriptions improve tool selection but cannot guarantee flawless execution.",
+      'Tool descriptions improve tool selection but cannot guarantee flawless execution. To reason through the choices, select the statements that match the criterion in the prompt: "They inform the LLM about the tool’s intended purpose."; "They help the model select the correct tool during planning."; "They reduce ambiguity about what each tool can do.". Do not select statements that miss that criterion: "They guarantee perfect tool usage by the model.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -718,7 +720,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Authority and trustworthiness must be inferred, not natively encoded.",
+      'Authority and trustworthiness must be inferred, not natively encoded. To reason through the choices, select the statements that match the criterion in the prompt: "They must evaluate semantic relevance, not just keyword overlap."; "They may need to incorporate user preferences."; "They must distinguish ambiguous query interpretations.". Do not select statements that miss that criterion: "They inherently know which documents are authoritative.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -746,7 +748,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Adversarial setups coexist with cooperation depending on system design.",
+      'Adversarial setups coexist with cooperation depending on system design. To reason through the choices, select the statements that match the criterion in the prompt: "Agents may critique or challenge each other\'s reasoning."; "Competition can improve robustness and performance."; "Adversarial dialogue can expose weaknesses in solutions.". Do not select statements that miss that criterion: "Agents cannot cooperate under any circumstances.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -772,7 +774,8 @@ export const aieChapter4Questions: Question[] = [
         isCorrect: false,
       },
     ],
-    explanation: "Planners complement but do not replace LLM reasoning.",
+    explanation:
+      'Planners complement but do not replace LLM reasoning. To reason through the choices, select the statements that match the criterion in the prompt: "They offer fast approximate solutions to planning problems."; "They can help LLMs avoid long and error-prone reasoning chains."; "They provide deterministic planning baselines.". Do not select statements that miss that criterion: "They eliminate the need for any LLM-based reasoning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -796,7 +799,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Task-oriented systems focus on practical, bounded tasks rather than open scientific exploration.",
+      'Task-oriented systems focus on practical, bounded tasks rather than open scientific exploration. To reason through the choices, select the statements that match the criterion in the prompt: "They require the agent to break down and execute user tasks."; "They often rely on internet search, APIs, or structured workflows."; "They focus on bounded, goal-driven tasks.". Do not select statements that miss that criterion: "They require scientific discovery capabilities.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -824,7 +827,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Specialization enables collaboration but requires communication.",
+      'Specialization enables collaboration but requires communication. To reason through the choices, select the statements that match the criterion in the prompt: "Each agent can focus on a specific domain or skill."; "Agents can collaborate to handle complex workflows."; "Failures in one agent may be caught by another.". Do not select statements that miss that criterion: "It removes the need for communication between agents.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -848,7 +851,7 @@ export const aieChapter4Questions: Question[] = [
       { text: "Autonomy inherently guarantees reliability.", isCorrect: false },
     ],
     explanation:
-      "Autonomy requires careful constraints to avoid unintended behavior.",
+      'Autonomy requires careful constraints to avoid unintended behavior. To reason through the choices, select the statements that match the criterion in the prompt: "Agents may take unnecessary actions if goals are underspecified."; "Ambiguous instructions can lead to unexpected tool calls."; "Long action chains may amplify earlier reasoning errors.". Do not select statements that miss that criterion: "Autonomy inherently guarantees reliability.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -872,7 +875,8 @@ export const aieChapter4Questions: Question[] = [
         isCorrect: false,
       },
     ],
-    explanation: "Temporal coherence is essential for video interpretation.",
+    explanation:
+      'Temporal coherence is essential for video interpretation. To reason through the choices, select the statements that match the criterion in the prompt: "The model must preserve frame ordering."; "Temporal context must be represented consistently."; "Compression must not destroy critical motion signals.". Do not select statements that miss that criterion: "Video can be treated as independent static images without loss.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -896,7 +900,7 @@ export const aieChapter4Questions: Question[] = [
       { text: "They never rely on external APIs.", isCorrect: false },
     ],
     explanation:
-      "Agents often rely on external search APIs to gather information.",
+      'Agents often rely on external search APIs to gather information. To reason through the choices, select the statements that match the criterion in the prompt: "They involve matching and ranking information relevant to a query."; "They may involve summarizing retrieved results."; "They may require reasoning about ambiguous user queries.". Do not select statements that miss that criterion: "They never rely on external APIs.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -924,7 +928,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Agents can misinterpret cues or hallucinate but do not have built-in perfect uncertainty modeling.",
+      'Agents can misinterpret cues or hallucinate but do not have built-in perfect uncertainty modeling. To reason through the choices, select the statements that match the criterion in the prompt: "They may overfit to patterns observed only in training contexts."; "They may misinterpret sensory input due to noise."; "They may fail to recognize missing or contradictory information.". Do not select statements that miss that criterion: "They always possess correct epistemic uncertainty estimates.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -949,7 +953,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Reasoning traces improve interpretability but may still contain hallucinations.",
+      'Reasoning traces improve interpretability but may still contain hallucinations. To reason through the choices, select the statements that match the criterion in the prompt: "They show intermediate thoughts or justifications."; "They help humans evaluate where the agent might be incorrect."; "They support debugging and interpretability.". Do not select statements that miss that criterion: "They guarantee that the reasoning is factually accurate.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -970,7 +974,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Coordination requires explicit design, communication, and alignment mechanisms.",
+      'Coordination requires explicit design, communication, and alignment mechanisms. To reason through the choices, select the statements that match the criterion in the prompt: "Agents may generate conflicting plans."; "Communication overhead may become large."; "Misaligned incentives can reduce overall performance.". Do not select statements that miss that criterion: "Coordination automatically emerges without design.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -1002,7 +1006,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Captioning introduces information bottlenecks and relies on external vision models.",
+      'Captioning introduces information bottlenecks and relies on external vision models. To reason through the choices, select the statements that match the criterion in the prompt: "A separate vision model generates a textual description."; "The caption becomes part of the prompt context.". Do not select statements that miss that criterion: "The LLM directly processes raw pixels without preprocessing."; "Captioning preserves all fine-grained visual information.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1024,7 +1028,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Memory augments context but does not modify model parameters.",
+      'Memory augments context but does not modify model parameters. To reason through the choices, select the statements that match the criterion in the prompt: "To store long-term task history."; "To retrieve prior reasoning traces or results.". Do not select statements that miss that criterion: "To increase parameter count of the LLM."; "To reduce need for any retrieval mechanisms.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1051,7 +1055,8 @@ export const aieChapter4Questions: Question[] = [
         isCorrect: false,
       },
     ],
-    explanation: "Specialization helps but coordination is still essential.",
+    explanation:
+      'Specialization helps but coordination is still essential. To reason through the choices, select the statements that match the criterion in the prompt: "They can optimize for domain-specific reasoning."; "They can split workload across multiple focused skills.". Do not select statements that miss that criterion: "They remove all need for coordination mechanisms."; "They eliminate misunderstandings between models.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1073,7 +1078,7 @@ export const aieChapter4Questions: Question[] = [
       { text: "Training requires only textual data.", isCorrect: false },
     ],
     explanation:
-      "Embodied systems require multimodal grounding and feasible action enforcement.",
+      'Embodied systems require multimodal grounding and feasible action enforcement. To reason through the choices, select the statements that match the criterion in the prompt: "Real-world uncertainty complicates planning."; "Physical feasibility must be enforced in actions.". Do not select statements that miss that criterion: "Symbolic-only representations are always sufficient."; "Training requires only textual data.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1092,7 +1097,7 @@ export const aieChapter4Questions: Question[] = [
       { text: "It guarantees correct tool use every time.", isCorrect: false },
     ],
     explanation:
-      "Multi-turn interaction improves context use but cannot guarantee flawless execution.",
+      'Multi-turn interaction improves context use but cannot guarantee flawless execution. To reason through the choices, select the statements that match the criterion in the prompt: "It allows refining queries iteratively."; "It enables context accumulation over turns.". Do not select statements that miss that criterion: "It removes ambiguity from all instructions automatically."; "It guarantees correct tool use every time.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1113,7 +1118,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Feedback loops help but do not guarantee convergence or agreement.",
+      'Feedback loops help but do not guarantee convergence or agreement. To reason through the choices, select the statements that match the criterion in the prompt: "One agent may critique another’s output."; "Feedback may improve performance through iteration.". Do not select statements that miss that criterion: "Feedback ensures agents never disagree."; "Feedback always converges on the optimal solution.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1141,7 +1146,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Alignment enforces representational consistency but still requires encoders and datasets.",
+      'Alignment enforces representational consistency but still requires encoders and datasets. To reason through the choices, select the statements that match the criterion in the prompt: "It helps link embeddings across different modalities."; "It reduces discrepancies between text and image representations.". Do not select statements that miss that criterion: "It allows direct processing of raw sensory input without encoders."; "It removes the need for modality-specific datasets.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1166,7 +1171,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Ranking requires semantic interpretation and preference modeling, not guaranteed by default.",
+      'Ranking requires semantic interpretation and preference modeling, not guaranteed by default. To reason through the choices, select the statements that match the criterion in the prompt: "It may misinterpret the user’s intent."; "It may prioritize irrelevant but semantically similar content.". Do not select statements that miss that criterion: "Ranking quality is unrelated to model reasoning ability."; "All LLMs inherently understand user preferences.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1190,7 +1195,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Agents must interpret tool descriptions and constraints to use them correctly.",
+      'Agents must interpret tool descriptions and constraints to use them correctly. To reason through the choices, select the statements that match the criterion in the prompt: "The model must infer when a tool is needed."; "The model must choose the correct tool among many.". Do not select statements that miss that criterion: "Tool names alone fully encode the tool’s purpose."; "Tools automatically execute safely without constraints.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1215,7 +1220,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Summarization depends on ranking and does not treat all sources equally.",
+      'Summarization depends on ranking and does not treat all sources equally. To reason through the choices, select the statements that match the criterion in the prompt: "They require retrieving relevant documents."; "They require synthesizing retrieved information.". Do not select statements that miss that criterion: "They eliminate the need for ranking results."; "They assume all sources are equally reliable.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1240,7 +1245,7 @@ export const aieChapter4Questions: Question[] = [
       { text: "Planning guarantees perfect accuracy.", isCorrect: false },
     ],
     explanation:
-      "Planning guides correct tool selection but cannot guarantee accuracy.",
+      'Planning guides correct tool selection but cannot guarantee accuracy. To reason through the choices, select the statements that match the criterion in the prompt: "Planning identifies which tool aligns with the goal."; "Planning clarifies subgoals needed to reach the final solution.". Do not select statements that miss that criterion: "Planning eliminates the need for action execution."; "Planning guarantees perfect accuracy.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1265,7 +1270,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Voting can amplify shared errors; it is not guaranteed to find the correct answer.",
+      'Voting can amplify shared errors; it is not guaranteed to find the correct answer. To reason through the choices, select the statements that match the criterion in the prompt: "Agents may share the same failure modes."; "Votes may converge on an incorrect consensus.". Do not select statements that miss that criterion: "Majority voting ensures perfect decision-making."; "Voting removes the need for individual reasoning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1280,7 +1285,7 @@ export const aieChapter4Questions: Question[] = [
       { text: "Guarantee optimality across all tasks.", isCorrect: false },
     ],
     explanation:
-      "Planners support but do not replace LLM reasoning and cannot guarantee optimality.",
+      'Planners support but do not replace LLM reasoning and cannot guarantee optimality. To reason through the choices, select the statements that match the criterion in the prompt: "Select steps to achieve a goal."; "Sequence subtasks into an actionable plan.". Do not select statements that miss that criterion: "Replace the need for any LLM reasoning."; "Guarantee optimality across all tasks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1301,7 +1306,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Dynamic environments require perception and rapid replanning.",
+      'Dynamic environments require perception and rapid replanning. To reason through the choices, select the statements that match the criterion in the prompt: "The agent must detect changes in state."; "The agent may need to replan frequently.". Do not select statements that miss that criterion: "Static plans suffice regardless of environmental changes."; "Reactivity can be ignored without consequence.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1326,7 +1331,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Alignment requires bridging heterogeneous feature spaces and often uses labeled datasets.",
+      'Alignment requires bridging heterogeneous feature spaces and often uses labeled datasets. To reason through the choices, select the statements that match the criterion in the prompt: "Different modalities vary in structure and dimensionality."; "Cross-modal semantics must be learned.". Do not select statements that miss that criterion: "All modalities naturally share identical feature spaces."; "Alignment is achievable without labeled data.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1348,7 +1353,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "RAG improves recall but does not replace planning or guarantee completeness.",
+      'RAG improves recall but does not replace planning or guarantee completeness. To reason through the choices, select the statements that match the criterion in the prompt: "It enables retrieval of past experiences or data."; "It helps reduce repeated reasoning steps.". Do not select statements that miss that criterion: "It replaces the need for planning entirely."; "It guarantees perfect recall of all prior interactions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1376,7 +1381,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Hallucinations often occur under ambiguity or irrelevant context.",
+      'Hallucinations often occur under ambiguity or irrelevant context. To reason through the choices, select the statements that match the criterion in the prompt: "They may fill missing information with plausible text."; "They may misinterpret irrelevant webpage sections.". Do not select statements that miss that criterion: "They have perfect recall of webpage structure."; "They always know which information is authoritative.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1404,7 +1409,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Static decomposition lacks adaptability and may amplify initial errors.",
+      'Static decomposition lacks adaptability and may amplify initial errors. To reason through the choices, select the statements that match the criterion in the prompt: "Errors introduced early may propagate through the plan."; "The plan cannot adjust based on unexpected results.". Do not select statements that miss that criterion: "It guarantees the shortest possible sequence of steps."; "It inherently corrects its assumptions during execution.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -1436,7 +1441,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "The LLM acts as the agent brain but lacks built-in perception, real-time knowledge, and long-term memory.",
+      'The LLM acts as the agent brain but lacks built-in perception, real-time knowledge, and long-term memory. To reason through the choices, select the statements that match the criterion in the prompt: "It serves as the central reasoning and decision-making component.". Do not select statements that miss that criterion: "It replaces the need for any perception modules."; "It inherently includes real-time knowledge of the world."; "It stores persistent long-term memory across tasks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1461,7 +1466,7 @@ export const aieChapter4Questions: Question[] = [
       { text: "They guarantee perfectly accurate results.", isCorrect: false },
     ],
     explanation:
-      "Search tools provide timely information but still require planning and relevance evaluation.",
+      'Search tools provide timely information but still require planning and relevance evaluation. To reason through the choices, select the statements that match the criterion in the prompt: "They give the agent access to real-time information.". Do not select statements that miss that criterion: "They eliminate the need for ranking search results."; "They allow the LLM to bypass planning entirely."; "They guarantee perfectly accurate results.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1486,7 +1491,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Competitive setups may reinforce biases in shared training data.",
+      'Competitive setups may reinforce biases in shared training data. To reason through the choices, select the statements that match the criterion in the prompt: "Competition can amplify shared weaknesses among agents.". Do not select statements that miss that criterion: "Competition always increases accuracy."; "Competition removes the need for evaluation."; "Competition guarantees convergence to optimal strategies.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1507,7 +1512,7 @@ export const aieChapter4Questions: Question[] = [
       { text: "It guarantees consistent convergence.", isCorrect: false },
     ],
     explanation:
-      "Interleaving improves adaptability but cannot guarantee efficiency or convergence.",
+      'Interleaving improves adaptability but cannot guarantee efficiency or convergence. To reason through the choices, select the statements that match the criterion in the prompt: "It alternates reasoning and execution to adapt to intermediate results.". Do not select statements that miss that criterion: "It ensures the shortest reasoning chain possible."; "It prevents any need for feedback loops."; "It guarantees consistent convergence.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1534,7 +1539,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Multimodal models rely on encoders and still require textual reasoning.",
+      'Multimodal models rely on encoders and still require textual reasoning. To reason through the choices, select the statements that match the criterion in the prompt: "They incorporate inputs from multiple sensory channels such as images or audio.". Do not select statements that miss that criterion: "They eliminate the need for specialized encoders."; "They naturally understand all sensory modalities without training."; "They replace the need for textual reasoning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1561,7 +1566,8 @@ export const aieChapter4Questions: Question[] = [
         isCorrect: false,
       },
     ],
-    explanation: "Reflection loops may stall progress if not constrained.",
+    explanation:
+      'Reflection loops may stall progress if not constrained. To reason through the choices, select the statements that match the criterion in the prompt: "Reflection can cause infinite loops where the agent repeatedly reevaluates without acting.". Do not select statements that miss that criterion: "Reflection guarantees optimal task decomposition."; "Reflection removes the need for intermediate results."; "Reflection inherently prevents hallucinations.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1589,7 +1595,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Intent clarification is necessary before ranking can succeed.",
+      'Intent clarification is necessary before ranking can succeed. To reason through the choices, select the statements that match the criterion in the prompt: "The model must disambiguate user intent before ranking effectively.". Do not select statements that miss that criterion: "Ambiguity automatically improves ranking performance."; "The agent always knows which domain is intended."; "Ranking is unnecessary when ambiguity exists.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1613,7 +1619,8 @@ export const aieChapter4Questions: Question[] = [
       },
       { text: "Tool use eliminates the need for reasoning.", isCorrect: false },
     ],
-    explanation: "LLMs must reason about when and how to invoke tools.",
+    explanation:
+      'LLMs must reason about when and how to invoke tools. To reason through the choices, select the statements that match the criterion in the prompt: "The LLM must decide when tool invocation is appropriate.". Do not select statements that miss that criterion: "Tools automatically trigger without model control."; "Tool selection requires no description or metadata."; "Tool use eliminates the need for reasoning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1632,7 +1639,7 @@ export const aieChapter4Questions: Question[] = [
       { text: "Communication guarantees perfect alignment.", isCorrect: false },
     ],
     explanation:
-      "Coordination introduces overhead and does not guarantee correctness.",
+      'Coordination introduces overhead and does not guarantee correctness. To reason through the choices, select the statements that match the criterion in the prompt: "Coordination overhead can reduce overall efficiency.". Do not select statements that miss that criterion: "More agents always outperform fewer agents."; "Collaboration eliminates failure modes."; "Communication guarantees perfect alignment.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1654,7 +1661,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Perception modules convert raw sensory input into a usable representation.",
+      'Perception modules convert raw sensory input into a usable representation. To reason through the choices, select the statements that match the criterion in the prompt: "To convert sensory inputs into forms the LLM can process.". Do not select statements that miss that criterion: "To store long-term memory."; "To replace the need for an LLM."; "To generate final textual answers for the user.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1681,7 +1688,8 @@ export const aieChapter4Questions: Question[] = [
         isCorrect: false,
       },
     ],
-    explanation: "Captioning introduces lossy translation from vision to text.",
+    explanation:
+      'Captioning introduces lossy translation from vision to text. To reason through the choices, select the statements that match the criterion in the prompt: "Captioning compresses visual information and may omit details.". Do not select statements that miss that criterion: "Captioning always encodes all pixel-level semantics."; "Captioning inherently matches human perception perfectly."; "Captioning eliminates the need for multimodal models.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1706,7 +1714,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Static planning has no mechanism for mid-execution adaptation.",
+      'Static planning has no mechanism for mid-execution adaptation. To reason through the choices, select the statements that match the criterion in the prompt: "It cannot adapt when new information arises during execution.". Do not select statements that miss that criterion: "It produces perfect plans for all tasks."; "It automatically integrates user feedback mid-execution."; "It consistently outperforms adaptive strategies.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1727,7 +1735,8 @@ export const aieChapter4Questions: Question[] = [
       },
       { text: "Agents never need to communicate.", isCorrect: false },
     ],
-    explanation: "Specialization is beneficial, but coordination is required.",
+    explanation:
+      'Specialization is beneficial, but coordination is required. To reason through the choices, select the statements that match the criterion in the prompt: "Different agents can specialize in different tasks.". Do not select statements that miss that criterion: "Multiple agents guarantee perfect accuracy."; "Multi-agent setups remove the need for planning."; "Agents never need to communicate.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1755,7 +1764,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Ranking prioritizes information but does not guarantee perfect filtering.",
+      'Ranking prioritizes information but does not guarantee perfect filtering. To reason through the choices, select the statements that match the criterion in the prompt: "It orders candidate documents by estimated relevance.". Do not select statements that miss that criterion: "It eliminates the need for matching algorithms."; "It guarantees that irrelevant documents never appear."; "It replaces the need for summarization tools.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1780,7 +1789,7 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Voting amplifies shared biases and can validate incorrect but plausible plans.",
+      'Voting amplifies shared biases and can validate incorrect but plausible plans. To reason through the choices, select the statements that match the criterion in the prompt: "Models may converge on plausible but incorrect plans.". Do not select statements that miss that criterion: "Voting inherently removes hallucinations."; "Voting requires no reasoning by individual agents."; "Voting guarantees optimal results in large groups.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1805,7 +1814,7 @@ export const aieChapter4Questions: Question[] = [
       { text: "They remove ambiguity from all tasks.", isCorrect: false },
     ],
     explanation:
-      "Tool descriptions guide usage but do not guarantee correctness.",
+      'Tool descriptions guide usage but do not guarantee correctness. To reason through the choices, select the statements that match the criterion in the prompt: "They help the LLM understand when and how to use a tool.". Do not select statements that miss that criterion: "They eliminate the need for the LLM to parse arguments."; "They ensure the tool will always be used correctly."; "They remove ambiguity from all tasks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1824,7 +1833,7 @@ export const aieChapter4Questions: Question[] = [
       { text: "To prevent the need for tool use.", isCorrect: false },
     ],
     explanation:
-      "Reflection is a quality-improving step but cannot replace planning entirely.",
+      'Reflection is a quality-improving step but cannot replace planning entirely. To reason through the choices, select the statements that match the criterion in the prompt: "To evaluate or revise a candidate plan before execution.". Do not select statements that miss that criterion: "To remove the need for decomposition."; "To guarantee optimal plans in all cases."; "To prevent the need for tool use.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1852,6 +1861,6 @@ export const aieChapter4Questions: Question[] = [
       },
     ],
     explanation:
-      "Real webpages contain noise and require careful reasoning to extract relevant data.",
+      'Real webpages contain noise and require careful reasoning to extract relevant data. To reason through the choices, select the statements that match the criterion in the prompt: "The model may struggle to identify relevant information in long or cluttered webpages.". Do not select statements that miss that criterion: "The model always extracts the correct information automatically."; "The model navigates HTML trees without explicit instruction."; "The model inherently knows which sites are trustworthy.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 ];

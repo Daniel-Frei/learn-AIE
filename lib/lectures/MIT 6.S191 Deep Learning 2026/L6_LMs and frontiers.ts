@@ -364,7 +364,7 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
       },
     ],
     explanation:
-      "Sampling begins from random noise and iteratively removes noise using the trained denoising network. No supervision is required during inference.",
+      'Sampling begins from random noise and iteratively removes noise using the trained denoising network. No supervision is required during inference. To reason through the choices, select the statements that match the criterion in the prompt: "Applying iterative denoising steps."; "Using a trained model to predict noise residuals.". Do not select statements that miss that criterion: "Starting from labeled supervision signals."; "Feeding labeled supervision signals at inference time.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -707,7 +707,7 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
       { text: "Guarantees semantic understanding.", isCorrect: false },
     ],
     explanation:
-      "Tokenization converts text into discrete tokens for numerical processing. It defines the vocabulary but does not guarantee semantic comprehension.",
+      'Tokenization converts text into discrete tokens for numerical processing. It defines the vocabulary but does not guarantee semantic comprehension. To reason through the choices, select the statements that match the criterion in the prompt: "Splits raw text into discrete units called tokens.". Do not select statements that miss that criterion: "Prevents numerical encoding of text."; "Has nothing to do with vocabulary space."; "Guarantees semantic understanding.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -776,7 +776,7 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
       { text: "Risk of bias from training data.", isCorrect: true },
     ],
     explanation:
-      "LLMs still struggle with long-term planning and robust reasoning. They can hallucinate and inherit biases. Uncertainty calibration remains imperfect.",
+      'LLMs still struggle with long-term planning and robust reasoning. They can hallucinate and inherit biases. Uncertainty calibration remains imperfect. To reason through the choices, select the statements that match the criterion in the prompt: "Difficulty with long-term planning and reasoning."; "Challenges in grounding outputs in verified knowledge."; "Risk of bias from training data.". Do not select statements that miss that criterion: "Perfect calibration of uncertainty.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -850,7 +850,7 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
       { text: "Removal of all uncertainty.", isCorrect: false },
     ],
     explanation:
-      "Post-training includes alignment methods and reinforcement learning from human feedback. Safety guardrails are implemented, but uncertainty remains.",
+      'Post-training includes alignment methods and reinforcement learning from human feedback. Safety guardrails are implemented, but uncertainty remains. To reason through the choices, select the statements that match the criterion in the prompt: "Alignment tuning."; "Safety guardrails."; "Reinforcement learning from human feedback.". Do not select statements that miss that criterion: "Removal of all uncertainty.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -904,7 +904,7 @@ export const MIT6S191_L6_LMsAndFrontiersQuestions: Question[] = [
       { text: "Scaling always eliminates hallucinations.", isCorrect: false },
     ],
     explanation:
-      "Scaling often follows power-law improvements. Gains are nonlinear and costly. Scaling alone does not remove hallucinations.",
+      'Scaling often follows power-law improvements. Gains are nonlinear and costly. Scaling alone does not remove hallucinations. To reason through the choices, select the statements that match the criterion in the prompt: "Performance improvements may follow power-law trends."; "Compute cost grows significantly with scale."; "Emergent gains are not linear with parameter growth.". Do not select statements that miss that criterion: "Scaling always eliminates hallucinations.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {

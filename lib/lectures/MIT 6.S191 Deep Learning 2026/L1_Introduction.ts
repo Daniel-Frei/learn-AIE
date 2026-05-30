@@ -440,7 +440,7 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
       },
     ],
     explanation:
-      "In a dense layer, each output is connected to all inputs. Bias terms are typically included. Activation functions are flexible and task-dependent.",
+      'In a dense layer, each output is connected to all inputs. Bias terms are typically included. Activation functions are flexible and task-dependent. To reason through the choices, select the statements that match the criterion in the prompt: "Every input unit connects to every output unit.". Do not select statements that miss that criterion: "Each output depends only on one input feature."; "Dense layers cannot include bias terms."; "Dense layers must always use sigmoid activation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -938,7 +938,7 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
       },
     ],
     explanation:
-      "During inference, dropout is disabled so the full network is used. This ensures stable predictions. Dropout is only active during training.",
+      'During inference, dropout is disabled so the full network is used. This ensures stable predictions. Dropout is only active during training. To reason through the choices, select the statements that match the criterion in the prompt: "Dropout is typically disabled during inference."; "All neurons are used during inference."; "Dropout reduces stochasticity during testing.". Do not select statements that miss that criterion: "Inference requires randomly dropping neurons again.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -992,7 +992,7 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
       },
     ],
     explanation:
-      "Output layers vary depending on regression vs classification tasks. Different losses and activations are used. Bias terms are typically included.",
+      'Output layers vary depending on regression vs classification tasks. Different losses and activations are used. Bias terms are typically included. To reason through the choices, select the statements that match the criterion in the prompt: "Output layer design depends on the task type.". Do not select statements that miss that criterion: "All tasks use sigmoid outputs."; "All tasks use mean squared error loss."; "Output layers cannot contain bias terms.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {

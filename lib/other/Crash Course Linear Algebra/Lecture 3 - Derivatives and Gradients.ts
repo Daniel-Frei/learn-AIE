@@ -1005,6 +1005,546 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
     explanation:
       "Modern AI systems learn by computing how losses depend on many numerical parameters and then updating those parameters. Derivatives, gradients, the chain rule, and backpropagation are the core tools that make this process work at scale.",
   },
+  {
+    id: "la-crash-l3-q41",
+    chapter: 3,
+    difficulty: "easy",
+    prompt:
+      "For \\(f(x)=5x^3\\), which statement correctly gives the derivative and its value at \\(x=2\\)?",
+    options: [
+      {
+        text: "\\(f'(x)=15x^2\\), so \\(f'(2)=60\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(f'(x)=5x^2\\), so \\(f'(2)=20\\).",
+        isCorrect: false,
+      },
+      {
+        text: "\\(f'(x)=15x^3\\), so \\(f'(2)=120\\).",
+        isCorrect: false,
+      },
+      {
+        text: "\\(f'(x)=x^4\\), so \\(f'(2)=16\\).",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The power rule gives \\(\\frac{d}{dx}x^3=3x^2\\), so multiplying by \\(5\\) gives \\(15x^2\\). Evaluating at \\(x=2\\) gives \\(15\\cdot4=60\\). The other options either miss the power-rule coefficient or keep the wrong power.",
+  },
+  {
+    id: "la-crash-l3-q42",
+    chapter: 3,
+    difficulty: "easy",
+    prompt:
+      "For \\(f(x,y)=xy+x^2\\), which partial-derivative statements are correct?",
+    options: [
+      {
+        text: "\\(\\frac{\\partial f}{\\partial x}=y+2x\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\frac{\\partial f}{\\partial y}=x\\).",
+        isCorrect: true,
+      },
+      {
+        text: "At \\((x,y)=(2,3)\\), \\(\\frac{\\partial f}{\\partial x}=7\\).",
+        isCorrect: true,
+      },
+      {
+        text: "When computing \\(\\frac{\\partial f}{\\partial x}\\), \\(y\\) must also be changed by the same amount.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "A partial derivative changes one variable while holding the others fixed. Differentiating \\(xy+x^2\\) with respect to \\(x\\) gives \\(y+2x\\), and differentiating with respect to \\(y\\) gives \\(x\\). At \\((2,3)\\), the first expression equals \\(3+4=7\\).",
+  },
+  {
+    id: "la-crash-l3-q43",
+    chapter: 3,
+    difficulty: "easy",
+    prompt:
+      "For \\(f(x,y)=x^2+4y^2\\) at \\((1,-2)\\), which statements are correct?",
+    options: [
+      {
+        text: "\\(\\nabla f(1,-2)=\\begin{bmatrix}2 \\\\ -16\\end{bmatrix}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The negative-gradient direction is \\(\\begin{bmatrix}-2 \\\\ 16\\end{bmatrix}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\nabla f(1,-2)=\\begin{bmatrix}1 \\\\ -2\\end{bmatrix}\\) because the gradient equals the input point.",
+        isCorrect: false,
+      },
+      {
+        text: "The gradient must point downhill for a loss function.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The partial derivatives are \\(2x\\) and \\(8y\\), giving \\((2,-16)\\) at \\((1,-2)\\). The gradient points in the direction of steepest local increase, so the negative gradient points downhill. The gradient is not generally the same as the input point.",
+  },
+  {
+    id: "la-crash-l3-q44",
+    chapter: 3,
+    difficulty: "easy",
+    prompt:
+      "For \\(f(x)=(x-3)^2\\), starting at \\(x=1\\) with learning rate \\(\\eta=0.1\\), which statements about one gradient-descent step are correct?",
+    options: [
+      {
+        text: "The gradient at \\(x=1\\) is \\(-4\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The update rule is \\(x_{new}=x-\\eta f'(x)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The new value is \\(x_{new}=1.4\\).",
+        isCorrect: true,
+      },
+      {
+        text: "This step moves \\(x\\) toward the minimizer \\(x=3\\).",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "The derivative is \\(2(x-3)\\), so at \\(x=1\\) it equals \\(-4\\). Gradient descent subtracts the gradient, giving \\(1-0.1(-4)=1.4\\). Since the minimizer is at \\(3\\), the update moves in the correct direction.",
+  },
+  {
+    id: "la-crash-l3-q45",
+    chapter: 3,
+    difficulty: "easy",
+    prompt:
+      "Which statement best explains why a learning rate can make training unstable?",
+    options: [
+      {
+        text: "A step size that is too large can overshoot useful downhill regions and increase the loss.",
+        isCorrect: true,
+      },
+      {
+        text: "A larger learning rate always guarantees faster convergence.",
+        isCorrect: false,
+      },
+      {
+        text: "Learning rate affects only how a model is displayed, not how parameters change.",
+        isCorrect: false,
+      },
+      {
+        text: "A nonzero learning rate prevents gradients from being computed.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The learning rate controls how far parameters move in the negative-gradient direction. If the step is too large, a locally downhill direction can still lead past the useful region and make the loss worse. This is why learning rate affects stability as well as speed.",
+  },
+  {
+    id: "la-crash-l3-q46",
+    chapter: 3,
+    difficulty: "easy",
+    prompt:
+      "For \\(y=(3x-2)^4\\), which statements correctly support a chain-rule derivative?",
+    options: [
+      {
+        text: "A useful intermediate variable is \\(u=3x-2\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\frac{dy}{du}=4u^3\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\frac{du}{dx}=3\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The derivative is \\(4(3x-2)^3\\) because the inner derivative can be ignored.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The chain rule multiplies the outer derivative by the inner derivative. With \\(u=3x-2\\), the outer derivative is \\(4u^3\\) and the inner derivative is \\(3\\), so \\(\\frac{dy}{dx}=12(3x-2)^3\\). Ignoring the inner derivative misses how the inside changes with \\(x\\).",
+  },
+  {
+    id: "la-crash-l3-q47",
+    chapter: 3,
+    difficulty: "easy",
+    prompt:
+      "If \\(W\\in\\mathbb{R}^{3\\times5}\\), which statements about the matrix gradient \\(\\frac{\\partial L}{\\partial W}\\) are correct?",
+    options: [
+      {
+        text: "\\(\\frac{\\partial L}{\\partial W}\\) has shape \\(3\\times5\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Each entry of \\(\\frac{\\partial L}{\\partial W}\\) describes the local sensitivity of the loss to one weight.",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\frac{\\partial L}{\\partial W}\\) must have shape \\(5\\times3\\) because gradients always transpose parameters.",
+        isCorrect: false,
+      },
+      {
+        text: "A matrix parameter has only one derivative, so the gradient is a scalar.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The gradient with respect to a parameter array has the same shape as that parameter array. Each weight gets its own local slope telling how a small change would affect the loss. Transposes may appear in formulas, but they do not change the final gradient shape for \\(W\\).",
+  },
+  {
+    id: "la-crash-l3-q48",
+    chapter: 3,
+    difficulty: "medium",
+    prompt:
+      "For a linear layer \\(y=Wx\\) with upstream gradient \\(g=\\frac{\\partial L}{\\partial y}\\), which statements are correct?",
+    options: [
+      {
+        text: "\\(\\frac{\\partial L}{\\partial W}=gx^T\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The weight gradient has one entry for each weight in \\(W\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\frac{\\partial L}{\\partial x}=W^Tg\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The entry \\((i,j)\\) of the weight gradient is proportional to \\(g_i x_j\\).",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "For a linear layer, the weight gradient is an outer product between the output error signal and the input activation. The input gradient uses \\(W^T\\) to send the output sensitivity back to the input coordinates. These formulas also provide useful shape checks during implementation.",
+  },
+  {
+    id: "la-crash-l3-q49",
+    chapter: 3,
+    difficulty: "medium",
+    prompt:
+      "For \\(f(x,y)=x^2+xy+y^2\\), which statement correctly gives \\(\\nabla f(1,2)\\)?",
+    options: [
+      {
+        text: "\\(\\nabla f(1,2)=\\begin{bmatrix}4 \\\\ 5\\end{bmatrix}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\nabla f(1,2)=\\begin{bmatrix}2 \\\\ 4\\end{bmatrix}\\).",
+        isCorrect: false,
+      },
+      {
+        text: "\\(\\nabla f(1,2)=\\begin{bmatrix}5 \\\\ 4\\end{bmatrix}\\).",
+        isCorrect: false,
+      },
+      {
+        text: "\\(\\nabla f(1,2)=7\\) because the function has scalar output.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The partial derivatives are \\(\\frac{\\partial f}{\\partial x}=2x+y\\) and \\(\\frac{\\partial f}{\\partial y}=x+2y\\). At \\((1,2)\\), these become \\(4\\) and \\(5\\). A scalar-valued function of two variables has a vector gradient with one component per input variable.",
+  },
+  {
+    id: "la-crash-l3-q50",
+    chapter: 3,
+    difficulty: "medium",
+    prompt:
+      "Which statements correctly describe the directional derivative of a differentiable function \\(f\\) in a unit direction \\(u\\)?",
+    options: [
+      {
+        text: "It is given by \\(\\nabla f\\cdot u\\).",
+        isCorrect: true,
+      },
+      {
+        text: "It is largest when \\(u\\) points in the gradient direction.",
+        isCorrect: true,
+      },
+      {
+        text: "It is zero when \\(u\\) is orthogonal to \\(\\nabla f\\).",
+        isCorrect: true,
+      },
+      {
+        text: "It ignores the gradient and depends only on the value \\(f(x)\\).",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The directional derivative measures the first-order change in a chosen direction and equals the dot product with the gradient. The dot product is largest in the gradient direction and zero for directions perpendicular to the gradient. Function value alone does not determine local slope.",
+  },
+  {
+    id: "la-crash-l3-q51",
+    chapter: 3,
+    difficulty: "medium",
+    prompt:
+      "For a computation \\(z=Wx\\), \\(a=\\operatorname{ReLU}(z)\\), followed by a loss \\(L\\), which statements about backpropagation are correct?",
+    options: [
+      {
+        text: "The ReLU derivative can mask gradient components where \\(z\\le 0\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Gradients reaching \\(W\\) depend on both the upstream error signal and the input \\(x\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The chain rule stops at ReLU because ReLU is not a matrix.",
+        isCorrect: false,
+      },
+      {
+        text: "The weight gradient has no relationship to the forward activations.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Backpropagation applies the chain rule through both matrix operations and elementwise nonlinearities. ReLU passes gradient through positive pre-activations and blocks it for nonpositive pre-activations in the usual convention. The gradient for \\(W\\) still depends on the input activation because each weight multiplies an input coordinate.",
+  },
+  {
+    id: "la-crash-l3-q52",
+    chapter: 3,
+    difficulty: "medium",
+    prompt:
+      "For a value-learning loss \\(L=(t-Q_\\theta(s,a))^2\\), treating target \\(t\\) as fixed, which statements are correct?",
+    options: [
+      {
+        text: "\\(\\frac{\\partial L}{\\partial Q_\\theta}=2(Q_\\theta(s,a)-t)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The gradient with respect to \\(\\theta\\) depends on \\(\\nabla_\\theta Q_\\theta(s,a)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The loss gradient is zero when \\(Q_\\theta(s,a)=t\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Gradient descent changes parameters in a direction that locally reduces this squared error when the step size is appropriate.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "The derivative of \\((t-Q)^2\\) with respect to \\(Q\\) is \\(2(Q-t)\\). To update parameters, the chain rule multiplies this scalar error derivative by how \\(Q_\\theta\\) changes with \\(\\theta\\). When prediction equals target, the squared-error gradient vanishes.",
+  },
+  {
+    id: "la-crash-l3-q53",
+    chapter: 3,
+    difficulty: "medium",
+    prompt:
+      "For \\(f(x,y)=(x-2)^2+(y+1)^2\\), starting at \\((0,0)\\) with \\(\\eta=0.25\\), which statement gives one gradient-descent update?",
+    options: [
+      {
+        text: "The update moves to \\((1,-0.5)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The update moves to \\((-1,0.5)\\).",
+        isCorrect: false,
+      },
+      {
+        text: "The update stays at \\((0,0)\\) because the loss is already minimized.",
+        isCorrect: false,
+      },
+      {
+        text: "The update moves to \\((2,-1)\\) in one step for every learning rate.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The gradient is \\((2(x-2),2(y+1))\\), so at \\((0,0)\\) it is \\((-4,2)\\). Gradient descent gives \\((0,0)-0.25(-4,2)=(1,-0.5)\\). This moves toward the minimizer \\((2,-1)\\) but does not necessarily reach it in one step.",
+  },
+  {
+    id: "la-crash-l3-q54",
+    chapter: 3,
+    difficulty: "hard",
+    prompt:
+      "Let \\(h=Wx\\) and \\(L=\\frac{1}{2}\\|h-y\\|^2\\). Which gradient statements are correct?",
+    options: [
+      {
+        text: "\\(\\frac{\\partial L}{\\partial h}=h-y\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\frac{\\partial L}{\\partial W}=(h-y)x^T\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\frac{\\partial L}{\\partial x}=W^T(h-y)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\frac{\\partial L}{\\partial W}\\) must be a scalar because \\(L\\) is scalar.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The squared-error derivative with respect to the prediction vector is the residual \\(h-y\\). The chain rule through \\(h=Wx\\) gives an outer product for the weight gradient and a transpose multiplication for the input gradient. A scalar loss can have a matrix-shaped gradient when the parameter is a matrix.",
+  },
+  {
+    id: "la-crash-l3-q55",
+    chapter: 3,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly describe what a zero gradient does and does not imply?",
+    options: [
+      {
+        text: "A zero gradient means the first-order local slope is zero.",
+        isCorrect: true,
+      },
+      {
+        text: "A saddle point can have zero gradient without being a local minimum.",
+        isCorrect: true,
+      },
+      {
+        text: "A zero gradient always proves that training has found the best possible parameters.",
+        isCorrect: false,
+      },
+      {
+        text: "A zero gradient means the loss function must be constant everywhere.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The gradient captures first-order local change, so a zero gradient indicates no linear slope at that point. It does not classify the point as a global optimum, because the point could be a saddle, a local maximum, or a flat non-optimal region. Additional curvature or global information is needed.",
+  },
+  {
+    id: "la-crash-l3-q56",
+    chapter: 3,
+    difficulty: "hard",
+    prompt:
+      "For a matrix product \\(C=AB\\) and scalar loss \\(L\\), let \\(G=\\frac{\\partial L}{\\partial C}\\). Which backpropagation formulas and shape facts are correct?",
+    options: [
+      {
+        text: "\\(\\frac{\\partial L}{\\partial A}=GB^T\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\frac{\\partial L}{\\partial B}=A^TG\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The transpose on \\(B\\) helps the gradient with respect to \\(A\\) match the shape of \\(A\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The transpose on \\(A\\) helps the gradient with respect to \\(B\\) match the shape of \\(B\\).",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Matrix-product gradients are a compact example of the chain rule with shape constraints. The upstream gradient \\(G\\) has the same shape as \\(C\\), and multiplying by the appropriate transpose sends that sensitivity back to each factor. These transpose patterns are one reason shape reasoning is essential in backpropagation.",
+  },
+  {
+    id: "la-crash-l3-q57",
+    chapter: 3,
+    difficulty: "hard",
+    prompt:
+      "For \\(f(x)=\\frac{1}{2}x^THx\\) with \\(H=\\begin{bmatrix}1 & 0 \\\\ 0 & 10\\end{bmatrix}\\), which statement correctly describes fixed-step gradient descent?",
+    options: [
+      {
+        text: "A learning rate below \\(0.2\\) is required for convergence in the steepest eigendirection of this quadratic.",
+        isCorrect: true,
+      },
+      {
+        text: "Any positive learning rate converges because the gradient points uphill.",
+        isCorrect: false,
+      },
+      {
+        text: "The largest curvature direction is irrelevant to stability.",
+        isCorrect: false,
+      },
+      {
+        text: "A learning rate of \\(1\\) is always safe for this function.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "For this diagonal quadratic, the steep direction has curvature \\(10\\), and fixed-step gradient descent is stable along that direction only when \\(0<\\eta<\\frac{2}{10}=0.2\\). This illustrates why high-curvature directions constrain learning rates. The gradient direction alone does not make every step size safe.",
+  },
+  {
+    id: "la-crash-l3-q58",
+    chapter: 3,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly describe vanishing or exploding gradients through many composed layers?",
+    options: [
+      {
+        text: "Backpropagation multiplies local derivative or Jacobian factors along computational paths.",
+        isCorrect: true,
+      },
+      {
+        text: "Repeated factors with singular values mostly below \\(1\\) can shrink gradients.",
+        isCorrect: true,
+      },
+      {
+        text: "Repeated factors with singular values mostly above \\(1\\) can amplify gradients.",
+        isCorrect: true,
+      },
+      {
+        text: "Every layer must receive exactly the same gradient because all layers belong to one network.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The chain rule propagates gradients through products of local sensitivities. Products of many shrinking factors can make gradients very small, while products of many amplifying factors can make them very large. Different layers can therefore receive very different gradient magnitudes.",
+  },
+  {
+    id: "la-crash-l3-q59",
+    chapter: 3,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly describe mini-batch gradients in neural-network training?",
+    options: [
+      {
+        text: "A mini-batch gradient averages or sums per-example gradient contributions for the examples in that batch.",
+        isCorrect: true,
+      },
+      {
+        text: "Batch matrix operations let many gradient contributions be computed in parallel.",
+        isCorrect: true,
+      },
+      {
+        text: "A mini-batch gradient is always exactly equal to the full-dataset gradient.",
+        isCorrect: false,
+      },
+      {
+        text: "Mini-batching removes the need for the chain rule.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Mini-batch training estimates the full gradient using a subset of examples, usually by averaging their contributions. Matrix operations make these computations efficient on hardware such as GPUs. The estimate can differ from the full-dataset gradient, but it still relies on the same chain-rule machinery.",
+  },
+  {
+    id: "la-crash-l3-q60",
+    chapter: 3,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly qualify the idea that learning is optimization using gradients?",
+    options: [
+      {
+        text: "Gradients give local information about how parameters affect loss.",
+        isCorrect: true,
+      },
+      {
+        text: "Backpropagation efficiently computes many parameter gradients by reusing intermediate derivatives.",
+        isCorrect: true,
+      },
+      {
+        text: "Gradient descent does not guarantee a global optimum for every deep network.",
+        isCorrect: true,
+      },
+      {
+        text: "Matrix gradients and chain rule reasoning are central when parameters are matrices.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Gradients are local tools: they tell how to change parameters to improve the loss near the current point. Backpropagation makes this practical by sharing computations across many parameters, including matrices. The method is powerful, but local gradient information alone does not guarantee global optimality in every deep-learning landscape.",
+  },
 ];
 
 export const CrashCourseLinearAlgebraL3Questions =

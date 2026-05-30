@@ -168,7 +168,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "FLOPs provide a hardware-agnostic way to estimate computational workload. Architectural choices like MoE versus dense layers directly affect FLOPs.",
+      'FLOPs provide a hardware-agnostic way to estimate computational workload. Architectural choices like MoE versus dense layers directly affect FLOPs. To reason through the choices, select every statement because each one matches the criterion in the prompt: "FLOPs count floating point operations such as additions and multiplications."; "They are used as a proxy for computational cost."; "They depend on model architecture and input length."; "They are commonly used to compare dense and sparse models.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -357,7 +357,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Top-k sampling balances randomness and control by limiting the candidate set. The final choice remains stochastic within the selected top-k tokens.",
+      'Top-k sampling balances randomness and control by limiting the candidate set. The final choice remains stochastic within the selected top-k tokens. To reason through the choices, select the statements that match the criterion in the prompt: "It restricts sampling to the k most probable tokens."; "It prevents extremely low-probability tokens from being sampled."; "It introduces stochasticity into generation.". Do not select statements that miss that criterion: "It guarantees selection of the most probable token.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -379,7 +379,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It is beneficial for model generalization.", isCorrect: false },
     ],
     explanation:
-      "Routing collapse limits the benefits of MoE by underutilizing experts. Regularization techniques are used to encourage more uniform routing.",
+      'Routing collapse limits the benefits of MoE by underutilizing experts. Regularization techniques are used to encourage more uniform routing. To reason through the choices, select the statements that match the criterion in the prompt: "It occurs when only a few experts receive most inputs."; "It can reduce effective model capacity."; "Auxiliary losses can encourage more balanced expert usage.". Do not select statements that miss that criterion: "It is beneficial for model generalization.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -404,7 +404,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "MoE routing is dynamic and learned. Tokens may be sent to different experts depending on layer and context, increasing expressiveness.",
+      'MoE routing is dynamic and learned. Tokens may be sent to different experts depending on layer and context, increasing expressiveness. To reason through the choices, select the statements that match the criterion in the prompt: "Routing decisions can be made at the token level."; "Different layers may route tokens to different experts."; "The router is typically a learned function.". Do not select statements that miss that criterion: "Routing decisions are fixed and not trainable.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -425,7 +425,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It requires retraining the language model.", isCorrect: false },
     ],
     explanation:
-      "Guided decoding operates at inference time by restricting token choices. It does not modify model weights but controls valid generation paths.",
+      'Guided decoding operates at inference time by restricting token choices. It does not modify model weights but controls valid generation paths. To reason through the choices, select the statements that match the criterion in the prompt: "It constrains which tokens are allowed during generation."; "It can enforce structured output formats such as JSON."; "It filters invalid next-token choices.". Do not select statements that miss that criterion: "It requires retraining the language model.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -452,7 +452,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Longer context windows allow more information but increase cost and may suffer from issues like context rot. More context is not always better.",
+      'Longer context windows allow more information but increase cost and may suffer from issues like context rot. More context is not always better. To reason through the choices, select the statements that match the criterion in the prompt: "It refers to the number of tokens a model can process at once."; "It is also called context window or context size."; "It affects computational cost of self-attention.". Do not select statements that miss that criterion: "Increasing it always improves model accuracy.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -473,7 +473,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It always reduces inference latency.", isCorrect: false },
     ],
     explanation:
-      "Chain-of-thought improves reasoning by making intermediate steps explicit, but it increases token count and therefore latency and cost.",
+      'Chain-of-thought improves reasoning by making intermediate steps explicit, but it increases token count and therefore latency and cost. To reason through the choices, select the statements that match the criterion in the prompt: "It encourages models to produce intermediate reasoning steps."; "It often improves performance on reasoning tasks."; "It increases the number of generated tokens.". Do not select statements that miss that criterion: "It always reduces inference latency.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -519,7 +519,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It removes randomness from generation.", isCorrect: false },
     ],
     explanation:
-      "Top-p sampling selects a variable number of tokens based on cumulative probability. This allows flexibility while maintaining stochasticity.",
+      'Top-p sampling selects a variable number of tokens based on cumulative probability. This allows flexibility while maintaining stochasticity. To reason through the choices, select the statements that match the criterion in the prompt: "It samples from the smallest set of tokens whose cumulative probability exceeds p."; "It adapts the candidate set size dynamically.". Do not select statements that miss that criterion: "It always samples exactly p tokens."; "It removes randomness from generation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -537,7 +537,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It is only used during training.", isCorrect: false },
     ],
     explanation:
-      "Softmax normalizes logits into probabilities and is affected by temperature. It is used during both training and inference.",
+      'Softmax normalizes logits into probabilities and is affected by temperature. It is used during both training and inference. To reason through the choices, select the statements that match the criterion in the prompt: "It converts logits into a probability distribution."; "Its outputs sum to one.". Do not select statements that miss that criterion: "It is independent of temperature scaling."; "It is only used during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -555,7 +555,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It reduces inference cost.", isCorrect: false },
     ],
     explanation:
-      "Self-consistency relies on multiple generations and majority voting. While it improves accuracy, it increases inference cost rather than reducing it.",
+      'Self-consistency relies on multiple generations and majority voting. While it improves accuracy, it increases inference cost rather than reducing it. To reason through the choices, select the statements that match the criterion in the prompt: "It aggregates answers from multiple sampled reasoning paths."; "It can improve robustness of final answers.". Do not select statements that miss that criterion: "It requires modifying model weights."; "It reduces inference cost.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -577,7 +577,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It is unrelated to training objectives.", isCorrect: false },
     ],
     explanation:
-      "Routing probabilities come from a learned router and can be uneven. Training objectives often include terms to encourage balanced expert usage.",
+      'Routing probabilities come from a learned router and can be uneven. Training objectives often include terms to encourage balanced expert usage. To reason through the choices, select the statements that match the criterion in the prompt: "It can be produced using a softmax over experts."; "It indicates how likely an expert is to be selected.". Do not select statements that miss that criterion: "It is always uniform across experts."; "It is unrelated to training objectives.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -599,7 +599,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "They eliminate the need for large datasets.", isCorrect: false },
     ],
     explanation:
-      "MoE models can be more sample efficient due to higher capacity, but they still require large datasets and careful training to outperform dense models.",
+      'MoE models can be more sample efficient due to higher capacity, but they still require large datasets and careful training to outperform dense models. To reason through the choices, select the statements that match the criterion in the prompt: "They can reach strong performance with fewer training steps."; "They increase total parameter count without proportional compute increase.". Do not select statements that miss that criterion: "They always outperform dense models."; "They eliminate the need for large datasets.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -617,7 +617,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "They must sum to one.", isCorrect: false },
     ],
     explanation:
-      "Logits are unnormalized scores. Softmax transforms them into probabilities that sum to one.",
+      'Logits are unnormalized scores. Softmax transforms them into probabilities that sum to one. To reason through the choices, select the statements that match the criterion in the prompt: "They are raw scores output by a model before softmax."; "They can take any real value.". Do not select statements that miss that criterion: "They are already probabilities."; "They must sum to one.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -666,7 +666,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "The feed-forward network dominates parameter count, making it a natural location for MoE layers. Attention and normalization layers remain unchanged.",
+      'The feed-forward network dominates parameter count, making it a natural location for MoE layers. Attention and normalization layers remain unchanged. To reason through the choices, select the statements that match the criterion in the prompt: "Experts are commonly placed in the feed-forward network block."; "This is because the feed-forward block has many parameters.". Do not select statements that miss that criterion: "Experts replace the attention mechanism."; "Experts remove the need for normalization layers.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -691,7 +691,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "A rule-based text generation system.", isCorrect: false },
     ],
     explanation:
-      "LLMs are defined by scale in parameters, data, and compute, not merely by producing embeddings or using rules.",
+      'LLMs are defined by scale in parameters, data, and compute, not merely by producing embeddings or using rules. To reason through the choices, select the statements that match the criterion in the prompt: "A language model with large parameter count, data, and compute.". Do not select statements that miss that criterion: "A small neural network trained on labeled data only."; "Any model that produces embeddings."; "A rule-based text generation system.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -715,7 +715,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Greedy decoding always chooses the most probable token, making it simple but often suboptimal.",
+      'Greedy decoding always chooses the most probable token, making it simple but often suboptimal. To reason through the choices, select the statements that match the criterion in the prompt: "It selects the highest-probability token at each step.". Do not select statements that miss that criterion: "It samples from a truncated probability distribution."; "It maintains multiple candidate sequences."; "It requires auxiliary losses during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -740,7 +740,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Sequence probabilities are products of token probabilities, which shrink with length. Length normalization is often added to counteract this bias.",
+      'Sequence probabilities are products of token probabilities, which shrink with length. Length normalization is often added to counteract this bias. To reason through the choices, select the statements that match the criterion in the prompt: "Multiplying probabilities less than one reduces total sequence probability.". Do not select statements that miss that criterion: "Probabilities greater than one accumulate with length."; "Beam search ignores end-of-sequence tokens."; "Beam search uses temperature scaling by default.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -758,7 +758,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "The model switches to dense computation.", isCorrect: false },
     ],
     explanation:
-      "Routing collapse occurs when the router repeatedly selects the same experts, reducing the benefit of having multiple experts.",
+      'Routing collapse occurs when the router repeatedly selects the same experts, reducing the benefit of having multiple experts. To reason through the choices, select the statements that match the criterion in the prompt: "Only a small subset of experts dominates routing decisions.". Do not select statements that miss that criterion: "All experts are used equally at all times."; "Routing becomes random and untrainable."; "The model switches to dense computation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -779,7 +779,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It requires beam search to function.", isCorrect: false },
     ],
     explanation:
-      "Top-p sampling chooses from the smallest set of tokens whose cumulative probability exceeds p, allowing adaptive control of diversity.",
+      'Top-p sampling chooses from the smallest set of tokens whose cumulative probability exceeds p, allowing adaptive control of diversity. To reason through the choices, select the statements that match the criterion in the prompt: "It samples from a dynamically sized set based on cumulative probability.". Do not select statements that miss that criterion: "It samples only the single most likely token."; "It removes all randomness from decoding."; "It requires beam search to function.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -801,7 +801,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Auxiliary losses are added to guide routing behavior, helping prevent collapse and improving overall expert usage.",
+      'Auxiliary losses are added to guide routing behavior, helping prevent collapse and improving overall expert usage. To reason through the choices, select the statements that match the criterion in the prompt: "They encourage balanced expert utilization.". Do not select statements that miss that criterion: "They increase vocabulary size."; "They replace the main language modeling loss."; "They eliminate the need for routing networks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -825,7 +825,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It only occurs in encoder-only models.", isCorrect: false },
     ],
     explanation:
-      "Context rot refers to degradation in effective information use as context length increases, especially in the presence of distractors.",
+      'Context rot refers to degradation in effective information use as context length increases, especially in the presence of distractors. To reason through the choices, select the statements that match the criterion in the prompt: "Models may struggle to retrieve relevant information as context grows.". Do not select statements that miss that criterion: "Models improve retrieval accuracy with longer context."; "Context rot is caused by overfitting during training."; "It only occurs in encoder-only models.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -846,7 +846,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "The model requires labeled demonstrations.", isCorrect: false },
     ],
     explanation:
-      "Zero-shot prompting relies solely on instructions and the model’s pre-trained knowledge, without providing example input–output pairs.",
+      'Zero-shot prompting relies solely on instructions and the model’s pre-trained knowledge, without providing example input–output pairs. To reason through the choices, select the statements that match the criterion in the prompt: "The model is given instructions without examples.". Do not select statements that miss that criterion: "The model is fine-tuned on new examples."; "The model updates its weights at inference time."; "The model requires labeled demonstrations.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -1202,7 +1202,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It guarantees incorrect answers.", isCorrect: false },
     ],
     explanation:
-      "Context rot describes reduced ability to leverage relevant information in long inputs. It increases difficulty but does not guarantee failure.",
+      'Context rot describes reduced ability to leverage relevant information in long inputs. It increases difficulty but does not guarantee failure. To reason through the choices, select the statements that match the criterion in the prompt: "It refers to degradation in effective information use with long contexts."; "Distractor tokens can worsen retrieval performance."; "It can occur even if the answer is present in the context.". Do not select statements that miss that criterion: "It guarantees incorrect answers.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1229,7 +1229,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Well-structured prompts guide the model more effectively. Each component helps clarify what the model should do and how it should respond.",
+      'Well-structured prompts guide the model more effectively. Each component helps clarify what the model should do and how it should respond. To reason through the choices, select the statements that match the criterion in the prompt: "Prompts can include context, instructions, input, and constraints."; "Different prompt components serve different functional roles."; "Constraints can restrict output format or content.". Do not select statements that miss that criterion: "Prompt structure has no impact on model behavior.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1250,7 +1250,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It updates the model’s parameters.", isCorrect: false },
     ],
     explanation:
-      "Few-shot prompting conditions behavior through examples rather than weight updates. The trade-off is increased token usage and latency.",
+      'Few-shot prompting conditions behavior through examples rather than weight updates. The trade-off is increased token usage and latency. To reason through the choices, select the statements that match the criterion in the prompt: "It includes example input–output pairs in the prompt."; "It often improves task performance."; "It increases context length and inference cost.". Do not select statements that miss that criterion: "It updates the model’s parameters.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1272,7 +1272,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It guarantees logically correct reasoning.", isCorrect: false },
     ],
     explanation:
-      "Chain-of-thought improves transparency and debugging. However, exposed reasoning can still be flawed or misleading.",
+      'Chain-of-thought improves transparency and debugging. However, exposed reasoning can still be flawed or misleading. To reason through the choices, select the statements that match the criterion in the prompt: "It exposes intermediate reasoning steps as tokens."; "It can help identify reasoning errors."; "It makes debugging easier compared to opaque outputs.". Do not select statements that miss that criterion: "It guarantees logically correct reasoning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1299,7 +1299,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Even with deterministic decoding strategies, hardware and numerical effects can introduce variability. Absolute determinism is difficult to guarantee.",
+      'Even with deterministic decoding strategies, hardware and numerical effects can introduce variability. Absolute determinism is difficult to guarantee. To reason through the choices, select the statements that match the criterion in the prompt: "Sampling introduces randomness into token selection."; "Floating-point operations can introduce nondeterminism."; "Parallel hardware execution can affect numerical results.". Do not select statements that miss that criterion: "Determinism is guaranteed at temperature zero in practice.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1317,7 +1317,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Most inference optimizations operate on execution rather than learning. They are essential for practical deployment of large models.",
+      'Most inference optimizations operate on execution rather than learning. They are essential for practical deployment of large models. To reason through the choices, select the statements that match the criterion in the prompt: "They do not require retraining the model."; "They can be combined with each other."; "They are crucial for large-scale deployment.". Do not select statements that miss that criterion: "They fundamentally change the model architecture.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -1342,7 +1342,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Fragmentation is irrelevant for KV caching.", isCorrect: false },
     ],
     explanation:
-      "Memory fragmentation wastes space and reduces efficiency. Managing fragmentation is critical for scalable inference systems.",
+      'Memory fragmentation wastes space and reduces efficiency. Managing fragmentation is critical for scalable inference systems. To reason through the choices, select the statements that match the criterion in the prompt: "Internal fragmentation refers to unused reserved memory."; "External fragmentation refers to scattered free memory blocks.". Do not select statements that miss that criterion: "Fragmentation improves cache locality."; "Fragmentation is irrelevant for KV caching.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1364,7 +1364,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Acceptance–rejection ensures correctness while allowing speedups. Rejections trigger corrective sampling to preserve the target distribution.",
+      'Acceptance–rejection ensures correctness while allowing speedups. Rejections trigger corrective sampling to preserve the target distribution. To reason through the choices, select the statements that match the criterion in the prompt: "Accepted tokens match the target model distribution."; "Rejected tokens require resampling.". Do not select statements that miss that criterion: "All draft tokens are always accepted."; "Acceptance eliminates the need for validation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1392,7 +1392,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Multi-token prediction changes the training objective but does not remove autoregressive structure or attention mechanisms.",
+      'Multi-token prediction changes the training objective but does not remove autoregressive structure or attention mechanisms. To reason through the choices, select the statements that match the criterion in the prompt: "They differ from standard next-token prediction objectives."; "They require predicting future tokens jointly.". Do not select statements that miss that criterion: "They eliminate the need for autoregressive decoding."; "They remove the need for attention mechanisms.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1410,7 +1410,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Both remove randomness from generation.", isCorrect: false },
     ],
     explanation:
-      "Top-k and top-p sampling introduce controlled randomness. They reduce unlikely tokens but remain stochastic.",
+      'Top-k and top-p sampling introduce controlled randomness. They reduce unlikely tokens but remain stochastic. To reason through the choices, select the statements that match the criterion in the prompt: "Both restrict the set of candidate tokens."; "Both aim to balance diversity and coherence.". Do not select statements that miss that criterion: "Both guarantee identical outputs across runs."; "Both remove randomness from generation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1428,7 +1428,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Probabilities can exceed one.", isCorrect: false },
     ],
     explanation:
-      "Logits can take any real value and are converted into probabilities via softmax. Probabilities are bounded between zero and one.",
+      'Logits can take any real value and are converted into probabilities via softmax. Probabilities are bounded between zero and one. To reason through the choices, select the statements that match the criterion in the prompt: "Logits are unnormalized scores."; "Probabilities are obtained after applying softmax.". Do not select statements that miss that criterion: "Logits must be positive."; "Probabilities can exceed one.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1449,7 +1449,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Temperature is only used during training.", isCorrect: false },
     ],
     explanation:
-      "Temperature rescales logits at inference time. It affects sampling behavior without altering learned parameters.",
+      'Temperature rescales logits at inference time. It affects sampling behavior without altering learned parameters. To reason through the choices, select the statements that match the criterion in the prompt: "Lower temperature sharpens the probability distribution."; "Higher temperature flattens the distribution.". Do not select statements that miss that criterion: "Temperature changes model weights."; "Temperature is only used during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1473,7 +1473,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "MoE models scale capacity by adding experts while keeping active computation limited. Routing determines which parameters are used.",
+      'MoE models scale capacity by adding experts while keeping active computation limited. Routing determines which parameters are used. To reason through the choices, select the statements that match the criterion in the prompt: "MoE increases total parameter count."; "Active parameters per token can remain constant.". Do not select statements that miss that criterion: "All parameters are used in every forward pass."; "Capacity scaling removes the need for routing.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1494,7 +1494,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Batching eliminates all bottlenecks.", isCorrect: false },
     ],
     explanation:
-      "Memory bandwidth and cache access are major bottlenecks in inference. Many optimizations target reducing memory movement.",
+      'Memory bandwidth and cache access are major bottlenecks in inference. Many optimizations target reducing memory movement. To reason through the choices, select the statements that match the criterion in the prompt: "Inference is often memory-bound rather than compute-bound."; "KV cache access can dominate latency.". Do not select statements that miss that criterion: "More parameters always mean faster inference."; "Batching eliminates all bottlenecks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1515,7 +1515,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Prompting replaces model training entirely.", isCorrect: false },
     ],
     explanation:
-      "Prompting is powerful but imperfect. It guides behavior probabilistically rather than enforcing hard guarantees.",
+      'Prompting is powerful but imperfect. It guides behavior probabilistically rather than enforcing hard guarantees. To reason through the choices, select the statements that match the criterion in the prompt: "Behavior can be modified without fine-tuning."; "Instructions influence generation style.". Do not select statements that miss that criterion: "Prompting guarantees perfect adherence to constraints."; "Prompting replaces model training entirely.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -1537,7 +1537,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It changes the Transformer architecture.", isCorrect: false },
     ],
     explanation:
-      "KV caching prevents redundant computation by reusing previously computed attention components for earlier tokens.",
+      'KV caching prevents redundant computation by reusing previously computed attention components for earlier tokens. To reason through the choices, select the statements that match the criterion in the prompt: "It avoids recomputing keys and values for past tokens.". Do not select statements that miss that criterion: "It removes the need for attention entirely."; "It reduces vocabulary size."; "It changes the Transformer architecture.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1555,7 +1555,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Attention is replaced by routing.", isCorrect: false },
     ],
     explanation:
-      "GQA reduces memory by allowing multiple queries to share keys and values while preserving more flexibility than MQA.",
+      'GQA reduces memory by allowing multiple queries to share keys and values while preserving more flexibility than MQA. To reason through the choices, select the statements that match the criterion in the prompt: "Queries are grouped to share key and value heads.". Do not select statements that miss that criterion: "Each query has its own key and value heads."; "Attention is computed without softmax."; "Attention is replaced by routing.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1570,7 +1570,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Model parameters decrease.", isCorrect: false },
     ],
     explanation:
-      "Routing collapse undermines MoE benefits by underutilizing experts. Auxiliary losses help mitigate this issue.",
+      'Routing collapse undermines MoE benefits by underutilizing experts. Auxiliary losses help mitigate this issue. To reason through the choices, select the statements that match the criterion in the prompt: "Only a few experts dominate usage.". Do not select statements that miss that criterion: "Experts become too diverse."; "Routing becomes deterministic."; "Model parameters decrease.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1589,7 +1589,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Acceptance removes randomness.", isCorrect: false },
     ],
     explanation:
-      "Acceptance ensures that generated tokens match the target model’s distribution, preserving correctness while accelerating decoding.",
+      'Acceptance ensures that generated tokens match the target model’s distribution, preserving correctness while accelerating decoding. To reason through the choices, select the statements that match the criterion in the prompt: "Tokens are accepted when draft probability is consistent with target probability.". Do not select statements that miss that criterion: "Draft tokens are always accepted."; "Acceptance ignores the target model."; "Acceptance removes randomness.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1607,7 +1607,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "The batch size during training.", isCorrect: false },
     ],
     explanation:
-      "Context length defines how many tokens a model can attend to at once. It directly affects attention cost and memory usage.",
+      'Context length defines how many tokens a model can attend to at once. It directly affects attention cost and memory usage. To reason through the choices, select the statements that match the criterion in the prompt: "The maximum number of tokens processed in a single pass.". Do not select statements that miss that criterion: "The number of parameters in the model."; "The number of experts in an MoE model."; "The batch size during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1626,7 +1626,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Temperature scaling causes collapse.", isCorrect: false },
     ],
     explanation:
-      "Sequence probability is the product of conditional probabilities. Multiplying values below one causes the total probability to shrink with length.",
+      'Sequence probability is the product of conditional probabilities. Multiplying values below one causes the total probability to shrink with length. To reason through the choices, select the statements that match the criterion in the prompt: "Joint probability multiplies many values less than one.". Do not select statements that miss that criterion: "Probabilities increase with each token."; "Softmax enforces decay."; "Temperature scaling causes collapse.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1645,7 +1645,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Incompatibility with sampling.", isCorrect: false },
     ],
     explanation:
-      "Chain-of-thought improves reasoning and interpretability but increases token count, latency, and cost.",
+      'Chain-of-thought improves reasoning and interpretability but increases token count, latency, and cost. To reason through the choices, select the statements that match the criterion in the prompt: "Improved reasoning at the cost of more tokens.". Do not select statements that miss that criterion: "Lower accuracy for reasoning tasks."; "Reduced interpretability."; "Incompatibility with sampling.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1664,7 +1664,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "To remove attention mechanisms.", isCorrect: false },
     ],
     explanation:
-      "Inference-time approximations aim to make generation faster and cheaper while preserving output quality as much as possible.",
+      'Inference-time approximations aim to make generation faster and cheaper while preserving output quality as much as possible. To reason through the choices, select the statements that match the criterion in the prompt: "To reduce cost and latency with minimal quality loss.". Do not select statements that miss that criterion: "To retrain the model faster."; "To change the training objective."; "To remove attention mechanisms.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -1750,7 +1750,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Beam search prioritizes likelihood and consistency, which reduces diversity. This makes it less suitable for creative or conversational tasks.",
+      'Beam search prioritizes likelihood and consistency, which reduces diversity. This makes it less suitable for creative or conversational tasks. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It favors high-likelihood but low-diversity outputs."; "It tends to converge to similar or generic sequences."; "It optimizes likelihood rather than creativity."; "It increases computational cost relative to sampling.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -1774,7 +1774,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Sampling draws tokens from the model’s predicted distribution. This allows diversity and creativity while remaining probabilistically grounded.",
+      'Sampling draws tokens from the model’s predicted distribution. This allows diversity and creativity while remaining probabilistically grounded. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Tokens are sampled according to a probability distribution."; "Higher-probability tokens are more likely to be selected."; "Low-probability tokens can still be sampled."; "Sampling introduces nondeterminism into generation.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -1802,7 +1802,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Temperature modifies the sharpness of the probability distribution. It affects randomness at inference time without altering learned parameters.",
+      'Temperature modifies the sharpness of the probability distribution. It affects randomness at inference time without altering learned parameters. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Temperature rescales logits before normalization."; "Lower temperature increases confidence in top tokens."; "Higher temperature increases entropy of the distribution."; "Temperature influences sampling behavior without changing model weights.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -1827,7 +1827,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "MoE models increase capacity by adding experts while activating only a subset. This allows very large models with controlled inference cost.",
+      'MoE models increase capacity by adding experts while activating only a subset. This allows very large models with controlled inference cost. To reason through the choices, select every statement because each one matches the criterion in the prompt: "To increase model capacity without linearly increasing compute."; "To activate only a subset of parameters per token."; "To scale to very large parameter counts."; "To reduce inference cost compared to dense models of equal size.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -1880,7 +1880,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Routing per token allows the model to dynamically select experts based on contextual needs, improving efficiency and specialization.",
+      'Routing per token allows the model to dynamically select experts based on contextual needs, improving efficiency and specialization. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Different tokens may require different expert specializations."; "Token-level routing increases expressiveness."; "Routing can adapt dynamically to context."; "It allows fine-grained allocation of compute.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   // ============================================================
@@ -1908,7 +1908,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It always produces deterministic output.", isCorrect: false },
     ],
     explanation:
-      "Top-k sampling restricts candidate tokens but still samples randomly within that subset, maintaining diversity.",
+      'Top-k sampling restricts candidate tokens but still samples randomly within that subset, maintaining diversity. To reason through the choices, select the statements that match the criterion in the prompt: "It limits sampling to the k most likely tokens."; "It prevents extremely unlikely tokens from being selected."; "It preserves stochasticity within the selected set.". Do not select statements that miss that criterion: "It always produces deterministic output.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1930,7 +1930,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Auxiliary losses supplement the main objective to promote balanced expert usage. They help prevent collapse without replacing the core task loss.",
+      'Auxiliary losses supplement the main objective to promote balanced expert usage. They help prevent collapse without replacing the core task loss. To reason through the choices, select the statements that match the criterion in the prompt: "They penalize uneven expert utilization."; "They encourage more uniform routing distributions."; "They mitigate routing collapse.". Do not select statements that miss that criterion: "They replace the main language modeling loss.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1948,7 +1948,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It requires retraining the model.", isCorrect: false },
     ],
     explanation:
-      "Guided decoding constrains token selection at inference time. It does not modify model weights.",
+      'Guided decoding constrains token selection at inference time. It does not modify model weights. To reason through the choices, select the statements that match the criterion in the prompt: "It restricts the set of valid next tokens."; "It can enforce structured output constraints."; "It operates during inference.". Do not select statements that miss that criterion: "It requires retraining the model.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1972,7 +1972,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Longer context always improves performance.", isCorrect: false },
     ],
     explanation:
-      "While longer contexts allow more information, they also increase cost and can harm effective retrieval due to context rot.",
+      'While longer contexts allow more information, they also increase cost and can harm effective retrieval due to context rot. To reason through the choices, select the statements that match the criterion in the prompt: "Longer context increases attention computation cost."; "Very long contexts can degrade retrieval accuracy."; "Context rot can occur even when answers are present.". Do not select statements that miss that criterion: "Longer context always improves performance.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1996,7 +1996,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It removes the need for sampling.", isCorrect: false },
     ],
     explanation:
-      "Speculative decoding accelerates generation while preserving correctness. Sampling and validation are still required.",
+      'Speculative decoding accelerates generation while preserving correctness. Sampling and validation are still required. To reason through the choices, select the statements that match the criterion in the prompt: "It uses a smaller draft model to propose tokens."; "It validates draft tokens using a larger target model."; "It preserves the target model’s output distribution.". Do not select statements that miss that criterion: "It removes the need for sampling.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2014,7 +2014,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It eliminates autoregressive decoding.", isCorrect: false },
     ],
     explanation:
-      "Multi-token prediction accelerates inference by predicting several tokens at once, but decoding remains fundamentally autoregressive.",
+      'Multi-token prediction accelerates inference by predicting several tokens at once, but decoding remains fundamentally autoregressive. To reason through the choices, select the statements that match the criterion in the prompt: "The model predicts multiple future tokens per step."; "It changes the training objective."; "It can reduce inference latency.". Do not select statements that miss that criterion: "It eliminates autoregressive decoding.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2032,7 +2032,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It enforces logical correctness.", isCorrect: false },
     ],
     explanation:
-      "Chain-of-thought improves reasoning but does not guarantee correctness. It also increases cost due to longer outputs.",
+      'Chain-of-thought improves reasoning but does not guarantee correctness. It also increases cost due to longer outputs. To reason through the choices, select the statements that match the criterion in the prompt: "It encourages explicit intermediate reasoning."; "It often improves reasoning task accuracy."; "It increases inference token count.". Do not select statements that miss that criterion: "It enforces logical correctness.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2047,7 +2047,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It reduces computational cost.", isCorrect: false },
     ],
     explanation:
-      "Self-consistency trades additional computation for improved robustness by aggregating multiple sampled solutions.",
+      'Self-consistency trades additional computation for improved robustness by aggregating multiple sampled solutions. To reason through the choices, select the statements that match the criterion in the prompt: "It samples multiple reasoning paths."; "It aggregates answers via majority voting."; "It can improve robustness of final answers.". Do not select statements that miss that criterion: "It reduces computational cost.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -2072,7 +2072,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It requires gradient updates.", isCorrect: false },
     ],
     explanation:
-      "In-context learning steers behavior through the prompt alone. Model parameters remain unchanged.",
+      'In-context learning steers behavior through the prompt alone. Model parameters remain unchanged. To reason through the choices, select the statements that match the criterion in the prompt: "It adapts behavior without updating model weights."; "It relies on information provided in the prompt.". Do not select statements that miss that criterion: "It permanently changes the model."; "It requires gradient updates.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2090,7 +2090,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It fine-tunes the model.", isCorrect: false },
     ],
     explanation:
-      "Zero-shot prompting depends on clear instructions and pretrained knowledge, without examples or weight updates.",
+      'Zero-shot prompting depends on clear instructions and pretrained knowledge, without examples or weight updates. To reason through the choices, select the statements that match the criterion in the prompt: "It uses instructions without examples."; "It relies on the model’s pretrained knowledge.". Do not select statements that miss that criterion: "It requires labeled demonstrations."; "It fine-tunes the model.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2105,7 +2105,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It removes the need for instructions.", isCorrect: false },
     ],
     explanation:
-      "Few-shot examples help alignment but consume context and do not guarantee generalization beyond the examples.",
+      'Few-shot examples help alignment but consume context and do not guarantee generalization beyond the examples. To reason through the choices, select the statements that match the criterion in the prompt: "It can improve task alignment."; "It increases context length and cost.". Do not select statements that miss that criterion: "It guarantees generalization."; "It removes the need for instructions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2123,7 +2123,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "They only matter during training.", isCorrect: false },
     ],
     explanation:
-      "Context windows constrain attention scope and heavily influence inference cost and feasibility.",
+      'Context windows constrain attention scope and heavily influence inference cost and feasibility. To reason through the choices, select the statements that match the criterion in the prompt: "They limit how many tokens can be attended to."; "They affect memory and compute usage.". Do not select statements that miss that criterion: "They are unrelated to attention."; "They only matter during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2138,7 +2138,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It is only used in encoder-only models.", isCorrect: false },
     ],
     explanation:
-      "KV cache memory scales with sequence length and can dominate inference costs, especially for long contexts.",
+      'KV cache memory scales with sequence length and can dominate inference costs, especially for long contexts. To reason through the choices, select the statements that match the criterion in the prompt: "It grows with sequence length."; "It can become a bottleneck during inference.". Do not select statements that miss that criterion: "It is constant regardless of context."; "It is only used in encoder-only models.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2156,7 +2156,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Determinism is guaranteed on GPUs.", isCorrect: false },
     ],
     explanation:
-      "The model itself is deterministic, but sampling and numerical effects introduce nondeterminism during inference.",
+      'The model itself is deterministic, but sampling and numerical effects introduce nondeterminism during inference. To reason through the choices, select the statements that match the criterion in the prompt: "Sampling introduces randomness."; "Floating-point arithmetic can cause variation.". Do not select statements that miss that criterion: "Transformers are probabilistic by design."; "Determinism is guaranteed on GPUs.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2171,7 +2171,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Changing model semantics.", isCorrect: false },
     ],
     explanation:
-      "Inference optimizations aim to improve speed and scalability without changing what the model computes.",
+      'Inference optimizations aim to improve speed and scalability without changing what the model computes. To reason through the choices, select the statements that match the criterion in the prompt: "Reducing latency."; "Improving throughput.". Do not select statements that miss that criterion: "Increasing training data."; "Changing model semantics.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2187,7 +2187,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "They eliminate attention computation.", isCorrect: false },
     ],
     explanation:
-      "Approximate techniques reduce cost while aiming to maintain similar output distributions. They do not remove core mechanisms like attention.",
+      'Approximate techniques reduce cost while aiming to maintain similar output distributions. They do not remove core mechanisms like attention. To reason through the choices, select the statements that match the criterion in the prompt: "They trade exactness for speed."; "They aim to preserve output quality.". Do not select statements that miss that criterion: "They always change model predictions."; "They eliminate attention computation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -2213,7 +2213,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Softmax outputs are fixed.", isCorrect: false },
     ],
     explanation:
-      "Sampling introduces randomness when selecting tokens from a probability distribution, leading to different outputs.",
+      'Sampling introduces randomness when selecting tokens from a probability distribution, leading to different outputs. To reason through the choices, select the statements that match the criterion in the prompt: "Randomness is introduced during token selection.". Do not select statements that miss that criterion: "The model weights change at inference time."; "The Transformer is nondeterministic internally."; "Softmax outputs are fixed.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2231,7 +2231,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Attention stops functioning.", isCorrect: false },
     ],
     explanation:
-      "Context rot refers to degradation in effective information use as context length grows, especially with distractors.",
+      'Context rot refers to degradation in effective information use as context length grows, especially with distractors. To reason through the choices, select the statements that match the criterion in the prompt: "Relevant information becomes harder to retrieve in long contexts.". Do not select statements that miss that criterion: "Models forget earlier training data."; "The model overfits to recent tokens only."; "Attention stops functioning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2259,7 +2259,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "MoE models scale total parameters by adding experts while keeping active computation limited through routing.",
+      'MoE models scale total parameters by adding experts while keeping active computation limited through routing. To reason through the choices, select the statements that match the criterion in the prompt: "Only a subset of experts is activated per token.". Do not select statements that miss that criterion: "All parameters are used in every forward pass."; "Attention layers scale linearly with parameters."; "Routing removes the need for large datasets.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2278,7 +2278,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Reduced parameter count.", isCorrect: false },
     ],
     explanation:
-      "Speculative decoding accelerates inference by batching validation while preserving the target model’s output distribution.",
+      'Speculative decoding accelerates inference by batching validation while preserving the target model’s output distribution. To reason through the choices, select the statements that match the criterion in the prompt: "Faster inference with preserved output distribution.". Do not select statements that miss that criterion: "Improved training convergence."; "Higher model accuracy."; "Reduced parameter count.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2296,7 +2296,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It guarantees perfect control.", isCorrect: false },
     ],
     explanation:
-      "Prompting steers behavior probabilistically via context, without modifying the model’s weights.",
+      'Prompting steers behavior probabilistically via context, without modifying the model’s weights. To reason through the choices, select the statements that match the criterion in the prompt: "It conditions model behavior through context.". Do not select statements that miss that criterion: "It permanently alters model parameters."; "It replaces the need for training."; "It guarantees perfect control.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -2318,6 +2318,6 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Avoid probabilistic decoding.", isCorrect: false },
     ],
     explanation:
-      "Modern LLM design balances scale with efficiency and controllability, using techniques like MoE, sampling, and inference optimizations.",
+      'Modern LLM design balances scale with efficiency and controllability, using techniques like MoE, sampling, and inference optimizations. To reason through the choices, select the statements that match the criterion in the prompt: "Balance scale, efficiency, and controllability.". Do not select statements that miss that criterion: "Maximize parameter count regardless of cost."; "Eliminate autoregressive generation."; "Avoid probabilistic decoding.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 ];

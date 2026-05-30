@@ -791,7 +791,7 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
       { text: "It requires labeled data.", isCorrect: false },
     ],
     explanation:
-      "Density estimation models the probability distribution over data. It enables likelihood evaluation and sampling. It does not require labels.",
+      'Density estimation models the probability distribution over data. It enables likelihood evaluation and sampling. It does not require labels. To reason through the choices, select the statements that match the criterion in the prompt: "It involves modeling \\(p_{model}(x)\\)."; "It allows evaluation of likelihood of new samples."; "It is central to many generative approaches.". Do not select statements that miss that criterion: "It requires labeled data.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -884,7 +884,7 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
       { text: "Both explicitly compute exact likelihoods.", isCorrect: false },
     ],
     explanation:
-      "VAEs and GANs are both neural generative models capable of producing new samples. However, GANs do not explicitly compute likelihoods.",
+      'VAEs and GANs are both neural generative models capable of producing new samples. However, GANs do not explicitly compute likelihoods. To reason through the choices, select the statements that match the criterion in the prompt: "Both are generative models."; "Both can generate new synthetic samples."; "Both rely on neural networks.". Do not select statements that miss that criterion: "Both explicitly compute exact likelihoods.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {

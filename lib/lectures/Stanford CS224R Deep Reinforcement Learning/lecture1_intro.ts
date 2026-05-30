@@ -143,7 +143,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       },
     ],
     explanation:
-      "When the agent cannot observe the full state, it must rely on observations. Memory or history helps compensate for missing information.",
+      'When the agent cannot observe the full state, it must rely on observations. Memory or history helps compensate for missing information. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Observations may not contain all information about the true state."; "They are what the agent directly perceives."; "They can require memory of past observations to act optimally."; "They are commonly used in partially observable environments.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -167,7 +167,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       },
     ],
     explanation:
-      "Rewards specify what the agent should achieve, not how to achieve it. This indirect supervision is a key distinction from supervised learning.",
+      'Rewards specify what the agent should achieve, not how to achieve it. This indirect supervision is a key distinction from supervised learning. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They define how desirable a state or action is."; "They encode the task objective."; "They can depend on the state, the action, or both."; "They guide learning without specifying correct actions explicitly.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -234,7 +234,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       },
     ],
     explanation:
-      "Value functions quantify how promising a situation is under a given policy. They are used to guide policy improvement in many algorithms.",
+      'Value functions quantify how promising a situation is under a given policy. They are used to guide policy improvement in many algorithms. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They estimate future expected reward."; "They depend on a specific policy."; "They help evaluate how good a state or action is."; "They are central to many reinforcement learning algorithms.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   // ============================================================
@@ -290,7 +290,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       },
     ],
     explanation:
-      "A Markov Decision Process assumes full access to the state, but this assumption can be relaxed in partially observable settings.",
+      'A Markov Decision Process assumes full access to the state, but this assumption can be relaxed in partially observable settings. To reason through the choices, select the statements that match the criterion in the prompt: "They consist of states, actions, rewards, and dynamics."; "They assume the Markov property holds."; "They define a probability distribution over trajectories.". Do not select statements that miss that criterion: "They require full observability of the environment.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -314,7 +314,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       },
     ],
     explanation:
-      "Observations may omit important information. Using history or memory helps compensate for this partial observability.",
+      'Observations may omit important information. Using history or memory helps compensate for this partial observability. To reason through the choices, select the statements that match the criterion in the prompt: "They may require maintaining a history to infer the state."; "They can come from sensors or user inputs."; "They can lead to partially observable problems.". Do not select statements that miss that criterion: "They are always equivalent to the true state.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -335,7 +335,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       },
     ],
     explanation:
-      "Trajectories capture interaction experience. Randomness in the environment or policy means trajectories vary even under the same policy.",
+      'Trajectories capture interaction experience. Randomness in the environment or policy means trajectories vary even under the same policy. To reason through the choices, select the statements that match the criterion in the prompt: "They depend on both the policy and environment dynamics."; "They can be used as training data."; "They represent experience collected by the agent.". Do not select statements that miss that criterion: "They are deterministic given a policy.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -354,7 +354,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       { text: "Stochasticity makes learning impossible.", isCorrect: false },
     ],
     explanation:
-      "Stochasticity introduces uncertainty but does not prevent learning. Algorithms explicitly account for randomness through expectations.",
+      'Stochasticity introduces uncertainty but does not prevent learning. Algorithms explicitly account for randomness through expectations. To reason through the choices, select the statements that match the criterion in the prompt: "Environment transitions can be stochastic."; "Policies can introduce randomness in action selection."; "Stochasticity affects expected returns.". Do not select statements that miss that criterion: "Stochasticity makes learning impossible.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -381,7 +381,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       },
     ],
     explanation:
-      "Discounting controls the importance of future outcomes. Value functions remain necessary to evaluate long-term consequences.",
+      'Discounting controls the importance of future outcomes. Value functions remain necessary to evaluate long-term consequences. To reason through the choices, select the statements that match the criterion in the prompt: "They weight future rewards relative to immediate rewards."; "A discount factor of 1 treats all rewards equally."; "Smaller discount factors emphasize near-term rewards.". Do not select statements that miss that criterion: "Discount factors eliminate the need for value functions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -406,7 +406,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       },
     ],
     explanation:
-      "Deep reinforcement learning uses neural networks to handle complex inputs. Learning is driven by rewards rather than explicit action labels.",
+      'Deep reinforcement learning uses neural networks to handle complex inputs. Learning is driven by rewards rather than explicit action labels. To reason through the choices, select the statements that match the criterion in the prompt: "They can process high-dimensional inputs like images."; "They can be trained using gradient-based methods."; "They are common in deep reinforcement learning.". Do not select statements that miss that criterion: "They require labeled action targets.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -427,7 +427,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       { text: "They eliminate the need for exploration.", isCorrect: false },
     ],
     explanation:
-      "Value functions help evaluate and improve policies but do not remove the need to explore uncertain actions.",
+      'Value functions help evaluate and improve policies but do not remove the need to explore uncertain actions. To reason through the choices, select the statements that match the criterion in the prompt: "They estimate expected future reward under a policy."; "They depend on the dynamics of the environment."; "They can be used to improve policies.". Do not select statements that miss that criterion: "They eliminate the need for exploration.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -443,7 +443,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       { text: "They are limited to simulated environments.", isCorrect: false },
     ],
     explanation:
-      "Reinforcement learning is applied across many domains, including real-world systems. Simulation is common but not mandatory.",
+      'Reinforcement learning is applied across many domains, including real-world systems. Simulation is common but not mandatory. To reason through the choices, select the statements that match the criterion in the prompt: "They include robotics and control tasks."; "They include game playing."; "They include language model post-training.". Do not select statements that miss that criterion: "They are limited to simulated environments.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -485,7 +485,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       { text: "They remove the need for policies.", isCorrect: false },
     ],
     explanation:
-      "Partial observability complicates decision-making. Memory or inference over hidden states helps address missing information.",
+      'Partial observability complicates decision-making. Memory or inference over hidden states helps address missing information. To reason through the choices, select the statements that match the criterion in the prompt: "They arise when the agent cannot observe the full state."; "They often require memory or belief states.". Do not select statements that miss that criterion: "They assume the Markov property over observations."; "They remove the need for policies.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -500,7 +500,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       { text: "They represent sequences over time.", isCorrect: true },
     ],
     explanation:
-      "Trajectories capture temporal structure, which distinguishes them from static datasets. Length can vary depending on termination conditions.",
+      'Trajectories capture temporal structure, which distinguishes them from static datasets. Length can vary depending on termination conditions. To reason through the choices, select the statements that match the criterion in the prompt: "They can include both states and actions."; "They represent sequences over time.". Do not select statements that miss that criterion: "They always have fixed length."; "They are equivalent to supervised datasets.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -515,7 +515,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       { text: "Rewards uniquely determine optimal actions.", isCorrect: false },
     ],
     explanation:
-      "Sparse rewards provide little feedback, slowing learning. Rewards need not be differentiable and often allow multiple optimal behaviors.",
+      'Sparse rewards provide little feedback, slowing learning. Rewards need not be differentiable and often allow multiple optimal behaviors. To reason through the choices, select the statements that match the criterion in the prompt: "Sparse rewards can make learning difficult."; "Reward shaping can help guide learning.". Do not select statements that miss that criterion: "Rewards must always be differentiable."; "Rewards uniquely determine optimal actions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -533,7 +533,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       { text: "It is identical to immediate reward.", isCorrect: false },
     ],
     explanation:
-      "Expected return accounts for uncertainty by averaging over outcomes. It captures long-term performance rather than immediate reward.",
+      'Expected return accounts for uncertainty by averaging over outcomes. It captures long-term performance rather than immediate reward. To reason through the choices, select the statements that match the criterion in the prompt: "It averages rewards over possible trajectories."; "It depends on the policy.". Do not select statements that miss that criterion: "It ignores stochasticity."; "It is identical to immediate reward.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -569,7 +569,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       { text: "They cannot handle high-dimensional inputs.", isCorrect: false },
     ],
     explanation:
-      "Neural networks are flexible function approximators. They are widely used to handle high-dimensional sensory inputs.",
+      'Neural networks are flexible function approximators. They are widely used to handle high-dimensional sensory inputs. To reason through the choices, select the statements that match the criterion in the prompt: "They can consume observations or states as input."; "They can output distributions over actions.". Do not select statements that miss that criterion: "They require full state observability."; "They cannot handle high-dimensional inputs.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -588,7 +588,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       { text: "It ignores rewards.", isCorrect: false },
     ],
     explanation:
-      "Trajectory probabilities combine environment dynamics and policy behavior. Rewards are not part of the probability but affect the objective.",
+      'Trajectory probabilities combine environment dynamics and policy behavior. Rewards are not part of the probability but affect the objective. To reason through the choices, select the statements that match the criterion in the prompt: "It factors into initial state, policy, and dynamics terms."; "It depends on the policy parameters.". Do not select statements that miss that criterion: "It is independent of the environment."; "It ignores rewards.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -603,7 +603,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       { text: "It is unnecessary once learning begins.", isCorrect: false },
     ],
     explanation:
-      "Exploration allows agents to gather informative experience. It does not guarantee optimality but is essential for learning.",
+      'Exploration allows agents to gather informative experience. It does not guarantee optimality but is essential for learning. To reason through the choices, select the statements that match the criterion in the prompt: "It is necessary to discover good actions."; "It can be enabled by stochastic policies.". Do not select statements that miss that criterion: "It guarantees optimal behavior."; "It is unnecessary once learning begins.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -623,7 +623,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       { text: "Matching human demonstrations exactly.", isCorrect: false },
     ],
     explanation:
-      "Reinforcement learning optimizes long-term reward rather than immediate accuracy or label matching.",
+      'Reinforcement learning optimizes long-term reward rather than immediate accuracy or label matching. To reason through the choices, select the statements that match the criterion in the prompt: "Maximizing expected cumulative reward.". Do not select statements that miss that criterion: "Predicting labels from fixed datasets."; "Minimizing classification error."; "Matching human demonstrations exactly.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -641,7 +641,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       { text: "It replaces the reward function.", isCorrect: false },
     ],
     explanation:
-      "Value functions evaluate states or actions but do not directly select actions.",
+      'Value functions evaluate states or actions but do not directly select actions. To reason through the choices, select the statements that match the criterion in the prompt: "It estimates expected future reward under a policy.". Do not select statements that miss that criterion: "It specifies which action to take."; "It defines environment dynamics."; "It replaces the reward function.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -657,7 +657,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       { text: "States are randomly shuffled.", isCorrect: false },
     ],
     explanation:
-      "Because actions affect future states, data depends on past decisions and policy behavior.",
+      'Because actions affect future states, data depends on past decisions and policy behavior. To reason through the choices, select the statements that match the criterion in the prompt: "Actions influence future observations.". Do not select statements that miss that criterion: "Rewards are deterministic."; "Policies are always fixed."; "States are randomly shuffled.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -676,7 +676,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       { text: "Policies are unnecessary.", isCorrect: false },
     ],
     explanation:
-      "Partial observability arises when sensors or inputs provide incomplete information about the world.",
+      'Partial observability arises when sensors or inputs provide incomplete information about the world. To reason through the choices, select the statements that match the criterion in the prompt: "The agent cannot directly observe the full state.". Do not select statements that miss that criterion: "The environment is deterministic."; "Rewards are unavailable."; "Policies are unnecessary.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -695,7 +695,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       { text: "They eliminate the need for rewards.", isCorrect: false },
     ],
     explanation:
-      "Stochastic policies allow agents to try different actions and gather informative experience.",
+      'Stochastic policies allow agents to try different actions and gather informative experience. To reason through the choices, select the statements that match the criterion in the prompt: "They encourage exploration during learning.". Do not select statements that miss that criterion: "They remove uncertainty from the environment."; "They guarantee optimal actions."; "They eliminate the need for rewards.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -711,7 +711,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       { text: "It represents the state of the world.", isCorrect: false },
     ],
     explanation:
-      "Actions are chosen by the agent and influence how the environment evolves.",
+      'Actions are chosen by the agent and influence how the environment evolves. To reason through the choices, select the statements that match the criterion in the prompt: "It is a decision chosen by the agent.". Do not select statements that miss that criterion: "It is the environment’s response."; "It is identical to a reward."; "It represents the state of the world.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -730,7 +730,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       { text: "It replaces value functions.", isCorrect: false },
     ],
     explanation:
-      "Discounting reflects how much the agent values future outcomes relative to immediate ones.",
+      'Discounting reflects how much the agent values future outcomes relative to immediate ones. To reason through the choices, select the statements that match the criterion in the prompt: "It controls the importance of future rewards.". Do not select statements that miss that criterion: "It removes randomness from rewards."; "It guarantees convergence."; "It replaces value functions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -749,6 +749,6 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       { text: "Policies cannot be stochastic.", isCorrect: false },
     ],
     explanation:
-      "The defining feature of a Markov Decision Process is the Markov property. Other assumptions such as determinism are not required.",
+      'The defining feature of a Markov Decision Process is the Markov property. Other assumptions such as determinism are not required. To reason through the choices, select the statements that match the criterion in the prompt: "Future states depend only on the current state and action.". Do not select statements that miss that criterion: "Observations always equal states."; "Rewards must be deterministic."; "Policies cannot be stochastic.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 ];

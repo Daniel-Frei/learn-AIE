@@ -73,7 +73,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "States are numerical observations describing the environment. Human subjective labels are not intrinsic state variables unless encoded numerically.",
+      'States are numerical observations describing the environment. Human subjective labels are not intrinsic state variables unless encoded numerically. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Pixel values from a game screen."; "Joint angles and velocities of a robot."; "Battery level and temperature readings."; "A state representation can be engineered or learned rather than provided only as a human symbolic judgment.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -98,7 +98,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "Rewards do not prescribe exact actions but provide evaluative feedback. The agent must learn how to act to maximize cumulative rewards.",
+      'Rewards do not prescribe exact actions but provide evaluative feedback. The agent must learn how to act to maximize cumulative rewards. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They provide scalar feedback after actions."; "They guide the agent toward desirable behavior."; "They are conventionally treated as signals from the environment."; "They do not directly specify the optimal action at each step.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -125,7 +125,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "Discounting downweights distant rewards and prevents divergence in infinite horizons. Determinism is unrelated to discounting.",
+      'Discounting downweights distant rewards and prevents divergence in infinite horizons. Determinism is unrelated to discounting. To reason through the choices, select every statement because each one matches the criterion in the prompt: "\\(G_t = \\sum_{k=0}^{\\infty} \\gamma^k r_{t+k}\\)"; "Discount factor \\(\\gamma\\) controls how much future rewards matter."; "Setting \\(\\gamma = 1\\) is safe only when episodes terminate."; "Discounting does not ensure actions are deterministic.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -152,7 +152,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "Markov states must contain all information needed to predict transitions. It is a structural assumption, not a guarantee of performance.",
+      'Markov states must contain all information needed to predict transitions. It is a structural assumption, not a guarantee of performance. To reason through the choices, select every statement because each one matches the criterion in the prompt: "The next state depends only on the current state and action."; "Missing velocity information can violate the Markov assumption."; "Including sufficient variables restores Markov structure."; "It does not guarantee fast learning regardless of rewards.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -189,7 +189,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "Policies decide actions, not transitions. The environment dynamics are modeled separately.",
+      'Policies decide actions, not transitions. The environment dynamics are modeled separately. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They output probabilities over actions."; "Stochasticity supports exploration."; "Softmax is often used for discrete policies."; "They do not directly encode environment dynamics.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -214,7 +214,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "Return encourages long-term planning. Exploration is still required to discover high-reward strategies.",
+      'Return encourages long-term planning. Exploration is still required to discover high-reward strategies. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It captures delayed consequences of actions."; "Greedy immediate rewards can lead to poor long-term outcomes."; "It allows optimizing over trajectories instead of single steps."; "It does not remove the need for exploration.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -235,7 +235,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "World models predict transitions and rewards. Model-free methods instead learn purely from sampled experience.",
+      'World models predict transitions and rewards. Model-free methods instead learn purely from sampled experience. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They estimate \\(P(s\', r | s, a)\\)."; "They encode environment dynamics."; "Having a world model improves sample efficiency."; "Model-free RL assumes no access to this transition model.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -253,7 +253,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "Trajectories are fundamental to learning in model-free RL since they provide all observed experience.",
+      'Trajectories are fundamental to learning in model-free RL since they provide all observed experience. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They are sequences \\((s_t,a_t,r_t)\\)."; "They are collected through sampling."; "Returns can be computed from them."; "They are still necessary in model-free RL because returns are estimated from sampled experience.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -277,7 +277,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "Monte Carlo waits for full returns, causing slow learning and poor credit assignment.",
+      'Monte Carlo waits for full returns, causing slow learning and poor credit assignment. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They update values only after episode completion."; "They struggle with long episodes."; "They cannot distinguish which intermediate actions were responsible for success."; "They are often less sample efficient than temporal difference methods.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -298,7 +298,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "Temporal difference uses one-step estimates rather than full rollouts, enabling faster updates.",
+      'Temporal difference uses one-step estimates rather than full rollouts, enabling faster updates. To reason through the choices, select the statements that match the criterion in the prompt: "It bootstraps from estimated future values."; "It reduces dependence on episode termination.". Do not select statements that miss that criterion: "It updates only after every full episode."; "It computes full trajectory returns explicitly.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -317,7 +317,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "The lecture explicitly labels SARSA variants as on-policy and Q-learning as off-policy.",
+      'The lecture explicitly labels SARSA variants as on-policy and Q-learning as off-policy. To reason through the choices, select the statements that match the criterion in the prompt: "Q-learning". Do not select statements that miss that criterion: "SARSA"; "Expected SARSA"; "Monte Carlo control (as used in the maze example)". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -344,7 +344,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "Epsilon-greedy ensures continued exploration but does not guarantee optimality without sufficient sampling.",
+      'Epsilon-greedy ensures continued exploration but does not guarantee optimality without sufficient sampling. To reason through the choices, select the statements that match the criterion in the prompt: "With probability \\(\\epsilon\\), a random action is selected.". Do not select statements that miss that criterion: "It always prevents convergence to a suboptimal policy."; "It follows a fixed exploration rate and never shifts toward exploitation."; "It guarantees finding the optimal policy in finite steps.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -372,7 +372,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "The lecture only makes empirical comparisons (maze) and explains sample efficiency conceptually.",
+      'The lecture only makes empirical comparisons (maze) and explains sample efficiency conceptually. To reason through the choices, select the statements that match the criterion in the prompt: "Sample efficiency refers to how many interactions are needed to learn good behavior.". Do not select statements that miss that criterion: "Temporal difference methods always outperform Monte Carlo in sample efficiency."; "In the maze example, Q-learning was always more sample efficient than SARSA in every setting."; "Monte Carlo was shown to be more efficient than TD methods.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -397,7 +397,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "Networks allow continuous representation but value-based approaches still require discrete actions.",
+      'Networks allow continuous representation but value-based approaches still require discrete actions. To reason through the choices, select the statements that match the criterion in the prompt: "They approximate continuous state spaces.". Do not select statements that miss that criterion: "They guarantee perfect generalization across all unseen states."; "They eliminate the need for choosing architectures or parameterizations."; "They naturally handle infinite discrete actions in value-based methods.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -421,7 +421,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       { text: "They directly learn stochastic policies.", isCorrect: false },
     ],
     explanation:
-      "Deep Q Networks estimate Q-values; the policy is derived greedily rather than modeled probabilistically.",
+      'Deep Q Networks estimate Q-values; the policy is derived greedily rather than modeled probabilistically. To reason through the choices, select the statements that match the criterion in the prompt: "They approximate the action-value function with neural networks.". Do not select statements that miss that criterion: "They rely on Q-learning updates without any bootstrapping targets."; "They operate naturally over any continuous action space without modification."; "They directly learn stochastic policies.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -445,7 +445,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       { text: "They rely on tabular value iteration only.", isCorrect: false },
     ],
     explanation:
-      "Policy gradient methods perform gradient ascent on expected reward and extend naturally to continuous domains.",
+      'Policy gradient methods perform gradient ascent on expected reward and extend naturally to continuous domains. To reason through the choices, select the statements that match the criterion in the prompt: "They optimize an objective \\(J(\\theta)\\) instead of minimizing supervised loss."; "They can handle continuous actions via Gaussian policies.". Do not select statements that miss that criterion: "They increase probability of actions without weighting by advantage or return."; "They rely on tabular value iteration only.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -463,7 +463,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       { text: "They remove the need for rewards.", isCorrect: false },
     ],
     explanation:
-      "Actor–critic combines policy optimization with value estimation; rewards remain essential.",
+      'Actor–critic combines policy optimization with value estimation; rewards remain essential. To reason through the choices, select the statements that match the criterion in the prompt: "The actor updates the policy."; "The critic estimates value functions.". Do not select statements that miss that criterion: "They typically avoid temporal-difference-style value estimates altogether."; "They remove the need for rewards.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -491,7 +491,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "Neuroscience evidence shows dopamine tracks surprise in expected reward, aligning closely with temporal difference error.",
+      'Neuroscience evidence shows dopamine tracks surprise in expected reward, aligning closely with temporal difference error. To reason through the choices, select the statements that match the criterion in the prompt: "Dopamine spikes correspond to reward prediction errors."; "Negative prediction errors occur when expected rewards fail to appear.". Do not select statements that miss that criterion: "Signals remain fixed on the primary reward and do not shift to predictive cues."; "Dopamine encodes only immediate reward magnitude.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -518,7 +518,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "Imitation learning mimics expert trajectories but struggles when encountering unseen states unless augmented.",
+      'Imitation learning mimics expert trajectories but struggles when encountering unseen states unless augmented. To reason through the choices, select the statements that match the criterion in the prompt: "Behavioral cloning learns policies directly from expert state–action pairs."; "Dataset Aggregation improves robustness by adding corrective labels.". Do not select statements that miss that criterion: "It completely removes dependence on expert data once the initial demonstrations are collected."; "It guarantees optimal behavior outside demonstrated states.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -546,7 +546,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "Inverse reinforcement learning deduces objectives from demonstrations rather than copying actions.",
+      'Inverse reinforcement learning deduces objectives from demonstrations rather than copying actions. To reason through the choices, select the statements that match the criterion in the prompt: "It aims to infer the reward function underlying expert behavior."; "It can generalize better by learning goals instead of direct actions.". Do not select statements that miss that criterion: "It eliminates the need for expert demonstrations."; "Inverse Q-learning is the only method used for inverse reinforcement learning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -567,7 +567,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       { text: "Naturally generalizes from few samples.", isCorrect: false },
     ],
     explanation:
-      "Model-free RL relies purely on trial-and-error, leading to high sample complexity.",
+      'Model-free RL relies purely on trial-and-error, leading to high sample complexity. To reason through the choices, select the statements that match the criterion in the prompt: "Requires large numbers of interactions."; "Learns without understanding environment physics."; "Often inefficient compared to model-based approaches.". Do not select statements that miss that criterion: "Naturally generalizes from few samples.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -586,7 +586,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       { text: "Cannot be combined with neural networks.", isCorrect: false },
     ],
     explanation:
-      "Model-based RL leverages predictive models to imagine futures and plan efficiently.",
+      'Model-based RL leverages predictive models to imagine futures and plan efficiently. To reason through the choices, select the statements that match the criterion in the prompt: "Uses learned or provided transition models."; "Allows simulated rollouts for planning."; "Can dramatically reduce required real-world samples.". Do not select statements that miss that criterion: "Cannot be combined with neural networks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -613,7 +613,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "RL is sensitive to randomness in initialization and sampling, leading to instability.",
+      'RL is sensitive to randomness in initialization and sampling, leading to instability. To reason through the choices, select the statements that match the criterion in the prompt: "Different random seeds can produce drastically different results."; "Policy gradient methods often show high variance across runs."; "Training reproducibility is a known challenge.". Do not select statements that miss that criterion: "RL training is fully deterministic given fixed hyperparameters.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -640,7 +640,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "Reward misalignment leads to gaming the metric rather than solving the task.",
+      'Reward misalignment leads to gaming the metric rather than solving the task. To reason through the choices, select the statements that match the criterion in the prompt: "Poorly designed rewards can lead to unintended behavior."; "Agents exploit loopholes rather than achieving true goals."; "Expert demonstrations can mitigate this issue.". Do not select statements that miss that criterion: "Reward hacking occurs only in continuous control tasks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -662,7 +662,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       { text: "It requires a deterministic environment.", isCorrect: false },
     ],
     explanation:
-      "Bellman optimality applies even in stochastic environments and is fundamental to value recursion.",
+      'Bellman optimality applies even in stochastic environments and is fundamental to value recursion. To reason through the choices, select the statements that match the criterion in the prompt: "Optimal future decisions must remain optimal from the next state onward."; "It underlies dynamic programming in RL."; "It justifies the max operator in Q-learning targets.". Do not select statements that miss that criterion: "It requires a deterministic environment.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -684,7 +684,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       { text: "Value estimates become meaningless.", isCorrect: false },
     ],
     explanation:
-      "Without terminal anchors values drift but relative ordering still guides decisions.",
+      'Without terminal anchors values drift but relative ordering still guides decisions. To reason through the choices, select the statements that match the criterion in the prompt: "Monte Carlo methods struggle because returns cannot be finalized."; "Temporal difference can still learn relative values."; "Discounting prevents divergence.". Do not select statements that miss that criterion: "Value estimates become meaningless.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -708,7 +708,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       { text: "They apply only to discrete action spaces.", isCorrect: false },
     ],
     explanation:
-      "Gaussian policies enable continuous control through parameterized distributions.",
+      'Gaussian policies enable continuous control through parameterized distributions. To reason through the choices, select the statements that match the criterion in the prompt: "Actions are sampled from \\(\\mathcal{N}(\\mu, \\sigma^2)\\)."; "Policy updates shift the mean toward advantageous actions."; "Variance can expand or contract based on exploration needs.". Do not select statements that miss that criterion: "They apply only to discrete action spaces.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -729,7 +729,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "J evaluates the policy globally; Q and V provide state/action-level learning structure.",
+      'J evaluates the policy globally; Q and V provide state/action-level learning structure. To reason through the choices, select the statements that match the criterion in the prompt: "It measures expected performance over trajectories."; "It is optimized using gradient ascent."; "Different equivalent definitions exist.". Do not select statements that miss that criterion: "It provides direct per-state learning targets like Q-values do.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -747,7 +747,7 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       { text: "It disappears in Monte Carlo methods.", isCorrect: false },
     ],
     explanation:
-      "Credit assignment remains challenging; Monte Carlo actually worsens it.",
+      'Credit assignment remains challenging; Monte Carlo actually worsens it. To reason through the choices, select the statements that match the criterion in the prompt: "It refers to identifying which actions led to outcomes."; "Harder when rewards are delayed."; "Temporal difference partially alleviates it.". Do not select statements that miss that criterion: "It disappears in Monte Carlo methods.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -771,6 +771,6 @@ export const OtherRL_introductiontoReinforcementLearning: Question[] = [
       },
     ],
     explanation:
-      "Humans leverage structure and reasoning beyond raw reward feedback.",
+      'Humans leverage structure and reasoning beyond raw reward feedback. To reason through the choices, select the statements that match the criterion in the prompt: "Humans use internal world models."; "Model-free RL resembles blind trial-and-error."; "RL can still succeed without explicit understanding.". Do not select statements that miss that criterion: "Humans learn exclusively via scalar rewards.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 ];

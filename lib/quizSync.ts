@@ -50,3 +50,9 @@ export type LocalMigrationRequest = {
 };
 
 export type LocalMigrationResponse = QuizStateResponse;
+
+export type ResetParticipantRatingRequest = {
+  participantId: string;
+};
+
+export type ResetParticipantRatingResponse = QuizStateResponse;

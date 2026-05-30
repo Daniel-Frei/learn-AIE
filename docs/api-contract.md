@@ -216,6 +216,48 @@ Persist one quiz answer for an anonymous participant and update both participant
 }
 ```
 
+## Endpoint: `POST /api/participant-rating-reset`
+
+### Purpose
+
+Reset one anonymous participant's Glicko rating to the default user state while preserving shared question ratings, answer-attempt history, and report counts.
+
+### Request Body
+
+```ts
+{
+  participantId: string;
+}
+```
+
+### Success Response
+
+- Status: `200`
+- Body shape matches `GET /api/quiz-state`.
+
+### Error Responses
+
+- Status: `400`
+
+```ts
+{
+  error: "participantId is required for rating reset.";
+}
+```
+
+- Status: `500`
+
+```ts
+{
+  error: "Failed to reset participant rating";
+}
+```
+
+### Notes For Backend Integrators
+
+- The reset only updates the `participants` row for the provided participant. It does not delete `question_ratings`, `answer_attempts`, or `question_reports`.
+- If the participant had not completed legacy migration, reset marks it complete to prevent old browser-local ratings from being imported again.
+
 ## Endpoint: `POST /api/question-reports`
 
 ### Purpose
@@ -275,6 +317,7 @@ Persist a shared append-only question-quality report.
 
 - Reports are append-only in the shared database; multiple reports for the same `questionId` remain separate entries.
 - Report submission rejects empty fields, comments over `2,000` characters, prompt snapshots over `4,000` characters, labels/ids over `200` characters, and topics outside `RL`, `DL`, `NLP`, `Math`, or `Life Science`.
+- The server-side topic validator and the `question_reports.topic` database check constraint must stay aligned with the registered quiz topics.
 
 ## Endpoint: `POST /api/local-migration`
 

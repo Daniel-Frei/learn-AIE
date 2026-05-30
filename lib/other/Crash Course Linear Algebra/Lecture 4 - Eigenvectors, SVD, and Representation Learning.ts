@@ -1058,6 +1058,543 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
     explanation:
       "Eigenvectors, PCA, and SVD provide tools for understanding important directions, compression, and latent structure in high-dimensional systems. These ideas directly support reasoning about embeddings, attention, LoRA, and representation learning.",
   },
+  {
+    id: "la-crash-l4-q41",
+    chapter: 4,
+    difficulty: "easy",
+    prompt:
+      "For \\(A=\\begin{bmatrix}3 & 0 \\\\ 0 & 1\\end{bmatrix}\\), which statements correctly identify eigenvector behavior?",
+    options: [
+      {
+        text: "\\(\\begin{bmatrix}1 \\\\ 0\\end{bmatrix}\\) is an eigenvector with eigenvalue \\(3\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\begin{bmatrix}0 \\\\ 1\\end{bmatrix}\\) is an eigenvector with eigenvalue \\(1\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\begin{bmatrix}2 \\\\ 0\\end{bmatrix}\\) is also an eigenvector with eigenvalue \\(3\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Every nonzero vector in \\(\\mathbb{R}^2\\) is an eigenvector of \\(A\\).",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The coordinate axes are stable directions for this diagonal transformation, so vectors on the \\(x\\)-axis scale by \\(3\\) and vectors on the \\(y\\)-axis scale by \\(1\\). Any nonzero scalar multiple of an eigenvector is still an eigenvector with the same eigenvalue. A mixed vector such as \\((1,1)\\) changes direction because its two coordinates are scaled differently.",
+  },
+  {
+    id: "la-crash-l4-q42",
+    chapter: 4,
+    difficulty: "easy",
+    prompt:
+      "For \\(A=\\begin{bmatrix}2 & 0 \\\\ 0 & -1\\end{bmatrix}\\) and \\(v=\\begin{bmatrix}0 \\\\ 4\\end{bmatrix}\\), which statement is correct?",
+    options: [
+      {
+        text: "\\(v\\) is an eigenvector with eigenvalue \\(-1\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(v\\) is an eigenvector with eigenvalue \\(2\\).",
+        isCorrect: false,
+      },
+      {
+        text: "\\(v\\) is not an eigenvector because its second coordinate is nonzero.",
+        isCorrect: false,
+      },
+      {
+        text: "\\(Av\\) cannot be computed because \\(A\\) has a negative entry.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Multiplying gives \\(Av=\\begin{bmatrix}0 \\\\ -4\\end{bmatrix}=-1v\\). The vector keeps its line of direction but flips because the eigenvalue is negative. A negative entry or eigenvalue does not prevent matrix multiplication.",
+  },
+  {
+    id: "la-crash-l4-q43",
+    chapter: 4,
+    difficulty: "easy",
+    prompt: "Which statements correctly describe covariance intuition?",
+    options: [
+      {
+        text: "Positive covariance means two variables tend to increase together.",
+        isCorrect: true,
+      },
+      {
+        text: "Negative covariance means one variable tends to decrease when the other increases.",
+        isCorrect: true,
+      },
+      {
+        text: "A covariance matrix must be diagonal because different features never interact.",
+        isCorrect: false,
+      },
+      {
+        text: "Covariance ignores how data spreads through space.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Covariance measures how variables vary together around their means. Positive and negative covariance describe different kinds of joint movement, while off-diagonal covariance entries capture feature relationships. This is why covariance is useful for identifying directions of spread in data.",
+  },
+  {
+    id: "la-crash-l4-q44",
+    chapter: 4,
+    difficulty: "easy",
+    prompt:
+      "For a centered data matrix \\(X\\), which statements about the covariance-style matrix \\(X^TX\\) are correct?",
+    options: [
+      {
+        text: "\\(X^TX\\) is symmetric.",
+        isCorrect: true,
+      },
+      {
+        text: "The entries of \\(X^TX\\) are feature-feature dot products.",
+        isCorrect: true,
+      },
+      {
+        text: "The diagonal entries of \\(X^TX\\) are sums of squared feature values.",
+        isCorrect: true,
+      },
+      {
+        text: "Multiplying by a positive scalar normalization factor changes eigenvalues but not eigenvector directions.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "The matrix \\(X^TX\\) compares columns of \\(X\\), so it captures feature relationships. It is symmetric because transposing the product gives the same product, and its diagonal contains squared norms of feature columns. A positive scalar normalization rescales eigenvalues but leaves the eigendirections unchanged.",
+  },
+  {
+    id: "la-crash-l4-q45",
+    chapter: 4,
+    difficulty: "easy",
+    prompt:
+      "Which statements correctly describe projecting two-dimensional data onto its first principal component?",
+    options: [
+      {
+        text: "The first principal component is the direction of maximum variance.",
+        isCorrect: true,
+      },
+      {
+        text: "The projection discards variation orthogonal to that component.",
+        isCorrect: true,
+      },
+      {
+        text: "For centered data, the first principal component is an eigenvector of the covariance matrix.",
+        isCorrect: true,
+      },
+      {
+        text: "The first principal component must be one of the original coordinate axes.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Principal Component Analysis (PCA) chooses directions that capture as much variance as possible. Projecting onto the first component keeps the strongest one-dimensional direction and discards the orthogonal residual information. The component can be a rotated linear combination of the original features, not necessarily a coordinate axis.",
+  },
+  {
+    id: "la-crash-l4-q46",
+    chapter: 4,
+    difficulty: "easy",
+    prompt:
+      "Which statement correctly describes Singular Value Decomposition (SVD)?",
+    options: [
+      {
+        text: "SVD can decompose rectangular as well as square matrices.",
+        isCorrect: true,
+      },
+      {
+        text: "SVD only works when a matrix is square and symmetric.",
+        isCorrect: false,
+      },
+      {
+        text: "Singular values are allowed to be negative because eigenvalues can be negative.",
+        isCorrect: false,
+      },
+      {
+        text: "SVD is unrelated to rotations, scaling, or low-rank approximation.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "SVD applies broadly to matrices, including rectangular matrices that do not have ordinary eigenvectors in the same way square matrices do. Its singular values are nonnegative and describe scaling strengths. The decomposition is central to geometric interpretation and low-rank approximation.",
+  },
+  {
+    id: "la-crash-l4-q47",
+    chapter: 4,
+    difficulty: "easy",
+    prompt: "Which statements correctly interpret singular values?",
+    options: [
+      {
+        text: "Large singular values correspond to strong transformation directions.",
+        isCorrect: true,
+      },
+      {
+        text: "Zero singular values indicate missing independent directions and reduce rank.",
+        isCorrect: true,
+      },
+      {
+        text: "Singular values are negative when a direction flips.",
+        isCorrect: false,
+      },
+      {
+        text: "Singular values are simply the original rows of the data matrix.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Singular values measure how strongly a matrix scales special orthogonal directions. Zero singular values indicate that some directions are collapsed, which lowers rank. Direction flips are represented in singular vectors or eigenvalues in other decompositions, while singular values themselves remain nonnegative.",
+  },
+  {
+    id: "la-crash-l4-q48",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "For the covariance matrix \\(\\Sigma=\\begin{bmatrix}4 & 0 \\\\ 0 & 1\\end{bmatrix}\\), which PCA statements are correct?",
+    options: [
+      {
+        text: "The first principal component is the \\(x\\)-axis direction.",
+        isCorrect: true,
+      },
+      {
+        text: "The first component explains \\(\\frac{4}{5}\\) of the total variance.",
+        isCorrect: true,
+      },
+      {
+        text: "Projecting onto the first component keeps the higher-variance direction.",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\Sigma\\) is symmetric, so its principal directions are well behaved.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "The diagonal entries show variance \\(4\\) along the \\(x\\)-axis and variance \\(1\\) along the \\(y\\)-axis. Total variance is \\(5\\), so the first component explains \\(4/5\\) of it. This simple example shows how PCA chooses high-variance directions.",
+  },
+  {
+    id: "la-crash-l4-q49",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "A matrix has singular values \\(10,3,0,0\\). Which statements are correct?",
+    options: [
+      {
+        text: "The rank of the matrix is \\(2\\).",
+        isCorrect: true,
+      },
+      {
+        text: "A rank-\\(2\\) SVD approximation can represent the matrix exactly.",
+        isCorrect: true,
+      },
+      {
+        text: "A rank-\\(1\\) approximation keeps all nonzero singular directions.",
+        isCorrect: false,
+      },
+      {
+        text: "The matrix must have rank \\(4\\) because four singular values are listed.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Rank equals the number of nonzero singular values, so this matrix has rank \\(2\\). Keeping the two nonzero singular directions reconstructs the matrix exactly, while keeping only one loses the direction with singular value \\(3\\). Listing zeros does not make those directions independent.",
+  },
+  {
+    id: "la-crash-l4-q50",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "For \\(A=\\begin{bmatrix}5 & 0 \\\\ 0 & 2\\end{bmatrix}\\), power iteration starts from a vector with a nonzero first coordinate. Which statement best describes the long-run direction?",
+    options: [
+      {
+        text: "The iterates tend to align with the first coordinate direction because eigenvalue \\(5\\) dominates eigenvalue \\(2\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The iterates tend to align with the second coordinate direction because \\(2\\) is smaller.",
+        isCorrect: false,
+      },
+      {
+        text: "The iterates cannot prefer a direction because diagonal matrices have no eigenvectors.",
+        isCorrect: false,
+      },
+      {
+        text: "The iterates must rotate by 90 degrees on every step.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Repeated multiplication scales the first coordinate by powers of \\(5\\) and the second coordinate by powers of \\(2\\). If the first coordinate is initially nonzero, the \\(5^k\\) term eventually dominates. This is the basic intuition behind power iteration.",
+  },
+  {
+    id: "la-crash-l4-q51",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "Which statements correctly describe best low-rank approximation with SVD?",
+    options: [
+      {
+        text: "Keeping the largest singular values preserves the strongest transformation directions.",
+        isCorrect: true,
+      },
+      {
+        text: "The approximation error is controlled by the singular values that are discarded.",
+        isCorrect: true,
+      },
+      {
+        text: "Compression works best when singular values decay quickly.",
+        isCorrect: true,
+      },
+      {
+        text: "Discarding the largest singular values is the standard way to preserve signal.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "SVD orders directions by their scaling strength, so keeping the largest singular values keeps the highest-energy structure. When the remaining singular values are small, the discarded information has relatively low impact. Throwing away the largest singular values would remove the strongest signal first.",
+  },
+  {
+    id: "la-crash-l4-q52",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "Which statements correctly connect low-rank adaptation to SVD and representation learning?",
+    options: [
+      {
+        text: "A product \\(AB\\) with inner dimension \\(r\\) has rank at most \\(r\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Low-rank adaptation assumes useful parameter changes may lie in a small set of directions.",
+        isCorrect: true,
+      },
+      {
+        text: "SVD can help analyze which directions in a matrix carry the strongest signal.",
+        isCorrect: true,
+      },
+      {
+        text: "Representation learning often benefits when high-dimensional data has lower-dimensional structure.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "A low-rank factorization restricts an update to a limited directional subspace. SVD provides a mathematical language for identifying strong and weak directions in matrices. Representation learning is effective partly because real data often has structure that can be captured with fewer directions than the ambient dimension.",
+  },
+  {
+    id: "la-crash-l4-q53",
+    chapter: 4,
+    difficulty: "medium",
+    prompt: "Which statements correctly describe PCA on an embedding matrix?",
+    options: [
+      {
+        text: "Principal components are directions that can be linear combinations of many embedding coordinates.",
+        isCorrect: true,
+      },
+      {
+        text: "Centering the embeddings changes the covariance calculation and can affect PCA directions.",
+        isCorrect: true,
+      },
+      {
+        text: "A two-dimensional PCA plot must preserve all pairwise distances exactly.",
+        isCorrect: false,
+      },
+      {
+        text: "PCA requires class labels because it is a supervised classifier.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "PCA is an unsupervised geometric method based on covariance, so class labels are not required. Its directions are usually linear combinations of many original coordinates, which is why PCA is not simple feature selection. A low-dimensional plot can be informative while still losing some distances and variance.",
+  },
+  {
+    id: "la-crash-l4-q54",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "Which statement correctly distinguishes symmetric matrices from general square matrices?",
+    options: [
+      {
+        text: "Real symmetric matrices have real eigenvalues and can be described using orthogonal eigenvector directions.",
+        isCorrect: true,
+      },
+      {
+        text: "Every square matrix has an orthogonal eigenbasis over the real numbers.",
+        isCorrect: false,
+      },
+      {
+        text: "Nonsymmetric matrices cannot have any eigenvectors.",
+        isCorrect: false,
+      },
+      {
+        text: "Symmetry matters only for storage efficiency and has no geometric consequence.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Symmetry gives covariance matrices and related operators especially clean geometry: real eigenvalues and orthogonal eigendirections. General square matrices can behave less neatly and may lack a full real orthogonal eigenbasis. This is one reason covariance matrices are so useful for PCA.",
+  },
+  {
+    id: "la-crash-l4-q55",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "For a matrix \\(A\\), which statements correctly connect SVD to eigenvectors?",
+    options: [
+      {
+        text: "Right singular vectors of \\(A\\) are eigenvectors of \\(A^TA\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Squared singular values of \\(A\\) are eigenvalues of \\(A^TA\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Left singular vectors describe important output-space directions.",
+        isCorrect: true,
+      },
+      {
+        text: "Singular values are ordinary eigenvalues of \\(A\\) for every rectangular matrix.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "SVD is closely related to eigenanalysis of the symmetric matrix \\(A^TA\\). The right singular vectors come from input-space directions, and the corresponding singular values are square roots of eigenvalues of \\(A^TA\\). Rectangular matrices do not have ordinary eigenvalues in the same way square matrices do.",
+  },
+  {
+    id: "la-crash-l4-q56",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "For a rank-\\(k\\) truncated SVD \\(A_k=U_k\\Sigma_kV_k^T\\) of an \\(m\\times n\\) matrix, which statements are correct?",
+    options: [
+      {
+        text: "\\(A_k\\) has rank at most \\(k\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Storing \\(U_k\\), the \\(k\\) singular values, and \\(V_k\\) can require about \\(k(m+n+1)\\) numbers.",
+        isCorrect: true,
+      },
+      {
+        text: "The approximation keeps the strongest \\(k\\) singular directions.",
+        isCorrect: true,
+      },
+      {
+        text: "The approximation error comes from the singular directions that were discarded.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "A truncated SVD keeps only \\(k\\) singular directions, so its rank cannot exceed \\(k\\). It can save storage when \\(k(m+n+1)\\) is much smaller than \\(mn\\). The quality depends on how much signal remains in the discarded singular values.",
+  },
+  {
+    id: "la-crash-l4-q57",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly explain why PCA is not the same as feature selection?",
+    options: [
+      {
+        text: "A principal component can combine many original features into one direction.",
+        isCorrect: true,
+      },
+      {
+        text: "PCA may rotate the coordinate system before projecting.",
+        isCorrect: true,
+      },
+      {
+        text: "PCA simply chooses a subset of original columns and discards the rest.",
+        isCorrect: false,
+      },
+      {
+        text: "PCA ignores covariance between features.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Feature selection keeps original variables, while PCA constructs new axes as linear combinations of the original variables. Those axes are chosen from covariance structure and can be rotated relative to the original coordinates. This is why PCA can preserve structure that no single original feature captures by itself.",
+  },
+  {
+    id: "la-crash-l4-q58",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "Which statement best explains why \\(X^TX\\) has no negative eigenvalues?",
+    options: [
+      {
+        text: "For every vector \\(z\\), \\(z^TX^TXz=\\|Xz\\|^2\\ge 0\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Every matrix product has only positive entries.",
+        isCorrect: false,
+      },
+      {
+        text: "A transpose removes all zero directions from a matrix.",
+        isCorrect: false,
+      },
+      {
+        text: "Eigenvalues are never negative for any real square matrix.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The quadratic form of \\(X^TX\\) is a squared norm, so it cannot be negative. This property is called positive semidefiniteness and is central to covariance geometry. General real square matrices can have negative eigenvalues, so the argument depends on the special \\(X^TX\\) structure.",
+  },
+  {
+    id: "la-crash-l4-q59",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly describe what it means for an attention matrix to be approximately low rank?",
+    options: [
+      {
+        text: "Some rows or columns may be well approximated by combinations of a smaller number of patterns.",
+        isCorrect: true,
+      },
+      {
+        text: "Its singular values may decay so that only a few directions carry most of the signal.",
+        isCorrect: true,
+      },
+      {
+        text: "A lower-rank approximation may reduce computation or storage while preserving the main structure.",
+        isCorrect: true,
+      },
+      {
+        text: "Approximate low rank means every attention score is exactly zero.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Approximate low rank means the matrix has redundant structure that can be summarized by fewer dominant directions. SVD expresses this through singular values and singular vectors. It does not mean the matrix is empty or that all entries vanish.",
+  },
+  {
+    id: "la-crash-l4-q60",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly connect eigenvectors, SVD, and representation learning?",
+    options: [
+      {
+        text: "Learned transformations can make useful semantic or decision directions easier to separate.",
+        isCorrect: true,
+      },
+      {
+        text: "Covariance and PCA can help inspect dominant directions in learned embeddings.",
+        isCorrect: true,
+      },
+      {
+        text: "SVD can reveal redundancy and compression opportunities in learned matrices.",
+        isCorrect: true,
+      },
+      {
+        text: "Eigenvector and SVD analysis can support model understanding without replacing gradient-based training.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Representation learning creates vector spaces where useful information is organized geometrically. Eigenvectors, covariance, PCA, and SVD provide tools for studying dominant directions, redundancy, and low-dimensional structure in those spaces. These analyses complement training rather than replacing the optimization process.",
+  },
 ];
 
 export const CrashCourseLinearAlgebraL4Questions =

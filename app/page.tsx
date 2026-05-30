@@ -32,6 +32,7 @@ export default function QuizPage() {
     userRating,
     userRatingRd,
     submitQuestionReport,
+    resetParticipantRating,
   } = useQuiz();
 
   const title = getTitleForSelection(selectedSources, selectedTopics);
@@ -53,6 +54,7 @@ export default function QuizPage() {
           accuracy={accuracy}
           userRating={userRating}
           userRatingRd={userRatingRd}
+          resetParticipantRating={resetParticipantRating}
         />
 
         <QuizQuestionSection

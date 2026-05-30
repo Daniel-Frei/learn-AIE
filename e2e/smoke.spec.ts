@@ -17,7 +17,27 @@ async function openFilters(page: Page) {
   }).toPass({ timeout: 10000 });
 }
 
+function trackHydrationErrors(page: Page) {
+  const errors: string[] = [];
+  const hydrationPattern = /hydration failed/i;
+
+  page.on("console", (message) => {
+    if (message.type() === "error" && hydrationPattern.test(message.text())) {
+      errors.push(message.text());
+    }
+  });
+  page.on("pageerror", (error) => {
+    if (hydrationPattern.test(error.message)) {
+      errors.push(error.message);
+    }
+  });
+
+  return errors;
+}
+
 test("renders core quiz controls on the home page", async ({ page }) => {
+  const hydrationErrors = trackHydrationErrors(page);
+
   await page.goto("/");
 
   await expect(
@@ -34,11 +54,15 @@ test("renders core quiz controls on the home page", async ({ page }) => {
   await expect(page.getByRole("spinbutton").nth(0)).toHaveValue("0");
   await expect(page.getByRole("spinbutton").nth(1)).toHaveValue("3000");
   await expect(
+    page.getByRole("button", { name: /reset glicko rating/i }),
+  ).toBeVisible();
+  await expect(
     page.getByText(/no questions for this selection/i),
   ).toBeVisible();
   await expect(
     page.getByText(/adjust the filters above to see available questions/i),
   ).toBeVisible();
+  expect(hydrationErrors, "home page should hydrate cleanly").toEqual([]);
 });
 
 test("updates filter checkboxes immediately after clicking", async ({
@@ -60,6 +84,20 @@ test("updates filter checkboxes immediately after clicking", async ({
   await expect(seriesCheckbox).not.toBeChecked();
   await seriesCheckbox.click();
   await expect(seriesCheckbox).toBeChecked();
+});
+
+test("resets the participant Glicko rating from the filter panel", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  await openFilters(page);
+  await page.getByRole("button", { name: /reset glicko rating/i }).click();
+
+  await expect(page.getByRole("status")).toHaveText(/rating reset/i);
+  await expect(
+    page.getByText(/glicko rating:\s*1500\s*\+\/-\s*350/i),
+  ).toBeVisible();
 });
 
 test("reveals question elo after answering and resets the timer for the next question", async ({

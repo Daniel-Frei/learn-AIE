@@ -533,7 +533,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
       },
     ],
     explanation:
-      "Preclinical work is essential but limited. Biological systems differ across models and humans, so many promising interventions still fail later.",
+      'Preclinical work is essential but limited. Biological systems differ across models and humans, so many promising interventions still fail later. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It can include cell, organoid, and animal studies."; "It can test mechanism, toxicity, and feasibility."; "Animal models often fail to predict humans perfectly."; "Preclinical success does not guarantee clinical success.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "bio-chem-life-l5-q22",

@@ -58,7 +58,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       },
     ],
     explanation:
-      "The Q-function evaluates state–action pairs. It explicitly conditions on the initial action before following the policy thereafter.",
+      'The Q-function evaluates state–action pairs. It explicitly conditions on the initial action before following the policy thereafter. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It measures expected return after taking action \\(a\\) in state \\(s\\) and then following \\(\\pi\\)."; "It differs from \\(V^\\pi(s)\\) by conditioning on the first action."; "It marginalizes over future stochastic transitions."; "It includes immediate reward plus expected future rewards.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -110,7 +110,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       },
     ],
     explanation:
-      "Actor–critic algorithms separate policy learning and value estimation. The critic provides a learned signal that reduces noise in the actor update.",
+      'Actor–critic algorithms separate policy learning and value estimation. The critic provides a learned signal that reduces noise in the actor update. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They use a critic to estimate value functions."; "They use advantage estimates to update the actor."; "They improve sample efficiency compared to vanilla policy gradients."; "They consist of two separate parameterized models.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -131,7 +131,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       },
     ],
     explanation:
-      "Monte Carlo directly regresses on sampled trajectory returns. While unbiased, variance grows with trajectory length.",
+      'Monte Carlo directly regresses on sampled trajectory returns. While unbiased, variance grows with trajectory length. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Targets are full returns \\(G_t = \\sum_{t\'=t}^T r_{t\'}\\)."; "It is unbiased."; "It suffers from high variance."; "It does not rely on bootstrapped predictions.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -152,7 +152,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       },
     ],
     explanation:
-      "Temporal difference uses the model’s own prediction as part of the target. This reduces variance but can propagate estimation errors.",
+      'Temporal difference uses the model’s own prediction as part of the target. This reduces variance but can propagate estimation errors. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Targets use \\(r_t + \\gamma V(s_{t+1})\\)."; "It bootstraps from the current value estimate."; "It reduces variance relative to Monte Carlo."; "It introduces bias when value estimates are inaccurate.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -170,7 +170,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Larger \\(n\\) reduces bias.", isCorrect: true },
     ],
     explanation:
-      "n-step returns trade off bias and variance. They combine actual rewards for several steps with bootstrapped value predictions.",
+      'n-step returns trade off bias and variance. They combine actual rewards for several steps with bootstrapped value predictions. To reason through the choices, select every statement because each one matches the criterion in the prompt: "\\(y_t = \\sum_{k=0}^{n-1} \\gamma^k r_{t+k} + \\gamma^n V(s_{t+n})\\)."; "They interpolate between Monte Carlo and TD."; "Smaller \\(n\\) gives lower variance."; "Larger \\(n\\) reduces bias.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -194,7 +194,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       },
     ],
     explanation:
-      "Discounting reduces the influence of distant rewards. It can be interpreted as a stochastic termination mechanism in the MDP.",
+      'Discounting reduces the influence of distant rewards. It can be interpreted as a stochastic termination mechanism in the MDP. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It weights future rewards exponentially."; "It prevents divergence for infinite horizons."; "It is equivalent to adding a termination probability \\(1-\\gamma\\)."; "Transition probabilities are scaled by \\(\\gamma\\).". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -213,7 +213,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "It still optimizes expected return.", isCorrect: true },
     ],
     explanation:
-      "Advantage-centered updates improve stability while keeping the same optimization objective.",
+      'Advantage-centered updates improve stability while keeping the same optimization objective. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Actions with positive advantage are reinforced."; "Advantage serves as a learned baseline."; "It reduces gradient variance."; "It still optimizes expected return.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   // ============================================================
@@ -242,7 +242,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       },
     ],
     explanation:
-      "Value learning is framed as regression. Labels change when bootstrapping is used.",
+      'Value learning is framed as regression. Labels change when bootstrapping is used. To reason through the choices, select the statements that match the criterion in the prompt: "Training data pairs states with observed returns."; "The loss is typically \\(L = (V_\\phi(s) - y)^2\\)."; "Multiple trajectories provide amortized supervision.". Do not select statements that miss that criterion: "The labels remain fixed during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -263,7 +263,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "It ignores cross-trajectory information.", isCorrect: true },
     ],
     explanation:
-      "Monte Carlo treats each trajectory independently. It does not exploit shared structure between similar states.",
+      'Monte Carlo treats each trajectory independently. It does not exploit shared structure between similar states. To reason through the choices, select the statements that match the criterion in the prompt: "It only uses rewards from the sampled trajectory."; "Similar states across trajectories are not linked."; "It ignores cross-trajectory information.". Do not select statements that miss that criterion: "It propagates value across similar states.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -278,7 +278,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "They reduce variance.", isCorrect: true },
     ],
     explanation:
-      "Bootstrapping lowers variance but introduces bias from imperfect predictions.",
+      'Bootstrapping lowers variance but introduces bias from imperfect predictions. To reason through the choices, select the statements that match the criterion in the prompt: "They depend on current value estimates."; "They are updated every gradient step."; "They reduce variance.". Do not select statements that miss that criterion: "They are unbiased.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -293,7 +293,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "They increase data efficiency.", isCorrect: true },
     ],
     explanation:
-      "Replay buffers allow reuse of experience. However, they may introduce instability due to distribution mismatch.",
+      'Replay buffers allow reuse of experience. However, they may introduce instability due to distribution mismatch. To reason through the choices, select the statements that match the criterion in the prompt: "They store transitions from past policies."; "They enable off-policy learning."; "They increase data efficiency.". Do not select statements that miss that criterion: "They always improve stability.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -311,7 +311,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "KL constraints can help stabilize learning.", isCorrect: true },
     ],
     explanation:
-      "Off-policy learning reweights samples but suffers if the new policy deviates significantly.",
+      'Off-policy learning reweights samples but suffers if the new policy deviates significantly. To reason through the choices, select the statements that match the criterion in the prompt: "They require importance sampling."; "They can diverge if policies differ too much."; "KL constraints can help stabilize learning.". Do not select statements that miss that criterion: "Advantages remain accurate indefinitely.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -327,7 +327,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Actor–critic improves sample usage.", isCorrect: true },
     ],
     explanation:
-      "Actor–critic augments policy gradients with learned value estimates but still depends on rewards.",
+      'Actor–critic augments policy gradients with learned value estimates but still depends on rewards. To reason through the choices, select the statements that match the criterion in the prompt: "Actor–critic learns what is good vs bad."; "Policy gradient uses raw sampled returns."; "Actor–critic improves sample usage.". Do not select statements that miss that criterion: "Actor–critic removes the need for rewards.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -348,7 +348,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Critic bias does not affect learning.", isCorrect: false },
     ],
     explanation:
-      "Since the policy relies on the critic’s predictions, systematic critic errors distort policy learning.",
+      'Since the policy relies on the critic’s predictions, systematic critic errors distort policy learning. To reason through the choices, select the statements that match the criterion in the prompt: "Errors in the critic propagate into the policy update."; "Biased value estimates lead to biased advantages."; "Critic bias affects gradient direction.". Do not select statements that miss that criterion: "Critic bias does not affect learning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -366,7 +366,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       },
     ],
     explanation:
-      "n-step returns balance real rewards and bootstrapping, often yielding better bias-variance tradeoffs.",
+      'n-step returns balance real rewards and bootstrapping, often yielding better bias-variance tradeoffs. To reason through the choices, select the statements that match the criterion in the prompt: "n-step uses more real rewards."; "TD uses only one-step rewards."; "n-step can reduce variance compared to Monte Carlo.". Do not select statements that miss that criterion: "n-step always has higher bias.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -380,7 +380,8 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "It estimates values.", isCorrect: false },
       { text: "It depends on advantage estimates.", isCorrect: true },
     ],
-    explanation: "The actor selects actions while the critic evaluates them.",
+    explanation:
+      'The actor selects actions while the critic evaluates them. To reason through the choices, select the statements that match the criterion in the prompt: "It represents the policy."; "It is updated via policy gradients."; "It depends on advantage estimates.". Do not select statements that miss that criterion: "It estimates values.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -399,7 +400,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Monte Carlo has lower variance.", isCorrect: false },
     ],
     explanation:
-      "Monte Carlo gives correct expectations but noisy estimates. TD trades bias for variance reduction.",
+      'Monte Carlo gives correct expectations but noisy estimates. TD trades bias for variance reduction. To reason through the choices, select the statements that match the criterion in the prompt: "Monte Carlo is unbiased."; "TD has lower variance.". Do not select statements that miss that criterion: "TD is unbiased."; "Monte Carlo has lower variance.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -414,7 +415,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Guaranteed convergence.", isCorrect: false },
     ],
     explanation:
-      "Replay buffers help reuse data but introduce off-policy bias.",
+      'Replay buffers help reuse data but introduce off-policy bias. To reason through the choices, select the statements that match the criterion in the prompt: "Distribution mismatch with current policy."; "Higher sample efficiency.". Do not select statements that miss that criterion: "Perfect unbiased gradients."; "Guaranteed convergence.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -429,7 +430,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "It removes future rewards.", isCorrect: false },
     ],
     explanation:
-      "Discounting controls magnitude and stability of value estimates.",
+      'Discounting controls magnitude and stability of value estimates. To reason through the choices, select the statements that match the criterion in the prompt: "It prioritizes near-term rewards."; "It prevents large value explosions.". Do not select statements that miss that criterion: "It increases variance."; "It removes future rewards.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -444,7 +445,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "They ignore rewards.", isCorrect: false },
     ],
     explanation:
-      "TD leverages bootstrapped predictions but still includes immediate rewards.",
+      'TD leverages bootstrapped predictions but still includes immediate rewards. To reason through the choices, select the statements that match the criterion in the prompt: "They use predictions of \\(V(s_{t+1})\\)."; "They reduce variance.". Do not select statements that miss that criterion: "They are unbiased."; "They ignore rewards.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -459,7 +460,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "They remove need for importance weights.", isCorrect: false },
     ],
     explanation:
-      "KL constraints control step size but do not fix estimation bias.",
+      'KL constraints control step size but do not fix estimation bias. To reason through the choices, select the statements that match the criterion in the prompt: "They limit policy deviation."; "They stabilize off-policy updates.". Do not select statements that miss that criterion: "They eliminate bias."; "They remove need for importance weights.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -473,7 +474,8 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Directly changes the policy.", isCorrect: false },
       { text: "Requires environment resets.", isCorrect: false },
     ],
-    explanation: "Critic updates are independent supervised learning steps.",
+    explanation:
+      'Critic updates are independent supervised learning steps. To reason through the choices, select the statements that match the criterion in the prompt: "Uses regression loss."; "Can take multiple gradient steps per batch.". Do not select statements that miss that criterion: "Directly changes the policy."; "Requires environment resets.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -488,7 +490,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "They are constant.", isCorrect: false },
     ],
     explanation:
-      "Advantages determine direction and magnitude of policy updates.",
+      'Advantages determine direction and magnitude of policy updates. To reason through the choices, select the statements that match the criterion in the prompt: "They guide actor updates."; "They compare action to baseline.". Do not select statements that miss that criterion: "They replace rewards."; "They are constant.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -502,7 +504,8 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "n-step always unbiased.", isCorrect: false },
       { text: "n-step always low variance.", isCorrect: false },
     ],
-    explanation: "n controls bias-variance tradeoff.",
+    explanation:
+      'n controls bias-variance tradeoff. To reason through the choices, select the statements that match the criterion in the prompt: "Smaller n → lower variance."; "Larger n → lower bias.". Do not select statements that miss that criterion: "n-step always unbiased."; "n-step always low variance.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -525,7 +528,8 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       },
       { text: "Ignores failed rollouts.", isCorrect: false },
     ],
-    explanation: "Critic extracts signal even from imperfect rollouts.",
+    explanation:
+      'Critic extracts signal even from imperfect rollouts. To reason through the choices, select the statements that match the criterion in the prompt: "Can learn from partial progress trajectories."; "More efficient than sparse reward policy gradients.". Do not select statements that miss that criterion: "Requires full reward success trajectories only."; "Ignores failed rollouts.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -544,7 +548,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "It removes need for rewards.", isCorrect: false },
     ],
     explanation:
-      "The critic evaluates how good states are under the current policy.",
+      'The critic evaluates how good states are under the current policy. To reason through the choices, select the statements that match the criterion in the prompt: "It estimates state values.". Do not select statements that miss that criterion: "It selects actions."; "It replaces the actor."; "It removes need for rewards.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -558,7 +562,8 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "No supervision.", isCorrect: false },
       { text: "Pure imitation.", isCorrect: false },
     ],
-    explanation: "TD uses one-step reward plus estimated value.",
+    explanation:
+      'TD uses one-step reward plus estimated value. To reason through the choices, select the statements that match the criterion in the prompt: "Bootstrap using next state value.". Do not select statements that miss that criterion: "Regression on full trajectory returns."; "No supervision."; "Pure imitation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -573,7 +578,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Environment deterministic.", isCorrect: false },
     ],
     explanation:
-      "Policy gradients assume actions come from the current policy distribution.",
+      'Policy gradients assume actions come from the current policy distribution. To reason through the choices, select the statements that match the criterion in the prompt: "Actions weren’t sampled from current policy.". Do not select statements that miss that criterion: "Rewards are missing."; "Value function unnecessary."; "Environment deterministic.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -587,7 +592,8 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Replay buffers.", isCorrect: false },
       { text: "Advantage normalization.", isCorrect: false },
     ],
-    explanation: "Monte Carlo uses full returns directly.",
+    explanation:
+      'Monte Carlo uses full returns directly. To reason through the choices, select the statements that match the criterion in the prompt: "Monte Carlo.". Do not select statements that miss that criterion: "Temporal difference."; "Replay buffers."; "Advantage normalization.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -604,7 +610,8 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Gamma eliminates variance.", isCorrect: false },
       { text: "Gamma only affects policy network.", isCorrect: false },
     ],
-    explanation: "Discounting exponentially shrinks distant rewards.",
+    explanation:
+      'Discounting exponentially shrinks distant rewards. To reason through the choices, select the statements that match the criterion in the prompt: "Gamma less than one reduces long-term reward weight.". Do not select statements that miss that criterion: "Gamma greater than one increases stability."; "Gamma eliminates variance."; "Gamma only affects policy network.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -618,7 +625,8 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Bias only changes rewards.", isCorrect: false },
       { text: "Bias improves exploration.", isCorrect: false },
     ],
-    explanation: "Actor relies directly on critic estimates.",
+    explanation:
+      'Actor relies directly on critic estimates. To reason through the choices, select the statements that match the criterion in the prompt: "Bias affects policy updates.". Do not select statements that miss that criterion: "Bias has no effect."; "Bias only changes rewards."; "Bias improves exploration.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -632,7 +640,8 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Partial reward sum plus bootstrap.", isCorrect: true },
       { text: "No rewards used.", isCorrect: false },
     ],
-    explanation: "n-step mixes rewards and predicted values.",
+    explanation:
+      'n-step mixes rewards and predicted values. To reason through the choices, select the statements that match the criterion in the prompt: "Partial reward sum plus bootstrap.". Do not select statements that miss that criterion: "Only one-step bootstrap."; "Full trajectory sum."; "No rewards used.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -649,6 +658,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Does not require learning.", isCorrect: false },
       { text: "Always unstable.", isCorrect: false },
     ],
-    explanation: "The critic reduces variance and improves data use.",
+    explanation:
+      'The critic reduces variance and improves data use. To reason through the choices, select the statements that match the criterion in the prompt: "Uses learned value estimates for better gradients.". Do not select statements that miss that criterion: "Less efficient than policy gradients."; "Does not require learning."; "Always unstable.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 ];

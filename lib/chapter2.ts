@@ -56,7 +56,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "For each output token, attention computes weights over all encoder states and combines them into a context vector, which is then used for prediction.",
+      'For each output token, attention computes weights over all encoder states and combines them into a context vector, which is then used for prediction. To reason through the choices, select the statements that match the criterion in the prompt: "It summarizes the encoder hidden states using attention weights for that time step.". Do not select statements that miss that criterion: "It is a fixed summary that never changes across decoder steps."; "It is used by itself, without the decoder state, to predict the next output token."; "It contains only the last encoder hidden state.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q03",
@@ -83,7 +83,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "The score is a scalar similarity between decoder state sᵢ₋₁ and encoder state hⱼ; applying softmax over all j produces attention weights.",
+      'The score is a scalar similarity between decoder state sᵢ₋₁ and encoder state hⱼ; applying softmax over all j produces attention weights. To reason through the choices, select the statements that match the criterion in the prompt: "A similarity measure between the current decoder state and an encoder hidden state.". Do not select statements that miss that criterion: "A distance between the current input token and the previous one."; "A scalar that is already normalized across all encoder positions before softmax."; "A probability that already sums to one over all encoder positions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q04",
@@ -110,7 +110,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Softmax exponentiates scores, normalizes them to sum to 1, and thus produces a probability distribution (attention weights).",
+      'Softmax exponentiates scores, normalizes them to sum to 1, and thus produces a probability distribution (attention weights). To reason through the choices, select the statements that match the criterion in the prompt: "Converts arbitrary real-valued scores into positive weights that sum to 1.". Do not select statements that miss that criterion: "Ensures that the largest score gets probability exactly 1."; "Emphasizes relatively larger scores while forcing every smaller score exactly to zero."; "Outputs values that can be negative or greater than 1.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q05",
@@ -167,7 +167,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Self-attention lets every token compare itself with all others, capturing long-range dependencies without sequential recurrence.",
+      'Self-attention lets every token compare itself with all others, capturing long-range dependencies without sequential recurrence. To reason through the choices, select the statements that match the criterion in the prompt: "Each token attends to other tokens in the same sequence to build a richer representation."; "The mechanism can discover relationships between distant positions in a single step.". Do not select statements that miss that criterion: "Tokens are processed independently with no interaction."; "The model must always read the sequence strictly left-to-right.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q07",
@@ -300,7 +300,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Computing all pairwise interactions between T tokens leads to O(T²) time and space, which motivates efficient attention variants for long contexts.",
+      'Computing all pairwise interactions between T tokens leads to O(T²) time and space, which motivates efficient attention variants for long contexts. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Time complexity grows on the order of T² with respect to sequence length."; "Memory usage also scales roughly with T² because of the attention matrix."; "The cost is not linear in T because building the attention matrix introduces quadratic scaling in sequence length."; "The quadratic cost is a major bottleneck for very long sequences.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   // --- Positional encoding & transformer block ---
@@ -382,7 +382,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Each transformer block stacks multi-head self-attention and a feedforward network, each wrapped with residual connections and layer normalization.",
+      'Each transformer block stacks multi-head self-attention and a feedforward network, each wrapped with residual connections and layer normalization. To reason through the choices, select every statement because each one matches the criterion in the prompt: "A multi-head self-attention sublayer."; "A position-wise feedforward network applied to each token."; "Residual (skip) connections around each sublayer."; "Normalization layers are also typically included around the main sublayers in standard implementations.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "ch2-q15",
@@ -462,7 +462,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "LayerNorm operates per token, using that token’s mean and variance, then applies learnable γ and β. Unlike BatchNorm it does not depend on batch size.",
+      'LayerNorm operates per token, using that token’s mean and variance, then applies learnable γ and β. Unlike BatchNorm it does not depend on batch size. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Normalizes activations across features within a single token representation."; "Uses the mean and standard deviation of that token’s features."; "Applies learned scale (γ) and shift (β) parameters after normalization."; "It does not require large batch sizes to estimate statistics.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   // --- Encoder, decoder, cross-attention, masking ---
@@ -519,7 +519,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Causal masks set attention scores to −∞ for future positions so that after softmax they receive zero weight, enforcing autoregressive behavior.",
+      'Causal masks set attention scores to −∞ for future positions so that after softmax they receive zero weight, enforcing autoregressive behavior. To reason through the choices, select the statements that match the criterion in the prompt: "To prevent each position from attending to future tokens that should not be known yet."; "To avoid information leakage when training a next-token prediction model.". Do not select statements that miss that criterion: "Because attending to past tokens is mathematically impossible."; "To force the model to see the entire sequence before predicting anything.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q20",
@@ -546,7 +546,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Encoders build rich representations of inputs; decoders generate sequences; encoder–decoder structures connect the two for tasks like translation.",
+      'Encoders build rich representations of inputs; decoders generate sequences; encoder–decoder structures connect the two for tasks like translation. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Encoder-only models (like BERT) are well-suited for understanding tasks such as classification."; "Decoder-only models (like GPT-2) are typically used for autoregressive text generation."; "Encoder–decoder models are natural fits for sequence-to-sequence tasks like translation."; "Decoder-only models can in fact be used for autoregressive text generation.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   // --- Language modeling, training objective, decoding ---
@@ -576,7 +576,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "The chain rule expresses the joint probability as a product of conditional probabilities for each token given its predecessors.",
+      'The chain rule expresses the joint probability as a product of conditional probabilities for each token given its predecessors. To reason through the choices, select the statements that match the criterion in the prompt: "As the product ∏ᵢ P(wᵢ | w₁:ᵢ₋₁)."; "Using the chain rule of probability.". Do not select statements that miss that criterion: "As the sum ∑ᵢ P(wᵢ | w₁:ᵢ₋₁)."; "Assuming all tokens are independent of each other.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q22",
@@ -630,7 +630,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Teacher forcing uses the real previous tokens during training, stabilizing learning by avoiding compounding errors from model-generated history.",
+      'Teacher forcing uses the real previous tokens during training, stabilizing learning by avoiding compounding errors from model-generated history. To reason through the choices, select the statements that match the criterion in the prompt: "Feeding the ground-truth previous token into the model when predicting the next one."; "Computing the loss at each time step using the correct next token.". Do not select statements that miss that criterion: "Always feeding the model its own previous predictions."; "A method that allows the model to ignore the training data.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q24",
@@ -657,7 +657,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Greedy decoding is deterministic and conservative, which often leads to safe but boring and repetitive outputs.",
+      'Greedy decoding is deterministic and conservative, which often leads to safe but boring and repetitive outputs. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It tends to produce repetitive and overly generic text."; "It ignores alternative plausible continuations that might yield more diverse outputs."; "It is usually computationally cheaper than sampling-based methods because it just takes the argmax at each step."; "It can get stuck in dull loops like repeating short phrases.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "ch2-q25",
@@ -684,7 +684,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Top-k and top-p restrict the candidate set; temperature < 1 sharpens the distribution (more deterministic), while >1 flattens it (more random).",
+      'Top-k and top-p restrict the candidate set; temperature < 1 sharpens the distribution (more deterministic), while >1 flattens it (more random). To reason through the choices, select the statements that match the criterion in the prompt: "Top-k sampling restricts sampling to the k most probable tokens at each step."; "Top-p (nucleus) sampling keeps the smallest set of tokens whose cumulative probability exceeds a threshold p.". Do not select statements that miss that criterion: "Temperature scaling always makes generation more diverse regardless of whether the temperature is above or below 1."; "Lower temperature values make the distribution more uniform and random.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // --- Tokenization & BPE ---
@@ -714,7 +714,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Subword tokenization like BPE splits rare words into frequent pieces while keeping common words whole, enabling open-vocabulary modeling.",
+      'Subword tokenization like BPE splits rare words into frequent pieces while keeping common words whole, enabling open-vocabulary modeling. To reason through the choices, select the statements that match the criterion in the prompt: "To reduce the number of unknown tokens for rare or new words."; "Because subword vocabularies can balance vocabulary size and expressivity.". Do not select statements that miss that criterion: "To exploit repeated morphemes such as prefixes and suffixes without ever splitting rare words."; "Because using whole words makes it impossible to train a language model.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q27",
@@ -768,7 +768,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "BPE avoids excessive unknown tokens by breaking rare words into known subword components, often aligning with morphological structure.",
+      'BPE avoids excessive unknown tokens by breaking rare words into known subword components, often aligning with morphological structure. To reason through the choices, select the statements that match the criterion in the prompt: "They are decomposed into smaller subword units that are in the vocabulary."; "Their pieces may correspond to meaningful morphemes like roots and suffixes.". Do not select statements that miss that criterion: "They always become a single special <UNK> token."; "They cannot be represented at all.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // --- BERT, MLM, bidirectional encoders ---
@@ -825,7 +825,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "MLM corrupts a subset of tokens with a special mask symbol; the model sees full context and predicts the missing pieces using cross-entropy.",
+      'MLM corrupts a subset of tokens with a special mask symbol; the model sees full context and predicts the missing pieces using cross-entropy. To reason through the choices, select the statements that match the criterion in the prompt: "Randomly mask some input tokens and have the model predict the original tokens."; "Use a cross-entropy loss over the vocabulary for each masked position.". Do not select statements that miss that criterion: "Use only the left context to infer each masked token."; "Mask every token so that no context remains.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q31",
@@ -879,7 +879,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "The [CLS] token’s representation attends to all tokens; a small classifier on top of it can be fine-tuned for tasks like sentiment or entailment.",
+      'The [CLS] token’s representation attends to all tokens; a small classifier on top of it can be fine-tuned for tasks like sentiment or entailment. To reason through the choices, select the statements that match the criterion in the prompt: "It is added at the beginning of the input sequence."; "Its final hidden representation is treated as an aggregate representation of the whole sequence."; "A classifier layer is applied on top of this representation to predict labels.". Do not select statements that miss that criterion: "It is ignored during training because it carries no information.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // --- GPT-2, visualization, internals ---
@@ -935,7 +935,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Attention maps provide a human-interpretable glimpse of which tokens influence others and how different heads distribute their focus.",
+      'Attention maps provide a human-interpretable glimpse of which tokens influence others and how different heads distribute their focus. To reason through the choices, select the statements that match the criterion in the prompt: "Which input tokens a given head focuses on when processing a particular token."; "That different heads within a layer specialize in different relations (e.g., subject–verb, coreference)."; "Patterns such as alignment between source and target tokens in translation.". Do not select statements that miss that criterion: "The exact internal numerical values of all parameters.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q35",
@@ -962,7 +962,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Gradient × Input multiplies local gradients by input activations to highlight which tokens are most influential for a particular output decision.",
+      'Gradient × Input multiplies local gradients by input activations to highlight which tokens are most influential for a particular output decision. To reason through the choices, select the statements that match the criterion in the prompt: "The sensitivity of the output (e.g., next-token probability) to small changes in each input token."; "An importance score indicating which tokens most affect a chosen prediction."; "It multiplies the gradient with the input representation to localize influential tokens.". Do not select statements that miss that criterion: "How much each neuron’s weight changes during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q36",
@@ -1019,7 +1019,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Transfer learning leverages general language knowledge from pretraining and then fine-tunes or adapts the model on task-specific supervised data.",
+      'Transfer learning leverages general language knowledge from pretraining and then fine-tunes or adapts the model on task-specific supervised data. To reason through the choices, select the statements that match the criterion in the prompt: "First train a model on a broad, generic task using massive text corpora."; "Then adapt the model to a specific downstream task using smaller labeled datasets."; "Reuse the learned representations to avoid learning language from zero each time.". Do not select statements that miss that criterion: "Always retrain all parameters from scratch for every new task.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q38",
@@ -1073,7 +1073,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Pretraining requires huge datasets and long training; fine-tuning reuses those representations and adapts them with comparatively modest compute.",
+      'Pretraining requires huge datasets and long training; fine-tuning reuses those representations and adapts them with comparatively modest compute. To reason through the choices, select the statements that match the criterion in the prompt: "Fine-tuning uses a much smaller dataset focused on a specific task."; "Most of the heavy computation of learning general language patterns has already been done."; "Fine-tuning usually involves fewer training steps and lower overall compute.". Do not select statements that miss that criterion: "Pretraining is always faster than fine-tuning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // --- Knowledge distillation ---
@@ -1102,7 +1102,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Distillation compresses a big model into a smaller one by having the student mimic the teacher’s behavior, often using its soft output distributions.",
+      'Distillation compresses a big model into a smaller one by having the student mimic the teacher’s behavior, often using its soft output distributions. To reason through the choices, select the statements that match the criterion in the prompt: "To transfer knowledge from a large teacher model to a smaller student model."; "To obtain a compact model with similar performance but lower computational cost."; "To use the teacher’s outputs (e.g., logits) as training signals for the student.". Do not select statements that miss that criterion: "To train a larger model from scratch using only the student’s predictions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q41",
@@ -1129,7 +1129,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Distillation typically computes KL divergence between temperature-scaled teacher and student probabilities; perfect matching yields zero KL.",
+      'Distillation typically computes KL divergence between temperature-scaled teacher and student probabilities; perfect matching yields zero KL. To reason through the choices, select the statements that match the criterion in the prompt: "It often uses Kullback–Leibler divergence between the softened probability distributions."; "A temperature parameter can smooth the distributions to highlight relative similarities between classes."; "The loss is zero when the student’s distribution matches the teacher’s distribution exactly.". Do not select statements that miss that criterion: "It ignores the teacher entirely and uses only ground-truth hard labels.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q42",
@@ -1186,7 +1186,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Multiplying X (T×d) by W_Q (d×dₖ) yields Q (T×dₖ); similarly for K and V. QKᵀ is T×T, and multiplying by V (T×dₖ) returns T×dₖ.",
+      'Multiplying X (T×d) by W_Q (d×dₖ) yields Q (T×dₖ); similarly for K and V. QKᵀ is T×T, and multiplying by V (T×dₖ) returns T×dₖ. To reason through the choices, select the statements that match the criterion in the prompt: "Q, K, and V each have shape T × dₖ."; "QKᵀ then has shape T × T."; "The output softmax(QKᵀ/√dₖ)V has shape T × dₖ (before any output projection).". Do not select statements that miss that criterion: "Q has shape d × T because weights and inputs are always transposed.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q44",
@@ -1270,7 +1270,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Freezing most layers retains general representations, reduces compute, and can prevent overfitting when only limited labeled data is available.",
+      'Freezing most layers retains general representations, reduces compute, and can prevent overfitting when only limited labeled data is available. To reason through the choices, select the statements that match the criterion in the prompt: "To reduce the risk of overfitting when the downstream dataset is small."; "To decrease computational cost and memory usage during training."; "Because the lower layers already capture general language features that we want to preserve.". Do not select statements that miss that criterion: "Because frozen layers cannot pass gradients to earlier layers.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q47",
@@ -1297,7 +1297,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Confusion matrices reveal detailed error patterns, such as which sentiment classes or categories the model mixes up.",
+      'Confusion matrices reveal detailed error patterns, such as which sentiment classes or categories the model mixes up. To reason through the choices, select the statements that match the criterion in the prompt: "To show counts of true vs predicted labels for each class."; "To identify which classes are most frequently confused with each other."; "To visualize model performance beyond a single accuracy number.". Do not select statements that miss that criterion: "To directly display gradients used during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q48",
@@ -1324,7 +1324,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Trainer abstracts away much of the boilerplate training code but still requires suitable datasets and model/tokenizer choices.",
+      'Trainer abstracts away much of the boilerplate training code but still requires suitable datasets and model/tokenizer choices. To reason through the choices, select the statements that match the criterion in the prompt: "You specify training hyperparameters such as batch size, epochs, and learning rate via TrainingArguments."; "The Trainer handles the training loop, evaluation, and logging for you."; "You still need to provide tokenized datasets compatible with the chosen model.". Do not select statements that miss that criterion: "Trainer can only be used for vision models, not text transformers.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q49",
@@ -1351,7 +1351,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Tokenizer and model are co-designed; mismatched token IDs break the link between text pieces and learned embeddings.",
+      'Tokenizer and model are co-designed; mismatched token IDs break the link between text pieces and learned embeddings. To reason through the choices, select the statements that match the criterion in the prompt: "Because the model’s embedding matrix is aligned with the token IDs produced by its tokenizer."; "Using a different tokenizer would mismatch token IDs and embeddings, leading to nonsense inputs."; "Different models may use different subword vocabularies and special tokens.". Do not select statements that miss that criterion: "Any tokenizer can be safely interchanged without affecting performance.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q50",
@@ -1404,7 +1404,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Transformers use self-attention and parallel computation, while RNNs are sequential and suffer from long-range dependency and gradient issues.",
+      'Transformers use self-attention and parallel computation, while RNNs are sequential and suffer from long-range dependency and gradient issues. To reason through the choices, select the statements that match the criterion in the prompt: "Transformers can process all tokens in a sequence in parallel."; "RNNs struggle with very long sequences and vanishing gradients.". Do not select statements that miss that criterion: "Transformers completely avoid using attention mechanisms."; "RNNs were designed only for images, not text.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q52",
@@ -1431,7 +1431,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Seq2seq models map an input sequence to an output sequence using an encoder and a decoder; attention later improved this architecture.",
+      'Seq2seq models map an input sequence to an output sequence using an encoder and a decoder; attention later improved this architecture. To reason through the choices, select the statements that match the criterion in the prompt: "A model with an encoder that reads the source sentence and a decoder that generates the target sentence."; "A model architecture originally used with RNNs and later extended with attention.". Do not select statements that miss that criterion: "A model that always outputs the same fixed-length vector instead of text."; "A model that never uses hidden states.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q53",
@@ -1457,7 +1457,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Attention weights are normalized scores (often from softmax) that tell the model how strongly to focus on each input token.",
+      'Attention weights are normalized scores (often from softmax) that tell the model how strongly to focus on each input token. To reason through the choices, select the statements that match the criterion in the prompt: "A number that indicates how important a specific input token is for the current prediction.". Do not select statements that miss that criterion: "A learned scalar that is always the same for every token."; "A negative number that is ignored by the model."; "A special token used during tokenization.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q54",
@@ -1484,7 +1484,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Self-attention builds new token representations by comparing each token’s query with all keys and mixing the corresponding values.",
+      'Self-attention builds new token representations by comparing each token’s query with all keys and mixing the corresponding values. To reason through the choices, select the statements that match the criterion in the prompt: "For every token, the model computes how related it is to every token (including itself) in the sequence."; "The representation of a token is updated using a weighted combination of all value vectors.". Do not select statements that miss that criterion: "The model only compares each token with the first token."; "Tokens are processed completely independently with no interaction.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q55",
@@ -1511,7 +1511,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Q, K, and V come from multiplying inputs by learned matrices; queries match against keys, and values carry information to be combined.",
+      'Q, K, and V come from multiplying inputs by learned matrices; queries match against keys, and values carry information to be combined. To reason through the choices, select the statements that match the criterion in the prompt: "They are different linear projections of the same input token representations."; "Queries are used to ask \'what am I looking for\' at each position."; "Keys and values are used to provide information about all positions that can be attended to.". Do not select statements that miss that criterion: "They are always fixed, hand-designed vectors that never change during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q56",
@@ -1538,7 +1538,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Dividing by √dₖ stabilizes the magnitude of dot products so that softmax doesn’t collapse onto a few positions and gradients remain usable.",
+      'Dividing by √dₖ stabilizes the magnitude of dot products so that softmax doesn’t collapse onto a few positions and gradients remain usable. To reason through the choices, select the statements that match the criterion in the prompt: "Without scaling, dot products can become very large when vectors are high-dimensional."; "Large dot products can make softmax extremely peaked with very small gradients."; "Scaling keeps the softmax inputs in a more moderate range.". Do not select statements that miss that criterion: "It is only used to make the formula look more complicated.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q57",
@@ -1564,7 +1564,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Multiple heads with different Q/K/V projections can focus on different relationships; their outputs are concatenated and projected back.",
+      'Multiple heads with different Q/K/V projections can focus on different relationships; their outputs are concatenated and projected back. To reason through the choices, select the statements that match the criterion in the prompt: "To let the model look at the sequence from several \'perspectives\' at the same time."; "To have several independent attention heads that can specialize in different patterns."; "To concatenate the outputs of all heads and mix them with a final linear layer.". Do not select statements that miss that criterion: "To ensure that every head uses exactly the same attention pattern.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q58",
@@ -1591,7 +1591,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Self-attention forms a T×T matrix of interactions, leading to O(T²) time and memory, which is expensive for long contexts.",
+      'Self-attention forms a T×T matrix of interactions, leading to O(T²) time and memory, which is expensive for long contexts. To reason through the choices, select the statements that match the criterion in the prompt: "The attention matrix compares every token with every other token."; "The time and memory cost grow roughly with the square of sequence length."; "This quadratic cost becomes a bottleneck for very long sequences.". Do not select statements that miss that criterion: "Self-attention always has lower cost than RNNs, regardless of sequence length.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q59",
@@ -1617,7 +1617,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Self-attention treats tokens as a set; positional encodings inject order information so the model can distinguish different word orders.",
+      'Self-attention treats tokens as a set; positional encodings inject order information so the model can distinguish different word orders. To reason through the choices, select the statements that match the criterion in the prompt: "Because self-attention alone is insensitive to the order of tokens."; "Because we want the model to know where each token is in the sequence.". Do not select statements that miss that criterion: "Because embeddings cannot represent word meaning without them."; "Because positional encodings are required only for very short sentences.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q60",
@@ -1644,7 +1644,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Sinusoidal encodings are fixed functions of position (no learned weights) and generalize to longer sequences without retraining.",
+      'Sinusoidal encodings are fixed functions of position (no learned weights) and generalize to longer sequences without retraining. To reason through the choices, select the statements that match the criterion in the prompt: "They use sine and cosine functions with different frequencies over the position index."; "They do not introduce extra learned parameters.". Do not select statements that miss that criterion: "They require re-training if we want to handle slightly longer sequences."; "They are randomly initialized and updated by gradient descent.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q61",
@@ -1670,7 +1670,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Transformers stack identical blocks, each with attention and a position-wise feedforward network plus residual and normalization layers.",
+      'Transformers stack identical blocks, each with attention and a position-wise feedforward network plus residual and normalization layers. To reason through the choices, select the statements that match the criterion in the prompt: "A repeated building unit that combines multi-head self-attention, a feedforward network, residual connections, and layer normalization.". Do not select statements that miss that criterion: "A layer that contains only convolution operations."; "A special token that marks sentence boundaries."; "A pre-processing step applied before tokenization.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q62",
@@ -1697,7 +1697,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "The FFN is a small MLP applied point-wise to each token, adding non-linearity and capacity without mixing positions.",
+      'The FFN is a small MLP applied point-wise to each token, adding non-linearity and capacity without mixing positions. To reason through the choices, select the statements that match the criterion in the prompt: "It applies two linear layers with a non-linear activation (like ReLU) in between."; "It is applied independently to each token’s representation.". Do not select statements that miss that criterion: "It mixes information across different time steps like self-attention does."; "It is mainly there to reduce the model’s capacity.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q63",
@@ -1723,7 +1723,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Residual additions create shortcut paths that stabilize training and allow deeper networks without forcing layers to be identity mappings.",
+      'Residual additions create shortcut paths that stabilize training and allow deeper networks without forcing layers to be identity mappings. To reason through the choices, select the statements that match the criterion in the prompt: "They add the input of a sublayer to its output."; "They help gradients flow through many stacked layers."; "They make the loss landscape smoother and easier to optimize.". Do not select statements that miss that criterion: "They force every layer to output exactly the same as its input.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q64",
@@ -1749,7 +1749,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "LayerNorm operates per token, using its feature statistics, and includes learnable γ and β; it does not depend on batch size like BatchNorm.",
+      'LayerNorm operates per token, using its feature statistics, and includes learnable γ and β; it does not depend on batch size like BatchNorm. To reason through the choices, select the statements that match the criterion in the prompt: "It normalizes activations across features for a single token."; "It uses that token’s mean and standard deviation."; "It then applies learned scale (γ) and shift (β) parameters.". Do not select statements that miss that criterion: "It requires very large batch sizes to work properly.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q65",
@@ -1775,7 +1775,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Cross-attention mixes information from the encoder into the decoder by taking queries from decoder states and keys/values from encoder outputs.",
+      'Cross-attention mixes information from the encoder into the decoder by taking queries from decoder states and keys/values from encoder outputs. To reason through the choices, select the statements that match the criterion in the prompt: "Attention in the decoder that uses encoder outputs as keys and values."; "A way for the decoder to condition its generation on the encoded source sentence.". Do not select statements that miss that criterion: "Self-attention that only looks within the decoder sequence."; "A mechanism that ignores the encoder completely.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q66",
@@ -1802,7 +1802,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "The causal (triangular) mask sets scores for future positions to −∞ so that, after softmax, each token only attends to itself and earlier tokens.",
+      'The causal (triangular) mask sets scores for future positions to −∞ so that, after softmax, each token only attends to itself and earlier tokens. To reason through the choices, select the statements that match the criterion in the prompt: "To block attention to future tokens that should not be known yet.". Do not select statements that miss that criterion: "To speed up training by skipping all past tokens."; "Because we want the model to see the full sequence, including future tokens."; "Because masking makes the attention matrix symmetric.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q67",
@@ -1829,7 +1829,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Autoregressive models apply the chain rule: P(w₁…wₙ) = ∏ᵢ P(wᵢ | w₁…wᵢ₋₁).",
+      'Autoregressive models apply the chain rule: P(w₁…wₙ) = ∏ᵢ P(wᵢ | w₁…wᵢ₋₁). To reason through the choices, select the statements that match the criterion in the prompt: "As a product of conditional probabilities for each token given all previous tokens."; "Using the chain rule of probability.". Do not select statements that miss that criterion: "As a sum of independent probabilities for each token."; "By assuming that all tokens are independent of context.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q68",
@@ -1855,7 +1855,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Logits are the pre-softmax scores output by the model; softmax turns them into a probability distribution over the vocabulary.",
+      'Logits are the pre-softmax scores output by the model; softmax turns them into a probability distribution over the vocabulary. To reason through the choices, select the statements that match the criterion in the prompt: "Raw, unnormalized scores for each vocabulary token before applying softmax."; "A vector of real numbers that is converted to probabilities by softmax.". Do not select statements that miss that criterion: "Probabilities that already sum exactly to 1."; "The values passed into the cross-entropy loss after softmax.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q69",
@@ -1882,7 +1882,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Cross-entropy compares predicted probabilities with one-hot targets, pushing the model to concentrate probability mass on the correct token.",
+      'Cross-entropy compares predicted probabilities with one-hot targets, pushing the model to concentrate probability mass on the correct token. To reason through the choices, select the statements that match the criterion in the prompt: "It measures the difference between the predicted distribution and the true distribution over the vocabulary."; "The true distribution is usually a one-hot vector for the correct next token."; "Minimizing cross-entropy encourages the model to assign high probability to the correct token.". Do not select statements that miss that criterion: "It is unrelated to probabilities and is only used for regression tasks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q70",
@@ -1908,7 +1908,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Teacher forcing stabilizes training by conditioning each prediction on the real previous token rather than on possibly wrong model outputs.",
+      'Teacher forcing stabilizes training by conditioning each prediction on the real previous token rather than on possibly wrong model outputs. To reason through the choices, select the statements that match the criterion in the prompt: "Feeding the ground-truth previous token to the model when predicting the next one.". Do not select statements that miss that criterion: "Always feeding the model its own previous predictions."; "A method that completely avoids using the training data."; "A technique used only at inference time.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q71",
@@ -1935,7 +1935,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Greedy decoding is deterministic and conservative; it often yields safe but repetitive outputs and misses creative alternatives.",
+      'Greedy decoding is deterministic and conservative; it often yields safe but repetitive outputs and misses creative alternatives. To reason through the choices, select the statements that match the criterion in the prompt: "It tends to produce repetitive, generic, and sometimes boring text."; "It ignores other plausible tokens that could lead to more diverse generations.". Do not select statements that miss that criterion: "It is much slower than sampling-based methods."; "It can get stuck in loops like repeating short phrases.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q72",
@@ -1962,7 +1962,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "BPE builds a vocabulary of frequent character sequences so common words stay whole and rare words are decomposed into reusable subword pieces.",
+      'BPE builds a vocabulary of frequent character sequences so common words stay whole and rare words are decomposed into reusable subword pieces. To reason through the choices, select the statements that match the criterion in the prompt: "Represent rare words as combinations of more frequent smaller units.". Do not select statements that miss that criterion: "Force every word to be a single token regardless of frequency."; "Completely avoid splitting any word into pieces."; "Use only individual characters as tokens in all cases.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q73",
@@ -1989,7 +1989,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Subword tokenization breaks unseen words into smaller known pieces, so the model rarely needs to fall back to a single unknown token.",
+      'Subword tokenization breaks unseen words into smaller known pieces, so the model rarely needs to fall back to a single unknown token. To reason through the choices, select the statements that match the criterion in the prompt: "Without subword methods, many rare or new words would be mapped to a single <UNK> token."; "Subword vocabularies greatly reduce how often <UNK> has to be used.". Do not select statements that miss that criterion: "<UNK> is still sometimes needed for truly unrepresentable symbols."; "Subword tokenization makes it impossible to model prefixes and suffixes.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q74",
@@ -2016,7 +2016,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "MLM hides a subset of tokens with a special mask and has the model reconstruct them from the full bidirectional context.",
+      'MLM hides a subset of tokens with a special mask and has the model reconstruct them from the full bidirectional context. To reason through the choices, select the statements that match the criterion in the prompt: "Randomly mask some tokens and train the model to predict the original tokens using both left and right context.". Do not select statements that miss that criterion: "Mask every token so that no context remains."; "Train the model to always output the <MASK> symbol."; "Only allow the model to look at tokens to the left of the mask.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q75",
@@ -2043,7 +2043,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "BERT uses MLM with bidirectional context for understanding; GPT-2 is a decoder-only causal language model for generation.",
+      'BERT uses MLM with bidirectional context for understanding; GPT-2 is a decoder-only causal language model for generation. To reason through the choices, select the statements that match the criterion in the prompt: "BERT is bidirectional and mainly used for understanding tasks (classification, QA, etc.)."; "GPT-2 is a causal decoder trained to predict the next token."; "GPT-2 generates text autoregressively by feeding its previous outputs back as input.". Do not select statements that miss that criterion: "BERT is primarily trained as a left-to-right language model.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q76",
@@ -2069,7 +2069,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "BERT adds [CLS] at the start; its final hidden state is treated as a sequence-level representation for tasks like sentiment or entailment.",
+      'BERT adds [CLS] at the start; its final hidden state is treated as a sequence-level representation for tasks like sentiment or entailment. To reason through the choices, select the statements that match the criterion in the prompt: "To obtain a single vector that summarizes the entire input sequence for classification."; "To mark the beginning of the input sequence.". Do not select statements that miss that criterion: "To serve as a padding token for short sentences."; "To signal the end of a document.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q77",
@@ -2096,7 +2096,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Transfer learning leverages broad language knowledge from pretraining and fine-tunes the model on smaller supervised datasets.",
+      'Transfer learning leverages broad language knowledge from pretraining and fine-tunes the model on smaller supervised datasets. To reason through the choices, select the statements that match the criterion in the prompt: "First pretrain on massive unlabeled text to learn general language patterns."; "Then adapt the model to a specific task using a much smaller labeled dataset."; "Reuse the same pretrained model for many tasks without starting from random initialization each time.". Do not select statements that miss that criterion: "Avoid using any labeled data for downstream tasks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q78",
@@ -2123,7 +2123,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Fine-tuning attaches a task-specific head and trains it (and sometimes parts of the backbone) using labeled data; we keep the pretrained weights.",
+      'Fine-tuning attaches a task-specific head and trains it (and sometimes parts of the backbone) using labeled data; we keep the pretrained weights. To reason through the choices, select the statements that match the criterion in the prompt: "We add a small classification head (for example, a linear layer) on top of the pretrained model."; "We train this head using labeled examples and a loss such as cross-entropy.". Do not select statements that miss that criterion: "We may optionally update some or all of the transformer’s internal weights."; "We always discard all pretrained weights and start from scratch.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch2-q79",
@@ -2176,6 +2176,6 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Pretrained models are tightly coupled to their tokenizers; mismatching them scrambles the mapping from text to embeddings and breaks performance.",
+      'Pretrained models are tightly coupled to their tokenizers; mismatching them scrambles the mapping from text to embeddings and breaks performance. To reason through the choices, select the statements that match the criterion in the prompt: "Because the model’s embedding matrix expects the exact token IDs produced by its tokenizer.". Do not select statements that miss that criterion: "Because different models may use different subword vocabularies and special tokens."; "Using a mismatched tokenizer can feed completely wrong indices into the embedding layer."; "Any tokenizer can be swapped without affecting the model.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 ];

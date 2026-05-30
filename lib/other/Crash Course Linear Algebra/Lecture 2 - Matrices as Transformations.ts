@@ -1067,6 +1067,546 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
     explanation:
       "Modern AI systems use matrices for learned projections, attention computations, and feature transformations. Embeddings live in vector spaces, LoRA uses low-rank matrix updates, and optimization moves through parameter spaces shaped by linear algebra. Shapes and rank remain important because they control compatibility, capacity, compression, and efficiency.",
   },
+
+  {
+    id: "la-crash-l2-q41",
+    chapter: 2,
+    difficulty: "easy",
+    prompt:
+      "For \\(A=\\begin{bmatrix}2 & -1 \\\\ 0 & 3\\end{bmatrix}\\) and \\(x=\\begin{bmatrix}4 \\\\ 2\\end{bmatrix}\\), which statements correctly describe \\(Ax\\)?",
+    options: [
+      {
+        text: "The first coordinate is \\(2\\cdot4 + (-1)\\cdot2 = 6\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The second coordinate is \\(0\\cdot4 + 3\\cdot2 = 6\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The output must be a vector in \\(\\mathbb{R}^3\\) because the matrix has three nonzero entries.",
+        isCorrect: false,
+      },
+      {
+        text: "Matrix-vector multiplication uses columns only, so row dot products are irrelevant.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Each output coordinate is a dot product between one row of the matrix and the input vector. The result is \\(\\begin{bmatrix}6 \\\\ 6\\end{bmatrix}\\), which is two-dimensional because the matrix has two rows. The number of nonzero entries does not determine the output dimension.",
+  },
+  {
+    id: "la-crash-l2-q42",
+    chapter: 2,
+    difficulty: "easy",
+    prompt:
+      "If \\(W\\in\\mathbb{R}^{2048\\times768}\\) maps an embedding \\(x\\in\\mathbb{R}^{768}\\), which statement gives the correct output shape of \\(Wx\\)?",
+    options: [
+      {
+        text: "\\(Wx\\in\\mathbb{R}^{2048}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(Wx\\in\\mathbb{R}^{768}\\).",
+        isCorrect: false,
+      },
+      {
+        text: "\\(Wx\\in\\mathbb{R}^{2048\\times768}\\).",
+        isCorrect: false,
+      },
+      {
+        text: "The product is undefined because the output dimension differs from the input dimension.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "For \\(W\\in\\mathbb{R}^{m\\times n}\\) and \\(x\\in\\mathbb{R}^n\\), the output is in \\(\\mathbb{R}^m\\). Here \\(m=2048\\) and \\(n=768\\), so the layer expands a 768-dimensional input into a 2048-dimensional representation. A change in dimension is exactly what many learned linear layers are designed to do.",
+  },
+  {
+    id: "la-crash-l2-q43",
+    chapter: 2,
+    difficulty: "easy",
+    prompt:
+      "For the diagonal matrix \\(D=\\begin{bmatrix}-2 & 0 \\\\ 0 & \\frac{1}{2}\\end{bmatrix}\\), which statements correctly describe the transformation?",
+    options: [
+      {
+        text: "The \\(x\\)-direction is scaled by \\(-2\\), so it is stretched and flipped.",
+        isCorrect: true,
+      },
+      {
+        text: "The \\(y\\)-direction is scaled by \\(\\frac{1}{2}\\), so it is shrunk.",
+        isCorrect: true,
+      },
+      {
+        text: "The vector \\(\\begin{bmatrix}1 \\\\ 0\\end{bmatrix}\\) maps to \\(\\begin{bmatrix}-2 \\\\ 0\\end{bmatrix}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The vector \\(\\begin{bmatrix}0 \\\\ 1\\end{bmatrix}\\) maps to \\(\\begin{bmatrix}0 \\\\ \\frac{1}{2}\\end{bmatrix}\\).",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "A diagonal matrix scales each coordinate axis independently. The negative value on the first diagonal entry flips the first coordinate while stretching its magnitude, and the positive one-half on the second diagonal entry shrinks the second coordinate. The basis-vector images reveal the geometry of the full transformation.",
+  },
+  {
+    id: "la-crash-l2-q44",
+    chapter: 2,
+    difficulty: "easy",
+    prompt:
+      "If \\(A\\in\\mathbb{R}^{2\\times3}\\), which statements about the transpose \\(A^T\\) are correct?",
+    options: [
+      {
+        text: "\\(A^T\\in\\mathbb{R}^{3\\times2}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Rows of \\(A\\) become columns of \\(A^T\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\((A^T)^T=A\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The transpose of every matrix has exactly the same shape as the original matrix.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The transpose flips the row and column axes, so a \\(2\\times3\\) matrix becomes a \\(3\\times2\\) matrix. Transposing twice returns the original matrix because the row-column flip is undone. Only square matrices keep the same shape under transposition.",
+  },
+  {
+    id: "la-crash-l2-q45",
+    chapter: 2,
+    difficulty: "easy",
+    prompt: "Which statement correctly identifies a symmetric matrix?",
+    options: [
+      {
+        text: "\\(\\begin{bmatrix}2 & 5 \\\\ 5 & 3\\end{bmatrix}\\) is symmetric because it equals its transpose.",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\begin{bmatrix}2 & 5 \\\\ 1 & 3\\end{bmatrix}\\) is symmetric because all entries are positive.",
+        isCorrect: false,
+      },
+      {
+        text: "Every rectangular matrix is symmetric after transposition.",
+        isCorrect: false,
+      },
+      {
+        text: "A matrix is symmetric whenever its diagonal entries are nonzero.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "A symmetric matrix must be square and must satisfy \\(A=A^T\\). The off-diagonal entries must mirror each other, so the entry above the diagonal must match the corresponding entry below the diagonal. Positivity or nonzero diagonal entries alone do not establish symmetry.",
+  },
+  {
+    id: "la-crash-l2-q46",
+    chapter: 2,
+    difficulty: "easy",
+    prompt:
+      "For the projection \\(P=\\begin{bmatrix}1 & 0 & 0 \\\\ 0 & 1 & 0 \\\\ 0 & 0 & 0\\end{bmatrix}\\), which statements are correct?",
+    options: [
+      {
+        text: "The transformation removes the third coordinate.",
+        isCorrect: true,
+      },
+      {
+        text: "The rank of \\(P\\) is \\(2\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The transformation preserves all information in \\(\\mathbb{R}^3\\).",
+        isCorrect: false,
+      },
+      {
+        text: "The matrix is invertible because it is square.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "This matrix maps \\((x,y,z)\\) to \\((x,y,0)\\), so the third coordinate is discarded. Only two independent output directions remain, which gives rank \\(2\\). Being square is not enough for invertibility when a direction is collapsed.",
+  },
+  {
+    id: "la-crash-l2-q47",
+    chapter: 2,
+    difficulty: "easy",
+    prompt:
+      "Which statements correctly explain why activation functions are needed between learned linear layers?",
+    options: [
+      {
+        text: "A composition such as \\(A(Bx)\\) can be rewritten as \\((AB)x\\) when shapes align.",
+        isCorrect: true,
+      },
+      {
+        text: "Without nonlinearities, depth alone still represents a single linear transformation.",
+        isCorrect: true,
+      },
+      {
+        text: "Elementwise functions such as ReLU or GELU can bend the input-output relationship.",
+        isCorrect: true,
+      },
+      {
+        text: "Nonlinearities allow stacked layers to express patterns that one linear map cannot express.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Linear maps are closed under composition, so a stack of purely linear layers can collapse into one equivalent linear map. Activation functions break that collapse by introducing nonlinear behavior between matrix multiplications. This is why depth becomes expressive only when paired with nonlinear operations.",
+  },
+  {
+    id: "la-crash-l2-q48",
+    chapter: 2,
+    difficulty: "medium",
+    prompt:
+      "Let \\(B\\in\\mathbb{R}^{4\\times3}\\), \\(A\\in\\mathbb{R}^{2\\times4}\\), and \\(x\\in\\mathbb{R}^3\\). Which statements about \\(A(Bx)\\) are correct?",
+    options: [
+      {
+        text: "\\(Bx\\in\\mathbb{R}^4\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(A(Bx)\\in\\mathbb{R}^2\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The composed matrix \\(AB\\) has shape \\(2\\times3\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(BA\\) is the same valid composition because matrix multiplication order does not affect shape compatibility.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The matrix \\(B\\) first maps a three-dimensional vector to four dimensions, and \\(A\\) then maps the result to two dimensions. The combined product \\(AB\\) therefore maps \\(\\mathbb{R}^3\\) to \\(\\mathbb{R}^2\\). The reverse product \\(BA\\) is not shape-compatible here, which shows why order matters even before considering geometry.",
+  },
+  {
+    id: "la-crash-l2-q49",
+    chapter: 2,
+    difficulty: "medium",
+    prompt:
+      "Let \\(R\\) be a 90-degree counterclockwise rotation and \\(S=\\begin{bmatrix}2 & 0 \\\\ 0 & 1\\end{bmatrix}\\). For \\(x=\\begin{bmatrix}1 \\\\ 0\\end{bmatrix}\\), which statements are correct?",
+    options: [
+      {
+        text: "\\(SRx=\\begin{bmatrix}0 \\\\ 1\\end{bmatrix}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(RSx=\\begin{bmatrix}0 \\\\ 2\\end{bmatrix}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(SRx=RSx\\) because rotations and stretches always commute.",
+        isCorrect: false,
+      },
+      {
+        text: "The order cannot matter because both matrices are \\(2\\times2\\).",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Applying \\(R\\) first sends \\((1,0)\\) to \\((0,1)\\), and then \\(S\\) leaves that vector unchanged. Applying \\(S\\) first sends \\((1,0)\\) to \\((2,0)\\), and then \\(R\\) sends it to \\((0,2)\\). Equal matrix shapes do not make matrix multiplication commutative.",
+  },
+  {
+    id: "la-crash-l2-q50",
+    chapter: 2,
+    difficulty: "medium",
+    prompt:
+      "Which statement correctly describes the rank of \\(A=\\begin{bmatrix}1 & 2 \\\\ 2 & 4\\end{bmatrix}\\)?",
+    options: [
+      {
+        text: "The rank is \\(1\\) because the second row and second column are multiples of the first.",
+        isCorrect: true,
+      },
+      {
+        text: "The rank is \\(2\\) because the matrix has two rows and two columns.",
+        isCorrect: false,
+      },
+      {
+        text: "The rank is \\(0\\) because the determinant is not visually shown.",
+        isCorrect: false,
+      },
+      {
+        text: "The matrix is full rank because all entries are nonzero.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Rank counts independent directions, not the number of rows, columns, or nonzero entries. Here one row is a multiple of the other and one column is a multiple of the other, so only one independent direction remains. The matrix therefore collapses two-dimensional input information onto a one-dimensional subspace.",
+  },
+  {
+    id: "la-crash-l2-q51",
+    chapter: 2,
+    difficulty: "medium",
+    prompt:
+      "For a LoRA-style update \\(W + AB\\) with \\(W\\in\\mathbb{R}^{m\\times n}\\), \\(A\\in\\mathbb{R}^{m\\times r}\\), and \\(B\\in\\mathbb{R}^{r\\times n}\\), which statements are correct?",
+    options: [
+      {
+        text: "\\(AB\\) has the same shape as \\(W\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The update \\(AB\\) has rank at most \\(r\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The trainable update uses \\(r(m+n)\\) parameters before counting any scaling constants.",
+        isCorrect: true,
+      },
+      {
+        text: "The factorization is parameter-efficient when \\(r\\) is much smaller than \\(m\\) and \\(n\\).",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "The shapes multiply as \\((m\\times r)(r\\times n)=m\\times n\\), so the update can be added to \\(W\\). Since the product passes through an \\(r\\)-dimensional bottleneck, its rank is at most \\(r\\). This is useful when a small number of learned directions can adapt a large matrix.",
+  },
+  {
+    id: "la-crash-l2-q52",
+    chapter: 2,
+    difficulty: "medium",
+    prompt:
+      "If \\(Q,K\\in\\mathbb{R}^{n\\times d}\\) store token query and key vectors as rows, which statements about \\(QK^T\\) are correct?",
+    options: [
+      {
+        text: "\\(QK^T\\in\\mathbb{R}^{n\\times n}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Entry \\((i,j)\\) is the dot product between query \\(q_i\\) and key \\(k_j\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The transpose aligns the shared embedding dimension \\(d\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(QK\\) is always the correct product because queries and keys have the same shape.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The transpose changes \\(K\\) from \\(n\\times d\\) to \\(d\\times n\\), allowing each query row to take dot products with every key row. The result is an \\(n\\times n\\) score matrix over token pairs. Having the same shape does not make \\(QK\\) valid or semantically correct in general.",
+  },
+  {
+    id: "la-crash-l2-q53",
+    chapter: 2,
+    difficulty: "medium",
+    prompt:
+      "For a centered data matrix \\(X\\in\\mathbb{R}^{b\\times f}\\), which statements about \\(X^TX\\) are correct?",
+    options: [
+      {
+        text: "\\(X^TX\\) has shape \\(f\\times f\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(X^TX\\) is symmetric.",
+        isCorrect: true,
+      },
+      {
+        text: "\\(X^TX\\) primarily compares examples to examples, so it has shape \\(b\\times b\\).",
+        isCorrect: false,
+      },
+      {
+        text: "The diagonal entries of \\(X^TX\\) must be negative when features vary strongly.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Multiplying \\(X^T\\in\\mathbb{R}^{f\\times b}\\) by \\(X\\in\\mathbb{R}^{b\\times f}\\) gives a feature-by-feature matrix. It is symmetric because \\((X^TX)^T=X^TX\\). Its diagonal entries are sums of squared feature values, so strong variation does not make them negative.",
+  },
+  {
+    id: "la-crash-l2-q54",
+    chapter: 2,
+    difficulty: "hard",
+    prompt:
+      "A network without biases computes \\(h_1=W_1x\\), \\(h_2=W_2h_1\\), and \\(y=W_3h_2\\). Which statement best describes the overall map from \\(x\\) to \\(y\\)?",
+    options: [
+      {
+        text: "It is the single linear map \\(y=(W_3W_2W_1)x\\) when the matrix shapes align.",
+        isCorrect: true,
+      },
+      {
+        text: "It is automatically nonlinear because it has three layers.",
+        isCorrect: false,
+      },
+      {
+        text: "It cannot be represented by one matrix product.",
+        isCorrect: false,
+      },
+      {
+        text: "It computes attention scores because the matrices are stacked.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "A composition of linear maps is still a linear map, so the three matrices can be multiplied into one equivalent matrix if the dimensions match. Depth alone does not create nonlinear decision boundaries or attention behavior. Nonlinear activations or other operations are needed to change the expressive class.",
+  },
+  {
+    id: "la-crash-l2-q55",
+    chapter: 2,
+    difficulty: "hard",
+    prompt:
+      "If \\(A\\in\\mathbb{R}^{2\\times3}\\) has rank \\(2\\), which statements are correct?",
+    options: [
+      {
+        text: "The null space of \\(A\\) has dimension \\(1\\).",
+        isCorrect: true,
+      },
+      {
+        text: "At least one input direction is collapsed to zero.",
+        isCorrect: true,
+      },
+      {
+        text: "Different vectors in \\(\\mathbb{R}^3\\) can map to the same output in \\(\\mathbb{R}^2\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The transformation cannot be invertible as a map from \\(\\mathbb{R}^3\\) to \\(\\mathbb{R}^2\\).",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Rank-nullity gives nullity \\(3-2=1\\), so one independent input direction is lost. When a nonzero direction maps to zero, adding that direction to an input does not change the output. This makes the map non-invertible even though it can still cover all of \\(\\mathbb{R}^2\\).",
+  },
+  {
+    id: "la-crash-l2-q56",
+    chapter: 2,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly distinguish low rank from small numerical entries?",
+    options: [
+      {
+        text: "\\(\\begin{bmatrix}100 & 200 \\\\ 200 & 400\\end{bmatrix}\\) is rank \\(1\\) even though its entries are large.",
+        isCorrect: true,
+      },
+      {
+        text: "Rank depends on independent rows or columns, not on whether entries look numerically small.",
+        isCorrect: true,
+      },
+      {
+        text: "Any matrix with large entries must be full rank.",
+        isCorrect: false,
+      },
+      {
+        text: "Multiplying a nonzero matrix by \\(0.001\\) must reduce its rank.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The rows and columns of the displayed matrix are multiples of each other, so only one independent direction is present. Scaling every entry by a nonzero constant changes magnitudes but not the linear dependence relationships. Rank is about independence, not about entry size.",
+  },
+  {
+    id: "la-crash-l2-q57",
+    chapter: 2,
+    difficulty: "hard",
+    prompt:
+      "For a linear layer \\(y=Wx\\), where \\(W\\in\\mathbb{R}^{m\\times n}\\), \\(x\\in\\mathbb{R}^n\\), and an upstream gradient \\(g_y\\in\\mathbb{R}^m\\), which statements are correct?",
+    options: [
+      {
+        text: "The input gradient has the form \\(W^Tg_y\\), which lies in \\(\\mathbb{R}^n\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The weight gradient has outer-product shape \\(g_yx^T\\), which lies in \\(\\mathbb{R}^{m\\times n}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The transpose appears because backward flow reverses the direction of the forward linear map.",
+        isCorrect: true,
+      },
+      {
+        text: "The expression \\(Wg_y\\) is always the correct input gradient.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The forward map sends input-space perturbations into output space, while the backward map sends output sensitivities back into input space using the transpose. The outer product \\(g_yx^T\\) gives one gradient entry for every weight. The expression \\(Wg_y\\) is generally shape-incompatible and has the wrong direction for backpropagation through \\(y=Wx\\).",
+  },
+  {
+    id: "la-crash-l2-q58",
+    chapter: 2,
+    difficulty: "hard",
+    prompt:
+      "If \\(A\\in\\mathbb{R}^{m\\times n}\\) has full column rank with \\(m>n\\), which statement is correct?",
+    options: [
+      {
+        text: "\\(Ax=Ay\\) implies \\(x=y\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(A\\) is square and has a two-sided inverse.",
+        isCorrect: false,
+      },
+      {
+        text: "The rank of \\(A\\) must be \\(m\\).",
+        isCorrect: false,
+      },
+      {
+        text: "The transformation must preserve every distance exactly.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Full column rank means the null space is trivial, so two different input vectors cannot map to the same output. Because \\(m>n\\), the matrix is tall rather than square and does not have a standard two-sided inverse. Full column rank also does not imply distance preservation.",
+  },
+  {
+    id: "la-crash-l2-q59",
+    chapter: 2,
+    difficulty: "hard",
+    prompt:
+      "For an orthogonal rotation matrix \\(R\\), which statements are correct?",
+    options: [
+      {
+        text: "\\(R^TR=I\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\|Rx\\|=\\|x\\|\\) for every vector \\(x\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Dot products are preserved: \\((Rx)^T(Ry)=x^Ty\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The inverse transformation is \\(R^T\\).",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Orthogonal rotations preserve the geometry of the space because their transpose is their inverse. Norm preservation follows from \\(\\|Rx\\|^2=x^TR^TRx=x^Tx\\), and dot-product preservation follows similarly. This is why rotations can change coordinates without changing distances or angles.",
+  },
+  {
+    id: "la-crash-l2-q60",
+    chapter: 2,
+    difficulty: "hard",
+    prompt:
+      "A full update to \\(W\\in\\mathbb{R}^{4096\\times4096}\\) has \\(16{,}777{,}216\\) entries. A rank-\\(8\\) update uses \\(A\\in\\mathbb{R}^{4096\\times8}\\) and \\(B\\in\\mathbb{R}^{8\\times4096}\\). Which statements are correct?",
+    options: [
+      {
+        text: "The factor matrices contain \\(8(4096+4096)=65{,}536\\) trainable entries.",
+        isCorrect: true,
+      },
+      {
+        text: "The low-rank update uses far fewer parameters than a full \\(4096\\times4096\\) update.",
+        isCorrect: true,
+      },
+      {
+        text: "The product \\(AB\\) has rank at most \\(8\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The product \\(AB\\) can represent every possible full-rank update to \\(W\\).",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The low-rank factors require only \\(32{,}768+32{,}768=65{,}536\\) entries, which is much smaller than the full matrix. The bottleneck dimension \\(8\\) limits the rank of \\(AB\\), so the update can only express changes lying in a small set of directions. That restriction is the source of both the efficiency and the limitation.",
+  },
 ];
 
 export const CrashCourseLinearAlgebraL2Questions =

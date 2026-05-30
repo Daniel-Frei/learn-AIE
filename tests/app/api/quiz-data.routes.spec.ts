@@ -138,6 +138,40 @@ describe("shared quiz data routes", () => {
     ).toBe(1);
   });
 
+  it("resets participant rating without clearing shared question ratings", async () => {
+    const { POST: postAnswer } = await import("@/app/api/answers/route");
+    const { POST: resetRating } =
+      await import("@/app/api/participant-rating-reset/route");
+
+    await postAnswer(
+      buildRequest("http://localhost/api/answers", "POST", {
+        participantId: "participant-a",
+        questionId: "mit15773-l4-q1",
+        label: "medium",
+        isCorrect: true,
+        elapsedMs: 15000,
+        mistakeCount: 0,
+      }),
+    );
+
+    const res = await resetRating(
+      buildRequest("http://localhost/api/participant-rating-reset", "POST", {
+        participantId: "participant-a",
+      }),
+    );
+    const body = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(body.ratingState.user).toMatchObject({
+      rating: 1500,
+      rd: 350,
+      sigma: 0.06,
+      gamesPlayed: 0,
+    });
+    expect(body.ratingState.questions["mit15773-l4-q1"].legacyCorrect).toBe(1);
+    expect(body.legacyMigrationCompleted).toBe(true);
+  });
+
   it("stores append-only reports and exposes counts through quiz state", async () => {
     const { POST } = await import("@/app/api/question-reports/route");
     const { GET } = await import("@/app/api/quiz-state/route");
@@ -307,6 +341,22 @@ describe("shared quiz data routes", () => {
     });
   });
 
+  it("returns 400 when rating reset is requested without a participant id", async () => {
+    const { POST } = await import("@/app/api/participant-rating-reset/route");
+
+    const res = await POST(
+      buildRequest("http://localhost/api/participant-rating-reset", "POST", {
+        participantId: " ",
+      }),
+    );
+    const body = await res.json();
+
+    expect(res.status).toBe(400);
+    expect(body).toEqual({
+      error: "participantId is required for rating reset.",
+    });
+  });
+
   it("returns 400 for oversized question report comments", async () => {
     const { POST } = await import("@/app/api/question-reports/route");
 
@@ -438,6 +488,8 @@ describe("shared quiz data routes", () => {
       await import("@/app/api/question-reports/route");
     const { POST: migrateLocal } =
       await import("@/app/api/local-migration/route");
+    const { POST: resetRating } =
+      await import("@/app/api/participant-rating-reset/route");
 
     const validReportDraft = {
       questionId: "mit15773-l4-q1",
@@ -477,15 +529,23 @@ describe("shared quiz data routes", () => {
           participantId: "participant-a",
         }),
       ),
+      resetRating(
+        buildRequest("http://localhost/api/participant-rating-reset", "POST", {
+          participantId: "participant-a",
+        }),
+      ),
     ]);
     const bodies = await Promise.all(responses.map((res) => res.json()));
 
-    expect(responses.map((res) => res.status)).toEqual([500, 500, 500, 500]);
+    expect(responses.map((res) => res.status)).toEqual([
+      500, 500, 500, 500, 500,
+    ]);
     expect(bodies).toEqual([
       { error: "Failed to load quiz state" },
       { error: "Failed to record answer" },
       { error: "Failed to submit question report" },
       { error: "Failed to migrate local state" },
+      { error: "Failed to reset participant rating" },
     ]);
   });
 });

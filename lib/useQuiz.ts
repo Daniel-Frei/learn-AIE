@@ -15,7 +15,7 @@ import {
   type SourceId,
   type Topic,
 } from "./quiz";
-import { loadRatingState } from "./difficultyStore";
+import { loadRatingState, saveRatingState } from "./difficultyStore";
 import {
   createDefaultRatingState,
   getQuestionRatingEstimate,
@@ -39,6 +39,7 @@ import type {
   LocalMigrationResponse,
   QuizStateResponse,
   RecordAnswerResponse,
+  ResetParticipantRatingResponse,
   SubmitQuestionReportResponse,
 } from "./quizSync";
 export type { DifficultyRange, QuestionSelectionMode } from "./quizSession";
@@ -417,6 +418,39 @@ export function useQuiz() {
     setClimbRecentIds([]);
   };
 
+  const resetParticipantRating = async (): Promise<boolean> => {
+    if (!participantId) return false;
+
+    try {
+      const response = await fetchJson<ResetParticipantRatingResponse>(
+        "/api/participant-rating-reset",
+        {
+          method: "POST",
+          body: JSON.stringify({ participantId }),
+        },
+      );
+
+      applyRemoteState(response);
+      markLegacyMigrationCompleted(participantId);
+      saveRatingState(createDefaultRatingState());
+
+      if (selectionMode === "climb") {
+        const nextQuestionId = pickClimbQuestionId(
+          availableQuestions,
+          response.ratingState,
+          [],
+        );
+        setClimbQuestionId(nextQuestionId);
+        setClimbRecentIds(nextQuestionId ? [nextQuestionId] : []);
+      }
+
+      return true;
+    } catch (err) {
+      console.error("Failed to reset participant rating:", err);
+      return false;
+    }
+  };
+
   const submitAnswer = async () => {
     if (!currentQuestion || showResult) return;
 
@@ -496,5 +530,6 @@ export function useQuiz() {
     currentQuestionReportCount,
 
     submitQuestionReport,
+    resetParticipantRating,
   };
 }

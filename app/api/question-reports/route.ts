@@ -3,6 +3,7 @@ import type {
   SubmitQuestionReportRequest,
   SubmitQuestionReportResponse,
 } from "@/lib/quizSync";
+import { ALL_TOPICS } from "@/lib/questionTopics";
 import { submitQuestionReportForParticipant } from "@/lib/server/quizDataService";
 
 export const runtime = "nodejs";
@@ -10,7 +11,7 @@ export const runtime = "nodejs";
 const MAX_REPORT_COMMENT_CHARS = 2_000;
 const MAX_REPORT_PROMPT_CHARS = 4_000;
 const MAX_LABEL_CHARS = 200;
-const VALID_TOPICS = new Set(["RL", "DL", "NLP", "Math", "Life Science"]);
+const VALID_TOPICS: ReadonlySet<string> = new Set(ALL_TOPICS);
 
 function isBoundedString(value: unknown, maxLength: number): value is string {
   return (

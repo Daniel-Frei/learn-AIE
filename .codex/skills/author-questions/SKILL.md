@@ -31,8 +31,8 @@ Use the repo docs as product context. Keep edits scoped to the new question file
    - Prefer existing series conventions over inventing new naming.
 
 4. Generate or edit the TypeScript question file.
-   - Default to 40 questions per source material unless the user requests another count or the surrounding series clearly uses a different count.
-   - If context is tight, draft in two 20-question passes, but the final file should contain the complete requested set.
+   - Before generating a new set, determine the requested question count. If the user did not specify one, ask for the count before generating questions; do not assume a default count from this skill.
+   - If context is tight, draft in multiple passes, but the final file should contain the complete requested set.
    - Use a filename based on the source item and topic, for example `lecture5_attention.ts`, `chapter4_agents.ts`, or the closest existing series convention.
    - Use a stable ASCII export name ending in `Questions`.
    - Use the correct relative import for `Question` from the new file to `lib/quiz.ts`.
@@ -65,13 +65,15 @@ Use the repo docs as product context. Keep edits scoped to the new question file
 - Include math-related questions when math is part of the source material. The amount of math should be proportional to its importance in the material.
 - Do not include questions about logistics or administration, such as exams, course structure, or resources.
 - Do not refer to the source material directly in prompts. Avoid phrases like "in the lecture", "in the transcript", "in the chapter", "in the paper", "the equation above", or "the slides show".
-- Questions should test understanding while also helping recall and reinforce concepts.
+- Questions should test whether learners really understand the concepts and can use them, not only whether they can recognize familiar wording or eliminate obviously wrong statements.
+- Difficulty should come from the level of knowledge, reasoning, transfer, or math required by the concept, not from tricky wording or low-quality answer options.
 
 ## Difficulty
 
-- Split `"easy"`, `"medium"`, and `"hard"` labels equally across each complete question set whenever the question count is divisible by three.
-- If the requested question count is not divisible by three, keep the three difficulty buckets as close to equal as possible, with no bucket more than one question away from another unless the user explicitly asks for a different split.
-- Do not omit a difficulty bucket from a complete source question set unless the user explicitly asks for that exception.
+- Use `"easy"`, `"medium"`, and `"hard"` labels to describe the level of knowledge and understanding required, not the guessability of the answer options.
+- If the user, source material, existing set convention, or local docs specify a difficulty distribution, follow that specified distribution.
+- If no difficulty distribution was specified, default to a roughly balanced mix of `"easy"`, `"medium"`, and `"hard"` labels when the source material supports it.
+- Always report the final difficulty balance to the user, including the counts for `"easy"`, `"medium"`, and `"hard"` questions and any deliberate deviation from a balanced default.
 - Easy questions cover terminology, definitions, and core concepts.
 - Medium and hard questions cover deeper understanding, application, connections between concepts, or math.
 - Easy questions should support understanding of harder ones by defining terms used later.
@@ -86,17 +88,13 @@ Use the repo docs as product context. Keep edits scoped to the new question file
 
 - Options must be independent; do not refer from one option to another.
 - Avoid obvious guessing patterns, including extreme absolutes like "always" or "never" unless truly correct.
-- Incorrect options should be plausible and useful for diagnosing misunderstandings.
+- Incorrect options should be plausible same-neighborhood alternatives, partial truths, common confusions, nearby quantities, or nearby conditions that help diagnose misunderstandings.
+- A learner should usually need concept understanding to distinguish correct options from incorrect options. Avoid distractors that are absurd, category-mismatched, self-refuting, or easy to eliminate from wording cues alone.
 
 ## Answer Distribution
 
-- Across a 40-question set, target:
-  - About 10 questions with 4 correct answers.
-  - About 10 questions with 3 correct answers.
-  - About 10 questions with 2 correct answers.
-  - About 10 questions with 1 correct answer.
-- For a 20-question drafting batch, approximate this as about 5 questions per answer-count bucket.
-- For other set sizes, keep the buckets as balanced as practical.
+- Across each complete question set, keep 1-, 2-, 3-, and 4-correct-answer questions as balanced as practical unless the user or existing set convention specifies another pattern.
+- For small or tightly scoped sets, prioritize source coverage and answer quality over exact answer-count balance.
 - "Correct" means `isCorrect: true`, meaning the user should select that option. It does not merely mean whether a statement is factually true in isolation.
 - Mixed phrasing is allowed, such as "which are correct" or "which are false", but the prompt must align exactly with the `isCorrect` flags.
 
@@ -150,7 +148,10 @@ export const sourceMaterialQuestions: Question[] = [
 
 - Exactly four options per question.
 - Multi-select compatible, with 1, 2, 3, or 4 correct answers.
-- Difficulty is exactly `"easy"`, `"medium"`, or `"hard"`, and the three difficulty buckets are equal or as close to equal as the question count allows.
+- If generating a new set, the user specified the question count or you asked for it before generating questions.
+- Difficulty is exactly `"easy"`, `"medium"`, or `"hard"`, follows any user/source-specified distribution, and otherwise uses a reasonable balanced default when the source material supports it.
+- Final response reports the difficulty balance with `"easy"`, `"medium"`, and `"hard"` counts.
+- Answer options are plausible enough that the learner needs concept understanding rather than elimination of obviously wrong distractors.
 - No prompt depends on seeing the source material, transcript, chapter, paper, or slides.
 - Every explanation has at least two sentences and covers all options.
 - Math uses escaped LaTeX delimiters inside TypeScript strings.

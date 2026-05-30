@@ -137,7 +137,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Context length determines how many tokens are visible at once; more context helps but quadratic attention cost makes very long contexts expensive.",
+      'Context length determines how many tokens are visible at once; more context helps but quadratic attention cost makes very long contexts expensive. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Context length is the maximum number of tokens the model can attend to in a single forward pass."; "Longer context windows allow the model to condition on more information, which helps tasks such as summarization and long-document QA."; "The computational and memory cost of vanilla self-attention grows roughly quadratically with context length."; "Extending context length is therefore useful but also expensive, motivating efficient attention variants.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "ch3-q06",
@@ -164,7 +164,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "MoE layers route each token through only a few learned experts, making it possible to increase parameter count without proportional compute per token.",
+      'MoE layers route each token through only a few learned experts, making it possible to increase parameter count without proportional compute per token. To reason through the choices, select every statement because each one matches the criterion in the prompt: "An MoE layer contains several expert networks (often FFNs) and a router that decides which experts to apply to each token."; "Only a subset of experts is activated per token, so computation is sparse even if the total parameter count is large."; "Experts can specialize on different regions of the input space, such as different languages or styles."; "Modern very large models like GPT-4 and Gemini are believed to use MoE-style components internally.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "ch3-q07",
@@ -191,7 +191,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Because MoEs activate only some experts, they save compute, allow specialization, scale to many parameters, and often behave like ensembles.",
+      'Because MoEs activate only some experts, they save compute, allow specialization, scale to many parameters, and often behave like ensembles. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They can achieve similar quality to dense models with less training compute by activating only a few experts per token."; "Different experts can specialize, potentially improving performance on heterogeneous data distributions."; "MoEs are highly scalable because we can add more experts without increasing the number of active parameters per token."; "Their ensemble nature can resemble a \'wisdom of the crowd\' effect across experts.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "ch3-q08",
@@ -218,7 +218,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "MoEs increase memory usage, can suffer from expert imbalance, complicate fine-tuning, and add interpretability challenges.",
+      'MoEs increase memory usage, can suffer from expert imbalance, complicate fine-tuning, and add interpretability challenges. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They require keeping all experts in memory even though only a few are used per token."; "Training can be unstable if the router collapses to using only a few experts much of the time."; "Fine-tuning MoE models can be more complex than fine-tuning dense models."; "Interpretability becomes harder because we must reason about both routing and many expert subnetworks.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "ch3-q09",
@@ -352,7 +352,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "DPO uses paired preference data and a contrastive-style loss directly on the LM, bypassing a separate reward model and RL.",
+      'DPO uses paired preference data and a contrastive-style loss directly on the LM, bypassing a separate reward model and RL. To reason through the choices, select every statement because each one matches the criterion in the prompt: "DPO avoids training a separate reward model and avoids online reinforcement learning."; "Training data consists of tuples like ⟨prompt, worse completion, better completion⟩."; "The loss is designed to increase the likelihood of preferred completions relative to dispreferred ones."; "DPO can be implemented using standard backpropagation on the language model itself.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "ch3-q14",
@@ -379,7 +379,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Small models can be sufficient, cheaper, and easier to run and iterate on, especially in focused domains.",
+      'Small models can be sufficient, cheaper, and easier to run and iterate on, especially in focused domains. To reason through the choices, select every statement because each one matches the criterion in the prompt: "SLMs require less memory and compute, so they are cheaper to deploy and run."; "For many business cases, a small, domain-specific model is sufficient."; "SLMs can sometimes run on a single commercial GPU or even CPU."; "Fine-tuning and experimentation with SLMs are usually faster than with hundred-billion parameter models.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "ch3-q15",
@@ -460,7 +460,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "ViTs tokenize images into patches, embed them, add positional information, and process them with transformer encoders much like word tokens.",
+      'ViTs tokenize images into patches, embed them, add positional information, and process them with transformer encoders much like word tokens. To reason through the choices, select every statement because each one matches the criterion in the prompt: "The image is split into fixed-size patches that play a role similar to tokens in text."; "Each patch is flattened and linearly projected into an embedding vector."; "Positional encodings are added so the model knows where each patch came from in the image."; "The sequence of patch embeddings is processed by a transformer encoder stack.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "ch3-q18",
@@ -513,7 +513,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "VLMs tie visual encoders to LLMs via a trainable connector; this lets a largely frozen LLM reason about visual content.",
+      'VLMs tie visual encoders to LLMs via a trainable connector; this lets a largely frozen LLM reason about visual content. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They connect an image encoder (such as a ViT) with a text-generating LLM."; "A bridge module (such as Q-Former in BLIP-2) maps visual features into a form the LLM can condition on."; "Once trained, such models can generate captions and answer questions about images."; "Only the bridge module may need to be trained from scratch; image encoder and LLM can often remain frozen.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "ch3-q20",
@@ -621,7 +621,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "ICL lets LLMs learn from prompt examples without weight updates, using few-shot prompts to infer the input–output mapping on the fly.",
+      'ICL lets LLMs learn from prompt examples without weight updates, using few-shot prompts to infer the input–output mapping on the fly. To reason through the choices, select every statement because each one matches the criterion in the prompt: "ICL is the ability of an LLM to perform a new task at inference time using examples provided in the prompt."; "The model’s parameters are not updated; it relies on patterns learned during pretraining."; "Few-shot prompting shows input–output examples and asks the model to complete a new test example in the same format."; "ICL emerged as a surprising capability: LLMs can often match fine-tuned models on some benchmarks using only prompt examples.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "ch3-q24",
@@ -707,7 +707,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "LLMs are large transformer models (not RNNs) trained on massive diverse corpora with autoregressive language modeling.",
+      'LLMs are large transformer models (not RNNs) trained on massive diverse corpora with autoregressive language modeling. To reason through the choices, select the statements that match the criterion in the prompt: "An LLM is roughly a transformer model with more than about 10 billion parameters."; "Current mainstream LLMs are almost all trained with an autoregressive next-token prediction objective."; "LLMs are typically trained on a huge variety of text sources and sometimes code.". Do not select statements that miss that criterion: "LLMs are always recurrent neural networks without self-attention.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q27",
@@ -734,7 +734,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "N is parameter count, N_c a reference, and α_N > 0; for N > N_c the ratio N_c/N < 1 so the power term decreases, representing lower loss.",
+      'N is parameter count, N_c a reference, and α_N > 0; for N > N_c the ratio N_c/N < 1 so the power term decreases, representing lower loss. To reason through the choices, select the statements that match the criterion in the prompt: "N denotes the number of model parameters and N_c is a reference scale where the law is calibrated."; "α_N is a positive exponent that controls how quickly loss decreases as model size increases."; "If N grows larger than N_c, the term (N_c / N)^{α_N} becomes smaller, corresponding to lower loss.". Do not select statements that miss that criterion: "The formula implies that loss increases when we make the model larger than N_c.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q28",
@@ -761,7 +761,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Chinchilla highlights the importance of token count and compute-optimal trade-offs; it does not claim data quality is irrelevant.",
+      'Chinchilla highlights the importance of token count and compute-optimal trade-offs; it does not claim data quality is irrelevant. To reason through the choices, select the statements that match the criterion in the prompt: "Chinchilla argues that performance depends more strongly on token count than some earlier scaling analyses suggested."; "It suggests many existing LLMs are undertrained relative to their size because they see too few tokens."; "It recommends, for a fixed compute budget, training smaller models for more tokens rather than ever-larger models.". Do not select statements that miss that criterion: "It concludes that data quality is irrelevant as long as token count is large enough.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q29",
@@ -815,7 +815,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "The router is a learnable module that decides which experts to activate and must be kept at inference time; load balancing is a key concern.",
+      'The router is a learnable module that decides which experts to activate and must be kept at inference time; load balancing is a key concern. To reason through the choices, select the statements that match the criterion in the prompt: "It learns to map each token (or hidden vector) to one or more experts based on its content."; "Its parameters are trained jointly with the rest of the model during pretraining."; "With appropriate regularization, it can encourage balanced use of experts rather than always picking the same few.". Do not select statements that miss that criterion: "After training, the router is typically discarded and experts are all run on every token.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q31",
@@ -842,7 +842,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "PEFT methods save compute and storage, preserve base weights, and support multiple light-weight adaptations, but GPUs are usually still helpful.",
+      'PEFT methods save compute and storage, preserve base weights, and support multiple light-weight adaptations, but GPUs are usually still helpful. To reason through the choices, select the statements that match the criterion in the prompt: "They drastically reduce the number of trainable parameters compared with full-model fine-tuning."; "They allow multiple domain-specific adaptations to be stored as small extra parameter sets."; "They avoid overwriting the base model weights, helping to preserve original capabilities.". Do not select statements that miss that criterion: "They completely eliminate the need for GPUs during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q32",
@@ -868,7 +868,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Instruction tuning uses diverse tasks; some outputs may be human-written or LLM-generated. Including rationales can improve reasoning abilities.",
+      'Instruction tuning uses diverse tasks; some outputs may be human-written or LLM-generated. Including rationales can improve reasoning abilities. To reason through the choices, select the statements that match the criterion in the prompt: "They contain natural-language instructions paired with target outputs."; "Instructions are often drawn from many task types such as QA, summarization, and translation."; "High-quality instruction datasets may include chain-of-thought style rationales in the outputs.". Do not select statements that miss that criterion: "Instruction tuning datasets cannot contain any machine-generated outputs.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q33",
@@ -894,7 +894,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "The reward model scores candidate outputs but does not itself generate text; it guides RL updates to the main language model.",
+      'The reward model scores candidate outputs but does not itself generate text; it guides RL updates to the main language model. To reason through the choices, select the statements that match the criterion in the prompt: "It is trained on human preference rankings over multiple candidate responses per prompt."; "It outputs a scalar score that estimates how aligned a response is with human preferences."; "During RL, the policy model generates responses that are scored by the reward model.". Do not select statements that miss that criterion: "Once trained, the reward model directly replaces the language model for generation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q34",
@@ -921,7 +921,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Small models trade generality and raw capability for efficiency and deployability; they do not universally beat large models.",
+      'Small models trade generality and raw capability for efficiency and deployability; they do not universally beat large models. To reason through the choices, select the statements that match the criterion in the prompt: "SLMs may have only millions or a few billions of parameters, instead of tens or hundreds of billions."; "SLMs are often specialized to narrower domains or tasks."; "SLMs can sometimes be deployed on edge devices such as mobile phones.". Do not select statements that miss that criterion: "SLMs always outperform LLMs on open-ended reasoning tasks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q35",
@@ -948,7 +948,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Quantization reduces memory and can speed up compute but often introduces small errors that may slightly degrade quality.",
+      'Quantization reduces memory and can speed up compute but often introduces small errors that may slightly degrade quality. To reason through the choices, select the statements that match the criterion in the prompt: "Model size in memory roughly halves when moving from 16-bit to 8-bit weights."; "Matrix multiplications can be faster on hardware with efficient low-precision support."; "There is usually some degradation in model accuracy, although good schemes try to make it small.". Do not select statements that miss that criterion: "Quantization guarantees zero loss in accuracy compared to the original model.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q36",
@@ -1002,7 +1002,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "ViTs use patches, not individual pixels, as tokens; each patch is flattened and projected to an embedding.",
+      'ViTs use patches, not individual pixels, as tokens; each patch is flattened and projected to an embedding. To reason through the choices, select the statements that match the criterion in the prompt: "The image is divided into fixed-size patches like 16×16 pixels."; "Each patch is flattened into a 1D vector that includes all color channels."; "These patch vectors are linearly projected into a common embedding dimension.". Do not select statements that miss that criterion: "Each individual pixel is always treated as a separate token.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q38",
@@ -1028,7 +1028,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "CLIP uses a contrastive objective on image–caption pairs rather than pixel reconstruction.",
+      'CLIP uses a contrastive objective on image–caption pairs rather than pixel reconstruction. To reason through the choices, select the statements that match the criterion in the prompt: "In each batch, the model sees multiple images and multiple captions."; "The objective encourages the embedding of each image to be closest to the embedding of its true caption."; "The objective simultaneously discourages similarity between an image and non-matching captions in the batch.". Do not select statements that miss that criterion: "The model is trained to reconstruct pixel values of the input images.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q39",
@@ -1055,7 +1055,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "LLMs may memorize sensitive data and leak it; forgetting is not automatic, which motivates machine unlearning and regulatory controls.",
+      'LLMs may memorize sensitive data and leak it; forgetting is not automatic, which motivates machine unlearning and regulatory controls. To reason through the choices, select the statements that match the criterion in the prompt: "Models can memorize rare sequences from training data, including personal information."; "Adversarial prompting can sometimes extract sensitive training examples from the model."; "Training on databases containing personal data without proper safeguards can violate privacy regulations.". Do not select statements that miss that criterion: "Once trained, LLMs are guaranteed to forget all individual training records.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q40",
@@ -1081,7 +1081,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Because LLMs generate convincing text without deep understanding, they can amplify misinformation; taxonomies help study this risk.",
+      'Because LLMs generate convincing text without deep understanding, they can amplify misinformation; taxonomies help study this risk. To reason through the choices, select the statements that match the criterion in the prompt: "LLMs can generate high-volume, plausible-sounding text that could be used for disinformation campaigns."; "They can be misused to craft targeted phishing emails or rage-bait posts."; "Research taxonomies distinguish between types, domains, sources, intents, and errors of misinformation.". Do not select statements that miss that criterion: "LLMs always reliably distinguish between true and false content, making misinformation impossible.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q41",
@@ -1107,7 +1107,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Zero-shot prompts use only instructions; the model’s weights stay fixed and good task descriptions can significantly improve results.",
+      'Zero-shot prompts use only instructions; the model’s weights stay fixed and good task descriptions can significantly improve results. To reason through the choices, select the statements that match the criterion in the prompt: "The prompt contains an instruction or question but no input–output examples."; "The model relies on capabilities learned during pretraining and any instruction tuning."; "Zero-shot performance can be improved by carefully specifying the task and desired format in the prompt.". Do not select statements that miss that criterion: "Zero-shot prompting requires updating model parameters for each new task.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q42",
@@ -1133,7 +1133,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Few-shot examples guide the model by demonstration; they need not come from pretraining data, but context length limits how many can be used.",
+      'Few-shot examples guide the model by demonstration; they need not come from pretraining data, but context length limits how many can be used. To reason through the choices, select the statements that match the criterion in the prompt: "The prompt includes several example input–output pairs before the query to be answered."; "Examples help the model infer both the task and the desired output style."; "In practice, there is often a trade-off between including more examples and leaving room for long contexts or documents.". Do not select statements that miss that criterion: "Few-shot prompting only works if examples are drawn from the training data.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q43",
@@ -1160,7 +1160,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "CoT exposes reasoning steps and encourages the model to reason explicitly, but it is not a guarantee of correctness.",
+      'CoT exposes reasoning steps and encourages the model to reason explicitly, but it is not a guarantee of correctness. To reason through the choices, select the statements that match the criterion in the prompt: "It provides intermediate reasoning steps, not just final answers, in example solutions."; "It can help LLMs perform better on multi-step reasoning tasks such as math word problems."; "Zero-shot CoT prompting can be triggered by adding phrases like “Let’s think step by step.”". Do not select statements that miss that criterion: "CoT guarantees mathematically correct reasoning on all problems.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q44",
@@ -1187,7 +1187,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Self-consistency ensembles multiple CoT samples, improving robustness at the cost of extra generations.",
+      'Self-consistency ensembles multiple CoT samples, improving robustness at the cost of extra generations. To reason through the choices, select the statements that match the criterion in the prompt: "The model is sampled multiple times to produce diverse reasoning paths."; "Final answers are aggregated, for example by majority vote, to decide the output."; "The method aims to reduce the chance that a single flawed reasoning path dominates the result.". Do not select statements that miss that criterion: "Self-consistency reduces compute requirements compared with using a single CoT sample.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q45",
@@ -1241,7 +1241,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "DSPy turns prompt engineering into an optimization problem over declarative programs, with automated tuning instead of only manual tweaking.",
+      'DSPy turns prompt engineering into an optimization problem over declarative programs, with automated tuning instead of only manual tweaking. To reason through the choices, select the statements that match the criterion in the prompt: "DSPy treats prompts and prompting strategies as declarative programs composed of modules."; "It introduces signatures that specify the input–output behavior for model calls."; "Optimizers automatically tune prompts or module parameters to improve performance on a validation set.". Do not select statements that miss that criterion: "DSPy requires manual hand-tuning of every prompt without any automation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q47",
@@ -1268,7 +1268,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Bias evaluation often uses group-wise metrics like toxicity or sentiment and comparisons across controlled prompt variations, beyond simple accuracy.",
+      'Bias evaluation often uses group-wise metrics like toxicity or sentiment and comparisons across controlled prompt variations, beyond simple accuracy. To reason through the choices, select the statements that match the criterion in the prompt: "Libraries such as Hugging Face Evaluate provide metrics for toxicity and sentiment."; "Researchers may compare completions for prompts that vary only in a sensitive attribute, such as gender or profession."; "Heatmaps or distributions over these metrics can reveal systematic differences between groups.". Do not select statements that miss that criterion: "Bias can be fully understood by looking only at overall accuracy on a single benchmark.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q48",
@@ -1322,7 +1322,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Relying too heavily on synthetic data can lead to model collapse and forgetting, so data mixtures must be chosen carefully.",
+      'Relying too heavily on synthetic data can lead to model collapse and forgetting, so data mixtures must be chosen carefully. To reason through the choices, select the statements that match the criterion in the prompt: "Training repeatedly on synthetic outputs from other models can degrade performance on real data."; "In extreme cases, the model may forget skills learned from human-written data."; "These phenomena motivate care when mixing human and synthetic data during training.". Do not select statements that miss that criterion: "Using only synthetic data is guaranteed to continually improve the model without risk.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q50",
@@ -1349,7 +1349,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Pruning and quantization address different axes of compression; combining them is powerful but must be done carefully to avoid harming quality.",
+      'Pruning and quantization address different axes of compression; combining them is powerful but must be done carefully to avoid harming quality. To reason through the choices, select the statements that match the criterion in the prompt: "Pruning removes weights or structures, while quantization lowers numerical precision."; "Together they can substantially reduce memory footprint and inference cost."; "Designing good compression pipelines requires monitoring quality to avoid severe degradation or collapse.". Do not select statements that miss that criterion: "Because the methods are independent, combining them always preserves original accuracy exactly.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // --------------------------------------------------------------------------------
@@ -1381,7 +1381,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Autoregressive LMs minimize cross-entropy for next-token prediction conditioned on past context only.",
+      'Autoregressive LMs minimize cross-entropy for next-token prediction conditioned on past context only. To reason through the choices, select the statements that match the criterion in the prompt: "The model is trained to maximize the probability of each next token given previous tokens."; "The loss is typically the cross-entropy between predicted token distributions and true next tokens.". Do not select statements that miss that criterion: "The model is trained to predict both past and future tokens simultaneously."; "The loss does not depend on the observed training data at all.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q52",
@@ -1408,7 +1408,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "The c-subscripted constants are fitted reference scales that depend on model family and training configuration; they are not universal or fixed at 1.",
+      'The c-subscripted constants are fitted reference scales that depend on model family and training configuration; they are not universal or fixed at 1. To reason through the choices, select the statements that match the criterion in the prompt: "They represent reference values for model size, dataset size, and compute used to express the power-law relationships."; "They depend on architecture choices and training setup.". Do not select statements that miss that criterion: "They are always equal to 1 by definition."; "They are independent of the specific model family and dataset.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q53",
@@ -1434,7 +1434,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "MoE saves compute by activating only a few experts but still stores all of them; parameter count is usually larger than a comparable dense model.",
+      'MoE saves compute by activating only a few experts but still stores all of them; parameter count is usually larger than a comparable dense model. To reason through the choices, select the statements that match the criterion in the prompt: "All experts must reside in memory even though only a subset are used per token."; "For a given token, only the selected experts contribute to forward and backward computation.". Do not select statements that miss that criterion: "MoE reduces both parameter count and compute compared with a dense model of the same width."; "MoE eliminates the need for routing decisions at inference time.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q54",
@@ -1487,7 +1487,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Adapters and LoRA are PEFT methods that leave base weights intact and add small task-specific modules; they do not require discarding the base model.",
+      'Adapters and LoRA are PEFT methods that leave base weights intact and add small task-specific modules; they do not require discarding the base model. To reason through the choices, select the statements that match the criterion in the prompt: "Both approaches add a relatively small number of new trainable parameters compared with the base model."; "Both can support multiple task-specific parameter sets while sharing the same frozen backbone.". Do not select statements that miss that criterion: "Both require deleting the original pretrained weights before fine-tuning."; "Both necessarily increase inference latency by a factor of 10× or more.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q56",
@@ -1513,7 +1513,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "RLHF uses SFT + reward model + RL; DPO uses preference pairs with a direct loss. Both rely on preference data but DPO avoids a separate reward model.",
+      'RLHF uses SFT + reward model + RL; DPO uses preference pairs with a direct loss. Both rely on preference data but DPO avoids a separate reward model. To reason through the choices, select the statements that match the criterion in the prompt: "Both use human preference data to steer model behavior toward preferred responses."; "DPO replaces the RL stage of RLHF with a supervised-style loss directly on the LM probabilities.". Do not select statements that miss that criterion: "Both require training a separate reward model that scores responses."; "RLHF never uses supervised fine-tuning as an initial step.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q57",
@@ -1647,7 +1647,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Factuality concerns correctness with respect to the world; faithfulness concerns adherence to instructions and context. Neither requires toxicity.",
+      'Factuality concerns correctness with respect to the world; faithfulness concerns adherence to instructions and context. Neither requires toxicity. To reason through the choices, select the statements that match the criterion in the prompt: "Factual hallucinations are statements that do not match real-world facts."; "Faithfulness hallucinations contradict the provided instructions or context even if they might be factually true elsewhere.". Do not select statements that miss that criterion: "Both types necessarily involve offensive language."; "Hallucinations only occur when the model refuses to answer.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q62",
@@ -1674,7 +1674,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Harmful representations can shape attitudes and decisions, while biased decision support systems can unfairly allocate resources.",
+      'Harmful representations can shape attitudes and decisions, while biased decision support systems can unfairly allocate resources. To reason through the choices, select the statements that match the criterion in the prompt: "Representational harm involves harmful or stereotyped portrayals of groups in model outputs."; "Allocational harm arises when biased models influence decisions that allocate opportunities or resources.". Do not select statements that miss that criterion: "Allocational harm is irrelevant when using models for hiring or credit scoring."; "Representational harm is always harmless because it affects only language, not people.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q63",
@@ -1701,7 +1701,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Zero-shot and few-shot learning exploit pretraining and instruction tuning; a handful of examples in the prompt can be enough.",
+      'Zero-shot and few-shot learning exploit pretraining and instruction tuning; a handful of examples in the prompt can be enough. To reason through the choices, select the statements that match the criterion in the prompt: "Instruction-tuned LLMs often perform surprisingly well in zero-shot settings."; "Few-shot prompts can further improve performance by demonstrating the desired task.". Do not select statements that miss that criterion: "Zero-shot capabilities require retraining the model from scratch for each new task."; "Few-shot learning always requires thousands of labeled examples.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q64",
@@ -1728,7 +1728,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Regular, clear formatting gives the model a strong signal about how inputs and outputs relate, which improves ICL.",
+      'Regular, clear formatting gives the model a strong signal about how inputs and outputs relate, which improves ICL. To reason through the choices, select the statements that match the criterion in the prompt: "Consistent input–output formatting in the prompt helps the model infer the mapping between them."; "Even when labels are simple, specifying them clearly in the prompt can improve performance.". Do not select statements that miss that criterion: "The model completely ignores formatting cues in the prompt."; "Randomizing formatting for each example usually improves ICL performance.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q65",
@@ -1755,7 +1755,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Reasoning-enhancing prompting schemes often sample multiple paths or explore trees, increasing compute relative to simple single-path decoding.",
+      'Reasoning-enhancing prompting schemes often sample multiple paths or explore trees, increasing compute relative to simple single-path decoding. To reason through the choices, select the statements that match the criterion in the prompt: "They typically require more forward passes because they generate multiple reasoning paths or candidate solutions."; "For a fixed model, their wall-clock inference time per query is usually higher than simple greedy decoding.". Do not select statements that miss that criterion: "They always reduce cost compared with using a smaller base model."; "They make decoding completely independent of model size.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q66",
@@ -1782,7 +1782,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Small models provide experimental guidance and reveal trends but are approximations; extrapolation to giant models is useful but imperfect.",
+      'Small models provide experimental guidance and reveal trends but are approximations; extrapolation to giant models is useful but imperfect. To reason through the choices, select the statements that match the criterion in the prompt: "We can test architectural ideas cheaply before scaling them to hundred-billion parameter models."; "Observed power-law trends on small models can guide expectations about larger models’ performance.". Do not select statements that miss that criterion: "Proxy models always perfectly predict the behavior of arbitrarily larger models."; "Results on small models are irrelevant when deciding how to scale up.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q67",
@@ -1809,7 +1809,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "If a model is under-trained relative to size, more data helps; simply scaling parameters without more data can be suboptimal.",
+      'If a model is under-trained relative to size, more data helps; simply scaling parameters without more data can be suboptimal. To reason through the choices, select the statements that match the criterion in the prompt: "They have more parameters than needed for the amount of data they see, so they could benefit from additional tokens."; "Increasing token count for a fixed-size model can continue to reduce loss according to scaling laws.". Do not select statements that miss that criterion: "Increasing model size without increasing data always guarantees better performance."; "Data-limited models are defined as those trained on infinite data.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q68",
@@ -1836,7 +1836,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Sophisticated pruning such as SparseGPT can compress large models significantly, but success depends on method choice and pruning ratio.",
+      'Sophisticated pruning such as SparseGPT can compress large models significantly, but success depends on method choice and pruning ratio. To reason through the choices, select the statements that match the criterion in the prompt: "Careful pruning methods can sometimes remove a large fraction of weights (for example over 50%) while retaining good performance."; "Naive aggressive pruning often leads to model collapse or severe degradation.". Do not select statements that miss that criterion: "SparseGPT guarantees no loss of performance regardless of pruning level."; "Pruning is unnecessary for large models because they never contain redundant parameters.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q69",
@@ -1917,7 +1917,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "The GPT-3 paper demonstrated strong ICL with pure language modeling pretraining and highlighted the importance of prompt formatting.",
+      'The GPT-3 paper demonstrated strong ICL with pure language modeling pretraining and highlighted the importance of prompt formatting. To reason through the choices, select the statements that match the criterion in the prompt: "It showed that sufficiently large autoregressive LMs can perform many tasks given only a few prompt examples."; "It popularized the terminology of zero-shot, one-shot, and few-shot prompting.". Do not select statements that miss that criterion: "The models in that work were trained specifically as supervised multi-task classifiers."; "It concluded that prompt design has no effect on performance.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q72",
@@ -1944,7 +1944,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Zero-shot CoT uses prompt cues to elicit reasoning behavior; it does not involve retraining but still needs careful evaluation.",
+      'Zero-shot CoT uses prompt cues to elicit reasoning behavior; it does not involve retraining but still needs careful evaluation. To reason through the choices, select the statements that match the criterion in the prompt: "Adding phrases like “Let’s think step by step” can cause the model to produce explicit reasoning before answering."; "This technique can improve performance on some reasoning benchmarks without providing worked examples.". Do not select statements that miss that criterion: "It requires re-training the model with a special loss function."; "It removes the need for careful evaluation of reasoning quality.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q73",
@@ -1971,7 +1971,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "DSPy treats prompt design as an optimization problem driven by explicit evaluation metrics and automated optimizers.",
+      'DSPy treats prompt design as an optimization problem driven by explicit evaluation metrics and automated optimizers. To reason through the choices, select the statements that match the criterion in the prompt: "Users specify evaluation metrics or objectives for the overall pipeline (for example, accuracy or F1)."; "DSPy optimizers adjust prompts or module parameters to maximize these metrics on a development set.". Do not select statements that miss that criterion: "DSPy forbids any automated modification of prompts."; "Metrics are irrelevant because DSPy guarantees optimal prompts analytically.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q74",
@@ -2025,7 +2025,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Different tasks show emergent behavior at different scales; harder tasks often require larger models to reach non-trivial performance.",
+      'Different tasks show emergent behavior at different scales; harder tasks often require larger models to reach non-trivial performance. To reason through the choices, select the statements that match the criterion in the prompt: "Harder reasoning tasks often appear to have higher critical scales than simpler tasks."; "Some narrow abilities, like simple arithmetic, may emerge at smaller model sizes than complex multi-step reasoning.". Do not select statements that miss that criterion: "All tasks share the same critical scale regardless of their complexity."; "Task difficulty is unrelated to when abilities appear in scaling experiments.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // --------------------------------------------------------------------------------
@@ -2057,7 +2057,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Logits are the raw scores produced by the output layer; softmax turns them into probabilities.",
+      'Logits are the raw scores produced by the output layer; softmax turns them into probabilities. To reason through the choices, select the statements that match the criterion in the prompt: "Unnormalized real-valued scores for each vocabulary token before applying softmax.". Do not select statements that miss that criterion: "The final probabilities after softmax."; "Binary indicators of whether a token is correct or not."; "The hidden states of the transformer layers.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q77",
@@ -2111,7 +2111,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Sparsity refers to activating only a few experts per token, not discarding tokens or removing attention parameters.",
+      'Sparsity refers to activating only a few experts per token, not discarding tokens or removing attention parameters. To reason through the choices, select the statements that match the criterion in the prompt: "For each token, only a small subset of experts is activated, so computation is sparse over experts.". Do not select statements that miss that criterion: "Most of the token positions in the input sequence are discarded."; "The model has no parameters in its attention layers."; "The model always uses sparsity-inducing L1 regularization on every weight.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q79",
@@ -2138,7 +2138,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Self-attention computes all pairwise token interactions, giving an O(T²) cost in time and memory.",
+      'Self-attention computes all pairwise token interactions, giving an O(T²) cost in time and memory. To reason through the choices, select the statements that match the criterion in the prompt: "The attention matrix has size T×T for sequence length T, so both time and memory scale quadratically in T.". Do not select statements that miss that criterion: "The model must retrain from scratch for every new context length."; "The embeddings cannot be reused across different context lengths."; "The softmax function is undefined for long sequences.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q80",
@@ -2165,7 +2165,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "RLHF optimizes via a reward model and RL, going beyond cross-entropy on fixed outputs.",
+      'RLHF optimizes via a reward model and RL, going beyond cross-entropy on fixed outputs. To reason through the choices, select the statements that match the criterion in the prompt: "RLHF uses a learned reward model and RL algorithm (such as PPO) to optimize policy behavior based on human preferences.". Do not select statements that miss that criterion: "RLHF only minimizes token-level cross-entropy on ground-truth text."; "Supervised fine-tuning never uses human-written examples."; "RLHF does not require any human feedback.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q81",
@@ -2192,7 +2192,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Feeding models mostly their own outputs can amplify errors and reduce diversity, leading to collapse.",
+      'Feeding models mostly their own outputs can amplify errors and reduce diversity, leading to collapse. To reason through the choices, select the statements that match the criterion in the prompt: "The model may progressively lose diversity and accuracy, a phenomenon sometimes called model collapse.". Do not select statements that miss that criterion: "The model will automatically debias itself relative to human-written text."; "Synthetic data always contains more information than human data."; "Using synthetic data guarantees perfect factual accuracy.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q82",
@@ -2219,7 +2219,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Quantization-aware training incorporates quantization effects into training, typically yielding better accuracy than naive post-training quantization.",
+      'Quantization-aware training incorporates quantization effects into training, typically yielding better accuracy than naive post-training quantization. To reason through the choices, select the statements that match the criterion in the prompt: "The model is trained while simulating low-precision effects, allowing it to adapt weights to be more robust to quantization.". Do not select statements that miss that criterion: "It removes the need to store any parameters at inference time."; "It guarantees that quantized weights are always exactly equal to the original float weights."; "It forces the model to use only binary weights of ±1.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q83",
@@ -2246,7 +2246,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "By dropping entire structures like channels or layers, structured pruning keeps dense tensor shapes, which existing BLAS kernels can accelerate.",
+      'By dropping entire structures like channels or layers, structured pruning keeps dense tensor shapes, which existing BLAS kernels can accelerate. To reason through the choices, select the statements that match the criterion in the prompt: "Structured pruning removes whole channels, heads, or blocks, so the resulting tensors are still dense and efficiently handled by standard kernels.". Do not select statements that miss that criterion: "Structured pruning always results in random sparsity patterns that are hard to exploit."; "Unstructured pruning guarantees speedups on all hardware without any special support."; "Structured pruning requires a custom sparse-matrix library for every deployment.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q84",
@@ -2273,7 +2273,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Alignment can reduce harmful or unhelpful outputs but cannot give models capabilities (like reliable verification) they fundamentally do not have.",
+      'Alignment can reduce harmful or unhelpful outputs but cannot give models capabilities (like reliable verification) they fundamentally do not have. To reason through the choices, select the statements that match the criterion in the prompt: "The underlying model may simply lack the knowledge or tools needed to verify facts, so no preference training can guarantee truthfulness.". Do not select statements that miss that criterion: "Alignment always gives the model access to a perfect world-knowledge database."; "Alignment changes the architecture from a transformer to a recurrent network."; "Alignment ensures the model never outputs uncertain or approximate answers.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q85",
@@ -2300,7 +2300,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "DSPy views prompt design as a declarative program plus optimization, reducing reliance on manual trial-and-error.",
+      'DSPy views prompt design as a declarative program plus optimization, reducing reliance on manual trial-and-error. To reason through the choices, select the statements that match the criterion in the prompt: "To replace ad-hoc manual prompt tinkering with systematic, optimizable prompt and module configurations.". Do not select statements that miss that criterion: "To prevent any use of evaluation metrics when designing prompts."; "To ensure that all prompts are fixed and unchangeable."; "To train new LLMs from scratch without prompts.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q86",
@@ -2327,7 +2327,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "By writing out intermediate steps, the model is nudged toward more structured reasoning, which often improves accuracy on arithmetic questions.",
+      'By writing out intermediate steps, the model is nudged toward more structured reasoning, which often improves accuracy on arithmetic questions. To reason through the choices, select the statements that match the criterion in the prompt: "It encourages the model to decompose the problem into intermediate steps instead of jumping directly to an answer.". Do not select statements that miss that criterion: "It forces the model to use exact symbolic algebra internally."; "It removes the need to check whether the final numeric answer is reasonable."; "It changes the loss function used during pretraining.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q87",
@@ -2354,7 +2354,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Stable Diffusion-like models often reuse CLIP’s text encoder to provide a rich semantic embedding of the prompt for the denoising U-Net.",
+      'Stable Diffusion-like models often reuse CLIP’s text encoder to provide a rich semantic embedding of the prompt for the denoising U-Net. To reason through the choices, select the statements that match the criterion in the prompt: "Use the CLIP text encoder to turn the user’s prompt into an embedding that conditions the diffusion process.". Do not select statements that miss that criterion: "Use CLIP to generate the final image directly without any diffusion or decoder."; "Use CLIP to quantize the model weights."; "Use CLIP to prune attention heads.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q88",
@@ -2381,7 +2381,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "If some abilities appear only beyond certain scales, forecasts based solely on small models may underestimate future capabilities.",
+      'If some abilities appear only beyond certain scales, forecasts based solely on small models may underestimate future capabilities. To reason through the choices, select the statements that match the criterion in the prompt: "Because performance on some tasks may remain low for a wide range of sizes and then improve rapidly, making extrapolation from smaller models unreliable.". Do not select statements that miss that criterion: "Because emergent abilities ensure linear improvement with model size on all tasks."; "Because emergent abilities only occur in computer vision models."; "Because emergent abilities guarantee that future models will be weaker.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q89",
@@ -2408,7 +2408,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Irreducible loss is the portion we cannot beat given the data distribution; knowing it helps set realistic expectations for scaling.",
+      'Irreducible loss is the portion we cannot beat given the data distribution; knowing it helps set realistic expectations for scaling. To reason through the choices, select the statements that match the criterion in the prompt: "It represents a lower bound due to data entropy, so further scaling cannot reduce loss below this floor.". Do not select statements that miss that criterion: "It can always be eliminated by adding more parameters."; "It measures the training instability of the optimizer."; "It directly equals the number of parameters in the model.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q90",
@@ -2435,7 +2435,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Longer context only helps if the model can identify and use the relevant pieces; otherwise it may add clutter.",
+      'Longer context only helps if the model can identify and use the relevant pieces; otherwise it may add clutter. To reason through the choices, select the statements that match the criterion in the prompt: "If the model cannot reliably focus on the truly relevant parts, extra context can introduce distraction or noise.". Do not select statements that miss that criterion: "Self-attention becomes linear in sequence length, making training trivial."; "Long contexts force the model to memorize the entire training set."; "Models always use all contextual information optimally.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q91",
@@ -2462,7 +2462,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Focused small models can be efficient and strong for specific use-cases, though they are not universal solutions.",
+      'Focused small models can be efficient and strong for specific use-cases, though they are not universal solutions. To reason through the choices, select the statements that match the criterion in the prompt: "They can be cheaper and faster while still performing well on a narrow, well-defined task.". Do not select statements that miss that criterion: "They automatically outperform general LLMs on every possible task."; "They remove the need for any domain-specific evaluation."; "They cannot be fine-tuned.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q92",
@@ -2489,7 +2489,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Preference data asks humans to compare different responses and indicate which they prefer, giving richer signals than simple correctness labels.",
+      'Preference data asks humans to compare different responses and indicate which they prefer, giving richer signals than simple correctness labels. To reason through the choices, select the statements that match the criterion in the prompt: "Human judgments that rank or compare multiple candidate responses for the same prompt.". Do not select statements that miss that criterion: "Random tokens sampled from the model with no human involvement."; "Only binary labels indicating whether an answer is grammatically correct."; "Pairs of prompts without any outputs.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q93",
@@ -2516,7 +2516,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Tools like Evaluate help quantify properties such as toxicity but do not themselves fix or guarantee absence of bias.",
+      'Tools like Evaluate help quantify properties such as toxicity but do not themselves fix or guarantee absence of bias. To reason through the choices, select the statements that match the criterion in the prompt: "They provide ready-made metrics (for example toxicity, sentiment) that can be applied systematically across prompts.". Do not select statements that miss that criterion: "They guarantee that a model has no bias."; "They replace the need for any human review of outputs."; "They prevent models from being trained on biased data.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q94",
@@ -2543,7 +2543,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Prompting can steer behavior but cannot imbue fundamentally new skills the base model does not already support.",
+      'Prompting can steer behavior but cannot imbue fundamentally new skills the base model does not already support. To reason through the choices, select the statements that match the criterion in the prompt: "Prompting cannot change the model’s underlying parameters, so it may be unable to learn new capabilities that require weight updates.". Do not select statements that miss that criterion: "Prompting always yields strictly better performance than fine-tuning."; "Prompting directly edits the training dataset."; "Prompting is incompatible with in-context learning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q95",
@@ -2597,7 +2597,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Determining whether an answer is hallucinated needs ground-truth references or tools, which can be expensive or domain-specific.",
+      'Determining whether an answer is hallucinated needs ground-truth references or tools, which can be expensive or domain-specific. To reason through the choices, select the statements that match the criterion in the prompt: "It often requires external knowledge or tools to verify whether model statements are actually true or supported by evidence.". Do not select statements that miss that criterion: "Hallucinations can be detected simply by checking whether the output is fluent."; "Any disagreement between users and the model is automatically a hallucination."; "Hallucinations can be measured only on arithmetic problems.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q97",
@@ -2624,7 +2624,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Long contexts let RAG systems stuff more retrieved evidence into a single prompt, which can improve answer quality.",
+      'Long contexts let RAG systems stuff more retrieved evidence into a single prompt, which can improve answer quality. To reason through the choices, select the statements that match the criterion in the prompt: "They can condition on many retrieved passages at once, reducing the need for strict pre-filtering.". Do not select statements that miss that criterion: "They eliminate the need for any retrieval."; "They replace embeddings with raw documents."; "They make it impossible to include user instructions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q98",
@@ -2651,7 +2651,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Discontinuous-looking curves can arise from thresholded or coarse metrics even when underlying performance changes smoothly.",
+      'Discontinuous-looking curves can arise from thresholded or coarse metrics even when underlying performance changes smoothly. To reason through the choices, select the statements that match the criterion in the prompt: "Coarse metrics (for example accuracy thresholds) can hide gradual improvements and then suddenly flip from \'fail\' to \'pass\' near a certain performance level.". Do not select statements that miss that criterion: "Metrics never affect how we perceive performance trends."; "Continuous metrics always produce step-like jumps."; "Metrics are irrelevant for scaling-law analyses.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q99",
@@ -2678,7 +2678,7 @@ export const chapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "DSPy optimizers treat prompt and program choices as parameters to be tuned against a metric on validation data.",
+      'DSPy optimizers treat prompt and program choices as parameters to be tuned against a metric on validation data. To reason through the choices, select the statements that match the criterion in the prompt: "To search over prompt templates and module configurations that maximize a chosen evaluation metric.". Do not select statements that miss that criterion: "To remove the need for any evaluation data."; "To guarantee human-level understanding of every prompt."; "To force the model to ignore instructions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch3-q100",

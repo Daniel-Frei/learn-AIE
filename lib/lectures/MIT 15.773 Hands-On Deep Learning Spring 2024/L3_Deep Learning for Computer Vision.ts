@@ -996,7 +996,7 @@ export const MIT15773L3DeepLearningForComputerVisionQuestions: Question[] = [
       },
     ],
     explanation:
-      "Semantic segmentation assigns a class label to each pixel, allowing models to identify regions such as road, grass, or animals within an image.",
+      'Semantic segmentation assigns a class label to each pixel, allowing models to identify regions such as road, grass, or animals within an image. To reason through the choices, select the statements that match the criterion in the prompt: "Every pixel in an image is assigned a category label.". Do not select statements that miss that criterion: "Semantic segmentation predicts a single label for the entire image."; "Semantic segmentation requires bounding boxes around objects."; "Semantic segmentation ignores spatial structure of images.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {

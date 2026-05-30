@@ -58,7 +58,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "GPUs were designed for massively parallel numerical computation, which closely matches the computational patterns of neural networks.",
+      'GPUs were designed for massively parallel numerical computation, which closely matches the computational patterns of neural networks. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They can perform many arithmetic operations in parallel."; "They are optimized for dense linear algebra workloads such as matrix multiplication."; "They provide high memory bandwidth compared to traditional Central Processing Units."; "They can accelerate both training and inference workloads.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -86,7 +86,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Cloud providers turn capital-intensive hardware into on-demand services and handle operational complexity for users.",
+      'Cloud providers turn capital-intensive hardware into on-demand services and handle operational complexity for users. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They rent access to large-scale compute resources such as GPUs and specialized accelerators."; "They manage provisioning, scaling, and reliability of compute infrastructure."; "They abstract hardware complexity behind application programming interfaces."; "They enable organizations to run large models without owning physical hardware.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -114,7 +114,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Many machine learning workloads are memory-bound, meaning data movement limits performance more than arithmetic capability.",
+      'Many machine learning workloads are memory-bound, meaning data movement limits performance more than arithmetic capability. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Memory bandwidth measures how fast data can be moved between memory and compute units."; "Insufficient memory bandwidth can cause compute units to remain idle."; "Attention-heavy models are often limited by memory bandwidth rather than raw compute."; "High-bandwidth memory technologies are critical for modern accelerators.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -142,7 +142,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Distributed training relies on frequent data exchange; weak interconnects waste expensive compute by forcing devices to wait.",
+      'Distributed training relies on frequent data exchange; weak interconnects waste expensive compute by forcing devices to wait. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Large models are often split across multiple accelerators."; "Slow interconnects increase synchronization and communication overhead."; "High-speed interconnects allow accelerators to behave like a single logical device."; "Interconnect performance directly affects overall training efficiency.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -170,7 +170,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "NVIDIA’s advantage is driven as much by software and ecosystem lock-in as by raw hardware performance.",
+      'NVIDIA’s advantage is driven as much by software and ecosystem lock-in as by raw hardware performance. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Its Compute Unified Device Architecture (CUDA) platform is widely supported by machine learning frameworks."; "It offers mature libraries, compilers, and debugging tools."; "Most production machine learning workloads are optimized for its software stack."; "Its hardware and software are tightly co-designed.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -198,7 +198,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Headline FLOP/s numbers are only meaningful when paired with utilization, memory efficiency, and software quality.",
+      'Headline FLOP/s numbers are only meaningful when paired with utilization, memory efficiency, and software quality. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Peak FLOP/s represents a theoretical maximum rather than guaranteed performance."; "Actual utilization depends on software, memory bandwidth, and workload structure."; "Two systems with similar peak FLOP/s can have very different effective throughput."; "Idle FLOPs represent wasted computational investment.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -226,7 +226,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Training cost grows rapidly due to scaling laws involving parameters, tokens, and optimization requirements.",
+      'Training cost grows rapidly due to scaling laws involving parameters, tokens, and optimization requirements. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Training involves repeated forward and backward passes through large networks."; "The number of Floating-Point Operations scales with both model size and token count."; "Training requires storing intermediate activations for gradient computation."; "Training often requires distributed computation across many accelerators.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   // ============================================================
@@ -257,7 +257,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "TPUs are optimized for dense numerical computation and are not general-purpose processors.",
+      'TPUs are optimized for dense numerical computation and are not general-purpose processors. To reason through the choices, select the statements that match the criterion in the prompt: "They are specialized accelerators designed primarily for machine learning workloads."; "They are most commonly used within Google’s internal infrastructure."; "They can be accessed externally through Google Cloud services.". Do not select statements that miss that criterion: "They are designed to run arbitrary non-numerical workloads efficiently.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -285,7 +285,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Inference is often latency- and cost-sensitive and may run on a single accelerator.",
+      'Inference is often latency- and cost-sensitive and may run on a single accelerator. To reason through the choices, select the statements that match the criterion in the prompt: "Inference refers to running a trained model to generate outputs."; "Inference workloads often prioritize low latency and cost efficiency."; "Inference typically requires fewer Floating-Point Operations than training.". Do not select statements that miss that criterion: "Inference always requires distributed multi-node computation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -312,7 +312,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Blackwell is new and still rolling out; Hopper remains widely deployed.",
+      'Blackwell is new and still rolling out; Hopper remains widely deployed. To reason through the choices, select the statements that match the criterion in the prompt: "It was announced after the Hopper architecture."; "It targets both large-scale training and efficient inference."; "It introduces improvements in memory and interconnect capabilities.". Do not select statements that miss that criterion: "It has completely replaced all previous GPU architectures worldwide.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -340,7 +340,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Reduced precision improves efficiency but may introduce numerical trade-offs.",
+      'Reduced precision improves efficiency but may introduce numerical trade-offs. To reason through the choices, select the statements that match the criterion in the prompt: "Lower precision reduces memory usage per number."; "Lower precision allows more operations per second on the same hardware."; "Lower precision can reduce energy consumption.". Do not select statements that miss that criterion: "Lower precision guarantees identical numerical accuracy in all models.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -368,7 +368,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "The economics of AI infrastructure strongly depend on keeping expensive hardware busy.",
+      'The economics of AI infrastructure strongly depend on keeping expensive hardware busy. To reason through the choices, select the statements that match the criterion in the prompt: "Idle accelerators represent wasted capital expenditure."; "Low utilization increases cost per inference or training step."; "Inefficient workloads can negate theoretical hardware advantages.". Do not select statements that miss that criterion: "Underutilization has no effect once hardware is purchased.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -396,7 +396,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Agent workloads rarely resemble the dense, continuous computation of training loops.",
+      'Agent workloads rarely resemble the dense, continuous computation of training loops. To reason through the choices, select the statements that match the criterion in the prompt: "Agent systems often involve many short, bursty model calls."; "They frequently involve input/output operations and tool calls."; "They are often latency-bound rather than throughput-bound.". Do not select statements that miss that criterion: "They consistently saturate GPUs with dense matrix multiplications.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -424,7 +424,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Software quality is a major determinant of real-world accelerator performance.",
+      'Software quality is a major determinant of real-world accelerator performance. To reason through the choices, select the statements that match the criterion in the prompt: "They translate high-level model descriptions into efficient hardware execution."; "They manage memory allocation and kernel scheduling."; "They influence how much of peak FLOP/s can actually be achieved.". Do not select statements that miss that criterion: "They are irrelevant once hardware performance is high enough.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -452,7 +452,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Custom accelerators complement rather than fully replace GPUs in most ecosystems.",
+      'Custom accelerators complement rather than fully replace GPUs in most ecosystems. To reason through the choices, select the statements that match the criterion in the prompt: "They aim to reduce dependence on third-party hardware vendors."; "They can optimize chips for their own dominant workloads."; "They seek better performance per dollar or per watt.". Do not select statements that miss that criterion: "They eliminate the need for general-purpose GPUs entirely.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -484,7 +484,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "FLOP/s measures compute throughput, not overall system efficiency.",
+      'FLOP/s measures compute throughput, not overall system efficiency. To reason through the choices, select the statements that match the criterion in the prompt: "It measures how many floating-point operations a system can perform per second."; "It is often reported in trillions or quadrillions per second.". Do not select statements that miss that criterion: "It directly guarantees application-level latency."; "It fully captures memory and communication bottlenecks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -512,7 +512,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Training and inference differ substantially in computation patterns and optimization goals.",
+      'Training and inference differ substantially in computation patterns and optimization goals. To reason through the choices, select the statements that match the criterion in the prompt: "Training typically requires gradient computation and parameter updates."; "Inference often prioritizes latency and cost over peak throughput.". Do not select statements that miss that criterion: "Inference generally requires storing all intermediate activations for backpropagation."; "Training always runs on a single accelerator.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -540,7 +540,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Data movement, not arithmetic, often limits throughput in large models.",
+      'Data movement, not arithmetic, often limits throughput in large models. To reason through the choices, select the statements that match the criterion in the prompt: "Model parameters must be repeatedly read from memory."; "Attention mechanisms require accessing large key-value caches.". Do not select statements that miss that criterion: "Memory access speed always scales with compute speed."; "Memory usage is irrelevant once a model fits on a device.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -568,7 +568,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Distributed systems are constrained by communication as much as computation.",
+      'Distributed systems are constrained by communication as much as computation. To reason through the choices, select the statements that match the criterion in the prompt: "It enables synchronization across distributed accelerators."; "Slow networks can negate gains from faster accelerators.". Do not select statements that miss that criterion: "Networking is only relevant for inference workloads."; "Networking overhead disappears at large batch sizes.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -596,7 +596,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Inference engines focus on efficiency and scalability, not learning.",
+      'Inference engines focus on efficiency and scalability, not learning. To reason through the choices, select the statements that match the criterion in the prompt: "They optimize execution for serving trained models efficiently."; "They can apply quantization and batching techniques.". Do not select statements that miss that criterion: "They replace the need for model training entirely."; "They eliminate memory constraints automatically.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -621,7 +621,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Real workloads rarely match the assumptions behind peak metrics.",
+      'Real workloads rarely match the assumptions behind peak metrics. To reason through the choices, select the statements that match the criterion in the prompt: "They assume ideal workloads and perfect utilization."; "They ignore software inefficiencies.". Do not select statements that miss that criterion: "They directly measure end-to-end application performance."; "They fully account for communication overhead.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -649,7 +649,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Irregular workloads reduce sustained utilization of accelerators.",
+      'Irregular workloads reduce sustained utilization of accelerators. To reason through the choices, select the statements that match the criterion in the prompt: "They involve frequent control-flow branching."; "They often wait on external tools or databases.". Do not select statements that miss that criterion: "They continuously stream dense tensors at full throughput."; "They guarantee predictable execution patterns.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -674,7 +674,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Cost scales with both computational demand and how efficiently hardware is used.",
+      'Cost scales with both computational demand and how efficiently hardware is used. To reason through the choices, select the statements that match the criterion in the prompt: "Higher FLOP requirements generally increase compute cost."; "Reducing FLOPs can lower infrastructure expenses.". Do not select statements that miss that criterion: "FLOPs are independent of hardware pricing."; "Cost is unaffected by utilization efficiency.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -703,7 +703,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Interconnects enable fast communication between devices, not automatic computation improvements.",
+      'Interconnects enable fast communication between devices, not automatic computation improvements. To reason through the choices, select the statements that match the criterion in the prompt: "To connect accelerators so they can efficiently share data.". Do not select statements that miss that criterion: "To replace on-chip memory entirely."; "To eliminate the need for software synchronization."; "To increase numerical precision automatically.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -731,7 +731,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "TPUs are optimized for Google’s internal ecosystem rather than general-purpose use.",
+      'TPUs are optimized for Google’s internal ecosystem rather than general-purpose use. To reason through the choices, select the statements that match the criterion in the prompt: "They are tightly integrated with Google’s software stack and workloads.". Do not select statements that miss that criterion: "They are universally faster than all GPUs for every workload."; "They eliminate the need for distributed training."; "They require no specialized compilers or frameworks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -759,7 +759,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Training workloads can exploit raw throughput earlier than latency-sensitive inference.",
+      'Training workloads can exploit raw throughput earlier than latency-sensitive inference. To reason through the choices, select the statements that match the criterion in the prompt: "Training benefits most from higher throughput and can tolerate higher latency.". Do not select statements that miss that criterion: "Inference never benefits from hardware improvements."; "Inference workloads do not use accelerators."; "Training hardware does not require software support.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -784,7 +784,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Compute capacity is only one component of end-to-end performance.",
+      'Compute capacity is only one component of end-to-end performance. To reason through the choices, select the statements that match the criterion in the prompt: "Memory, interconnect, and software efficiency heavily influence real throughput.". Do not select statements that miss that criterion: "FLOPs measure energy consumption directly."; "FLOPs determine correctness of model outputs."; "FLOPs automatically include input/output costs.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -803,7 +803,7 @@ export const mixedQuestions: Question[] = [
       { text: "They improve long-term utilization.", isCorrect: false },
     ],
     explanation:
-      "Idle accelerators still incur capital and operational costs without delivering output.",
+      'Idle accelerators still incur capital and operational costs without delivering output. To reason through the choices, select the statements that match the criterion in the prompt: "They represent paid-for compute capacity that produces no value.". Do not select statements that miss that criterion: "They permanently damage hardware."; "They increase numerical error rates."; "They improve long-term utilization.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -831,7 +831,7 @@ export const mixedQuestions: Question[] = [
       },
     ],
     explanation:
-      "Infrastructure enables AI systems but does not replace model or application design.",
+      'Infrastructure enables AI systems but does not replace model or application design. To reason through the choices, select the statements that match the criterion in the prompt: "It provides the computational foundation on which models and applications are built.". Do not select statements that miss that criterion: "It replaces the need for machine learning models."; "It determines application logic and user interfaces."; "It guarantees superior model quality regardless of design.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================

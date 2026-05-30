@@ -55,7 +55,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       { text: "Topic classification of documents or posts.", isCorrect: true },
     ],
     explanation:
-      "Classification tasks map an input text to one label such as sentiment, intent, language, or topic.",
+      'Classification tasks map an input text to one label such as sentiment, intent, language, or topic. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Sentiment analysis of movie or product reviews."; "Intent detection in a virtual assistant (for example, setting an alarm)."; "Language identification (for example, detecting that a sentence is French)."; "Topic classification of documents or posts.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -83,7 +83,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "These tasks predict multiple outputs per input, often at the token or span level (entities, tags, parse structure, or multiple labels).",
+      'These tasks predict multiple outputs per input, often at the token or span level (entities, tags, parse structure, or multiple labels). To reason through the choices, select every statement because each one matches the criterion in the prompt: "Named Entity Recognition (identifying locations, people, dates, etc.)."; "Part-of-speech tagging (labeling nouns, verbs, adjectives, and so on)."; "Dependency or constituency parsing of syntactic structure."; "Assigning multiple categories or attributes to a single piece of text.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -107,7 +107,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Generation tasks take text as input and produce new text outputs such as translations, answers, summaries, or creative content.",
+      'Generation tasks take text as input and produce new text outputs such as translations, answers, summaries, or creative content. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Machine translation from one language to another."; "Question answering where the system writes a natural-language answer."; "Summarization of long documents or articles."; "Free-form generation such as code, stories, or poems.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -134,7 +134,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Tokenization defines the basic units of text on which models operate, with design choices affecting vocabulary, length, and robustness.",
+      'Tokenization defines the basic units of text on which models operate, with design choices affecting vocabulary, length, and robustness. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Tokenization splits raw text into smaller units called tokens."; "Tokens can be whole words, subwords, or individual characters."; "Tokenization is required so that text can be fed into neural models."; "Different tokenization schemes have different trade-offs in vocabulary size and sequence length.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -161,7 +161,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Subword tokenization shares roots, handles rare words, avoids extreme sequence lengths, and is a pragmatic trade-off widely used in modern LLMs.",
+      'Subword tokenization shares roots, handles rare words, avoids extreme sequence lengths, and is a pragmatic trade-off widely used in modern LLMs. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It allows common roots or stems (for example, \'bear\' in \'bear\' and \'bears\') to be shared."; "It reduces the chance of truly unseen tokens by decomposing rare words."; "It balances between word-level semantics and character-level robustness."; "It tends to keep sequence lengths moderate compared with character-level tokenization.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -189,7 +189,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "OOV is a core issue in word-level schemes; subword and character tokenizations largely mitigate it by decomposing words into reusable parts.",
+      'OOV is a core issue in word-level schemes; subword and character tokenizations largely mitigate it by decomposing words into reusable parts. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Word-level tokenization can assign many unseen words to an unknown token."; "Subword tokenization reduces OOV rate by composing unseen words from known pieces."; "Character-level tokenization essentially eliminates OOV for alphabetic scripts."; "Handling OOV tokens is important because models need representations for words not seen during training.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -216,7 +216,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "One-hot encodings provide unique IDs but no semantics; every token is orthogonal regardless of meaning, and dimensionality grows with vocabulary size.",
+      'One-hot encodings provide unique IDs but no semantics; every token is orthogonal regardless of meaning, and dimensionality grows with vocabulary size. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Each token is represented as a vector with a single 1 and the rest 0s."; "All one-hot vectors in the same vocabulary are orthogonal to each other."; "One-hot vectors do not encode any notion of semantic similarity."; "One-hot encodings are typically very high-dimensional when vocabularies are large.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -244,7 +244,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Word2vec-style embeddings use proxy prediction tasks to learn dense vectors where semantic similarity is captured as geometric similarity.",
+      'Word2vec-style embeddings use proxy prediction tasks to learn dense vectors where semantic similarity is captured as geometric similarity. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They map tokens to dense, low-dimensional vectors."; "They are learned from data so that similar words have similar vectors."; "They are trained via proxy tasks such as predicting context words or a target word."; "They support similarity measures such as cosine similarity to compare word meanings.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -272,7 +272,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "CBOW and Skip-Gram reverse the direction of prediction but share the core idea of learning embeddings via context-based proxy tasks.",
+      'CBOW and Skip-Gram reverse the direction of prediction but share the core idea of learning embeddings via context-based proxy tasks. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Both are trained on large unlabeled text corpora."; "CBOW predicts a target word from its surrounding context words."; "Skip-Gram predicts surrounding context words from a central target word."; "Both treat these prediction tasks as proxies for learning useful word embeddings.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -300,7 +300,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "RNNs use a recurrent hidden state to process sequences and predate transformers by decades.",
+      'RNNs use a recurrent hidden state to process sequences and predate transformers by decades. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They process sequences step by step, maintaining a hidden state."; "The hidden state summarizes information from previous time steps."; "They can be used for classification, tagging, and generation tasks."; "They were introduced long before the transformer architecture.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -328,7 +328,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "LSTMs add gating and a cell state to help preserve important information and reduce vanishing gradients compared to vanilla RNNs.",
+      'LSTMs add gating and a cell state to help preserve important information and reduce vanishing gradients compared to vanilla RNNs. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It is a specific type of recurrent neural network."; "It introduces a cell state in addition to the hidden state."; "It aims to better preserve information over longer sequences."; "It was designed to mitigate the vanishing gradient problem in standard recurrent neural networks.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -356,7 +356,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "RNNs face long-range dependency issues, vanishing/exploding gradients, sequential computation, and bottlenecked representations.",
+      'RNNs face long-range dependency issues, vanishing/exploding gradients, sequential computation, and bottlenecked representations. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They can struggle to capture very long-range dependencies."; "Backpropagation through many time steps can cause gradients to vanish or explode."; "Their sequential nature leads to slow training on long sequences."; "The entire sentence meaning can be bottlenecked into a single hidden state.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -384,7 +384,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Attention lets the model focus on relevant parts of the sequence directly, helping with long-range dependencies and bottlenecks.",
+      'Attention lets the model focus on relevant parts of the sequence directly, helping with long-range dependencies and bottlenecks. To reason through the choices, select every statement because each one matches the criterion in the prompt: "To provide direct connections between a prediction and relevant positions in the input sequence."; "To mitigate the difficulty of remembering faraway tokens in long sequences."; "To let the model weight different input tokens based on their relevance to the current prediction."; "To move away from strictly sequential dependence on a single hidden state.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -412,7 +412,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Self-attention lets each position attend to all positions to build context-aware token representations using matrix operations well suited to GPUs.",
+      'Self-attention lets each position attend to all positions to build context-aware token representations using matrix operations well suited to GPUs. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Each token representation is updated by looking at all tokens in the sequence."; "Attention weights indicate how much each token attends to every other token."; "Self-attention can be implemented efficiently with matrix multiplications."; "Self-attention is a central building block of the transformer encoder and decoder.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -440,7 +440,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Self-attention projects inputs into query, key, and value spaces; query–key similarities yield weights that mix corresponding values.",
+      'Self-attention projects inputs into query, key, and value spaces; query–key similarities yield weights that mix corresponding values. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Queries, keys, and values are learned linear projections of the same input embeddings."; "Attention weights are computed by comparing queries with keys."; "Values are combined with attention weights to form the final context vectors."; "All three (queries, keys, values) are trainable via gradient descent along with the rest of the model.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -467,7 +467,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Multi-head attention provides multiple learned projections that attend in different ways, then merges them into a single representation.",
+      'Multi-head attention provides multiple learned projections that attend in different ways, then merges them into a single representation. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It runs several independent attention mechanisms (heads) in parallel."; "Each head uses its own projection matrices for queries, keys, and values."; "The outputs of all heads are concatenated and then linearly projected back to the model dimension."; "Multiple heads allow the model to capture different types of relations between tokens.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -527,7 +527,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "F1 is the harmonic mean of precision and recall, not the arithmetic mean; accuracy alone can be misleading on imbalanced data.",
+      'F1 is the harmonic mean of precision and recall, not the arithmetic mean; accuracy alone can be misleading on imbalanced data. To reason through the choices, select the statements that match the criterion in the prompt: "Accuracy can be misleading when classes are highly imbalanced."; "Precision measures, among predicted positives, how many are actually positive."; "Recall measures, among true positives, how many were correctly predicted positive.". Do not select statements that miss that criterion: "The F1 score is the arithmetic mean of precision and recall.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -554,7 +554,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "BLEU and ROUGE compare model outputs with reference texts using n-gram overlaps; they require references and are not reference-free.",
+      'BLEU and ROUGE compare model outputs with reference texts using n-gram overlaps; they require references and are not reference-free. To reason through the choices, select the statements that match the criterion in the prompt: "They are reference-based metrics comparing model outputs to human-written texts."; "They were widely used for evaluating machine translation and summarization."; "They rely on overlapping n-grams between prediction and reference.". Do not select statements that miss that criterion: "They can be computed without any reference outputs.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -609,7 +609,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Character-level tokenization is robust and OOV-free but produces very long sequences, not shorter ones.",
+      'Character-level tokenization is robust and OOV-free but produces very long sequences, not shorter ones. To reason through the choices, select the statements that match the criterion in the prompt: "It tends to produce much longer token sequences than word-level tokenization."; "It is robust to misspellings and unusual word forms."; "It avoids out-of-vocabulary issues for alphabetic writing systems.". Do not select statements that miss that criterion: "It guarantees that sequences are shorter than with subword tokenization.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -693,7 +693,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Backpropagation through time multiplies many Jacobians; when these shrink, gradients vanish and long-range learning becomes difficult.",
+      'Backpropagation through time multiplies many Jacobians; when these shrink, gradients vanish and long-range learning becomes difficult. To reason through the choices, select the statements that match the criterion in the prompt: "Gradients are backpropagated through many time steps in sequence models."; "Repeated multiplication by Jacobians with eigenvalues less than one can shrink gradients toward zero."; "Very small gradients make it difficult to learn long-range dependencies.". Do not select statements that miss that criterion: "The problem arises because gradients are added, not multiplied, across time.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -721,7 +721,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Transformers were introduced in 2017, not the early 1990s; the other historical points match the lecture.",
+      'Transformers were introduced in 2017, not the early 1990s; the other historical points match the lecture. To reason through the choices, select the statements that match the criterion in the prompt: "Recurrent neural network ideas date back to the 1980s."; "Long Short-Term Memory networks were proposed in the 1990s."; "Word2vec popularized word embeddings in the early 2010s.". Do not select statements that miss that criterion: "Transformers were first introduced in the early 1990s.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -748,7 +748,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "The encoder builds contextual representations of the source sequence; decoding target tokens is handled by the decoder, not the encoder.",
+      'The encoder builds contextual representations of the source sequence; decoding target tokens is handled by the decoder, not the encoder. To reason through the choices, select the statements that match the criterion in the prompt: "It processes the input sequence in a fully parallel way using self-attention."; "It produces context-aware embeddings for each input position."; "Its self-attention is not masked and can attend to all positions.". Do not select statements that miss that criterion: "It directly generates the target-language tokens one by one.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -776,7 +776,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Decoder self-attention is masked to prevent peeking at future tokens; cross-attention connects decoder queries to encoder outputs.",
+      'Decoder self-attention is masked to prevent peeking at future tokens; cross-attention connects decoder queries to encoder outputs. To reason through the choices, select the statements that match the criterion in the prompt: "It uses masked self-attention over previously generated target tokens."; "It uses cross-attention to attend to the encoder’s output representations."; "It predicts the next target token via a linear layer plus softmax over the vocabulary.". Do not select statements that miss that criterion: "It can freely attend to future target tokens during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -804,7 +804,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Scaling by √dₖ prevents dot products from growing too large; softmax turns them into normalized attention weights.",
+      'Scaling by √dₖ prevents dot products from growing too large; softmax turns them into normalized attention weights. To reason through the choices, select the statements that match the criterion in the prompt: "The dot products between queries and keys measure compatibility between positions."; "Dividing by the square root of the key dimension keeps dot products numerically well-scaled."; "The softmax converts raw scores into a probability distribution over keys for each query.". Do not select statements that miss that criterion: "Removing the scaling factor always improves training stability.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -916,7 +916,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Only decoder self-attention is masked to prevent using future tokens; encoder self-attention can attend to all positions.",
+      'Only decoder self-attention is masked to prevent using future tokens; encoder self-attention can attend to all positions. To reason through the choices, select the statements that match the criterion in the prompt: "The attention mask prevents attending to positions to the right of the current token."; "The mask enforces an autoregressive factorization during training."; "The mask ensures that predictions do not use future target tokens as information.". Do not select statements that miss that criterion: "The mask is also applied in the encoder’s self-attention.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -972,7 +972,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Transformers are typically trained with cross-entropy over next-token predictions; BLEU is used as an evaluation metric, not a direct training loss.",
+      'Transformers are typically trained with cross-entropy over next-token predictions; BLEU is used as an evaluation metric, not a direct training loss. To reason through the choices, select the statements that match the criterion in the prompt: "The source sentence is encoded via the encoder into context-aware embeddings."; "The decoder processes the target sentence with masked self-attention during training."; "The model predicts each next target token conditioned on previous target tokens and the encoded source.". Do not select statements that miss that criterion: "The model is trained by directly minimizing BLEU scores.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -1032,7 +1032,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Named Entity Recognition and similar tasks label multiple positions or spans; they are not single-label document classifiers.",
+      'Named Entity Recognition and similar tasks label multiple positions or spans; they are not single-label document classifiers. To reason through the choices, select the statements that match the criterion in the prompt: "They assign labels to multiple parts of a single input sequence."; "They can evaluate predictions at the token or entity level.". Do not select statements that miss that criterion: "They were described as mapping a sentence to exactly one label."; "They ignore spans of text and only label entire documents.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1060,7 +1060,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Word-level tokens keep sequence length short but suffer from OOV; subwords leverage roots and reduce OOV but lengthen sequences.",
+      'Word-level tokens keep sequence length short but suffer from OOV; subwords leverage roots and reduce OOV but lengthen sequences. To reason through the choices, select the statements that match the criterion in the prompt: "Word-level tokenization typically leads to smaller sequence lengths than subword tokenization."; "Subword tokenization reduces the risk of out-of-vocabulary tokens compared to word-level tokenization.". Do not select statements that miss that criterion: "Word-level tokenization is more robust to misspellings than subword tokenization."; "Subword tokenization was described as ignoring roots and morphological structure.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1088,7 +1088,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "The lecture mentioned rule-of-thumb ranges and trade-offs; vocabulary size affects memory and compute, not just theory.",
+      'The lecture mentioned rule-of-thumb ranges and trade-offs; vocabulary size affects memory and compute, not just theory. To reason through the choices, select the statements that match the criterion in the prompt: "Monolingual tokenizers often target tens of thousands of subword tokens."; "Multilingual or code-aware tokenizers can reach hundreds of thousands of tokens.". Do not select statements that miss that criterion: "The ideal vocabulary size is determined purely by a closed-form mathematical formula."; "Vocabulary size has no connection to computational cost.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1116,7 +1116,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Static embeddings do not represent context; averaging them ignores order and nuanced meaning beyond crude bag-of-words semantics.",
+      'Static embeddings do not represent context; averaging them ignores order and nuanced meaning beyond crude bag-of-words semantics. To reason through the choices, select the statements that match the criterion in the prompt: "Averaging word embeddings is a simple way to create a sentence vector."; "Averaging word embeddings discards word order information.". Do not select statements that miss that criterion: "Averaging static embeddings fully captures contextual meaning of each word."; "Static embeddings were presented as inherently context-dependent in this lecture.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1144,7 +1144,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "LSTMs still process sequences sequentially and reduce, but do not completely eliminate, vanishing gradient issues.",
+      'LSTMs still process sequences sequentially and reduce, but do not completely eliminate, vanishing gradient issues. To reason through the choices, select the statements that match the criterion in the prompt: "LSTMs track both a hidden state and a separate cell state."; "LSTMs were designed to better preserve important information over longer time spans.". Do not select statements that miss that criterion: "LSTMs remove the sequential nature of processing sequences."; "LSTMs completely eliminate vanishing gradients in practice.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1172,7 +1172,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Transformers parallelize over positions via attention; RNNs are inherently sequential, making them less parallel-friendly.",
+      'Transformers parallelize over positions via attention; RNNs are inherently sequential, making them less parallel-friendly. To reason through the choices, select the statements that match the criterion in the prompt: "Transformers use attention to enable parallel computation across sequence positions within each layer."; "Recurrent neural networks must process tokens one time step after another.". Do not select statements that miss that criterion: "Transformers were presented as strictly slower than recurrent neural networks for long sequences."; "Recurrent neural networks were presented as inherently more parallelizable than transformers.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1200,7 +1200,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Cross-attention connects decoder queries to encoder key–value pairs; position encodings are added earlier and are not the job of cross-attention.",
+      'Cross-attention connects decoder queries to encoder key–value pairs; position encodings are added earlier and are not the job of cross-attention. To reason through the choices, select the statements that match the criterion in the prompt: "Decoder queries attend to keys and values derived from encoder outputs."; "Cross-attention lets the decoder condition its predictions on the encoded source sequence.". Do not select statements that miss that criterion: "Cross-attention was described as operating only within the decoder without looking at encoder states."; "Cross-attention is responsible for adding positional information to encoder embeddings.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1281,7 +1281,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "BOS and EOS tokens structure sequences for both training and generation in many models, regardless of tokenization granularity.",
+      'BOS and EOS tokens structure sequences for both training and generation in many models, regardless of tokenization granularity. To reason through the choices, select the statements that match the criterion in the prompt: "BOS indicates the start of a sequence for the decoder to begin generation."; "EOS marks where generation should stop.". Do not select statements that miss that criterion: "These tokens are unnecessary when training autoregressive language models."; "These tokens are used only for character-level models and not for word-based models.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1309,7 +1309,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "QKᵀ is an n×n matrix of pairwise scores; multiplying by V yields an n×d matrix of context vectors, not scalars.",
+      'QKᵀ is an n×n matrix of pairwise scores; multiplying by V yields an n×d matrix of context vectors, not scalars. To reason through the choices, select the statements that match the criterion in the prompt: "The query, key, and value matrices each contain one row per token position."; "The product QKᵀ results in a matrix of attention scores between all pairs of positions.". Do not select statements that miss that criterion: "The product QKᵀ has the same shape as the original embedding matrix."; "Multiplying attention weights by V produces token-wise scalar scores instead of vectors.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1337,7 +1337,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "The lecture emphasized recordings and online resources; exams are concept-based, not live coding, and attendance is flexible.",
+      'The lecture emphasized recordings and online resources; exams are concept-based, not live coding, and attendance is flexible. To reason through the choices, select the statements that match the criterion in the prompt: "Slides and recordings are posted online after each lecture."; "Students can ask questions via an online forum integrated into the course platform.". Do not select statements that miss that criterion: "The exams include programming questions that must be solved live in class."; "Attending in person is mandatory because the class is not recorded.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1365,7 +1365,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Supervised translation requires aligned sentence pairs, which are costlier to obtain than raw monolingual text.",
+      'Supervised translation requires aligned sentence pairs, which are costlier to obtain than raw monolingual text. To reason through the choices, select the statements that match the criterion in the prompt: "Datasets such as WMT provide paired sentences in different languages."; "Paired datasets are more expensive to collect than single-language corpora.". Do not select statements that miss that criterion: "The lecture described translation training as using only monolingual corpora."; "The lecture stated that no labels are needed for supervised translation training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1393,7 +1393,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Softmax produces model probabilities; label smoothing changes the target distribution in the loss to avoid overly sharp targets.",
+      'Softmax produces model probabilities; label smoothing changes the target distribution in the loss to avoid overly sharp targets. To reason through the choices, select the statements that match the criterion in the prompt: "Softmax is applied to model logits to produce a probability distribution."; "Label smoothing modifies the target distribution used in the loss, not the softmax operation itself.". Do not select statements that miss that criterion: "Label smoothing was described as replacing softmax with a different activation function."; "Softmax alone was described as sufficient to express uncertainty in the target distribution.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1421,7 +1421,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "The lecture emphasized difficulties of reference-based evaluation and hinted at newer methods, not that references are universally unnecessary.",
+      'The lecture emphasized difficulties of reference-based evaluation and hinted at newer methods, not that references are universally unnecessary. To reason through the choices, select the statements that match the criterion in the prompt: "There are many valid outputs for the same input, which complicates evaluation."; "Traditional metrics like BLEU and ROUGE compare against reference outputs."; "Collecting high-quality reference outputs is time-consuming and expensive.". Do not select statements that miss that criterion: "The lecture claimed that reference-based metrics are unnecessary for all generative tasks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1481,7 +1481,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "One-hot vectors treat all tokens as equally distant and contain no information about meaning or similarity.",
+      'One-hot vectors treat all tokens as equally distant and contain no information about meaning or similarity. To reason through the choices, select the statements that match the criterion in the prompt: "They do not encode semantic similarity between tokens.". Do not select statements that miss that criterion: "They require a separate neural network for each token."; "They cannot represent more than a few hundred tokens."; "They were only defined for vision tasks, not text.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1509,7 +1509,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Subwords mitigate out-of-vocabulary issues and capture morphological patterns without exploding sequence lengths like pure character tokenization.",
+      'Subwords mitigate out-of-vocabulary issues and capture morphological patterns without exploding sequence lengths like pure character tokenization. To reason through the choices, select the statements that match the criterion in the prompt: "It strikes a balance between handling rare words and keeping sequence length manageable.". Do not select statements that miss that criterion: "It guarantees that each token corresponds to exactly one character."; "It ensures that all possible strings share the same tokenization."; "It is only suitable for languages with no morphology.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1537,7 +1537,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Static embeddings do not disambiguate word senses; the word 'bank' gets one vector whether it refers to a river or a financial institution.",
+      'Static embeddings do not disambiguate word senses; the word \'bank\' gets one vector whether it refers to a river or a financial institution. To reason through the choices, select the statements that match the criterion in the prompt: "They assign the same vector to a word regardless of context.". Do not select statements that miss that criterion: "They cannot be used as input to neural networks."; "They require labeled data for every embedding update."; "They always encode sentence position as part of the vector.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1562,7 +1562,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       { text: "They avoid using GPUs by design.", isCorrect: false },
     ],
     explanation:
-      "Transformers are built around matrix operations that map naturally to highly parallel hardware such as GPUs and TPUs.",
+      'Transformers are built around matrix operations that map naturally to highly parallel hardware such as GPUs and TPUs. To reason through the choices, select the statements that match the criterion in the prompt: "Their self-attention and feedforward operations can be expressed as batched matrix multiplications.". Do not select statements that miss that criterion: "They do not require any multiplications, only additions."; "They process each token entirely independently of all others, with no interactions."; "They avoid using GPUs by design.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1587,7 +1587,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "The encoder’s outputs are context-rich representations of the source text that the decoder uses via cross-attention when generating targets.",
+      'The encoder’s outputs are context-rich representations of the source text that the decoder uses via cross-attention when generating targets. To reason through the choices, select the statements that match the criterion in the prompt: "They provide context representations of the source sequence for the decoder to attend to.". Do not select statements that miss that criterion: "They directly contain the final target-language tokens."; "They are discarded before decoding begins."; "They only store positional encodings and no semantic information.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1615,7 +1615,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Masked self-attention ensures the model cannot look ahead to future target tokens, preserving the autoregressive structure during training.",
+      'Masked self-attention ensures the model cannot look ahead to future target tokens, preserving the autoregressive structure during training. To reason through the choices, select the statements that match the criterion in the prompt: "It enforces that each prediction depends only on past tokens, matching the generation process.". Do not select statements that miss that criterion: "It prevents the model from using the encoder outputs."; "It forces all attention weights to be equal."; "It is only needed for evaluation, not training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1643,7 +1643,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Self-attention is invariant to permutations, so explicit positional information must be added to represent order.",
+      'Self-attention is invariant to permutations, so explicit positional information must be added to represent order. To reason through the choices, select the statements that match the criterion in the prompt: "To provide information about token order that self-attention alone does not capture.". Do not select statements that miss that criterion: "To randomly shuffle the positions of tokens during training."; "To reduce the vocabulary size by merging similar tokens."; "To implement the attention mechanism without queries or keys.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1671,7 +1671,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "By softening targets, label smoothing reduces overconfidence and can lead to better-calibrated and more robust models.",
+      'By softening targets, label smoothing reduces overconfidence and can lead to better-calibrated and more robust models. To reason through the choices, select the statements that match the criterion in the prompt: "It discourages the model from becoming overconfident on the training set.". Do not select statements that miss that criterion: "It forces the model to memorize every training example exactly."; "It ensures the model assigns zero probability to all incorrect classes."; "It removes the need for a softmax layer in the output.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1699,7 +1699,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "When gradients shrink through many time steps, early dependencies barely receive learning signal, impeding long-range credit assignment.",
+      'When gradients shrink through many time steps, early dependencies barely receive learning signal, impeding long-range credit assignment. To reason through the choices, select the statements that match the criterion in the prompt: "Parameters influencing early time steps are updated very weakly, making long-range learning difficult.". Do not select statements that miss that criterion: "Gradients become extremely large and cause numerical instability."; "The loss function becomes constant and cannot be differentiated."; "Only the output layer is affected, while recurrent weights are unaffected.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1727,7 +1727,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "The textbook and cheat sheet were presented as complementary resources to reinforce and condense course concepts.",
+      'The textbook and cheat sheet were presented as complementary resources to reinforce and condense course concepts. To reason through the choices, select the statements that match the criterion in the prompt: "They provide condensed summaries and detailed explanations of the concepts taught in class.". Do not select statements that miss that criterion: "They fully replace the need to attend lectures or watch recordings."; "They cover unrelated topics not mentioned in the course."; "They are used purely as exam formula sheets with no conceptual content.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1755,7 +1755,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "The transformer eliminates recurrence and convolutions, relying instead on stacked attention and feedforward layers.",
+      'The transformer eliminates recurrence and convolutions, relying instead on stacked attention and feedforward layers. To reason through the choices, select the statements that match the criterion in the prompt: "The architecture replaces recurrent and convolutional layers with attention as the primary interaction mechanism.". Do not select statements that miss that criterion: "The architecture removes all linear transformations and uses only attention."; "The paper shows that attention is unnecessary for machine translation."; "The model uses attention only once at the output layer.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1783,7 +1783,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Softmax exponentiates and normalizes logits so they sum to one, forming a probability distribution over the vocabulary.",
+      'Softmax exponentiates and normalizes logits so they sum to one, forming a probability distribution over the vocabulary. To reason through the choices, select the statements that match the criterion in the prompt: "To convert raw logits into a normalized probability distribution over tokens.". Do not select statements that miss that criterion: "To compute cosine similarity between tokens."; "To remove all negative values from embeddings."; "To determine attention weights between encoder and decoder states.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1811,7 +1811,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Precision and recall quantify performance on positive cases in different ways and are especially important when classes are imbalanced.",
+      'Precision and recall quantify performance on positive cases in different ways and are especially important when classes are imbalanced. To reason through the choices, select the statements that match the criterion in the prompt: "To provide more informative evaluation than accuracy alone on imbalanced datasets.". Do not select statements that miss that criterion: "To measure how fast the model runs on a GPU."; "To compute the average sequence length of the inputs."; "To estimate the vocabulary size of the tokenization scheme.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1839,7 +1839,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Attention provides explicit paths between any pair of positions, reducing reliance on information flowing only through repeated recurrent updates.",
+      'Attention provides explicit paths between any pair of positions, reducing reliance on information flowing only through repeated recurrent updates. To reason through the choices, select the statements that match the criterion in the prompt: "It allows direct connections between distant tokens instead of relying on many recurrent steps.". Do not select statements that miss that criterion: "It stores the entire sequence in a single scalar value."; "It eliminates the need to backpropagate through time entirely."; "It forces all attention weights to be identical for all pairs of tokens.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1867,7 +1867,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "By learning dense vectors, models can capture nuanced similarity patterns between tokens beyond simple identity.",
+      'By learning dense vectors, models can capture nuanced similarity patterns between tokens beyond simple identity. To reason through the choices, select the statements that match the criterion in the prompt: "Dense embeddings can encode graded semantic similarity between tokens.". Do not select statements that miss that criterion: "Dense embeddings guarantee that all words in a language are equidistant."; "Dense embeddings completely remove the need for training data."; "Dense embeddings ensure that vocabulary size has no impact on dimensionality.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1895,7 +1895,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "The feedforward network enriches token-wise representations non-linearly after attention has mixed information across positions.",
+      'The feedforward network enriches token-wise representations non-linearly after attention has mixed information across positions. To reason through the choices, select the statements that match the criterion in the prompt: "To apply non-linear transformations to each token’s representation independently after attention.". Do not select statements that miss that criterion: "To compute the dot product between queries and keys."; "To introduce positional information into the model."; "To enforce masking in the decoder’s self-attention.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -1923,6 +1923,6 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "The lecture walks from NLP tasks, tokenization, embeddings, and recurrent models to attention and the transformer architecture.",
+      'The lecture walks from NLP tasks, tokenization, embeddings, and recurrent models to attention and the transformer architecture. To reason through the choices, select the statements that match the criterion in the prompt: "Introducing the path from basic NLP concepts to the transformer architecture for sequence modeling.". Do not select statements that miss that criterion: "Deriving training algorithms for reinforcement learning agents in robotics."; "Designing convolutional neural networks for image classification."; "Implementing databases for large-scale relational data.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 ];

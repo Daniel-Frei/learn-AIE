@@ -59,7 +59,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Evaluation is needed to uncover both obvious and subtle model failures, including hallucinations, harmful content, and systematic performance gaps.",
+      'Evaluation is needed to uncover both obvious and subtle model failures, including hallucinations, harmful content, and systematic performance gaps. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Hallucinated or fabricated facts presented confidently."; "Toxic, biased, or otherwise harmful content."; "Subtle reasoning errors that are hard to spot by just ‘vibe checking’."; "Systematic blind spots on specific domains, languages, or user groups.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q03",
@@ -113,7 +113,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Cross entropy H(P, Q) = H(P) + D_KL(P || Q); minimizing it both fits the data and reduces divergence between the model and the true distribution.",
+      'Cross entropy H(P, Q) = H(P) + D_KL(P || Q); minimizing it both fits the data and reduces divergence between the model and the true distribution. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Cross entropy measures how hard it is for a model to predict the next token in a dataset."; "It can be decomposed into data entropy plus a KL-divergence term between true and model distributions."; "Lower cross entropy indicates that the model’s distribution is closer to the true data distribution."; "If a model perfectly matches the data distribution, its cross entropy equals the data entropy.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q05",
@@ -140,7 +140,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Perplexity (e.g., 2^{H}) summarizes predictive uncertainty; design choices like tokenization and context length directly affect its value.",
+      'Perplexity (e.g., 2^{H}) summarizes predictive uncertainty; design choices like tokenization and context length directly affect its value. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Perplexity is an exponential transform of cross entropy."; "Lower perplexity means the model is less ‘confused’ about the next token."; "Perplexity can be interpreted as the effective average number of choices the model has for the next token."; "Perplexity depends on how the tokens are defined and how much context the model is allowed to see.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q06",
@@ -167,7 +167,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Perplexity is useful for model comparison, contamination detection, anomaly detection, and data deduplication / selection decisions.",
+      'Perplexity is useful for model comparison, contamination detection, anomaly detection, and data deduplication / selection decisions. To reason through the choices, select every statement because each one matches the criterion in the prompt: "As a rough proxy for downstream task performance when comparing base models."; "To check for possible benchmark contamination when perplexity on a test set is suspiciously low."; "To detect unusual or anomalous text, which tends to have very high perplexity."; "To help decide whether new text is sufficiently different from existing data before adding it to a training set.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q07",
@@ -194,7 +194,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "More context, better training, smaller vocabularies, and more structured datasets all tend to make next-token prediction easier, lowering perplexity.",
+      'More context, better training, smaller vocabularies, and more structured datasets all tend to make next-token prediction easier, lowering perplexity. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Giving the model a longer context window when computing probabilities."; "Training the model longer or on more relevant data from the same distribution."; "Using a smaller vocabulary of tokens for the same underlying text."; "Evaluating on structured text such as markup or source code instead of noisy everyday text.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q08",
@@ -221,7 +221,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Open-ended tasks have huge output spaces and multiple valid answers, so exact supervised labels cover only a tiny subset of acceptable responses.",
+      'Open-ended tasks have huge output spaces and multiple valid answers, so exact supervised labels cover only a tiny subset of acceptable responses. To reason through the choices, select every statement because each one matches the criterion in the prompt: "There are many acceptable outputs for the same input."; "It is infeasible to enumerate all valid responses as references."; "Different users may legitimately prefer different styles or trade-offs in the answer."; "The space of possible outputs grows combinatorially with length, making exhaustive labeling unrealistic.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q09",
@@ -248,7 +248,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Functional correctness directly measures whether an application does its job; for code or SQL generation it’s often enforced by running tests.",
+      'Functional correctness directly measures whether an application does its job; for code or SQL generation it’s often enforced by running tests. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It checks whether a system actually achieves the intended real-world effect or output."; "It is often implemented via unit tests and execution-based checks for code and programs."; "For some tasks, it can be fully automated by comparing behavior against test cases."; "It is conceptually the most important metric because it reflects whether the application works.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q10",
@@ -275,7 +275,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "pass@k summarizes the probability that k sampled generations contain at least one fully correct solution across benchmark problems.",
+      'pass@k summarizes the probability that k sampled generations contain at least one fully correct solution across benchmark problems. To reason through the choices, select every statement because each one matches the criterion in the prompt: "A problem is considered solved if at least one of the k sampled programs passes all tests."; "Higher k generally increases the chance that a model solves a problem."; "pass@k is reported as the fraction of problems solved among all benchmark tasks."; "pass@1 is usually lower than pass@k for k > 1 on the same model and benchmark.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q11",
@@ -302,7 +302,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Exact match is simple and precise, but brittle whenever multiple correct wordings exist or formatting details differ.",
+      'Exact match is simple and precise, but brittle whenever multiple correct wordings exist or formatting details differ. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It works best when short, unambiguous outputs are expected."; "Variations in formatting or phrasing can cause correct answers to be scored as wrong unless normalization is applied."; "It often fails for tasks like translation or summarization where many different phrasings are acceptable."; "Even when used, it is often supplemented with more flexible similarity metrics.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q12",
@@ -329,7 +329,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Lexical metrics quantify surface overlap with references but can misjudge semantic quality if phrasing differs or references are incomplete.",
+      'Lexical metrics quantify surface overlap with references but can misjudge semantic quality if phrasing differs or references are incomplete. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They operate on surface tokens like words, subwords, or character n-grams."; "They reward overlapping tokens or n-grams between a generated answer and reference text."; "They can mis-score good answers if references do not cover certain valid phrasings."; "They were widely used in tasks like machine translation and summarization before large language models.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q13",
@@ -356,7 +356,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Embedding methods represent meaning as vectors; distance or cosine similarity between vectors is used to judge semantic closeness between texts.",
+      'Embedding methods represent meaning as vectors; distance or cosine similarity between vectors is used to judge semantic closeness between texts. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Each text is mapped to a vector embedding in some high-dimensional space."; "Similarity is computed using functions like cosine similarity on those embeddings."; "Semantically similar sentences are intended to lie close together in the embedding space."; "Embedding-based similarity is often more robust than pure lexical overlap when wordings differ.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q14",
@@ -383,7 +383,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Embeddings offer flexible semantic representations that generalize beyond exact wording and can power multiple application components.",
+      'Embeddings offer flexible semantic representations that generalize beyond exact wording and can power multiple application components. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They can recognize paraphrases with few shared words."; "They support cross-modal comparisons when embeddings are shared across modalities."; "They can be reused for retrieval, clustering, and anomaly detection beyond evaluation."; "Good embedding models provide a common building block for many downstream tasks.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q15",
@@ -410,7 +410,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Joint embedding spaces align heterogeneous data types into one space, enabling cross-modal similarity search and downstream multimodal applications.",
+      'Joint embedding spaces align heterogeneous data types into one space, enabling cross-modal similarity search and downstream multimodal applications. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They map different modalities (e.g. images and text) into a shared vector space."; "Training typically brings paired items (e.g. an image and its caption) closer together in that space."; "They enable cross-modal retrieval, such as searching images using text queries."; "They allow similarity comparisons between modalities without converting everything back into raw pixels or tokens.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q16",
@@ -464,7 +464,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Human-written references are costly, imperfect, and incomplete; evaluation scores reflect both model behavior and the quality of the reference set.",
+      'Human-written references are costly, imperfect, and incomplete; evaluation scores reflect both model behavior and the quality of the reference set. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It can be expensive and slow to create high-quality references."; "Human references implicitly define what ‘good’ looks like for a task."; "Reference data can itself contain errors or biases."; "Coverage limitations mean some correct model answers may be penalized as incorrect.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q18",
@@ -491,7 +491,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Reference-free metrics scale better to production, avoid constant labeling, and complement small, curated test sets.",
+      'Reference-free metrics scale better to production, avoid constant labeling, and complement small, curated test sets. To reason through the choices, select every statement because each one matches the criterion in the prompt: "You do not need to collect labeled outputs for every production query."; "They can be applied directly to live traffic where no ground truth exists."; "They reduce dependence on fixed test sets that may become outdated or contaminated."; "They can be combined with spot-checking to trade off cost against coverage.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q19",
@@ -545,7 +545,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "An AI judge is effectively a complete system: model choice, prompt, sampling configuration, and examples all influence the resulting scores.",
+      'An AI judge is effectively a complete system: model choice, prompt, sampling configuration, and examples all influence the resulting scores. To reason through the choices, select every statement because each one matches the criterion in the prompt: "The underlying model used as the judge."; "The judge prompt, including definitions of criteria and scoring scales."; "Sampling parameters such as temperature that affect determinism and variance."; "Whether examples (few-shot cases) are included to anchor the scoring behavior.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q21",
@@ -571,7 +571,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Self-bias, position bias, and verbosity bias are widely observed; understanding them is key when interpreting AI-judged comparisons.",
+      'Self-bias, position bias, and verbosity bias are widely observed; understanding them is key when interpreting AI-judged comparisons. To reason through the choices, select every statement because each one matches the criterion in the prompt: "A model often prefers its own generations over those from other models (self-bias)."; "Judges can show position bias, consistently preferring answers that appear in a certain order."; "Many judge models favor longer, more verbose answers even when they contain mistakes."; "Bias behavior can vary across judge architectures and may diminish as models improve, but it does not disappear automatically.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q22",
@@ -598,7 +598,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Treat judges as versioned components: make them transparent, stable, and periodically calibrated against human judgments.",
+      'Treat judges as versioned components: make them transparent, stable, and periodically calibrated against human judgments. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Inspect the judge’s prompt and model; avoid opaque ‘black-box’ evaluation endpoints when possible."; "Periodically verify judge scores against human spot checks to detect drift or failure modes."; "Keep the judge configuration stable when tracking metric trends over time."; "Document which evaluation configuration produced which historical metrics.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q23",
@@ -625,7 +625,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Each additional judge call adds cost and latency; smaller models and sampling can help, and partial evaluation can still yield actionable signals.",
+      'Each additional judge call adds cost and latency; smaller models and sampling can help, and partial evaluation can still yield actionable signals. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Evaluating every response with a strong model can multiply inference cost significantly."; "Using smaller or cheaper models as judges can reduce cost at the risk of lower alignment with humans."; "Guardrail-style online judging can add noticeable latency if placed on the critical user path."; "Spot-checking only a fraction of responses can control costs while still providing useful monitoring signals.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q24",
@@ -652,7 +652,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Knowing whether a metric is exact or judgment-based clarifies how to interpret changes, confidence intervals, and reproducibility.",
+      'Knowing whether a metric is exact or judgment-based clarifies how to interpret changes, confidence intervals, and reproducibility. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Exact methods yield deterministic, reproducible scores given the same inputs."; "Subjective methods depend on human or AI judgments that can vary over time."; "Systematic monitoring often relies on relatively stable exact metrics where possible."; "Understanding which metrics are subjective helps avoid over-interpreting small changes in scores.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch3-q25",
@@ -679,7 +679,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Robust evaluation both reduces risk and accelerates product learning, making it central to responsible AI engineering.",
+      'Robust evaluation both reduces risk and accelerates product learning, making it central to responsible AI engineering. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It helps prevent catastrophic failures that damage users and trust."; "It supports faster iteration by giving clear feedback on which changes help."; "It provides evidence to regulators, partners, or management that the system is under control."; "It reveals opportunities for product improvement that are invisible from logs alone.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   // ----------------------------------------------------------------------------
@@ -738,7 +738,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "BPC and BPB re-express entropy in units of characters or bytes; perplexity is an exponential transform, not the same numeric quantity.",
+      'BPC and BPB re-express entropy in units of characters or bytes; perplexity is an exponential transform, not the same numeric quantity. To reason through the choices, select the statements that match the criterion in the prompt: "They normalize cross entropy to be independent of a specific tokenizer’s token boundaries."; "Bits-per-character divides bits per token by average characters per token."; "Bits-per-byte accounts for how characters are encoded into bytes (e.g. UTF-8).". Do not select statements that miss that criterion: "Bits-per-byte is always numerically equal to perplexity.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q28",
@@ -765,7 +765,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Perplexity reflects predictability and distribution match, not universal ‘quality’; many factors beyond perplexity matter for downstream utility.",
+      'Perplexity reflects predictability and distribution match, not universal ‘quality’; many factors beyond perplexity matter for downstream utility. To reason through the choices, select the statements that match the criterion in the prompt: "Dataset A is likely more predictable or similar to the training distribution than dataset B."; "The model may have memorized parts of dataset A more than dataset B."; "For some tasks, lower perplexity on A suggests the model may perform better on A-related downstream tasks.". Do not select statements that miss that criterion: "It proves that A is a higher-quality dataset than B for any purpose.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q29",
@@ -792,7 +792,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Low perplexity is a useful signal of overlap, but high perplexity does not strictly rule out partial contamination.",
+      'Low perplexity is a useful signal of overlap, but high perplexity does not strictly rule out partial contamination. To reason through the choices, select the statements that match the criterion in the prompt: "Very low perplexity on an evaluation set can indicate that the set was included in training."; "Comparing perplexity across suspected and clean subsets can surface contamination patterns."; "Perplexity alone cannot prove contamination but can provide strong hints to investigate further.". Do not select statements that miss that criterion: "If perplexity is high, it guarantees that the evaluation set was not seen during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q30",
@@ -819,7 +819,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Execution-based tests work well for code and other formally specified tasks, but not for creative tasks without precise test oracles.",
+      'Execution-based tests work well for code and other formally specified tasks, but not for creative tasks without precise test oracles. To reason through the choices, select the statements that match the criterion in the prompt: "You can run the generated code on predefined test cases."; "For each test, the outcome is objectively pass or fail."; "You do not need human raters for each generated program.". Do not select statements that miss that criterion: "It works equally well for any open-ended creative writing task.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q31",
@@ -846,7 +846,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "BLEU and relatives were developed for translation quality estimation based on n-gram overlap, not as direct proxies for perplexity.",
+      'BLEU and relatives were developed for translation quality estimation based on n-gram overlap, not as direct proxies for perplexity. To reason through the choices, select the statements that match the criterion in the prompt: "They consider n-gram overlap between candidate and reference texts."; "They can penalize valid paraphrases that use different wording."; "They may correlate poorly with functional correctness in code-generation benchmarks.". Do not select statements that miss that criterion: "They were originally designed to evaluate how well models minimize perplexity.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q32",
@@ -873,7 +873,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Relaxed matching and normalization help, but each choice introduces trade-offs; no variant is error-free for all tasks.",
+      'Relaxed matching and normalization help, but each choice introduces trade-offs; no variant is error-free for all tasks. To reason through the choices, select the statements that match the criterion in the prompt: "Some variants treat outputs that contain the reference answer as correct (substring match)."; "Substring matching can incorrectly mark wrong answers as correct when they merely mention the right token."; "Normalization (e.g. stripping punctuation and case) can reduce spurious mismatches.". Do not select statements that miss that criterion: "Exact match with no normalization avoids all evaluation errors.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q33",
@@ -899,7 +899,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Embeddings are high-dimensional vectors whose geometry approximates semantic similarity; scalar representations would be far too limited.",
+      'Embeddings are high-dimensional vectors whose geometry approximates semantic similarity; scalar representations would be far too limited. To reason through the choices, select the statements that match the criterion in the prompt: "They represent complex objects (e.g. text, images) as numeric vectors."; "They usually have dimension in the hundreds or thousands rather than one or two."; "They are designed so that geometric relationships reflect semantic relationships.". Do not select statements that miss that criterion: "They must always be one-dimensional scalars to be interpretable.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q34",
@@ -926,7 +926,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Cosine similarity focuses on direction; Euclidean distance depends on magnitude as well, so they are not identical.",
+      'Cosine similarity focuses on direction; Euclidean distance depends on magnitude as well, so they are not identical. To reason through the choices, select the statements that match the criterion in the prompt: "It measures the angle between two vectors, ignoring their magnitude."; "Values range from –1 (opposite direction) to +1 (same direction)."; "It is often preferred because it is invariant to uniform scaling of vectors.". Do not select statements that miss that criterion: "It is equivalent to simple Euclidean distance in all cases.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q35",
@@ -953,7 +953,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Good language-model perplexity does not guarantee task-specific embedding quality; separate eval suites remain necessary.",
+      'Good language-model perplexity does not guarantee task-specific embedding quality; separate eval suites remain necessary. To reason through the choices, select the statements that match the criterion in the prompt: "They can be benchmarked on tasks like clustering, retrieval, and classification."; "Benchmarks such as large text-embedding suites aggregate performance across multiple tasks."; "Embedding quality is often judged indirectly by downstream task performance rather than a single theoretical metric.". Do not select statements that miss that criterion: "Once a model has good perplexity, its embeddings are guaranteed to be optimal for all tasks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q36",
@@ -980,7 +980,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "AI judges remain subjective; their judgments depend on prompt wording and model behavior even without references.",
+      'AI judges remain subjective; their judgments depend on prompt wording and model behavior even without references. To reason through the choices, select the statements that match the criterion in the prompt: "You can evaluate answers based only on the question and some rubric in the prompt."; "This is useful when acceptable outputs are diverse and not easy to enumerate."; "The resulting score depends heavily on how clearly the rubric is described.". Do not select statements that miss that criterion: "It eliminates all subjectivity, because the judge is an algorithm.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q37",
@@ -1007,7 +1007,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Even strong AI judges cannot fully replace human judgment, especially for nuanced or high-stakes decisions.",
+      'Even strong AI judges cannot fully replace human judgment, especially for nuanced or high-stakes decisions. To reason through the choices, select the statements that match the criterion in the prompt: "Human review is needed to sanity-check AI-judged metrics and catch new failure modes."; "Some subtle harms, such as cultural offense, are hard to capture with existing automatic metrics."; "High-stakes domains may legally or ethically require human oversight.". Do not select statements that miss that criterion: "Humans can be fully replaced by AI judges as soon as those judges reach 80% agreement.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q38",
@@ -1034,7 +1034,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Evaluation is iterative; metrics and logging evolve as you discover new failure modes and improve your system.",
+      'Evaluation is iterative; metrics and logging evolve as you discover new failure modes and improve your system. To reason through the choices, select the statements that match the criterion in the prompt: "You typically combine several metrics, not just one."; "You should focus on the parts of the system where failure would be most costly."; "Evaluation design may require modifying the system to expose more signals or logs.". Do not select statements that miss that criterion: "Once chosen, metrics should never be revisited or refined.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q39",
@@ -1060,7 +1060,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Lower temperature and better prompting can increase consistency, but being consistently wrong is still possible.",
+      'Lower temperature and better prompting can increase consistency, but being consistently wrong is still possible. To reason through the choices, select the statements that match the criterion in the prompt: "Sampling randomness can cause the same judge configuration to output different scores on repeated runs."; "Adding few-shot examples to the judge prompt can increase consistency across runs."; "Higher consistency does not automatically imply higher alignment with human ground truth.". Do not select statements that miss that criterion: "Setting temperature high usually makes scores more deterministic.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q40",
@@ -1087,7 +1087,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Criterion names are not standardized; practitioners must read prompts and documentation to interpret scores correctly.",
+      'Criterion names are not standardized; practitioners must read prompts and documentation to interpret scores correctly. To reason through the choices, select the statements that match the criterion in the prompt: "Different tools may use the same label (e.g. ‘faithfulness’) but define it differently in their judge prompts."; "Score scales (e.g. 0/1 vs 1–5) can differ even for nominally similar criteria."; "Because of this, you cannot assume that ‘faithfulness = 0.8’ means the same thing across two platforms.". Do not select statements that miss that criterion: "The community already has a single standard specification that all providers strictly follow.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q41",
@@ -1114,7 +1114,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Lexical overlap is neither necessary nor sufficient for semantic equivalence; semantic similarity attempts to capture meaning directly.",
+      'Lexical overlap is neither necessary nor sufficient for semantic equivalence; semantic similarity attempts to capture meaning directly. To reason through the choices, select the statements that match the criterion in the prompt: "Lexical similarity focuses on surface form overlap (e.g. shared words or n-grams)."; "Semantic similarity focuses on meaning, often via embeddings."; "Two texts can be lexically dissimilar but semantically similar.". Do not select statements that miss that criterion: "Two texts that share many words necessarily have the same meaning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q42",
@@ -1141,7 +1141,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Practitioners mix both approaches; references provide precise targets where available, while reference-free metrics scale to production.",
+      'Practitioners mix both approaches; references provide precise targets where available, while reference-free metrics scale to production. To reason through the choices, select the statements that match the criterion in the prompt: "Reference-based methods compare outputs to one or more canonical answers."; "Reference-free methods rely on criteria such as quality or consistency without explicit ground truth answers."; "Reference-based approaches are often more precise when good references are available.". Do not select statements that miss that criterion: "Reference-free methods cannot be combined with reference-based methods.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q43",
@@ -1168,7 +1168,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Application-specific evaluation must reflect actual usage patterns and risk profiles; generic benchmarks are only one ingredient.",
+      'Application-specific evaluation must reflect actual usage patterns and risk profiles; generic benchmarks are only one ingredient. To reason through the choices, select the statements that match the criterion in the prompt: "You should weight evaluation more heavily toward realistically frequent and high-impact scenarios."; "Synthetic test cases can be useful but should be complemented by real user data where possible."; "Coverage of rare but catastrophic failures may deserve targeted tests even if they are unlikely.". Do not select statements that miss that criterion: "A single generic public benchmark is usually sufficient on its own.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q44",
@@ -1195,7 +1195,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Guardrails reduce risk but cannot guarantee absolute safety; residual errors and trade-offs between latency and coverage remain.",
+      'Guardrails reduce risk but cannot guarantee absolute safety; residual errors and trade-offs between latency and coverage remain. To reason through the choices, select the statements that match the criterion in the prompt: "They can screen out obviously unsafe or low-quality responses before they reach users."; "They may delay responses, since an extra model call is added on the critical path."; "They can be configured to route questionable outputs for human review instead of outright blocking.". Do not select statements that miss that criterion: "They guarantee that no harmful content will ever reach users.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q45",
@@ -1222,7 +1222,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Vibe checks are helpful early on but provide neither coverage nor statistical reliability; more systematic evaluation is needed for real systems.",
+      'Vibe checks are helpful early on but provide neither coverage nor statistical reliability; more systematic evaluation is needed for real systems. To reason through the choices, select the statements that match the criterion in the prompt: "It relies on a few hand-picked prompts inspected manually."; "It is quick and informal, so it can be useful at the very beginning of prototyping."; "It does not scale or provide reliable signals for serious iteration.". Do not select statements that miss that criterion: "It is generally sufficient on its own for high-stakes deployments.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q46",
@@ -1249,7 +1249,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Fuzzy matching is useful for approximate string similarity but still operates on surface form and does not capture high-level meaning.",
+      'Fuzzy matching is useful for approximate string similarity but still operates on surface form and does not capture high-level meaning. To reason through the choices, select the statements that match the criterion in the prompt: "It counts how many insertions, deletions, or substitutions are needed to convert one string into another."; "Some variants also treat transposition of adjacent characters as a single edit."; "Strings with smaller edit distance are considered more similar.". Do not select statements that miss that criterion: "Edit distance naturally captures deep semantic relationships between sentences.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q47",
@@ -1276,7 +1276,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Models generally handle categorical or small discrete scales better than fine-grained continuous scoring without strong anchoring.",
+      'Models generally handle categorical or small discrete scales better than fine-grained continuous scoring without strong anchoring. To reason through the choices, select the statements that match the criterion in the prompt: "Classification-style outputs (e.g. good/bad) are often easier for models than regressing a fine-grained continuous score."; "Discrete numeric scales like 1–5 can work well if the rubric clearly defines each level."; "Very wide discrete ranges (e.g. 1–100) tend to be harder for models to use consistently.". Do not select statements that miss that criterion: "Continuous 0–1 scores always yield more reliable judgments than categorical labels.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q48",
@@ -1303,7 +1303,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Interpreting metric trends requires understanding both model updates and evolving evaluation setups; dashboards alone are not enough.",
+      'Interpreting metric trends requires understanding both model updates and evolving evaluation setups; dashboards alone are not enough. To reason through the choices, select the statements that match the criterion in the prompt: "Metric drift can be caused either by model changes or by changes in the evaluation configuration."; "Tracking versions of both your application and your judges is necessary to interpret trends."; "Large sudden jumps in a subjective metric should trigger an investigation rather than be blindly celebrated.". Do not select statements that miss that criterion: "Once you have a dashboard, you can safely ignore how metrics are computed internally.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q49",
@@ -1330,7 +1330,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "AI judges enable reference-free pairwise comparisons, but bias and rubric design critically shape leaderboard interpretations.",
+      'AI judges enable reference-free pairwise comparisons, but bias and rubric design critically shape leaderboard interpretations. To reason through the choices, select the statements that match the criterion in the prompt: "The judge can be asked to choose which of two answers is better according to a rubric."; "Win–loss statistics across many prompts can produce a leaderboard of models."; "Self-bias may inflate a model’s apparent performance when it acts as both generator and judge.". Do not select statements that miss that criterion: "Pairwise comparisons are impossible when you lack human-written references.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q50",
@@ -1357,7 +1357,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Hybrid evaluation leverages AI for scale and humans for nuanced judgment, using disagreements as valuable debugging signals.",
+      'Hybrid evaluation leverages AI for scale and humans for nuanced judgment, using disagreements as valuable debugging signals. To reason through the choices, select the statements that match the criterion in the prompt: "Humans can focus on edge cases and high-risk scenarios while AI covers bulk traffic."; "AI-judged scores can help prioritize which examples to show to human reviewers."; "Disagreements between humans and AI judges can reveal important blind spots.". Do not select statements that miss that criterion: "Once AI judges are in place, human feedback is no longer useful.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ----------------------------------------------------------------------------
@@ -1389,7 +1389,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Saturation occurs when many models hit similar top scores, making the benchmark less informative for new progress.",
+      'Saturation occurs when many models hit similar top scores, making the benchmark less informative for new progress. To reason through the choices, select the statements that match the criterion in the prompt: "Models eventually achieve near-perfect scores, leaving little room to distinguish improvements."; "Benchmarks rarely capture newly emerging capabilities that future models might have.". Do not select statements that miss that criterion: "Saturation means the benchmark is mathematically impossible to solve."; "Once saturated, the benchmark can still reliably separate models of very different capability.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q52",
@@ -1416,7 +1416,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Perplexity is useful but imperfect; post-training and other factors can decouple next-token prediction from user-facing quality.",
+      'Perplexity is useful but imperfect; post-training and other factors can decouple next-token prediction from user-facing quality. To reason through the choices, select the statements that match the criterion in the prompt: "For base language models, lower perplexity on relevant text often correlates with better task performance."; "After heavy post-training (e.g. instruction tuning), perplexity may no longer correlate cleanly with task quality.". Do not select statements that miss that criterion: "Perplexity directly measures how aligned a model is with user preferences."; "Two models with identical perplexity must behave identically on all tasks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q53",
@@ -1443,7 +1443,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Lexical metrics are blind to factuality and depend heavily on reference coverage and quality.",
+      'Lexical metrics are blind to factuality and depend heavily on reference coverage and quality. To reason through the choices, select the statements that match the criterion in the prompt: "They may give high scores to outputs that copy the references but miss task requirements."; "They may give low scores to outputs that fulfill the task using different phrasing.". Do not select statements that miss that criterion: "They inherently reason about factual correctness and safety."; "They are robust to any errors in the reference data.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q54",
@@ -1470,7 +1470,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Embeddings inherit biases and limitations from their training data and architecture; similarity is approximate, not perfect.",
+      'Embeddings inherit biases and limitations from their training data and architecture; similarity is approximate, not perfect. To reason through the choices, select the statements that match the criterion in the prompt: "Different embedding models may disagree about which sentence pairs are most similar."; "Semantic similarity scores can be sensitive to domain mismatch between embedding training data and evaluation texts.". Do not select statements that miss that criterion: "Once trained, embeddings encode semantics without any bias from the training corpus."; "Cosine similarity always perfectly matches human judgments of meaning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q55",
@@ -1496,7 +1496,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Both humans and AI have biases and inconsistencies; their main differences are in speed, cost, and kinds of errors.",
+      'Both humans and AI have biases and inconsistencies; their main differences are in speed, cost, and kinds of errors. To reason through the choices, select the statements that match the criterion in the prompt: "Human evaluation is slower and more expensive per sample than AI-based evaluation."; "AI judges can process large volumes cheaply but may systematically miss certain failure types.". Do not select statements that miss that criterion: "AI judges never show bias, whereas humans always do."; "Human judgments are perfectly consistent across time and annotators.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q56",
@@ -1523,7 +1523,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "AI-based safety scoring provides scalable heuristics but not legal or ethical guarantees; human governance remains necessary.",
+      'AI-based safety scoring provides scalable heuristics but not legal or ethical guarantees; human governance remains necessary. To reason through the choices, select the statements that match the criterion in the prompt: "They can flag obviously harmful content according to a safety rubric provided in the prompt."; "Their decisions reflect the values encoded in training data and prompts, which may not match all stakeholders.". Do not select statements that miss that criterion: "They give guarantees that content is legally compliant in every jurisdiction."; "They eliminate the need for any safety review process.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q57",
@@ -1549,7 +1549,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Self-bias is real but can be reduced (not eliminated) with careful experimental design and alternative judge models.",
+      'Self-bias is real but can be reduced (not eliminated) with careful experimental design and alternative judge models. To reason through the choices, select the statements that match the criterion in the prompt: "A judge tends to prefer answers that look stylistically similar to its own outputs."; "This can inflate the apparent performance of the model family used as the judge when comparing different systems.". Do not select statements that miss that criterion: "The effect disappears entirely once you add more few-shot examples to the judge prompt."; "It is impossible to mitigate by altering prompts or sampling setups.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q58",
@@ -1575,7 +1575,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "pass@k is about any of k samples passing all tests; more tests per problem make it harder to pass.",
+      'pass@k is about any of k samples passing all tests; more tests per problem make it harder to pass. To reason through the choices, select the statements that match the criterion in the prompt: "For the same model and benchmark, pass@10 should be at least as high as pass@1."; "Increasing k effectively trades extra sampling cost for higher chance of solving each problem.". Do not select statements that miss that criterion: "pass@k directly measures how often the model’s first attempt is correct."; "pass@k is unaffected by the number of test cases per problem.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q59",
@@ -1602,7 +1602,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Evaluation is continuous; it steers model choice, iteration, and production monitoring throughout the product lifecycle.",
+      'Evaluation is continuous; it steers model choice, iteration, and production monitoring throughout the product lifecycle. To reason through the choices, select the statements that match the criterion in the prompt: "Evaluation guides which model or prompt changes to ship."; "Evaluation helps decide whether an application is ready to move from prototype to production.". Do not select statements that miss that criterion: "Evaluation is mostly optional once you have access to a strong foundation model."; "Evaluation becomes unnecessary after the first successful deployment.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q60",
@@ -1629,7 +1629,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Perplexity is a noisy but useful heuristic for novelty and redundancy, not an exact measure of data value.",
+      'Perplexity is a noisy but useful heuristic for novelty and redundancy, not an exact measure of data value. To reason through the choices, select the statements that match the criterion in the prompt: "High perplexity on candidate text can signal that it adds new information not already well covered in training data."; "Very low perplexity may indicate that similar content is already present, suggesting diminishing returns from adding it again.". Do not select statements that miss that criterion: "Perplexity alone can precisely estimate the marginal value of every training example."; "Perplexity cannot be used at all for any data selection task.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q61",
@@ -1656,7 +1656,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Edit distance is helpful for approximate correctness in short strings but remains a surface-level metric.",
+      'Edit distance is helpful for approximate correctness in short strings but remains a surface-level metric. To reason through the choices, select the statements that match the criterion in the prompt: "It can be more forgiving than exact string match while still penalizing large deviations."; "It is useful when small typos should not cause a full penalty.". Do not select statements that miss that criterion: "It inherently knows whether two answers refer to the same real-world entity."; "It can distinguish subtle semantic differences between long paragraphs.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q62",
@@ -1683,7 +1683,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "AI judges support rubric-dependent comparative evaluation even in the absence of labeled references.",
+      'AI judges support rubric-dependent comparative evaluation even in the absence of labeled references. To reason through the choices, select the statements that match the criterion in the prompt: "You can run the same prompts through multiple system variants and let a judge choose which answer is better."; "Aggregating many pairwise judgments can approximate a preference ranking over systems.". Do not select statements that miss that criterion: "The resulting ranking is independent of the rubric specified in the judge prompt."; "Ranking is impossible without ground-truth references.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q63",
@@ -1710,7 +1710,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "References are not guaranteed to be perfect; both errors and omissions affect metric reliability.",
+      'References are not guaranteed to be perfect; both errors and omissions affect metric reliability. To reason through the choices, select the statements that match the criterion in the prompt: "Incorrect reference answers can cause good model outputs to be penalized."; "Missing valid references can make metrics underestimate a model’s capabilities.". Do not select statements that miss that criterion: "Reference errors are harmless as long as lexical similarity metrics are used."; "Reference errors are automatically corrected by AI judges.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q64",
@@ -1737,7 +1737,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Summarization evaluation is difficult precisely because many valid compressions and phrasings exist.",
+      'Summarization evaluation is difficult precisely because many valid compressions and phrasings exist. To reason through the choices, select the statements that match the criterion in the prompt: "Multiple different summaries can all be acceptable for the same source text."; "Checking purely for lexical overlap with a single reference summary can miss high-quality summaries.". Do not select statements that miss that criterion: "Exact match is usually sufficient because there is only one correct summary."; "Evaluation is trivial because summaries are short.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q65",
@@ -1764,7 +1764,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Real systems juggle multiple objectives; conflicting signals are normal and do not mean a metric is worthless.",
+      'Real systems juggle multiple objectives; conflicting signals are normal and do not mean a metric is worthless. To reason through the choices, select the statements that match the criterion in the prompt: "You may care about a vector of metrics (e.g. quality, safety, latency) rather than a single scalar score."; "Improving one metric can sometimes worsen another, requiring trade-off decisions.". Do not select statements that miss that criterion: "If two metrics disagree, it always means one of them is useless."; "Combining many metrics guarantees that you will never miss a failure mode.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q66",
@@ -1791,7 +1791,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Where evaluation runs in the pipeline determines how much latency overhead is acceptable; judge choice directly affects it.",
+      'Where evaluation runs in the pipeline determines how much latency overhead is acceptable; judge choice directly affects it. To reason through the choices, select the statements that match the criterion in the prompt: "Offline batch evaluation can use slower, more expensive judges without affecting user-facing latency."; "Online evaluation on the critical path must respect strict latency budgets.". Do not select statements that miss that criterion: "Latency constraints are irrelevant for guardrail-style checks."; "Using a fast judge model always yields the same scores as a slower model.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q67",
@@ -1818,7 +1818,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Even ‘obvious’ tasks benefit from clear written criteria and examples to keep human judgments aligned.",
+      'Even ‘obvious’ tasks benefit from clear written criteria and examples to keep human judgments aligned. To reason through the choices, select the statements that match the criterion in the prompt: "Clear rubrics with examples reduce variance across annotators."; "Ambiguous or underspecified criteria lead to noisy and inconsistent scores.". Do not select statements that miss that criterion: "Guidelines are unnecessary when the task seems intuitive."; "Annotators will automatically infer the same standards without written guidance.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q68",
@@ -1845,7 +1845,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Sampling trades coverage for cost; statistical reasoning can still provide useful estimates, but rare events may be missed.",
+      'Sampling trades coverage for cost; statistical reasoning can still provide useful estimates, but rare events may be missed. To reason through the choices, select the statements that match the criterion in the prompt: "Evaluating a random subset of responses can greatly reduce cost."; "Larger samples give tighter confidence intervals on estimated metrics.". Do not select statements that miss that criterion: "Sampling makes it impossible to say anything about system quality."; "Sampling guarantees that rare failures will be caught immediately.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q69",
@@ -1872,7 +1872,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Lack of transparency pushes evaluation toward black-box testing over many scenarios instead of theory-driven diagnostics.",
+      'Lack of transparency pushes evaluation toward black-box testing over many scenarios instead of theory-driven diagnostics. To reason through the choices, select the statements that match the criterion in the prompt: "You cannot inspect training data or architecture to anticipate strengths and weaknesses."; "You must rely mostly on observed behavior across tasks and prompts.". Do not select statements that miss that criterion: "You can always compute gradients and internal activations to diagnose errors."; "Access to internals usually makes it harder to design evaluation strategies.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q70",
@@ -1899,7 +1899,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Evaluation and system architecture are intertwined; surfaces for logging and testing often need to be designed intentionally.",
+      'Evaluation and system architecture are intertwined; surfaces for logging and testing often need to be designed intentionally. To reason through the choices, select the statements that match the criterion in the prompt: "Sometimes you must redesign your system to expose signals that are easier to evaluate."; "Improved observability (logs, traces, intermediate states) can make evaluation more targeted and informative.". Do not select statements that miss that criterion: "Evaluation can always be added afterward without changing the system."; "A system that hides its internal decisions is always easier to evaluate.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q71",
@@ -1926,7 +1926,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Semantic textual similarity tasks focus on grading similarity between sentence pairs, not on generating new text.",
+      'Semantic textual similarity tasks focus on grading similarity between sentence pairs, not on generating new text. To reason through the choices, select the statements that match the criterion in the prompt: "They evaluate how well similarity scores align with human judgments of sentence relatedness."; "They are one way to benchmark text embedding models.". Do not select statements that miss that criterion: "They require models to output human-written summaries."; "They are identical to translation tasks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q72",
@@ -1953,7 +1953,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "RAG introduces additional components; evaluating them requires metrics for retrieval relevance and grounding, not just base-model perplexity.",
+      'RAG introduces additional components; evaluating them requires metrics for retrieval relevance and grounding, not just base-model perplexity. To reason through the choices, select the statements that match the criterion in the prompt: "You may need to evaluate both retrieval quality and answer quality."; "Faithfulness metrics check whether answers are supported by retrieved documents.". Do not select statements that miss that criterion: "RAG systems can be fully evaluated by perplexity of the underlying base model alone."; "Retrieval metrics never require ground-truth relevant documents.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q73",
@@ -1980,7 +1980,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Subjective criteria require careful, often evolving definitions; there is no single universally correct rubric.",
+      'Subjective criteria require careful, often evolving definitions; there is no single universally correct rubric. To reason through the choices, select the statements that match the criterion in the prompt: "Their meaning must be operationalized in a rubric before humans or AI can score them consistently."; "Different organizations may define them differently depending on goals and values.". Do not select statements that miss that criterion: "They have universally accepted mathematical definitions."; "Once defined, they never need to be revisited.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q74",
@@ -2007,7 +2007,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Evaluation highlights where the product is weakest in terms that matter for users; priorities follow impact, not just metric changes.",
+      'Evaluation highlights where the product is weakest in terms that matter for users; priorities follow impact, not just metric changes. To reason through the choices, select the statements that match the criterion in the prompt: "You should focus first on failure modes that are both common and harmful."; "Benchmark performance that does not affect real users should receive lower priority.". Do not select statements that miss that criterion: "Any metric that improves should automatically receive maximum engineering attention."; "Deciding priorities is unrelated to evaluation results.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q75",
@@ -2034,7 +2034,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Leaderboards are useful signals but cannot replace application-specific evaluation or guarantee robustness.",
+      'Leaderboards are useful signals but cannot replace application-specific evaluation or guarantee robustness. To reason through the choices, select the statements that match the criterion in the prompt: "They often reflect performance on narrow benchmarks rather than your specific use case."; "Over-optimization to leaderboard metrics can harm generalization to real-world tasks.". Do not select statements that miss that criterion: "They remove the need for any in-house evaluation."; "They always use perfectly curated, unbiased test sets.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ----------------------------------------------------------------------------
@@ -2065,7 +2065,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Perplexity can be read as how many equally likely options the model ‘feels’ it has for each step on average.",
+      'Perplexity can be read as how many equally likely options the model ‘feels’ it has for each step on average. To reason through the choices, select the statements that match the criterion in the prompt: "It is the model’s effective average number of choices for the next token.". Do not select statements that miss that criterion: "It is the fraction of test examples the model classifies correctly."; "It is the total number of parameters in the model."; "It is the maximum length of sequence the model can process.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q77",
@@ -2119,7 +2119,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Post-training steers the model toward desired behavior, which may diverge from maximizing likelihood under the original corpus.",
+      'Post-training steers the model toward desired behavior, which may diverge from maximizing likelihood under the original corpus. To reason through the choices, select the statements that match the criterion in the prompt: "It optimizes for human-preferred responses rather than raw next-token likelihood.". Do not select statements that miss that criterion: "It always shrinks the vocabulary, making prediction harder."; "It forces the model to output random noise on training data."; "It discards all information learned during pre-training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q79",
@@ -2146,7 +2146,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Execution-based tests focus on behavior, which is what matters for code; stylistic similarity alone is insufficient.",
+      'Execution-based tests focus on behavior, which is what matters for code; stylistic similarity alone is insufficient. To reason through the choices, select the statements that match the criterion in the prompt: "It evaluates whether the program actually produces correct outputs on tests.". Do not select statements that miss that criterion: "It only checks whether the generated code uses the same variable names as references."; "It primarily scores stylistic similarity to human-written code."; "It avoids the need to run any code at all.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q80",
@@ -2172,7 +2172,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Embeddings are vector encodings used to capture semantics or structure for downstream similarity computations.",
+      'Embeddings are vector encodings used to capture semantics or structure for downstream similarity computations. To reason through the choices, select the statements that match the criterion in the prompt: "A vector representation that captures important features of the original object.". Do not select statements that miss that criterion: "A scalar that counts how many tokens a sentence has."; "A loss function used to train language models."; "A special type of benchmark dataset.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q81",
@@ -2199,7 +2199,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "People worry that AI judges may inherit opaque biases and that systems might optimize to please the judge rather than users.",
+      'People worry that AI judges may inherit opaque biases and that systems might optimize to please the judge rather than users. To reason through the choices, select the statements that match the criterion in the prompt: "Because using the same technology to both generate and evaluate raises concerns about hidden biases and circular reasoning.". Do not select statements that miss that criterion: "Because AI models are incapable of following any instructions about evaluation."; "Because AI-judged scores cannot be computed at scale."; "Because AI judges never agree with human annotators.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q82",
@@ -2226,7 +2226,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Lower temperature makes the judge more deterministic, reducing variance in scores for identical inputs.",
+      'Lower temperature makes the judge more deterministic, reducing variance in scores for identical inputs. To reason through the choices, select the statements that match the criterion in the prompt: "Lowering the judge model’s temperature toward zero.". Do not select statements that miss that criterion: "Using a very small context window for the judge."; "Randomly changing the rubric text before each call."; "Sampling outputs from multiple judge models and picking one at random.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q83",
@@ -2253,7 +2253,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Task success is typically the primary goal; other metrics like latency and cost are important but secondary.",
+      'Task success is typically the primary goal; other metrics like latency and cost are important but secondary. To reason through the choices, select the statements that match the criterion in the prompt: "A metric that reflects whether the assistant achieves its core user-facing task (functional success).". Do not select statements that miss that criterion: "A metric that measures how many tokens the assistant uses."; "A metric that counts how many new features engineers shipped last quarter."; "A metric that only considers latency regardless of correctness.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q84",
@@ -2280,7 +2280,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Exact matching is too rigid when many different phrasings or outputs would satisfy the task.",
+      'Exact matching is too rigid when many different phrasings or outputs would satisfy the task. To reason through the choices, select the statements that match the criterion in the prompt: "It cannot recognize alternative correct answers that differ from the reference text.". Do not select statements that miss that criterion: "It is computationally impossible to compute for short answers."; "It always requires embeddings to compute."; "It is only defined for image data.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q85",
@@ -2307,7 +2307,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Conflicting signals invite deeper analysis; understanding what each metric captures is crucial for informed decisions.",
+      'Conflicting signals invite deeper analysis; understanding what each metric captures is crucial for informed decisions. To reason through the choices, select the statements that match the criterion in the prompt: "Investigate why they differ and relate each metric back to real user needs before deciding.". Do not select statements that miss that criterion: "Immediately discard both metrics as useless."; "Assume the metric with the larger numeric scale is correct."; "Pick the metric that favors the model you already like.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q86",
@@ -2334,7 +2334,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Systematic evaluation supports stable iteration and monitoring; it does not completely eliminate risk.",
+      'Systematic evaluation supports stable iteration and monitoring; it does not completely eliminate risk. To reason through the choices, select the statements that match the criterion in the prompt: "It provides repeatable, quantitative signals that can track progress and regressions over time.". Do not select statements that miss that criterion: "It ensures that every single user query is manually inspected."; "It guarantees that no failures will ever occur in production."; "It removes the need for any product judgment or prioritization.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q87",
@@ -2361,7 +2361,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "For general models, evaluation includes exploration: discovering surprising capabilities and limits across new task types.",
+      'For general models, evaluation includes exploration: discovering surprising capabilities and limits across new task types. To reason through the choices, select the statements that match the criterion in the prompt: "Evaluation must also explore what new tasks the model might perform well at, not just measure known tasks.". Do not select statements that miss that criterion: "Evaluation is only about measuring performance on pre-defined benchmarks."; "Evaluation should avoid testing any tasks beyond human ability."; "Evaluation ignores tasks that were not in the training distribution.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q88",
@@ -2388,7 +2388,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Historically, algorithm development outpaced investment in robust evaluation frameworks, leaving a tooling gap.",
+      'Historically, algorithm development outpaced investment in robust evaluation frameworks, leaving a tooling gap. To reason through the choices, select the statements that match the criterion in the prompt: "Research attention and tooling have focused more on new algorithms and models than on standardized evaluation methods.". Do not select statements that miss that criterion: "Evaluation requires fundamentally unsolved hardware breakthroughs."; "Evaluation is mathematically impossible for neural networks."; "Evaluation is unnecessary because models self-verify their own outputs.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q89",
@@ -2415,7 +2415,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "For paraphrases and free-form answers, meaning is what matters; surface forms can legitimately vary.",
+      'For paraphrases and free-form answers, meaning is what matters; surface forms can legitimately vary. To reason through the choices, select the statements that match the criterion in the prompt: "Because many tasks only require that the meaning matches, not that the wording is identical.". Do not select statements that miss that criterion: "Because humans cannot read exact strings."; "Because exact equality cannot be computed by a computer."; "Because semantic similarity is always easier to compute than string comparison.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q90",
@@ -2442,7 +2442,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Transparency about configuration lets others understand what the judge is doing and replicate or critique it.",
+      'Transparency about configuration lets others understand what the judge is doing and replicate or critique it. To reason through the choices, select the statements that match the criterion in the prompt: "Publishing the exact prompt, scoring rubric, and model version you used.". Do not select statements that miss that criterion: "Using an obscure internal codename for the judge."; "Rounding all scores to exactly two decimal places."; "Ensuring that the judge always returns a score of 0.5.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q91",
@@ -2469,7 +2469,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Stronger proprietary judges can work well but may be costly and require sending sensitive data to third parties.",
+      'Stronger proprietary judges can work well but may be costly and require sending sensitive data to third parties. To reason through the choices, select the statements that match the criterion in the prompt: "It can make evaluation expensive and may raise privacy or IP concerns with sensitive data.". Do not select statements that miss that criterion: "It cannot follow any instructions about evaluation criteria."; "Its judgments are guaranteed to be worse than a weak open-source model."; "It is incapable of producing explanations for its scores.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q92",
@@ -2496,7 +2496,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Each approach compensates for the other’s weaknesses; together they give a more reliable picture of system behavior.",
+      'Each approach compensates for the other’s weaknesses; together they give a more reliable picture of system behavior. To reason through the choices, select the statements that match the criterion in the prompt: "Automatic metrics scale cheaply, while humans provide depth and nuance on critical cases.". Do not select statements that miss that criterion: "Humans cannot judge language quality at all."; "Automatic metrics are illegal in most countries."; "Human evaluation always takes less time than automatic evaluation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q93",
@@ -2523,7 +2523,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Adversarial probing targets weaknesses that average-case benchmarks miss, especially for safety and robustness.",
+      'Adversarial probing targets weaknesses that average-case benchmarks miss, especially for safety and robustness. To reason through the choices, select the statements that match the criterion in the prompt: "It deliberately searches for challenging edge cases that benchmarks may not cover.". Do not select statements that miss that criterion: "It only measures average-case performance on random data."; "It eliminates the need for any automated metrics."; "It focuses exclusively on synthetic, unrealistic prompts.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q94",
@@ -2550,7 +2550,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Dashboards are a monitoring surface; they surface anomalies but do not explain or fix them by themselves.",
+      'Dashboards are a monitoring surface; they surface anomalies but do not explain or fix them by themselves. To reason through the choices, select the statements that match the criterion in the prompt: "To summarize key metrics so that regressions or improvements are quickly visible.". Do not select statements that miss that criterion: "To replace the need for any detailed analysis or investigation."; "To hide evaluation details from engineers."; "To guarantee that all failures will be automatically fixed.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q95",
@@ -2577,7 +2577,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Common rubrics help keep human scores comparable across annotators and time.",
+      'Common rubrics help keep human scores comparable across annotators and time. To reason through the choices, select the statements that match the criterion in the prompt: "Without shared criteria, different raters may score the same answer very differently.". Do not select statements that miss that criterion: "Raters naturally agree on all judgments even without guidance."; "Shared criteria are only needed for automatic metrics, not humans."; "Inconsistent criteria make it easier to compare models.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q96",
@@ -2604,7 +2604,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Temporarily freezing the suite provides a stable baseline; it does not mean the suite should never be revised.",
+      'Temporarily freezing the suite provides a stable baseline; it does not mean the suite should never be revised. To reason through the choices, select the statements that match the criterion in the prompt: "To ensure that metric changes reflect model changes rather than evolving tests.". Do not select statements that miss that criterion: "To guarantee that the suite will remain useful forever without updates."; "To prevent anyone from understanding how evaluation works."; "To avoid adding any new test cases even when new failure modes appear.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q97",
@@ -2631,7 +2631,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "As model competence rises, human evaluators may struggle to verify complex outputs, especially in technical domains.",
+      'As model competence rises, human evaluators may struggle to verify complex outputs, especially in technical domains. To reason through the choices, select the statements that match the criterion in the prompt: "Few people are qualified to reliably check correctness on very advanced problems.". Do not select statements that miss that criterion: "Models instantly become impossible to run on any hardware."; "Benchmarks can no longer store correct answers."; "High performance guarantees perfect behavior in all other domains.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q98",
@@ -2658,7 +2658,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Targeting high-risk, high-frequency parts of the system makes evaluation more impactful.",
+      'Targeting high-risk, high-frequency parts of the system makes evaluation more impactful. To reason through the choices, select the statements that match the criterion in the prompt: "Because resources are limited, so we get the most value by probing where things are most likely to go wrong or cause harm.". Do not select statements that miss that criterion: "Because random testing always covers all edge cases."; "Because we should avoid testing any common user flows."; "Because systems never fail in rare or unexpected ways.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q99",
@@ -2685,7 +2685,7 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Goodhart’s law applies: when a measure becomes a target, it can cease to be a good measure of underlying quality.",
+      'Goodhart’s law applies: when a measure becomes a target, it can cease to be a good measure of underlying quality. To reason through the choices, select the statements that match the criterion in the prompt: "The system may ‘game’ that metric while degrading along important unmeasured dimensions.". Do not select statements that miss that criterion: "Multiple metrics are mathematically impossible to compute."; "Optimizing for one metric always optimizes all others simultaneously."; "Single-metric optimization guarantees perfect robustness.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch3-q100",
@@ -2712,6 +2712,6 @@ export const aieChapter3Questions: Question[] = [
       },
     ],
     explanation:
-      "Evaluation is an ongoing engineering discipline that underpins safety, reliability, and iteration for AI-powered products.",
+      'Evaluation is an ongoing engineering discipline that underpins safety, reliability, and iteration for AI-powered products. To reason through the choices, select the statements that match the criterion in the prompt: "It is the process of systematically measuring and monitoring model behavior so systems can be improved and deployed safely.". Do not select statements that miss that criterion: "It is a one-time checklist step before turning on an API key."; "It is mainly a marketing exercise to produce leaderboard numbers."; "It is only relevant for academic research, not for real applications.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 ];

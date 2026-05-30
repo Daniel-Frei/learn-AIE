@@ -1065,6 +1065,545 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
     explanation:
       "Vectors, matrices, dot products, gradients, low-rank structure, and representation geometry show up across LLMs, deep learning, and reinforcement learning. Model scale increases the importance of these ideas rather than making them irrelevant.",
   },
+  {
+    id: "la-crash-l5-q41",
+    chapter: 5,
+    difficulty: "easy",
+    prompt:
+      "If \\(X\\in\\mathbb{R}^{n\\times d}\\) and \\(W_Q\\in\\mathbb{R}^{d\\times d_k}\\), which statements about \\(Q=XW_Q\\) are correct?",
+    options: [
+      {
+        text: "\\(Q\\in\\mathbb{R}^{n\\times d_k}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Each row of \\(Q\\) is a learned query representation for one token.",
+        isCorrect: true,
+      },
+      {
+        text: "\\(W_Q\\) is a learned linear transformation of the embedding space.",
+        isCorrect: true,
+      },
+      {
+        text: "The multiplication is valid because the inner \\(d\\) dimensions align.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "The input rows are token embeddings, and multiplying on the right applies the same learned projection to each token. The product shape is \\(n\\times d_k\\) because the shared \\(d\\) dimension contracts. This is a direct use of matrices as learned transformations.",
+  },
+  {
+    id: "la-crash-l5-q42",
+    chapter: 5,
+    difficulty: "easy",
+    prompt:
+      "If \\(Q,K\\in\\mathbb{R}^{n\\times d}\\), which statements about the attention score matrix \\(QK^T\\) are correct?",
+    options: [
+      {
+        text: "\\(QK^T\\in\\mathbb{R}^{n\\times n}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Entry \\((i,j)\\) compares token \\(i\\)'s query with token \\(j\\)'s key using a dot product.",
+        isCorrect: true,
+      },
+      {
+        text: "\\(QK^T\\in\\mathbb{R}^{d\\times d}\\) because attention compares embedding coordinates only.",
+        isCorrect: false,
+      },
+      {
+        text: "The values matrix \\(V\\) is needed before any query-key score can be computed.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The transpose changes \\(K\\) to shape \\(d\\times n\\), so each query can be compared with every key. The result is a token-by-token matrix, not an embedding-coordinate matrix. Values are used after the attention weights are computed.",
+  },
+  {
+    id: "la-crash-l5-q43",
+    chapter: 5,
+    difficulty: "easy",
+    prompt:
+      "A row of attention scores is \\([2,1,0]\\). Which statement best describes the softmax of this row?",
+    options: [
+      {
+        text: "The largest score receives the largest weight, but the weights still form a soft distribution that sums to \\(1\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The largest score becomes weight \\(1\\), and all other scores always become weight \\(0\\).",
+        isCorrect: false,
+      },
+      {
+        text: "Softmax makes the smallest score receive the largest weight.",
+        isCorrect: false,
+      },
+      {
+        text: "Softmax changes the number of tokens in the sequence.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Softmax converts raw scores into nonnegative weights that sum to one. Higher scores receive higher weights, but ordinary softmax is not hard selection unless the score differences become extreme. The sequence length is unchanged.",
+  },
+  {
+    id: "la-crash-l5-q44",
+    chapter: 5,
+    difficulty: "easy",
+    prompt:
+      "If \\(A=\\operatorname{softmax}(QK^T)\\in\\mathbb{R}^{n\\times n}\\) and \\(V\\in\\mathbb{R}^{n\\times d_v}\\), which statements about \\(AV\\) are correct?",
+    options: [
+      {
+        text: "\\(AV\\in\\mathbb{R}^{n\\times d_v}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Each output row is a weighted sum of value vectors.",
+        isCorrect: true,
+      },
+      {
+        text: "When softmax is applied row-wise, each row of \\(A\\) can be interpreted as attention weights over tokens.",
+        isCorrect: true,
+      },
+      {
+        text: "\\(AV\\) collapses the whole sequence into one vector regardless of \\(n\\).",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The attention matrix has one row of weights per query token, and multiplying by \\(V\\) mixes value vectors according to those weights. The output keeps one row per token, now contextualized by information from other tokens. Attention does not automatically collapse the sequence to a single vector.",
+  },
+  {
+    id: "la-crash-l5-q45",
+    chapter: 5,
+    difficulty: "easy",
+    prompt: "Which statements correctly describe multi-head attention?",
+    options: [
+      {
+        text: "Different heads use different learned projection matrices.",
+        isCorrect: true,
+      },
+      {
+        text: "Different heads can focus on different geometric or semantic relationships.",
+        isCorrect: true,
+      },
+      {
+        text: "The head outputs are combined to form a richer representation.",
+        isCorrect: true,
+      },
+      {
+        text: "Multiple heads let the same token sequence be viewed through several learned subspaces.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Multi-head attention repeats the query-key-value idea with multiple learned projections. Each head can form its own similarity geometry and route different kinds of information. Combining heads gives the model a richer contextual representation than a single attention pattern.",
+  },
+  {
+    id: "la-crash-l5-q46",
+    chapter: 5,
+    difficulty: "easy",
+    prompt:
+      "Which statements correctly explain why nonlinearities matter in a neural network stack?",
+    options: [
+      {
+        text: "Without nonlinearities, \\(W_2(W_1x)\\) is equivalent to \\((W_2W_1)x\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Nonlinearities allow learned transformations to create decision boundaries that a single linear map cannot represent.",
+        isCorrect: true,
+      },
+      {
+        text: "Depth alone makes a purely linear network nonlinear.",
+        isCorrect: false,
+      },
+      {
+        text: "Nonlinearities remove the need for matrix multiplication in deep networks.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "A stack of linear transformations still represents one linear transformation if no nonlinear operation intervenes. Nonlinearities such as ReLU or GELU let the network bend and reshape representation space. They complement matrix multiplication rather than replacing it.",
+  },
+  {
+    id: "la-crash-l5-q47",
+    chapter: 5,
+    difficulty: "easy",
+    prompt:
+      "Which statement best describes a reinforcement-learning value function \\(Q(s,a)\\)?",
+    options: [
+      {
+        text: "It estimates expected future reward for taking action \\(a\\) in state \\(s\\).",
+        isCorrect: true,
+      },
+      {
+        text: "It is the same object as the transformer query matrix \\(Q\\).",
+        isCorrect: false,
+      },
+      {
+        text: "It stores only the immediate reward and ignores future outcomes.",
+        isCorrect: false,
+      },
+      {
+        text: "It is unrelated to function approximation in modern deep RL.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The notation \\(Q(s,a)\\) in reinforcement learning refers to an action-value function, not to a transformer query matrix. It estimates future return after choosing an action in a state. Deep RL often approximates this function with neural networks built from linear algebra operations.",
+  },
+  {
+    id: "la-crash-l5-q48",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "Let \\(q=\\begin{bmatrix}1 \\\\ 2\\end{bmatrix}\\), \\(k_1=\\begin{bmatrix}2 \\\\ 0\\end{bmatrix}\\), and \\(k_2=\\begin{bmatrix}0 \\\\ 3\\end{bmatrix}\\). Which statements correctly describe dot-product attention scores?",
+    options: [
+      {
+        text: "The score with \\(k_1\\) is \\(2\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The score with \\(k_2\\) is \\(6\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Before softmax, \\(k_2\\) has the higher dot-product score.",
+        isCorrect: true,
+      },
+      {
+        text: "The scores are Euclidean distances, so smaller values mean stronger attention.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The dot products are \\(1\\cdot2+2\\cdot0=2\\) and \\(1\\cdot0+2\\cdot3=6\\). A larger dot product indicates stronger alignment before softmax. Dot-product attention is not based on Euclidean distance in this formulation.",
+  },
+  {
+    id: "la-crash-l5-q49",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "A sequence has \\(n=5\\) tokens, attention head dimension \\(d=8\\), and value dimension \\(d_v=6\\). If \\(Q,K\\in\\mathbb{R}^{5\\times8}\\) and \\(V\\in\\mathbb{R}^{5\\times6}\\), which statements are correct?",
+    options: [
+      {
+        text: "\\(QK^T\\) has shape \\(5\\times5\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The row-wise softmax attention matrix has shape \\(5\\times5\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The final attention output has shape \\(5\\times6\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The projection matrices that created \\(Q\\), \\(K\\), and \\(V\\) are learned transformations.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "The score matrix compares every token to every token, giving a \\(5\\times5\\) matrix. Multiplying those weights by \\(V\\) keeps one output row per token and uses the value dimension \\(6\\). These shapes are a concrete example of transformer attention as matrix multiplication.",
+  },
+  {
+    id: "la-crash-l5-q50",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "For the value-function loss \\(L=(Q_{target}-Q_\\theta)^2\\), suppose \\(Q_{target}=10\\) and \\(Q_\\theta=7\\). Which statements are correct?",
+    options: [
+      {
+        text: "The loss value is \\(9\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Gradient descent on \\(Q_\\theta\\) would locally push the prediction upward.",
+        isCorrect: true,
+      },
+      {
+        text: "The derivative with respect to \\(Q_\\theta\\) is \\(+6\\).",
+        isCorrect: false,
+      },
+      {
+        text: "The loss is zero because the target and prediction are both positive.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The prediction error is \\(10-7=3\\), so the squared loss is \\(9\\). The derivative with respect to \\(Q_\\theta\\) is \\(2(Q_\\theta-Q_{target})=-6\\), so subtracting the gradient increases the prediction. Positivity alone does not make the loss zero.",
+  },
+  {
+    id: "la-crash-l5-q51",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "For the loss surface \\(f(x,y)=x^2-y^2\\), which statement correctly describes the point \\((0,0)\\)?",
+    options: [
+      {
+        text: "It is a saddle point because the gradient is zero but the surface curves upward in one direction and downward in another.",
+        isCorrect: true,
+      },
+      {
+        text: "It is a strict local minimum because all nearby directions increase the loss.",
+        isCorrect: false,
+      },
+      {
+        text: "It is a strict local maximum because all nearby directions decrease the loss.",
+        isCorrect: false,
+      },
+      {
+        text: "It cannot be a critical point because the function has two variables.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "At \\((0,0)\\), both partial derivatives are zero. Along the \\(x\\)-axis the function is positive, while along the \\(y\\)-axis it is negative, so the point is neither a local minimum nor a local maximum. This is the basic geometry of a saddle point.",
+  },
+  {
+    id: "la-crash-l5-q52",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "Which statements correctly describe high-dimensional optimization landscapes?",
+    options: [
+      {
+        text: "There can be many directions in which the loss changes differently.",
+        isCorrect: true,
+      },
+      {
+        text: "Saddle points can be common and can slow optimization.",
+        isCorrect: true,
+      },
+      {
+        text: "Gradients provide local directions for improvement, not a full map of the entire landscape.",
+        isCorrect: true,
+      },
+      {
+        text: "Every critical point in a high-dimensional neural network is necessarily a bad local minimum.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "High-dimensional parameter spaces have many directions, so curvature and slope can vary across them. Saddle points can have zero gradient while still offering downhill escape directions. Gradients are local signals, not complete global descriptions of the loss surface.",
+  },
+  {
+    id: "la-crash-l5-q53",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "Which statements correctly support the view that modern AI is high-dimensional geometric optimization?",
+    options: [
+      {
+        text: "Inputs such as text, images, audio, states, and actions can be represented as vectors.",
+        isCorrect: true,
+      },
+      {
+        text: "Model layers often apply learned matrix transformations to those vectors.",
+        isCorrect: true,
+      },
+      {
+        text: "Learning adjusts parameters using gradients of loss functions.",
+        isCorrect: true,
+      },
+      {
+        text: "Similarity and routing often depend on dot products or related geometric comparisons.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Modern AI systems convert many data types into vector representations and then transform those representations with learned matrices. Training uses gradients to improve loss functions over very high-dimensional parameter spaces. Attention, retrieval, and embeddings also rely heavily on geometric similarity.",
+  },
+  {
+    id: "la-crash-l5-q54",
+    chapter: 5,
+    difficulty: "hard",
+    prompt:
+      "Suppose every row of \\(Q\\) is identical while \\(K\\) is fixed. Which statements about \\(QK^T\\) and attention are correct before any masking is applied?",
+    options: [
+      {
+        text: "All rows of \\(QK^T\\) are identical.",
+        isCorrect: true,
+      },
+      {
+        text: "Row-wise softmax gives identical attention-weight rows.",
+        isCorrect: true,
+      },
+      {
+        text: "The values matrix \\(V\\) determines the query-key scores.",
+        isCorrect: false,
+      },
+      {
+        text: "Identical scores force attention to choose exactly one token with probability \\(1\\).",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "If every query row is the same, then each row takes the same set of dot products with the key rows. Applying the same row-wise softmax to identical score rows gives identical attention distributions. The values are mixed after scores are computed, and softmax remains a soft distribution unless scores become extreme.",
+  },
+  {
+    id: "la-crash-l5-q55",
+    chapter: 5,
+    difficulty: "hard",
+    prompt:
+      "If the number of tokens \\(n\\) doubles while the attention head dimension \\(d\\) stays fixed, which statement best describes the raw score matrix \\(QK^T\\)?",
+    options: [
+      {
+        text: "Its number of entries grows by about a factor of \\(4\\) because the matrix is \\(n\\times n\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Its number of entries grows by about a factor of \\(2\\) because attention is always linear in sequence length.",
+        isCorrect: false,
+      },
+      {
+        text: "Its shape remains \\(d\\times d\\) because \\(d\\) is fixed.",
+        isCorrect: false,
+      },
+      {
+        text: "Its size is independent of the number of tokens.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The score matrix compares every token query with every token key, so it has \\(n^2\\) entries. Doubling \\(n\\) changes \\(n^2\\) to \\((2n)^2=4n^2\\). This shape fact is one reason attention cost is sensitive to sequence length.",
+  },
+  {
+    id: "la-crash-l5-q56",
+    chapter: 5,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly describe a transformer block as a sequence of geometric operations?",
+    options: [
+      {
+        text: "Linear projections create query, key, and value spaces from token embeddings.",
+        isCorrect: true,
+      },
+      {
+        text: "Dot products route information by comparing directions in learned spaces.",
+        isCorrect: true,
+      },
+      {
+        text: "Feed-forward nonlinearities help reshape representations beyond a single linear map.",
+        isCorrect: true,
+      },
+      {
+        text: "The block performs symbolic rule lookup instead of differentiable vector operations.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Transformer computations are built from learned linear projections, dot products, softmax weighting, and nonlinear feed-forward transformations. These operations reshape and route vectors in representation space. They are differentiable geometric operations rather than explicit symbolic database lookup.",
+  },
+  {
+    id: "la-crash-l5-q57",
+    chapter: 5,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly connect reinforcement-learning states to vector representations?",
+    options: [
+      {
+        text: "Robot sensor readings can be represented as state vectors.",
+        isCorrect: true,
+      },
+      {
+        text: "A game board can be encoded as a vector or structured tensor before being processed by a value network.",
+        isCorrect: true,
+      },
+      {
+        text: "A language context can be represented by embeddings when an RL-style objective is used with language models.",
+        isCorrect: true,
+      },
+      {
+        text: "A value network can transform state representations into estimates for actions.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Deep RL relies on numerical representations of states so neural networks can process them. Those representations may come from sensors, game encodings, or language embeddings depending on the environment. Value or policy networks then use matrix transformations and nonlinearities to produce decision-relevant outputs.",
+  },
+  {
+    id: "la-crash-l5-q58",
+    chapter: 5,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly describe saddle-point intuition in optimization?",
+    options: [
+      {
+        text: "A saddle point can have uphill directions and downhill directions nearby.",
+        isCorrect: true,
+      },
+      {
+        text: "In high dimensions, there may be many possible directions for escaping a saddle-like region.",
+        isCorrect: true,
+      },
+      {
+        text: "Every zero-gradient point is a local minimum.",
+        isCorrect: false,
+      },
+      {
+        text: "Large models eliminate the need to choose a learning rate.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "A saddle point is not simply a minimum; it can curve upward in some directions and downward in others. High-dimensional spaces often contain many directions, which changes optimization behavior compared with low-dimensional pictures. Learning rate still matters because gradient steps must have a usable size.",
+  },
+  {
+    id: "la-crash-l5-q59",
+    chapter: 5,
+    difficulty: "hard",
+    prompt:
+      "Which statement most accurately compares transformer attention and deep RL value approximation?",
+    options: [
+      {
+        text: "Both use vector representations and learned matrix transformations, but attention routes token information while value approximation estimates future reward.",
+        isCorrect: true,
+      },
+      {
+        text: "They are the same algorithm because both use the symbol \\(Q\\).",
+        isCorrect: false,
+      },
+      {
+        text: "Attention uses no dot products, while value approximation uses only dot products.",
+        isCorrect: false,
+      },
+      {
+        text: "Deep RL does not use gradients when value functions are represented by neural networks.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The letter \\(Q\\) is overloaded: transformer queries and reinforcement-learning action values are different objects. Both systems still depend on vector spaces, matrix transformations, and gradient-based learning in modern neural versions. Their objectives and roles are different even though the underlying linear algebra tools overlap.",
+  },
+  {
+    id: "la-crash-l5-q60",
+    chapter: 5,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly synthesize the linear-algebra themes behind LLMs, deep learning, and RL?",
+    options: [
+      {
+        text: "Low-rank structure helps explain why some large matrices or updates can be compressed.",
+        isCorrect: true,
+      },
+      {
+        text: "Gradients adjust learned matrices and representations to reduce task losses.",
+        isCorrect: true,
+      },
+      {
+        text: "Covariance, PCA, and SVD help analyze structure in learned representation spaces.",
+        isCorrect: true,
+      },
+      {
+        text: "Dot products are useful only for text models and have no role in retrieval, attention, or RL features.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The same mathematical tools recur across AI systems: vectors represent data, matrices transform it, gradients train the transformations, and decompositions reveal structure. Low-rank and covariance ideas help explain compression and representation organization. Dot products appear broadly in similarity, routing, and feature interactions, not only in text models.",
+  },
 ];
 
 export const CrashCourseLinearAlgebraL5Questions =

@@ -28,7 +28,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "One-hot vectors are sparse, vocab-sized vectors with a single 1. They do not encode semantics and become memory-heavy with large vocabularies.",
+      'One-hot vectors are sparse, vocab-sized vectors with a single 1. They do not encode semantics and become memory-heavy with large vocabularies. To reason through the choices, select the statements that match the criterion in the prompt: "Each word is represented by a sparse vector with a single 1 and the rest 0s.". Do not select statements that miss that criterion: "The length of each one-hot vector equals the number of tokens in the current sentence."; "One-hot vectors naturally encode semantic similarity between words."; "One-hot encoding is memory-efficient for very large vocabularies.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q02",
@@ -81,7 +81,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "BoW counts word frequency per document, ignores order, and yields sparse high-dimensional vectors sized by the vocabulary.",
+      'BoW counts word frequency per document, ignores order, and yields sparse high-dimensional vectors sized by the vocabulary. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Each document becomes a vector of word counts over a shared vocabulary."; "Word order within the document is ignored."; "BoW vectors tend to be high-dimensional and sparse for large vocabularies."; "BoW does not explicitly encode the position of each word in the sentence.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "ch1-q04",
@@ -134,7 +134,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "TF measures within-document frequency (often normalized by document length). Document frequency is handled by IDF, not TF.",
+      'TF measures within-document frequency (often normalized by document length). Document frequency is handled by IDF, not TF. To reason through the choices, select the statements that match the criterion in the prompt: "How often a word appears within a specific document, usually normalized by document length.". Do not select statements that miss that criterion: "How many documents in the corpus contain the word."; "The inverse of the word’s length in characters."; "The absolute position of the word within a sentence.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q06",
@@ -160,7 +160,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "IDF highlights rare, discriminative words and reduces the influence of very frequent, generic words.",
+      'IDF highlights rare, discriminative words and reduces the influence of very frequent, generic words. To reason through the choices, select the statements that match the criterion in the prompt: "Down-weight very common words that appear in many documents.". Do not select statements that miss that criterion: "Up-weight words that appear in only one document and ignore all other rare words."; "Give the same weight to every word regardless of frequency."; "Focus only on word order in a document.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q07",
@@ -213,7 +213,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Distributional semantics assumes context reflects meaning and acknowledges that the same surface form can carry different senses.",
+      'Distributional semantics assumes context reflects meaning and acknowledges that the same surface form can carry different senses. To reason through the choices, select the statements that match the criterion in the prompt: "A single word can have multiple meanings depending on context.". Do not select statements that miss that criterion: "Words that occur in similar contexts always have identical meanings."; "Semantic meaning can be fully captured by raw word frequency alone."; "Embeddings should ignore context to avoid ambiguity.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q09",
@@ -239,7 +239,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Embeddings should be dense, low- to medium-dimensional, and encode semantic relationships, unlike sparse one-hot or BoW vectors.",
+      'Embeddings should be dense, low- to medium-dimensional, and encode semantic relationships, unlike sparse one-hot or BoW vectors. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Dense vectors of real numbers."; "Moderate, fixed dimensionality independent of vocabulary size."; "Ability to capture semantic similarity between words."; "They are not very sparse binary vectors whose length grows with the vocabulary.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "ch1-q10",
@@ -265,7 +265,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Word2vec is self-supervised: it predicts words from context and treats the resulting weights as embeddings, without manual labels.",
+      'Word2vec is self-supervised: it predicts words from context and treats the resulting weights as embeddings, without manual labels. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Train a model to predict a target word from its context (or vice versa)."; "Use a large corpus where contexts provide implicit supervision."; "Use the learned weight vectors of the neural network as word embeddings."; "It does not require human-annotated semantic tags for each training example.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "ch1-q11",
@@ -291,7 +291,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Negative sampling turns training into many small binary classification problems: is (w, c) a real pair or a random negative?",
+      'Negative sampling turns training into many small binary classification problems: is (w, c) a real pair or a random negative? To reason through the choices, select the statements that match the criterion in the prompt: "Decide whether a candidate context word belongs to the true context window of a center word.". Do not select statements that miss that criterion: "Assign each word to exactly one semantic cluster."; "Binary classification: + for real context words, − for randomly sampled words, but only after enumerating the full vocabulary."; "Multi-class classification over the entire vocabulary in every step.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q12",
@@ -317,7 +317,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "The sigmoid converts similarity scores into probabilities for binary logistic regression; it doesn’t normalize the embeddings themselves.",
+      'The sigmoid converts similarity scores into probabilities for binary logistic regression; it doesn’t normalize the embeddings themselves. To reason through the choices, select the statements that match the criterion in the prompt: "It maps the dot product between embeddings into a probability between 0 and 1.". Do not select statements that miss that criterion: "It is suitable for full-vocabulary multiclass softmax at each training step."; "It forces all dot products to be exactly 0 or 1."; "It guarantees that embeddings stay unit-length during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q13",
@@ -344,7 +344,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Dot products grow with both alignment and magnitude and are unbounded. Word2vec uses σ(c·w) as a probability.",
+      'Dot products grow with both alignment and magnitude and are unbounded. Word2vec uses σ(c·w) as a probability. To reason through the choices, select every statement because each one matches the criterion in the prompt: "A large positive dot product suggests the vectors point in a similar direction."; "The dot product tends to be larger for vectors with larger magnitudes."; "The dot product is not naturally bounded between −1 and 1."; "In word2vec, the dot product between w and c feeds into a sigmoid to get P(+|w,c).". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "ch1-q14",
@@ -371,7 +371,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Cross-entropy is the standard loss for logistic regression; it pushes P(+|w,c_pos) up and P(+|w,c_neg) down.",
+      'Cross-entropy is the standard loss for logistic regression; it pushes P(+|w,c_pos) up and P(+|w,c_neg) down. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Penalizes low probability for true context words around the center word."; "Penalizes high probability for sampled negative context words."; "It does not directly minimize the Euclidean distance between embeddings."; "Is optimized so that real (+) and fake (−) examples are correctly classified.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "ch1-q15",
@@ -398,7 +398,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Data quality, corpus size, and embedding dimensionality all matter. Context window size is also tuned rather than fixed at 1.",
+      'Data quality, corpus size, and embedding dimensionality all matter. Context window size is also tuned rather than fixed at 1. To reason through the choices, select the statements that match the criterion in the prompt: "Quality of the training corpus (e.g., Wikipedia vs noisy web data)."; "Amount of text available for training.". Do not select statements that miss that criterion: "Embedding dimensionality becomes irrelevant once it exceeds a very small minimum."; "Using only very short context windows of size 1 regardless of task.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q16",
@@ -425,7 +425,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Window size trades off local syntactic relationships vs more global semantic similarity; common choices include values around 4.",
+      'Window size trades off local syntactic relationships vs more global semantic similarity; common choices include values around 4. To reason through the choices, select the statements that match the criterion in the prompt: "Smaller windows (e.g., 2) help capture syntactic information such as part of speech."; "Larger windows capture broader semantic similarity.". Do not select statements that miss that criterion: "Changing the window size has no impact on the learned embeddings."; "A window of length 4–5 is always optimal regardless of the corpus or task.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q17",
@@ -451,7 +451,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Cosine similarity normalizes the dot product, giving a scale-invariant measure in [−1,1] that depends only on direction.",
+      'Cosine similarity normalizes the dot product, giving a scale-invariant measure in [−1,1] that depends only on direction. To reason through the choices, select the statements that match the criterion in the prompt: "It is the dot product divided by the product of the vector magnitudes."; "It is always between −1 and 1.". Do not select statements that miss that criterion: "It is invariant to rescaling the vectors even if the rescaling flips only one vector’s sign."; "It always increases when you multiply both vectors by 10.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q18",
@@ -478,7 +478,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Cosine focuses on angle (direction), is bounded, and works well in high dimensions, whereas raw dot product is unbounded and magnitude-dependent.",
+      'Cosine focuses on angle (direction), is bounded, and works well in high dimensions, whereas raw dot product is unbounded and magnitude-dependent. To reason through the choices, select the statements that match the criterion in the prompt: "It is less sensitive to vector magnitude and word frequency."; "It yields a bounded and interpretable similarity score.". Do not select statements that miss that criterion: "It completely ignores the direction of the vectors."; "It is more robust to high-dimensional sparse data than every other similarity measure.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q19",
@@ -559,7 +559,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "RNNs maintain a hidden state so they can model dependencies across time steps in sequences.",
+      'RNNs maintain a hidden state so they can model dependencies across time steps in sequences. To reason through the choices, select the statements that match the criterion in the prompt: "Sequences of inputs where the current output depends on previous elements."; "Time series such as text, speech, or sensor readings.". Do not select statements that miss that criterion: "Independent examples where order carries no information."; "Only fixed-length tabular data.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q22",
@@ -586,7 +586,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "The RNN uses h(t−1) and x(t) to compute a(t), then h(t)=tanh(a(t)), and o(t) then y(t) are derived from h(t).",
+      'The RNN uses h(t−1) and x(t) to compute a(t), then h(t)=tanh(a(t)), and o(t) then y(t) are derived from h(t). To reason through the choices, select the statements that match the criterion in the prompt: "h(t) is the new hidden state, typically obtained by applying tanh to a(t)."; "a(t) combines the previous hidden state h(t−1) and the current input x(t).". Do not select statements that miss that criterion: "y(t) is produced by applying a nonlinearity σ directly to h(t) without using o(t)."; "There is no dependence on h(t−1); RNNs ignore past states.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q23",
@@ -613,7 +613,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Backpropagation through time can cause gradients to vanish or explode, making it hard for simple RNNs to capture long-range patterns.",
+      'Backpropagation through time can cause gradients to vanish or explode, making it hard for simple RNNs to capture long-range patterns. To reason through the choices, select the statements that match the criterion in the prompt: "Vanishing gradients during backpropagation through many time steps."; "Difficulty learning long-range dependencies.". Do not select statements that miss that criterion: "Exploding gradients cannot occur in RNNs once hidden states are reused across time steps."; "Too few parameters to overfit small datasets.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q24",
@@ -640,7 +640,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "LSTMs use gates and an explicit cell state to manage long- and short-term information while still using nonlinearities like tanh and sigmoid.",
+      'LSTMs use gates and an explicit cell state to manage long- and short-term information while still using nonlinearities like tanh and sigmoid. To reason through the choices, select the statements that match the criterion in the prompt: "They introduce gates to control information flow."; "They can decide to forget or retain information through a forget gate.". Do not select statements that miss that criterion: "They maintain only a hidden state h and no separate long-term cell state c."; "They remove the need for any nonlinearity inside the recurrent cell.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q25",
@@ -666,7 +666,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Forget, input, and output gates each have their own parameters and control different aspects of how the cell state is updated and exposed.",
+      'Forget, input, and output gates each have their own parameters and control different aspects of how the cell state is updated and exposed. To reason through the choices, select the statements that match the criterion in the prompt: "The forget gate f(t) decides how much of the previous cell state c(t−1) to keep."; "The input gate i(t) and candidate g(t) determine what new information is added to the cell state.". Do not select statements that miss that criterion: "The output gate o(t) permanently overwrites the cell state c(t) at every step."; "All gates share exactly the same parameters; they differ only in their names.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q26",
@@ -692,7 +692,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "GRUs keep a single hidden state and use update and reset gates, making them lighter than LSTMs while retaining gating behavior.",
+      'GRUs keep a single hidden state and use update and reset gates, making them lighter than LSTMs while retaining gating behavior. To reason through the choices, select the statements that match the criterion in the prompt: "They are a simplified alternative to LSTMs with fewer parameters."; "They merge the input and forget gates into a reset gate and update gate.". Do not select statements that miss that criterion: "They use an update gate z(t) that is mathematically identical to the LSTM forget gate."; "They maintain two distinct states (h and c) just like LSTMs.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q27",
@@ -718,7 +718,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "GRUs are lighter and often faster but may overfit more easily, while LSTMs tend to model complex long-range patterns better.",
+      'GRUs are lighter and often faster but may overfit more easily, while LSTMs tend to model complex long-range patterns better. To reason through the choices, select the statements that match the criterion in the prompt: "GRUs have fewer parameters and can converge faster."; "LSTMs generally handle very long-term dependencies better.". Do not select statements that miss that criterion: "GRUs always overfit more because they have fewer parameters."; "LSTMs are always strictly worse than GRUs on all tasks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q28",
@@ -744,7 +744,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "1D CNNs convolve filters over sequences (often embeddings), capturing n-gram-like local patterns similar to context windows.",
+      '1D CNNs convolve filters over sequences (often embeddings), capturing n-gram-like local patterns similar to context windows. To reason through the choices, select the statements that match the criterion in the prompt: "They slide 1D filters over sequences to extract local patterns."; "The filter size can be interpreted as a kind of context window over words.". Do not select statements that miss that criterion: "They can operate only on raw token indicators rather than embedding vectors."; "They require 2D image-like inputs and cannot process text sequences.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q29",
@@ -771,7 +771,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "The pipeline cleans text, tokenizes, vectorizes via word indices, and pads to a fixed length so batches can be processed.",
+      'The pipeline cleans text, tokenizes, vectorizes via word indices, and pads to a fixed length so batches can be processed. To reason through the choices, select the statements that match the criterion in the prompt: "Cleaning text (removing extra spaces, special characters, some punctuation)."; "Tokenizing reviews and mapping words to indices via a vocabulary.". Do not select statements that miss that criterion: "Padding sequences to a fixed length is never useful for batch training."; "Randomly dropping half of the reviews to simplify the dataset.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q30",
@@ -798,7 +798,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "The model uses embedding + GRUs + dropout + a linear layer to predict a single sentiment probability.",
+      'The model uses embedding + GRUs + dropout + a linear layer to predict a single sentiment probability. To reason through the choices, select every statement because each one matches the criterion in the prompt: "An embedding layer to learn word vectors from the reviews."; "GRU layers as the main sequence model."; "Dropout for regularization."; "A final linear layer mapping features to a single output probability.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "ch1-q31",
@@ -825,7 +825,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "A common setup uses BCE loss with Adam and trains in batches for the two-class sentiment task.",
+      'A common setup uses BCE loss with Adam and trains in batches for the two-class sentiment task. To reason through the choices, select the statements that match the criterion in the prompt: "Binary cross-entropy loss."; "The Adam optimizer."; "Mini-batch training over many epochs.". Do not select statements that miss that criterion: "A loss function that expects three sentiment classes (positive/neutral/negative).". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q33",
@@ -852,7 +852,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Padding ensures all sequences in a batch share the same length; it is a general requirement for many sequence architectures, not just CNNs.",
+      'Padding ensures all sequences in a batch share the same length; it is a general requirement for many sequence architectures, not just CNNs. To reason through the choices, select the statements that match the criterion in the prompt: "Neural networks expect fixed-shape batches, so sequence lengths must be harmonized."; "Padding allows us to pack multiple sequences into tensors of the same length.". Do not select statements that miss that criterion: "Padding improves semantic quality of the embeddings themselves."; "Padding is only required for CNNs, not for recurrent models.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q34",
@@ -879,7 +879,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Common practice is to use clustering and 2D projections (PCA, t-SNE, UMAP), including diachronic views of how word meanings change over time.",
+      'Common practice is to use clustering and 2D projections (PCA, t-SNE, UMAP), including diachronic views of how word meanings change over time. To reason through the choices, select the statements that match the criterion in the prompt: "Clustering of word embeddings."; "Dimensionality reduction to 2D using techniques like PCA, t-SNE, or UMAP."; "Plots showing semantic shifts of words such as \'gay\' or \'broadcast\' across decades.". Do not select statements that miss that criterion: "3D bar plots of raw one-hot vectors.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q35",
@@ -933,7 +933,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "One-hot vectors are vocab-length with a single 1; different words are orthogonal but semantic similarity is not encoded.",
+      'One-hot vectors are vocab-length with a single 1; different words are orthogonal but semantic similarity is not encoded. To reason through the choices, select the statements that match the criterion in the prompt: "Each word is mapped to a vector of length 10,000."; "Exactly one element of the vector is 1, the rest are 0."; "Two different words will always have orthogonal one-hot vectors.". Do not select statements that miss that criterion: "The representation automatically captures that \'cat\' and \'dog\' are similar animals.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q37",
@@ -960,7 +960,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Cosine similarity is angle-based, scale-invariant, bounded, and efficient to compute, which is ideal for embedding comparisons.",
+      'Cosine similarity is angle-based, scale-invariant, bounded, and efficient to compute, which is ideal for embedding comparisons. To reason through the choices, select the statements that match the criterion in the prompt: "It is cheap to compute even in high dimensions."; "It is not influenced by overall vector magnitude."; "Opposite vectors have similarity −1 and orthogonal vectors have similarity 0.". Do not select statements that miss that criterion: "It depends only on the Euclidean distance between the vectors.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q38",
@@ -987,7 +987,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "The sigmoid maps 0 → 0.5 and smoothly transitions from near 0 for large negative inputs to near 1 for large positive inputs; it is nonlinear.",
+      'The sigmoid maps 0 → 0.5 and smoothly transitions from near 0 for large negative inputs to near 1 for large positive inputs; it is nonlinear. To reason through the choices, select the statements that match the criterion in the prompt: "If c·w = 0, then P(+|w,c) = 0.5."; "Increasing c·w pushes the probability closer to 1."; "Very negative values of c·w yield probabilities close to 0.". Do not select statements that miss that criterion: "σ(x) is a linear function of x.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q39",
@@ -1014,7 +1014,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Vanishing/exploding gradients are fundamental challenges; LSTMs and GRUs mitigate but do not magically eliminate them.",
+      'Vanishing/exploding gradients are fundamental challenges; LSTMs and GRUs mitigate but do not magically eliminate them. To reason through the choices, select the statements that match the criterion in the prompt: "Gradients in long unrolled RNNs can vanish, making learning long-range dependencies difficult."; "Gradients can also explode, causing unstable training."; "LSTMs reduce vanishing gradients partly through additive (plus) operations in the cell state.". Do not select statements that miss that criterion: "GRUs completely eliminate both vanishing and exploding gradients in all settings.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q40",
@@ -1040,7 +1040,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Embeddings support similarity search, analogies, and diachronic analysis but are not full parsers by themselves.",
+      'Embeddings support similarity search, analogies, and diachronic analysis but are not full parsers by themselves. To reason through the choices, select the statements that match the criterion in the prompt: "Finding most similar words via cosine similarity."; "Solving word analogies using vector arithmetic."; "Studying semantic change of words over time.". Do not select statements that miss that criterion: "Directly decoding full grammatical parse trees from a single embedding vector.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q41",
@@ -1067,7 +1067,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "BoW counts word occurrences across documents; each row is a document vector with many possible non-zero entries.",
+      'BoW counts word occurrences across documents; each row is a document vector with many possible non-zero entries. To reason through the choices, select the statements that match the criterion in the prompt: "Tokenize each document into words."; "Build a vocabulary of unique words and map each word to an index."; "Create a document-by-vocabulary matrix where entries are word counts.". Do not select statements that miss that criterion: "Ensure each document vector has exactly one non-zero entry.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q42",
@@ -1094,7 +1094,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Word2vec learns input (w) and output (c) embeddings; they are often averaged or one is chosen for downstream use.",
+      'Word2vec learns input (w) and output (c) embeddings; they are often averaged or one is chosen for downstream use. To reason through the choices, select the statements that match the criterion in the prompt: "There is one matrix for center words and one for context words."; "These matrices tend to be similar, so often one of them is used as \'the\' embedding."; "They arise because the model has separate parameters for input and output roles.". Do not select statements that miss that criterion: "Keeping two completely unrelated matrices is required for using the embeddings.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q43",
@@ -1120,7 +1120,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "1D CNNs capture local n-gram patterns and parallelize well; RNNs model sequence order via hidden states, and both can use embeddings as input.",
+      '1D CNNs capture local n-gram patterns and parallelize well; RNNs model sequence order via hidden states, and both can use embeddings as input. To reason through the choices, select the statements that match the criterion in the prompt: "CNNs are good at capturing local patterns via filters of limited size."; "RNNs explicitly model sequential order via recurrent connections."; "CNNs are inherently faster to parallelize than basic RNNs.". Do not select statements that miss that criterion: "CNNs are unable to use pretrained embeddings as input.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q44",
@@ -1147,7 +1147,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Cosine depends only on angle, not magnitude, so scaling vectors doesn’t change it; its extreme values indicate alignment or opposition.",
+      'Cosine depends only on angle, not magnitude, so scaling vectors doesn’t change it; its extreme values indicate alignment or opposition. To reason through the choices, select the statements that match the criterion in the prompt: "cos(θ) = 1 when the vectors are perfectly aligned (same direction)."; "cos(θ) = 0 when the vectors are orthogonal."; "cos(θ) = −1 when the vectors point in exactly opposite directions.". Do not select statements that miss that criterion: "Scaling one vector by 2 changes cos(θ).". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q45",
@@ -1174,7 +1174,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Training improves separation of classes but not perfectly; projections show how the model clusters sentiments.",
+      'Training improves separation of classes but not perfectly; projections show how the model clusters sentiments. To reason through the choices, select the statements that match the criterion in the prompt: "Before training, positive and negative reviews are intermixed in the embedding projection."; "After training, positive and negative reviews become more separable in the embedding space."; "Embeddings can be used to visualize how the model organizes examples by sentiment.". Do not select statements that miss that criterion: "The model has perfectly separated all points with no overlap at all.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q46",
@@ -1200,7 +1200,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "IDF grows when df is small (rare terms) and shrinks for terms appearing in many documents; TF is normalized frequency.",
+      'IDF grows when df is small (rare terms) and shrinks for terms appearing in many documents; TF is normalized frequency. To reason through the choices, select the statements that match the criterion in the prompt: "TF is often computed as count divided by total words in the document."; "IDF uses a log of (N / (1 + df)) with smoothing."; "TF-IDF for a term is TF multiplied by IDF.". Do not select statements that miss that criterion: "IDF is larger for words that appear in many documents.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q47",
@@ -1227,7 +1227,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "Domain, data quality, and noise affect learned embeddings; more dimensions don’t magically remove bias.",
+      'Domain, data quality, and noise affect learned embeddings; more dimensions don’t magically remove bias. To reason through the choices, select the statements that match the criterion in the prompt: "Training on social media like Twitter can introduce bias."; "Mixing different domains (e.g., Wikipedia + news) can change performance on different tasks."; "Common Crawl is large but relatively noisy.". Do not select statements that miss that criterion: "Using more dimensions always removes bias completely.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q48",
@@ -1254,7 +1254,7 @@ export const chapter1Questions: Question[] = [
       },
     ],
     explanation:
-      "The loop uses standard PyTorch training practices and also tracks validation loss/accuracy.",
+      'The loop uses standard PyTorch training practices and also tracks validation loss/accuracy. To reason through the choices, select the statements that match the criterion in the prompt: "The model switches to training mode with model.train()."; "Hidden states are detached between batches to avoid backpropagating through the entire epoch."; "Loss.backward() is called to compute gradients, followed by optimizer.step().". Do not select statements that miss that criterion: "No validation set is used; only training loss is monitored.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "ch1-q49",

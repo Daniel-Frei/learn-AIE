@@ -221,7 +221,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Scale is usually summarized by parameter count, token count, and compute (FLOPs), with dataset size and diversity providing additional context.",
+      'Scale is usually summarized by parameter count, token count, and compute (FLOPs), with dataset size and diversity providing additional context. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Number of model parameters."; "Number of training tokens processed."; "Approximate number of floating point operations (FLOPs) used during training."; "Rough size and diversity of the training dataset(s).". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch2-q09",
@@ -383,7 +383,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Temperature divides logits, sharpening or flattening the probabilities: low T ≈ more deterministic; high T ≈ more diverse and creative outputs.",
+      'Temperature divides logits, sharpening or flattening the probabilities: low T ≈ more deterministic; high T ≈ more diverse and creative outputs. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Temperature rescales logits before softmax is applied."; "Lower temperatures make the distribution more peaked, favoring high-probability tokens."; "Higher temperatures flatten the distribution, increasing the chance of sampling lower-probability tokens."; "Setting temperature very close to zero approximates greedy (argmax) decoding.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch2-q15",
@@ -410,7 +410,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Top-k truncates to the k most likely tokens, normalizes among them, and samples; this can reduce compute and trade diversity for predictability via k.",
+      'Top-k truncates to the k most likely tokens, normalizes among them, and samples; this can reduce compute and trade diversity for predictability via k. To reason through the choices, select every statement because each one matches the criterion in the prompt: "The model keeps only the k tokens with highest logits (or probabilities) before sampling."; "Softmax is applied only over those top-k tokens, not the entire vocabulary."; "Smaller k makes outputs more predictable but less diverse."; "This strategy can reduce the computational cost of softmax compared with using the full vocabulary.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch2-q16",
@@ -437,7 +437,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Top-p chooses a variable-size subset of tokens whose cumulative probability reaches p, adapting to context rather than fixing k.",
+      'Top-p chooses a variable-size subset of tokens whose cumulative probability reaches p, adapting to context rather than fixing k. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Tokens are sorted by probability in descending order."; "The smallest set of tokens whose cumulative probability exceeds p is selected as the sampling pool."; "The value p controls how much of the probability mass is retained (e.g., 0.9 or 0.95)."; "Unlike top-k, the number of tokens considered can vary depending on the context.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch2-q17",
@@ -491,7 +491,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Sampling from a probability distribution introduces randomness: helpful for creativity, problematic for consistency and reproducibility if unmanaged.",
+      'Sampling from a probability distribution introduces randomness: helpful for creativity, problematic for consistency and reproducibility if unmanaged. To reason through the choices, select every statement because each one matches the criterion in the prompt: "The same prompt can yield different outputs across runs when sampling is stochastic."; "Even with fixed sampling settings, tiny numerical differences can sometimes change the sampled token."; "This randomness helps with creativity and diversity of outputs."; "The same probabilistic behavior can also cause inconsistencies that feel strange to users.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch2-q19",
@@ -545,7 +545,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Hallucinations are plausible but incorrect outputs; they predate today’s LLMs and remain a major concern when factual accuracy matters.",
+      'Hallucinations are plausible but incorrect outputs; they predate today’s LLMs and remain a major concern when factual accuracy matters. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They are outputs that sound plausible but are not grounded in facts or the model’s true knowledge."; "They can arise even if the model’s training data is very large."; "They are especially dangerous in factual or safety-critical applications."; "They have been discussed in natural language generation research since before today’s large LLMs.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
   {
     id: "aie-ch2-q21",
@@ -680,7 +680,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Sampling heavily influences LLM behavior; understanding it lets you debug, tune trade-offs, and design more reliable application workflows.",
+      'Sampling heavily influences LLM behavior; understanding it lets you debug, tune trade-offs, and design more reliable application workflows. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Sampling choices can explain inconsistent or surprising behavior."; "Tuning sampling hyperparameters can often improve performance without retraining the model."; "Different tasks benefit from different trade-offs between diversity and predictability."; "Sampling interacts with evaluation and reliability, so it must be considered in system design.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   // ----------------------------------------------------------------------------
@@ -712,7 +712,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Web data is unbalanced; high-resource languages dominate. Low-resource languages usually need explicit data collection and curation.",
+      'Web data is unbalanced; high-resource languages dominate. Low-resource languages usually need explicit data collection and curation. To reason through the choices, select the statements that match the criterion in the prompt: "Internet text is heavily skewed toward certain high-resource languages like English."; "Models trained mostly on English will typically perform better in English than in low-resource languages."; "Adding targeted data in a low-resource language can noticeably improve performance in that language.". Do not select statements that miss that criterion: "Generic web crawls always contain balanced data for all languages, so no extra curation is needed.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q27",
@@ -739,7 +739,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Raw web data is noisy and must be filtered; even then, some low-quality or harmful content will remain and can affect model behavior.",
+      'Raw web data is noisy and must be filtered; even then, some low-quality or harmful content will remain and can affect model behavior. To reason through the choices, select the statements that match the criterion in the prompt: "They can contain spam, clickbait, and misleading information."; "Heuristic filters and blocklists are often used to remove obviously bad content."; "Some remaining low-quality content can still influence model outputs.". Do not select statements that miss that criterion: "Any raw web crawl is automatically a clean, high-quality dataset suitable for safety-critical tasks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q28",
@@ -765,7 +765,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Proprietary datasets are restricted but valuable; organizations negotiate licenses or rely on their own internal data as a source of advantage.",
+      'Proprietary datasets are restricted but valuable; organizations negotiate licenses or rely on their own internal data as a source of advantage. To reason through the choices, select the statements that match the criterion in the prompt: "Contracts, medical records, and internal documents can be valuable proprietary datasets."; "Access to high-quality proprietary data can become a competitive advantage between organizations."; "License agreements with publishers or content owners can grant access to otherwise restricted data.". Do not select statements that miss that criterion: "Proprietary data is always freely available to anyone building an AI system.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q29",
@@ -819,7 +819,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Smaller models are cheaper and faster, and may run on edge devices, but they typically underperform larger models on many tasks.",
+      'Smaller models are cheaper and faster, and may run on edge devices, but they typically underperform larger models on many tasks. To reason through the choices, select the statements that match the criterion in the prompt: "Lower inference latency on the same hardware."; "Lower memory and compute requirements, enabling cheaper deployment."; "Easier on-device or edge deployment scenarios.". Do not select statements that miss that criterion: "Guaranteed better performance on every task compared with larger models.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q31",
@@ -846,7 +846,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Pre-training usually relies on self-supervised objectives like next-token or masked-token prediction, not on manual class labels.",
+      'Pre-training usually relies on self-supervised objectives like next-token or masked-token prediction, not on manual class labels. To reason through the choices, select the statements that match the criterion in the prompt: "Autoregressive models commonly use next-token prediction as their objective."; "Masked language models predict masked-out tokens from their context."; "These objectives are forms of self-supervision, where labels are derived from the data itself.". Do not select statements that miss that criterion: "Pre-training typically requires fully labeled datasets with human-written class labels.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q32",
@@ -873,7 +873,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Uncontrolled use of synthetic data can distort distributions and lose diversity; it is not automatically beneficial and needs careful design.",
+      'Uncontrolled use of synthetic data can distort distributions and lose diversity; it is not automatically beneficial and needs careful design. To reason through the choices, select the statements that match the criterion in the prompt: "New models may start to overfit to artifacts of older models instead of human-generated patterns."; "Recursive training on model outputs can cause models to gradually forget rarer real-world patterns."; "It can be hard to distinguish synthetic data from real web data at scale.". Do not select statements that miss that criterion: "Training on synthetic outputs is guaranteed to always improve model performance in the long run.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q33",
@@ -899,7 +899,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Scaling requires massive compute and energy. Hardware and electricity costs dominate; training is far from free, even with existing hardware.",
+      'Scaling requires massive compute and energy. Hardware and electricity costs dominate; training is far from free, even with existing hardware. To reason through the choices, select the statements that match the criterion in the prompt: "Training cost generally increases with both model size and dataset size."; "Larger models usually require more expensive hardware infrastructure."; "Energy consumption of data centers becomes a practical constraint at very large scales.". Do not select statements that miss that criterion: "Once you have the hardware, training cost is essentially zero and can be ignored.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q34",
@@ -926,7 +926,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Scaling laws show smooth trends but not exact guarantees. Doubling parameters improves performance but not in such a simple fixed ratio.",
+      'Scaling laws show smooth trends but not exact guarantees. Doubling parameters improves performance but not in such a simple fixed ratio. To reason through the choices, select the statements that match the criterion in the prompt: "Empirical curves often show loss decreasing roughly as a power law in model size."; "Similar relationships exist for loss versus dataset size and versus compute."; "Scaling laws separate reducible loss from an irreducible component tied to data entropy and task difficulty.". Do not select statements that miss that criterion: "These laws guarantee that doubling parameters always halves the loss.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q35",
@@ -953,7 +953,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Even when pre-training includes internet data, SFT is valuable for shaping model behaviors into user-oriented, instruction-following responses.",
+      'Even when pre-training includes internet data, SFT is valuable for shaping model behaviors into user-oriented, instruction-following responses. To reason through the choices, select the statements that match the criterion in the prompt: "It can teach the model to answer questions instead of just completing text."; "It can show the model how to follow instructions and structure answers."; "It uses explicit examples of desired behavior for training.". Do not select statements that miss that criterion: "It is unnecessary if the pre-training data already contains internet text.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q36",
@@ -1034,7 +1034,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Greedy is fine for classification but too deterministic for creative generation, where stochastic sampling strategies tend to work better.",
+      'Greedy is fine for classification but too deterministic for creative generation, where stochastic sampling strategies tend to work better. To reason through the choices, select the statements that match the criterion in the prompt: "In simple classification, taking the most probable class is often the right choice."; "In open-ended text generation, always picking the argmax token can produce boring, repetitive text."; "Greedy decoding can be viewed as sampling with an extremely low temperature.". Do not select statements that miss that criterion: "Greedy decoding is always the best strategy for creative writing tasks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q39",
@@ -1060,7 +1060,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Top-k fixes the count; top-p fixes the mass. They’re often combined (e.g., apply top-k, then top-p on that subset) in practical decoding schemes.",
+      'Top-k fixes the count; top-p fixes the mass. They’re often combined (e.g., apply top-k, then top-p on that subset) in practical decoding schemes. To reason through the choices, select the statements that match the criterion in the prompt: "Top-k restricts sampling to the k most likely tokens, regardless of their cumulative probability."; "Top-p chooses a variable number of tokens whose cumulative probability reaches a target threshold p."; "Top-p can adapt to contexts where only a few tokens are plausible vs. where many are plausible.". Do not select statements that miss that criterion: "Top-k and top-p are mutually exclusive and cannot be combined in practice.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q40",
@@ -1087,7 +1087,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Production systems regularly adjust decoding strategies, but must do so with monitoring, evaluation, and guardrails for critical flows.",
+      'Production systems regularly adjust decoding strategies, but must do so with monitoring, evaluation, and guardrails for critical flows. To reason through the choices, select the statements that match the criterion in the prompt: "You may need deterministic fallbacks or guardrails for high-risk actions."; "Evaluation pipelines should account for distributional changes due to sampling settings."; "Monitoring should track error rates as you change decoding hyperparameters.". Do not select statements that miss that criterion: "Once a model is deployed, decoding settings should never be changed.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q41",
@@ -1114,7 +1114,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "APIs often expose only partial logprobs (e.g., top tokens) and may restrict access for security or IP reasons.",
+      'APIs often expose only partial logprobs (e.g., top tokens) and may restrict access for security or IP reasons. To reason through the choices, select the statements that match the criterion in the prompt: "They can show which tokens the model considered likely at each step."; "They help debug when a model chooses an unexpected token."; "They can be used to score candidate completions for reranking or classification.". Do not select statements that miss that criterion: "They always expose the full probability distribution over all tokens with no restrictions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q42",
@@ -1141,7 +1141,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Caching is a useful engineering tool for cost and consistency, but doesn’t remove the need to evaluate and monitor model outputs.",
+      'Caching is a useful engineering tool for cost and consistency, but doesn’t remove the need to evaluate and monitor model outputs. To reason through the choices, select the statements that match the criterion in the prompt: "Caching reduces cost for repeated or similar queries."; "Caching can improve perceived consistency for identical prompts."; "You may need cache invalidation when models or prompts change significantly.". Do not select statements that miss that criterion: "Caching makes evaluation unnecessary, because outputs will never change.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q43",
@@ -1195,7 +1195,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Hallucinations require architectural, training, and workflow-level mitigations; size alone doesn’t automatically eliminate them.",
+      'Hallucinations require architectural, training, and workflow-level mitigations; size alone doesn’t automatically eliminate them. To reason through the choices, select the statements that match the criterion in the prompt: "Using retrieval-augmented generation to ground answers in external knowledge sources."; "Prompting the model to admit uncertainty instead of guessing when it ‘doesn’t know’."; "Designing reward functions that penalize confidently wrong answers more strongly.". Do not select statements that miss that criterion: "Assuming hallucinations will disappear if we simply increase model size without changing anything else.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q45",
@@ -1222,7 +1222,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Energy and power infrastructure are real constraints; scaling compute requires considering electricity availability, cost, and sustainability.",
+      'Energy and power infrastructure are real constraints; scaling compute requires considering electricity availability, cost, and sustainability. To reason through the choices, select the statements that match the criterion in the prompt: "Data centers already consume a noticeable fraction of global electricity."; "Future growth of data centers is limited by the ability to supply additional power."; "Energy costs influence both training and inference economics for AI systems.". Do not select statements that miss that criterion: "Electricity usage is irrelevant when planning large-scale AI deployments.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q46",
@@ -1249,7 +1249,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "In practice, temperature, top-k, and top-p are often combined to customize behavior for specific applications or prompts.",
+      'In practice, temperature, top-k, and top-p are often combined to customize behavior for specific applications or prompts. To reason through the choices, select the statements that match the criterion in the prompt: "You can apply both temperature scaling and top-k at the same time."; "You can further apply top-p on the truncated distribution to refine the candidate set."; "Different combinations can be used for different tasks or stages of generation.". Do not select statements that miss that criterion: "Using more than one sampling strategy is mathematically impossible.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q47",
@@ -1276,7 +1276,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Post-training builds on pre-training rather than replacing it; it uses relatively little compute while drastically changing model behavior.",
+      'Post-training builds on pre-training rather than replacing it; it uses relatively little compute while drastically changing model behavior. To reason through the choices, select the statements that match the criterion in the prompt: "Pre-training provides broad capabilities from large corpora."; "Post-training adapts and constrains those capabilities to better match human preferences."; "Post-training typically uses much less compute than pre-training.". Do not select statements that miss that criterion: "Post-training completely replaces what the model learned during pre-training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q48",
@@ -1303,7 +1303,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Evaluation must consider whether data matches production conditions and whether benchmarks are contaminated or too similar to training data.",
+      'Evaluation must consider whether data matches production conditions and whether benchmarks are contaminated or too similar to training data. To reason through the choices, select the statements that match the criterion in the prompt: "Benchmarks overlapping heavily with training data may overestimate generalization."; "Shifts between training and production data distributions can degrade performance."; "Domain-specific evaluation sets are needed if you care about specific industries or tasks.". Do not select statements that miss that criterion: "As long as a model is large, evaluation details on specific data distributions are unimportant.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q49",
@@ -1330,7 +1330,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Temperature is an inference-time control; varying it is a useful way to inspect and understand the model’s probability distribution over outputs.",
+      'Temperature is an inference-time control; varying it is a useful way to inspect and understand the model’s probability distribution over outputs. To reason through the choices, select the statements that match the criterion in the prompt: "Setting temperature close to zero approximates greedy decoding, revealing the model’s most likely behavior."; "Exploring outputs at higher temperatures can reveal alternative hypotheses the model considers plausible."; "Varying temperature while inspecting logprobs can reveal whether the distribution is too flat or too peaky.". Do not select statements that miss that criterion: "Temperature can only be changed during training, not at inference time.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q50",
@@ -1356,7 +1356,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Probabilistic sampling naturally leads to variability; from a user perspective, this can feel inconsistent unless carefully managed.",
+      'Probabilistic sampling naturally leads to variability; from a user perspective, this can feel inconsistent unless carefully managed. To reason through the choices, select the statements that match the criterion in the prompt: "Asking the same question twice can yield different answers when sampling is stochastic."; "Small paraphrases in the prompt can unexpectedly change the model’s answer."; "Users may perceive such inconsistency as unreliability or untrustworthiness.". Do not select statements that miss that criterion: "Probabilistic sampling guarantees identical outputs for identical inputs.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ----------------------------------------------------------------------------
@@ -1388,7 +1388,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Foundation models are large, broadly trained, and reusable across tasks, not tiny task-specific models that must be trained from scratch each time.",
+      'Foundation models are large, broadly trained, and reusable across tasks, not tiny task-specific models that must be trained from scratch each time. To reason through the choices, select the statements that match the criterion in the prompt: "A large model trained on broad data that can be adapted to many downstream tasks."; "A model whose pre-training alone already enables many useful capabilities.". Do not select statements that miss that criterion: "A small model trained from scratch on a single tiny dataset for a single task only."; "A model that must be fully retrained every time you change the application.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q52",
@@ -1415,7 +1415,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Softmax(1,2) ≈ (0.27, 0.73); higher logit → higher probability. The sign alone doesn’t force equal or deterministic probabilities.",
+      'Softmax(1,2) ≈ (0.27, 0.73); higher logit → higher probability. The sign alone doesn’t force equal or deterministic probabilities. To reason through the choices, select the statements that match the criterion in the prompt: "Token B will have higher probability than token A after softmax."; "The exact probabilities are approximately 0.27 for A and 0.73 for B.". Do not select statements that miss that criterion: "Softmax will assign equal probability to A and B because they share the same sign."; "Token A must always be chosen, because its logit is positive.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q53",
@@ -1442,7 +1442,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Underflow is a numerical artifact; logs help avoid tiny values disappearing. Logprobs are widely used in practice for stability and convenience.",
+      'Underflow is a numerical artifact; logs help avoid tiny values disappearing. Logprobs are widely used in practice for stability and convenience. To reason through the choices, select the statements that match the criterion in the prompt: "Underflow can occur when probabilities are so small that they round to zero in floating-point representation."; "Working in log space helps mitigate underflow because it represents small probabilities as manageable negative numbers.". Do not select statements that miss that criterion: "Underflow only happens when probabilities are exactly zero in mathematics."; "Logprobs are rarely used in practice because they are harder to compute than raw probabilities.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q54",
@@ -1468,7 +1468,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Best-of-N improves odds of a good output but doesn’t guarantee perfection; it costs roughly N× a single sample unless optimized.",
+      'Best-of-N improves odds of a good output but doesn’t guarantee perfection; it costs roughly N× a single sample unless optimized. To reason through the choices, select the statements that match the criterion in the prompt: "It can be seen as a simple form of test-time search over multiple stochastic outputs."; "It can use a reward model, heuristic, or human-in-the-loop to pick the best candidate.". Do not select statements that miss that criterion: "It guarantees that at least one of the outputs will be perfect."; "It is free, because generating N outputs costs the same as generating 1.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q55",
@@ -1601,7 +1601,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Top-k is motivated partly by compute considerations: doing softmax over fewer tokens can reduce work, especially with huge vocabularies.",
+      'Top-k is motivated partly by compute considerations: doing softmax over fewer tokens can reduce work, especially with huge vocabularies. To reason through the choices, select the statements that match the criterion in the prompt: "Top-k can reduce the cost of computing softmax by restricting to the highest-k logits."; "For very large vocabularies, computing softmax over all tokens can be expensive.". Do not select statements that miss that criterion: "Top-k always increases compute cost compared with full-vocabulary softmax."; "Top-k is unrelated to computational efficiency and only affects diversity.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q60",
@@ -1628,7 +1628,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Prompt design affects hallucination risk but cannot guarantee zero hallucinations; constraints and ‘don’t know’ instructions can help reduce them.",
+      'Prompt design affects hallucination risk but cannot guarantee zero hallucinations; constraints and ‘don’t know’ instructions can help reduce them. To reason through the choices, select the statements that match the criterion in the prompt: "Asking for very long, detailed answers increases opportunities for hallucination."; "Prompts that encourage the model to say ‘I don’t know’ can sometimes reduce hallucinations.". Do not select statements that miss that criterion: "Hallucinations cannot be influenced by prompts at all."; "Shorter, highly constrained prompts always eliminate hallucinations.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q61",
@@ -1655,7 +1655,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Sampling influences outputs and hence evaluation results; fair comparisons require consistent, documented decoding settings.",
+      'Sampling influences outputs and hence evaluation results; fair comparisons require consistent, documented decoding settings. To reason through the choices, select the statements that match the criterion in the prompt: "Changing sampling settings can change measured performance on benchmarks."; "Evaluation setups should document decoding parameters like temperature and top-p.". Do not select statements that miss that criterion: "Once a model is trained, its performance is independent of sampling strategy."; "It is safe to compare two models if they use entirely different, undocumented sampling strategies.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q62",
@@ -1735,7 +1735,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Copyright and licensing still apply to training data and potential memorized outputs; deals and ToS govern what can be used.",
+      'Copyright and licensing still apply to training data and potential memorized outputs; deals and ToS govern what can be used. To reason through the choices, select the statements that match the criterion in the prompt: "If a model reproduces copyrighted content from training data, it can raise legal and ethical concerns."; "Agreements with publishers and platforms can govern legitimate use of their data.". Do not select statements that miss that criterion: "Public web availability always implies that content is free to use for training without restrictions."; "Once data is used in training, copyright considerations no longer matter.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q65",
@@ -1762,7 +1762,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Human preference is heterogeneous; RLHF datasets encode specific value judgments and cannot capture a single universal preference function.",
+      'Human preference is heterogeneous; RLHF datasets encode specific value judgments and cannot capture a single universal preference function. To reason through the choices, select the statements that match the criterion in the prompt: "Different annotators may disagree about which response is better."; "Preference datasets often reflect the values and tastes of specific groups of labelers.". Do not select statements that miss that criterion: "It is trivial to encode a single universal notion of human preference in a reward model."; "Preference diversity is irrelevant when building aligned systems.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q66",
@@ -1789,7 +1789,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Deployment environments can differ sharply from training corpora; robustness requires considering and monitoring those shifts.",
+      'Deployment environments can differ sharply from training corpora; robustness requires considering and monitoring those shifts. To reason through the choices, select the statements that match the criterion in the prompt: "Distribution shift can cause models to perform poorly even if training metrics were strong."; "Monitoring inputs and outputs in production can reveal new failure modes not seen during training.". Do not select statements that miss that criterion: "Training on web data automatically guarantees robustness to any domain."; "It is unnecessary to consider deployment conditions when designing training data.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q67",
@@ -1816,7 +1816,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Beam search is a heuristic search over multiple hypotheses; it is not guaranteed optimal and differs from independent stochastic sampling.",
+      'Beam search is a heuristic search over multiple hypotheses; it is not guaranteed optimal and differs from independent stochastic sampling. To reason through the choices, select the statements that match the criterion in the prompt: "Beam search keeps track of multiple partial hypotheses at each decoding step."; "It expands only the most promising partial sequences according to some score.". Do not select statements that miss that criterion: "Beam search is guaranteed to find the globally optimal sequence in all neural sequence models."; "Beam search is equivalent to sampling independently from the softmax distribution at each step.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q68",
@@ -1843,7 +1843,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Self-attention lets tokens look at others in parallel; positional encodings are still needed to represent order.",
+      'Self-attention lets tokens look at others in parallel; positional encodings are still needed to represent order. To reason through the choices, select the statements that match the criterion in the prompt: "Each token can attend to many other tokens in the sequence in a single layer."; "Attention weights indicate which tokens are most influential for predicting a given token.". Do not select statements that miss that criterion: "Attention eliminates the need for positional information entirely."; "Attention forces tokens to be processed strictly in order with no parallelism.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q69",
@@ -1870,7 +1870,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Small numerical differences can flip sampling decisions near ties; hardware and implementation details can therefore affect exact outputs.",
+      'Small numerical differences can flip sampling decisions near ties; hardware and implementation details can therefore affect exact outputs. To reason through the choices, select the statements that match the criterion in the prompt: "Floating-point arithmetic can differ slightly across hardware or libraries."; "These tiny differences can change which token is sampled when probabilities are close."; "Thus, exactly reproducing outputs across providers can be difficult even with the same prompts and settings.". Do not select statements that miss that criterion: "Hardware differences never affect probabilistic sampling behavior.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q70",
@@ -1897,7 +1897,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Retrieval helps ground generations but does not automatically prevent hallucinations; sampling and training data still matter.",
+      'Retrieval helps ground generations but does not automatically prevent hallucinations; sampling and training data still matter. To reason through the choices, select the statements that match the criterion in the prompt: "Retrieved documents can be added to the prompt so the model conditions on grounded facts."; "Sampling hyperparameters still matter, even when retrieval is used.". Do not select statements that miss that criterion: "Retrieval guarantees that hallucinations cannot occur."; "Retrieval eliminates the need to think about the model’s training data distribution.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q71",
@@ -1924,7 +1924,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Higher temperature flattens distributions, allowing rare tokens to be sampled more often and increasing creativity at the cost of reliability.",
+      'Higher temperature flattens distributions, allowing rare tokens to be sampled more often and increasing creativity at the cost of reliability. To reason through the choices, select the statements that match the criterion in the prompt: "Increasing temperature above 1 tends to make rare tokens more likely."; "This can lead to more creative but also more error-prone outputs.". Do not select statements that miss that criterion: "Decreasing temperature is the best way to get surprising outputs."; "Temperature adjustments have no effect on the sampled tokens.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q72",
@@ -1951,7 +1951,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Sampling turns probability distributions into concrete text and is crucial to understanding variability, hallucinations, and inconsistencies.",
+      'Sampling turns probability distributions into concrete text and is crucial to understanding variability, hallucinations, and inconsistencies. To reason through the choices, select the statements that match the criterion in the prompt: "It explains why outputs can vary even when the model parameters are fixed."; "It connects model probabilities to actual observed outputs.". Do not select statements that miss that criterion: "It is irrelevant for understanding why hallucinations or inconsistencies happen."; "It only matters for classification models, not generative models.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q73",
@@ -2064,7 +2064,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Low-resource languages are underrepresented online; targeted curation or data collection is usually needed to improve performance.",
+      'Low-resource languages are underrepresented online; targeted curation or data collection is usually needed to improve performance. To reason through the choices, select the statements that match the criterion in the prompt: "It is often necessary to curate or collect additional data specifically for those languages.". Do not select statements that miss that criterion: "Low-resource languages always have more web text than English."; "Automatic translation from English fully replaces the need for native-language data."; "Low-resource languages are automatically handled well by any sufficiently large model.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q77",
@@ -2090,7 +2090,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Web crawls include all sorts of content; filtering and cleaning are essential before using them for training.",
+      'Web crawls include all sorts of content; filtering and cleaning are essential before using them for training. To reason through the choices, select the statements that match the criterion in the prompt: "They contain a mix of high-quality and very low-quality content and must be filtered.". Do not select statements that miss that criterion: "They only contain peer-reviewed scientific articles."; "They are manually curated by experts for factual accuracy."; "They completely avoid spam, clickbait, and malicious content.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q78",
@@ -2117,7 +2117,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Scaling laws are empirically fitted curves that connect loss with size, data, and compute; they’re approximate, not exact derivations.",
+      'Scaling laws are empirically fitted curves that connect loss with size, data, and compute; they’re approximate, not exact derivations. To reason through the choices, select the statements that match the criterion in the prompt: "They empirically relate model performance to parameters, data, and compute using approximate power-law relationships.". Do not select statements that miss that criterion: "They are exact analytic formulas derived from first principles."; "They show that performance is independent of training compute."; "They imply that once a model is large enough, training data quality no longer matters.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q79",
@@ -2143,7 +2143,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "SFT uses labeled demonstration pairs, building on pre-trained weights; it’s separate from RL-based methods like PPO.",
+      'SFT uses labeled demonstration pairs, building on pre-trained weights; it’s separate from RL-based methods like PPO. To reason through the choices, select the statements that match the criterion in the prompt: "It trains the model to imitate high-quality responses on (prompt, response) examples.". Do not select statements that miss that criterion: "It discards the pre-trained weights and starts from random initialization."; "It always uses reinforcement learning algorithms like PPO."; "It requires that all training prompts are unlabeled.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q80",
@@ -2170,7 +2170,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "The RM approximates human preferences and supplies a reward signal, but it can be exploited and still depends on initial human preference data.",
+      'The RM approximates human preferences and supplies a reward signal, but it can be exploited and still depends on initial human preference data. To reason through the choices, select the statements that match the criterion in the prompt: "They provide a learned scalar signal that guides RL updates by scoring model responses.". Do not select statements that miss that criterion: "They replace the need for human feedback entirely during data collection."; "They guarantee that the policy model will never exploit their weaknesses."; "They are always simple linear models trained on raw token embeddings.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q81",
@@ -2196,7 +2196,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Temperature is an inference-time control; lower values push sampling toward high-probability tokens and more deterministic behavior.",
+      'Temperature is an inference-time control; lower values push sampling toward high-probability tokens and more deterministic behavior. To reason through the choices, select the statements that match the criterion in the prompt: "Lowering temperature makes the distribution more peaked and outputs more deterministic.". Do not select statements that miss that criterion: "Lowering temperature always makes the model more creative."; "Temperature is a training-only hyperparameter and cannot be changed at inference."; "Temperature has no effect once logits are computed.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q82",
@@ -2222,7 +2222,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Top-p uses cumulative probability, not a fixed token count, and then samples within that nucleus distribution.",
+      'Top-p uses cumulative probability, not a fixed token count, and then samples within that nucleus distribution. To reason through the choices, select the statements that match the criterion in the prompt: "It selects the smallest set of tokens whose cumulative probability exceeds a threshold p.". Do not select statements that miss that criterion: "It always uses exactly p tokens, regardless of probabilities."; "It ignores token probabilities and chooses tokens uniformly."; "It is identical to greedy decoding when p = 0.9.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q83",
@@ -2248,7 +2248,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Hallucinations are problematic precisely because outputs sound authoritative even when wrong; users may not verify them.",
+      'Hallucinations are problematic precisely because outputs sound authoritative even when wrong; users may not verify them. To reason through the choices, select the statements that match the criterion in the prompt: "They are dangerous because the model can confidently state incorrect information that users may trust.". Do not select statements that miss that criterion: "They are harmless because users always verify everything the model says."; "They can be ignored as long as the text is grammatically correct."; "They only occur when the model has never seen similar examples during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q84",
@@ -2274,7 +2274,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Caching is an engineering optimization; it reduces cost and variability for repeated queries but doesn’t change the underlying model behavior.",
+      'Caching is an engineering optimization; it reduces cost and variability for repeated queries but doesn’t change the underlying model behavior. To reason through the choices, select the statements that match the criterion in the prompt: "It can make repeated queries cheaper and more consistent by reusing previous responses.". Do not select statements that miss that criterion: "It forces the model to retrain before each response."; "It eliminates the need for any monitoring of outputs."; "It guarantees that hallucinations never occur again.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q85",
@@ -2301,7 +2301,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Synthetic data must be used strategically; naïve recursive reuse risks collapsing diversity and harming performance.",
+      'Synthetic data must be used strategically; naïve recursive reuse risks collapsing diversity and harming performance. To reason through the choices, select the statements that match the criterion in the prompt: "If not handled carefully, recursively training on model outputs can degrade performance by drifting away from original human-generated distributions.". Do not select statements that miss that criterion: "Training solely on AI-generated data always improves diversity and robustness."; "Using AI-generated data automatically solves data scarcity for all domains."; "AI-generated data never appears on the web, so it is irrelevant for training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q86",
@@ -2328,7 +2328,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Parallelism over sequence positions is a key advantage of transformers, improving efficiency and enabling large-scale training.",
+      'Parallelism over sequence positions is a key advantage of transformers, improving efficiency and enabling large-scale training. To reason through the choices, select the statements that match the criterion in the prompt: "Transformers can process all tokens in parallel during training, enabling better hardware utilization.". Do not select statements that miss that criterion: "Transformers require strictly sequential processing of tokens at training time."; "Transformers cannot handle long-range dependencies."; "Transformers completely remove the need for large training datasets.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q87",
@@ -2355,7 +2355,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "FLOPs provide a model- and hardware-agnostic proxy for compute cost, but actual time depends on hardware and implementation.",
+      'FLOPs provide a model- and hardware-agnostic proxy for compute cost, but actual time depends on hardware and implementation. To reason through the choices, select the statements that match the criterion in the prompt: "They measure the approximate number of floating point operations and are a proxy for training compute cost.". Do not select statements that miss that criterion: "They only count memory accesses, not arithmetic operations."; "They are irrelevant for budgeting hardware and energy."; "They guarantee exact training time for any hardware configuration.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q88",
@@ -2382,7 +2382,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Prompting is a useful mitigation, but hallucinations remain possible; evaluation and monitoring are still needed.",
+      'Prompting is a useful mitigation, but hallucinations remain possible; evaluation and monitoring are still needed. To reason through the choices, select the statements that match the criterion in the prompt: "Prompts that instruct the model to state ‘I don’t know’ when uncertain can reduce, but not eliminate, hallucinations.". Do not select statements that miss that criterion: "Prompting guarantees that the model will never hallucinate again."; "Prompting has no influence on hallucinations whatsoever."; "Prompting can remove the need for any evaluation or monitoring.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q89",
@@ -2409,7 +2409,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Beam search is a heuristic search that tracks multiple high-score hypotheses; it is different from stochastic sampling.",
+      'Beam search is a heuristic search that tracks multiple high-score hypotheses; it is different from stochastic sampling. To reason through the choices, select the statements that match the criterion in the prompt: "Beam search focuses on a small set of high-scoring candidate sequences instead of sampling randomly at each step.". Do not select statements that miss that criterion: "Beam search is identical to temperature sampling with T = 1."; "Beam search always produces more diverse outputs than high-temperature sampling."; "Beam search cannot be used for text generation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q90",
@@ -2436,7 +2436,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Developers can often get large behavior changes by simply tuning sampling, making it a powerful yet underappreciated tool.",
+      'Developers can often get large behavior changes by simply tuning sampling, making it a powerful yet underappreciated tool. To reason through the choices, select the statements that match the criterion in the prompt: "Small changes in sampling strategy can significantly change model behavior without retraining.". Do not select statements that miss that criterion: "Sampling is irrelevant because models only ever use greedy decoding."; "Sampling hyperparameters have negligible impact on user experience."; "Sampling can be ignored once a model passes a benchmark.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q91",
@@ -2463,7 +2463,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Probabilistic models require ongoing, systematic evaluation—especially as decoding, data, or usage patterns change.",
+      'Probabilistic models require ongoing, systematic evaluation—especially as decoding, data, or usage patterns change. To reason through the choices, select the statements that match the criterion in the prompt: "You need systematic evaluation pipelines to detect failures and monitor changes as you adjust models and sampling.". Do not select statements that miss that criterion: "Once a model is deployed, you never need to evaluate it again."; "Probabilistic behavior makes evaluation impossible."; "Evaluation is only needed during academic research, not in production systems.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q92",
@@ -2490,7 +2490,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Data restrictions and finite human-generated text are a key bottleneck, leading to interest in proprietary and synthetic datasets.",
+      'Data restrictions and finite human-generated text are a key bottleneck, leading to interest in proprietary and synthetic datasets. To reason through the choices, select the statements that match the criterion in the prompt: "High-quality human-generated text is limited, and many web sources are becoming restricted for training.". Do not select statements that miss that criterion: "We have infinite high-quality labeled data for every domain."; "Copyright restrictions are disappearing, making scraping easier."; "Data availability grows automatically at the same rate as compute.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q93",
@@ -2517,7 +2517,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Accelerator hardware is expensive and limited, concentrating large-scale training in a small number of organizations.",
+      'Accelerator hardware is expensive and limited, concentrating large-scale training in a small number of organizations. To reason through the choices, select the statements that match the criterion in the prompt: "Hardware supply constraints can limit who can realistically train frontier-scale foundation models.". Do not select statements that miss that criterion: "Any individual can easily rent unlimited accelerators at negligible cost."; "Training compute is independent of hardware availability."; "Accelerator scarcity has no effect on the pace of AI research.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q94",
@@ -2544,7 +2544,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Deployment constraints like memory, latency, and cost often push applications toward smaller or distilled models.",
+      'Deployment constraints like memory, latency, and cost often push applications toward smaller or distilled models. To reason through the choices, select the statements that match the criterion in the prompt: "Very large models may be difficult or impossible to deploy on edge devices due to memory and latency constraints.". Do not select statements that miss that criterion: "Larger models always have lower latency than smaller models."; "Deployment constraints are identical for 7B and 500B parameter models."; "Model size has no effect on inference hardware requirements.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q95",
@@ -2571,7 +2571,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "A core benefit of foundation models is reuse: one model can be adapted to many tasks via prompts or additional training.",
+      'A core benefit of foundation models is reuse: one model can be adapted to many tasks via prompts or additional training. To reason through the choices, select the statements that match the criterion in the prompt: "A single foundation model can be adapted via prompting, retrieval, and finetuning to many different applications.". Do not select statements that miss that criterion: "Each new task always requires training a completely new model from scratch."; "Foundation models cannot generalize beyond the task they were trained for."; "Using one model for multiple tasks is impossible due to parameter sharing.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q96",
@@ -2597,7 +2597,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Users expect some stability; wildly different answers for similar inputs often reduce trust in the system.",
+      'Users expect some stability; wildly different answers for similar inputs often reduce trust in the system. To reason through the choices, select the statements that match the criterion in the prompt: "Highly unstable or inconsistent outputs can erode user trust, even if the model is powerful.". Do not select statements that miss that criterion: "Users are always comfortable with completely unpredictable answers."; "Sampling settings cannot influence perceived reliability."; "User trust is unrelated to whether outputs are repeatable for similar queries.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q97",
@@ -2624,7 +2624,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Creative tasks often benefit from diverse, surprising outputs, which sampling parameters strongly influence.",
+      'Creative tasks often benefit from diverse, surprising outputs, which sampling parameters strongly influence. To reason through the choices, select the statements that match the criterion in the prompt: "Higher temperatures and richer sampling strategies can be especially useful for brainstorming or creative writing.". Do not select statements that miss that criterion: "For creative tasks, greedy decoding is always ideal."; "Creative tasks never benefit from diversity in outputs."; "Sampling strategies are irrelevant if prompts are well written.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q98",
@@ -2651,7 +2651,7 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Different tasks have different trade-offs between creativity and reliability, so sampling settings are often task-specific.",
+      'Different tasks have different trade-offs between creativity and reliability, so sampling settings are often task-specific. To reason through the choices, select the statements that match the criterion in the prompt: "You may want different temperature/top-p settings for coding assistance, factual Q&A, and story generation.". Do not select statements that miss that criterion: "All tasks should share exactly the same sampling configuration."; "Sampling variables have no impact on coding assistance."; "Sampling variables are only relevant for image generation models.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "aie-ch2-q99",
@@ -2705,6 +2705,6 @@ export const aieChapter2Questions: Question[] = [
       },
     ],
     explanation:
-      "Understanding training, scaling, post-training, and sampling helps you design, debug, and improve real applications more systematically.",
+      'Understanding training, scaling, post-training, and sampling helps you design, debug, and improve real applications more systematically. To reason through the choices, select the statements that match the criterion in the prompt: "They let you reason about model choice, sampling settings, and risk trade-offs instead of treating the model as a complete black box.". Do not select statements that miss that criterion: "They are only useful if you’re an academic researcher."; "They become obsolete once you have a working API key."; "They prevent you from changing any system settings safely.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 ];

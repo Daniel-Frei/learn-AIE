@@ -12,26 +12,27 @@
 - Users can switch between:
   - `standard` mode (randomized from filtered pool)
   - `climb` mode (questions are biased toward current user Glicko rating with some randomness)
-- The UI displays the current anonymous participant Glicko rating and rating deviation (RD).
+- The UI displays the current anonymous participant Glicko rating and rating deviation (RD). The filter panel includes a reset button that returns the participant rating to the default Glicko state without clearing shared question ratings or question-report counts.
 
 ## Current Behavior
 
 - Main quiz UI lives in `/app/page.tsx`.
-- On Windows, users can install a per-user Start Menu shortcut named `Learning AI`; launching it runs `make start` from the cloned repository.
+- On Windows, users can install a per-user Start Menu shortcut named `Learning AI`; launching it refreshes stale local Next.js dev artifacts, then runs `make start` from the cloned repository.
 - Question banks are maintained in `lib/*` and `lib/lectures/*`.
 - Quiz source registry includes MIT 6.S191 2025 lectures L1-L6, Crash Course Linear Algebra L0-L5, Biology & Chemistry for Life Science L0-L5, and LangChain Deep Agents as selectable practice sources.
 - Crash Course Linear Algebra L0 provides prerequisite AP/A-level-style linear algebra practice on notation and terminology, coordinates, vector magnitude and direction, unit vectors, dot products, projection, span, basis, matrices, determinants, systems, and rank.
 - Crash Course Linear Algebra L1 includes supplemental applied math practice on vectors, norms, dot products, cosine similarity, and matrix-vector multiplication for A-level/AP-style reinforcement.
-- Crash Course Linear Algebra L2 includes applied matrix-transformation practice on composition, shape reasoning, geometric transformations, rank, LoRA, transpose, symmetry, and attention.
-- Crash Course Linear Algebra L3 covers derivatives, partial derivatives, gradients, gradient descent, learning rates, chain rule, backpropagation, and matrix-gradient shape intuition.
-- Crash Course Linear Algebra L4 covers eigenvectors, eigenvalues, covariance, PCA, dimensionality reduction, SVD, low-rank approximation, embeddings, attention compression, and LoRA.
-- Crash Course Linear Algebra L5 synthesizes attention, Q/K/V projections, neural networks as matrix stacks, RL value functions, optimization landscapes, and why linear algebra dominates modern AI systems.
+- Crash Course Linear Algebra L2 includes 60 questions with applied matrix-transformation practice on composition, shape reasoning, geometric transformations, rank, LoRA, transpose, symmetry, attention, and more rigorous computation.
+- Crash Course Linear Algebra L3 includes 60 questions covering derivatives, partial derivatives, gradients, gradient descent, learning rates, chain rule, backpropagation, matrix-gradient shape intuition, and applied optimization calculations.
+- Crash Course Linear Algebra L4 includes 60 questions covering eigenvectors, eigenvalues, covariance, PCA, dimensionality reduction, SVD, low-rank approximation, embeddings, attention compression, LoRA, and applied decomposition reasoning.
+- Crash Course Linear Algebra L5 includes 60 questions synthesizing attention, Q/K/V projections, neural networks as matrix stacks, RL value functions, optimization landscapes, and why linear algebra dominates modern AI systems.
 - Biology & Chemistry for Life Science L0 provides 81 prerequisite questions on core biology, chemistry, and AP/A-level basics needed before the course, with equal easy/medium/hard difficulty labels: atoms, molecules, bonds, pH, water, macromolecules, cells, membranes, metabolism, genetics, evolution, immunity, disease, drugs, clinical trials, and biomedical evidence.
 - Biology & Chemistry for Life Science L1 covers chemistry-of-life fundamentals: atoms, bonds, water, hydrophobic effects, biological macromolecules, proteins, enzymes, ATP, metabolism, and structure-function reasoning.
 - Biology & Chemistry for Life Science L2 covers cells as organized information-processing systems: organelles, membranes, transport, gradients, signaling, feedback, division, apoptosis, cancer, and immunity.
 - Biology & Chemistry for Life Science L3 covers genetics, proteins, and regulation: DNA, genes, central dogma, gene expression, transcription factors, epigenetics, mutation, evolution, CRISPR, mRNA, gene therapy, and synthetic biology.
 - Biology & Chemistry for Life Science L4 covers physiology, disease, and pharmacology: homeostasis, nervous/cardiovascular/endocrine coordination, disease as disrupted regulation, receptors, agonists/antagonists, dose response, PK/PD, side effects, biomarkers, and precision medicine.
 - Biology & Chemistry for Life Science L5 covers clinical trials and biomedical evidence: placebo effects, confounding, bias, randomization, controls, blinding, endpoints, trial phases, medical statistics, drug development, reproducibility, and AI in biomedicine.
+- Clinical Trials Crash Course L1-L2 covers why clinical trials exist and how trials are designed: causal inference, placebo effects, natural recovery, regression to the mean, confounding, selection/observer/publication bias, evidence hierarchy, sponsors, investigators, CROs, regulators, patients, PICO(T), randomization methods, blinding, endpoints, Phase I-IV development, and internal versus external validity.
 - Explanation endpoint exists at `/api/explain` and proxies to an LLM helper in `lib/llm/explain.ts`.
 - Mobile uses local-first profile sync:
   - Bundled questions, filters, timers, answer checking, generic explanations, and local rating updates work without network.
@@ -43,7 +44,7 @@
   - Each browser/device is treated as its own anonymous participant via a locally stored `participantId`.
   - Question difficulty is shared globally across participants and remains a Glicko-2 style rating under the hood, even though the UI labels it as Elo.
   - New unanswered question ratings are seeded from difficulty labels close to the neutral rating: easy `1400`, medium `1500`, and hard `1600`. Once answer data exists for a question, the persisted rating is used and the initial seed only remains as the starting point whose influence fades as more answers accumulate.
-  - Participant rating/climb behavior remains per device.
+  - Participant rating/climb behavior remains per device. Resetting the participant rating preserves global question difficulty data and marks legacy migration complete so old browser-local ratings are not re-imported after reset.
 - Answer scoring is still binary at the core, but rating updates are weighted by response time and mistake count so fast, clean answers move ratings more than slow or messy ones. The response-time weight stays full through the first 20 seconds, then scales down linearly to a 25% maximum reduction at the 3-minute timer cap.
 - Question answer attempts store the elapsed time and mistake count alongside the binary result for later auditability.
 - Question reports are append-only in the shared database:

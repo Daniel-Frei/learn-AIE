@@ -196,7 +196,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
       },
     ],
     explanation:
-      "Infectious disease emerges from interactions between a pathogen and the host. Symptoms can come from pathogen damage, immune response, or both.",
+      'Infectious disease emerges from interactions between a pathogen and the host. Symptoms can come from pathogen damage, immune response, or both. To reason through the choices, select the statements that match the criterion in the prompt: "Infection involves interaction between a host and a pathogen such as a bacterium, virus, fungus, or parasite.". Do not select statements that miss that criterion: "Infection never involves the immune response."; "Infection is the same thing as inherited DNA sequence variation."; "Infection requires a drug receptor to be activated by an agonist.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
   {
     id: "bio-chem-life-l4-q09",

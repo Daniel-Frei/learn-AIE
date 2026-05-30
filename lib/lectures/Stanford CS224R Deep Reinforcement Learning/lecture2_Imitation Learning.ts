@@ -88,7 +88,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "Demonstrations are trajectories sampled from an expert policy. When multiple experts contribute data, demonstrations often reflect diverse strategies.",
+      'Demonstrations are trajectories sampled from an expert policy. When multiple experts contribute data, demonstrations often reflect diverse strategies. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They consist of sequences of states and actions."; "They are assumed to come from an unknown expert policy."; "They define the data distribution used for training."; "They may contain variability due to different human strategies.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   {
@@ -247,7 +247,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "Diffusion policies gradually transform noise into actions. Their iterative structure allows them to represent highly complex distributions.",
+      'Diffusion policies gradually transform noise into actions. Their iterative structure allows them to represent highly complex distributions. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They generate actions via iterative denoising."; "They can model complex continuous action distributions."; "Sampling requires multiple refinement steps."; "They are more expressive than single Gaussian policies.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
   },
 
   // ============================================================
@@ -272,7 +272,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "Demonstrations are often imperfect and diverse. Imitation learning aims to match expert behavior, not necessarily optimal behavior.",
+      'Demonstrations are often imperfect and diverse. Imitation learning aims to match expert behavior, not necessarily optimal behavior. To reason through the choices, select the statements that match the criterion in the prompt: "They may come from multiple experts."; "They define the training distribution for imitation learning."; "They may include inconsistent action choices.". Do not select statements that miss that criterion: "They always correspond to optimal behavior.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -297,7 +297,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "GMMs extend unimodal Gaussians but remain limited compared to fully flexible generative models like diffusion.",
+      'GMMs extend unimodal Gaussians but remain limited compared to fully flexible generative models like diffusion. To reason through the choices, select the statements that match the criterion in the prompt: "They combine multiple Gaussian components."; "They are more expressive than a single Gaussian."; "They require choosing the number of components.". Do not select statements that miss that criterion: "They are maximally expressive for continuous actions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -322,7 +322,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "Discretization trades metric precision for expressive categorical modeling. Distance relationships are only approximated through binning.",
+      'Discretization trades metric precision for expressive categorical modeling. Distance relationships are only approximated through binning. To reason through the choices, select the statements that match the criterion in the prompt: "Continuous actions can be binned into discrete categories."; "Discretization enables categorical cross-entropy loss."; "Finer discretization increases expressivity.". Do not select statements that miss that criterion: "Discretization preserves exact distance information between actions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -349,7 +349,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "Offline methods are safer and simpler but do not inherently solve distribution shift issues that arise during deployment.",
+      'Offline methods are safer and simpler but do not inherently solve distribution shift issues that arise during deployment. To reason through the choices, select the statements that match the criterion in the prompt: "It trains using a fixed dataset of demonstrations."; "It does not require running the learned policy during training."; "It avoids safety risks from untrained policies.". Do not select statements that miss that criterion: "It guarantees robustness to compounding errors.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -373,7 +373,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "They only occur in stochastic environments.", isCorrect: false },
     ],
     explanation:
-      "Compounding errors stem from sequential decision making, not randomness alone. Even deterministic systems can exhibit them.",
+      'Compounding errors stem from sequential decision making, not randomness alone. Even deterministic systems can exhibit them. To reason through the choices, select the statements that match the criterion in the prompt: "They arise when policy mistakes alter future states."; "They cause the policy to visit unseen states."; "They create a mismatch between training and deployment distributions.". Do not select statements that miss that criterion: "They only occur in stochastic environments.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -394,7 +394,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "It is a purely offline algorithm.", isCorrect: false },
     ],
     explanation:
-      "DAgger is inherently online because it relies on policy rollouts and expert feedback during training.",
+      'DAgger is inherently online because it relies on policy rollouts and expert feedback during training. To reason through the choices, select the statements that match the criterion in the prompt: "It collects data by running the learned policy."; "It queries the expert at visited states."; "It aggregates corrective data with original demonstrations.". Do not select statements that miss that criterion: "It is a purely offline algorithm.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -422,7 +422,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "Categorical policies fully represent discrete distributions and naturally align with classification objectives.",
+      'Categorical policies fully represent discrete distributions and naturally align with classification objectives. To reason through the choices, select the statements that match the criterion in the prompt: "They output probabilities over discrete actions."; "They are maximally expressive for discrete action spaces."; "They are trained using classification losses.". Do not select statements that miss that criterion: "They require continuous action representations.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -449,7 +449,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "The output distribution fundamentally limits what behaviors can be represented, independent of network depth.",
+      'The output distribution fundamentally limits what behaviors can be represented, independent of network depth. To reason through the choices, select the statements that match the criterion in the prompt: "Distribution expressivity differs from network expressivity."; "A large network with L2 loss still predicts a mean."; "Expressive distributions enable safer action sampling.". Do not select statements that miss that criterion: "Distribution choice is irrelevant if the network is deep enough.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -477,7 +477,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "Training conditions on expert actions (teacher forcing). Gradients flow through probabilities, not discrete samples.",
+      'Training conditions on expert actions (teacher forcing). Gradients flow through probabilities, not discrete samples. To reason through the choices, select the statements that match the criterion in the prompt: "Training uses expert actions as conditioning inputs."; "Cross-entropy loss is applied per action dimension."; "Inference feeds sampled actions back into the model.". Do not select statements that miss that criterion: "Backpropagation requires differentiating through sampled actions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -496,7 +496,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "They depend on demonstration quality.", isCorrect: true },
     ],
     explanation:
-      "Imitation learning optimizes likelihood of demonstrations rather than reward. The quality of the expert data strongly affects performance.",
+      'Imitation learning optimizes likelihood of demonstrations rather than reward. The quality of the expert data strongly affects performance. To reason through the choices, select the statements that match the criterion in the prompt: "They maximize likelihood of expert actions."; "They depend on demonstration quality.". Do not select statements that miss that criterion: "They maximize expected reward directly."; "They require a known reward function.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -515,7 +515,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "They eliminate the need for sampling.", isCorrect: false },
     ],
     explanation:
-      "Discretization simplifies modeling at the cost of precision. Autoregression avoids exponential blowup of joint distributions.",
+      'Discretization simplifies modeling at the cost of precision. Autoregression avoids exponential blowup of joint distributions. To reason through the choices, select the statements that match the criterion in the prompt: "They convert continuous actions into bins."; "They reduce modeling complexity of joint distributions.". Do not select statements that miss that criterion: "They preserve exact geometric distances."; "They eliminate the need for sampling.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -542,7 +542,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "Covariate shift is intrinsic to sequential prediction. Even large datasets cannot fully eliminate it.",
+      'Covariate shift is intrinsic to sequential prediction. Even large datasets cannot fully eliminate it. To reason through the choices, select the statements that match the criterion in the prompt: "It arises when policy actions affect future states."; "It causes mismatch between expert and policy state distributions.". Do not select statements that miss that criterion: "It is irrelevant when demonstrations are large."; "It can be ignored in sequential decision problems.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -566,7 +566,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "Human-gated DAgger reduces annotation burden but still requires expert oversight during rollouts.",
+      'Human-gated DAgger reduces annotation burden but still requires expert oversight during rollouts. To reason through the choices, select the statements that match the criterion in the prompt: "The expert intervenes when the policy fails."; "It is more practical than querying every visited state.". Do not select statements that miss that criterion: "Corrections are collected without policy rollouts."; "It eliminates the need for expert involvement.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -587,7 +587,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "Diffusion trades off inference speed for expressivity. Its iterative nature enables rich continuous distributions.",
+      'Diffusion trades off inference speed for expressivity. Its iterative nature enables rich continuous distributions. To reason through the choices, select the statements that match the criterion in the prompt: "They operate by iterative refinement."; "They handle multimodal continuous actions well.". Do not select statements that miss that criterion: "They generate actions in a single forward pass."; "They require discretization of actions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -605,7 +605,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "Expressive policies improve realism and safety but do not guarantee optimality.",
+      'Expressive policies improve realism and safety but do not guarantee optimality. To reason through the choices, select the statements that match the criterion in the prompt: "They reduce risk of unsafe averaged actions."; "They enable sampling from high-probability regions.". Do not select statements that miss that criterion: "They guarantee optimal performance."; "They are unnecessary for multimodal data.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -626,7 +626,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "They eliminate compounding errors.", isCorrect: false },
     ],
     explanation:
-      "Gaussian policies are simple but restrictive. Multimodal tasks require richer distributions.",
+      'Gaussian policies are simple but restrictive. Multimodal tasks require richer distributions. To reason through the choices, select the statements that match the criterion in the prompt: "They are unimodal distributions."; "They are limited for multimodal imitation data.". Do not select statements that miss that criterion: "They can represent arbitrary action distributions."; "They eliminate compounding errors.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -650,7 +650,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "Imitation learning focuses on matching observed behavior, not exceeding it.",
+      'Imitation learning focuses on matching observed behavior, not exceeding it. To reason through the choices, select the statements that match the criterion in the prompt: "Experts may follow different strategies."; "Imitation learning aims to match expert performance.". Do not select statements that miss that criterion: "Imitation learning assumes expert behavior is optimal."; "Imitation learning can outperform experts by default.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -668,7 +668,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "Deployment does not affect policy behavior.", isCorrect: false },
     ],
     explanation:
-      "Sequential execution amplifies small mistakes. This makes deployment significantly harder than supervised prediction.",
+      'Sequential execution amplifies small mistakes. This makes deployment significantly harder than supervised prediction. To reason through the choices, select the statements that match the criterion in the prompt: "Deployment may expose unseen states."; "Errors can accumulate over time.". Do not select statements that miss that criterion: "Training and deployment distributions are identical."; "Deployment does not affect policy behavior.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   // ============================================================
@@ -693,7 +693,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "Covariate shift is a central challenge in imitation learning due to sequential decisions.",
+      'Covariate shift is a central challenge in imitation learning due to sequential decisions. To reason through the choices, select the statements that match the criterion in the prompt: "It can suffer from covariate shift.". Do not select statements that miss that criterion: "It always requires online interaction with the environment."; "It inherently solves long-horizon planning."; "It guarantees stable performance without interventions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -715,7 +715,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "Negative log-likelihood fits the full action distribution rather than point estimates.",
+      'Negative log-likelihood fits the full action distribution rather than point estimates. To reason through the choices, select the statements that match the criterion in the prompt: "It fits a probabilistic model to expert actions.". Do not select statements that miss that criterion: "It minimizes squared error between actions."; "It maximizes reward directly."; "It removes the need for expressive distributions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -733,7 +733,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "They invalidate imitation learning.", isCorrect: false },
     ],
     explanation:
-      "Multimodal data motivates probabilistic policies rather than deterministic ones.",
+      'Multimodal data motivates probabilistic policies rather than deterministic ones. To reason through the choices, select the statements that match the criterion in the prompt: "They require expressive policy distributions.". Do not select statements that miss that criterion: "They should be averaged for safety."; "They are rare in human data."; "They invalidate imitation learning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -751,7 +751,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "It removes the need for demonstrations.", isCorrect: false },
     ],
     explanation:
-      "DAgger explicitly addresses distribution shift by collecting corrective data.",
+      'DAgger explicitly addresses distribution shift by collecting corrective data. To reason through the choices, select the statements that match the criterion in the prompt: "It reduces compounding errors.". Do not select statements that miss that criterion: "It eliminates expert queries entirely."; "It is less data-efficient than offline cloning."; "It removes the need for demonstrations.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -775,7 +775,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      "Expressive distributions are especially valuable when experts behave differently.",
+      'Expressive distributions are especially valuable when experts behave differently. To reason through the choices, select the statements that match the criterion in the prompt: "They improve robustness under expert diversity.". Do not select statements that miss that criterion: "They are unnecessary for single-expert datasets."; "They only matter for large neural networks."; "They replace the need for state representation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -796,7 +796,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "It requires a reward function.", isCorrect: false },
     ],
     explanation:
-      "Autoregressive models capture dependencies by conditioning each dimension on previous ones.",
+      'Autoregressive models capture dependencies by conditioning each dimension on previous ones. To reason through the choices, select the statements that match the criterion in the prompt: "It factorizes the joint action distribution.". Do not select statements that miss that criterion: "It predicts all action dimensions simultaneously."; "It ignores correlations between action dimensions."; "It requires a reward function.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -820,7 +820,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "It eliminates the need for data collection.", isCorrect: false },
     ],
     explanation:
-      "Imitation learning reproduces what it sees. Poor or limited demonstrations constrain performance.",
+      'Imitation learning reproduces what it sees. Poor or limited demonstrations constrain performance. To reason through the choices, select the statements that match the criterion in the prompt: "Its performance is bounded by demonstration quality.". Do not select statements that miss that criterion: "It can improve beyond expert performance by default."; "It provides a mechanism for self-improvement through exploration."; "It eliminates the need for data collection.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 
   {
@@ -838,6 +838,6 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "They only occur in robotics.", isCorrect: false },
     ],
     explanation:
-      "Sequential decision making causes errors to propagate forward, regardless of domain.",
+      'Sequential decision making causes errors to propagate forward, regardless of domain. To reason through the choices, select the statements that match the criterion in the prompt: "They arise because actions affect future states.". Do not select statements that miss that criterion: "They are unique to stochastic policies."; "They disappear with enough training epochs."; "They only occur in robotics.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
   },
 ];
