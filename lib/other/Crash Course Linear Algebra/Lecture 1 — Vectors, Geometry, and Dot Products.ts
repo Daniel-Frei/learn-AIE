@@ -302,7 +302,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
       "Which statements correctly describe cosine similarity in embedding spaces?",
     options: [
       {
-        text: "Cosine similarity focuses on magnitude only and ignores direction.",
+        text: "Cosine similarity focuses on magnitude and ignores direction.",
         isCorrect: false,
       },
       {
@@ -338,7 +338,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is defined only for two-dimensional vectors.",
+        text: "It is defined for two-dimensional vectors in this setting.",
         isCorrect: false,
       },
     ],
@@ -354,7 +354,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
       "Which statements about high-dimensional vectors in machine learning are correct?",
     options: [
       {
-        text: "Word embeddings always contain exactly three dimensions.",
+        text: "Word embeddings use exactly three dimensions.",
         isCorrect: false,
       },
       {
@@ -366,7 +366,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Vectors with more than three dimensions cannot be used in machine learning models.",
+        text: "Vectors with more than three dimensions are unsuitable for machine learning models.",
         isCorrect: false,
       },
     ],
@@ -439,7 +439,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     options: [
       { text: "The dot product equals 3.", isCorrect: true },
       {
-        text: "The formula \\(a\\cdot b = \\|a\\|\\|b\\|\\cos\\theta\\) cannot be used here.",
+        text: "The formula \\(a\\cdot b = \\|a\\|\\|b\\|\\cos\\theta\\) is not the right tool here.",
         isCorrect: false,
       },
       {
@@ -464,7 +464,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Reinforcement learning states cannot be encoded as vectors.",
+        text: "Reinforcement learning states are unsuitable for vector encoding.",
         isCorrect: false,
       },
       {
@@ -472,7 +472,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Vectors cannot represent categorical information.",
+        text: "Vectors are unsuitable for categorical information.",
         isCorrect: false,
       },
     ],
@@ -492,7 +492,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Neural network layers never compute dot products in parallel.",
+        text: "Neural network layers avoid computing dot products in parallel.",
         isCorrect: false,
       },
       {
@@ -500,7 +500,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Dot products can only be used in two-dimensional spaces.",
+        text: "Dot products are limited to two-dimensional spaces.",
         isCorrect: false,
       },
     ],
@@ -606,7 +606,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "The neuron output depends only on the length of the input vector.",
+        text: "The neuron output depends on the length of the input vector rather than its components.",
         isCorrect: false,
       },
     ],
@@ -676,7 +676,10 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         text: "It measures distance using a different geometry than L2.",
         isCorrect: true,
       },
-      { text: "It is always identical to the L2 norm.", isCorrect: false },
+      {
+        text: "It is identical to the L2 norm in this setting.",
+        isCorrect: false,
+      },
     ],
     explanation:
       "The L1 norm sums the absolute values of vector components. It represents a different geometric distance than L2 and is often associated with sparsity in optimization. The L1 and L2 norms generally produce different values.",
@@ -769,7 +772,10 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         text: "States in reinforcement learning can be represented as vectors.",
         isCorrect: true,
       },
-      { text: "Vectors cannot represent text data.", isCorrect: false },
+      {
+        text: "Vectors are unsuitable for representing text data.",
+        isCorrect: false,
+      },
     ],
     explanation:
       "In machine learning, vectors represent structured information such as features, embeddings, or state representations. Even text is converted into vector representations through token embeddings. Vectors are a universal representation format across many ML models.",
@@ -807,7 +813,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Vectors only exist in two-dimensional space.",
+        text: "Vectors are limited to two-dimensional space.",
         isCorrect: false,
       },
     ],
@@ -832,7 +838,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It only works when the matrix has the same number of rows and columns.",
+        text: "It works when the matrix has the same number of rows and columns.",
         isCorrect: false,
       },
     ],
@@ -930,7 +936,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Linear algebra only applies to two- or three-dimensional vectors.",
+        text: "Linear algebra is limited to two- or three-dimensional vectors.",
         isCorrect: false,
       },
     ],
@@ -955,7 +961,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Vector representations are limited to classical statistics models only.",
+        text: "Vector representations are limited to classical statistics models.",
         isCorrect: false,
       },
     ],
@@ -1095,7 +1101,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     options: [
       { text: "\\(a\\cdot b=6\\).", isCorrect: true },
       {
-        text: "All of \\(b\\) lies in the direction of \\(a\\).",
+        text: "The whole vector \\(b\\) lies in the direction of \\(a\\).",
         isCorrect: false,
       },
       {

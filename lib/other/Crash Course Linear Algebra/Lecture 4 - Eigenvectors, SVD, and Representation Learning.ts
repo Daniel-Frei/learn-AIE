@@ -43,7 +43,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The equation means \\(v\\) must become perpendicular to itself.",
+        text: "The equation means \\(v\\) must become perpendicular to itself after the transformation.",
         isCorrect: false,
       },
     ],
@@ -65,11 +65,11 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A negative eigenvalue can never flip direction.",
+        text: "A negative eigenvalue keeps orientation while changing length within the same line.",
         isCorrect: false,
       },
       {
-        text: "Every eigenvalue must be exactly 1.",
+        text: "Eigenvalues in this setting are fixed at 1 by definition.",
         isCorrect: false,
       },
     ],
@@ -92,11 +92,11 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "They are random directions chosen independently of the matrix.",
+        text: "They are random directions chosen independently of the matrix rather than tied to its geometry.",
         isCorrect: false,
       },
       {
-        text: "They are vectors that cannot be multiplied by a matrix.",
+        text: "They are vectors outside the matrix's domain.",
         isCorrect: false,
       },
     ],
@@ -149,7 +149,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Power iteration proves that every direction is amplified equally.",
+        text: "Power iteration treats the starting direction as equally amplified at each step.",
         isCorrect: false,
       },
     ],
@@ -171,11 +171,11 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Near-zero covariance proves there is no nonlinear relationship of any kind.",
+        text: "Near-zero covariance rules out a curved relationship between variables.",
         isCorrect: false,
       },
       {
-        text: "Covariance measures only the number of rows in a dataset.",
+        text: "Covariance measures the row count rather than joint variation.",
         isCorrect: false,
       },
     ],
@@ -193,7 +193,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It stores only class labels.",
+        text: "It stores class labels instead of pairwise feature variation inside the covariance table.",
         isCorrect: false,
       },
       {
@@ -201,7 +201,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It can only be formed from one-dimensional data.",
+        text: "It is restricted to one-dimensional data.",
         isCorrect: false,
       },
     ],
@@ -275,7 +275,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Dimensionality reduction always preserves every original coordinate exactly.",
+        text: "Dimensionality reduction preserves original coordinates one by one.",
         isCorrect: false,
       },
       {
@@ -301,7 +301,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Principal components are chosen only by alphabetical feature names.",
+        text: "Principal components are chosen by alphabetical feature names in the input table.",
         isCorrect: false,
       },
       {
@@ -359,7 +359,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It only works when every matrix entry is zero.",
+        text: "It works best when matrix entries are zero across the dataset.",
         isCorrect: false,
       },
     ],
@@ -382,11 +382,11 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "\\(U\\) removes all output-space geometry from the decomposition.",
+        text: "\\(U\\) discards output-space geometry from the decomposition.",
         isCorrect: false,
       },
       {
-        text: "\\(\\Sigma\\) stores only unrelated labels, not numerical scales.",
+        text: "\\(\\Sigma\\) stores labels rather than numerical scales.",
         isCorrect: false,
       },
     ],
@@ -404,11 +404,11 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They are always meaningless noise.",
+        text: "They are usually measurement noise rather than useful signal.",
         isCorrect: false,
       },
       {
-        text: "They must all be equal for SVD to work.",
+        text: "They should be equal for SVD to work well.",
         isCorrect: false,
       },
       {
@@ -464,7 +464,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Low-rank structure means the model cannot contain useful information.",
+        text: "Low-rank structure means the model has little useful information despite its learned weights.",
         isCorrect: false,
       },
     ],
@@ -486,7 +486,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "LoRA requires updating every full model weight directly.",
+        text: "LoRA requires directly updating the dense model-weight matrix.",
         isCorrect: false,
       },
       {
@@ -509,15 +509,15 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Every embedding coordinate always carries unrelated information of equal importance.",
+        text: "Embedding coordinates carry unrelated information with equal importance.",
         isCorrect: false,
       },
       {
-        text: "Compression works only by deleting labels, not numerical structure.",
+        text: "Compression works by deleting labels rather than numerical structure.",
         isCorrect: false,
       },
       {
-        text: "Embeddings are not numerical vectors, so compression is impossible.",
+        text: "Embeddings are categorical tags rather than numerical vectors.",
         isCorrect: false,
       },
     ],
@@ -570,7 +570,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It intentionally removes all relationships between features before analysis.",
+        text: "It intentionally removes feature relationships before analysis.",
         isCorrect: false,
       },
     ],
@@ -593,7 +593,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Every coordinate must have a simple human-readable meaning.",
+        text: "Each coordinate maps to a simple human-readable concept.",
         isCorrect: false,
       },
       {
@@ -616,11 +616,11 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "PCA only chooses existing columns by name.",
+        text: "PCA chooses existing columns by name.",
         isCorrect: false,
       },
       {
-        text: "PCA cannot reduce dimensionality.",
+        text: "PCA changes labels without reducing dimensionality.",
         isCorrect: false,
       },
       {
@@ -676,7 +676,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Representation learning guarantees every latent dimension is independent.",
+        text: "Representation learning separates latent dimensions into independent factors by default.",
         isCorrect: false,
       },
     ],
@@ -695,7 +695,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Information can never concentrate in major attention directions.",
+        text: "Information is spread uniformly rather than concentrating in major attention directions.",
         isCorrect: false,
       },
       {
@@ -783,7 +783,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "SVD compression requires increasing every matrix dimension.",
+        text: "SVD compression increases the stored matrix dimensions.",
         isCorrect: false,
       },
     ],
@@ -806,11 +806,11 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It proves every cluster has a causal biological or semantic explanation.",
+        text: "A cluster in the plot is direct causal evidence for a biological or semantic category.",
         isCorrect: false,
       },
       {
-        text: "It requires ignoring all vector geometry.",
+        text: "It requires ignoring vector geometry during interpretation.",
         isCorrect: false,
       },
     ],
@@ -829,15 +829,15 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "SVD works only for diagonal covariance matrices.",
+        text: "SVD is designed for diagonal covariance matrices rather than general matrices.",
         isCorrect: false,
       },
       {
-        text: "SVD cannot be applied to learned model weights.",
+        text: "SVD is disconnected from learned model weights.",
         isCorrect: false,
       },
       {
-        text: "SVD removes all geometric interpretation.",
+        text: "SVD removes geometric interpretation from the matrix.",
         isCorrect: false,
       },
     ],
@@ -889,7 +889,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Low-rank structure always means low-quality information.",
+        text: "Low-rank structure indicates low-quality information rather than useful compression in model weights.",
         isCorrect: false,
       },
     ],
@@ -908,7 +908,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Attention matrices cannot show structured redundancy.",
+        text: "Attention matrices are too irregular to show structured redundancy.",
         isCorrect: false,
       },
       {
@@ -916,7 +916,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Transformers cannot be analyzed using linear algebra.",
+        text: "Transformer behavior is separate from linear-algebra analysis.",
         isCorrect: false,
       },
     ],
@@ -935,11 +935,11 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "All directions in high-dimensional data are always equally important.",
+        text: "Directions in high-dimensional data tend to carry equal importance.",
         isCorrect: false,
       },
       {
-        text: "Compression is impossible when data is numerical.",
+        text: "Numerical data resists compression because coordinates are already numbers.",
         isCorrect: false,
       },
       {
@@ -997,7 +997,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Every possible fine-tuning task must be exactly rank one.",
+        text: "Fine-tuning tasks are expected to be rank one in this picture.",
         isCorrect: false,
       },
     ],
@@ -1020,11 +1020,11 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Low-rank factors always make storage and computation larger.",
+        text: "Low-rank factors make storage and computation larger in typical recommender systems.",
         isCorrect: false,
       },
       {
-        text: "SVD is useful only for matrices with no repeated patterns.",
+        text: "SVD is useful mainly for matrices with no repeated patterns.",
         isCorrect: false,
       },
     ],
@@ -1047,7 +1047,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "They prove every model must use full-rank updates for adaptation.",
+        text: "They suggest model adaptation should use dense full-rank updates.",
         isCorrect: false,
       },
       {
@@ -1078,7 +1078,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Every nonzero vector in \\(\\mathbb{R}^2\\) is an eigenvector of \\(A\\).",
+        text: "Any nonzero vector in \\(\\mathbb{R}^2\\) is treated as an eigenvector of \\(A\\).",
         isCorrect: false,
       },
     ],
@@ -1105,7 +1105,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "\\(Av\\) cannot be computed because \\(A\\) has a negative entry.",
+        text: "\\(Av\\) is treated as undefined because \\(A\\) has a negative entry.",
         isCorrect: false,
       },
     ],
@@ -1127,7 +1127,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A covariance matrix must be diagonal because different features never interact.",
+        text: "A covariance matrix is diagonal when feature interactions are being studied by default.",
         isCorrect: false,
       },
       {
@@ -1204,7 +1204,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "SVD only works when a matrix is square and symmetric.",
+        text: "SVD is restricted to square symmetric matrices.",
         isCorrect: false,
       },
       {
@@ -1288,7 +1288,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A rank-\\(1\\) approximation keeps all nonzero singular directions.",
+        text: "A rank-\\(1\\) approximation keeps the two displayed nonzero singular directions.",
         isCorrect: false,
       },
       {
@@ -1315,11 +1315,11 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "The iterates cannot prefer a direction because diagonal matrices have no eigenvectors.",
+        text: "The iterates have no preferred direction because diagonal matrices lack eigenvectors.",
         isCorrect: false,
       },
       {
-        text: "The iterates must rotate by 90 degrees on every step.",
+        text: "The iterates rotate by 90 degrees at each step.",
         isCorrect: false,
       },
     ],
@@ -1395,7 +1395,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A two-dimensional PCA plot must preserve all pairwise distances exactly.",
+        text: "A two-dimensional PCA plot preserves pairwise distances from the original space.",
         isCorrect: false,
       },
       {
@@ -1418,15 +1418,15 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Every square matrix has an orthogonal eigenbasis over the real numbers.",
+        text: "A general square matrix has an orthogonal real eigenbasis by default.",
         isCorrect: false,
       },
       {
-        text: "Nonsymmetric matrices cannot have any eigenvectors.",
+        text: "Nonsymmetric matrices lack eigenvectors in the real setting.",
         isCorrect: false,
       },
       {
-        text: "Symmetry matters only for storage efficiency and has no geometric consequence.",
+        text: "Symmetry matters for storage efficiency rather than geometry.",
         isCorrect: false,
       },
     ],
@@ -1453,7 +1453,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Singular values are ordinary eigenvalues of \\(A\\) for every rectangular matrix.",
+        text: "Singular values are ordinary eigenvalues of \\(A\\) for rectangular matrices.",
         isCorrect: false,
       },
     ],
@@ -1503,7 +1503,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "PCA simply chooses a subset of original columns and discards the rest.",
+        text: "PCA simply chooses a subset of original columns and discards the rest rather than rotating directions.",
         isCorrect: false,
       },
       {
@@ -1526,15 +1526,15 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Every matrix product has only positive entries.",
+        text: "A matrix product has positive entries when it is written as \\(X^TX\\).",
         isCorrect: false,
       },
       {
-        text: "A transpose removes all zero directions from a matrix.",
+        text: "A transpose removes zero directions from a matrix product.",
         isCorrect: false,
       },
       {
-        text: "Eigenvalues are never negative for any real square matrix.",
+        text: "Real square matrices have nonnegative eigenvalues by default.",
         isCorrect: false,
       },
     ],
@@ -1561,7 +1561,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Approximate low rank means every attention score is exactly zero.",
+        text: "Approximate low rank means attention scores are mostly zero.",
         isCorrect: false,
       },
     ],

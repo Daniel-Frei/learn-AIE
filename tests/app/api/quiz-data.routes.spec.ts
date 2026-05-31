@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { NextRequest } from "next/server";
+import { ALL_TOPICS } from "@/lib/questionTopics";
 import { createDefaultRatingState, recordAnswer } from "@/lib/ratingEngine";
 import {
   InMemoryQuizDataStore,
@@ -413,6 +414,34 @@ describe("shared quiz data routes", () => {
       totalReportCount: 1,
       questionReportCount: 1,
     });
+  });
+
+  it("accepts every configured question report topic", async () => {
+    const { POST } = await import("@/app/api/question-reports/route");
+
+    for (const [index, topic] of ALL_TOPICS.entries()) {
+      const res = await POST(
+        buildRequest("http://localhost/api/question-reports", "POST", {
+          participantId: "participant-a",
+          draft: {
+            questionId: `topic-check-${index}`,
+            comment: `Topic ${topic} report payload should be accepted.`,
+            snapshot: {
+              sourceId: `topic-check-${index}`,
+              sourceLabel: `Topic Check ${index}`,
+              seriesId: "other",
+              seriesLabel: "Other Sources",
+              topic,
+              prompt: `Prompt for ${topic}.`,
+            },
+          },
+        }),
+      );
+      const body = await res.json();
+
+      expect(res.status).toBe(200);
+      expect(body.questionReportCount).toBe(1);
+    }
   });
 
   it("returns 400 for non-object question report payloads", async () => {

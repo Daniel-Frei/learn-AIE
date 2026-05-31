@@ -56,11 +56,11 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         true,
       ],
       [
-        "Carbon is useful because it cannot form covalent bonds with hydrogen, oxygen, or nitrogen.",
+        "Carbon is useful because its bonding is limited to carbon-carbon networks, excluding heteroatoms from most biomolecules.",
         false,
       ],
       [
-        "Carbon is useful because it dissolves all biological molecules in water by itself.",
+        "Carbon is useful because elemental carbon by itself serves as the main solvent for polar biomolecules.",
         false,
       ],
       [
@@ -123,11 +123,11 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         false,
       ],
       [
-        "Water polarity matters only for ice, not for chemical reactions inside cells.",
+        "Water polarity mainly changes freezing behavior, with little relevance to solvation inside cells.",
         false,
       ],
       [
-        "Water dissolves molecules only according to molecular mass, not charge or polarity.",
+        "Water solubility is predicted mainly by molecular mass rather than charge or polarity.",
         false,
       ],
     ],
@@ -148,7 +148,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         false,
       ],
       [
-        "It means polar molecules cannot ever cross membranes by any route.",
+        "Polar molecules cross membranes at the same rate as small nonpolar gases through the lipid core.",
         false,
       ],
     ],
@@ -207,11 +207,11 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
       ],
       ["An amino acid is a nucleotide that stores one DNA base.", false],
       [
-        "An amino acid is always a lipid with a hydrophobic tail and hydrophilic head.",
+        "An amino acid has a hydrophobic tail and hydrophilic head arranged like a phospholipid.",
         false,
       ],
       [
-        "An amino acid is a sugar monomer used only for short-term energy.",
+        "An amino acid is a monosaccharide building block used mainly for glycogen storage.",
         false,
       ],
     ],
@@ -235,7 +235,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         false,
       ],
       [
-        "ATP makes enzymes unnecessary by forcing every reaction to happen instantly.",
+        "ATP replaces enzyme catalysis by directly forcing thermodynamically unfavorable reactions to completion.",
         false,
       ],
     ],
@@ -259,7 +259,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         true,
       ],
       [
-        "A single amino acid substitution cannot matter unless the protein's entire gene is deleted.",
+        "A single amino acid substitution matters mainly when it removes the whole gene from the chromosome.",
         false,
       ],
     ],
@@ -275,15 +275,15 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         true,
       ],
       [
-        "Phospholipids form bilayers because all parts of the molecule are equally charged.",
+        "Phospholipids form bilayers because their head groups and tails have the same polarity in water.",
         false,
       ],
       [
-        "Bilayers require a ribosome to place every lipid into position one at a time.",
+        "Bilayers require ribosomes to assemble lipid molecules into a membrane sequence.",
         false,
       ],
       [
-        "Bilayers form because covalent bonds link every lipid tail to every neighboring lipid tail.",
+        "Bilayers form because covalent bonds join adjacent lipid tails into a continuous sheet.",
         false,
       ],
     ],
@@ -300,7 +300,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         true,
       ],
       [
-        "Enzymes are consumed as the required fuel for every reaction they catalyze.",
+        "Enzymes serve as stoichiometric fuel that is used up during catalysis.",
         false,
       ],
       ["Enzymes work by changing the genetic code of their substrates.", false],
@@ -331,7 +331,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
       ["Changing pH can alter charge states of amino acid side chains.", true],
       ["Enzyme function can depend strongly on pH.", true],
       [
-        "pH matters only in pure water and has no effect in cells or blood.",
+        "pH mainly describes purified lab water and has little relevance to cells or blood.",
         false,
       ],
     ],
@@ -362,8 +362,11 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         "Lipids are often hydrophobic or amphipathic and are important in membranes and energy storage.",
         true,
       ],
-      ["Carbohydrates are always genetic polymers read by ribosomes.", false],
-      ["Lipids are always enzymes that lower activation energy.", false],
+      ["Carbohydrates are genetic polymers translated by ribosomes.", false],
+      [
+        "Lipids are catalytic polymers that lower activation energy through active sites.",
+        false,
+      ],
     ],
     "Carbohydrates and lipids differ in chemistry and typical biological roles. Some carbohydrates are structural or recognition molecules, while lipids often form membranes, store energy, or act as signals because of their hydrophobic chemistry.",
   ),
@@ -400,7 +403,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         true,
       ],
       [
-        "Cells become alive only when all reactions reach permanent chemical equilibrium.",
+        "Cells become metabolically functional by letting reactions settle into permanent chemical equilibrium.",
         false,
       ],
     ],
@@ -416,7 +419,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         true,
       ],
       [
-        "Sequence matters only for DNA, while proteins work independently of their amino acid order.",
+        "Sequence is important for DNA, while protein activity is mostly independent of amino acid order.",
         false,
       ],
       [
@@ -424,7 +427,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         false,
       ],
       [
-        "Protein function is determined only by total molecular mass, not by side-chain chemistry.",
+        "Protein function is determined mainly by total molecular mass rather than side-chain chemistry.",
         false,
       ],
     ],
@@ -448,7 +451,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         false,
       ],
       [
-        "The change proves covalent bonds are irrelevant to membrane proteins.",
+        "The change suggests membrane-protein function is unrelated to covalent structure.",
         false,
       ],
     ],
@@ -472,7 +475,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         true,
       ],
       [
-        "Tight binding in purified water proves the drug must work in every biological context.",
+        "Tight binding in purified water is sufficient evidence that the drug will work in cells.",
         false,
       ],
     ],
@@ -513,11 +516,11 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         false,
       ],
       [
-        "The protein must be DNA because only DNA can bind molecules specifically.",
+        "The binding protein is better classified as DNA because specificity is a property of nucleic acids.",
         false,
       ],
       [
-        "The binding pocket proves the reaction is thermodynamically favorable.",
+        "The binding pocket by itself shows the coupled reaction has a favorable overall free-energy change.",
         false,
       ],
     ],
@@ -540,7 +543,10 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         "A gradient means molecules are evenly distributed and no work can be extracted.",
         false,
       ],
-      ["A gradient can only be built by changing DNA sequence.", false],
+      [
+        "A gradient is built by rewriting DNA sequence before each transport event.",
+        false,
+      ],
     ],
     "Gradients represent separations that can drive movement or work. Cells build and maintain gradients using pumps, metabolism, and membranes, not by changing DNA sequence every time a transport process is needed.",
   ),
@@ -562,7 +568,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         true,
       ],
       [
-        "The mutation must improve function because charged residues are always better than hydrophobic residues.",
+        "The mutation should improve function because charged residues generally substitute for hydrophobic residues without changing folding or binding.",
         false,
       ],
     ],
@@ -600,10 +606,13 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         false,
       ],
       [
-        "Unfolding proves covalent bonds in the backbone cannot exist in proteins.",
+        "Unfolding indicates that the covalent peptide backbone has been converted into separate amino-acid monomers.",
         false,
       ],
-      ["Proteins only fold when no water is present.", false],
+      [
+        "Protein folding requires removing water from the biological environment.",
+        false,
+      ],
     ],
     "Protein folding depends on a balance of many weak interactions and the surrounding solvent. Heat can disrupt that balance without necessarily breaking every covalent bond in the backbone or changing the underlying sequence.",
   ),
@@ -621,11 +630,11 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         true,
       ],
       [
-        "The phrase means sequence, environment, and regulation never matter.",
+        "The phrase treats sequence, environment, and regulation as minor details outside molecular function.",
         false,
       ],
       [
-        "The phrase applies only to proteins and never to membranes, nucleic acids, or small molecules.",
+        "The phrase applies to proteins but excludes membranes, nucleic acids, and small molecules from structure-function reasoning.",
         false,
       ],
     ],

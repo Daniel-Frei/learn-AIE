@@ -48,7 +48,10 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
       [
         ["An element is defined by one kind of atom.", true],
         ["A molecule contains atoms held together by chemical bonds.", true],
-        ["A molecule must contain every element in the periodic table.", false],
+        [
+          "A molecule is defined as a loose mixture of unrelated element samples.",
+          false,
+        ],
         [
           "An element is defined by how many different molecules are mixed together.",
           false,
@@ -66,8 +69,14 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           "A polar molecule has perfectly even charge distribution everywhere.",
           false,
         ],
-        ["Charge and polarity never affect solubility in water.", false],
-        ["A charged molecule is always a lipid bilayer.", false],
+        [
+          "Charge and polarity mainly determine molecular mass rather than interactions with water.",
+          false,
+        ],
+        [
+          "Net charge is the defining property that makes a molecule a lipid bilayer.",
+          false,
+        ],
       ],
       "An ion is defined by net charge. Polarity and solubility are related ideas that students will use soon, but the incorrect options here reverse their definitions or confuse charged molecules with membranes.",
     ),
@@ -93,7 +102,10 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
       [
         ["Water is polar.", true],
         ["Water often dissolves charged or polar substances well.", true],
-        ["Water dissolves all nonpolar oils better than salts.", false],
+        [
+          "Water dissolves nonpolar oils more readily than ionic salts because oils are larger.",
+          false,
+        ],
         ["Water's polarity is unrelated to biological organization.", false],
       ],
       "Water's polarity helps it interact with ions and polar groups. Nonpolar molecules interact poorly with water, which helps explain membranes, protein folding, and why cells need organized compartments.",
@@ -138,7 +150,10 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
       [
         ["A monomer is a smaller building block.", true],
         ["A polymer is built from repeated building blocks.", true],
-        ["A polymer is always a whole organ such as a lung.", false],
+        [
+          "A polymer is best understood as a tissue-level structure rather than a chain of building blocks.",
+          false,
+        ],
         ["A monomer is the same thing as a clinical endpoint.", false],
       ],
       "Macromolecules such as proteins, nucleic acids, and many carbohydrates are built from smaller units. This vocabulary helps students understand digestion, biosynthesis, DNA, RNA, and proteins.",
@@ -154,7 +169,10 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
         ["Hydrolysis is the process of reading codons at a ribosome.", false],
-        ["Dehydration reactions mean all cells lose their membranes.", false],
+        [
+          "Dehydration reactions describe cell dehydration rather than bond-forming chemistry.",
+          false,
+        ],
       ],
       "Hydrolysis and dehydration reactions are basic ways to break and build biological molecules. They prepare students to understand digestion, polymer assembly, and molecular recycling.",
     ),
@@ -168,11 +186,11 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
         [
-          "They are always membrane receptors that bind neurotransmitters.",
+          "They are membrane receptors whose main role is neurotransmitter binding.",
           false,
         ],
         [
-          "They are the only molecules that can store inherited genetic information.",
+          "They are the primary inherited-information polymers in chromosomes.",
           false,
         ],
         ["They are antibiotics that block bacterial ribosomes.", false],
@@ -190,10 +208,10 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
         [
-          "Lipids are never used in membranes, energy storage, or signaling.",
+          "Lipids are unrelated to membranes, energy storage, and signaling.",
           false,
         ],
-        ["All lipids are nucleotides that encode codons.", false],
+        ["Lipids are nucleotide polymers that encode codons.", false],
       ],
       "Lipids are essential for boundaries and signaling because of their hydrophobic or amphipathic chemistry. They are not nucleotides, and the claim that they never support membranes or signaling reverses important introductory biology.",
     ),
@@ -206,10 +224,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           "A building block of proteins with a shared backbone and a variable side chain.",
           true,
         ],
-        [
-          "A molecule made only of glucose units for short-term energy storage.",
-          false,
-        ],
+        ["A glucose polymer used for short-term energy storage.", false],
         ["A viral envelope used to enter a host cell.", false],
         [
           "A clinical-trial design feature that prevents selection bias.",
@@ -247,11 +262,11 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
         ["Enzymes are catalysts.", true],
         ["Enzymes can speed reactions by lowering activation energy.", true],
         [
-          "Enzymes work by permanently changing the genetic code of every substrate.",
+          "Enzymes work by editing the genetic sequence of each substrate molecule.",
           false,
         ],
         [
-          "Enzymes are consumed as the only fuel in every reaction they catalyze.",
+          "Enzymes serve as stoichiometric fuel that is used up during catalysis.",
           false,
         ],
       ],
@@ -268,7 +283,10 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
         ["ATP is the same thing as a chromosome.", false],
-        ["Metabolism means all molecules stop reacting.", false],
+        [
+          "Metabolism means cellular reaction networks become chemically inactive.",
+          false,
+        ],
       ],
       "ATP and metabolism are needed because cells constantly do chemical work. They build, break, transport, signal, repair, and maintain order rather than remaining static.",
     ),
@@ -329,7 +347,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
         ["A receptor can detect a signal and trigger a response.", true],
         ["Receptor binding can depend on molecular shape and chemistry.", true],
         [
-          "A receptor is always a sugar polymer used only for energy storage.",
+          "A receptor is a carbohydrate storage polymer rather than a signal-detecting molecule.",
           false,
         ],
       ],
@@ -344,9 +362,15 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           "A response that tends to counteract a change and stabilize a system.",
           true,
         ],
-        ["A response that always amplifies a change forever.", false],
+        [
+          "A response that reinforces deviation instead of stabilizing a variable.",
+          false,
+        ],
         ["A chemical bond formed by sharing electrons.", false],
-        ["A DNA sequence that always encodes only one amino acid.", false],
+        [
+          "A DNA sequence used as a codon rather than a regulatory control loop.",
+          false,
+        ],
       ],
       "Negative feedback is a control concept used throughout physiology. It helps students reason about homeostasis, blood glucose, temperature, hormones, and drug compensation.",
     ),
@@ -509,7 +533,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
         [
-          "It means the body never changes any variable under any condition.",
+          "It keeps variables fixed at one exact value despite changing conditions.",
           false,
         ],
       ],
@@ -527,7 +551,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
         [
-          "Metabolic disease is always caused by a single viral receptor.",
+          "Metabolic disease is best explained as a viral receptor problem rather than disrupted regulation.",
           false,
         ],
       ],
@@ -545,7 +569,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
         [
-          "All drugs work by permanently replacing every gene in the body.",
+          "Drugs work by replacing body-wide genetic information as their common mechanism.",
           false,
         ],
       ],
@@ -561,8 +585,11 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
         ["The exact number of chromosomes in a human cell.", false],
-        ["A receptor that can bind only water.", false],
-        ["A guarantee that higher dose is always safer.", false],
+        [
+          "A receptor whose binding behavior defines the safe dose range.",
+          false,
+        ],
+        ["A rule that increasing dose steadily improves safety.", false],
       ],
       "A therapeutic window helps students reason about benefit and toxicity together. It prepares them for dose-response curves, patient variation, monitoring, and side effects.",
     ),
@@ -591,9 +618,12 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           "A biomarker can support diagnosis, prognosis, monitoring, or treatment selection.",
           true,
         ],
-        ["Every biomarker automatically proves disease causation.", false],
         [
-          "A biomarker is always a full organ transplanted between patients.",
+          "A biomarker measurement is sufficient by itself to establish disease causation.",
+          false,
+        ],
+        [
+          "A biomarker is a transplanted tissue used as the measurement itself.",
           false,
         ],
       ],
@@ -607,7 +637,10 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
         ["A control group helps answer compared to what.", true],
         ["Randomization can reduce confounding in expectation.", true],
         ["An endpoint is the outcome used to judge an intervention.", true],
-        ["A plausible mechanism alone proves patient benefit.", false],
+        [
+          "A plausible mechanism is sufficient by itself to establish patient benefit.",
+          false,
+        ],
       ],
       "Students need enough evidence vocabulary to interpret claims without making clinical trials the core course topic. Controls, randomization, and endpoints help separate mechanism, association, and patient outcomes.",
     ),
@@ -629,7 +662,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
         [
-          "A model system is guaranteed to predict every human outcome exactly.",
+          "A model system is expected to reproduce human outcomes with full clinical fidelity.",
           false,
         ],
       ],
@@ -666,7 +699,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           "AI predictions eliminate the need for measurements, controls, or validation.",
           false,
         ],
-        ["AI proves causation whenever it finds a correlation.", false],
+        ["AI establishes causation from correlation in a dataset.", false],
         ["AI is unaffected by biased or incomplete data.", false],
       ],
       "AI can help find patterns, but biomedical use still depends on data quality, biological interpretation, workflow fit, and evidence. Prediction is not automatically causation or patient benefit.",
@@ -686,7 +719,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
         [
-          "It means every patient always receives a completely unique custom molecule.",
+          "It means each patient receives a unique custom molecule rather than subgroup-guided care.",
           false,
         ],
       ],
@@ -714,8 +747,14 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
       [
         ["pH can change charge states of amino acid side chains.", true],
         ["pH can disrupt folding or active-site chemistry.", true],
-        ["pH directly changes the number of chromosomes in every cell.", false],
-        ["pH matters only outside living systems.", false],
+        [
+          "pH directly changes chromosome number as the main way it affects enzymes.",
+          false,
+        ],
+        [
+          "pH mainly matters in laboratory glassware rather than living systems.",
+          false,
+        ],
       ],
       "This is still prerequisite-level reasoning: pH can change molecular charge and protein behavior. Students do not need advanced enzyme kinetics to see why a different chemical environment can alter activity.",
     ),
@@ -746,7 +785,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
         ["Folding or local structure could change.", true],
         ["The protein automatically becomes DNA.", false],
         [
-          "The mutation must have no effect because only whole-gene deletion matters.",
+          "The mutation should have no functional effect unless the entire gene is removed.",
           false,
         ],
       ],
@@ -759,10 +798,13 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
       [
         ["Some tissues may express more of the relevant receptor.", true],
         [
-          "Downstream signaling machinery must be identical in every cell type.",
+          "Downstream signaling machinery is identical across cell types regardless of gene-expression state.",
           false,
         ],
-        ["Gene-expression state cannot affect how a cell responds.", false],
+        [
+          "Gene-expression state is separate from cellular response to a hormone.",
+          false,
+        ],
         [
           "The hormone must contain different DNA sequences for each tissue.",
           false,
@@ -819,8 +861,14 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           "The drug may affect biology without producing meaningful clinical benefit.",
           true,
         ],
-        ["Any marker change automatically proves clinical success.", false],
-        ["Laboratory markers can never be useful in medicine.", false],
+        [
+          "A marker change is sufficient evidence of clinical success by itself.",
+          false,
+        ],
+        [
+          "Laboratory markers are disconnected from diagnosis, monitoring, and treatment decisions.",
+          false,
+        ],
       ],
       "Markers can be useful, but only when their relationship to meaningful outcomes is validated. This prepares students for the revised Lecture 5 treatment of evidence as context rather than as the course core.",
     ),
@@ -878,7 +926,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
         [
-          "All three are ordinary antibiotics that block bacterial cell walls.",
+          "These technologies are ordinary bacterial cell-wall antibiotics.",
           false,
         ],
       ],
@@ -893,7 +941,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
         ["Metabolism or excretion could differ.", true],
         ["Drug interactions or organ function could differ.", true],
         [
-          "The tablets must contain different genes because dose is the only factor in exposure.",
+          "The tablets must contain different genes because exposure is determined by the dose label.",
           false,
         ],
       ],
@@ -908,9 +956,15 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           "It can involve disrupted glucose regulation across hormones, tissues, metabolism, genetics, environment, and time.",
           true,
         ],
-        ["It is always caused only by a virus entering one cell.", false],
+        [
+          "It is best explained as a single-cell viral entry event rather than disrupted regulation.",
+          false,
+        ],
         ["It is identical to a single covalent bond forming in water.", false],
-        ["It proves homeostasis cannot exist in any organism.", false],
+        [
+          "It indicates that regulated physiology is absent from organisms with metabolic disease.",
+          false,
+        ],
       ],
       "The point is not to teach diabetes in depth, but to prepare systems reasoning. Disease can emerge from interactions across scales rather than from one isolated molecule.",
     ),
@@ -932,7 +986,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           false,
         ],
         [
-          "Autoimmune disease happens only when proteins cannot fold in water.",
+          "Autoimmune disease results from protein-folding failure in water rather than immune recognition of self.",
           false,
         ],
       ],
@@ -956,7 +1010,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
         [
-          "Viruses maintain their own complete metabolism like mitochondria outside cells.",
+          "Viruses maintain mitochondria-like energy metabolism outside cells.",
           false,
         ],
       ],
@@ -973,10 +1027,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           "The drug may affect multiple tissues if the pump is widely used.",
           true,
         ],
-        [
-          "Blocking the pump directly rewrites all codons in the genome.",
-          false,
-        ],
+        ["Blocking the pump directly edits genomic codons.", false],
       ],
       "This scenario links gradients, pumps, drugs, and side effects. It prepares students to reason from a molecular target to cell physiology and tissue-level consequences.",
     ),
@@ -1015,10 +1066,13 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
         ],
         ["Performance may drop in other hospitals or populations.", true],
         [
-          "High accuracy on the original data proves the model learned causation.",
+          "High accuracy on the original data establishes a causal disease mechanism.",
           false,
         ],
-        ["Validation is unnecessary if the model uses many parameters.", false],
+        [
+          "Validation becomes redundant when the model has many parameters.",
+          false,
+        ],
       ],
       "AI questions in this course should test evidence and biology, not hype. Data source, labels, distribution shift, and validation all matter before a prediction can be trusted in biomedical practice.",
     ),
@@ -1037,7 +1091,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
         [
-          "Cancer is best described as every cell in the body dividing normally and dying on schedule.",
+          "Cancer is best described as normal tissue turnover rather than dysregulated growth and survival.",
           false,
         ],
       ],
@@ -1075,7 +1129,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
         ],
         ["Memorize terms as isolated facts and ignore mechanisms.", false],
         [
-          "Assume every biological claim is proven by one plausible story.",
+          "Assume a plausible story is sufficient evidence for a biological claim.",
           false,
         ],
         [

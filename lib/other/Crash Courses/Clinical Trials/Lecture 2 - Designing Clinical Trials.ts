@@ -53,7 +53,7 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is unnecessary because treatments can always be judged in isolation.",
+        text: "It is optional because treatments can be judged in isolation from alternatives and usual care context.",
         isCorrect: false,
       },
       {
@@ -83,7 +83,7 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Randomization guarantees that every trial result is correct.",
+        text: "Randomization by itself makes trial results correct even when follow-up, measurement, or analysis are biased.",
         isCorrect: false,
       },
     ],
@@ -110,7 +110,7 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Only known confounders can affect trial interpretation.",
+        text: "Known confounders are the full set of factors that can distort interpretation in a trial or observational comparison.",
         isCorrect: false,
       },
     ],
@@ -151,7 +151,7 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It guarantees that patients in each group have identical biology.",
+        text: "It makes patient biology identical across groups at baseline.",
         isCorrect: false,
       },
     ],
@@ -177,7 +177,7 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It means only one type of patient is allowed into the study.",
+        text: "It restricts enrollment to a narrow patient type as its defining purpose rather than balancing factors within enrolled participants.",
         isCorrect: false,
       },
     ],
@@ -230,7 +230,7 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Open-label designs remove all risk of expectation bias.",
+        text: "Open-label designs remove expectation bias by showing assignments openly.",
         isCorrect: false,
       },
     ],
@@ -256,7 +256,7 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Endpoint selection is irrelevant once a treatment is randomized.",
+        text: "Endpoint selection is a technical detail once treatment assignment is randomized, even when outcomes differ in clinical meaning.",
         isCorrect: false,
       },
     ],
@@ -294,7 +294,7 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A laboratory value that a patient never sees.",
+        text: "A laboratory value disconnected from symptoms, function, or survival.",
         isCorrect: false,
       },
       {
@@ -397,7 +397,7 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Confounding becomes impossible because physicians know the patients.",
+        text: "Confounding disappears because physicians know the patients.",
         isCorrect: false,
       },
     ],
@@ -424,7 +424,7 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Randomization means every patient has exactly the same biology.",
+        text: "Randomization means patients have matched biology across groups.",
         isCorrect: false,
       },
     ],
@@ -489,11 +489,11 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Every biomarker improvement automatically means patients live longer or feel better.",
+        text: "A biomarker improvement is sufficient evidence that patients live longer or feel better in the intended population.",
         isCorrect: false,
       },
       {
-        text: "Clinical endpoints are never relevant to regulators or patients.",
+        text: "Clinical endpoints have little relevance to regulators or patients.",
         isCorrect: false,
       },
     ],
@@ -515,11 +515,11 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Surrogates are always safer and more meaningful than clinical endpoints.",
+        text: "Surrogates are safer and more meaningful than clinical endpoints by default.",
         isCorrect: false,
       },
       {
-        text: "Using a surrogate means the trial no longer needs a scientific rationale.",
+        text: "Using a surrogate removes the need for a scientific rationale.",
         isCorrect: false,
       },
     ],
@@ -538,15 +538,15 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "All surrogate endpoints are invalid in every disease area.",
+        text: "Surrogate endpoints are invalid across disease areas.",
         isCorrect: false,
       },
       {
-        text: "A biomarker is always more important than a clinical endpoint.",
+        text: "A biomarker should outrank a clinical endpoint in decision-making.",
         isCorrect: false,
       },
       {
-        text: "Clinical trials are unnecessary when a mechanism looks plausible.",
+        text: "Clinical trials can be skipped when a mechanism looks plausible.",
         isCorrect: false,
       },
     ],
@@ -595,11 +595,11 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They always prove the treatment improves survival.",
+        text: "They are designed to establish survival improvement from early human exposure.",
         isCorrect: false,
       },
       {
-        text: "They occur only after a product has already been approved for marketing.",
+        text: "They are post-marketing studies rather than early human testing.",
         isCorrect: false,
       },
     ],
@@ -647,11 +647,11 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "They occur only after regulatory approval.",
+        text: "They are post-approval studies rather than confirmatory preapproval trials.",
         isCorrect: false,
       },
       {
-        text: "They never compare against standard care or another treatment.",
+        text: "They avoid comparisons against standard care or another treatment.",
         isCorrect: false,
       },
     ],
@@ -699,11 +699,11 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Internal validity is the same as generalizability to every real-world patient.",
+        text: "Internal validity is the same as broad generalizability to real-world patients.",
         isCorrect: false,
       },
       {
-        text: "Internal validity becomes irrelevant when a study has many participants.",
+        text: "Internal validity matters less when a study has many participants.",
         isCorrect: false,
       },
     ],
@@ -725,7 +725,7 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "External validity is guaranteed whenever internal validity is high.",
+        text: "External validity follows directly from high internal validity.",
         isCorrect: false,
       },
       {
@@ -802,11 +802,11 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Explanatory trials are uncontrolled anecdotes, while pragmatic trials never measure outcomes.",
+        text: "Explanatory trials are uncontrolled anecdotes, while pragmatic trials avoid outcome measurement.",
         isCorrect: false,
       },
       {
-        text: "Pragmatic trials are always less ethical than explanatory trials.",
+        text: "Pragmatic trials are less ethical than explanatory trials by design.",
         isCorrect: false,
       },
       {
@@ -859,7 +859,7 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Unvalidated surrogates and death are equally informative in every context.",
+        text: "Unvalidated surrogates and death provide the same information across contexts.",
         isCorrect: false,
       },
       {
@@ -963,11 +963,11 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The treatment should be assumed to improve survival in all patients.",
+        text: "The treatment should be assumed to improve survival across patients.",
         isCorrect: false,
       },
       {
-        text: "Phase III confirmation is unnecessary because biomarkers always translate into outcomes.",
+        text: "Phase III confirmation can be skipped because biomarkers translate into outcomes.",
         isCorrect: false,
       },
       {

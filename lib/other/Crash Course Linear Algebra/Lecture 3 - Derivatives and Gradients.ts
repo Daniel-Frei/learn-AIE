@@ -34,7 +34,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
       { text: "At \\(x=1\\), the slope is 2.", isCorrect: true },
       { text: "At \\(x=5\\), the slope is 10.", isCorrect: true },
       {
-        text: "The slope is the same at every value of \\(x\\).",
+        text: "The slope is constant across the graph.",
         isCorrect: false,
       },
     ],
@@ -57,7 +57,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A derivative guarantees the global minimum is known immediately.",
+        text: "A derivative by itself identifies the global minimum immediately.",
         isCorrect: false,
       },
       {
@@ -77,7 +77,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
       { text: "\\(f'(x)=6x\\).", isCorrect: true },
       { text: "\\(f'(x)=3x\\).", isCorrect: false },
       { text: "\\(f'(x)=x^3\\).", isCorrect: false },
-      { text: "\\(f'(x)=6\\) for every \\(x\\).", isCorrect: false },
+      { text: "\\(f'(x)=6\\) across the whole domain.", isCorrect: false },
     ],
     explanation:
       "The constant multiplier remains, and the derivative of \\(x^2\\) is \\(2x\\), giving \\(6x\\). The other choices either drop a factor, change the power incorrectly, or confuse a variable slope with a constant one.",
@@ -145,11 +145,11 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It always points in the direction of fastest decrease.",
+        text: "It points in the direction of fastest decrease.",
         isCorrect: false,
       },
       {
-        text: "It can only be defined for functions with exactly one input variable.",
+        text: "It is limited to functions with exactly one input variable.",
         isCorrect: false,
       },
     ],
@@ -264,15 +264,15 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The parameters \\(\\theta\\) cannot affect the value estimate.",
+        text: "The parameters \\(\\theta\\) are disconnected from the value estimate.",
         isCorrect: false,
       },
       {
-        text: "Gradient methods are irrelevant to actor-critic systems.",
+        text: "Actor-critic systems avoid gradient methods in their parameter updates.",
         isCorrect: false,
       },
       {
-        text: "Partial derivatives only apply to supervised learning.",
+        text: "Partial derivatives are a tool reserved for supervised-learning losses.",
         isCorrect: false,
       },
     ],
@@ -345,7 +345,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It only works for models with one parameter.",
+        text: "It is limited to models with one parameter.",
         isCorrect: false,
       },
     ],
@@ -364,15 +364,15 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Early layers receive gradients because their weights are always copied from later layers.",
+        text: "Early layers receive gradients because their weights are copied from later layers during the backward pass.",
         isCorrect: false,
       },
       {
-        text: "Early layers cannot affect the loss once later layers are added.",
+        text: "Early layers stop influencing the loss once later layers are added.",
         isCorrect: false,
       },
       {
-        text: "Only the final layer can be trained with gradient descent.",
+        text: "The final layer is the part trained by gradient descent.",
         isCorrect: false,
       },
     ],
@@ -439,11 +439,11 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A scalar loss cannot have derivatives with respect to a matrix.",
+        text: "A scalar loss is disconnected from matrix-valued parameters.",
         isCorrect: false,
       },
       {
-        text: "All entries in a matrix gradient must be identical.",
+        text: "Matrix-gradient entries share a single identical value.",
         isCorrect: false,
       },
     ],
@@ -466,7 +466,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It must have shape \\(n\\times m\\) for every matrix.",
+        text: "It uses shape \\(n\\times m\\) by convention for this matrix.",
         isCorrect: false,
       },
       {
@@ -547,11 +547,11 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A gradient is always the same thing as the loss value.",
+        text: "A gradient is the loss value written as a vector.",
         isCorrect: false,
       },
       {
-        text: "Knowing only the function value always identifies the best descent direction.",
+        text: "Knowing the function value identifies the best descent direction.",
         isCorrect: false,
       },
     ],
@@ -620,7 +620,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A network cannot be trained if it contains any matrix multiplication.",
+        text: "Matrix multiplication blocks gradient-based training in a network.",
         isCorrect: false,
       },
     ],
@@ -643,11 +643,11 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Policy-gradient methods never optimize expected reward.",
+        text: "Policy-gradient methods optimize a supervised-label objective instead of expected reward.",
         isCorrect: false,
       },
       {
-        text: "Reinforcement learning removes the need for differentiable models in every possible method.",
+        text: "Reinforcement learning removes differentiability requirements from actor-critic updates.",
         isCorrect: false,
       },
     ],
@@ -666,11 +666,11 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "\\(\\nabla L\\) and \\(-\\nabla L\\) always point in the same direction.",
+        text: "\\(\\nabla L\\) and \\(-\\nabla L\\) point in the same direction during descent.",
         isCorrect: false,
       },
       {
-        text: "The negative sign is only a notation convention with no effect on updates.",
+        text: "The negative sign is a notation convention with no effect on update direction.",
         isCorrect: false,
       },
       {
@@ -728,7 +728,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Large learning rates guarantee faster convergence for every problem.",
+        text: "Large learning rates make convergence faster across problem settings.",
         isCorrect: false,
       },
     ],
@@ -751,11 +751,11 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A gradient for a matrix parameter should always be a single number.",
+        text: "A gradient for a matrix parameter should be summarized as a single number.",
         isCorrect: false,
       },
       {
-        text: "Shape reasoning is irrelevant once automatic differentiation is used.",
+        text: "Automatic differentiation replaces shape reasoning during gradient flow.",
         isCorrect: false,
       },
     ],
@@ -782,7 +782,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It only works because neural networks have no intermediate values.",
+        text: "It works because neural networks have no intermediate values.",
         isCorrect: false,
       },
     ],
@@ -836,7 +836,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Derivatives are only meaningful when both input and output are scalars.",
+        text: "Derivatives are meaningful mainly for scalar-to-scalar functions.",
         isCorrect: false,
       },
     ],
@@ -859,11 +859,11 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Embeddings cannot be changed by optimization because they are geometric objects.",
+        text: "Embeddings are fixed geometric objects rather than trainable parameters.",
         isCorrect: false,
       },
       {
-        text: "Gradient descent only updates scalar parameters, not vectors.",
+        text: "Gradient descent updates scalar parameters but not vector parameters.",
         isCorrect: false,
       },
     ],
@@ -882,7 +882,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A model learns by storing every training example as a separate rule.",
+        text: "A model learns by storing each training example as a separate rule.",
         isCorrect: false,
       },
       {
@@ -944,7 +944,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Learning rate only changes speed and cannot affect stability.",
+        text: "Learning rate changes step speed without affecting stability.",
         isCorrect: false,
       },
     ],
@@ -963,7 +963,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Deep RL value or policy networks cannot use gradient-based updates.",
+        text: "Deep RL value or policy networks use update rules separate from gradients.",
         isCorrect: false,
       },
       {
@@ -971,7 +971,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Gradients are useful only when labels are immediate and deterministic.",
+        text: "Gradients are useful mainly when labels are immediate and deterministic.",
         isCorrect: false,
       },
     ],
@@ -1125,11 +1125,11 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A larger learning rate always guarantees faster convergence.",
+        text: "A larger learning rate gives faster convergence across the run.",
         isCorrect: false,
       },
       {
-        text: "Learning rate affects only how a model is displayed, not how parameters change.",
+        text: "Learning rate affects the display of a model rather than its parameter changes.",
         isCorrect: false,
       },
       {
@@ -1183,11 +1183,11 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "\\(\\frac{\\partial L}{\\partial W}\\) must have shape \\(5\\times3\\) because gradients always transpose parameters.",
+        text: "\\(\\frac{\\partial L}{\\partial W}\\) has shape \\(5\\times3\\) because gradients use the transpose of the parameter shape.",
         isCorrect: false,
       },
       {
-        text: "A matrix parameter has only one derivative, so the gradient is a scalar.",
+        text: "A matrix parameter has a single derivative value, so the gradient is a scalar.",
         isCorrect: false,
       },
     ],
@@ -1268,7 +1268,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It ignores the gradient and depends only on the value \\(f(x)\\).",
+        text: "It ignores the gradient and uses the value \\(f(x)\\) as the step direction.",
         isCorrect: false,
       },
     ],
@@ -1349,7 +1349,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "The update moves to \\((2,-1)\\) in one step for every learning rate.",
+        text: "The update moves to \\((2,-1)\\) in one step for the usual step sizes.",
         isCorrect: false,
       },
     ],
@@ -1399,7 +1399,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A zero gradient always proves that training has found the best possible parameters.",
+        text: "A zero gradient is enough to identify the best possible parameters.",
         isCorrect: false,
       },
       {
@@ -1453,11 +1453,11 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "The largest curvature direction is irrelevant to stability.",
+        text: "The largest curvature direction has little connection to stability.",
         isCorrect: false,
       },
       {
-        text: "A learning rate of \\(1\\) is always safe for this function.",
+        text: "A learning rate of \\(1\\) is safe for this quadratic.",
         isCorrect: false,
       },
     ],
@@ -1484,7 +1484,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Every layer must receive exactly the same gradient because all layers belong to one network.",
+        text: "Each layer receives the same gradient because the layers belong to one network.",
         isCorrect: false,
       },
     ],
@@ -1507,7 +1507,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A mini-batch gradient is always exactly equal to the full-dataset gradient.",
+        text: "A mini-batch gradient matches the full-dataset gradient on a typical step.",
         isCorrect: false,
       },
       {

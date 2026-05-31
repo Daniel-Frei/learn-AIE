@@ -218,11 +218,11 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The matrix rotates every vector by 90 degrees.",
+        text: "The matrix acts like a quarter-turn rotation in the plane.",
         isCorrect: false,
       },
       {
-        text: "The matrix maps every vector to the origin.",
+        text: "The matrix collapses both coordinate directions to the origin.",
         isCorrect: false,
       },
     ],
@@ -306,7 +306,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The transformation deletes the y-coordinate for every input vector.",
+        text: "The transformation sends the y-coordinate into the first coordinate.",
         isCorrect: false,
       },
     ],
@@ -329,11 +329,11 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Projection must preserve all distances exactly.",
+        text: "Projection preserves distances in the discarded direction.",
         isCorrect: false,
       },
       {
-        text: "Projection always increases the number of independent directions.",
+        text: "Projection raises the number of independent directions in the output.",
         isCorrect: false,
       },
     ],
@@ -357,7 +357,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "The stacked operation cannot be represented by a matrix.",
+        text: "The stacked operation needs a separate table for each input vector.",
         isCorrect: false,
       },
       {
@@ -432,7 +432,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "A low-rank matrix must have only small numerical values.",
+        text: "A low-rank matrix is identified by small numerical entries.",
         isCorrect: false,
       },
     ],
@@ -452,15 +452,15 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It necessarily maps every input to zero.",
+        text: "It collapses the input space to the zero vector.",
         isCorrect: false,
       },
       {
-        text: "It always reduces a 3D space to a 2D plane.",
+        text: "It reduces a 3D space to a 2D plane in the usual case.",
         isCorrect: false,
       },
       {
-        text: "It means every matrix entry is nonzero.",
+        text: "It means the matrix has no zero-valued entries.",
         isCorrect: false,
       },
     ],
@@ -540,11 +540,11 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A matrix is low rank exactly when all of its entries are close to zero.",
+        text: "A matrix is low rank when its entries have small magnitudes rather than independent rows.",
         isCorrect: false,
       },
       {
-        text: "Multiplying every entry by a large constant necessarily makes the matrix full rank.",
+        text: "Scaling the entries by a large constant changes a low-rank matrix into a full-rank matrix.",
         isCorrect: false,
       },
     ],
@@ -563,11 +563,11 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It squares every entry.",
+        text: "It squares the entries before multiplying.",
         isCorrect: false,
       },
       {
-        text: "It deletes all off-diagonal entries.",
+        text: "It keeps the diagonal entries and discards cross terms.",
         isCorrect: false,
       },
       {
@@ -627,7 +627,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "\\(AB\\) and \\(BA\\) are guaranteed to be equal whenever both products are defined.",
+        text: "\\(AB\\) and \\(BA\\) match whenever the two products have compatible shapes.",
         isCorrect: false,
       },
     ],
@@ -651,7 +651,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The transpose is used because dot products require every key vector to be discarded.",
+        text: "The transpose is used because key vectors should be collapsed before scoring.",
         isCorrect: false,
       },
       {
@@ -672,7 +672,10 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
       { text: "\\(A = A^T\\).", isCorrect: true },
       { text: "\\(A = -A^T\\).", isCorrect: false },
       { text: "\\(A\\) has more rows than columns.", isCorrect: false },
-      { text: "Every entry of \\(A\\) is positive.", isCorrect: false },
+      {
+        text: "\\(A\\) has positive entries in the positions that determine rank.",
+        isCorrect: false,
+      },
     ],
     explanation:
       "A matrix is symmetric when it equals its transpose, which means entries mirror across the main diagonal. The condition \\(A=-A^T\\) describes skew-symmetry, not symmetry. Rectangular shape or positive entries alone do not define symmetry.",
@@ -750,7 +753,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The equality \\(AB = BA\\) holds for every pair of square matrices.",
+        text: "The equality \\(AB = BA\\) holds for a typical pair of square matrices.",
         isCorrect: false,
       },
       {
@@ -774,7 +777,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "\\(b\\) determines the input dimension, while \\(W\\) only stores labels.",
+        text: "\\(b\\) determines the input dimension, while \\(W\\) stores output labels.",
         isCorrect: false,
       },
       {
@@ -862,7 +865,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The map must be invertible for every possible input.",
+        text: "The map needs a two-sided inverse on its input space.",
         isCorrect: false,
       },
       {
@@ -950,7 +953,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The addition is shape-compatible only when \\(A\\) and \\(B\\) are both square matrices of shape \\(m \\times m\\).",
+        text: "The addition is shape-compatible when \\(A\\) and \\(B\\) share the square shape \\(m \\times m\\).",
         isCorrect: false,
       },
     ],
@@ -997,7 +1000,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Every additional linear layer creates a new nonlinear bend in the input space.",
+        text: "An additional linear layer creates another nonlinear bend in the input space.",
         isCorrect: false,
       },
       {
@@ -1033,7 +1036,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Every rotation necessarily destroys all similarity relationships.",
+        text: "A rotation destroys cosine similarity relationships by changing angles.",
         isCorrect: false,
       },
     ],
@@ -1056,7 +1059,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Matrix shapes are irrelevant once a model has many layers.",
+        text: "Matrix shapes become a bookkeeping detail after enough layers are added.",
         isCorrect: false,
       },
       {
@@ -1088,7 +1091,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Matrix-vector multiplication uses columns only, so row dot products are irrelevant.",
+        text: "Matrix-vector multiplication should be read from columns rather than row dot products.",
         isCorrect: false,
       },
     ],
@@ -1169,7 +1172,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The transpose of every matrix has exactly the same shape as the original matrix.",
+        text: "The transpose of a rectangular matrix keeps the same row and column counts.",
         isCorrect: false,
       },
     ],
@@ -1187,11 +1190,11 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "\\(\\begin{bmatrix}2 & 5 \\\\ 1 & 3\\end{bmatrix}\\) is symmetric because all entries are positive.",
+        text: "\\(\\begin{bmatrix}2 & 5 \\\\ 1 & 3\\end{bmatrix}\\) is symmetric because its entries are positive and near the diagonal.",
         isCorrect: false,
       },
       {
-        text: "Every rectangular matrix is symmetric after transposition.",
+        text: "A rectangular matrix becomes symmetric after taking its transpose.",
         isCorrect: false,
       },
       {
@@ -1218,7 +1221,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The transformation preserves all information in \\(\\mathbb{R}^3\\).",
+        text: "The transformation keeps the full three-dimensional input information.",
         isCorrect: false,
       },
       {
@@ -1299,11 +1302,11 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "\\(SRx=RSx\\) because rotations and stretches always commute.",
+        text: "\\(SRx=RSx\\) because rotations and stretches commute in this setup.",
         isCorrect: false,
       },
       {
-        text: "The order cannot matter because both matrices are \\(2\\times2\\).",
+        text: "The order is a notation detail because both matrices are \\(2\\times2\\).",
         isCorrect: false,
       },
     ],
@@ -1330,7 +1333,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "The matrix is full rank because all entries are nonzero.",
+        text: "The matrix is full rank because its nonzero entries fill the displayed matrix.",
         isCorrect: false,
       },
     ],
@@ -1384,7 +1387,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "\\(QK\\) is always the correct product because queries and keys have the same shape.",
+        text: "\\(QK\\) has the right semantic product because queries and keys share a shape.",
         isCorrect: false,
       },
     ],
@@ -1434,7 +1437,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It cannot be represented by one matrix product.",
+        text: "It needs two matrix products rather than one.",
         isCorrect: false,
       },
       {
@@ -1519,7 +1522,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The expression \\(Wg_y\\) is always the correct input gradient.",
+        text: "The expression \\(Wg_y\\) is the input gradient for this map.",
         isCorrect: false,
       },
     ],
@@ -1546,7 +1549,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "The transformation must preserve every distance exactly.",
+        text: "The transformation preserves distances while reducing dimension.",
         isCorrect: false,
       },
     ],
@@ -1600,7 +1603,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The product \\(AB\\) can represent every possible full-rank update to \\(W\\).",
+        text: "The product \\(AB\\) can represent a full-rank update to \\(W\\) when enough data is present.",
         isCorrect: false,
       },
     ],

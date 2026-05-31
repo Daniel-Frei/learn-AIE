@@ -52,7 +52,7 @@ This file captures durable process preferences so future tasks can follow them b
 - The unit-test command enforces at least 95% statements, branches, functions, and lines for the configured core logic/API coverage scope.
 - Prioritize tests for quiz source selection/title logic, difficulty rating behavior, and API validation/error handling.
 - For question reporting, prefer append-only shared database entries and include source/prompt snapshot context for reviewer triage.
-- When adding a quiz topic, update both API validation and Supabase `question_reports.topic` constraints; tests should fail if registered topics and report constraints drift.
+- When adding a quiz topic, update the central `lib/questionTopics.ts` list and the API/product docs. Do not add topic-specific Supabase `question_reports.topic` enum constraints; reports should accept future configured topics without another report-table schema migration.
 - Do not revive browser-local report storage or report export/import UI; legacy local reports should be ignored.
 - For shared quiz data, use anonymous per-device participants in v1: question difficulty is global, but each participant keeps their own rating/climb state.
 
@@ -77,6 +77,7 @@ This file captures durable process preferences so future tasks can follow them b
 - Questions should test real concept understanding rather than surface recall or answer elimination. Difficulty should reflect the knowledge, reasoning, transfer, or math required, while answer options should remain high-quality and similarly plausible.
 - For source-material-derived question sets, practicing all questions to mastery should teach roughly the same core conceptual knowledge as reading and fully understanding the source material.
 - Avoid low-quality distractors that can be ruled out by wording cues, extreme absolutes, category mismatch, or absurdity; wrong options should be plausible alternatives that diagnose common misunderstandings.
+- After creating or editing registered question sets with `.codex/skills/author-questions`, run the targeted guessability test with `QUESTION_GUESSABILITY_SOURCE_IDS` set to the changed source id. If simple language-cue heuristics score well, improve the answer options instead of treating the test as a nuisance.
 - Use the repo-local `.codex/skills/author-questions` skill to create or edit question sets from source-material folders; source material can be transcripts, chapters, papers, slides, PDFs, or other learning artifacts, and generated sets should be registered in `lib/quiz.ts` so they are selectable for practice.
 - When students are struggling with a math-heavy question set, prefer adding applied A-level/AP-style computation questions before adding more abstract theory-only questions.
 - Crash Course Linear Algebra Lecture 0 should stay focused on prerequisite AP/A-level linear algebra rather than AI applications, helping students practice the math needed for later lecture question sets.

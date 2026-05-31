@@ -43,22 +43,18 @@ function listSqlMigrationFiles(): string[] {
     .map((fileName) => path.join(supabaseMigrationsRoot, fileName));
 }
 
-function extractLastQuestionReportTopicConstraint(): string[] | null {
-  const sql = listSqlMigrationFiles()
+function readAllSqlMigrations(): string {
+  return listSqlMigrationFiles()
     .map((filePath) => fs.readFileSync(filePath, "utf8"))
     .join("\n");
-  const topicCheckPattern =
-    /(?:topic\s+text\s+not\s+null\s+check|question_reports_topic_check[\s\S]*?check)\s*\(\s*topic\s+in\s*\(([^)]*)\)\s*\)/gi;
-  let allowedTopics: string[] | null = null;
-  let match: RegExpExecArray | null;
+}
 
-  while ((match = topicCheckPattern.exec(sql))) {
-    allowedTopics = Array.from(match[1].matchAll(/'([^']+)'/g)).map(
-      (topicMatch) => topicMatch[1],
-    );
+function findLastMatchIndex(source: string, pattern: RegExp): number {
+  let lastIndex = -1;
+  for (const match of source.matchAll(pattern)) {
+    lastIndex = match.index ?? lastIndex;
   }
-
-  return allowedTopics;
+  return lastIndex;
 }
 
 describe("question file registration", () => {
@@ -98,26 +94,39 @@ describe("question file registration", () => {
     ).toEqual([]);
   });
 
-  it("keeps report topic database constraints aligned with registered topics", () => {
-    const allowedTopics = extractLastQuestionReportTopicConstraint();
-    const registeredTopics = Array.from(
+  it("keeps registered source topics listed in ALL_TOPICS", () => {
+    const knownTopics = new Set<string>(ALL_TOPICS);
+    const missingRegisteredTopics = Array.from(
       new Set(QUESTION_SOURCES.map((source) => source.topic)),
-    ).sort();
-    const missingRegisteredTopics = registeredTopics.filter(
-      (topic) => !allowedTopics?.includes(topic),
-    );
-    const missingKnownTopics = ALL_TOPICS.filter(
-      (topic) => !allowedTopics?.includes(topic),
-    );
+    )
+      .filter((topic) => !knownTopics.has(topic))
+      .sort();
 
-    expect(allowedTopics).not.toBeNull();
     expect(
       missingRegisteredTopics,
-      "Registered source topics must be accepted by question_reports.topic.",
+      "Registered source topics must be added to ALL_TOPICS for API validation and UI filters.",
     ).toEqual([]);
+  });
+
+  it("keeps question report topic storage open to future topics", () => {
+    const sql = readAllSqlMigrations();
+    const lastClosedEnumDropIndex = findLastMatchIndex(
+      sql,
+      /drop\s+constraint\s+if\s+exists\s+question_reports_topic_check/gi,
+    );
+    const effectiveSql =
+      lastClosedEnumDropIndex >= 0 ? sql.slice(lastClosedEnumDropIndex) : sql;
+
     expect(
-      missingKnownTopics,
-      "ALL_TOPICS must be accepted by question_reports.topic.",
-    ).toEqual([]);
+      lastClosedEnumDropIndex,
+      "Migrations should drop the old closed question_reports.topic enum constraint.",
+    ).toBeGreaterThanOrEqual(0);
+    expect(
+      effectiveSql,
+      "Do not reintroduce topic-specific question_reports.topic enums; API validation owns the current topic list.",
+    ).not.toMatch(/\btopic\s+in\s*\(/i);
+    expect(effectiveSql).toMatch(
+      /question_reports_topic_present_check[\s\S]*char_length\s*\(\s*btrim\s*\(\s*topic\s*\)\s*\)\s+between\s+1\s+and\s+200/i,
+    );
   });
 });

@@ -50,12 +50,12 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         true,
       ],
       [
-        "Prokaryotes have no DNA, while eukaryotes always have plasmids as their main chromosomes.",
+        "Prokaryotic DNA is stored in a membrane-bound nucleus, while eukaryotic chromosomes usually float freely in cytoplasm.",
         false,
       ],
       ["Prokaryotes are viruses, while eukaryotes are bacteria.", false],
       [
-        "Prokaryotes cannot regulate genes, while eukaryotes regulate every gene identically in every tissue.",
+        "Prokaryotic gene regulation is absent, while eukaryotic tissues use identical expression programs.",
         false,
       ],
     ],
@@ -104,11 +104,11 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         true,
       ],
       [
-        "Movement against a concentration gradient by direct ATP use in every case.",
+        "Movement against a gradient is classified as simple diffusion through the lipid bilayer.",
         false,
       ],
       [
-        "Water movement only, with no relevance to gases or small solutes.",
+        "Passive transport is limited to osmosis and does not include gases or small nonpolar solutes.",
         false,
       ],
       ["A change in DNA sequence that creates a new cell type.", false],
@@ -144,7 +144,7 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
       ],
       ["Pumps can use energy to move substances against gradients.", true],
       [
-        "Channels and pumps are identical because both move every molecule with no selectivity.",
+        "Channels and pumps are identical because both ignore solute identity and move substances at the same rate.",
         false,
       ],
       [
@@ -185,9 +185,12 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         true,
       ],
       ["A response that necessarily makes a signal grow forever.", false],
-      ["A process that only happens in DNA replication.", false],
       [
-        "A signaling failure caused by every receptor being permanently inactive.",
+        "A DNA-copying process rather than a control loop that stabilizes a variable.",
+        false,
+      ],
+      [
+        "A signaling failure caused by receptors being permanently locked in a single inactive state.",
         false,
       ],
     ],
@@ -202,7 +205,7 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
       ["Adaptive immunity is more specific and can form memory.", true],
       ["Adaptive immunity excludes B cells, antibodies, and T cells.", false],
       [
-        "Innate immunity works only after years of training by vaccines.",
+        "Innate immunity develops antigen-specific memory after repeated vaccination.",
         false,
       ],
     ],
@@ -242,7 +245,7 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         true,
       ],
       [
-        "Amplification means every signal molecule must directly enter the nucleus to become DNA.",
+        "Amplification means signal molecules enter the nucleus and are copied into DNA before a response can occur.",
         false,
       ],
       [
@@ -263,15 +266,15 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
     [
       ["It stores genomic DNA.", true],
       [
-        "It directly performs every transport, folding, and ATP-generating function in the cell by itself.",
+        "It is the direct site for transport, protein folding, and ATP generation rather than one compartment among many.",
         false,
       ],
       [
-        "It is the site where every protein is fully folded and secreted.",
+        "It is the main site where secreted proteins finish folding and leave the cell.",
         false,
       ],
       [
-        "It is a simple master controller that directly executes all cellular work without proteins or cytoplasm.",
+        "It acts as a command center that directly performs cellular work without support from proteins or cytoplasm.",
         false,
       ],
     ],
@@ -323,7 +326,7 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         true,
       ],
       [
-        "Uncontrolled cell bursting that always spreads infection to every neighboring cell.",
+        "Uncontrolled cell rupture that releases contents and tends to provoke inflammation.",
         false,
       ],
       ["A process that converts a bacterium into a virus.", false],
@@ -348,7 +351,7 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         true,
       ],
       [
-        "Cancer requires every cell in the body to have exactly the same mutation at the same time.",
+        "Cancer requires a body-wide synchronized mutation before a tumor can evolve.",
         false,
       ],
       [
@@ -397,7 +400,7 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         true,
       ],
       [
-        "The immune system recognizes threats only by measuring body temperature.",
+        "The immune system identifies threats mainly by sensing body temperature changes.",
         false,
       ],
     ],
@@ -413,10 +416,13 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         true,
       ],
       [
-        "It means nothing can ever cross the membrane under any circumstance.",
+        "It means the membrane behaves as a sealed wall with no regulated transport.",
         false,
       ],
-      ["It means every molecule crosses membranes at the same rate.", false],
+      [
+        "It means membrane passage is governed by molecular size rather than charge, polarity, or transport proteins.",
+        false,
+      ],
       ["It means membranes store genetic information in codons.", false],
     ],
     "Selective permeability is the basis of cellular control. Cells are open enough to exchange matter and information, but closed enough to maintain concentrations, electrical differences, compartments, and identity.",
@@ -434,7 +440,10 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         "Membrane potential and downstream processes such as neuron signaling can be disrupted.",
         true,
       ],
-      ["The pump blockade directly changes every codon in the genome.", false],
+      [
+        "The pump blockade directly edits coding sequences in the nuclear genome.",
+        false,
+      ],
       [
         "Diffusion will automatically rebuild the original gradients without energy input.",
         false,
@@ -495,7 +504,7 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         false,
       ],
       [
-        "The signal cannot be real because one ligand must always produce one identical response in every cell.",
+        "The signal is better explained as a naming error because one ligand should produce a uniform response across cell types.",
         false,
       ],
       [
@@ -513,11 +522,11 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
       ["Apoptosis can remove cells with severe DNA damage.", true],
       ["Evading apoptosis can give abnormal cells a survival advantage.", true],
       [
-        "Apoptosis is harmful in every context because tissues should never remove cells.",
+        "Apoptosis is harmful in development because tissue maintenance should preserve damaged cells.",
         false,
       ],
       [
-        "Cancer prevention depends only on killing pathogens, not on regulating cell survival.",
+        "Cancer prevention is mainly a pathogen-killing problem rather than a cell-survival regulation problem.",
         false,
       ],
     ],
@@ -538,7 +547,7 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         true,
       ],
       [
-        "Vaccines work by making antibiotics effective against every virus.",
+        "Vaccines work by converting antibiotics into virus-targeting drugs.",
         false,
       ],
     ],
@@ -559,7 +568,7 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         true,
       ],
       [
-        "A signaling failure must mean ligands no longer contain any atoms.",
+        "A signaling failure must mean the ligand has lost its molecular structure entirely.",
         false,
       ],
     ],
@@ -600,11 +609,11 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         true,
       ],
       [
-        "Immune response cannot affect symptoms because only pathogens cause symptoms.",
+        "Immune responses affect pathogen clearance but are separate from symptom generation.",
         false,
       ],
       [
-        "A stronger immune response is always clinically better in every disease.",
+        "A stronger immune response is clinically preferable across inflammatory, autoimmune, and infectious disease contexts.",
         false,
       ],
     ],

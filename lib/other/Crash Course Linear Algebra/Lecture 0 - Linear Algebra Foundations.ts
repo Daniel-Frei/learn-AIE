@@ -118,7 +118,7 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It points in every direction at the same time in ordinary vector geometry.",
+        text: "It points in multiple ordinary vector directions at once.",
         isCorrect: false,
       },
     ],
@@ -306,7 +306,7 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is always equal to \\(\\|a\\|\\), regardless of direction.",
+        text: "It equals \\(\\|a\\|\\) even when directions differ.",
         isCorrect: false,
       },
     ],
@@ -572,7 +572,7 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The identity matrix sends every vector to the zero vector.",
+        text: "The identity matrix sends vectors to the zero vector.",
         isCorrect: false,
       },
     ],
@@ -864,7 +864,7 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "The notation \\(^T\\) means to add all vector components.",
+        text: "The notation \\(^T\\) means to add the vector components.",
         isCorrect: false,
       },
     ],
@@ -996,11 +996,11 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Multiply all components of \\(x\\) together and then multiply all components of \\(y\\) together.",
+        text: "Multiply the components of \\(x\\) together and then multiply the components of \\(y\\) together.",
         isCorrect: false,
       },
       {
-        text: "Choose only the largest value of \\(x_i y_i\\).",
+        text: "Choose the largest value of \\(x_i y_i\\).",
         isCorrect: false,
       },
       {
@@ -1088,7 +1088,7 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "The product is defined only when \\(m=n\\).",
+        text: "The product is defined when \\(m=n\\) rather than when inner dimensions match.",
         isCorrect: false,
       },
     ],
@@ -1192,7 +1192,7 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Rank is the same as the sum of all entries in a matrix.",
+        text: "Rank is the same as the sum of matrix entries.",
         isCorrect: false,
       },
       {
@@ -1224,7 +1224,7 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "A determinant is defined for every rectangular matrix.",
+        text: "A determinant is defined for rectangular matrices.",
         isCorrect: false,
       },
     ],
@@ -1279,7 +1279,7 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The notation means every vector is changed into a perpendicular vector.",
+        text: "The notation means vectors are changed into perpendicular vectors.",
         isCorrect: false,
       },
     ],
@@ -1307,7 +1307,7 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "The notation means \\(\\Sigma\\) is a vector of components named \\(\\Sigma_i\\) only.",
+        text: "The notation means \\(\\Sigma\\) is a vector with components named \\(\\Sigma_i\\).",
         isCorrect: false,
       },
     ],
@@ -1327,7 +1327,7 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "\\(c\\), \\(v\\), and \\(A\\) must all be square matrices.",
+        text: "\\(c\\), \\(v\\), and \\(A\\) are required to be square matrices.",
         isCorrect: false,
       },
       {

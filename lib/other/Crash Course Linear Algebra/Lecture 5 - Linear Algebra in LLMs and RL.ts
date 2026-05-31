@@ -71,7 +71,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "They remove all trainable parameters from attention.",
+        text: "They replace learned projections with fixed routing weights.",
         isCorrect: false,
       },
     ],
@@ -89,7 +89,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It stores only the final predicted class label.",
+        text: "It stores the final predicted class label rather than contextual states.",
         isCorrect: false,
       },
       {
@@ -97,7 +97,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It replaces all keys and values with zeros.",
+        text: "It replaces keys and values with zero vectors before scoring.",
         isCorrect: false,
       },
     ],
@@ -149,7 +149,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They are based only on alphabetical order of tokens.",
+        text: "They are based on alphabetical token order rather than learned projections.",
         isCorrect: false,
       },
     ],
@@ -172,11 +172,11 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The result contains one row for every embedding dimension rather than every token.",
+        text: "The result uses one row per embedding dimension rather than per token.",
         isCorrect: false,
       },
       {
-        text: "The transpose is unnecessary because \\(QK\\) already has shape \\(n\\times n\\).",
+        text: "The transpose is a cosmetic notation choice because \\(QK\\) already has shape \\(n\\times n\\).",
         isCorrect: false,
       },
     ],
@@ -194,11 +194,11 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It deletes all value vectors before aggregation.",
+        text: "It discards value vectors before aggregation.",
         isCorrect: false,
       },
       {
-        text: "It makes every token weight negative.",
+        text: "It gives token weights negative values after normalization.",
         isCorrect: false,
       },
       {
@@ -255,7 +255,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "All heads are forced to have identical learned projections.",
+        text: "The heads share identical learned projections.",
         isCorrect: false,
       },
     ],
@@ -278,11 +278,11 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Nonlinearities are irrelevant to the expressivity of stacked layers.",
+        text: "Nonlinearities contribute little to expressivity in stacked layers.",
         isCorrect: false,
       },
       {
-        text: "Neural networks never use matrix multiplication.",
+        text: "Neural networks rely on lookup tables instead of matrix multiplication.",
         isCorrect: false,
       },
     ],
@@ -301,11 +301,11 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Nonlinearities are needed because matrices cannot multiply vectors.",
+        text: "Nonlinearities are needed because matrix products fail on vector inputs.",
         isCorrect: false,
       },
       {
-        text: "Nonlinearities remove all learned parameters.",
+        text: "Nonlinearities remove the learned parameter matrices.",
         isCorrect: false,
       },
       {
@@ -386,11 +386,11 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Its inputs cannot be vectorized state or action information.",
+        text: "Its inputs are separate symbols rather than vectorized state or action information.",
         isCorrect: false,
       },
       {
-        text: "It must be a handwritten table in all modern deep RL systems.",
+        text: "It is represented as a handwritten table in modern deep RL systems.",
         isCorrect: false,
       },
     ],
@@ -417,7 +417,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It can only be used when there are no parameters \\(\\theta\\).",
+        text: "It is used when there are no parameters \\(\\theta\\).",
         isCorrect: false,
       },
     ],
@@ -470,7 +470,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Every critical point in a neural network is necessarily a bad local minimum.",
+        text: "A critical point in a neural network is treated as a bad local minimum.",
         isCorrect: false,
       },
     ],
@@ -493,11 +493,11 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Bad local minima are the only optimization concern.",
+        text: "Bad local minima are the main optimization concern in this setting.",
         isCorrect: false,
       },
       {
-        text: "High dimensions make gradients mathematically impossible.",
+        text: "High dimensions make gradient directions unusable.",
         isCorrect: false,
       },
     ],
@@ -599,7 +599,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The routing is nondifferentiable and cannot be trained.",
+        text: "The routing is nondifferentiable and trained outside gradient methods.",
         isCorrect: false,
       },
       {
@@ -622,15 +622,15 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Because matrix multiplication is undefined for all neural networks.",
+        text: "Because matrix multiplication is undefined in neural-network layers.",
         isCorrect: false,
       },
       {
-        text: "Because \\(W_1\\) must always equal \\(W_2\\).",
+        text: "Because \\(W_1\\) is constrained to equal \\(W_2\\).",
         isCorrect: false,
       },
       {
-        text: "Because multiplying by matrices removes all information in every case.",
+        text: "Because matrix multiplication removes information in this architecture.",
         isCorrect: false,
       },
     ],
@@ -710,7 +710,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Low-rank structure means all vectors are invalid.",
+        text: "Low-rank structure makes vector representations invalid.",
         isCorrect: false,
       },
     ],
@@ -729,7 +729,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is used only to make the notation look symmetric.",
+        text: "It is used to make notation look symmetric rather than to align dimensions.",
         isCorrect: false,
       },
       {
@@ -814,11 +814,11 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Every layer must preserve all distances exactly.",
+        text: "Each layer preserves distances as it transforms representations.",
         isCorrect: false,
       },
       {
-        text: "Representation geometry is irrelevant to prediction.",
+        text: "Representation geometry has little connection to prediction.",
         isCorrect: false,
       },
     ],
@@ -841,11 +841,11 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Value functions cannot use vectors.",
+        text: "Value functions use scalar tables rather than vector features.",
         isCorrect: false,
       },
       {
-        text: "Gradient descent cannot adjust RL networks.",
+        text: "Gradient descent is separate from RL network adjustment.",
         isCorrect: false,
       },
     ],
@@ -897,7 +897,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Similarity in modern AI never uses vector alignment.",
+        text: "Similarity in modern AI avoids vector alignment.",
         isCorrect: false,
       },
     ],
@@ -920,11 +920,11 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Model behavior comes only from a simple row-per-fact table.",
+        text: "Model behavior comes from a simple row-per-fact table.",
         isCorrect: false,
       },
       {
-        text: "LLMs store all facts in a single human-readable lookup table.",
+        text: "LLMs store facts in a single human-readable lookup table.",
         isCorrect: false,
       },
     ],
@@ -943,15 +943,15 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Attention avoids linear algebra by using only strings.",
+        text: "Attention compares token strings directly rather than vector projections.",
         isCorrect: false,
       },
       {
-        text: "Attention cannot be batched.",
+        text: "Attention is treated as a single-example operation.",
         isCorrect: false,
       },
       {
-        text: "Attention works only when there is exactly one token.",
+        text: "Attention works in the single-token case rather than sequences.",
         isCorrect: false,
       },
     ],
@@ -1108,7 +1108,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "\\(QK^T\\in\\mathbb{R}^{d\\times d}\\) because attention compares embedding coordinates only.",
+        text: "\\(QK^T\\in\\mathbb{R}^{d\\times d}\\) because attention compares embedding coordinates rather than token pairs.",
         isCorrect: false,
       },
       {
@@ -1131,7 +1131,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The largest score becomes weight \\(1\\), and all other scores always become weight \\(0\\).",
+        text: "The largest score becomes weight \\(1\\), while lower scores become weight \\(0\\).",
         isCorrect: false,
       },
       {
@@ -1242,7 +1242,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It stores only the immediate reward and ignores future outcomes.",
+        text: "It stores the immediate reward and ignores future outcomes.",
         isCorrect: false,
       },
       {
@@ -1346,15 +1346,15 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is a strict local minimum because all nearby directions increase the loss.",
+        text: "It is a strict local minimum because nearby directions increase the loss.",
         isCorrect: false,
       },
       {
-        text: "It is a strict local maximum because all nearby directions decrease the loss.",
+        text: "It is a strict local maximum because nearby directions decrease the loss.",
         isCorrect: false,
       },
       {
-        text: "It cannot be a critical point because the function has two variables.",
+        text: "It is not a critical point because the function has two variables.",
         isCorrect: false,
       },
     ],
@@ -1381,7 +1381,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Every critical point in a high-dimensional neural network is necessarily a bad local minimum.",
+        text: "A critical point in a high-dimensional neural network is treated as a bad local minimum.",
         isCorrect: false,
       },
     ],
@@ -1454,7 +1454,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Its number of entries grows by about a factor of \\(2\\) because attention is always linear in sequence length.",
+        text: "Its number of entries grows by about a factor of \\(2\\) because attention is modeled as linear in sequence length.",
         isCorrect: false,
       },
       {
@@ -1539,7 +1539,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Every zero-gradient point is a local minimum.",
+        text: "A zero-gradient point is a local minimum.",
         isCorrect: false,
       },
       {
@@ -1566,7 +1566,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Attention uses no dot products, while value approximation uses only dot products.",
+        text: "Attention uses string matching, while value approximation uses dot products.",
         isCorrect: false,
       },
       {
@@ -1597,7 +1597,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Dot products are useful only for text models and have no role in retrieval, attention, or RL features.",
+        text: "Dot products are mainly a text-model tool rather than a retrieval, attention, or RL feature.",
         isCorrect: false,
       },
     ],

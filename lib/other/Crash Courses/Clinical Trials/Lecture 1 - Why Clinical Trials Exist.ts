@@ -44,7 +44,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The observed improvement proves the pill is better than placebo.",
+        text: "The observed improvement is enough to conclude the pill outperformed placebo.",
         isCorrect: false,
       },
       {
@@ -127,7 +127,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Placebo effects make comparison groups unnecessary.",
+        text: "Placebo effects make single-arm improvement a direct estimate of drug effect.",
         isCorrect: false,
       },
     ],
@@ -145,7 +145,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Every untreated illness steadily worsens at the same rate.",
+        text: "Untreated illnesses follow a uniform decline at the same rate.",
         isCorrect: false,
       },
       {
@@ -153,7 +153,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Natural history proves that symptomatic improvement is caused by treatment.",
+        text: "Natural history shows symptomatic improvement was caused by treatment.",
         isCorrect: false,
       },
     ],
@@ -294,11 +294,11 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "To make every participant receive the experimental treatment.",
+        text: "To route participants toward the experimental treatment regardless of comparison needs.",
         isCorrect: false,
       },
       {
-        text: "To guarantee that no patient can improve naturally.",
+        text: "To prevent participants in the comparison group from improving naturally.",
         isCorrect: false,
       },
       {
@@ -321,11 +321,11 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Researchers cannot measure any outcomes after treatment.",
+        text: "Researchers lose outcome information after treatment begins.",
         isCorrect: false,
       },
       {
-        text: "Treatments only work when no comparison group exists.",
+        text: "Treatments work best when studied without a comparison group.",
         isCorrect: false,
       },
       {
@@ -375,7 +375,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A plausible theory guarantees that a treatment benefits patients.",
+        text: "A plausible theory is sufficient evidence that a treatment benefits patients.",
         isCorrect: false,
       },
       {
@@ -425,7 +425,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
       "Which statements correctly compare observational studies with randomized controlled trials?",
     options: [
       {
-        text: "Observational studies are always slower and less practical for rare outcomes.",
+        text: "Observational studies are inherently slower and less practical for rare outcomes.",
         isCorrect: false,
       },
       {
@@ -433,7 +433,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Observational studies are automatically invalid and never useful.",
+        text: "Observational studies are invalid by design and lack evidentiary value.",
         isCorrect: false,
       },
       {
@@ -478,7 +478,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
       "Which statements correctly describe systematic reviews and meta-analyses?",
     options: [
       {
-        text: "They synthesize evidence from only one study.",
+        text: "They synthesize evidence from a single selected study.",
         isCorrect: false,
       },
       {
@@ -509,11 +509,11 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It guarantees every measured baseline variable is exactly identical in every group.",
+        text: "It forces measured baseline variables to match exactly in each group.",
         isCorrect: false,
       },
       {
-        text: "It prevents all missing data and protocol deviations.",
+        text: "It prevents missing data and protocol deviations by design.",
         isCorrect: false,
       },
       {
@@ -532,7 +532,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
       "A study finds that people who take vitamins have lower mortality. Later analysis shows vitamin users exercise more, smoke less, and have higher income. Which interpretations are appropriate?",
     options: [
       {
-        text: "The observed association cannot be confounded by healthier behaviors or socioeconomic differences.",
+        text: "The observed association is insulated from healthier behaviors or socioeconomic differences.",
         isCorrect: false,
       },
       {
@@ -571,7 +571,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Personally providing all routine care at every study site.",
+        text: "Personally providing routine care at study sites as the sponsor's main role.",
         isCorrect: false,
       },
     ],
@@ -625,7 +625,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Serving as the only authority that approves therapies for marketing.",
+        text: "Serving as the central authority that approves therapies for marketing.",
         isCorrect: false,
       },
     ],
@@ -648,7 +648,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "They cannot influence what evidence is required before marketing.",
+        text: "They have little effect on what evidence is required before marketing.",
         isCorrect: false,
       },
       {
@@ -675,11 +675,11 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "They guarantee that a medical product will be commercially successful.",
+        text: "They make commercial success the expected result of product development.",
         isCorrect: false,
       },
       {
-        text: "They exist to guarantee that every trial result is positive.",
+        text: "They exist to make trial results positive for sponsors.",
         isCorrect: false,
       },
     ],
@@ -706,7 +706,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Patients' consent is irrelevant when a sponsor wants faster evidence.",
+        text: "Patients' consent can be bypassed when a sponsor wants faster evidence.",
         isCorrect: false,
       },
     ],
@@ -767,11 +767,11 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Every randomized trial is automatically more informative than every observational study.",
+        text: "A randomized trial is more informative than an observational study regardless of design quality or question.",
         isCorrect: false,
       },
       {
-        text: "Observational designs never contribute useful evidence.",
+        text: "Observational designs lack value for medical evidence.",
         isCorrect: false,
       },
       {
@@ -820,7 +820,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The association proves Drug A caused every death in the treated group.",
+        text: "The association establishes Drug A as the cause of deaths in the treated group.",
         isCorrect: false,
       },
     ],
@@ -843,7 +843,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Blinding is unnecessary whenever outcomes are even partly subjective.",
+        text: "Blinding has little value whenever outcomes are partly subjective.",
         isCorrect: false,
       },
       {
@@ -893,7 +893,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Every published study is designed with no bias.",
+        text: "Published studies are usually designed and reported without bias.",
         isCorrect: false,
       },
       {
@@ -928,7 +928,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Being high in the hierarchy guarantees that a conclusion is true in every patient.",
+        text: "A high evidence-hierarchy position makes a conclusion true across patients.",
         isCorrect: false,
       },
     ],
@@ -982,7 +982,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Training as a clinician removes all cognitive bias.",
+        text: "Training as a clinician removes cognitive bias.",
         isCorrect: false,
       },
     ],
@@ -1001,7 +1001,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The finding proves the treatment should be approved for all patients.",
+        text: "The finding is sufficient to approve the treatment broadly across patients.",
         isCorrect: false,
       },
       {
@@ -1009,7 +1009,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Rare conditions cannot be affected by selection bias or natural history.",
+        text: "Rare conditions are insulated from selection bias and natural history.",
         isCorrect: false,
       },
     ],
@@ -1036,7 +1036,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Operational coordination is irrelevant once a scientific hypothesis exists.",
+        text: "Operational coordination is a secondary concern once a scientific hypothesis exists.",
         isCorrect: false,
       },
     ],

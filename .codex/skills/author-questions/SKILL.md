@@ -33,6 +33,7 @@ Use the repo docs as product context. Keep edits scoped to the new question file
 4. Generate or edit the TypeScript question file.
    - Before generating a new set, determine the requested question count. If the user did not specify one, ask for the count before generating questions; do not assume a default count from this skill.
    - If context is tight, draft in multiple passes, but the final file should contain the complete requested set.
+   - After drafting, run the adversarial answer-option review below before considering questions complete.
    - Use a filename based on the source item and topic, for example `lecture5_attention.ts`, `chapter4_agents.ts`, or the closest existing series convention.
    - Use a stable ASCII export name ending in `Questions`.
    - Use the correct relative import for `Question` from the new file to `lib/quiz.ts`.
@@ -52,6 +53,8 @@ Use the repo docs as product context. Keep edits scoped to the new question file
 7. Verify.
    - Prefer `make check` before finishing when practical.
    - For focused verification during question-bank work, at least run `npm run test:focused -- tests/lib/question-registration.spec.ts` and `make types-check`.
+   - After creating or editing registered question sets, run the targeted guessability heuristic for each changed source id: `$env:QUESTION_GUESSABILITY_SOURCE_IDS="source-id"; npm run test:question-guessability`. Use comma-separated source ids for multiple changed sets.
+   - If the guessability test fails, treat it as an answer-option quality issue. Revise distractors and prompts before rerunning instead of weakening the thresholds, unless there is a documented source-specific reason.
    - If formatting may have changed, run `make format-check`.
    - If any command fails, include the exact error output and fix the root cause.
 
@@ -87,9 +90,24 @@ Use the repo docs as product context. Keep edits scoped to the new question file
 ## Answer Options
 
 - Options must be independent; do not refer from one option to another.
-- Avoid obvious guessing patterns, including extreme absolutes like "always" or "never" unless truly correct.
-- Incorrect options should be plausible same-neighborhood alternatives, partial truths, common confusions, nearby quantities, or nearby conditions that help diagnose misunderstandings.
+- Each option in a question should compete on the same semantic axis. Do not pair one detailed, technically plausible correct option with three broad anti-claims, absurdities, or generic "this removes all risk/tests/security concerns" statements.
+- Incorrect options should be plausible same-neighborhood alternatives, partial truths, common confusions, nearby quantities, nearby conditions, wrong scope boundaries, wrong causal directions, or wrong inclusion/exclusion details that help diagnose misunderstandings.
 - A learner should usually need concept understanding to distinguish correct options from incorrect options. Avoid distractors that are absurd, category-mismatched, self-refuting, or easy to eliminate from wording cues alone.
+- Absolute or high-certainty language such as "always", "never", "only", "every", "all", "none", "cannot", "impossible", "guarantees", "proves", or "complete" is not banned, but it is high risk. Use it only when the source, math, or formal definition supports the exact quantifier, and avoid making these cues correlate mostly with incorrect options.
+- Keep option specificity, detail level, and plausibility roughly comparable. If the correct option is much more concrete, technical, or carefully hedged than the incorrect options, rewrite the distractors to be closer competitors.
+
+## Adversarial Answer Review
+
+Before finalizing a generated or revised set, review it from the perspective of a reasonably educated learner who has not read the source and is trying to game the quiz.
+
+- Hide the `isCorrect` flags and ask whether the learner could answer by generic test-taking heuristics instead of source understanding.
+- If marking options with absolutes or overclaims as false would get many options right, revise the affected distractors and any matching prompts.
+- If the longest, most technical, or most carefully hedged option is usually correct, revise so incorrect options have comparable detail and credibility.
+- For "best describes" questions, make all four options candidate descriptions of the same thing. Do not make the incorrect options mostly claims about what the concept does not do.
+- Prefer near-miss distractors created by changing one meaningful detail of the correct concept: component inclusion, scope, precondition, feedback signal, direction of causality, authority boundary, failure mode, or tradeoff.
+- Do not let difficulty come from trick wording. The question should be hard because the tested distinction is substantive, while the options remain clear and fair.
+- When practical for a large set, run or mentally simulate a simple language-cue baseline such as "mark options containing always/never/only/every/guarantees/proves/complete as false and the rest as true." If that baseline would score well at the option level, the set is still too guessable.
+- For registered question sets, prefer the deterministic check over mental simulation: `$env:QUESTION_GUESSABILITY_SOURCE_IDS="source-id"; npm run test:question-guessability`.
 
 ## Answer Distribution
 
@@ -139,7 +157,7 @@ export const sourceMaterialQuestions: Question[] = [
       { text: "Option 4 text", isCorrect: false },
     ],
     explanation:
-      "At least two sentences. Explain why correct options are correct and why incorrect options are incorrect.",
+      "At least two sentences (at least 200 characters). Explain why correct options are correct and why incorrect options are incorrect.",
   },
 ];
 ```
@@ -152,6 +170,8 @@ export const sourceMaterialQuestions: Question[] = [
 - Difficulty is exactly `"easy"`, `"medium"`, or `"hard"`, follows any user/source-specified distribution, and otherwise uses a reasonable balanced default when the source material supports it.
 - Final response reports the difficulty balance with `"easy"`, `"medium"`, and `"hard"` counts.
 - Answer options are plausible enough that the learner needs concept understanding rather than elimination of obviously wrong distractors.
+- Adversarial answer review has been applied: absolutes, overclaims, option length/detail, and obvious false-option cues do not let a generic heuristic score well.
+- Targeted guessability test passes for each created or edited registered question set, or any failure has been fixed at the question level.
 - No prompt depends on seeing the source material, transcript, chapter, paper, or slides.
 - Every explanation has at least two sentences and covers all options.
 - Math uses escaped LaTeX delimiters inside TypeScript strings.

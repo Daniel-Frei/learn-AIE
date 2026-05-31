@@ -277,7 +277,7 @@ Persist a shared append-only question-quality report.
       sourceLabel: string;
       seriesId: string;
       seriesLabel: string;
-      topic: "RL" | "DL" | "NLP" | "Math" | "Life Science";
+      topic: Topic; // one of lib/questionTopics.ALL_TOPICS; currently "RL" | "DL" | "NLP" | "Math" | "Life Science"
       prompt: string;
     }
   }
@@ -316,8 +316,8 @@ Persist a shared append-only question-quality report.
 ### Notes For Backend Integrators
 
 - Reports are append-only in the shared database; multiple reports for the same `questionId` remain separate entries.
-- Report submission rejects empty fields, comments over `2,000` characters, prompt snapshots over `4,000` characters, labels/ids over `200` characters, and topics outside `RL`, `DL`, `NLP`, `Math`, or `Life Science`.
-- The server-side topic validator and the `question_reports.topic` database check constraint must stay aligned with the registered quiz topics.
+- Report submission rejects empty fields, comments over `2,000` characters, prompt snapshots over `4,000` characters, labels/ids over `200` characters, and topics outside the configured `lib/questionTopics.ALL_TOPICS` list.
+- The API validator owns the current accepted topic list. The `question_reports.topic` database constraint intentionally checks only that topic text is present and bounded, not that it belongs to a closed enum, so future quiz topics do not need another report-table schema migration.
 
 ## Endpoint: `POST /api/local-migration`
 

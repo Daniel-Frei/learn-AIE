@@ -57,10 +57,13 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
       ],
       ["Viruses are too large for medicines to reach.", false],
       [
-        "Viruses are made only of carbohydrates, so no molecule can bind them.",
+        "Viral particles are defined by carbohydrate shells rather than nucleic acids and proteins.",
         false,
       ],
-      ["Antibiotics work only by changing human chromosomes.", false],
+      [
+        "Antibiotics treat viruses by targeting host chromosomes rather than bacterial structures.",
+        false,
+      ],
     ],
     "Many antibiotics exploit bacterial-specific structures or processes, such as cell walls, bacterial ribosomes, or bacterial metabolism. Viruses lack those cellular targets and instead depend on host-cell machinery plus virus-specific steps.",
   ),
@@ -117,11 +120,11 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         false,
       ],
       [
-        "A guaranteed result that every treatment creates immediately in every patient.",
+        "A predictable immediate outcome produced uniformly by treatment in each patient.",
         false,
       ],
       [
-        "A process that happens only when no genetic or phenotypic variation exists.",
+        "A process that occurs when genetic and phenotypic variation are absent from the population.",
         false,
       ],
     ],
@@ -165,11 +168,11 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "mRNA medicines permanently replace every chromosome in every treated cell.",
+        "mRNA medicines replace treated-cell chromosomes with durable RNA copies.",
         false,
       ],
       [
-        "All modalities work by the exact same mechanism, dose route, and safety profile.",
+        "Therapeutic modalities share the same mechanism, dose route, and safety profile.",
         false,
       ],
     ],
@@ -185,12 +188,12 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "Biomarkers can only be useful if they fit exactly one category and never guide decisions.",
+        "Biomarkers lose usefulness when they support more than one decision type.",
         false,
       ],
       ["A measurement must be validated for the decision it supports.", true],
       [
-        "A biomarker association automatically proves that changing the biomarker improves patient outcomes.",
+        "A biomarker association is sufficient to show that changing the marker improves patient outcomes.",
         false,
       ],
     ],
@@ -205,10 +208,13 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         "They simplify biological systems so mechanisms, toxicity, or feasibility can be studied before or alongside human evidence.",
         true,
       ],
-      ["They perfectly duplicate every feature of every human disease.", false],
+      [
+        "They replicate human disease with full fidelity across mechanisms, symptoms, and treatment response.",
+        false,
+      ],
       ["They remove the need for any later validation.", false],
       [
-        "They are only useful if they contain no cells, molecules, or measurements.",
+        "They are useful mainly as abstract measurements without cells, molecules, or biological readouts.",
         false,
       ],
     ],
@@ -248,14 +254,17 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "Host physiology cannot contribute to symptoms once a pathogen is present.",
+        "Host physiology stops shaping symptoms once pathogen replication begins.",
         false,
       ],
       [
         "The pathogen and host response together shape disease presentation.",
         true,
       ],
-      ["Symptoms prove the immune system is absent.", false],
+      [
+        "Symptoms indicate immune response is absent rather than activated or misdirected.",
+        false,
+      ],
     ],
     "Infectious disease is a host-pathogen system. Fever and inflammation can be protective in some contexts but harmful in others, so denying host contribution to symptoms is incorrect.",
   ),
@@ -277,7 +286,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         false,
       ],
       [
-        "A spike protein is useful only if it permanently edits host DNA.",
+        "A spike protein is useful as an immune target because it edits host DNA.",
         false,
       ],
     ],
@@ -312,11 +321,11 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "Resistance cannot emerge through mutation, selection, or gene transfer.",
+        "Resistance is disconnected from mutation, selection, and gene transfer.",
         false,
       ],
       [
-        "Resistance is impossible in cancer because only microbes evolve.",
+        "Resistance is restricted to microbes rather than evolving tumor populations.",
         false,
       ],
     ],
@@ -336,7 +345,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "Antibodies are always small oral drugs with the same tissue access as every small molecule.",
+        "Antibodies are small oral chemicals with tissue access like intracellular small molecules.",
         false,
       ],
       [
@@ -355,9 +364,12 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         "mRNA usually gives temporary protein-production instructions, while gene editing aims to change DNA more durably.",
         true,
       ],
-      ["mRNA medicine works only by destroying ribosomes.", false],
       [
-        "Gene editing is always temporary because DNA disappears after one translation event.",
+        "mRNA medicine works by disabling ribosomes rather than providing translated instructions.",
+        false,
+      ],
+      [
+        "Gene editing is temporary because edited DNA is discarded after a translation event.",
         false,
       ],
       [
@@ -385,7 +397,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         false,
       ],
       [
-        "Cell therapy means prescribing a small molecule that never interacts with cells.",
+        "Cell therapy means prescribing a noncellular small molecule as the therapeutic platform.",
         false,
       ],
     ],
@@ -406,7 +418,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "A successful model result proves identical safety and efficacy in all humans.",
+        "A successful model result is sufficient to infer matched safety and efficacy in humans.",
         false,
       ],
     ],
@@ -427,7 +439,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "Endpoint choice is irrelevant because any measurement proves treatment value.",
+        "Endpoint choice is a minor detail because a measured change is sufficient for treatment value.",
         false,
       ],
     ],
@@ -447,11 +459,11 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         false,
       ],
       [
-        "AI predictions prove causation whenever a model finds a correlation.",
+        "AI predictions establish causation from correlation in observational datasets.",
         false,
       ],
       [
-        "AI is useful only if all biological data are perfectly unbiased and complete.",
+        "AI requires error-free, fully measured biological datasets before it can contribute.",
         false,
       ],
     ],
@@ -475,7 +487,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "Partial escape proves the original vaccine never trained adaptive immunity.",
+        "Partial escape indicates the original vaccine failed to induce adaptive immune memory.",
         false,
       ],
     ],
@@ -496,7 +508,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "A DNA sequence alone guarantees every production system makes an identical safe medicine.",
+        "A DNA sequence by itself is sufficient for matched safety and activity across production systems.",
         false,
       ],
     ],
@@ -533,14 +545,17 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "The drug must still be effective because animal biomarkers always equal clinical benefit.",
+        "Animal biomarker improvement is sufficient evidence that patient symptoms will improve.",
         false,
       ],
       [
-        "The failure proves animal models can never teach any mechanism.",
+        "The failure shows animal models are unsuitable for studying mechanisms.",
         false,
       ],
-      ["The result proves patient symptoms are unrelated to biology.", false],
+      [
+        "The result indicates patient symptoms are disconnected from biological mechanisms.",
+        false,
+      ],
     ],
     "A translational failure does not mean models are useless; it means the evidence chain was incomplete for the patient claim. Mechanism, model validity, exposure, biomarker relevance, and endpoint selection all need scrutiny.",
   ),
@@ -598,7 +613,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "High benchmark accuracy guarantees clinical usefulness in a changed workflow.",
+        "High benchmark accuracy is sufficient to show clinical usefulness after workflow changes.",
         false,
       ],
     ],
@@ -637,7 +652,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
       ],
       ["Safety and efficacy claims still require validation.", true],
       [
-        "A more complex model automatically removes uncertainty about patient benefit.",
+        "A more complex model removes uncertainty about patient benefit by increasing parameter count.",
         false,
       ],
     ],

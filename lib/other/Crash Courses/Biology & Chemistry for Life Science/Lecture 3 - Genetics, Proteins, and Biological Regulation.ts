@@ -107,11 +107,11 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         true,
       ],
       [
-        "DNA is irrelevant because proteins appear without sequence information.",
+        "DNA has little practical role once proteins are present in the cell.",
         false,
       ],
       [
-        "DNA contains one deterministic switch for every complex trait with no environmental effects.",
+        "DNA contains a direct switch for each complex trait that works independently of environment.",
         false,
       ],
       [
@@ -139,7 +139,7 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         false,
       ],
       [
-        "Gene expression means every gene is active at the same level in every cell.",
+        "Gene expression means a cell runs a uniform expression program across its genome.",
         false,
       ],
     ],
@@ -153,11 +153,11 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
       ["They are often proteins that help regulate gene transcription.", true],
       ["They can help turn genes on or off in particular contexts.", true],
       [
-        "They cannot be influenced by signals or other regulatory proteins.",
+        "They operate separately from signals and other regulatory proteins.",
         false,
       ],
       [
-        "They are the same thing as carbohydrates used only for short-term energy storage.",
+        "They are carbohydrate storage molecules rather than transcription regulators.",
         false,
       ],
     ],
@@ -187,9 +187,9 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         "Regulation of access to genetic information without changing the underlying DNA sequence.",
         true,
       ],
-      ["Replacement of every nucleotide with an amino acid.", false],
+      ["Replacement of nucleotide sequences with amino acid chains.", false],
       [
-        "A process that makes all genes impossible to transcribe forever.",
+        "A process that locks genes into a permanently inaccessible state across the genome.",
         false,
       ],
       ["The same process as bacterial cell-wall synthesis.", false],
@@ -222,11 +222,11 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
       ["They express different sets of genes.", true],
       ["They maintain different regulatory states and protein networks.", true],
       [
-        "Their differentiation history cannot affect which programs are accessible.",
+        "Their differentiation history has little influence on which programs are accessible.",
         false,
       ],
       [
-        "Their difference requires every gene sequence to be replaced in one of the cell types.",
+        "Their difference requires wholesale replacement of one cell type's gene sequences.",
         false,
       ],
     ],
@@ -267,11 +267,11 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         true,
       ],
       [
-        "DNA affects traits only through direct electrical signals sent from chromosomes to organs.",
+        "DNA affects traits through direct electrical signals sent from chromosomes to organs.",
         false,
       ],
       [
-        "Every DNA sequence is automatically translated into a functional protein in every cell.",
+        "A DNA sequence becomes a functional protein regardless of expression state, codon context, or cell type.",
         false,
       ],
     ],
@@ -283,7 +283,10 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
     "Which statements correctly describe plasmids in bacteria and biotechnology?",
     [
       ["Plasmids are small DNA molecules that can carry genes.", true],
-      ["Plasmids cannot carry antibiotic resistance genes.", false],
+      [
+        "Plasmids are mainly inert DNA loops unrelated to transferable resistance traits.",
+        false,
+      ],
       [
         "Engineered plasmids can be used to introduce genes into bacteria for cloning or expression.",
         true,
@@ -331,7 +334,7 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         false,
       ],
       [
-        "Epigenetic regulation always deletes chromosomes, while mutation never affects sequence.",
+        "Epigenetic regulation deletes chromosomes, while mutation leaves sequence unchanged.",
         false,
       ],
     ],
@@ -348,7 +351,7 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
       ],
       ["Antibiotic exposure can select for resistant variants.", true],
       [
-        "Resistance genes cannot spread through plasmids or horizontal gene transfer.",
+        "Resistance genes spread vertically but are disconnected from plasmids and horizontal gene transfer.",
         false,
       ],
       [
@@ -369,11 +372,11 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
       ],
       ["They do not use the cell's translation machinery.", false],
       [
-        "They cannot be used in vaccine strategies that encode an antigen.",
+        "They are unsuitable for vaccine strategies that encode an antigen.",
         false,
       ],
       [
-        "They must permanently replace the entire genome in every treated cell to work.",
+        "They work by replacing the treated cell's genome with a permanent RNA-derived chromosome.",
         false,
       ],
     ],
@@ -401,7 +404,10 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         true,
       ],
       ["Any drug that blocks a receptor for ten minutes.", false],
-      ["A diagnostic test that only measures blood pressure.", false],
+      [
+        "A diagnostic workflow that reports blood pressure without altering disease biology.",
+        false,
+      ],
       ["The process by which ribosomes digest carbohydrates.", false],
     ],
     "Gene therapy intervenes at the genetic-information layer, but it still must solve delivery, durability, safety, tissue targeting, and patient-selection problems. It is not a synonym for all drugs or all diagnostics.",
@@ -421,7 +427,7 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         true,
       ],
       [
-        "The variant proves that every carrier must have identical symptoms at birth.",
+        "The variant implies identical symptoms at birth for carriers across environments.",
         false,
       ],
     ],
@@ -439,7 +445,7 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
       ["Editing and delivery may not occur in every target cell.", true],
       ["Off-target or unintended effects may need to be checked.", true],
       [
-        "A guide sequence guarantees a perfectly identical outcome in every cell and patient.",
+        "A guide sequence is sufficient to produce uniform repair outcomes across cells and patients.",
         false,
       ],
     ],
@@ -470,7 +476,7 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         true,
       ],
       [
-        "The initial shrinkage proves evolution cannot occur inside a tumor.",
+        "The initial shrinkage rules out resistant subclones as a later clinical problem.",
         false,
       ],
       [
@@ -478,7 +484,7 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         false,
       ],
       [
-        "Regrowth proves the drug never interacted with a biological target.",
+        "Regrowth indicates the drug had no biologically relevant target interaction.",
         false,
       ],
     ],
@@ -495,7 +501,7 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         true,
       ],
       [
-        "One gene always maps to one visible trait with no regulation or interaction.",
+        "One gene maps directly to one visible trait without regulation or interaction.",
         false,
       ],
       [
@@ -523,7 +529,7 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         true,
       ],
       [
-        "Sequencing alone directly measures every protein activity, metabolite, and clinical outcome without additional data.",
+        "Sequencing alone directly measures protein activity, metabolite levels, and clinical outcome.",
         false,
       ],
     ],
@@ -541,7 +547,7 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
       ],
       ["Interactions among cells and tissues create emergent behavior.", true],
       [
-        "Organism complexity is determined only by the number of protein-coding genes and nothing else.",
+        "Organism complexity is determined mainly by protein-coding gene count rather than regulation or interaction.",
         false,
       ],
     ],

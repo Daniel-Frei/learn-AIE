@@ -17,7 +17,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The framing treats code only as the final artifact produced after an agent has already completed its work.",
+        text: "The framing treats code as a finished deliverable after agent work, separate from reasoning, action, feedback, state management, and verification inside the loop.",
         isCorrect: false,
       },
       {
@@ -44,7 +44,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Only the model weights and no external software infrastructure.",
+        text: "Model weights plus no surrounding tools, memory, validation, permissions, or execution environment.",
         isCorrect: false,
       },
       {
@@ -90,7 +90,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
       "Which statement best captures the scope boundary for the word code in code-as-harness systems?",
     options: [
       {
-        text: "Code means only human-readable programming language source files and excludes tests, traces, tool schemas, and formal specifications.",
+        text: "Code means human-readable source files while excluding executable tests, traces, tool schemas, formal specifications, logs, machine-checkable contracts, and generated workflow artifacts.",
         isCorrect: false,
       },
       {
@@ -98,7 +98,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Code includes every physical state in the world as long as an agent talks about that state.",
+        text: "Code includes physical-world states whenever an agent mentions them in a conversation.",
         isCorrect: false,
       },
       {
@@ -129,7 +129,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Code is useful mainly because it hides state transitions from the harness.",
+        text: "Code is useful mainly because it hides state transitions from the harness while still letting the model claim that execution occurred.",
         isCorrect: false,
       },
     ],
@@ -152,7 +152,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Executable traces and variable states are irrelevant to later reasoning and should be discarded before the harness observes them.",
+        text: "Executable traces and variable states are low-value byproducts that should be discarded before the harness can use them for debugging or future reasoning.",
         isCorrect: false,
       },
       {
@@ -174,7 +174,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The model must internally compute every intermediate result without using a runtime.",
+        text: "The model should compute intermediate results internally instead of using runtimes or structured execution.",
         isCorrect: false,
       },
       {
@@ -182,7 +182,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The approach is useful only when the final answer is a source-code file.",
+        text: "The approach is useful mainly when the user asks for a final source-code file.",
         isCorrect: false,
       },
     ],
@@ -209,7 +209,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Formal methods are useful only if their outputs are never fed back to the model.",
+        text: "Formal methods are useful mainly when their outputs stay outside the model feedback loop rather than constraining subsequent reasoning or repair.",
         isCorrect: false,
       },
     ],
@@ -258,11 +258,11 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Executable action code replaces perception, controllers, APIs, and safety layers, so the harness no longer needs those components.",
+        text: "Executable action code replaces perception, controllers, APIs, and safety layers, so those components become redundant.",
         isCorrect: false,
       },
       {
-        text: "Grounding is unnecessary when actions are represented as code because code cannot produce invalid state transitions.",
+        text: "Grounding is optional when actions are represented as code because invalid state transitions are treated as coding details.",
         isCorrect: false,
       },
     ],
@@ -280,15 +280,15 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It bypasses reusable skills and always asks the model to generate low-level motor or UI commands from scratch.",
+        text: "It bypasses reusable skills and asks the model to regenerate low-level motor or UI commands from scratch, even when the environment exposes tested actions.",
         isCorrect: false,
       },
       {
-        text: "It assumes ambiguity should never trigger clarification because the executable skill library is fixed.",
+        text: "It treats ambiguity as a problem solved by a fixed executable skill library.",
         isCorrect: false,
       },
       {
-        text: "It works only for text-only question answering and not for embodied or GUI environments.",
+        text: "It is restricted to plain question answering rather than embodied or GUI environments.",
         isCorrect: false,
       },
     ],
@@ -341,7 +341,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They avoid persistent memory because long-horizon interaction makes reusable executable skills harmful by definition.",
+        text: "They avoid persistent memory because long-horizon interaction makes reusable executable skills a liability rather than a source of transferable task knowledge.",
         isCorrect: false,
       },
     ],
@@ -387,7 +387,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Structured world representations are never executable, while execution traces are always natural-language summaries.",
+        text: "Structured world representations are treated as non-executable, while execution traces are treated as plain summaries.",
         isCorrect: false,
       },
       {
@@ -395,7 +395,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Both approaches reject code as an environment interface and instead rely only on latent embeddings.",
+        text: "Both approaches reject code as an environment interface and rely on latent embeddings instead.",
         isCorrect: false,
       },
     ],
@@ -422,7 +422,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They cannot support benchmarks because executable feedback is incompatible with evaluation.",
+        text: "They are a poor fit for benchmarks because executable feedback conflicts with evaluation.",
         isCorrect: false,
       },
     ],
@@ -441,7 +441,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Planning is useful only as private hidden reasoning and should not become an inspectable harness artifact.",
+        text: "Planning is useful as private hidden reasoning rather than as an inspectable harness artifact.",
         isCorrect: false,
       },
       {
@@ -449,7 +449,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Planning works only for one-shot code completion and becomes irrelevant in repository-level work.",
+        text: "Planning is mainly for one-shot code completion and adds little to repository-level work.",
         isCorrect: false,
       },
     ],
@@ -476,7 +476,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Its main strength is that the first decomposition is guaranteed to be complete and never needs revision.",
+        text: "Its main strength is that the first decomposition is treated as finished and stable.",
         isCorrect: false,
       },
     ],
@@ -581,7 +581,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "A plan that produces a final answer always proves that the harness made reliable intermediate decisions.",
+        text: "A plan that produces a final answer is sufficient evidence that intermediate decisions were reliable.",
         isCorrect: false,
       },
     ],
@@ -635,7 +635,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Semantic memory is unrelated to the codebase and stores only the model's private hidden thoughts.",
+        text: "Semantic memory is separate from the codebase and stores the model's private hidden thoughts.",
         isCorrect: false,
       },
     ],
@@ -662,7 +662,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The main objective of long-term memory is to accumulate every event without write gates, compression, or quality control.",
+        text: "The main objective of long-term memory is to accumulate raw events before quality control, compression, or write gating.",
         isCorrect: false,
       },
     ],
@@ -684,11 +684,11 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Its only challenge is storing more tokens, while granularity of sharing and information flooding do not matter.",
+        text: "Its main challenge is token storage, while sharing granularity and information flooding are secondary details.",
         isCorrect: false,
       },
       {
-        text: "It is unnecessary whenever agents have different role names.",
+        text: "Different role names make communication protocols redundant.",
         isCorrect: false,
       },
     ],
@@ -707,15 +707,15 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They require every build log, trace, and test output to stay verbatim in the active prompt.",
+        text: "They require build logs, traces, and test output to stay verbatim in the active prompt.",
         isCorrect: false,
       },
       {
-        text: "They make auditing impossible because full artifacts are deleted after summarization.",
+        text: "They make auditing unreliable because full artifacts are deleted after summarization.",
         isCorrect: false,
       },
       {
-        text: "They are useful only for conversational chatbots and not for code-agent workflows.",
+        text: "They are designed for conversational chatbots rather than code-agent workflows.",
         isCorrect: false,
       },
     ],
@@ -795,7 +795,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "A failed check should never update working memory or guide the next action.",
+        text: "A failed check should be treated as terminal output rather than a working-memory update.",
         isCorrect: false,
       },
     ],
@@ -866,7 +866,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A robust plan is useful only if it remains hidden from tools, users, and later verification steps.",
+        text: "A robust plan is most useful when hidden from tools, users, and later verification steps.",
         isCorrect: false,
       },
       {
@@ -897,11 +897,11 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Network access, credentials, deployment commands, package publishing, and destructive file operations should be treated like low-risk read-only inspection.",
+        text: "Network access, credentials, deployment commands, package publishing, and destructive file operations should be grouped with low-risk read inspection.",
         isCorrect: false,
       },
       {
-        text: "Sandboxing makes permission tiers unnecessary because every possible side effect is harmless.",
+        text: "Sandboxing makes permission tiers redundant because side effects are harmless inside the harness.",
         isCorrect: false,
       },
     ],
@@ -980,7 +980,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is equivalent to logging only the final pass or fail result.",
+        text: "It is equivalent to logging the final pass or fail result.",
         isCorrect: false,
       },
     ],
@@ -998,15 +998,15 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It edits only the target repository and never changes prompts, tools, validators, memory policies, or permission rules.",
+        text: "It edits the target repository while leaving prompts, tools, validators, memory policies, and permission rules unchanged.",
         isCorrect: false,
       },
       {
-        text: "It should promote every suggested harness change immediately because self-modification is safe by default.",
+        text: "It should promote suggested harness changes immediately because self-modification is treated as low risk.",
         isCorrect: false,
       },
       {
-        text: "It replaces the need for regression tests because telemetry is already a complete proof of improvement.",
+        text: "It replaces regression tests because telemetry is treated as sufficient evidence of improvement.",
         isCorrect: false,
       },
     ],
@@ -1032,7 +1032,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Harness mutation is safe only when it bypasses logs, rollback paths, and human oversight.",
+        text: "Harness mutation is safest when it bypasses logs, rollback paths, and human oversight.",
         isCorrect: false,
       },
     ],
@@ -1059,7 +1059,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They make shared state synchronization unnecessary because role names alone prevent conflicts.",
+        text: "They make shared state synchronization redundant because role names prevent conflicts.",
         isCorrect: false,
       },
     ],
@@ -1105,15 +1105,15 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Verification agents are reliable only when they reuse the coder's exact private reasoning as the test oracle.",
+        text: "Verification agents are reliable when they reuse the coder's private reasoning as the test oracle.",
         isCorrect: false,
       },
       {
-        text: "Independent verification removes the need to run code because agent disagreement is always a sufficient oracle.",
+        text: "Independent verification replaces code execution because agent disagreement is a sufficient oracle.",
         isCorrect: false,
       },
       {
-        text: "A tester becomes more objective by avoiding execution feedback and looking only at the final code text.",
+        text: "A tester becomes more objective by avoiding execution feedback and reading the final code text.",
         isCorrect: false,
       },
     ],
@@ -1163,7 +1163,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Hierarchical and star topologies cannot use central coordination, delegation, or aggregation of worker outputs.",
+        text: "Hierarchical and star topologies lack central coordination, delegation, or aggregation of worker outputs.",
         isCorrect: false,
       },
       {
@@ -1244,7 +1244,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "The main gap is that code cannot produce objective signals, so agents must rely only on conversational agreement.",
+        text: "The main gap is that code produces no objective signals, so agents rely on conversational agreement.",
         isCorrect: false,
       },
       {
@@ -1321,7 +1321,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Once agents use files and tests, summaries can no longer lose details and logs can no longer become noisy.",
+        text: "Once agents use files and tests, summaries preserve detail and logs remain clean by default.",
         isCorrect: false,
       },
       {
@@ -1329,7 +1329,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Execution signals make stale cached views, conflicting assumptions, and bandwidth limits impossible.",
+        text: "Execution signals eliminate stale cached views, conflicting assumptions, and bandwidth limits.",
         isCorrect: false,
       },
     ],
@@ -1375,7 +1375,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Failure attribution in long-horizon loops is already solved because a final failed test always identifies the exact responsible step, tool, and agent.",
+        text: "Failure attribution in long-horizon loops is solved because a final failed test identifies the responsible step, tool, and agent.",
         isCorrect: false,
       },
       {
@@ -1383,7 +1383,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Trust calibration in pair-programming workflows is irrelevant once an agent can open a pull request.",
+        text: "Trust calibration in pair-programming workflows becomes a secondary concern once an agent can open a pull request.",
         isCorrect: false,
       },
     ],
@@ -1429,15 +1429,15 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Memory is unnecessary because each screenshot contains a perfect and complete description of all task history.",
+        text: "Memory can be replaced by screenshots that fully describe task history.",
         isCorrect: false,
       },
       {
-        text: "GUI memory must be only raw pixels and cannot include JSON, Python skills, HTML summaries, or graph-like state.",
+        text: "GUI memory should be raw pixels rather than JSON, Python skills, HTML summaries, or graph-like state.",
         isCorrect: false,
       },
       {
-        text: "Successful GUI skills should never be promoted into reusable libraries because UI environments cannot recur.",
+        text: "Successful GUI skills should stay task-local because UI environments do not recur.",
         isCorrect: false,
       },
     ],
@@ -1460,11 +1460,11 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Embodied skills act only as natural-language descriptions and should not be re-executed as reusable behaviors.",
+        text: "Embodied skills act as natural-language descriptions rather than reusable executable behaviors.",
         isCorrect: false,
       },
       {
-        text: "Physical constraints such as reachability, collision, force, timing, and stability become irrelevant once a policy is generated as code.",
+        text: "Physical constraints such as reachability, collision, force, timing, and stability become secondary once a policy is generated as code.",
         isCorrect: false,
       },
     ],
@@ -1483,7 +1483,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Scientific agents avoid code because hypotheses and experiments cannot be represented as executable or verifiable artifacts.",
+        text: "Scientific agents avoid code because hypotheses and experiments are poor fits for executable or verifiable artifacts.",
         isCorrect: false,
       },
       {
@@ -1491,7 +1491,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Simulators and self-driving labs are outside the harness because physical or numerical feedback cannot update agent state.",
+        text: "Simulators and self-driving labs are outside the harness because physical or numerical feedback stays separate from agent state.",
         isCorrect: false,
       },
     ],
@@ -1518,7 +1518,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Proxy engagement metrics are always reliable oracles for true user welfare and satisfaction.",
+        text: "Proxy engagement metrics are reliable oracles for user welfare and satisfaction.",
         isCorrect: false,
       },
     ],
@@ -1537,11 +1537,11 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A harness should be evaluated only by final task success because tool calls, retries, feedback quality, and safety policies do not affect performance.",
+        text: "A harness should be evaluated by final task success rather than tool calls, retries, feedback quality, and safety policies.",
         isCorrect: false,
       },
       {
-        text: "A green test result proves that all semantic, security, usability, and safety requirements have been satisfied.",
+        text: "A green test result establishes semantic, security, usability, and safety requirements.",
         isCorrect: false,
       },
       {
@@ -1591,7 +1591,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Harness engineering should focus only on bigger model context windows and ignore tools, permissions, telemetry, memory, and evaluation.",
+        text: "Harness engineering should focus on larger model context windows while downplaying tools, permissions, telemetry, memory, and evaluation.",
         isCorrect: false,
       },
       {
@@ -1599,7 +1599,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "The final task answer is enough to diagnose all failures in a closed-loop agent system.",
+        text: "The final task answer is enough to diagnose failures in a closed-loop agent system.",
         isCorrect: false,
       },
     ],

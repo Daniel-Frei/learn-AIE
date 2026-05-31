@@ -56,11 +56,17 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         true,
       ],
       [
-        "Keeping every molecule at exactly the same concentration forever.",
+        "Holding molecular concentrations at a fixed value despite changing needs.",
         false,
       ],
-      ["Stopping all feedback loops so the body cannot adjust.", false],
-      ["A type of DNA mutation that always causes infection.", false],
+      [
+        "Suppressing feedback loops so internal variables drift with external conditions.",
+        false,
+      ],
+      [
+        "A DNA mutation that directly turns a tissue into an infectious pathogen.",
+        false,
+      ],
     ],
     "Homeostasis is active regulation, not frozen sameness. Variables such as glucose, temperature, blood pressure, pH, and electrolytes fluctuate, but feedback systems keep them within ranges compatible with life.",
   ),
@@ -106,9 +112,15 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         "Disease caused by interaction between a host and a pathogen such as a bacterium, virus, fungus, or parasite.",
         true,
       ],
-      ["A disease category caused only by inherited chromosome number.", false],
+      [
+        "A disease category defined by inherited chromosome number rather than host-pathogen interaction.",
+        false,
+      ],
       ["A drug receptor becoming activated by an agonist.", false],
-      ["A guaranteed absence of immune response.", false],
+      [
+        "A state where immune response is absent despite pathogen exposure.",
+        false,
+      ],
     ],
     "Infectious disease depends on both pathogen biology and host response. Symptoms can result from pathogen damage, immune inflammation, tissue injury, or disrupted physiology.",
   ),
@@ -141,7 +153,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
       ["A receptor is often a protein that receives a signal.", true],
       ["Some drugs work by activating or blocking receptors.", true],
       [
-        "Receptors never exist in more than one tissue, so they cannot contribute to side effects.",
+        "Receptors are restricted to single tissues, so shared pathway effects are unlikely.",
         false,
       ],
       [
@@ -162,11 +174,11 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         true,
       ],
       [
-        "Only antagonists can ever have therapeutic uses, while agonists are never medicines.",
+        "Antagonists have therapeutic uses, while agonists are laboratory artifacts rather than therapeutic drugs.",
         false,
       ],
       [
-        "An antagonist must always permanently destroy the receptor's gene.",
+        "An antagonist works by deleting the receptor gene from treated tissues.",
         false,
       ],
     ],
@@ -221,7 +233,10 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         "Insulin can promote glucose uptake and storage, pushing glucose back toward range.",
         true,
       ],
-      ["Failure of this regulation cannot contribute to any disease.", false],
+      [
+        "Failure of this regulation is isolated from diseases such as diabetes.",
+        false,
+      ],
       [
         "Negative feedback means glucose must increase without limit after insulin release.",
         false,
@@ -239,11 +254,11 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         true,
       ],
       [
-        "Symptoms can only be caused by pathogen molecules touching pain receptors directly.",
+        "Symptoms come from direct pathogen contact with pain receptors rather than host inflammatory pathways.",
         false,
       ],
       [
-        "A falling pathogen load proves the immune system was never activated.",
+        "A falling pathogen load indicates symptoms are independent of immune activation.",
         false,
       ],
       ["Infection symptoms are unrelated to host physiology.", false],
@@ -260,7 +275,10 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         true,
       ],
       ["Toxicity can increase with exposure as well as desired effects.", true],
-      ["More dose is always clinically better with no plateau or harm.", false],
+      [
+        "Increasing dose keeps improving benefit after target saturation without adding toxicity.",
+        false,
+      ],
       [
         "Dose-response curves are unrelated to receptor binding or system response.",
         false,
@@ -279,7 +297,10 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         true,
       ],
       ["It is independent of drug exposure and patient vulnerability.", false],
-      ["It means every dose below the window is maximally toxic.", false],
+      [
+        "Doses below the window are expected to be maximally toxic rather than subtherapeutic.",
+        false,
+      ],
     ],
     "The therapeutic window is a practical decision concept, not a magic boundary. Benefit and harm depend on exposure and patient factors, so denying those dependencies is unsafe reasoning.",
   ),
@@ -294,7 +315,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         true,
       ],
       [
-        "It excludes adverse effects by definition because only desired effects count as biology.",
+        "It treats desired effects as biological while classifying adverse effects outside drug action.",
         false,
       ],
       [
@@ -313,9 +334,18 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         "They can occur because targets, pathways, and compensatory responses are shared across tissues and functions.",
         true,
       ],
-      ["They prove a drug never interacted with any target.", false],
-      ["They are impossible if a drug has a plausible mechanism.", false],
-      ["They only happen when a drug changes every gene in the genome.", false],
+      [
+        "They show that target binding observed in vitro was biologically meaningless.",
+        false,
+      ],
+      [
+        "They are inconsistent with a drug that has a plausible target mechanism.",
+        false,
+      ],
+      [
+        "They arise from genome-wide gene replacement rather than shared targets or pathways.",
+        false,
+      ],
     ],
     "Side effects are often expected consequences of intervening in connected systems. A target may be present in multiple tissues, and changing one pathway can alter feedback loops, compensatory mechanisms, or unrelated functions.",
   ),
@@ -326,7 +356,10 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
     [
       ["It involves immune responses directed against self tissues.", true],
       ["It can reflect failure of immune tolerance or regulation.", true],
-      ["It is identical to a bacterial infection in every mechanism.", false],
+      [
+        "It is mechanistically equivalent to bacterial infection rather than misdirected immune recognition.",
+        false,
+      ],
       ["It means the immune system is absent rather than misdirected.", false],
     ],
     "Autoimmune disease is not simply weak immunity or infection. It reflects misdirected immune recognition and regulation, which can cause tissue damage even without an external pathogen as the main driver.",
@@ -345,11 +378,11 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         true,
       ],
       [
-        "Metabolic disease always has exactly one isolated molecular cause with no regulation or environment involved.",
+        "Metabolic disease is best explained by one isolated molecular defect without regulatory or environmental context.",
         false,
       ],
       [
-        "Metabolic disease is always caused by a single pathogen and cured by any antibiotic.",
+        "Metabolic disease is a pathogen-driven category treated by antibiotics.",
         false,
       ],
     ],
@@ -365,15 +398,15 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         true,
       ],
       [
-        "It cannot use biomarkers, genomics, imaging, or clinical features.",
+        "It avoids biomarkers, genomics, imaging, and clinical features when assigning therapy.",
         false,
       ],
       [
-        "It never tries to identify groups more likely to benefit or be harmed.",
+        "It treats benefit and harm as unrelated to patient subgroup biology.",
         false,
       ],
       [
-        "It means all patients should receive exactly the same treatment regardless of disease subtype.",
+        "It recommends the same intervention for patients regardless of disease subtype.",
         false,
       ],
     ],
@@ -392,7 +425,10 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         "A predictive biomarker is any molecule whose average value differs between two groups.",
         false,
       ],
-      ["A predictive biomarker must be the only cause of the disease.", false],
+      [
+        "A predictive biomarker has to be the primary disease cause rather than a treatment-response marker.",
+        false,
+      ],
       [
         "A predictive biomarker is a drug pump that excretes medicine from the kidney.",
         false,
@@ -414,7 +450,10 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         true,
       ],
       ["Compensatory pathways may reduce downstream effect.", true],
-      ["Strong binding in an assay guarantees large patient benefit.", false],
+      [
+        "Strong binding in an assay is sufficient evidence for large patient benefit.",
+        false,
+      ],
     ],
     "Target binding is only one layer of pharmacology. Tissue exposure, pathway relevance, disease heterogeneity, compensatory biology, timing, and endpoint choice all affect whether a molecular effect becomes a patient benefit.",
   ),
@@ -470,15 +509,15 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         true,
       ],
       [
-        "The treatment must be clinically effective because every biomarker change is patient benefit.",
+        "A biomarker improvement is sufficient evidence of clinical effectiveness.",
         false,
       ],
       [
-        "The biomarker improvement proves randomization is unnecessary forever.",
+        "The biomarker improvement makes controlled outcome testing redundant for future claims.",
         false,
       ],
       [
-        "The result means biomarkers can never be useful in any setting.",
+        "The result means biomarker evidence should replace patient-centered outcomes in other settings.",
         false,
       ],
     ],
@@ -502,7 +541,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         true,
       ],
       [
-        "Patient variation is impossible if the drug is chemically pure.",
+        "Patient variation disappears when the active molecule has a consistent chemical structure.",
         false,
       ],
     ],
@@ -526,7 +565,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         true,
       ],
       [
-        "Homeostasis means drug effects cannot occur in living organisms.",
+        "Homeostatic feedback prevents drugs from changing physiological variables.",
         false,
       ],
     ],
@@ -547,7 +586,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         true,
       ],
       [
-        "It is best defined as an acute bacterial infection of every neuron.",
+        "It is best defined as a rapid bacterial infection of neural tissue rather than progressive dysfunction.",
         false,
       ],
     ],
@@ -588,7 +627,10 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         "Treating one pathway can reveal compensation or side effects elsewhere.",
         true,
       ],
-      ["A systems view means molecular mechanisms no longer matter.", false],
+      [
+        "A systems view treats molecular mechanisms as background details outside disease explanation.",
+        false,
+      ],
     ],
     "Systems thinking does not replace molecular biology; it connects molecular mechanisms to cells, tissues, organs, patients, and environments. That connection is essential for understanding complex disease and treatment response.",
   ),
