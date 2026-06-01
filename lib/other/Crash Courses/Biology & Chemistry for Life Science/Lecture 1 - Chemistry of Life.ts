@@ -664,6 +664,375 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
     ],
     "The chemistry of life is not isolated background material. It provides the mechanistic basis for pharmacology, disease, biotechnology, diagnostics, and computational biology, where molecular structure and interaction determine larger-scale outcomes.",
   ),
+  makeQuestion(
+    31,
+    "easy",
+    "Which statement best describes what protons do in atoms?",
+    [
+      ["They help define which element the atom is.", true],
+      [
+        "They mainly control isotope mass without affecting element identity.",
+        false,
+      ],
+      [
+        "They form the electron cloud that determines most bonding behavior.",
+        false,
+      ],
+      ["They are temporary particles created during enzyme reactions.", false],
+    ],
+    "Protons are central to element identity because the number of protons defines the atomic number. Neutrons affect isotopes and mass, while electrons are most directly involved in bonding, charge, and reactivity.",
+  ),
+  makeQuestion(
+    32,
+    "easy",
+    "Which statement best describes the role of electrons in biological chemistry?",
+    [
+      ["They strongly influence bonding, charge, and reactivity.", true],
+      ["They define the element more directly than the nucleus does.", false],
+      ["They add most of the atom's mass in biological molecules.", false],
+      [
+        "They are found between protons and neutrons inside the nucleus.",
+        false,
+      ],
+    ],
+    "Electrons occupy regions outside the nucleus and determine how atoms interact chemically. Their arrangement affects covalent bonding, ionic charge, polarity, and many reactions that matter in cells.",
+  ),
+  makeQuestion(
+    33,
+    "easy",
+    "Which statement best explains why carbon supports molecular diversity in life?",
+    [
+      [
+        "Carbon can form four covalent bonds, enabling chains, branches, rings, and isomers.",
+        true,
+      ],
+      [
+        "Carbon mainly acts as the solvent that surrounds proteins and nucleic acids.",
+        false,
+      ],
+      [
+        "Carbon prevents organic molecules from interacting with nitrogen or oxygen.",
+        false,
+      ],
+      [
+        "Carbon forms biological molecules by avoiding stable covalent bonds.",
+        false,
+      ],
+    ],
+    "Carbon's four covalent bonds allow stable but flexible organic frameworks. This makes it possible to build many shapes and arrangements, including chains, branches, rings, and isomers.",
+  ),
+  makeQuestion(
+    34,
+    "easy",
+    "Which statement best defines a monomer?",
+    [
+      [
+        "A small building block that can be joined into a larger molecule.",
+        true,
+      ],
+      ["A membrane compartment that stores ATP for later reactions.", false],
+      ["A folded protein region that binds a specific ligand.", false],
+      ["A charged atom that forms when salt dissolves in water.", false],
+    ],
+    "A monomer is a smaller molecular building block used to construct larger molecules. For example, amino acids are monomers for proteins, monosaccharides are monomers for many carbohydrates, and nucleotides are monomers for DNA and RNA.",
+  ),
+  makeQuestion(
+    35,
+    "easy",
+    "Which statement best describes ATP in cells?",
+    [
+      [
+        "ATP is an energy currency that helps couple energy-releasing processes to cellular work.",
+        true,
+      ],
+      [
+        "ATP is the genetic polymer that stores inherited information in chromosomes.",
+        false,
+      ],
+      [
+        "ATP is a membrane lipid that forms the hydrophobic core of bilayers.",
+        false,
+      ],
+      ["ATP is a structural protein that transports oxygen in blood.", false],
+    ],
+    "Adenosine triphosphate (ATP) is used to connect energy-releasing reactions to energy-requiring work. It is not DNA, a membrane lipid, or a transport protein, although ATP-dependent processes support many of those systems.",
+  ),
+  makeQuestion(
+    36,
+    "easy",
+    "Which statements correctly connect CHNOPS elements to biological roles?",
+    [
+      ["Nitrogen appears in amino acids, proteins, and nucleic acids.", true],
+      [
+        "Phosphorus appears in DNA/RNA backbones, ATP, phospholipids, and phosphorylation.",
+        true,
+      ],
+      [
+        "Sulfur is mainly the element that gives DNA bases their sugar-phosphate backbone.",
+        false,
+      ],
+      [
+        "Oxygen is mainly avoided in metabolism and polar biological groups.",
+        false,
+      ],
+    ],
+    "CHNOPS summarizes carbon, hydrogen, nitrogen, oxygen, phosphorus, and sulfur because each has common biological roles. Nitrogen is central in amino acids and nucleic acids, while phosphorus is central in nucleic acid backbones, ATP, phospholipids, and phosphorylation.",
+  ),
+  makeQuestion(
+    37,
+    "easy",
+    "Which statements correctly distinguish covalent bonds from weaker biological interactions?",
+    [
+      ["Covalent bonds involve atoms sharing electrons.", true],
+      ["Covalent bonds often form stable molecular backbones.", true],
+      [
+        "Hydrogen bonds are the main covalent skeleton of DNA, proteins, carbohydrates, and lipids.",
+        false,
+      ],
+      [
+        "The hydrophobic effect is a covalent bond between nonpolar groups and water.",
+        false,
+      ],
+    ],
+    "Covalent bonds involve shared electrons and often create stable molecular skeletons. Hydrogen bonds, ionic interactions, and hydrophobic effects are usually weaker interactions that help determine shape, binding, folding, and organization.",
+  ),
+  makeQuestion(
+    38,
+    "easy",
+    "Which statements correctly describe why water is polar?",
+    [
+      ["Oxygen pulls shared electrons more strongly than hydrogen.", true],
+      ["Water has partial charges that support hydrogen bonding.", true],
+      [
+        "Water is polar because hydrogen and oxygen share electrons equally.",
+        false,
+      ],
+      [
+        "Water is polar because it lacks any charged or partially charged regions.",
+        false,
+      ],
+    ],
+    "Water is polar because oxygen attracts shared electrons more strongly than hydrogen, creating partial charges. Those partial charges allow water molecules to hydrogen bond and shape solubility, protein folding, and cellular organization.",
+  ),
+  makeQuestion(
+    39,
+    "easy",
+    "Which statements correctly describe hydrolysis and dehydration reactions?",
+    [
+      ["Hydrolysis uses water to break bonds.", true],
+      [
+        "Dehydration reactions remove water while joining building blocks.",
+        true,
+      ],
+      ["Hydrolysis joins monomers by removing water between them.", false],
+      [
+        "Dehydration reactions digest food polymers by adding water to bonds.",
+        false,
+      ],
+    ],
+    "Hydrolysis and dehydration reactions are opposite patterns in polymer chemistry. Hydrolysis helps break polymers into smaller pieces, while dehydration reactions help cells join building blocks into larger molecules.",
+  ),
+  makeQuestion(
+    40,
+    "easy",
+    "Which statements correctly describe catabolism and anabolism?",
+    [
+      ["Catabolism breaks molecules down and can release usable energy.", true],
+      ["Anabolism builds molecules and consumes energy.", true],
+      [
+        "Catabolism builds proteins, nucleic acids, and membranes from small precursors.",
+        false,
+      ],
+      ["Anabolism is the direct digestion of polymers into monomers.", false],
+    ],
+    "Catabolism and anabolism describe two broad directions of metabolism. Catabolic pathways break molecules down, while anabolic pathways build larger molecules and require energy input.",
+  ),
+  makeQuestion(
+    41,
+    "easy",
+    "Which statements correctly describe the four major biological macromolecule classes?",
+    [
+      [
+        "Carbohydrates include sugars and can support energy storage, structure, and recognition.",
+        true,
+      ],
+      [
+        "Proteins are amino acid polymers involved in catalysis, transport, signaling, movement, structure, and immunity.",
+        true,
+      ],
+      [
+        "Nucleic acids are nucleotide polymers that store and transfer genetic information.",
+        true,
+      ],
+      [
+        "Lipids are nucleotide chains that encode inherited sequence information.",
+        false,
+      ],
+    ],
+    "Carbohydrates, lipids, proteins, and nucleic acids have different building blocks and roles. Lipids are mostly hydrophobic molecules involved in membranes, energy storage, hormones, and signaling, not nucleotide polymers.",
+  ),
+  makeQuestion(
+    42,
+    "easy",
+    "Which statements correctly describe lipids and phospholipids?",
+    [
+      ["Many lipids are mostly hydrophobic.", true],
+      ["Phospholipids have hydrophilic heads and hydrophobic tails.", true],
+      ["Phospholipids can self-assemble into bilayers.", true],
+      [
+        "Lipids are usually made from amino acid monomers linked into folded chains.",
+        false,
+      ],
+    ],
+    "Lipids include fatty acids, phospholipids, steroid hormones, and energy-storage molecules. Phospholipids are amphipathic, so their head and tail chemistry helps them self-assemble into bilayers in water.",
+  ),
+  makeQuestion(
+    43,
+    "easy",
+    "Which statements correctly describe protein side chains?",
+    [
+      ["Side chains can differ in charge.", true],
+      ["Side chains can differ in polarity and hydrophobicity.", true],
+      ["Side chains help drive folding and molecular interactions.", true],
+      [
+        "Side chains are the repeating sugar-phosphate units of proteins.",
+        false,
+      ],
+    ],
+    "Proteins are built from amino acids, and amino acid side chains vary in charge, polarity, hydrophobicity, size, and reactivity. Those differences shape folding, binding, catalysis, and specificity.",
+  ),
+  makeQuestion(
+    44,
+    "easy",
+    "Which statements correctly describe enzymes?",
+    [
+      ["Enzymes are biological catalysts.", true],
+      ["Enzymes speed reactions by lowering activation energy.", true],
+      [
+        "Enzymes can be specific because of shape, charge, polarity, and local chemistry.",
+        true,
+      ],
+      [
+        "Enzymes speed reactions by changing the overall energy balance into a different reaction.",
+        false,
+      ],
+    ],
+    "Enzymes help reactions proceed fast enough for cells by lowering activation energy. They do not change the overall energy balance of the reaction, and their specificity depends on molecular complementarity and dynamics.",
+  ),
+  makeQuestion(
+    45,
+    "easy",
+    "Which statements correctly describe pH in biological systems?",
+    [
+      ["pH reflects hydrogen ion concentration.", true],
+      [
+        "Changing protonation can change charge, shape, and binding behavior.",
+        true,
+      ],
+      [
+        "pH matters for enzyme function, protein folding, blood chemistry, and cellular compartments.",
+        true,
+      ],
+      [
+        "pH is a direct count of how many carbon atoms are present in a molecule.",
+        false,
+      ],
+    ],
+    "pH measures hydrogen ion concentration, and biological groups can gain or lose protons. That can alter charge, folding, binding, and enzyme activity, which is why pH matters across cells and tissues.",
+  ),
+  makeQuestion(
+    46,
+    "medium",
+    "Which statements correctly describe how weak interactions support biological specificity?",
+    [
+      [
+        "Hydrogen bonds can help shape water behavior, DNA base pairing, and protein structure.",
+        true,
+      ],
+      [
+        "Ionic interactions can help charged regions of molecules attract each other.",
+        true,
+      ],
+      [
+        "Hydrophobic effects can help organize membranes and protein cores.",
+        true,
+      ],
+      [
+        "Many weak interactions together can produce strong, specific binding.",
+        true,
+      ],
+    ],
+    "Weak interactions are individually reversible, but many of them acting together can create strong specificity. This balance lets biological systems bind, fold, organize, and regulate without turning every interaction into a permanent covalent connection.",
+  ),
+  makeQuestion(
+    47,
+    "medium",
+    "Which statements correctly describe why nonpolar substances behave differently from salts or sugars in water?",
+    [
+      [
+        "Water can surround and stabilize many polar or charged substances.",
+        true,
+      ],
+      [
+        "Nonpolar substances interact poorly with water compared with water-water interactions.",
+        true,
+      ],
+      ["Nonpolar groups often cluster away from water.", true],
+      [
+        "This behavior helps explain lipid bilayers and hydrophobic protein interiors.",
+        true,
+      ],
+    ],
+    "Water's polarity makes it a good environment for many charged and polar substances. Nonpolar groups tend to cluster because water-water interactions are more favorable than water-nonpolar interactions, creating the hydrophobic effect.",
+  ),
+  makeQuestion(
+    48,
+    "medium",
+    "Which statements correctly connect monomers, polymers, and digestion?",
+    [
+      ["Cells can build polymers from smaller building blocks.", true],
+      ["Food polymers can be broken into smaller pieces by hydrolysis.", true],
+      [
+        "Macromolecules are large biological molecules built from or organized around smaller chemical units.",
+        true,
+      ],
+      [
+        "Dehydration reactions and hydrolysis help connect chemistry to food, cells, and biosynthesis.",
+        true,
+      ],
+    ],
+    "Polymer chemistry explains both construction and breakdown. Cells build larger molecules from smaller units, while digestion often uses hydrolysis to break food polymers into usable pieces.",
+  ),
+  makeQuestion(
+    49,
+    "medium",
+    "Which statements correctly describe proteins as sequence-to-function molecules?",
+    [
+      ["Amino acid sequence influences folding.", true],
+      ["Folded structure influences binding surfaces and active sites.", true],
+      [
+        "Protein dynamics and conformational change can matter for function.",
+        true,
+      ],
+      ["Cellular context and regulation can affect what a protein does.", true],
+    ],
+    "Protein function is often summarized as sequence to structure to dynamics to function. That chain is useful, but the environment, binding partners, modifications, and cellular context also influence what the protein does.",
+  ),
+  makeQuestion(
+    50,
+    "medium",
+    "Which statements correctly describe why cells are not at equilibrium?",
+    [
+      [
+        "Cells require constant energy flow to build, repair, transport, signal, move, and replicate.",
+        true,
+      ],
+      ["Cells maintain organization by using energy.", true],
+      ["Gradients can store usable energy across membranes.", true],
+      ["Metabolism helps cells couple energy supply to cellular work.", true],
+    ],
+    "Living cells maintain organized states that require ongoing energy flow. ATP, metabolism, and gradients help cells do work and keep internal organization despite the tendency of systems to move toward equilibrium.",
+  ),
 ];
 
 export const BiologyChemistryLifeScienceL1Questions =

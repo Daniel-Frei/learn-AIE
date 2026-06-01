@@ -658,6 +658,375 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
     ],
     "AI can support prediction and integration, but it does not make physiology irrelevant. Useful medical AI must map measurements to biological states, clinical decisions, patient outcomes, and evidence.",
   ),
+  makeQuestion(
+    31,
+    "easy",
+    "Which statement best describes physiology?",
+    [
+      [
+        "Physiology studies coordinated function across cells, tissues, organs, organ systems, and the organism.",
+        true,
+      ],
+      [
+        "Physiology is mainly the naming of DNA bases in inherited sequence information.",
+        false,
+      ],
+      [
+        "Physiology is the process of manufacturing proteins in bacterial plasmids.",
+        false,
+      ],
+      [
+        "Physiology is the chemical synthesis of small-molecule drugs outside the body.",
+        false,
+      ],
+    ],
+    "Physiology focuses on how body systems function and coordinate across scales. Cells, tissues, organs, organ systems, and the whole organism interact to maintain useful internal states.",
+  ),
+  makeQuestion(
+    32,
+    "easy",
+    "Which statement best describes homeostasis?",
+    [
+      [
+        "Homeostasis means maintaining internal stability despite external change.",
+        true,
+      ],
+      [
+        "Homeostasis means driving every body variable upward until it reaches its maximum.",
+        false,
+      ],
+      [
+        "Homeostasis means replacing feedback loops with fixed, unregulated outputs.",
+        false,
+      ],
+      [
+        "Homeostasis means disease progression without any sensing or response.",
+        false,
+      ],
+    ],
+    "Homeostasis keeps variables such as glucose, temperature, blood pressure, pH, oxygen, electrolytes, and fluid balance in functional ranges. It depends on sensing, comparison, response, and feedback.",
+  ),
+  makeQuestion(
+    33,
+    "easy",
+    "Which statement best defines an agonist?",
+    [
+      ["An agonist activates a receptor or pathway.", true],
+      [
+        "An agonist blocks a receptor from responding to its usual signal.",
+        false,
+      ],
+      [
+        "An agonist describes how the body absorbs, distributes, metabolizes, and excretes a drug.",
+        false,
+      ],
+      ["An agonist is a measurable indicator of biological state.", false],
+    ],
+    "An agonist activates a receptor or pathway. By contrast, an antagonist blocks activation or prevents a signal from producing its usual effect. This distinction is basic for understanding receptor pharmacology.",
+  ),
+  makeQuestion(
+    34,
+    "easy",
+    "Which statement best defines pharmacokinetics?",
+    [
+      ["Pharmacokinetics asks what the body does to the drug.", true],
+      ["Pharmacokinetics asks what the drug does to target physiology.", false],
+      ["Pharmacokinetics is the maximum effect a drug can achieve.", false],
+      ["Pharmacokinetics is the immune system attacking self tissues.", false],
+    ],
+    "Pharmacokinetics (PK) describes drug exposure over time through absorption, distribution, metabolism, and excretion. Pharmacodynamics (PD) describes what the drug does to the body.",
+  ),
+  makeQuestion(
+    35,
+    "easy",
+    "Which statement best defines a biomarker?",
+    [
+      ["A biomarker is a measurable indicator of biological state.", true],
+      ["A biomarker is a drug target that activates a receptor.", false],
+      ["A biomarker is a daughter cell produced by mitosis.", false],
+      ["A biomarker is a pathogen that causes infection.", false],
+    ],
+    "A biomarker is something measurable that indicates a biological state. Examples include blood glucose, blood pressure, cholesterol, tumor mutations, protein expression, inflammatory markers, and imaging findings.",
+  ),
+  makeQuestion(
+    36,
+    "easy",
+    "Which statements correctly describe nervous and endocrine signaling?",
+    [
+      [
+        "The nervous system supports fast information processing and control.",
+        true,
+      ],
+      [
+        "The endocrine system uses hormones for longer-distance regulation.",
+        true,
+      ],
+      [
+        "The nervous system mainly communicates by circulating hormones over days.",
+        false,
+      ],
+      [
+        "The endocrine system is limited to reflex arcs across synapses.",
+        false,
+      ],
+    ],
+    "The nervous system commonly uses electrical signals, neurotransmitters, reflexes, sensory input, and motor output. The endocrine system regulates over longer distances through hormones such as insulin, cortisol, thyroid hormone, and sex hormones.",
+  ),
+  makeQuestion(
+    37,
+    "easy",
+    "Which statements correctly describe the cardiovascular system?",
+    [
+      ["It transports oxygen and carbon dioxide.", true],
+      [
+        "It transports nutrients, hormones, immune cells, heat, and waste.",
+        true,
+      ],
+      [
+        "It is mainly a gene-editing system that changes DNA sequence in tissues.",
+        false,
+      ],
+      [
+        "It replaces the need for cellular metabolism by storing codons in blood.",
+        false,
+      ],
+    ],
+    "The cardiovascular system is a transport network. Coordinated cardiac tissue pumps blood, and the system supports oxygen delivery, waste removal, hormone movement, immune-cell movement, heat distribution, and nutrient transport.",
+  ),
+  makeQuestion(
+    38,
+    "easy",
+    "Which statements correctly describe a homeostatic loop?",
+    [
+      ["It needs a sensor.", true],
+      ["It needs a set point or useful range plus comparison.", true],
+      ["It works by removing effector responses from regulation.", false],
+      [
+        "It is a random mutation that spreads through a tissue population.",
+        false,
+      ],
+    ],
+    "A homeostatic loop needs sensing, a useful range or set point, comparison, an effector response, and feedback. These pieces let the body counter deviations and keep variables in functional ranges.",
+  ),
+  makeQuestion(
+    39,
+    "easy",
+    "Which statements correctly distinguish negative and positive feedback?",
+    [
+      [
+        "Negative feedback counteracts deviation and stabilizes a system.",
+        true,
+      ],
+      [
+        "Positive feedback amplifies change or drives a process toward completion.",
+        true,
+      ],
+      [
+        "Negative feedback is the same as uncontrolled amplification of clotting or contractions.",
+        false,
+      ],
+      [
+        "Positive feedback mainly returns a variable toward its useful range.",
+        false,
+      ],
+    ],
+    "Negative feedback stabilizes systems such as blood glucose regulation or temperature control. Positive feedback amplifies processes such as blood clotting, childbirth contractions, and some cell-fate decisions.",
+  ),
+  makeQuestion(
+    40,
+    "easy",
+    "Which statements correctly describe disease categories?",
+    [
+      [
+        "Infection involves pathogens such as bacteria, viruses, fungi, or parasites.",
+        true,
+      ],
+      [
+        "Autoimmune disease involves the immune system attacking self tissues.",
+        true,
+      ],
+      [
+        "Metabolic disease is mainly a vaccine training response against antigens.",
+        false,
+      ],
+      [
+        "Neurodegeneration is mainly acute hormone signaling over minutes to days.",
+        false,
+      ],
+    ],
+    "Disease categories can be understood as recurring regulatory failure modes. Infection, cancer, metabolic disease, autoimmune disease, neurodegeneration, and genetic disease involve different mechanisms and often overlap with host regulation.",
+  ),
+  makeQuestion(
+    41,
+    "easy",
+    "Which statements correctly describe infection and symptoms?",
+    [
+      ["Pathogens can cause disease through direct damage.", true],
+      ["Host immune responses can contribute to symptoms.", true],
+      [
+        "Inflammation can be protective while also causing tissue effects.",
+        true,
+      ],
+      [
+        "Symptoms are simply the dose of drug absorbed into the bloodstream.",
+        false,
+      ],
+    ],
+    "Infection is shaped by pathogen activity and the host response. Symptoms can come from direct pathogen damage, immune activation, inflammation, tissue repair, and disrupted physiology.",
+  ),
+  makeQuestion(
+    42,
+    "easy",
+    "Which statements correctly describe cancer as a disease category?",
+    [
+      ["Cancer can involve growth advantage.", true],
+      ["Cancer can involve evasion of death and tissue constraints.", true],
+      ["Cancer can evolve inside tissues.", true],
+      [
+        "Cancer is a normal endocrine feedback loop maintaining glucose range.",
+        false,
+      ],
+    ],
+    "Cancer is a family of evolutionary diseases in which cells gain behaviors that disrupt tissue regulation. Growth, survival, control escape, and ongoing variation can shape disease progression.",
+  ),
+  makeQuestion(
+    43,
+    "easy",
+    "Which statements correctly describe dose-response ideas?",
+    [
+      ["Drug effect can increase with dose and then plateau.", true],
+      ["Potency describes how much drug is needed for an effect.", true],
+      ["Efficacy describes the maximum effect achievable.", true],
+      [
+        "Toxicity is the same as beneficial target activation at low exposure.",
+        false,
+      ],
+    ],
+    "Dose-response reasoning separates amount, effect, and harm. Potency is about the dose needed for an effect, efficacy is about maximum effect, and toxicity describes harmful effects that often rise with exposure.",
+  ),
+  makeQuestion(
+    44,
+    "easy",
+    "Which statements correctly describe pharmacodynamics?",
+    [
+      ["Pharmacodynamics asks what the drug does to the body.", true],
+      [
+        "Pharmacodynamics includes effects such as lowering blood pressure or reducing inflammation.",
+        true,
+      ],
+      [
+        "Pharmacodynamics can involve killing bacteria or inhibiting an enzyme.",
+        true,
+      ],
+      [
+        "Pharmacodynamics is the absorption, distribution, metabolism, and excretion of the drug.",
+        false,
+      ],
+    ],
+    "Pharmacodynamics (PD) describes drug effects on targets, pathways, and physiology. Pharmacokinetics (PK) describes drug exposure processes such as absorption, distribution, metabolism, and excretion.",
+  ),
+  makeQuestion(
+    45,
+    "easy",
+    "Which statements correctly describe patient variation?",
+    [
+      [
+        "Patients can differ in genetics, age, sex, organ function, immune state, and microbiome.",
+        true,
+      ],
+      [
+        "Patients can differ in lifestyle, environment, previous treatments, and medication interactions.",
+        true,
+      ],
+      ["Disease subtype can affect treatment response.", true],
+      [
+        "Patient variation is best treated as a measurement error with no biological source.",
+        false,
+      ],
+    ],
+    "Patients are biologically and clinically heterogeneous. Differences in genetics, physiology, disease subtype, immune state, organ function, exposures, and medications can change risk, treatment response, and side effects.",
+  ),
+  makeQuestion(
+    46,
+    "medium",
+    "Which statements correctly describe physiology as multi-scale coordination?",
+    [
+      [
+        "Single cells can have behaviors that combine into tissue function.",
+        true,
+      ],
+      [
+        "Organs coordinate with other organs through nervous, endocrine, immune, and transport systems.",
+        true,
+      ],
+      ["Organ-system interactions can create organism-level regulation.", true],
+      ["Emergent properties can appear when many parts interact.", true],
+    ],
+    "The body is a distributed regulatory network rather than a simple centrally controlled machine. Many physiological functions emerge from interactions among cells, tissues, organs, organ systems, and organism-level context.",
+  ),
+  makeQuestion(
+    47,
+    "medium",
+    "Which statements correctly describe the therapeutic window?",
+    [
+      ["It is the dose or exposure range where benefit outweighs harm.", true],
+      ["Narrow-window drugs require careful monitoring.", true],
+      ["The useful window depends on both desired effect and toxicity.", true],
+      ["Patient variation can shift where benefit and harm occur.", true],
+    ],
+    "The therapeutic window is about balancing benefit and harm. It depends on exposure, pharmacodynamics, toxicity, patient factors, and monitoring, especially for drugs with narrow margins.",
+  ),
+  makeQuestion(
+    48,
+    "medium",
+    "Which statements correctly describe ADME?",
+    [
+      ["Absorption describes drug entry into the body or bloodstream.", true],
+      ["Distribution describes movement into tissues and compartments.", true],
+      ["Metabolism describes chemical modification of a drug.", true],
+      ["Excretion describes removal from the body.", true],
+    ],
+    "ADME is the core pharmacokinetic framework: absorption, distribution, metabolism, and excretion. Together these processes determine how much drug reaches relevant tissues and how exposure changes over time.",
+  ),
+  makeQuestion(
+    49,
+    "medium",
+    "Which statements correctly describe biomarkers and precision medicine?",
+    [
+      [
+        "Biomarkers can support diagnosis, prognosis, monitoring, treatment selection, and safety tracking.",
+        true,
+      ],
+      ["Biomarkers need validation for the decision they support.", true],
+      [
+        "Companion diagnostics can identify likely responders or patients at risk of harm.",
+        true,
+      ],
+      [
+        "Precision medicine matches intervention to biologically meaningful patient subgroups.",
+        true,
+      ],
+    ],
+    "Biomarkers are useful when the measurement is reliable and connected to a decision. Precision medicine does not mean a unique treatment for each person; it means using meaningful biological stratification to improve decisions.",
+  ),
+  makeQuestion(
+    50,
+    "medium",
+    "Which statements correctly describe why side effects are expected in pharmacology?",
+    [
+      ["Targets can appear in multiple tissues.", true],
+      [
+        "Pathways can connect to downstream systems beyond the intended effect.",
+        true,
+      ],
+      [
+        "Changing one receptor, enzyme, channel, or transporter can shift broader physiology.",
+        true,
+      ],
+      ["Dose, exposure, patient variation, and context can affect harm.", true],
+    ],
+    "Drugs perturb biological systems rather than isolated components. Side effects are common because targets, pathways, and patients are interconnected across tissues and scales.",
+  ),
 ];
 
 export const BiologyChemistryLifeScienceL4Questions =

@@ -682,6 +682,393 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
     ],
     "Clinical trials remain highly relevant, but they are not the central content of a biology and chemistry crash course. The revised capstone uses trial ideas to interpret biomedical claims while keeping the core on mechanisms, measurements, tools, and translation.",
   ),
+  makeQuestion(
+    31,
+    "easy",
+    "Which statement best describes bacteria?",
+    [
+      [
+        "Bacteria are living cells with membranes, metabolism, DNA, ribosomes, and regulated gene expression.",
+        true,
+      ],
+      [
+        "Bacteria are protein shells that reproduce by using host-cell ribosomes.",
+        false,
+      ],
+      [
+        "Bacteria are antibodies that bind antigens during adaptive immunity.",
+        false,
+      ],
+      ["Bacteria are clinical endpoints used to judge patient benefit.", false],
+    ],
+    "Bacteria are cells, which is why antibiotics can target bacterial cell walls, ribosomes, DNA replication, or metabolic pathways. Many bacteria are harmless or beneficial, while some cause disease.",
+  ),
+  makeQuestion(
+    32,
+    "easy",
+    "Which statement best describes viruses?",
+    [
+      [
+        "Viruses are genetic material packaged in protein and sometimes lipid envelopes, and they use host-cell machinery.",
+        true,
+      ],
+      [
+        "Viruses are free-living cells with their own ribosomes and complete metabolism.",
+        false,
+      ],
+      [
+        "Viruses are small-molecule drugs that enter cells and bind proteins.",
+        false,
+      ],
+      ["Viruses are biomarkers that measure drug exposure over time.", false],
+    ],
+    "Viruses are not cells and do not reproduce independently. They must enter host cells and use host machinery to replicate genomes, produce proteins, assemble particles, and spread.",
+  ),
+  makeQuestion(
+    33,
+    "easy",
+    "Which statement best describes a vaccine?",
+    [
+      [
+        "A vaccine trains adaptive immunity to recognize a pathogen or pathogen component before dangerous infection.",
+        true,
+      ],
+      [
+        "A vaccine directly kills bacteria by blocking their cell wall synthesis.",
+        false,
+      ],
+      [
+        "A vaccine is a diagnostic test that classifies disease state from a sample.",
+        false,
+      ],
+      [
+        "A vaccine is a pharmacokinetic process that removes drug from the body.",
+        false,
+      ],
+    ],
+    "Vaccines prepare adaptive immunity by presenting a pathogen-related target or instructions for making one. The goal is faster and stronger recognition later, often involving memory B and T cells.",
+  ),
+  makeQuestion(
+    34,
+    "easy",
+    "Which statement best describes antibiotic resistance?",
+    [
+      [
+        "Resistance evolves when variation affects survival under antibiotic treatment pressure.",
+        true,
+      ],
+      [
+        "Resistance means antibiotics convert viral particles into harmless bacteria.",
+        false,
+      ],
+      ["Resistance is the same as a control group in a clinical trial.", false],
+      [
+        "Resistance occurs because vaccines remove immune memory from B and T cells.",
+        false,
+      ],
+    ],
+    "Treatment changes the selective environment. Bacteria with resistance traits can survive and spread under antibiotic pressure, especially when resistance genes move through plasmids or other mechanisms.",
+  ),
+  makeQuestion(
+    35,
+    "easy",
+    "Which statement best defines a diagnostic?",
+    [
+      [
+        "A diagnostic classifies a biological state in a way that can support a decision.",
+        true,
+      ],
+      [
+        "A diagnostic is a protein medicine produced using living systems.",
+        false,
+      ],
+      ["A diagnostic is a drug receptor that activates a pathway.", false],
+      [
+        "A diagnostic is the randomization step that balances trial groups.",
+        false,
+      ],
+    ],
+    "Diagnostics turn biological information into measurements or classifications. Examples include pathogen tests, genetic tests, blood chemistry, imaging, pathology, and protein biomarkers.",
+  ),
+  makeQuestion(
+    36,
+    "easy",
+    "Which statements correctly describe pathogens?",
+    [
+      ["Pathogens can include bacteria.", true],
+      ["Pathogens can include viruses.", true],
+      [
+        "Pathogens are mainly clinical-trial endpoints rather than biological agents.",
+        false,
+      ],
+      ["Pathogens are immune memory cells that prevent reinfection.", false],
+    ],
+    "Pathogens include bacteria, viruses, fungi, and parasites. They differ in structure, replication, treatment options, and immune responses, so identifying the pathogen type matters for diagnosis and therapy.",
+  ),
+  makeQuestion(
+    37,
+    "easy",
+    "Which statements correctly describe the basic viral life cycle?",
+    [
+      ["A virus can bind a host receptor and enter a cell.", true],
+      [
+        "A virus can release genetic material, replicate, assemble particles, and exit.",
+        true,
+      ],
+      [
+        "A virus normally divides by mitosis as a free-living eukaryotic cell.",
+        false,
+      ],
+      [
+        "A virus normally makes ATP through its own mitochondria before infection.",
+        false,
+      ],
+    ],
+    "Viruses must use host cells to reproduce. A simplified pattern is receptor binding, entry, genome release, replication and protein production, particle assembly, and exit.",
+  ),
+  makeQuestion(
+    38,
+    "easy",
+    "Which statements correctly distinguish antibiotics and antivirals?",
+    [
+      [
+        "Antibiotics can target bacterial cell wall synthesis, ribosomes, DNA replication, or metabolism.",
+        true,
+      ],
+      [
+        "Antivirals can target viral entry, genome replication, viral enzymes, assembly, or release.",
+        true,
+      ],
+      [
+        "Antibiotics target viruses well because viruses have bacterial ribosomes.",
+        false,
+      ],
+      ["Antivirals are mainly drugs that build bacterial cell walls.", false],
+    ],
+    "Antibiotics and antivirals target different biology. Antibiotics work against bacterial processes, while antivirals target steps in a viral life cycle.",
+  ),
+  makeQuestion(
+    39,
+    "easy",
+    "Which statements correctly describe biologics?",
+    [
+      [
+        "Biologics include antibodies, proteins, and other large molecules produced using living systems.",
+        true,
+      ],
+      ["Biologics can be highly specific for extracellular targets.", true],
+      [
+        "Biologics are usually tiny chemically manufactured compounds designed for oral delivery.",
+        false,
+      ],
+      [
+        "Biologics are trial design features such as blinding and endpoint selection.",
+        false,
+      ],
+    ],
+    "Biologics are large therapeutic molecules often produced with living systems. They can be powerful and specific, but manufacturing is complex and injection or infusion is often required.",
+  ),
+  makeQuestion(
+    40,
+    "easy",
+    "Which statements correctly describe model systems in biomedical research?",
+    [
+      [
+        "Cell cultures, organoids, animal models, and computational models are simplified representations.",
+        true,
+      ],
+      [
+        "Model systems can be useful for studying mechanisms before human testing.",
+        true,
+      ],
+      [
+        "A model system is a validated proof of patient benefit by definition.",
+        false,
+      ],
+      [
+        "A model system removes disease heterogeneity from human medicine.",
+        false,
+      ],
+    ],
+    "Model systems are useful because they make biology easier to study under controlled conditions. They are limited because they simplify human biology, dosing, immune context, tissue context, heterogeneity, and clinical outcomes.",
+  ),
+  makeQuestion(
+    41,
+    "easy",
+    "Which statements correctly describe immune memory?",
+    [
+      ["Some B cells can become memory cells.", true],
+      ["Some T cells can become memory cells.", true],
+      [
+        "Memory can support faster and stronger responses after later exposure.",
+        true,
+      ],
+      ["Immune memory is the same as a drug's metabolism by the liver.", false],
+    ],
+    "Adaptive immunity can learn and remember molecular targets. Memory B and T cells are part of why vaccines can prepare the immune system before dangerous exposure.",
+  ),
+  makeQuestion(
+    42,
+    "easy",
+    "Which statements correctly describe recombinant DNA and protein medicines?",
+    [
+      ["Scientists can insert a gene into cells.", true],
+      ["Cells can express the inserted gene as a protein.", true],
+      [
+        "Insulin can be produced by cells carrying an inserted insulin gene.",
+        true,
+      ],
+      [
+        "Recombinant DNA works by removing translation from the production cell.",
+        false,
+      ],
+    ],
+    "Recombinant DNA uses cellular information flow for production. A gene can be inserted into bacteria or other production cells, expressed as a protein, and then purified as a medicine.",
+  ),
+  makeQuestion(
+    43,
+    "easy",
+    "Which statements correctly describe small-molecule drugs?",
+    [
+      ["They are chemically manufactured compounds.", true],
+      ["They can sometimes enter cells and bind intracellular proteins.", true],
+      ["Oral delivery is sometimes possible.", true],
+      ["They are living cells engineered to recognize cancer targets.", false],
+    ],
+    "Small molecules are chemically manufactured and can sometimes reach intracellular targets. Their strengths include scalable manufacturing and possible oral delivery, while limits include off-target effects, difficult targets, and toxicity.",
+  ),
+  makeQuestion(
+    44,
+    "easy",
+    "Which statements correctly describe gene therapy and genome editing?",
+    [
+      [
+        "They aim to add, replace, silence, or modify genetic information.",
+        true,
+      ],
+      ["Delivery to the right cells is a key challenge.", true],
+      [
+        "Durability, immune response, off-target effects, reversibility, and ethics matter.",
+        true,
+      ],
+      ["They are mainly antibiotics that block bacterial ribosomes.", false],
+    ],
+    "Gene therapy and genome editing act at the genetic-information layer. Their promise depends on getting the right change into the right cells with acceptable safety, durability, and ethical justification.",
+  ),
+  makeQuestion(
+    45,
+    "easy",
+    "Which statements correctly describe core clinical evidence concepts?",
+    [
+      ["A control group asks what the intervention is compared against.", true],
+      [
+        "Randomization helps balance known and unknown factors in expectation.",
+        true,
+      ],
+      ["Blinding reduces expectation and measurement bias.", true],
+      [
+        "An endpoint is the chemical structure of a small-molecule drug.",
+        false,
+      ],
+    ],
+    "Clinical evidence asks whether biomedical claims hold up in humans. Control groups, randomization, blinding, and endpoints help separate plausible mechanisms or associations from trustworthy causal conclusions about patient outcomes.",
+  ),
+  makeQuestion(
+    46,
+    "medium",
+    "Which statements correctly describe why antibiotics do not treat viral infections?",
+    [
+      ["Viruses lack bacterial cell walls.", true],
+      ["Viruses lack bacterial ribosomes.", true],
+      ["Viruses use host-cell machinery for replication.", true],
+      [
+        "Antibiotic targets are usually bacterial processes rather than viral life-cycle steps.",
+        true,
+      ],
+    ],
+    "Antibiotics target bacterial biology, not viral replication strategies. Viruses are not cells, so antiviral drugs need to target viral entry, viral enzymes, genome replication, assembly, release, or host-virus interactions.",
+  ),
+  makeQuestion(
+    47,
+    "medium",
+    "Which statements correctly describe therapeutic modalities?",
+    [
+      [
+        "mRNA medicines deliver temporary instructions for cells to make a protein.",
+        true,
+      ],
+      [
+        "Cell therapy modifies or selects cells and gives them to a patient.",
+        true,
+      ],
+      [
+        "CAR T-cell therapy engineers immune cells to recognize cancer targets.",
+        true,
+      ],
+      [
+        "Biologics, small molecules, vaccines, mRNA, gene therapy, and cell therapy differ in delivery, target type, durability, and risks.",
+        true,
+      ],
+    ],
+    "Therapeutic modalities intervene at different biological layers. Comparing them requires thinking about molecule size, production, delivery, target location, durability, immune response, safety, and evidence.",
+  ),
+  makeQuestion(
+    48,
+    "medium",
+    "Which statements correctly describe biomarker types?",
+    [
+      ["A diagnostic biomarker can help identify disease.", true],
+      ["A prognostic biomarker can help predict likely disease course.", true],
+      ["A predictive biomarker can help predict treatment response.", true],
+      [
+        "A pharmacodynamic biomarker can show biological effect of a drug.",
+        true,
+      ],
+    ],
+    "Biomarkers can support different decisions depending on what they measure and predict. The same measurement is not automatically useful for diagnosis, prognosis, treatment selection, pharmacodynamic tracking, and safety; its use needs validation.",
+  ),
+  makeQuestion(
+    49,
+    "medium",
+    "Which statements correctly explain why preclinical results can fail to translate to humans?",
+    [
+      [
+        "The model may omit immune, endocrine, vascular, or tissue context.",
+        true,
+      ],
+      ["Dosing and exposure may differ between the model and humans.", true],
+      ["Animal biology may differ from human biology.", true],
+      [
+        "The measured biomarker may differ from the clinical outcome that matters.",
+        true,
+      ],
+    ],
+    "A treatment can work in a dish or animal model and still fail in patients. Human disease includes organism-scale context, heterogeneity, dosing realities, toxicity, and outcomes that simplified models may not capture.",
+  ),
+  makeQuestion(
+    50,
+    "medium",
+    "Which statements correctly describe useful and risky AI roles in biomedicine?",
+    [
+      [
+        "AI can help with protein structure, genomics, image analysis, drug discovery, and patient stratification.",
+        true,
+      ],
+      [
+        "AI can fail when data are biased, labels are noisy, measurements are unreliable, or populations shift.",
+        true,
+      ],
+      [
+        "AI predictions require biological interpretation and evidence before clinical reliance.",
+        true,
+      ],
+      [
+        "AI is most useful when paired with mechanism, measurement quality, workflow fit, safety, and validation.",
+        true,
+      ],
+    ],
+    "AI can accelerate biomedical work, but it does not bypass biology or evidence. Common bottlenecks include biological understanding, reliable measurement, data quality, workflow integration, regulation, safety, and validation.",
+  ),
 ];
 
 export const BiologyChemistryLifeScienceL5Questions =

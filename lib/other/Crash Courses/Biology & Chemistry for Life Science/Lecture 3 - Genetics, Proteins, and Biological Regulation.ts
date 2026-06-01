@@ -610,6 +610,360 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
     ],
     "Genetics is not just heredity vocabulary. It provides the information layer for biotechnology, diagnostics, cancer, infection, pharmacology, evolution, and AI models of biological systems.",
   ),
+  makeQuestion(
+    31,
+    "easy",
+    "Which statement best describes DNA as an information molecule?",
+    [
+      ["DNA stores information in nucleotide sequence.", true],
+      ["DNA stores information mainly as folded enzyme shapes.", false],
+      [
+        "DNA stores information by changing into ATP during cell division.",
+        false,
+      ],
+      [
+        "DNA stores information as a membrane gradient across mitochondria.",
+        false,
+      ],
+    ],
+    "DNA stores inherited biological information in the order of its nucleotide bases. The chemical structure is stable enough to preserve information, while the sequence can be copied, read, and regulated.",
+  ),
+  makeQuestion(
+    32,
+    "easy",
+    "Which statement best describes complementary base pairing in DNA?",
+    [
+      ["A pairs with T, and G pairs with C.", true],
+      ["A pairs with G, and T pairs with C.", false],
+      ["A pairs with C, and G pairs with T.", false],
+      [
+        "Bases pair according to amino acid size rather than nucleotide chemistry.",
+        false,
+      ],
+    ],
+    "Complementary base pairing gives DNA a predictable copying rule. Adenine pairs with thymine, and guanine pairs with cytosine, supporting replication, repair, inheritance, and molecular recognition.",
+  ),
+  makeQuestion(
+    33,
+    "easy",
+    "Which statement best defines a gene?",
+    [
+      [
+        "A gene is a DNA sequence that can be used to produce a functional product.",
+        true,
+      ],
+      ["A gene is a complete organism's set of chromosomes.", false],
+      ["A gene is a protein machine that reads messenger RNA.", false],
+      [
+        "A gene is a random mutation that improves survival in a population.",
+        false,
+      ],
+    ],
+    "A gene is a DNA sequence that can produce a functional product, often a protein or functional RNA. Genes influence traits through regulated expression, product function, cellular context, environment, and interactions with other genes.",
+  ),
+  makeQuestion(
+    34,
+    "easy",
+    "Which statement best describes transcription?",
+    [
+      ["Transcription copies a DNA region into RNA.", true],
+      [
+        "Transcription builds a protein by reading codons at a ribosome.",
+        false,
+      ],
+      ["Transcription separates copied chromosomes during mitosis.", false],
+      [
+        "Transcription inserts a plasmid into bacteria for recombinant production.",
+        false,
+      ],
+    ],
+    "Transcription is the process of making RNA from a DNA template. RNA polymerase reads DNA and produces RNA, including messenger RNA that can carry protein-coding instructions.",
+  ),
+  makeQuestion(
+    35,
+    "easy",
+    "Which statement best describes translation?",
+    [
+      ["Translation builds a protein from a messenger RNA sequence.", true],
+      ["Translation copies DNA into a shorter-lived RNA working copy.", false],
+      [
+        "Translation changes chromatin packing without changing DNA sequence.",
+        false,
+      ],
+      [
+        "Translation randomly changes variant frequencies in a small population.",
+        false,
+      ],
+    ],
+    "Translation is the process in which ribosomes read messenger RNA and build an amino acid chain. It connects nucleotide instructions to protein sequence.",
+  ),
+  makeQuestion(
+    36,
+    "easy",
+    "Which statements correctly describe chromosomes and genomes?",
+    [
+      [
+        "Chromosomes contain DNA organized with genes and regulatory regions.",
+        true,
+      ],
+      [
+        "A genome is the full genetic information of an organism or cell.",
+        true,
+      ],
+      ["A chromosome is the three-nucleotide unit read by ribosomes.", false],
+      ["A genome is the folded active site of an enzyme.", false],
+    ],
+    "The hierarchy runs from base pairs to genes and regulatory regions to chromosomes to the genome. A genome refers to the full genetic information, while chromosomes are large DNA structures containing many genetic elements.",
+  ),
+  makeQuestion(
+    37,
+    "easy",
+    "Which statements correctly describe the central dogma pattern?",
+    [
+      ["DNA can be transcribed into RNA.", true],
+      ["RNA can be translated into protein.", true],
+      [
+        "Protein sequence is usually copied back into DNA during ordinary gene expression.",
+        false,
+      ],
+      ["The central dogma says cells use DNA as a membrane lipid.", false],
+    ],
+    "The central pattern students need is DNA to RNA to protein. Biology contains additional regulatory flows, but this core pathway explains how stored sequence information can become working molecules.",
+  ),
+  makeQuestion(
+    38,
+    "easy",
+    "Which statements correctly describe codons?",
+    [
+      ["A codon is a three-nucleotide unit read during translation.", true],
+      [
+        "Three-base codons provide enough combinations for amino acids and stop signals.",
+        true,
+      ],
+      [
+        "A codon is a complete chromosome containing thousands of genes.",
+        false,
+      ],
+      [
+        "A codon is a protein that turns genes on and off by binding DNA.",
+        false,
+      ],
+    ],
+    "Ribosomes read messenger RNA in codons, and each codon has three nucleotides. Three bases allow 64 combinations, enough to encode amino acids plus stop signals.",
+  ),
+  makeQuestion(
+    39,
+    "easy",
+    "Which statements correctly describe gene expression?",
+    [
+      [
+        "Gene expression means how much a gene product is made in a given context.",
+        true,
+      ],
+      ["Cells regulate which instructions are active.", true],
+      [
+        "Gene expression means each cell uses the same genes at the same level.",
+        false,
+      ],
+      [
+        "Gene expression is the random loss of chromosomes during normal differentiation.",
+        false,
+      ],
+    ],
+    "Gene expression is about which gene products are made and how much of them are made. Different cell types and conditions use different expression programs even when the underlying DNA is very similar.",
+  ),
+  makeQuestion(
+    40,
+    "easy",
+    "Which statements correctly describe transcription factors?",
+    [
+      [
+        "Transcription factors are proteins that help turn genes on or off.",
+        true,
+      ],
+      ["Transcription factors can bind DNA or regulatory complexes.", true],
+      [
+        "Transcription factors are the three-base units that encode amino acids.",
+        false,
+      ],
+      [
+        "Transcription factors are small circular DNA molecules used mainly in bacteria.",
+        false,
+      ],
+    ],
+    "Transcription factors are regulatory proteins that influence gene use. They help cells decide which gene programs to run in particular contexts by connecting DNA regulatory regions, signals, and cellular state.",
+  ),
+  makeQuestion(
+    41,
+    "easy",
+    "Which statements correctly describe epigenetic regulation?",
+    [
+      [
+        "It can change access to genetic information without changing the DNA sequence.",
+        true,
+      ],
+      ["DNA methylation and histone modification are examples.", true],
+      ["Chromatin packing can affect which genes are easier to use.", true],
+      [
+        "Epigenetic regulation is the same as replacing the base sequence with a new mutation.",
+        false,
+      ],
+    ],
+    "Epigenetic regulation is about accessibility and cell state rather than changing the underlying DNA sequence. DNA methylation, histone modification, and chromatin packing can influence gene use.",
+  ),
+  makeQuestion(
+    42,
+    "easy",
+    "Which statements correctly describe mutation?",
+    [
+      ["A mutation is a change in DNA sequence.", true],
+      [
+        "Replication errors, radiation, chemicals, viruses, and mobile genetic elements can cause mutations.",
+        true,
+      ],
+      [
+        "A mutation can be neutral, harmful, or beneficial depending on context.",
+        true,
+      ],
+      [
+        "A mutation is the normal process of translating RNA into protein.",
+        false,
+      ],
+    ],
+    "Mutation means a DNA sequence change. Its effect depends on location, context, environment, and selection pressure, so mutations are not automatically beneficial or harmful in every situation.",
+  ),
+  makeQuestion(
+    43,
+    "easy",
+    "Which statements correctly describe natural selection?",
+    [
+      ["Selection requires variation.", true],
+      ["Selection requires inheritance.", true],
+      ["Selection involves differential survival or reproduction.", true],
+      [
+        "Selection is the same as random variant-frequency change with no fitness difference.",
+        false,
+      ],
+    ],
+    "Natural selection changes variant frequencies when inherited differences affect survival or reproduction. Genetic drift is the random change in variant frequencies, especially important in small populations.",
+  ),
+  makeQuestion(
+    44,
+    "easy",
+    "Which statements correctly describe plasmids and recombinant DNA?",
+    [
+      ["Plasmids are small DNA molecules found in many bacteria.", true],
+      [
+        "Plasmids can carry useful genes, including antibiotic resistance genes.",
+        true,
+      ],
+      [
+        "Inserted genes can be carried into bacteria for copying or expression.",
+        true,
+      ],
+      [
+        "Plasmids are ribosomes that assemble amino acids into insulin protein.",
+        false,
+      ],
+    ],
+    "Plasmids are useful because they can carry DNA into bacteria. Recombinant DNA methods can insert a gene, such as a human insulin gene, so cells copy or express the encoded product.",
+  ),
+  makeQuestion(
+    45,
+    "easy",
+    "Which statements correctly describe mRNA technology?",
+    [
+      ["mRNA medicines deliver temporary instructions.", true],
+      ["Cells can translate the delivered mRNA into an encoded protein.", true],
+      ["mRNA can be used in vaccines and other therapeutic strategies.", true],
+      [
+        "mRNA medicines work by permanently replacing the patient's genome in each target cell.",
+        false,
+      ],
+    ],
+    "Messenger RNA medicines operate at the working-copy layer of biological information. They give cells temporary instructions to make a protein without directly rewriting the patient's DNA sequence.",
+  ),
+  makeQuestion(
+    46,
+    "medium",
+    "Which statements correctly explain why DNA is a library rather than a simple blueprint?",
+    [
+      ["Cells regulate which parts of DNA are read.", true],
+      [
+        "The same DNA can support different cell behaviors through different expression programs.",
+        true,
+      ],
+      [
+        "Traits emerge through gene products, regulation, environment, and interactions.",
+        true,
+      ],
+      ["Cells copy, repair, package, and access DNA dynamically.", true],
+    ],
+    "DNA contains inherited information, but cells do not execute the entire genome in a fixed way. Regulation, context, cell type, environment, and interactions determine which information is used and what effects it has.",
+  ),
+  makeQuestion(
+    47,
+    "medium",
+    "Which statements correctly describe why neurons and liver cells can behave differently despite sharing DNA?",
+    [
+      ["They can run different gene expression programs.", true],
+      ["They can maintain different regulatory states.", true],
+      ["They can respond to different signals and cellular contexts.", true],
+      [
+        "They can produce different sets of proteins from shared genetic information.",
+        true,
+      ],
+    ],
+    "Most cells in a body share nearly the same DNA, but they do not use it in the same way. Cell identity depends heavily on regulated gene expression, signaling, chromatin state, and feedback.",
+  ),
+  makeQuestion(
+    48,
+    "medium",
+    "Which statements correctly describe regulatory networks?",
+    [
+      ["Genes can help produce proteins that regulate other genes.", true],
+      ["Signals can change gene expression.", true],
+      ["RNA molecules can affect translation or stability.", true],
+      [
+        "Regulatory networks connect genes, proteins, signals, RNA, and feedback.",
+        true,
+      ],
+    ],
+    "Biological regulation is networked rather than a simple one-gene one-trait chain. Genes, proteins, RNAs, signals, and feedback can influence each other over time.",
+  ),
+  makeQuestion(
+    49,
+    "medium",
+    "Which statements correctly connect evolution to medicine?",
+    [
+      ["Antibiotic resistance can evolve under treatment pressure.", true],
+      ["Cancer progression can involve evolving cell populations.", true],
+      ["Immune escape can occur when variants avoid recognition.", true],
+      [
+        "Pathogens can adapt in ways that change transmission, disease, or treatment response.",
+        true,
+      ],
+    ],
+    "Evolution is active in modern medicine, not just ancient history. Pathogens, tumors, and resistant populations can change as selection pressures favor variants that survive and spread.",
+  ),
+  makeQuestion(
+    50,
+    "medium",
+    "Which statements correctly describe biotechnology tools built on biological information flow?",
+    [
+      ["Sequencing reads nucleotide order.", true],
+      ["CRISPR-based tools use sequence-guided targeting.", true],
+      [
+        "Gene therapy aims to add, replace, silence, or edit genetic information.",
+        true,
+      ],
+      [
+        "Synthetic biology treats cells as programmable platforms while still respecting biological noise and regulation.",
+        true,
+      ],
+    ],
+    "Biotechnology works because scientists can read, copy, write, edit, and express biological information. These tools are powerful, but delivery, safety, regulation, context, and evidence remain central.",
+  ),
 ];
 
 export const BiologyChemistryLifeScienceL3Questions =

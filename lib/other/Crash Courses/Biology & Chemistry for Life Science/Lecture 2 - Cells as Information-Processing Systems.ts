@@ -643,6 +643,411 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
     ],
     "The cell concepts in this lecture are direct foundations for medicine. Pharmacology, cancer, immunity, endocrine disease, neurobiology, diagnostics, and AI-for-health applications all rely on understanding cellular organization and signaling.",
   ),
+  makeQuestion(
+    31,
+    "easy",
+    "Which statement best describes why cells need compartments?",
+    [
+      [
+        "Compartments help keep molecules concentrated, protected, and chemically controlled.",
+        true,
+      ],
+      [
+        "Compartments mainly exist to prevent molecules from taking part in reactions.",
+        false,
+      ],
+      [
+        "Compartments remove the need for membranes, transport, and regulation.",
+        false,
+      ],
+      [
+        "Compartments turn a cell into a uniform mixture with no local differences.",
+        false,
+      ],
+    ],
+    "Compartments let cells organize chemistry in space. They help maintain local concentrations, protect information, and separate reactions that would interfere with each other.",
+  ),
+  makeQuestion(
+    32,
+    "easy",
+    "Which statement best distinguishes prokaryotic and eukaryotic cells?",
+    [
+      [
+        "Prokaryotes lack a nucleus, while eukaryotic cells are more compartmentalized.",
+        true,
+      ],
+      [
+        "Prokaryotes have mitochondria, while eukaryotic cells lack membrane-bound organelles.",
+        false,
+      ],
+      [
+        "Prokaryotes are human cells, while eukaryotic cells are bacterial cells.",
+        false,
+      ],
+      [
+        "Prokaryotes use DNA, while eukaryotic cells store information in proteins instead.",
+        false,
+      ],
+    ],
+    "Prokaryotes such as bacteria are usually smaller and lack a nucleus. Eukaryotic cells such as human cells are larger and contain more internal compartments and organelles.",
+  ),
+  makeQuestion(
+    33,
+    "easy",
+    "Which statement best describes the cell membrane?",
+    [
+      [
+        "It is a lipid bilayer with embedded proteins that acts as a boundary and transport controller.",
+        true,
+      ],
+      [
+        "It is a rigid DNA shell that stores the cell's inherited information.",
+        false,
+      ],
+      [
+        "It is a ribosome layer that translates messenger RNA into proteins.",
+        false,
+      ],
+      [
+        "It is a soluble enzyme mixture that floats freely outside the cell.",
+        false,
+      ],
+    ],
+    "The membrane is built from a lipid bilayer with embedded proteins. It separates the cell from its surroundings and supports transport, communication, and signaling.",
+  ),
+  makeQuestion(
+    34,
+    "easy",
+    "Which statement best describes ribosomes?",
+    [
+      ["Ribosomes translate messenger RNA into amino acid chains.", true],
+      ["Ribosomes store DNA inside a membrane-bound nucleus.", false],
+      ["Ribosomes modify and ship secreted proteins after folding.", false],
+      [
+        "Ribosomes maintain ion gradients by pumping sodium and potassium.",
+        false,
+      ],
+    ],
+    "Ribosomes are the cellular machines that translate messenger RNA instructions into protein chains. They connect nucleotide information to amino acid sequence.",
+  ),
+  makeQuestion(
+    35,
+    "easy",
+    "Which statement best describes apoptosis?",
+    [
+      [
+        "Apoptosis is programmed cell death that removes damaged, risky, or unneeded cells.",
+        true,
+      ],
+      [
+        "Apoptosis is uncontrolled cell bursting that spreads inflammation through tissue.",
+        false,
+      ],
+      ["Apoptosis is the copying and separation of DNA during mitosis.", false],
+      [
+        "Apoptosis is the movement of water toward higher solute concentration.",
+        false,
+      ],
+    ],
+    "Apoptosis is a regulated form of cell death. It helps remove damaged or unnecessary cells in a controlled way, reducing the risk of uncontrolled inflammation or harmful survival.",
+  ),
+  makeQuestion(
+    36,
+    "easy",
+    "Which statements correctly describe major eukaryotic organelles?",
+    [
+      [
+        "The nucleus stores DNA and regulates access to genetic information.",
+        true,
+      ],
+      ["Mitochondria convert energy from nutrients into ATP.", true],
+      [
+        "The Golgi apparatus is the main structure that reads codons during translation.",
+        false,
+      ],
+      [
+        "The cytoskeleton is mainly a passive fluid with no role in movement or transport.",
+        false,
+      ],
+    ],
+    "The nucleus stores genetic information, and mitochondria help produce ATP from nutrient energy. The Golgi modifies, sorts, and ships molecules, while the cytoskeleton supports structure, movement, and intracellular transport.",
+  ),
+  makeQuestion(
+    37,
+    "easy",
+    "Which statements correctly describe the endoplasmic reticulum and Golgi apparatus?",
+    [
+      [
+        "The endoplasmic reticulum helps synthesize, fold, and process proteins and lipids.",
+        true,
+      ],
+      ["The Golgi modifies, sorts, and ships molecules.", true],
+      [
+        "The endoplasmic reticulum is the main organelle that stores chromosomes as a genome.",
+        false,
+      ],
+      [
+        "The Golgi is the membrane channel that lets sodium diffuse down its gradient.",
+        false,
+      ],
+    ],
+    "The endoplasmic reticulum and Golgi form an important processing and trafficking pathway. They are especially relevant for secreted proteins, membrane proteins, lipids, and many therapeutic targets.",
+  ),
+  makeQuestion(
+    38,
+    "easy",
+    "Which statements correctly distinguish diffusion and active transport?",
+    [
+      [
+        "Diffusion moves molecules from higher concentration toward lower concentration.",
+        true,
+      ],
+      [
+        "Active transport can use energy to move substances against a gradient.",
+        true,
+      ],
+      [
+        "Diffusion requires ATP-driven pumps for each molecule that moves down a gradient.",
+        false,
+      ],
+      [
+        "Active transport is the passive spreading of molecules without energy input.",
+        false,
+      ],
+    ],
+    "Diffusion follows an existing concentration gradient and does not require direct energy input. Active transport uses energy, often ATP, to build or maintain gradients by moving substances against their favored direction.",
+  ),
+  makeQuestion(
+    39,
+    "easy",
+    "Which statements correctly describe ligands and receptors?",
+    [
+      ["A ligand is a signaling molecule.", true],
+      [
+        "A receptor is usually a protein that detects a ligand and changes activity or shape.",
+        true,
+      ],
+      [
+        "A ligand is the lipid tail that makes the membrane hydrophobic.",
+        false,
+      ],
+      [
+        "A receptor is mainly a stored energy gradient across a membrane.",
+        false,
+      ],
+    ],
+    "Ligands and receptors are basic pieces of cell signaling. A ligand binds a receptor, and the receptor response can start internal changes in protein activity, gene expression, movement, secretion, growth, or survival.",
+  ),
+  makeQuestion(
+    40,
+    "easy",
+    "Which statements correctly distinguish innate and adaptive immunity?",
+    [
+      ["Innate immunity is fast and broad.", true],
+      ["Adaptive immunity is more specific and can form memory.", true],
+      [
+        "Innate immunity is based mainly on antibodies made after target learning.",
+        false,
+      ],
+      ["Adaptive immunity lacks B cells, antibodies, and T cells.", false],
+    ],
+    "Innate immunity responds quickly to common danger patterns with broad defenses. Adaptive immunity is slower at first but more specific, involving B cells, antibodies, T cells, and memory.",
+  ),
+  makeQuestion(
+    41,
+    "easy",
+    "Which statements correctly describe selective permeability of membranes?",
+    [
+      [
+        "Small nonpolar molecules cross lipid bilayers more easily than charged particles.",
+        true,
+      ],
+      ["Charged particles often require channels or transporters.", true],
+      ["Large polar molecules often need transport systems or vesicles.", true],
+      [
+        "Selective permeability means the membrane functions like an open hole with no filtering.",
+        false,
+      ],
+    ],
+    "A lipid bilayer separates environments and filters movement based on size, polarity, and charge. Proteins such as channels and transporters help substances cross when the lipid core is unfavorable.",
+  ),
+  makeQuestion(
+    42,
+    "easy",
+    "Which statements correctly describe osmosis?",
+    [
+      [
+        "Osmosis is water movement across a selectively permeable membrane.",
+        true,
+      ],
+      [
+        "Water tends to move toward higher effective solute concentration.",
+        true,
+      ],
+      [
+        "Osmosis matters for cell swelling, shrinking, dehydration, and intravenous fluids.",
+        true,
+      ],
+      [
+        "Osmosis is the movement of DNA from the nucleus to the cytoplasm.",
+        false,
+      ],
+    ],
+    "Osmosis describes water movement across membranes in response to solute differences. It matters clinically because water balance affects cell volume, kidney function, dehydration, and fluid therapy.",
+  ),
+  makeQuestion(
+    43,
+    "easy",
+    "Which statements correctly describe ion gradients?",
+    [
+      ["Cells maintain different ion concentrations across membranes.", true],
+      [
+        "Gradients store usable energy through separated charge and concentration.",
+        true,
+      ],
+      [
+        "Ion gradients help explain neuron firing, muscle contraction, and mitochondrial ATP production.",
+        true,
+      ],
+      [
+        "Ion gradients are identical ion concentrations on both sides of a membrane.",
+        false,
+      ],
+    ],
+    "Ion gradients are differences in concentration and charge across a membrane. Those differences store energy and can drive electrical signaling, transport, secretion, and ATP production.",
+  ),
+  makeQuestion(
+    44,
+    "easy",
+    "Which statements correctly describe signal transduction?",
+    [
+      ["A ligand can bind a receptor.", true],
+      ["A receptor can change conformation or activity.", true],
+      [
+        "Intracellular proteins can be activated or inhibited downstream.",
+        true,
+      ],
+      [
+        "Signal transduction is the direct copying of DNA before cell division.",
+        false,
+      ],
+    ],
+    "Signal transduction converts an external or local signal into internal cellular change. The chain can involve receptor changes, protein cascades, metabolism, gene expression, movement, secretion, growth, or survival.",
+  ),
+  makeQuestion(
+    45,
+    "easy",
+    "Which statements correctly describe cancer as a cellular process?",
+    [
+      ["Cancer cells can gain growth advantages.", true],
+      ["Cancer cells can evade death or ignore tissue constraints.", true],
+      ["Cancer can evolve inside the body as cell populations change.", true],
+      [
+        "Cancer is best understood as ordinary apoptosis working at a healthy rate.",
+        false,
+      ],
+    ],
+    "Cancer involves dysregulated cell behavior, including growth, survival, control escape, and evolution within tissues. This framing explains why cancer is not a single static condition but a family of evolving diseases.",
+  ),
+  makeQuestion(
+    46,
+    "medium",
+    "Which statements correctly describe the problems a cell solves?",
+    [
+      [
+        "It keeps useful molecules concentrated through compartmentalization.",
+        true,
+      ],
+      [
+        "It processes information from nutrients, damage, pathogens, neighboring cells, hormones, and physical conditions.",
+        true,
+      ],
+      [
+        "It allocates energy, building blocks, enzymes, membrane area, and repair capacity.",
+        true,
+      ],
+      [
+        "It coordinates division, differentiation, or death when appropriate.",
+        true,
+      ],
+    ],
+    "A cell is an organized system that controls chemistry, information, resources, and fate decisions. This view is more useful than treating the cell as a bag of molecules.",
+  ),
+  makeQuestion(
+    47,
+    "medium",
+    "Which statements correctly describe amplification and feedback in signaling?",
+    [
+      ["Amplification lets a small signal produce a large response.", true],
+      ["Negative feedback can stabilize a system.", true],
+      ["Positive feedback can amplify change or commit a process.", true],
+      [
+        "Feedback can shape metabolism, gene expression, movement, secretion, growth, or survival.",
+        true,
+      ],
+    ],
+    "Cell signaling is not just detection; it includes response control. Amplification increases signal impact, negative feedback stabilizes systems, and positive feedback can drive decisive transitions.",
+  ),
+  makeQuestion(
+    48,
+    "medium",
+    "Which statements correctly describe cell division and differentiation?",
+    [
+      [
+        "Mitosis creates two daughter cells after DNA is copied and separated.",
+        true,
+      ],
+      [
+        "Checkpoints help decide whether conditions are suitable for division.",
+        true,
+      ],
+      ["Stem cells can produce specialized cell types.", true],
+      [
+        "Differentiation depends on regulated gene expression rather than different DNA in each cell type.",
+        true,
+      ],
+    ],
+    "Cells must balance growth, repair, specialization, and removal. Division requires accurate copying and separation, while differentiation depends on regulatory programs that make cells use shared genetic information differently.",
+  ),
+  makeQuestion(
+    49,
+    "medium",
+    "Which statements correctly describe antibodies and T cells?",
+    [
+      ["Antibodies are proteins that bind specific molecular targets.", true],
+      [
+        "Antibodies can neutralize pathogens or mark targets for destruction.",
+        true,
+      ],
+      ["T cells can inspect cells and coordinate immune responses.", true],
+      ["Some T cells can destroy infected or abnormal cells.", true],
+    ],
+    "Antibodies and T cells are central pieces of adaptive immunity. Antibodies bind targets outside or on cells, while T cells inspect cellular state, coordinate responses, and can destroy infected or abnormal cells.",
+  ),
+  makeQuestion(
+    50,
+    "medium",
+    "Which statements correctly connect cell biology to medicine?",
+    [
+      [
+        "Membranes and transport help explain drug entry, ion channels, and gradients.",
+        true,
+      ],
+      [
+        "Signaling helps explain hormones, growth factors, cytokines, and therapeutic targets.",
+        true,
+      ],
+      [
+        "Apoptosis and cell-cycle control help explain cancer and tissue maintenance.",
+        true,
+      ],
+      [
+        "Innate and adaptive immunity help explain infection, vaccines, autoimmunity, and immunotherapy.",
+        true,
+      ],
+    ],
+    "Cell biology provides the basic mechanisms behind many medical topics. Transport, signaling, growth control, death control, and immunity connect molecular events to disease and treatment.",
+  ),
 ];
 
 export const BiologyChemistryLifeScienceL2Questions =
