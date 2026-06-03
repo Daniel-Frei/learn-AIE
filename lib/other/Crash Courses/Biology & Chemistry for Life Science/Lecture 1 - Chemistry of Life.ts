@@ -166,11 +166,11 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         true,
       ],
       [
-        "Hydrolysis is the same as translating messenger RNA into protein.",
+        "Hydrolysis joins monomers by removing water from the newly formed bond.",
         false,
       ],
     ],
-    "Macromolecule chemistry depends on building and breaking bonds between smaller units. Hydrolysis and dehydration reactions are chemical processes, while translation is an information-to-protein process that uses amino acids but is not itself the definition of hydrolysis.",
+    "Macromolecule chemistry depends on building and breaking bonds between smaller units. Hydrolysis uses water to break bonds, while dehydration reactions join building blocks while releasing water, so reversing those processes is the key misconception.",
   ),
   makeQuestion(
     8,
@@ -207,11 +207,11 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
       ],
       ["An amino acid is a nucleotide that stores one DNA base.", false],
       [
-        "An amino acid has a hydrophobic tail and hydrophilic head arranged like a phospholipid.",
+        "An amino acid's side chain is identical across all protein building blocks.",
         false,
       ],
       [
-        "An amino acid is a monosaccharide building block used mainly for glycogen storage.",
+        "An amino acid cannot be linked into polymers because its backbone lacks shared reactive groups.",
         false,
       ],
     ],
@@ -259,7 +259,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         true,
       ],
       [
-        "A single amino acid substitution matters mainly when it removes the whole gene from the chromosome.",
+        "A single substitution matters only when it changes total protein length, not local chemistry.",
         false,
       ],
     ],
@@ -279,11 +279,11 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         false,
       ],
       [
-        "Bilayers require ribosomes to assemble lipid molecules into a membrane sequence.",
+        "Bilayers require every phospholipid tail to form covalent bonds with neighboring tails.",
         false,
       ],
       [
-        "Bilayers form because covalent bonds join adjacent lipid tails into a continuous sheet.",
+        "Bilayers form because hydrophobic tails prefer direct contact with water over contact with other tails.",
         false,
       ],
     ],
@@ -343,11 +343,11 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
     "A molecule has the same chemical formula as another molecule but a different atom arrangement. Which term best applies?",
     [
       ["Isomer.", true],
+      ["Monomer.", false],
       ["Polymer.", false],
-      ["Ribosome.", false],
-      ["Gradient.", false],
+      ["Isotope.", false],
     ],
-    "Isomers have the same formula but different arrangements, which can lead to different shapes and biological effects. This matters because molecular function depends on structure, not only on which atoms are present.",
+    "Isomers have the same formula but different arrangements, which can lead to different shapes and biological effects. Monomers, polymers, and isotopes are nearby chemistry terms, but they refer to building blocks, chains, or nuclear composition rather than arrangement with the same formula.",
   ),
   makeQuestion(
     17,
@@ -362,9 +362,12 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         "Lipids are often hydrophobic or amphipathic and are important in membranes and energy storage.",
         true,
       ],
-      ["Carbohydrates are genetic polymers translated by ribosomes.", false],
       [
-        "Lipids are catalytic polymers that lower activation energy through active sites.",
+        "Carbohydrates usually form membrane bilayers because they are mostly hydrophobic.",
+        false,
+      ],
+      [
+        "Lipids are usually built from nucleotide monomers and store sequence information.",
         false,
       ],
     ],
@@ -447,11 +450,11 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         true,
       ],
       [
-        "The protein must now become a carbohydrate because it contains hydrophobic residues.",
+        "The pore should conduct charged solutes better because hydrophobic residues exclude water.",
         false,
       ],
       [
-        "The change suggests membrane-protein function is unrelated to covalent structure.",
+        "The change cannot matter if the protein's total amino acid count stays unchanged.",
         false,
       ],
     ],

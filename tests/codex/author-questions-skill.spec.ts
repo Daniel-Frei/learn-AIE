@@ -58,4 +58,25 @@ describe("author-questions skill guidance", () => {
       "Questions should test real concept understanding rather than surface recall or answer elimination.",
     );
   });
+
+  it("guards against generic answer-recognition patterns", () => {
+    expect(skill).toContain(
+      'Avoid making the correct answer the only "reasonable middle" option',
+    );
+    expect(skill).toContain(
+      "Keep distractors in the same category and reasoning layer as the prompt.",
+    );
+    expect(skill).toContain(
+      "Prompts should identify the concept or task precisely without revealing the abstract answer pattern.",
+    );
+    expect(skill).toContain(
+      '"select the hedged middle answer", "reject the category mismatch", and "infer the context/validation answer from the stem."',
+    );
+    expect(teamPreferences).toContain(
+      "do not let correct answers become recognizable as the only hedged, context-sensitive, evidence-aware",
+    );
+    expect(teamPreferences).toContain(
+      "Avoid over-scaffolding a set around one reusable schema.",
+    );
+  });
 });

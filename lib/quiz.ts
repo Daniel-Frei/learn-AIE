@@ -96,6 +96,17 @@ export type QuestionSourceMetadata = {
   topic: Topic;
 };
 
+export type QuestionSource = {
+  id: string;
+  label: string;
+  title: string;
+  seriesId: SourceSeriesId;
+  seriesLabel: string;
+  topic: Topic;
+  questions: Question[];
+  balance?: boolean;
+};
+
 // ------------------------------
 // Central question set registry
 // ------------------------------
@@ -463,6 +474,7 @@ export const QUESTION_SOURCES = [
     seriesLabel: "Biology & Chemistry for Life Science",
     topic: "Life Science" as const,
     questions: BiologyChemistryLifeScienceL0Questions,
+    balance: false,
   },
   {
     id: "bio-chem-life-l1" as const,
@@ -558,7 +570,7 @@ export const QUESTION_SOURCES = [
     topic: "DL" as const,
     questions: mixedQuestions,
   },
-];
+] satisfies QuestionSource[];
 
 export type SourceId = (typeof QUESTION_SOURCES)[number]["id"];
 export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {

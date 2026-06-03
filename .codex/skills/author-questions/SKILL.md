@@ -86,6 +86,13 @@ Use the repo docs as product context. Keep edits scoped to the new question file
 - Cover all major concepts from the source material.
 - Make coverage proportional to the source material's emphasis. More important or repeated topics should receive more questions.
 - Avoid repeated or near-duplicate questions unless the source material explicitly requires closely related distinctions.
+- If a set teaches a recurring schema or contrast, later questions must require new source-specific detail, conditions, mechanisms, calculations, or boundary cases. Do not let a learner answer many later questions by reusing one generic rule such as "prefer the nuanced/context-dependent option" or "reject the option that skips validation."
+
+## Prompt Design
+
+- Prompts should identify the concept or task precisely without revealing the abstract answer pattern. Avoid stems where a learner can infer the answer from generic framing alone, such as "why is X not enough?", "why can X fail to generalize?", or "why does X still need validation?", unless the options all require a specific source-grounded distinction.
+- For "why", "what explains", and "best describes" prompts, make all options plausible answers to that same prompt. Do not make the correct option the only one that addresses context, evidence, tradeoffs, uncertainty, or limitations.
+- When the source repeatedly uses a broad template, such as information flow, selection pressure, error analysis, optimization tradeoffs, evidence chains, or system boundaries, anchor each question to the concrete version from the source rather than asking for the generic template again.
 
 ## Answer Options
 
@@ -93,6 +100,10 @@ Use the repo docs as product context. Keep edits scoped to the new question file
 - Each option in a question should compete on the same semantic axis. Do not pair one detailed, technically plausible correct option with three broad anti-claims, absurdities, or generic "this removes all risk/tests/security concerns" statements.
 - Incorrect options should be plausible same-neighborhood alternatives, partial truths, common confusions, nearby quantities, nearby conditions, wrong scope boundaries, wrong causal directions, or wrong inclusion/exclusion details that help diagnose misunderstandings.
 - A learner should usually need concept understanding to distinguish correct options from incorrect options. Avoid distractors that are absurd, category-mismatched, self-refuting, or easy to eliminate from wording cues alone.
+- Answer options should also teach useful contrasts about the concept being tested. A learner practicing the question should learn something relevant from why an option is wrong, such as a nearby misconception, prerequisite distinction, or boundary condition; avoid random cross-topic distractors whose only lesson is that the concept is not an unrelated statistic, study-design term, drug concept, or other category mismatch.
+- Avoid making the correct answer the only "reasonable middle" option: useful but limited, context-dependent, evidence-aware, partially true, or needing validation. Incorrect options can also be moderate and evidence-aware while still being wrong because they shift one substantive detail, condition, direction, layer, or scope boundary.
+- Keep distractors in the same category and reasoning layer as the prompt. If the prompt asks about a method, model, mechanism, metric, policy, API, proof, or intervention, wrong options should usually be nearby versions of that same kind of thing rather than unrelated objects, outcomes, roles, or workflow stages.
+- Avoid wrong answers that are false only because they collapse a general chain from mechanism to measurement to deployment, decision, or outcome. Strong distractors should preserve most of the chain but make one meaningful mistake about which link is sufficient, missing, reversed, or out of scope.
 - Absolute or high-certainty language such as "always", "never", "only", "every", "all", "none", "cannot", "impossible", "guarantees", "proves", or "complete" is not banned, but it is high risk. Use it only when the source, math, or formal definition supports the exact quantifier, and avoid making these cues correlate mostly with incorrect options.
 - Keep option specificity, detail level, and plausibility roughly comparable. If the correct option is much more concrete, technical, or carefully hedged than the incorrect options, rewrite the distractors to be closer competitors.
 
@@ -102,11 +113,15 @@ Before finalizing a generated or revised set, review it from the perspective of 
 
 - Hide the `isCorrect` flags and ask whether the learner could answer by generic test-taking heuristics instead of source understanding.
 - If marking options with absolutes or overclaims as false would get many options right, revise the affected distractors and any matching prompts.
+- If choosing the option that sounds like the reasonable scientific or technical middle would get many options right, revise so several options are nuanced and the distinction turns on source-specific substance.
+- If rejecting semantic oddballs, category mismatches, or options from a different reasoning layer would get many options right, rewrite those distractors into same-neighborhood misconceptions.
+- If the stem itself reveals the answer frame, such as context-dependence, validation, uncertainty, model limits, or a missing comparison, make the prompt more concrete and make all options plausible within that frame.
 - If the longest, most technical, or most carefully hedged option is usually correct, revise so incorrect options have comparable detail and credibility.
 - For "best describes" questions, make all four options candidate descriptions of the same thing. Do not make the incorrect options mostly claims about what the concept does not do.
 - Prefer near-miss distractors created by changing one meaningful detail of the correct concept: component inclusion, scope, precondition, feedback signal, direction of causality, authority boundary, failure mode, or tradeoff.
 - Do not let difficulty come from trick wording. The question should be hard because the tested distinction is substantive, while the options remain clear and fair.
 - When practical for a large set, run or mentally simulate a simple language-cue baseline such as "mark options containing always/never/only/every/guarantees/proves/complete as false and the rest as true." If that baseline would score well at the option level, the set is still too guessable.
+- Also simulate broader baselines: "select the hedged middle answer", "reject the category mismatch", and "infer the context/validation answer from the stem." If any of these work across many questions, revise prompts and distractors before finalizing.
 - For registered question sets, prefer the deterministic check over mental simulation: `$env:QUESTION_GUESSABILITY_SOURCE_IDS="source-id"; npm run test:question-guessability`.
 
 ## Answer Distribution

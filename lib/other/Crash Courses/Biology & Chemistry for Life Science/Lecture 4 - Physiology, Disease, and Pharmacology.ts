@@ -64,7 +64,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         false,
       ],
       [
-        "A DNA mutation that directly turns a tissue into an infectious pathogen.",
+        "A regulatory state where every internal variable is held at one exact value.",
         false,
       ],
     ],
@@ -157,7 +157,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         false,
       ],
       [
-        "A receptor is the same thing as a clinical-trial randomization schedule.",
+        "A receptor is any drug molecule that circulates until it finds a protein target.",
         false,
       ],
     ],
@@ -197,8 +197,14 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         "What the drug does to the body at its target and downstream systems.",
         false,
       ],
-      ["The inheritance pattern of a gene across generations.", false],
-      ["The exact same thing as a placebo effect.", false],
+      [
+        "How strongly the drug activates or blocks its target once it arrives.",
+        false,
+      ],
+      [
+        "The patient's reported improvement caused by expectation rather than drug exposure.",
+        false,
+      ],
     ],
     "Pharmacokinetics, often abbreviated PK, describes drug exposure over time. It asks how the body absorbs, distributes, metabolizes, and eliminates the drug, which strongly affects dose and safety.",
   ),
@@ -742,9 +748,15 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
     "Which statement best defines a biomarker?",
     [
       ["A biomarker is a measurable indicator of biological state.", true],
-      ["A biomarker is a drug target that activates a receptor.", false],
-      ["A biomarker is a daughter cell produced by mitosis.", false],
-      ["A biomarker is a pathogen that causes infection.", false],
+      ["A biomarker is any treatment that changes a disease mechanism.", false],
+      [
+        "A biomarker is useful for every clinical decision as soon as it can be measured.",
+        false,
+      ],
+      [
+        "A biomarker is the same thing as the disease cause it is associated with.",
+        false,
+      ],
     ],
     "A biomarker is something measurable that indicates a biological state. Examples include blood glucose, blood pressure, cholesterol, tumor mutations, protein expression, inflammatory markers, and imaging findings.",
   ),
@@ -783,11 +795,11 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         true,
       ],
       [
-        "It is mainly a gene-editing system that changes DNA sequence in tissues.",
+        "It mainly works as a closed loop that keeps blood inside the heart and away from tissues.",
         false,
       ],
       [
-        "It replaces the need for cellular metabolism by storing codons in blood.",
+        "It mainly coordinates long-distance regulation by releasing hormones instead of transporting blood.",
         false,
       ],
     ],
@@ -800,9 +812,9 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
     [
       ["It needs a sensor.", true],
       ["It needs a set point or useful range plus comparison.", true],
-      ["It works by removing effector responses from regulation.", false],
+      ["It works by sensing deviation but preventing any response.", false],
       [
-        "It is a random mutation that spreads through a tissue population.",
+        "It works best when feedback amplifies every deviation without limit.",
         false,
       ],
     ],
@@ -846,11 +858,11 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         true,
       ],
       [
-        "Metabolic disease is mainly a vaccine training response against antigens.",
+        "Metabolic disease is mainly disrupted immune recognition of self tissue.",
         false,
       ],
       [
-        "Neurodegeneration is mainly acute hormone signaling over minutes to days.",
+        "Neurodegeneration is mainly short-term blood glucose feedback after a meal.",
         false,
       ],
     ],
@@ -868,7 +880,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         true,
       ],
       [
-        "Symptoms are simply the dose of drug absorbed into the bloodstream.",
+        "Symptoms prove that pathogen damage is the only active mechanism.",
         false,
       ],
     ],
@@ -883,7 +895,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
       ["Cancer can involve evasion of death and tissue constraints.", true],
       ["Cancer can evolve inside tissues.", true],
       [
-        "Cancer is a normal endocrine feedback loop maintaining glucose range.",
+        "Cancer is mainly normal programmed cell death removing risky cells at the right time.",
         false,
       ],
     ],

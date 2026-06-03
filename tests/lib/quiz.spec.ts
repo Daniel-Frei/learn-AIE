@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import {
   ALL_SOURCE_IDS,
   ALL_TOPICS,
-  BiologyChemistryLifeScienceL0Questions,
   QUESTION_SOURCE_CONTEXT,
   SOURCE_SERIES,
   QUESTION_SOURCES,
@@ -206,28 +205,22 @@ describe("quiz source registry helpers", () => {
     expect(ids.has("langchain-deepagents")).toBe(true);
   });
 
-  it("keeps Biology & Chemistry Lecture 0 balanced as preparation practice", () => {
-    const difficultyCounts = BiologyChemistryLifeScienceL0Questions.reduce(
-      (counts, question) => {
-        counts[question.difficulty] += 1;
-        return counts;
-      },
-      { easy: 0, medium: 0, hard: 0 },
+  it("marks Biology & Chemistry Lecture 0 as a balance opt-out preparation set", () => {
+    const source = QUESTION_SOURCES.find(
+      (entry) => entry.id === "bio-chem-life-l0",
     );
-    const answerBuckets = [0, 0, 0, 0, 0];
 
-    for (const question of BiologyChemistryLifeScienceL0Questions) {
+    expect(source).toBeDefined();
+    expect(source!.balance).toBe(false);
+    expect(source!.questions).toHaveLength(60);
+
+    for (const question of source!.questions) {
       expect(question.options).toHaveLength(4);
       const correctCount = question.options.filter(
         (option) => option.isCorrect,
       ).length;
       expect(correctCount).toBeGreaterThanOrEqual(1);
       expect(correctCount).toBeLessThanOrEqual(4);
-      answerBuckets[correctCount] += 1;
     }
-
-    expect(BiologyChemistryLifeScienceL0Questions).toHaveLength(60);
-    expect(difficultyCounts).toEqual({ easy: 20, medium: 20, hard: 20 });
-    expect(answerBuckets.slice(1)).toEqual([15, 15, 15, 15]);
   });
 });

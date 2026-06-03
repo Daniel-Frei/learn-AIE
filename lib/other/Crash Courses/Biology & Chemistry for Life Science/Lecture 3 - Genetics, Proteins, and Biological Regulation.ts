@@ -54,7 +54,10 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         "A lipid bilayer that controls transport across the cell membrane.",
         false,
       ],
-      ["A clinical-trial endpoint used to measure patient survival.", false],
+      [
+        "Any DNA stretch that is physically near a trait-associated variant, whether or not it can make a product.",
+        false,
+      ],
     ],
     "A gene is a usable information segment within DNA, not the final protein or the whole biological outcome. Genes influence traits through regulated expression, RNA, protein function, environment, and interaction with other systems.",
   ),
@@ -68,7 +71,10 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         "Translation: ribosomes use messenger RNA to build an amino acid chain.",
         true,
       ],
-      ["Codon: a lipid bilayer that stores ATP in mitochondria.", false],
+      [
+        "Codon: a three-nucleotide DNA or RNA unit that directly stores a folded protein shape.",
+        false,
+      ],
       [
         "Replication: proteins are converted directly into DNA sequence by ribosomes.",
         false,
@@ -291,7 +297,10 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         "Engineered plasmids can be used to introduce genes into bacteria for cloning or expression.",
         true,
       ],
-      ["Plasmids are the same as human red blood cells.", false],
+      [
+        "Plasmids are the main linear chromosomes that package most human nuclear genes.",
+        false,
+      ],
     ],
     "Plasmids matter medically and technologically because they can carry genes and can be engineered as vectors. Some plasmids do carry antibiotic resistance genes, so saying they cannot do so is incorrect.",
   ),
@@ -310,7 +319,7 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         false,
       ],
       [
-        "The process works because bacteria naturally contain finished human pancreas tissue.",
+        "The inserted DNA sequence by itself makes purification and activity testing unnecessary.",
         false,
       ],
     ],
@@ -326,11 +335,11 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         true,
       ],
       [
-        "Mutation means messenger RNA is translated, while epigenetic regulation means proteins are hydrolyzed.",
+        "Mutation changes which genes are expressed without changing any nucleotide sequence.",
         false,
       ],
       [
-        "Mutation and epigenetic regulation are both names for ATP production in mitochondria.",
+        "Epigenetic regulation changes the DNA base sequence while mutation changes only chromatin access.",
         false,
       ],
       [
@@ -403,12 +412,18 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         "A treatment strategy that aims to add, replace, silence, or edit genetic information to alter disease-relevant biology.",
         true,
       ],
-      ["Any drug that blocks a receptor for ten minutes.", false],
       [
-        "A diagnostic workflow that reports blood pressure without altering disease biology.",
+        "A short-acting drug strategy that binds a receptor without changing genetic information.",
         false,
       ],
-      ["The process by which ribosomes digest carbohydrates.", false],
+      [
+        "A diagnostic strategy that reads genetic information without attempting to alter it.",
+        false,
+      ],
+      [
+        "A protein-replacement strategy that gives the final protein but leaves the genetic layer untouched.",
+        false,
+      ],
     ],
     "Gene therapy intervenes at the genetic-information layer, but it still must solve delivery, durability, safety, tissue targeting, and patient-selection problems. It is not a synonym for all drugs or all diagnostics.",
   ),
@@ -583,7 +598,7 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
       ["Plasmids can be one vehicle for transferable traits.", true],
       ["Horizontal transfer can spread antibiotic resistance.", true],
       [
-        "Horizontal gene transfer is the same as human meiosis producing eggs and sperm.",
+        "Horizontal gene transfer requires genes to pass only from parent bacterium to daughter bacterium during division.",
         false,
       ],
     ],
@@ -616,13 +631,16 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
     "Which statement best describes DNA as an information molecule?",
     [
       ["DNA stores information in nucleotide sequence.", true],
-      ["DNA stores information mainly as folded enzyme shapes.", false],
       [
-        "DNA stores information by changing into ATP during cell division.",
+        "DNA stores information mainly as amino acid side-chain chemistry.",
         false,
       ],
       [
-        "DNA stores information as a membrane gradient across mitochondria.",
+        "DNA stores information mainly by the total mass of each chromosome.",
+        false,
+      ],
+      [
+        "DNA stores information mainly through random folding patterns unrelated to base order.",
         false,
       ],
     ],
@@ -652,10 +670,16 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         "A gene is a DNA sequence that can be used to produce a functional product.",
         true,
       ],
-      ["A gene is a complete organism's set of chromosomes.", false],
-      ["A gene is a protein machine that reads messenger RNA.", false],
       [
-        "A gene is a random mutation that improves survival in a population.",
+        "A gene is the complete genome rather than a usable segment of it.",
+        false,
+      ],
+      [
+        "A gene is any expressed protein product after translation is complete.",
+        false,
+      ],
+      [
+        "A gene is only a disease-causing variant and never a normal functional sequence.",
         false,
       ],
     ],
@@ -668,12 +692,15 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
     [
       ["Transcription copies a DNA region into RNA.", true],
       [
-        "Transcription builds a protein by reading codons at a ribosome.",
+        "Transcription translates messenger RNA codons into an amino acid chain.",
         false,
       ],
-      ["Transcription separates copied chromosomes during mitosis.", false],
       [
-        "Transcription inserts a plasmid into bacteria for recombinant production.",
+        "Transcription copies the entire chromosome into protein before cell division.",
+        false,
+      ],
+      [
+        "Transcription changes DNA base sequence so the same gene is permanently edited.",
         false,
       ],
     ],
@@ -691,7 +718,7 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         false,
       ],
       [
-        "Translation randomly changes variant frequencies in a small population.",
+        "Translation copies DNA sequence into RNA without building an amino acid chain.",
         false,
       ],
     ],
@@ -710,8 +737,14 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         "A genome is the full genetic information of an organism or cell.",
         true,
       ],
-      ["A chromosome is the three-nucleotide unit read by ribosomes.", false],
-      ["A genome is the folded active site of an enzyme.", false],
+      [
+        "A chromosome is usually a single codon rather than a large DNA structure.",
+        false,
+      ],
+      [
+        "A genome is only the subset of genes being actively transcribed in one cell type.",
+        false,
+      ],
     ],
     "The hierarchy runs from base pairs to genes and regulatory regions to chromosomes to the genome. A genome refers to the full genetic information, while chromosomes are large DNA structures containing many genetic elements.",
   ),
@@ -723,10 +756,13 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
       ["DNA can be transcribed into RNA.", true],
       ["RNA can be translated into protein.", true],
       [
-        "Protein sequence is usually copied back into DNA during ordinary gene expression.",
+        "Protein sequence is usually copied back into DNA as the ordinary next step after translation.",
         false,
       ],
-      ["The central dogma says cells use DNA as a membrane lipid.", false],
+      [
+        "The central dogma means RNA is skipped whenever a gene affects protein sequence.",
+        false,
+      ],
     ],
     "The central pattern students need is DNA to RNA to protein. Biology contains additional regulatory flows, but this core pathway explains how stored sequence information can become working molecules.",
   ),
@@ -741,11 +777,11 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         true,
       ],
       [
-        "A codon is a complete chromosome containing thousands of genes.",
+        "A codon is a two-base unit, which provides enough combinations for all amino acids.",
         false,
       ],
       [
-        "A codon is a protein that turns genes on and off by binding DNA.",
+        "A codon is a regulatory protein that decides whether RNA polymerase starts transcription.",
         false,
       ],
     ],
@@ -783,11 +819,11 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
       ],
       ["Transcription factors can bind DNA or regulatory complexes.", true],
       [
-        "Transcription factors are the three-base units that encode amino acids.",
+        "Transcription factors are messenger RNA triplets read directly by ribosomes.",
         false,
       ],
       [
-        "Transcription factors are small circular DNA molecules used mainly in bacteria.",
+        "Transcription factors are DNA plasmids that carry genes into bacteria but do not regulate transcription.",
         false,
       ],
     ],
@@ -862,7 +898,7 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         true,
       ],
       [
-        "Plasmids are ribosomes that assemble amino acids into insulin protein.",
+        "Plasmids make recombinant expression possible only after becoming part of the human nuclear genome.",
         false,
       ],
     ],

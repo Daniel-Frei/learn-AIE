@@ -53,7 +53,10 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         "Prokaryotic DNA is stored in a membrane-bound nucleus, while eukaryotic chromosomes usually float freely in cytoplasm.",
         false,
       ],
-      ["Prokaryotes are viruses, while eukaryotes are bacteria.", false],
+      [
+        "Prokaryotes are less compartmentalized because they lack DNA, ribosomes, and regulated metabolism.",
+        false,
+      ],
       [
         "Prokaryotic gene regulation is absent, while eukaryotic tissues use identical expression programs.",
         false,
@@ -68,14 +71,8 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
     [
       ["Ribosome: translates messenger RNA into protein.", true],
       ["Mitochondrion: helps generate ATP using membrane gradients.", true],
-      [
-        "Golgi apparatus: stores the entire nuclear genome as its primary job.",
-        false,
-      ],
-      [
-        "Nucleus: burns glucose directly as its main role in ATP production.",
-        false,
-      ],
+      ["Golgi apparatus: modifies, sorts, and ships nuclear DNA.", false],
+      ["Nucleus: translates messenger RNA into proteins for export.", false],
     ],
     "Organelles divide cellular labor without acting as isolated modules. Ribosomes and mitochondria support protein production and energy flow, while the Golgi is better understood as a processing and sorting system than as the whole-genome storage site.",
   ),
@@ -186,7 +183,7 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
       ],
       ["A response that necessarily makes a signal grow forever.", false],
       [
-        "A DNA-copying process rather than a control loop that stabilizes a variable.",
+        "A response that detects deviation but has no effector to change the variable.",
         false,
       ],
       [
@@ -245,11 +242,11 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         true,
       ],
       [
-        "Amplification means signal molecules enter the nucleus and are copied into DNA before a response can occur.",
+        "Amplification means each upstream molecule activates fewer downstream molecules than it receives.",
         false,
       ],
       [
-        "Amplification means the cell deletes negative feedback permanently.",
+        "Amplification means feedback is absent, so the pathway cannot be shut down.",
         false,
       ],
       [
@@ -423,7 +420,10 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         "It means membrane passage is governed by molecular size rather than charge, polarity, or transport proteins.",
         false,
       ],
-      ["It means membranes store genetic information in codons.", false],
+      [
+        "It means membrane passage is fixed by the bilayer alone and cannot be changed by channels or transporters.",
+        false,
+      ],
     ],
     "Selective permeability is the basis of cellular control. Cells are open enough to exchange matter and information, but closed enough to maintain concentrations, electrical differences, compartments, and identity.",
   ),
@@ -441,7 +441,7 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         true,
       ],
       [
-        "The pump blockade directly edits coding sequences in the nuclear genome.",
+        "The pump blockade should immediately strengthen the sodium and potassium gradients it normally maintains.",
         false,
       ],
       [
@@ -681,7 +681,7 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         false,
       ],
       [
-        "Prokaryotes are human cells, while eukaryotic cells are bacterial cells.",
+        "Prokaryotes and eukaryotes are distinguished mainly by whether their membranes contain phospholipids.",
         false,
       ],
       [
@@ -701,15 +701,15 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         true,
       ],
       [
-        "It is a rigid DNA shell that stores the cell's inherited information.",
+        "It is a freely open lipid sheet that lets charged particles cross as easily as oxygen.",
         false,
       ],
       [
-        "It is a ribosome layer that translates messenger RNA into proteins.",
+        "It is only a passive wrapper and does not participate in signaling or transport.",
         false,
       ],
       [
-        "It is a soluble enzyme mixture that floats freely outside the cell.",
+        "It is a protein-only wall whose main job is to copy genetic information.",
         false,
       ],
     ],
@@ -943,7 +943,7 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
       ["Cancer cells can evade death or ignore tissue constraints.", true],
       ["Cancer can evolve inside the body as cell populations change.", true],
       [
-        "Cancer is best understood as ordinary apoptosis working at a healthy rate.",
+        "Cancer is best understood as a state where cell-cycle checkpoints and death controls work too strongly.",
         false,
       ],
     ],

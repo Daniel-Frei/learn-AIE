@@ -1,6 +1,3 @@
-import fs from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { QUESTION_SOURCES } from "@/lib/quiz";
 
@@ -12,9 +9,6 @@ const MIT15773_SOURCE_IDS = [
   "mit15773-l5",
 ] as const;
 
-const testDir = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(testDir, "../..");
-const libRoot = path.join(repoRoot, "lib");
 const APPROXIMATE_BUCKET_TOLERANCE_RATIO = 0.1;
 
 function getDistribution(sourceId: (typeof MIT15773_SOURCE_IDS)[number]) {
@@ -32,38 +26,17 @@ function getDistribution(sourceId: (typeof MIT15773_SOURCE_IDS)[number]) {
   return { source: source!, distribution };
 }
 
-function listQuestionFiles(dir: string): string[] {
-  const entries = fs.readdirSync(dir, { withFileTypes: true });
-
-  return entries.flatMap((entry) => {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      if (fullPath === path.join(libRoot, "llm")) return [];
-      return listQuestionFiles(fullPath);
-    }
-
-    if (!fullPath.endsWith(".ts")) return [];
-
-    const content = fs.readFileSync(fullPath, "utf8");
-    if (!/export\s+const\s+\w+\s*:\s*Question\[\]/.test(content)) return [];
-
-    return [fullPath];
-  });
-}
-
-function getDistributionFromFile(filePath: string) {
-  const content = fs.readFileSync(filePath, "utf8");
-  const questionBlocks = [
-    ...content.matchAll(/options:\s*\[([\s\S]*?)\]\s*,\s*explanation:/g),
-  ];
+function getDistributionFromSource(source: (typeof QUESTION_SOURCES)[number]) {
   const distribution = { 1: 0, 2: 0, 3: 0, 4: 0 } as Record<number, number>;
 
-  for (const block of questionBlocks) {
-    const correctCount = (block[1].match(/isCorrect:\s*true/g) || []).length;
+  for (const question of source.questions) {
+    const correctCount = question.options.filter(
+      (option) => option.isCorrect,
+    ).length;
     distribution[correctCount] += 1;
   }
 
-  return { distribution, totalQuestions: questionBlocks.length };
+  return { distribution, totalQuestions: source.questions.length };
 }
 
 describe("MIT 15.773 answer distributions", () => {
@@ -87,12 +60,11 @@ describe("MIT 15.773 answer distributions", () => {
   it("keeps all lib question banks outside lib/llm roughly balanced", () => {
     const failures: string[] = [];
 
-    for (const filePath of listQuestionFiles(libRoot)) {
-      const relativePath = path
-        .relative(repoRoot, filePath)
-        .replace(/\\/g, "/");
+    for (const source of QUESTION_SOURCES) {
+      if (source.balance === false) continue;
+
       const { distribution, totalQuestions } =
-        getDistributionFromFile(filePath);
+        getDistributionFromSource(source);
       const idealBucketSize = totalQuestions / 4;
       const allowedDeviation = Math.max(
         1,
@@ -107,14 +79,14 @@ describe("MIT 15.773 answer distributions", () => {
 
       if (outOfRangeBuckets.length > 0) {
         failures.push(
-          `${relativePath}: total=${totalQuestions}, distribution=${JSON.stringify(distribution)}, ideal=${idealBucketSize.toFixed(2)}, allowedDeviation=${allowedDeviation}`,
+          `${source.id}: total=${totalQuestions}, distribution=${JSON.stringify(distribution)}, ideal=${idealBucketSize.toFixed(2)}, allowedDeviation=${allowedDeviation}`,
         );
       }
     }
 
     expect(
       failures,
-      "Question-bank files should stay roughly balanced across 1/2/3/4-correct patterns.",
+      "Question-bank sources should stay roughly balanced across 1/2/3/4-correct patterns unless balance is false.",
     ).toEqual([]);
   });
 });

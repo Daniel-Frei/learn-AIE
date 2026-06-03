@@ -55,13 +55,16 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         "Antibiotics often target bacterial cellular processes that viruses do not have.",
         true,
       ],
-      ["Viruses are too large for medicines to reach.", false],
       [
-        "Viral particles are defined by carbohydrate shells rather than nucleic acids and proteins.",
+        "Antibiotics usually block viral receptor binding more specifically than antiviral drugs do.",
         false,
       ],
       [
-        "Antibiotics treat viruses by targeting host chromosomes rather than bacterial structures.",
+        "Viruses normally carry bacterial-type ribosomes, but antibiotics cannot slow them enough during infection.",
+        false,
+      ],
+      [
+        "Antibiotics mainly train adaptive immune memory rather than interrupting microbial replication.",
         false,
       ],
     ],
@@ -75,11 +78,11 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
       ["Binding to a host-cell receptor.", true],
       ["Entering a host cell and releasing viral genetic material.", true],
       [
-        "Maintaining independent ATP-producing metabolism outside any host cell.",
+        "Completing genome replication and particle assembly without entering or using a cell.",
         false,
       ],
       [
-        "Producing ATP independently in viral mitochondria while outside any cell.",
+        "Synthesizing viral proteins on ribosomes packaged inside the viral particle while outside cells.",
         false,
       ],
     ],
@@ -116,11 +119,11 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "A conscious choice by each microbe to ignore a drug after reading its label.",
+        "A short-term stress response that appears uniformly in every exposed microbe and is not inherited.",
         false,
       ],
       [
-        "A predictable immediate outcome produced uniformly by treatment in each patient.",
+        "A treatment effect where susceptible variants become more common because the drug favors them.",
         false,
       ],
       [
@@ -140,7 +143,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "The produced protein can be used as medicine without purification or quality control.",
+        "Gene insertion alone makes the final protein medicine clinically usable without purification or testing.",
         false,
       ],
       [
@@ -148,7 +151,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "The process requires finished human organs to grow inside bacteria.",
+        "The same production host always gives every human protein identical folding, modification, and impurities.",
         false,
       ],
     ],
@@ -209,12 +212,15 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "They replicate human disease with full fidelity across mechanisms, symptoms, and treatment response.",
+        "They are chosen because simplified systems reproduce all human dosing, toxicity, and heterogeneity.",
         false,
       ],
-      ["They remove the need for any later validation.", false],
       [
-        "They are useful mainly as abstract measurements without cells, molecules, or biological readouts.",
+        "They replace human evidence once a plausible molecular mechanism has been observed.",
+        false,
+      ],
+      [
+        "They are useful only when they exclude living cells, molecules, tissues, or biological readouts.",
         false,
       ],
     ],
@@ -278,15 +284,15 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "A spike protein is a carbohydrate storage polymer unrelated to host cells.",
+        "It is useful for infection only when it stays hidden inside the viral genome and away from host receptors.",
         false,
       ],
       [
-        "A spike protein prevents antibodies from binding any virus in principle.",
+        "It is useful for vaccination because antibodies recognize the host receptor instead of the viral surface.",
         false,
       ],
       [
-        "A spike protein is useful as an immune target because it edits host DNA.",
+        "It becomes a vaccine target only after losing the binding shape involved in infection.",
         false,
       ],
     ],
@@ -302,8 +308,14 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       ["They exploit steps in the viral life cycle.", true],
-      ["They are identical to broad bacterial cell-wall antibiotics.", false],
-      ["They work by giving viruses their own independent ribosomes.", false],
+      [
+        "They mostly block bacterial peptidoglycan synthesis and rely on that to stop viral entry later.",
+        false,
+      ],
+      [
+        "They work by giving infected cells a general toxicity signal without targeting viral replication steps.",
+        false,
+      ],
     ],
     "Antivirals target viral-specific vulnerabilities or virus-dependent host processes. They differ from antibiotics because viruses are not cells with bacterial cell walls, bacterial ribosomes, or independent metabolism.",
   ),
@@ -365,15 +377,15 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "mRNA medicine works by disabling ribosomes rather than providing translated instructions.",
+        "mRNA medicine usually aims to alter DNA sequence in every treated cell for durable inheritance.",
         false,
       ],
       [
-        "Gene editing is temporary because edited DNA is discarded after a translation event.",
+        "Gene editing mainly supplies a transient RNA template that ribosomes translate and then degrade.",
         false,
       ],
       [
-        "mRNA and gene editing are identical because both are ordinary antibiotics.",
+        "mRNA and gene editing have the same durability and off-target profile because both use nucleic acids.",
         false,
       ],
     ],
@@ -389,15 +401,15 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "CAR T-cell therapy is an ordinary antibiotic that blocks bacterial cell-wall synthesis.",
+        "CAR T-cell therapy gives soluble antibodies without transferring living immune cells.",
         false,
       ],
       [
-        "Cell therapies have no manufacturing, safety, persistence, or patient-selection challenges.",
+        "Cell therapies avoid persistence and safety questions because infused cells stop interacting after delivery.",
         false,
       ],
       [
-        "Cell therapy means prescribing a noncellular small molecule as the therapeutic platform.",
+        "Cell therapy means delivering messenger RNA instructions while never transferring cells.",
         false,
       ],
     ],
@@ -545,15 +557,15 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "Animal biomarker improvement is sufficient evidence that patient symptoms will improve.",
+        "The model result should override patient symptoms because biomarkers are closer to mechanism.",
         false,
       ],
       [
-        "The failure shows animal models are unsuitable for studying mechanisms.",
+        "The failure proves the drug target is irrelevant in every model and disease setting.",
         false,
       ],
       [
-        "The result indicates patient symptoms are disconnected from biological mechanisms.",
+        "The patient endpoint must be wrong because animal biomarkers cannot mislead translation.",
         false,
       ],
     ],
@@ -685,146 +697,167 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
   makeQuestion(
     31,
     "easy",
-    "Which statement best describes bacteria?",
+    "Which statement best describes a pathogen in biomedical systems?",
     [
       [
-        "Bacteria are living cells with membranes, metabolism, DNA, ribosomes, and regulated gene expression.",
+        "A biological agent that can cause disease through interaction with a host, such as a bacterium, virus, fungus, or parasite.",
         true,
       ],
       [
-        "Bacteria are protein shells that reproduce by using host-cell ribosomes.",
+        "Any microbe carried by a person, including harmless commensals, regardless of disease potential.",
         false,
       ],
       [
-        "Bacteria are antibodies that bind antigens during adaptive immunity.",
+        "Any immune molecule that recognizes an antigen, whether or not disease occurs.",
         false,
       ],
-      ["Bacteria are clinical endpoints used to judge patient benefit.", false],
+      [
+        "A treatment pressure that makes susceptible variants expand faster than resistant variants.",
+        false,
+      ],
     ],
-    "Bacteria are cells, which is why antibiotics can target bacterial cell walls, ribosomes, DNA replication, or metabolic pathways. Many bacteria are harmless or beneficial, while some cause disease.",
+    "A pathogen is defined by its disease-causing relationship with a host, not merely by being biological or microscopic. Harmless microbes, immune molecules, and treatment pressures can all matter in biomedicine, but they are not themselves pathogens by that definition.",
   ),
   makeQuestion(
     32,
     "easy",
-    "Which statement best describes viruses?",
+    "Which statement best describes a retrovirus?",
     [
       [
-        "Viruses are genetic material packaged in protein and sometimes lipid envelopes, and they use host-cell machinery.",
+        "An RNA virus that can copy RNA into DNA before integration into a host genome.",
         true,
       ],
       [
-        "Viruses are free-living cells with their own ribosomes and complete metabolism.",
+        "A virus that reproduces independently because RNA gives it complete metabolism.",
         false,
       ],
       [
-        "Viruses are small-molecule drugs that enter cells and bind proteins.",
+        "A bacterium that stores antibiotic-resistance genes on plasmids.",
         false,
       ],
-      ["Viruses are biomarkers that measure drug exposure over time.", false],
+      [
+        "A vaccine vector that cannot enter host cells or express genetic information.",
+        false,
+      ],
     ],
-    "Viruses are not cells and do not reproduce independently. They must enter host cells and use host machinery to replicate genomes, produce proteins, assemble particles, and spread.",
+    "Some viruses use RNA and some use DNA, and retroviruses are a special RNA-virus case because reverse transcription creates DNA that can integrate into the host genome. Plasmids, vaccine vectors, and ordinary viral replication are related topics, but they do not define a retrovirus.",
   ),
   makeQuestion(
     33,
     "easy",
-    "Which statement best describes a vaccine?",
+    "Which statement best describes what vaccine platforms have in common?",
     [
       [
-        "A vaccine trains adaptive immunity to recognize a pathogen or pathogen component before dangerous infection.",
+        "They expose the immune system to an antigen or antigen-making instructions so adaptive memory can form before dangerous exposure.",
         true,
       ],
       [
-        "A vaccine directly kills bacteria by blocking their cell wall synthesis.",
+        "They work only by directly killing pathogens after infection begins.",
         false,
       ],
       [
-        "A vaccine is a diagnostic test that classifies disease state from a sample.",
+        "They are useful only when they avoid B-cell and T-cell memory formation.",
         false,
       ],
       [
-        "A vaccine is a pharmacokinetic process that removes drug from the body.",
+        "They replace diagnostics because trained immunity proves a person is uninfected.",
         false,
       ],
     ],
-    "Vaccines prepare adaptive immunity by presenting a pathogen-related target or instructions for making one. The goal is faster and stronger recognition later, often involving memory B and T cells.",
+    "Vaccine platforms differ, but the shared idea is safer immune training before a dangerous infection. Vaccines do not classify current infection, and their value depends heavily on adaptive immune recognition and memory rather than direct drug-like killing after disease starts.",
   ),
   makeQuestion(
     34,
     "easy",
-    "Which statement best describes antibiotic resistance?",
+    "Which statement best describes B cells, antibodies, and immune memory?",
     [
       [
-        "Resistance evolves when variation affects survival under antibiotic treatment pressure.",
+        "B cells can produce antibodies, and some B and T cells become memory cells for faster later responses.",
         true,
       ],
       [
-        "Resistance means antibiotics convert viral particles into harmless bacteria.",
+        "Antibodies are enzymes that copy viral genomes so immune cells can read them.",
         false,
       ],
-      ["Resistance is the same as a control group in a clinical trial.", false],
       [
-        "Resistance occurs because vaccines remove immune memory from B and T cells.",
+        "Immune memory means the original pathogen remains actively replicating as a reminder.",
+        false,
+      ],
+      [
+        "Memory T cells mainly function by secreting free antibodies with the same role as B cells.",
         false,
       ],
     ],
-    "Treatment changes the selective environment. Bacteria with resistance traits can survive and spread under antibiotic pressure, especially when resistance genes move through plasmids or other mechanisms.",
+    "Adaptive immunity includes antibody-producing B-cell responses and memory cells that support faster later responses. Antibodies bind antigens; they do not copy viral genomes, and immune memory does not require persistent active infection.",
   ),
   makeQuestion(
     35,
     "easy",
-    "Which statement best defines a diagnostic?",
+    "Which statement best describes when a diagnostic is useful?",
     [
       [
-        "A diagnostic classifies a biological state in a way that can support a decision.",
+        "It is accurate enough, in the relevant context, for the decision it is meant to support.",
         true,
       ],
       [
-        "A diagnostic is a protein medicine produced using living systems.",
+        "Any measurable biomarker is automatically a diagnostic for every disease in which it changes.",
         false,
       ],
-      ["A diagnostic is a drug receptor that activates a pathway.", false],
       [
-        "A diagnostic is the randomization step that balances trial groups.",
+        "Its usefulness is independent of sampling method, patient population, and false-result consequences.",
+        false,
+      ],
+      [
+        "Disease prevalence can change disease frequency but not the interpretation of test results.",
         false,
       ],
     ],
-    "Diagnostics turn biological information into measurements or classifications. Examples include pathogen tests, genetic tests, blood chemistry, imaging, pathology, and protein biomarkers.",
+    "Diagnostics translate biological information into classifications or measurements for decisions. A test can be technically impressive but clinically weak if the wrong population, sample, threshold, prevalence, or decision context changes the meaning of its results.",
   ),
   makeQuestion(
     36,
     "easy",
-    "Which statements correctly describe pathogens?",
+    "Which statements correctly compare major pathogen types?",
     [
-      ["Pathogens can include bacteria.", true],
-      ["Pathogens can include viruses.", true],
       [
-        "Pathogens are mainly clinical-trial endpoints rather than biological agents.",
+        "Pathogen type affects replication strategy, immune response, and treatment choice.",
+        true,
+      ],
+      [
+        "Bacterial antigens and viral proteins can both matter for immune recognition or diagnosis.",
+        true,
+      ],
+      [
+        "All pathogens are living cells with bacterial ribosomes and bacterial metabolism.",
         false,
       ],
-      ["Pathogens are immune memory cells that prevent reinfection.", false],
+      [
+        "All symptoms during infection come directly from pathogen damage rather than host response.",
+        false,
+      ],
     ],
-    "Pathogens include bacteria, viruses, fungi, and parasites. They differ in structure, replication, treatment options, and immune responses, so identifying the pathogen type matters for diagnosis and therapy.",
+    "Bacteria, viruses, fungi, and parasites differ in structure, replication, treatment options, and immune interactions. Symptoms can arise from pathogen damage, immune response, inflammation, tissue repair, or disrupted physiology, so pathogen identity is only part of the disease picture.",
   ),
   makeQuestion(
     37,
     "easy",
     "Which statements correctly describe the basic viral life cycle?",
     [
-      ["A virus can bind a host receptor and enter a cell.", true],
+      ["Receptor binding helps determine which cells a virus can enter.", true],
       [
-        "A virus can release genetic material, replicate, assemble particles, and exit.",
+        "After entry, viral genetic material must be copied and viral proteins produced to assemble particles.",
         true,
       ],
       [
-        "A virus normally divides by mitosis as a free-living eukaryotic cell.",
+        "A virion usually completes protein synthesis before contact with a host cell.",
         false,
       ],
       [
-        "A virus normally makes ATP through its own mitochondria before infection.",
+        "Viral exit is normally when the virus becomes a free-living cell with its own ribosomes.",
         false,
       ],
     ],
-    "Viruses must use host cells to reproduce. A simplified pattern is receptor binding, entry, genome release, replication and protein production, particle assembly, and exit.",
+    "A simplified viral pattern is receptor binding, entry, genome release, replication and protein production, assembly, and exit. Viruses do not become self-sufficient cells; they rely on host-cell machinery to make the components needed for new particles.",
   ),
   makeQuestion(
     38,
@@ -840,12 +873,15 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "Antibiotics target viruses well because viruses have bacterial ribosomes.",
+        "A drug's antimicrobial label determines its target better than the pathogen's biology does.",
         false,
       ],
-      ["Antivirals are mainly drugs that build bacterial cell walls.", false],
+      [
+        "The same bacterial ribosome target explains most antiviral and antibiotic activity.",
+        false,
+      ],
     ],
-    "Antibiotics and antivirals target different biology. Antibiotics work against bacterial processes, while antivirals target steps in a viral life cycle.",
+    "Antibiotics and antivirals target different biological vulnerabilities. The same symptom pattern can come from different pathogens, so treatment reasoning starts with the pathogen's structure and life cycle rather than a generic antimicrobial category.",
   ),
   makeQuestion(
     39,
@@ -856,17 +892,20 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         "Biologics include antibodies, proteins, and other large molecules produced using living systems.",
         true,
       ],
-      ["Biologics can be highly specific for extracellular targets.", true],
       [
-        "Biologics are usually tiny chemically manufactured compounds designed for oral delivery.",
+        "Their size and specificity often favor extracellular or cell-surface targets.",
+        true,
+      ],
+      [
+        "They are defined by chemical synthesis into tiny oral molecules with no protein structure.",
         false,
       ],
       [
-        "Biologics are trial design features such as blinding and endpoint selection.",
+        "Their manufacturing is usually simpler than small molecules because living systems add no variability.",
         false,
       ],
     ],
-    "Biologics are large therapeutic molecules often produced with living systems. They can be powerful and specific, but manufacturing is complex and injection or infusion is often required.",
+    "Biologics are large therapeutic molecules such as antibodies and proteins, often made with living systems. Their specificity can be powerful, but size, delivery route, immune reactions, and manufacturing variability create constraints that differ from small molecules.",
   ),
   makeQuestion(
     40,
@@ -874,23 +913,23 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
     "Which statements correctly describe model systems in biomedical research?",
     [
       [
-        "Cell cultures, organoids, animal models, and computational models are simplified representations.",
+        "Cell cultures, organoids, animal models, human observational data, and computational models are simplified representations.",
         true,
       ],
       [
-        "Model systems can be useful for studying mechanisms before human testing.",
+        "Model systems can isolate mechanisms or feasibility before a patient claim is tested.",
         true,
       ],
       [
-        "A model system is a validated proof of patient benefit by definition.",
+        "A model result proves patient benefit as long as it changes a biological readout.",
         false,
       ],
       [
-        "A model system removes disease heterogeneity from human medicine.",
+        "A good model is defined by excluding dosing, toxicity, heterogeneity, and tissue context from the question.",
         false,
       ],
     ],
-    "Model systems are useful because they make biology easier to study under controlled conditions. They are limited because they simplify human biology, dosing, immune context, tissue context, heterogeneity, and clinical outcomes.",
+    "Model systems are useful because they make biological questions tractable under controlled conditions. Their limits come from simplification: dosing, exposure, tissue context, immune context, heterogeneity, toxicity, and patient outcomes may not match the model readout.",
   ),
   makeQuestion(
     41,
@@ -903,9 +942,12 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         "Memory can support faster and stronger responses after later exposure.",
         true,
       ],
-      ["Immune memory is the same as a drug's metabolism by the liver.", false],
+      [
+        "Immune memory means antibodies permanently remove the need for innate or current immune responses.",
+        false,
+      ],
     ],
-    "Adaptive immunity can learn and remember molecular targets. Memory B and T cells are part of why vaccines can prepare the immune system before dangerous exposure.",
+    "Adaptive immunity can learn and remember molecular targets, which is why vaccines can prepare the immune system before dangerous exposure. Memory improves later responses, but current immune activation, innate defense, and infection context still matter.",
   ),
   makeQuestion(
     42,
@@ -919,11 +961,11 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "Recombinant DNA works by removing translation from the production cell.",
+        "Purification is optional because the correct DNA sequence guarantees a final medicine's identity, folding, and safety.",
         false,
       ],
     ],
-    "Recombinant DNA uses cellular information flow for production. A gene can be inserted into bacteria or other production cells, expressed as a protein, and then purified as a medicine.",
+    "Recombinant DNA uses cellular information flow for production. A gene can be inserted into bacteria or other production cells, expressed as a protein, and then the product still needs purification and quality control before it can be used as medicine.",
   ),
   makeQuestion(
     43,
@@ -933,9 +975,12 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
       ["They are chemically manufactured compounds.", true],
       ["They can sometimes enter cells and bind intracellular proteins.", true],
       ["Oral delivery is sometimes possible.", true],
-      ["They are living cells engineered to recognize cancer targets.", false],
+      [
+        "Being small by itself determines target selectivity and safety, so target biology is secondary.",
+        false,
+      ],
     ],
-    "Small molecules are chemically manufactured and can sometimes reach intracellular targets. Their strengths include scalable manufacturing and possible oral delivery, while limits include off-target effects, difficult targets, and toxicity.",
+    "Small molecules are chemically manufactured and can sometimes reach intracellular targets, with oral delivery sometimes possible. Their value still depends on target fit, exposure, selectivity, metabolism, and toxicity; small size alone does not guarantee safety.",
   ),
   makeQuestion(
     44,
@@ -951,9 +996,12 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         "Durability, immune response, off-target effects, reversibility, and ethics matter.",
         true,
       ],
-      ["They are mainly antibiotics that block bacterial ribosomes.", false],
+      [
+        "They avoid genetic information and work chiefly by blocking extracellular receptors.",
+        false,
+      ],
     ],
-    "Gene therapy and genome editing act at the genetic-information layer. Their promise depends on getting the right change into the right cells with acceptable safety, durability, and ethical justification.",
+    "Gene therapy and genome editing act at the genetic-information layer by adding, replacing, silencing, or modifying genetic information. Their promise depends on getting the right change into the right cells with acceptable safety, durability, reversibility, and ethical justification.",
   ),
   makeQuestion(
     45,
@@ -967,26 +1015,35 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
       ],
       ["Blinding reduces expectation and measurement bias.", true],
       [
-        "An endpoint is the chemical structure of a small-molecule drug.",
+        "An endpoint should be chosen after results are known so it can match the strongest observed change.",
         false,
       ],
     ],
-    "Clinical evidence asks whether biomedical claims hold up in humans. Control groups, randomization, blinding, and endpoints help separate plausible mechanisms or associations from trustworthy causal conclusions about patient outcomes.",
+    "Clinical evidence asks whether biomedical claims hold up in humans. Control groups, randomization, blinding, and pre-specified endpoints help separate plausible mechanisms or associations from trustworthy conclusions about patient outcomes.",
   ),
   makeQuestion(
     46,
     "medium",
     "Which statements correctly describe why antibiotics do not treat viral infections?",
     [
-      ["Viruses lack bacterial cell walls.", true],
-      ["Viruses lack bacterial ribosomes.", true],
-      ["Viruses use host-cell machinery for replication.", true],
       [
-        "Antibiotic targets are usually bacterial processes rather than viral life-cycle steps.",
+        "Antibiotic targets such as peptidoglycan synthesis are absent from viruses.",
+        true,
+      ],
+      [
+        "Bacterial ribosome differences can be drug targets, but viruses use host translation machinery.",
+        true,
+      ],
+      [
+        "Viral infections usually require prevention, immune response, supportive care, or antivirals aimed at viral steps rather than bacterial cell processes.",
+        true,
+      ],
+      [
+        "Knowing whether illness is bacterial or viral changes treatment reasoning and resistance stewardship.",
         true,
       ],
     ],
-    "Antibiotics target bacterial biology, not viral replication strategies. Viruses are not cells, so antiviral drugs need to target viral entry, viral enzymes, genome replication, assembly, release, or host-virus interactions.",
+    "Antibiotics target bacterial biology, not viral replication strategies. Because viruses use host-cell machinery and virus-specific life-cycle steps, treatment reasoning depends on diagnosis, prevention, immune response, supportive care, and antiviral mechanisms when available.",
   ),
   makeQuestion(
     47,
@@ -998,7 +1055,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "Cell therapy modifies or selects cells and gives them to a patient.",
+        "Cell therapy can involve selecting, expanding, or engineering cells before giving them to a patient.",
         true,
       ],
       [
@@ -1010,22 +1067,28 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
     ],
-    "Therapeutic modalities intervene at different biological layers. Comparing them requires thinking about molecule size, production, delivery, target location, durability, immune response, safety, and evidence.",
+    "Therapeutic modalities intervene at different biological layers. Comparing them requires thinking about molecule size, production system, delivery route, target location, durability, immune response, safety, patient selection, and evidence.",
   ),
   makeQuestion(
     48,
     "medium",
     "Which statements correctly describe biomarker types?",
     [
-      ["A diagnostic biomarker can help identify disease.", true],
-      ["A prognostic biomarker can help predict likely disease course.", true],
-      ["A predictive biomarker can help predict treatment response.", true],
+      [
+        "Diagnostic and prognostic biomarkers support different claims: identifying disease versus estimating likely course.",
+        true,
+      ],
+      [
+        "A predictive biomarker can help predict response to a particular treatment.",
+        true,
+      ],
       [
         "A pharmacodynamic biomarker can show biological effect of a drug.",
         true,
       ],
+      ["A safety biomarker can signal potential harm.", true],
     ],
-    "Biomarkers can support different decisions depending on what they measure and predict. The same measurement is not automatically useful for diagnosis, prognosis, treatment selection, pharmacodynamic tracking, and safety; its use needs validation.",
+    "Biomarkers are measurable indicators of biological state, but their meaning depends on the decision they support. Diagnostic, prognostic, predictive, pharmacodynamic, and safety uses are different claims and each needs validation in context.",
   ),
   makeQuestion(
     49,
@@ -1033,17 +1096,20 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
     "Which statements correctly explain why preclinical results can fail to translate to humans?",
     [
       [
-        "The model may omit immune, endocrine, vascular, or tissue context.",
+        "A model may omit immune, endocrine, vascular, or tissue context.",
         true,
       ],
       ["Dosing and exposure may differ between the model and humans.", true],
-      ["Animal biology may differ from human biology.", true],
       [
-        "The measured biomarker may differ from the clinical outcome that matters.",
+        "Animal biology and patient disease heterogeneity may differ from the study system.",
+        true,
+      ],
+      [
+        "Toxicity and patient-relevant endpoints may appear only at organism or clinical scale.",
         true,
       ],
     ],
-    "A treatment can work in a dish or animal model and still fail in patients. Human disease includes organism-scale context, heterogeneity, dosing realities, toxicity, and outcomes that simplified models may not capture.",
+    "A treatment can work in a dish or animal model and still fail in patients. Human disease includes organism-scale context, exposure, heterogeneity, toxicity, and outcomes that simplified systems may not capture.",
   ),
   makeQuestion(
     50,
@@ -1055,7 +1121,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "AI can fail when data are biased, labels are noisy, measurements are unreliable, or populations shift.",
+        "AI can fail when data are biased, labels are noisy, measurements are unreliable, correlations are noncausal, or populations shift.",
         true,
       ],
       [
@@ -1067,7 +1133,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
     ],
-    "AI can accelerate biomedical work, but it does not bypass biology or evidence. Common bottlenecks include biological understanding, reliable measurement, data quality, workflow integration, regulation, safety, and validation.",
+    "AI can accelerate biomedical work, but it does not bypass biology or evidence. Common bottlenecks include biological understanding, reliable measurement, data quality, workflow integration, regulation, safety, trust, and validation.",
   ),
 ];
 
