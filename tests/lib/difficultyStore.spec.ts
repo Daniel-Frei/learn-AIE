@@ -53,7 +53,7 @@ describe("difficulty store core behavior", () => {
     expect(afterWrong.questions["q-counter"]?.legacyWrong).toBe(1);
   });
 
-  it("caps the slow-answer rating movement at 75% of a fast clean answer", () => {
+  it("caps the slow-answer rating movement at 60% of a fast clean answer", () => {
     const base = createDefaultRatingState();
     const fast = recordAnswer(base, "q-fast", "medium", true, 1000, {
       elapsedMs: 1000,
@@ -83,8 +83,101 @@ describe("difficulty store core behavior", () => {
     expect(fast.questions["q-fast"]!.rating).toBeLessThan(
       slow.questions["q-slow"]!.rating,
     );
-    expect(slowUserGain / fastUserGain).toBeCloseTo(0.75, 2);
-    expect(slowQuestionLoss / fastQuestionLoss).toBeCloseTo(0.75, 2);
+    expect(slowUserGain / fastUserGain).toBeCloseTo(0.6, 2);
+    expect(slowQuestionLoss / fastQuestionLoss).toBeCloseTo(0.6, 2);
+  });
+
+  it("caps extreme rating movement and scales the cap by answer weight", () => {
+    const base = createDefaultRatingState();
+    const mismatched = {
+      ...base,
+      user: {
+        ...base.user,
+        rating: 2600,
+        rd: 30,
+        gamesPlayed: 50,
+      },
+      questions: {
+        "q-extreme": {
+          rating: 1300,
+          rd: 300,
+          sigma: 0.06,
+          lastUpdatedAt: 0,
+          gamesPlayed: 0,
+          legacyCorrect: 0,
+          legacyWrong: 0,
+          label: "easy" as const,
+        },
+      },
+    };
+
+    const fastWrong = recordAnswer(
+      mismatched,
+      "q-extreme",
+      "easy",
+      false,
+      1000,
+      {
+        elapsedMs: 1000,
+        mistakeCount: 0,
+      },
+    );
+    const slowWrong = recordAnswer(
+      mismatched,
+      "q-extreme",
+      "easy",
+      false,
+      1000,
+      {
+        elapsedMs: QUESTION_TIME_LIMIT_MS,
+        mistakeCount: 0,
+      },
+    );
+
+    expect(2600 - fastWrong.user.rating).toBeLessThanOrEqual(100);
+    expect(fastWrong.questions["q-extreme"]!.rating - 1300).toBeCloseTo(100, 5);
+    expect(2600 - slowWrong.user.rating).toBeLessThanOrEqual(60);
+    expect(slowWrong.questions["q-extreme"]!.rating - 1300).toBeCloseTo(60, 5);
+  });
+
+  it("keeps a minimum rating exchange for expected outcomes", () => {
+    const base = createDefaultRatingState();
+    const expectedCorrect = {
+      ...base,
+      user: {
+        ...base.user,
+        rating: 2600,
+        rd: 30,
+        gamesPlayed: 50,
+      },
+      questions: {
+        "q-expected": {
+          rating: 1300,
+          rd: 30,
+          sigma: 0.06,
+          lastUpdatedAt: 0,
+          gamesPlayed: 50,
+          legacyCorrect: 0,
+          legacyWrong: 0,
+          label: "easy" as const,
+        },
+      },
+    };
+
+    const updated = recordAnswer(
+      expectedCorrect,
+      "q-expected",
+      "easy",
+      true,
+      1000,
+      {
+        elapsedMs: 1000,
+        mistakeCount: 0,
+      },
+    );
+
+    expect(updated.user.rating - 2600).toBeCloseTo(2, 5);
+    expect(1300 - updated.questions["q-expected"]!.rating).toBeCloseTo(2, 5);
   });
 
   it("reduces the penalty for a single mistake compared with multiple mistakes", () => {

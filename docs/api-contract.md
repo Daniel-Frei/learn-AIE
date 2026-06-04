@@ -103,6 +103,8 @@ Load the current anonymous participant rating state, global question difficulty 
       maxRd: number;
       difficultyAnchorRating: number;
       difficultyScale: number;
+      minRatingExchange: number;
+      maxRatingExchange: number;
     }
     user: {
       rating: number;
@@ -337,7 +339,8 @@ Import one participant's legacy local browser rating data into the shared databa
 ### Notes For Backend Integrators
 
 - If `elapsedMs` or `mistakeCount` is omitted, the server treats the answer like a full-weight binary result, which preserves old callers.
-- The rating engine still uses a Glicko-2 style update internally; the timing and mistake metadata only scale the magnitude of the win/loss exchange. `elapsedMs` keeps full weight through the first 20 seconds, then scales linearly to a 25% maximum reduction at 3 minutes or slower.
+- The rating engine still uses a Glicko-2 style update internally; the timing and mistake metadata scale the magnitude of the win/loss exchange. `elapsedMs` keeps full weight through the first 20 seconds, then scales linearly to a 40% maximum reduction at 3 minutes or slower.
+- Per-answer participant/question rating deltas are bounded before weighting by `minRatingExchange` and `maxRatingExchange`; the effective bounds are multiplied by the same timing and mistake weight used for the answer.
 - For a question with no persisted rating yet, the `label` seeds the initial question rating as easy `1400`, medium `1500`, or hard `1600`; subsequent answer data updates and persists the question rating from that starting point.
 
 - Rating migration is approximate because the legacy browser store only contains aggregates, not the original event log.

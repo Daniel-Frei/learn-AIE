@@ -577,7 +577,7 @@ export const cs224rLecture1IntroQuestions: Question[] = [
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "Which statements about the probability of a trajectory are correct?",
+      "For a standard state-action trajectory \\(\\tau=(s_1,a_1,\\ldots,s_T,a_T)\\), with rewards used later in the objective, which statements about \\(p_\\theta(\\tau)\\) are correct?",
     options: [
       {
         text: "It factors into initial state, policy, and dynamics terms.",
@@ -585,10 +585,13 @@ export const cs224rLecture1IntroQuestions: Question[] = [
       },
       { text: "It depends on the policy parameters.", isCorrect: true },
       { text: "It is independent of the environment.", isCorrect: false },
-      { text: "It ignores rewards.", isCorrect: false },
+      {
+        text: "Reward values affect the return or objective but are not multiplicative terms in this state-action trajectory probability.",
+        isCorrect: true,
+      },
     ],
     explanation:
-      'Trajectory probabilities combine environment dynamics and policy behavior. Rewards are not part of the probability but affect the objective. To reason through the choices, select the statements that match the criterion in the prompt: "It factors into initial state, policy, and dynamics terms."; "It depends on the policy parameters.". Do not select statements that miss that criterion: "It is independent of the environment."; "It ignores rewards.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "The usual factorization multiplies the initial-state distribution, policy action probabilities, and environment transition dynamics. Rewards determine the return being optimized, but for this state-action trajectory probability they are not another multiplicative probability term; the environment still matters through the transition factors.",
   },
 
   {

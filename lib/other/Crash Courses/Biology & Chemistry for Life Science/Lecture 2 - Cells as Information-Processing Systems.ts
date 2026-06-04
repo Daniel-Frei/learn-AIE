@@ -94,23 +94,26 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
   makeQuestion(
     5,
     "easy",
-    "Which statement best describes diffusion?",
+    "A dissolved molecule is more concentrated outside a cell than inside, and it can cross through an open pathway without ATP. Which statement best describes the expected net movement?",
     [
       [
         "Net movement from higher concentration toward lower concentration due to random molecular motion.",
         true,
       ],
       [
-        "Movement against a gradient is classified as simple diffusion through the lipid bilayer.",
+        "Net movement against the concentration gradient, because crossing a membrane reverses random molecular motion.",
         false,
       ],
       [
-        "Passive transport is limited to osmosis and does not include gases or small nonpolar solutes.",
+        "No net movement unless an ATP-powered pump pushes each molecule across the pathway.",
         false,
       ],
-      ["A change in DNA sequence that creates a new cell type.", false],
+      [
+        "Equal movement from low to high and high to low concentration until the gradient becomes steeper.",
+        false,
+      ],
     ],
-    "Diffusion is passive net movement down a concentration gradient. It is important for gases, small molecules, and many cellular processes, but it is different from active transport and from genetic change.",
+    "Diffusion is passive net movement down a concentration gradient, driven by random molecular motion. Membranes and channels can shape what crosses, but diffusion itself does not require ATP and does not build a steeper gradient.",
   ),
   makeQuestion(
     6,
@@ -141,11 +144,11 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
       ],
       ["Pumps can use energy to move substances against gradients.", true],
       [
-        "Channels and pumps are identical because both ignore solute identity and move substances at the same rate.",
+        "Channels mainly build gradients by spending ATP, while pumps mainly let solutes drift down existing gradients.",
         false,
       ],
       [
-        "Channels and pumps are identical because neither can be selective.",
+        "Channels and pumps are interchangeable as long as both are embedded in the membrane.",
         false,
       ],
     ],
@@ -175,19 +178,22 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
   makeQuestion(
     9,
     "easy",
-    "Which statement best describes negative feedback?",
+    "Blood glucose rises after a meal, insulin helps lower it, and insulin release falls as glucose returns toward range. Which statement best describes that control pattern?",
     [
       [
         "A response that counteracts deviation and helps stabilize a variable.",
         true,
       ],
-      ["A response that necessarily makes a signal grow forever.", false],
+      [
+        "A response that amplifies deviation until the process commits to completion.",
+        false,
+      ],
       [
         "A response that detects deviation but has no effector to change the variable.",
         false,
       ],
       [
-        "A signaling failure caused by receptors being permanently locked in a single inactive state.",
+        "A pathway that is inactive whenever the original signal is no longer present.",
         false,
       ],
     ],
@@ -259,19 +265,22 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
   makeQuestion(
     13,
     "medium",
-    "Which statements correctly describe the nucleus in a eukaryotic cell?",
+    "Which statement about the nucleus avoids the common command-center misconception?",
     [
-      ["It stores genomic DNA.", true],
       [
-        "It is the direct site for transport, protein folding, and ATP generation rather than one compartment among many.",
+        "It stores genomic DNA and helps regulate access to that information.",
+        true,
+      ],
+      [
+        "It directly performs most protein folding, membrane transport, and ATP production once DNA is stored there.",
         false,
       ],
       [
-        "It is the main site where secreted proteins finish folding and leave the cell.",
+        "It is passive DNA storage with little role in controlling which information can be used.",
         false,
       ],
       [
-        "It acts as a command center that directly performs cellular work without support from proteins or cytoplasm.",
+        "It replaces cytoplasm and organelles as the execution layer for most cellular work.",
         false,
       ],
     ],
@@ -326,9 +335,12 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         "Uncontrolled cell rupture that releases contents and tends to provoke inflammation.",
         false,
       ],
-      ["A process that converts a bacterium into a virus.", false],
       [
-        "A membrane transport process that pumps sodium against a gradient.",
+        "A cell-cycle checkpoint that pauses division while a damaged cell remains alive indefinitely.",
+        false,
+      ],
+      [
+        "A differentiation program that specializes a cell without removing it from the tissue.",
         false,
       ],
     ],
@@ -500,15 +512,15 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         true,
       ],
       [
-        "The growth factor must be two unrelated molecules with identical names.",
+        "The signal should force identical gene-expression outputs whenever receptor binding occurs.",
         false,
       ],
       [
-        "The signal is better explained as a naming error because one ligand should produce a uniform response across cell types.",
+        "Different outcomes imply one response cannot be biological because growth factors only cause division.",
         false,
       ],
       [
-        "The cells must have no membranes because membranes prevent signaling.",
+        "Once both cell types detect the ligand, downstream regulatory context no longer matters.",
         false,
       ],
     ],
@@ -547,7 +559,7 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
         true,
       ],
       [
-        "Vaccines work by converting antibiotics into virus-targeting drugs.",
+        "Vaccines mainly work by killing pathogens directly at injection rather than priming recognition.",
         false,
       ],
     ],
@@ -622,7 +634,7 @@ export const BiologyChemistryForLifeScienceLecture2Questions: Question[] = [
   makeQuestion(
     30,
     "hard",
-    "Which statements correctly connect Lecture 2 to later disease and pharmacology topics?",
+    "A later pharmacology unit asks why cell biology matters for disease and treatment. Which connections from this cell-systems model are valid?",
     [
       [
         "Drugs can target receptors, channels, pumps, enzymes, or signaling proteins.",

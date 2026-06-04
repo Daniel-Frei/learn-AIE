@@ -3,6 +3,7 @@ import { QUESTION_SOURCES, type Question } from "@/lib/quiz";
 import { createDefaultRatingState } from "@/lib/ratingEngine";
 import {
   buildQuizApiUrl,
+  CLIMB_MIN_TARGETED_POOL_SIZE,
   clampDifficultyRange,
   DEFAULT_DIFFICULTY_RANGE,
   evaluateAnswer,
@@ -113,23 +114,6 @@ describe("quiz session helpers", () => {
     expect(pickClimbQuestionId([], createDefaultRatingState(), [])).toBeNull();
   });
 
-  it("returns null if random selection falls outside the climb shortlist", () => {
-    const pool: Question[] = [
-      {
-        id: "medium-question",
-        chapter: 1,
-        difficulty: "medium",
-        prompt: "Medium",
-        options: [],
-        explanation: "",
-      },
-    ];
-
-    expect(
-      pickClimbQuestionId(pool, createDefaultRatingState(), [], () => 1),
-    ).toBe(null);
-  });
-
   it("penalizes recently seen climb questions", () => {
     const ratingState = {
       ...createDefaultRatingState(),
@@ -157,6 +141,71 @@ describe("quiz session helpers", () => {
     expect(
       pickClimbQuestionId(pool, ratingState, ["medium-question"], () => 0),
     ).toBe("hard-question");
+  });
+
+  it("uses random climb selection for a share of questions", () => {
+    const ratingState = createDefaultRatingState();
+    const pool: Question[] = [
+      {
+        id: "near-question",
+        chapter: 1,
+        difficulty: "medium",
+        prompt: "Near",
+        options: [],
+        explanation: "",
+      },
+      {
+        id: "far-question",
+        chapter: 1,
+        difficulty: "hard",
+        prompt: "Far",
+        options: [],
+        explanation: "",
+      },
+    ];
+    const rolls = [0.95, 0.99];
+
+    expect(
+      pickClimbQuestionId(pool, ratingState, [], () => rolls.shift() ?? 0),
+    ).toBe("far-question");
+  });
+
+  it("keeps at least ten targeted climb candidates when available", () => {
+    const base = createDefaultRatingState();
+    const pool: Question[] = Array.from(
+      { length: CLIMB_MIN_TARGETED_POOL_SIZE + 2 },
+      (_, index) => ({
+        id: `question-${index}`,
+        chapter: 1,
+        difficulty: "medium",
+        prompt: `Question ${index}`,
+        options: [],
+        explanation: "",
+      }),
+    );
+    const ratingState = {
+      ...base,
+      questions: Object.fromEntries(
+        pool.map((question, index) => [
+          question.id,
+          {
+            rating: 1500 + index,
+            rd: 30,
+            sigma: 0.06,
+            lastUpdatedAt: 0,
+            gamesPlayed: 10,
+            legacyCorrect: 0,
+            legacyWrong: 0,
+            label: "medium" as const,
+          },
+        ]),
+      ),
+    };
+    const rolls = [0, ...Array.from({ length: pool.length }, () => 0), 0.99];
+
+    expect(
+      pickClimbQuestionId(pool, ratingState, [], () => rolls.shift() ?? 0),
+    ).toBe(`question-${CLIMB_MIN_TARGETED_POOL_SIZE - 1}`);
   });
 
   it("builds absolute mobile API URLs", () => {

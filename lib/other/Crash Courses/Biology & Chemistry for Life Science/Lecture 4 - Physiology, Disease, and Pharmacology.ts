@@ -28,7 +28,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
   makeQuestion(
     1,
     "easy",
-    "Which statements correctly describe physiology as multi-scale coordination?",
+    "A cardiac drug changes ion-channel activity in heart cells, heart contraction, blood pressure, and kidney hormone signaling. Which statements explain why that chain is physiological rather than just molecular?",
     [
       [
         "Cells, tissues, organs, and organ systems interact to produce organism-level function.",
@@ -106,19 +106,22 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
   makeQuestion(
     5,
     "easy",
-    "Which statement best describes infection as a disease category?",
+    "A patient becomes ill after a virus enters airway cells and the immune response inflames the tissue. Which statement best describes infection as a disease category?",
     [
       [
         "Disease caused by interaction between a host and a pathogen such as a bacterium, virus, fungus, or parasite.",
         true,
       ],
       [
-        "A disease category defined by inherited chromosome number rather than host-pathogen interaction.",
+        "A disease category defined only by the pathogen's growth, with host response unrelated to symptoms.",
         false,
       ],
-      ["A drug receptor becoming activated by an agonist.", false],
       [
-        "A state where immune response is absent despite pathogen exposure.",
+        "A disease category where immune activation rules out infection because symptoms must be direct pathogen damage.",
+        false,
+      ],
+      [
+        "A disorder caused by inherited variants alone, without interaction with microbes or host defense.",
         false,
       ],
     ],
@@ -127,7 +130,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
   makeQuestion(
     6,
     "easy",
-    "Which statements correctly describe cancer at a high level?",
+    "A tumor contains cells with different mutations, growth rates, immune visibility, and drug sensitivity. Which statements correctly describe cancer at this level?",
     [
       ["Cancer involves dysregulated cell growth and survival.", true],
       [
@@ -178,7 +181,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         false,
       ],
       [
-        "An antagonist works by deleting the receptor gene from treated tissues.",
+        "An antagonist must permanently remove the receptor before it can reduce signaling.",
         false,
       ],
     ],
@@ -211,7 +214,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
   makeQuestion(
     10,
     "easy",
-    "Which statements correctly describe biomarkers?",
+    "A clinic measures glucose, blood pressure, tumor mutations, and inflammatory markers for different decisions. Which statements correctly describe biomarkers in that setting?",
     [
       ["A biomarker is a measurable indicator of a biological state.", true],
       [
@@ -334,22 +337,22 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
   makeQuestion(
     16,
     "medium",
-    "Which statement best describes side effects in systems terms?",
+    "A drug improves one symptom but also changes heart rate and gut motility. Which statement best describes side effects in systems terms?",
     [
       [
         "They can occur because targets, pathways, and compensatory responses are shared across tissues and functions.",
         true,
       ],
       [
-        "They show that target binding observed in vitro was biologically meaningless.",
+        "They show the target interaction was meaningless because a real target would affect only the intended symptom.",
         false,
       ],
       [
-        "They are inconsistent with a drug that has a plausible target mechanism.",
+        "They are inconsistent with a plausible mechanism because mechanistic drugs cannot affect shared pathways.",
         false,
       ],
       [
-        "They arise from genome-wide gene replacement rather than shared targets or pathways.",
+        "They arise only when the drug permanently changes the genome in every exposed tissue.",
         false,
       ],
     ],
@@ -397,26 +400,26 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
   makeQuestion(
     19,
     "medium",
-    "Which statements correctly describe precision medicine?",
+    "Which statement best describes precision medicine?",
     [
       [
         "It aims to match interventions to biologically meaningful patient subgroups.",
         true,
       ],
       [
-        "It avoids biomarkers, genomics, imaging, and clinical features when assigning therapy.",
+        "It gives every patient a completely unique treatment plan, even when subgroup evidence is absent.",
         false,
       ],
       [
-        "It treats benefit and harm as unrelated to patient subgroup biology.",
+        "It assumes a biomarker association is sufficient for treatment selection without response validation.",
         false,
       ],
       [
-        "It recommends the same intervention for patients regardless of disease subtype.",
+        "It ignores subgroup biology once a treatment has average benefit in a broad population.",
         false,
       ],
     ],
-    "Precision medicine is about better stratification and decision-making. It can use measurements to identify patients more likely to benefit, be harmed, or require different monitoring, so the negative options are wrong.",
+    "Precision medicine is about better stratification and decision-making, not necessarily a one-off therapy for every individual. It can use measurements to identify patients more likely to benefit, be harmed, or require different monitoring, but those measurements need validation for the treatment decision.",
   ),
   makeQuestion(
     20,
@@ -428,7 +431,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         true,
       ],
       [
-        "A predictive biomarker is any molecule whose average value differs between two groups.",
+        "A predictive biomarker is any associated measurement, even if treatment response is the same across marker groups.",
         false,
       ],
       [
@@ -436,7 +439,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         false,
       ],
       [
-        "A predictive biomarker is a drug pump that excretes medicine from the kidney.",
+        "A predictive biomarker is mainly a prognostic marker because it estimates baseline risk without reference to intervention choice.",
         false,
       ],
     ],

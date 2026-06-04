@@ -94,7 +94,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
   makeQuestion(
     4,
     "easy",
-    "Which statements correctly distinguish major biological interactions?",
+    "A learner is sorting why DNA backbones are stable, salt bridges can form in proteins, base pairs can match, and lipid tails cluster in water. Which assignments are consistent with those examples?",
     [
       ["Covalent bonds often create stable molecular skeletons.", true],
       ["Ionic interactions involve attraction between opposite charges.", true],
@@ -107,7 +107,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         true,
       ],
     ],
-    "These interaction types explain different layers of biological structure. Stable covalent skeletons define molecules, while ionic interactions, hydrogen bonds, and hydrophobic effects often control folding, binding, membranes, and regulation.",
+    "These interaction types explain different layers of biological structure. Stable covalent skeletons define molecules, while ionic interactions, hydrogen bonds, and hydrophobic effects often control folding, binding, membranes, and regulation in water.",
   ),
   makeQuestion(
     5,
@@ -175,7 +175,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
   makeQuestion(
     8,
     "easy",
-    "Which statements correctly describe the four major classes of biological macromolecules?",
+    "A cell uses glucose, phospholipids, enzymes, and RNA in different jobs. Which class-function links correctly explain why those molecules are not interchangeable?",
     [
       [
         "Carbohydrates can provide fuel, storage, structure, or cell-recognition roles.",
@@ -194,7 +194,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         true,
       ],
     ],
-    "The macromolecule classes are not just labels; they map to recurring biological functions. Each class has characteristic chemistry and building blocks that make it suited for particular roles in cells and organisms.",
+    "The macromolecule classes are not just labels; they map to recurring biological functions. Each class has characteristic chemistry and building blocks, so confusing the classes hides why cells use different materials for fuel, membranes, work, and information.",
   ),
   makeQuestion(
     9,
@@ -259,7 +259,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         true,
       ],
       [
-        "A single substitution matters only when it changes total protein length, not local chemistry.",
+        "A single substitution matters only when it changes the total number of amino acids, not the side-chain chemistry.",
         false,
       ],
     ],
@@ -303,7 +303,10 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         "Enzymes serve as stoichiometric fuel that is used up during catalysis.",
         false,
       ],
-      ["Enzymes work by changing the genetic code of their substrates.", false],
+      [
+        "Enzymes speed reactions by forcing the substrate-product equilibrium to favor product in every context.",
+        false,
+      ],
     ],
     "Enzymes alter reaction rates by stabilizing transition states or productive molecular arrangements. They do not by themselves change the overall free-energy difference of a reaction, and they are not consumed like fuel in each catalytic cycle.",
   ),
@@ -376,7 +379,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
   makeQuestion(
     18,
     "medium",
-    "Which statements correctly describe biological specificity?",
+    "An antibody binds one viral surface well but does not bind a similar-looking host protein. Which molecular features could help create that specificity?",
     [
       [
         "Specificity can arise from complementary shape between molecules.",
@@ -386,7 +389,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
       ["Specificity can involve many weak interactions acting together.", true],
       ["Specificity can change when a protein changes conformation.", true],
     ],
-    "Specificity is rarely one simple lock-and-key feature. Shape, charge, polarity, hydrophobic surfaces, flexibility, and conformational change can all contribute to whether two biological molecules bind or react productively.",
+    "Specificity is rarely one simple lock-and-key feature. Shape, charge, polarity, hydrophobic surfaces, flexibility, and conformational change can all contribute to whether two biological molecules bind, avoid binding, or react productively.",
   ),
   makeQuestion(
     19,
@@ -415,18 +418,18 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
   makeQuestion(
     20,
     "medium",
-    "Which statement best describes the relationship between a protein sequence and protein function?",
+    "Two proteins have similar lengths but different amino acid sequences, and only one binds a substrate well. Which explanation best captures why sequence can matter?",
     [
       [
         "Sequence influences folding and chemical surfaces, which influence dynamics, binding, catalysis, and regulation.",
         true,
       ],
       [
-        "Sequence is important for DNA, while protein activity is mostly independent of amino acid order.",
+        "Sequence mainly affects how much protein is made, while folded activity is mostly independent of amino acid order.",
         false,
       ],
       [
-        "Any amino acid sequence will fold into the same structure if ATP is present.",
+        "Similar protein length is enough to produce the same fold and binding surface when ATP is present.",
         false,
       ],
       [
@@ -450,11 +453,11 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         true,
       ],
       [
-        "The pore should conduct charged solutes better because hydrophobic residues exclude water.",
+        "The pore should conduct charged solutes better because a hydrophobic lining reduces contact with water and ions.",
         false,
       ],
       [
-        "The change cannot matter if the protein's total amino acid count stays unchanged.",
+        "The change cannot matter if the protein still inserts into the membrane and has the same length.",
         false,
       ],
     ],
@@ -515,15 +518,15 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         true,
       ],
       [
-        "Any molecule that binds a protein must be chemically converted by that protein.",
+        "Strong binding is enough to label the protein as an enzyme whenever the ligand fits the pocket.",
         false,
       ],
       [
-        "The binding protein is better classified as DNA because specificity is a property of nucleic acids.",
+        "A pocket without catalytic residues still proves the protein lowers activation energy for that ligand.",
         false,
       ],
       [
-        "The binding pocket by itself shows the coupled reaction has a favorable overall free-energy change.",
+        "A tight pocket by itself shows the coupled reaction has a favorable overall free-energy change.",
         false,
       ],
     ],
@@ -622,7 +625,7 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
   makeQuestion(
     29,
     "hard",
-    "Which statements correctly identify limits of the phrase structure determines function?",
+    "A learner treats structure determines function as meaning one static shape fully explains every molecule's role. Which corrections are valid?",
     [
       [
         "Protein function can depend on dynamics and conformational changes, not only one static shape.",
@@ -633,15 +636,15 @@ export const BiologyChemistryForLifeScienceLecture1Questions: Question[] = [
         true,
       ],
       [
-        "The phrase treats sequence, environment, and regulation as minor details outside molecular function.",
+        "Once a molecular structure is known, sequence, environment, and regulation no longer affect function.",
         false,
       ],
       [
-        "The phrase applies to proteins but excludes membranes, nucleic acids, and small molecules from structure-function reasoning.",
+        "Structure-function reasoning applies only to proteins and cannot help explain membranes, nucleic acids, or small molecules.",
         false,
       ],
     ],
-    "Structure-function reasoning is central, but structure should not be treated as one frozen image. Dynamics, modifications, partners, concentration, compartment, and environment all affect what a molecule can do.",
+    "Structure-function reasoning is central, but structure should not be treated as one frozen image that explains everything by itself. Dynamics, modifications, partners, concentration, compartment, environment, and sequence all affect what a molecule can do, and the same reasoning can apply beyond proteins.",
   ),
   makeQuestion(
     30,

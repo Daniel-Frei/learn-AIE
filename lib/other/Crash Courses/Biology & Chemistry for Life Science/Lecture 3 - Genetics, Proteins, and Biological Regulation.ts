@@ -43,15 +43,18 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
   makeQuestion(
     2,
     "easy",
-    "Which statement best describes a gene?",
+    "A DNA region is being evaluated as a gene rather than just nearby sequence. Which feature best supports calling it a gene?",
     [
       [
         "A DNA sequence that can be used to produce a functional product, often a protein or functional RNA.",
         true,
       ],
-      ["A finished protein that has already folded in the cytoplasm.", false],
       [
-        "A lipid bilayer that controls transport across the cell membrane.",
+        "A finished protein product after translation and folding are complete.",
+        false,
+      ],
+      [
+        "A regulatory region that affects a neighboring gene but cannot itself produce a functional product.",
         false,
       ],
       [
@@ -80,7 +83,7 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         false,
       ],
     ],
-    "The central dogma is DNA -> RNA -> protein, with replication copying DNA. Codons are three-nucleotide information units, not lipid bilayers, and later questions use that vocabulary directly.",
+    "The central dogma is DNA -> RNA -> protein, with replication copying DNA. Codons are three-nucleotide information units read during translation; they do not directly store a finished folded protein shape.",
   ),
   makeQuestion(
     4,
@@ -121,7 +124,7 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         false,
       ],
       [
-        "DNA is a clinical drug dose table rather than a biological information molecule.",
+        "DNA directly executes cellular work without needing RNA, proteins, regulation, or context.",
         false,
       ],
     ],
@@ -193,12 +196,18 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         "Regulation of access to genetic information without changing the underlying DNA sequence.",
         true,
       ],
-      ["Replacement of nucleotide sequences with amino acid chains.", false],
       [
-        "A process that locks genes into a permanently inaccessible state across the genome.",
+        "A change in nucleotide order that rewrites the stored DNA sequence.",
         false,
       ],
-      ["The same process as bacterial cell-wall synthesis.", false],
+      [
+        "A regulatory layer that makes every gene permanently inaccessible in every cell type.",
+        false,
+      ],
+      [
+        "A synonym for ordinary transcription, with no effect on chromatin access or cell state.",
+        false,
+      ],
     ],
     "Epigenetic regulation affects how genetic information is packaged, accessed, and inherited across cell states. It should not be treated as mystical rewriting of the genome or as a synonym for mutation.",
   ),
@@ -252,10 +261,13 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
         false,
       ],
       [
-        "Codons contain three nucleotides because DNA has three total bases.",
+        "Two-base codons would give 16 combinations, which is enough for all amino acids and stop signals.",
         false,
       ],
-      ["A codon is three proteins arranged in a lipid membrane.", false],
+      [
+        "Codon length is chosen by protein mass rather than by the number of possible base combinations.",
+        false,
+      ],
     ],
     "The triplet code is an information-capacity solution. With four possible bases, three-position codons provide enough combinations to encode the amino acid alphabet and stop signals with redundancy.",
   ),
@@ -469,7 +481,7 @@ export const BiologyChemistryForLifeScienceLecture3Questions: Question[] = [
   makeQuestion(
     23,
     "hard",
-    "Which statements correctly synthesize gene regulation with signaling?",
+    "A cell receives a growth signal, changes transcription factor activity, and later becomes more sensitive to a different signal. Which regulatory links can explain that chain?",
     [
       ["External signals can change transcription factor activity.", true],
       ["Transcription factors can alter gene expression programs.", true],

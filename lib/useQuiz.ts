@@ -434,16 +434,6 @@ export function useQuiz() {
       markLegacyMigrationCompleted(participantId);
       saveRatingState(createDefaultRatingState());
 
-      if (selectionMode === "climb") {
-        const nextQuestionId = pickClimbQuestionId(
-          availableQuestions,
-          response.ratingState,
-          [],
-        );
-        setClimbQuestionId(nextQuestionId);
-        setClimbRecentIds(nextQuestionId ? [nextQuestionId] : []);
-      }
-
       return true;
     } catch (err) {
       console.error("Failed to reset participant rating:", err);

@@ -970,7 +970,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     chapter: 3,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe PagedAttention-style memory management?",
+      "An LLM serving system must keep key/value cache memory for many concurrent long-context requests without reserving every token slot upfront. Which statements describe PagedAttention-style memory management?",
     options: [
       {
         text: "It allocates KV cache memory in fixed-size blocks.",
@@ -985,12 +985,12 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It improves scalability of serving multiple concurrent requests.",
-        isCorrect: true,
+        text: "It stores each request's entire KV cache as one contiguous allocation sized to the maximum context length.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "PagedAttention manages KV cache memory dynamically using blocks. This prevents large amounts of unused reserved memory and allows efficient multi-request serving.",
+      "PagedAttention manages key/value cache memory dynamically using fixed-size blocks rather than one large contiguous maximum-length allocation per request. That design reduces wasted reserved memory and fragmentation, which helps serving systems scale to many concurrent requests.",
   },
 
   {

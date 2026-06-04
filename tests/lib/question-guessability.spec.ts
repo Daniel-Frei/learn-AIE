@@ -502,6 +502,7 @@ describe("question answer-option guessability", () => {
           "Simple test-taking heuristics should not predict answer options well.",
           `Run with ${SOURCE_IDS_ENV}=source-id after creating or editing a question set.`,
           "A failure is a signal to make prompts less frame-revealing and distractors more semantically close, nuanced, and less cue-driven.",
+          "A pass is only a deterministic smoke test; it is not proof that the set has high diagnosticity.",
         ].join("\n"),
       ).toEqual([]);
     },

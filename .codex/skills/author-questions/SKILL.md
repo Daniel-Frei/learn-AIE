@@ -7,9 +7,20 @@ description: Create, extend, edit, rebalance, and register Learning AI quiz ques
 
 ## Overview
 
-Create and maintain high-quality multi-select quiz question sets for the Learning AI repo. For new source material, generate one or more question files and register each set so it appears in the app's source selector. For existing question sets, preserve the local style while adding, revising, rebalancing, or fixing questions.
+Create, review, and maintain high-quality multi-select quiz question sets for the Learning AI repo. For new source material, generate one or more question files and register each set so it appears in the app's source selector. For existing question sets, preserve the local style while reviewing quality, adding questions, revising weak items, rebalancing answer patterns, rewriting topic slices, or fixing reported issues.
 
 Use the repo docs as product context. Keep edits scoped to the new question files, `lib/quiz.ts` registration, tests/docs updates when required, and small supporting changes needed for verification.
+
+## Supported Operations
+
+Use the same quality gate for creation, review, and improvement work. The skill supports these common request shapes:
+
+- Create a new question set from source material, such as "create 30 questions about X."
+- Add questions to an existing set, such as "add 10 questions about C to set X."
+- Review an existing set for quality issues. If the user asks only for a review, report findings without editing; if the user asks to improve issues, make the scoped fixes.
+- Improve an existing set by rewriting low-quality prompts, options, explanations, answer flags, or difficulty labels while preserving IDs unless there is a clear reason to change them.
+- Rewrite a targeted topic slice inside a larger set, such as "rewrite all questions about topic A in set X," while leaving unrelated questions alone.
+- Combine operations in one pass, such as adding new questions and rewriting a targeted subset of existing questions.
 
 ## Folder Workflow
 
@@ -17,6 +28,8 @@ Use the repo docs as product context. Keep edits scoped to the new question file
    - For new source material, follow the folder workflow below.
    - For an existing question file, inspect the current set before editing and preserve its naming, IDs, topic scope, and registration unless the user asks for a broader change.
    - For additions to an existing set, continue the existing ID sequence and rebalance answer-count distribution across the full file, not only the new questions.
+   - For quality reviews, use the same question-quality criteria as generation. If the user asks to improve issues, edit the set; if the user asks only to review, report actionable findings and verification gaps.
+   - For targeted rewrites inside an existing set, identify the matching topic slice first and keep unrelated questions out of scope.
    - For fixes, update the prompt, options, `isCorrect` flags, and explanation together so they remain consistent.
 
 2. Identify the input folder and source materials when generating new sets.
@@ -29,11 +42,12 @@ Use the repo docs as product context. Keep edits scoped to the new question file
    - Read nearby question files in the target directory for naming style, export names, `chapter` values, question IDs, and source labels.
    - Read `lib/quiz.ts` to understand the existing `seriesId`, `seriesLabel`, `topic`, labels, titles, and registration style.
    - Prefer existing series conventions over inventing new naming.
+   - For review or improvement tasks, inspect enough of the full set to understand repeated schemas, answer-count distribution, difficulty balance, and topic coverage before editing only the requested slice.
 
 4. Generate or edit the TypeScript question file.
    - Before generating a new set, determine the requested question count. If the user did not specify one, ask for the count before generating questions; do not assume a default count from this skill.
    - If context is tight, draft in multiple passes, but the final file should contain the complete requested set.
-   - After drafting, run the adversarial answer-option review below before considering questions complete.
+   - After drafting or editing, run the question quality gate below before considering questions complete.
    - Use a filename based on the source item and topic, for example `lecture5_attention.ts`, `chapter4_agents.ts`, or the closest existing series convention.
    - Use a stable ASCII export name ending in `Questions`.
    - Use the correct relative import for `Question` from the new file to `lib/quiz.ts`.
@@ -55,8 +69,40 @@ Use the repo docs as product context. Keep edits scoped to the new question file
    - For focused verification during question-bank work, at least run `npm run test:focused -- tests/lib/question-registration.spec.ts` and `make types-check`.
    - After creating or editing registered question sets, run the targeted guessability heuristic for each changed source id: `$env:QUESTION_GUESSABILITY_SOURCE_IDS="source-id"; npm run test:question-guessability`. Use comma-separated source ids for multiple changed sets.
    - If the guessability test fails, treat it as an answer-option quality issue. Revise distractors and prompts before rerunning instead of weakening the thresholds, unless there is a documented source-specific reason.
+   - If the guessability test passes, do not treat that as evidence that the set has high diagnosticity. The deterministic check is only a smoke test for simple surface cues; still run the question quality gate below for created, added, rewritten, or otherwise edited questions.
    - If formatting may have changed, run `make format-check`.
    - If any command fails, include the exact error output and fix the root cause.
+
+## Question Quality Gate
+
+Run this gate whenever this skill creates, adds, rewrites, fixes, or otherwise edits questions. Passing deterministic guessability checks is not enough, because many weak items are answerable by recognizing one plausible sentence among implausible ones.
+
+For new question sets, run the gate over the full draft before finalizing. For additions, rewrites, and fixes, run it over every changed question plus enough surrounding questions to catch repeated schemas and answer-pattern drift. For review-only tasks, perform the same triage but stop at findings unless the user asked you to edit. For combined add-and-rewrite tasks, run the triage over the affected existing slice and apply the same quality bar to the newly added questions.
+
+1. Audit each question with `isCorrect` hidden.
+   - Mark a question low-diagnosticity if a learner can answer by matching object categories, rejecting extreme wording, choosing the broad/hedged reasonable option, spotting the familiar definition, following wording in the stem, or reusing a repeated course theme.
+   - Mark definition-recognition items low-diagnosticity when three options are plainly about other concepts and only one option is the right kind of thing.
+   - Mark broad all-true or mostly-true multi-select items low-diagnosticity when the true options are generic introductory truths and false options are absurd, impossible, or overclaimed.
+
+2. For each low-diagnosticity item, name the construct target and misconception target.
+   - The construct target is what understanding the question should measure, such as applying a definition, predicting a consequence, explaining a mechanism, comparing two plausible alternatives, using math, or transferring the idea to a new case.
+   - The misconception target is the plausible mistake a real learner might make after partial study.
+   - If you cannot name both targets, rewrite the item instead of only polishing wording.
+
+3. Prefer substantial rewrites over small distractor edits for low-diagnosticity items.
+   - When a weak definition-recognition item needs a rewrite, choose the least forced question form that fits the source material: a direct prompt with better sibling definitions, a boundary case, consequence, mechanism, comparison, calculation, transfer, or a concise scenario.
+   - Use scenarios when the topic naturally involves a decision, observation, workflow, patient/system case, or experimental setup. A useful scenario supplies facts that affect the answer choice; if the setup can be removed without changing the reasoning, prefer a direct prompt.
+   - Keep orientation questions intentionally easy only when they are serving prerequisite confidence or vocabulary setup; label them `"easy"` and do not let them dominate medium or hard coverage.
+   - Rewrite the correct option too when it is broad enough to be true from common sense. Make it source-specific enough that understanding is required.
+
+4. After editing, run a second hidden-answer review.
+   - Ask whether a learner could still solve without knowing why the right options are right.
+   - Ask whether every false option represents a plausible nearby misconception rather than merely sounding wrong.
+   - Ask whether the same broad theme could answer many questions in the set.
+
+5. Report the quality gate in the final response.
+   - Include how many questions were created or changed, how many were reviewed by the gate, how many were substantially rewritten, how many received minor option/explanation edits, and how many intentionally easy orientation items were retained.
+   - If only a small fraction of low-diagnosticity items were rewritten, say so instead of implying the whole set quality was fixed.
 
 ## Question Requirements
 
@@ -91,6 +137,11 @@ Use the repo docs as product context. Keep edits scoped to the new question file
 ## Prompt Design
 
 - Prompts should identify the concept or task precisely without revealing the abstract answer pattern. Avoid stems where a learner can infer the answer from generic framing alone, such as "why is X not enough?", "why can X fail to generalize?", or "why does X still need validation?", unless the options all require a specific source-grounded distinction.
+- Do not overuse "which statement best describes" for basic definitions. If a definition prompt is necessary, make the alternatives plausible sibling definitions or boundary cases rather than unrelated categories.
+- Prefer prompts that ask the learner to apply, predict, compare, explain, calculate, or transfer a concept. Pure recognition of a familiar sentence should be reserved for intentional easy orientation questions.
+- Across `lib/` topics, vary the prompt form to match the material. Clinical, procedural, or experimental topics may support scenarios; foundational, mathematical, or abstract topics often work better as direct comparisons, boundary cases, mechanisms, calculations, or consequence questions.
+- Do not add a scenario sentence merely to make a direct concept question look applied. The setup should be referenced by, constrain, or change the interpretation of the answer options.
+- Watch for stems whose everyday language gives away the answer, such as terms that already imply stability, evidence, usefulness, feedback, or decision relevance. In those cases, ask for a concrete mechanism, condition, exception, or consequence.
 - For "why", "what explains", and "best describes" prompts, make all options plausible answers to that same prompt. Do not make the correct option the only one that addresses context, evidence, tradeoffs, uncertainty, or limitations.
 - When the source repeatedly uses a broad template, such as information flow, selection pressure, error analysis, optimization tradeoffs, evidence chains, or system boundaries, anchor each question to the concrete version from the source rather than asking for the generic template again.
 
@@ -106,6 +157,8 @@ Use the repo docs as product context. Keep edits scoped to the new question file
 - Avoid wrong answers that are false only because they collapse a general chain from mechanism to measurement to deployment, decision, or outcome. Strong distractors should preserve most of the chain but make one meaningful mistake about which link is sufficient, missing, reversed, or out of scope.
 - Absolute or high-certainty language such as "always", "never", "only", "every", "all", "none", "cannot", "impossible", "guarantees", "proves", or "complete" is not banned, but it is high risk. Use it only when the source, math, or formal definition supports the exact quantifier, and avoid making these cues correlate mostly with incorrect options.
 - Keep option specificity, detail level, and plausibility roughly comparable. If the correct option is much more concrete, technical, or carefully hedged than the incorrect options, rewrite the distractors to be closer competitors.
+- Every distractor should pass the "real learner" test: a learner with a partial misconception could plausibly select it for a substantive reason.
+- For multi-select items with several true options, avoid making all true options broad introductory facts and all false options absurd. Mix specificity and plausibility so selecting all correct options requires discriminating understanding.
 
 ## Adversarial Answer Review
 
@@ -186,10 +239,13 @@ export const sourceMaterialQuestions: Question[] = [
 - Final response reports the difficulty balance with `"easy"`, `"medium"`, and `"hard"` counts.
 - Answer options are plausible enough that the learner needs concept understanding rather than elimination of obviously wrong distractors.
 - Adversarial answer review has been applied: absolutes, overclaims, option length/detail, and obvious false-option cues do not let a generic heuristic score well.
+- For every created, added, rewritten, fixed, or otherwise edited question, low-diagnosticity risk has been triaged by construct target and misconception target, and weak recognition items were substantially rewritten rather than lightly polished.
+- Passing the deterministic guessability test was not used as the sole evidence of question quality.
 - Targeted guessability test passes for each created or edited registered question set, or any failure has been fixed at the question level.
 - No prompt depends on seeing the source material, transcript, chapter, paper, or slides.
 - Every explanation has at least two sentences and covers all options.
 - Math uses escaped LaTeX delimiters inside TypeScript strings.
 - Question IDs are unique across the repo.
 - The new question file is imported, registered in `QUESTION_SOURCES`, described in `QUESTION_SOURCE_CONTEXT`, and re-exported from `lib/quiz.ts`.
+- Final response for creation or editing work reports created/changed, reviewed, substantially rewritten, minor-edited, and intentionally retained orientation counts.
 - Registration tests and type checks pass, or failures are reported with exact errors.

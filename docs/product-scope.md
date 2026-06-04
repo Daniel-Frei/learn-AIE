@@ -11,8 +11,8 @@
 - Each question has an info icon after the prompt; hovering or focusing it shows the short source-context sentence so randomized mixed-source practice still exposes the lecture/chapter context without taking persistent vertical space.
 - Users can switch between:
   - `standard` mode (randomized from filtered pool)
-  - `climb` mode (questions are biased toward current user Glicko rating with some randomness)
-- The UI displays the current anonymous participant Glicko rating and rating deviation (RD). The filter panel includes a reset button that returns the participant rating to the default Glicko state without clearing shared question ratings or question-report counts.
+  - `climb` mode (questions are biased toward current user Glicko rating, use at least 10 targeted candidates when available, and select 20% of questions randomly from the active filtered pool regardless of user Elo)
+- The UI displays the current anonymous participant Glicko rating and rating deviation (RD). The filter panel includes a reset button that returns the participant rating to the default Glicko state without clearing shared question ratings or question-report counts. Resetting the participant rating does not replace the currently open question; the new rating affects the next question selection after the user advances.
 
 ## Current Behavior
 
@@ -47,7 +47,8 @@
   - Question difficulty is shared globally across participants and remains a Glicko-2 style rating under the hood, even though the UI labels it as Elo.
   - New unanswered question ratings are seeded from difficulty labels close to the neutral rating: easy `1400`, medium `1500`, and hard `1600`. Once answer data exists for a question, the persisted rating is used and the initial seed only remains as the starting point whose influence fades as more answers accumulate.
   - Participant rating/climb behavior remains per device. Resetting the participant rating preserves global question difficulty data and marks legacy migration complete so old browser-local ratings are not re-imported after reset.
-- Answer scoring is still binary at the core, but rating updates are weighted by response time and mistake count so fast, clean answers move ratings more than slow or messy ones. The response-time weight stays full through the first 20 seconds, then scales down linearly to a 25% maximum reduction at the 3-minute timer cap.
+- Answer scoring is still binary at the core, but rating updates are weighted by response time and mistake count so fast, clean answers move ratings more than slow or messy ones. Response speed is treated as a meaningful but incomplete skill signal: the response-time weight stays full through the first 20 seconds, then scales down linearly to a 40% maximum reduction at the 3-minute timer cap.
+- A single answer has bounded rating exchange. Before answer weighting, each participant/question side moves by at least `2` rating points when the result would otherwise move it by less, and by at most `100` rating points when the result would otherwise create a larger jump; those bounds scale with the response-time and mistake-count weight.
 - Question answer attempts store the elapsed time and mistake count alongside the binary result for later auditability.
 - Question reports are append-only in the shared database:
   - Each submit creates a separate report entry, even for the same question.

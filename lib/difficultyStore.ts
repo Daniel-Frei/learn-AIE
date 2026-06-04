@@ -34,6 +34,8 @@ export type RatingConfig = {
   maxRd: number;
   difficultyAnchorRating: number;
   difficultyScale: number;
+  minRatingExchange: number;
+  maxRatingExchange: number;
 };
 
 export type RatingStateV2 = {
@@ -55,7 +57,7 @@ const MIN_PROBABILITY = 1e-12;
 export const QUESTION_TIME_LIMIT_MS = 3 * 60 * 1000;
 
 const QUESTION_FAST_RESPONSE_MS = 20 * 1000;
-const QUESTION_MIN_TIME_WEIGHT = 0.75;
+const QUESTION_MIN_TIME_WEIGHT = 0.6;
 const QUESTION_ONE_MISTAKE_WEIGHT = 0.85;
 
 const LABEL_PRIOR_RATING: Record<Difficulty, number> = {
@@ -76,6 +78,8 @@ const DEFAULT_CONFIG: RatingConfig = {
   maxRd: 350,
   difficultyAnchorRating: 1500,
   difficultyScale: 400,
+  minRatingExchange: 2,
+  maxRatingExchange: 100,
 };
 
 type Glicko2Core = {
@@ -187,6 +191,14 @@ function sanitizeConfig(value: unknown): RatingConfig {
   const maxRd = sanitizeFiniteNumber(value.maxRd, base.maxRd);
   const normalizedMinRd = Math.max(1, Math.min(minRd, maxRd));
   const normalizedMaxRd = Math.max(normalizedMinRd, maxRd);
+  const minRatingExchange = Math.max(
+    0,
+    sanitizeFiniteNumber(value.minRatingExchange, base.minRatingExchange),
+  );
+  const maxRatingExchange = Math.max(
+    minRatingExchange,
+    sanitizeFiniteNumber(value.maxRatingExchange, base.maxRatingExchange),
+  );
 
   return {
     defaultRating: sanitizeFiniteNumber(
@@ -221,6 +233,8 @@ function sanitizeConfig(value: unknown): RatingConfig {
       1e-6,
       sanitizeFiniteNumber(value.difficultyScale, base.difficultyScale),
     ),
+    minRatingExchange,
+    maxRatingExchange,
   };
 }
 
@@ -510,9 +524,18 @@ function rateOneMatch(
     sigmaPrime,
     config,
   );
+  const ratingDelta = updated.rating - entity.rating;
+  const ratingDirection = Math.sign(ratingDelta) || Math.sign(s - expected);
+  const minDelta = config.minRatingExchange * weightFactor;
+  const maxDelta = config.maxRatingExchange * weightFactor;
+  const boundedDelta =
+    weightFactor > 0 && ratingDirection !== 0
+      ? ratingDirection * clamp(Math.abs(ratingDelta), minDelta, maxDelta)
+      : 0;
 
   return {
     ...updated,
+    rating: entity.rating + boundedDelta,
     gamesPlayed: entity.gamesPlayed + 1,
   };
 }

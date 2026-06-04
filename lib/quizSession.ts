@@ -29,6 +29,8 @@ export type AnswerEvaluation = {
 export const QUESTION_TIMER_TICK_MS = 1000;
 export const QUESTION_ELO_FILTER_MIN = 0;
 export const QUESTION_ELO_FILTER_MAX = 3000;
+export const CLIMB_RANDOM_SELECTION_RATE = 0.2;
+export const CLIMB_MIN_TARGETED_POOL_SIZE = 10;
 
 export const DEFAULT_DIFFICULTY_RANGE: DifficultyRange = {
   min: QUESTION_ELO_FILTER_MIN,
@@ -91,6 +93,19 @@ export function pickClimbQuestionId(
 
   const targetRating = ratingState.user.rating;
   const recent = new Set(recentQuestionIds.slice(-6));
+  const pickRandomQuestion = (candidates: Question[]): string | null => {
+    if (candidates.length === 0) return null;
+    const index = Math.min(
+      candidates.length - 1,
+      Math.floor(random() * candidates.length),
+    );
+    return candidates[index]?.id ?? null;
+  };
+
+  if (random() >= 1 - CLIMB_RANDOM_SELECTION_RATE) {
+    const nonRecent = pool.filter((question) => !recent.has(question.id));
+    return pickRandomQuestion(nonRecent.length > 0 ? nonRecent : pool);
+  }
 
   const scored = pool
     .map((question) => {
@@ -110,9 +125,12 @@ export function pickClimbQuestionId(
     })
     .sort((a, b) => a.score - b.score);
 
-  const shortlistSize = Math.min(8, scored.length);
+  const shortlistSize = Math.min(CLIMB_MIN_TARGETED_POOL_SIZE, scored.length);
   const shortlist = scored.slice(0, shortlistSize);
-  const choice = shortlist[Math.floor(random() * shortlist.length)];
+  const choice =
+    shortlist[
+      Math.min(shortlist.length - 1, Math.floor(random() * shortlist.length))
+    ];
   return choice?.id ?? null;
 }
 

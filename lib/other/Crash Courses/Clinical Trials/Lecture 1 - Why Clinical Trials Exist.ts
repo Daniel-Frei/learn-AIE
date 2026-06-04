@@ -6,7 +6,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Which statements correctly explain why clinical trials are needed in medicine?",
+      "A clinician sees patients improve after a plausible new treatment and wants to know whether the treatment caused the improvement. Which reasons explain why a clinical trial is needed?",
     options: [
       {
         text: "Patient outcomes can improve for reasons unrelated to a treatment.",
@@ -60,7 +60,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Which statements correctly distinguish correlation from causation?",
+      "Which statements correctly distinguish correlation from causation in clinical research?",
     options: [
       {
         text: "Correlation means two variables move together or are associated.",
@@ -86,7 +86,8 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
     id: "clinical-trials-l1-q04",
     chapter: 1,
     difficulty: "easy",
-    prompt: "Which statements correctly describe confounding?",
+    prompt:
+      "In an observational study, sicker patients are more likely to receive Drug A and also more likely to die. Which statements correctly describe the confounding problem?",
     options: [
       {
         text: "Confounding occurs when another factor helps explain an apparent exposure-outcome relationship.",
@@ -112,7 +113,8 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
     id: "clinical-trials-l1-q05",
     chapter: 1,
     difficulty: "easy",
-    prompt: "Which statements correctly describe placebo effects?",
+    prompt:
+      "Which statements correctly describe placebo effects in clinical research?",
     options: [
       {
         text: "Expectations and treatment context can influence symptoms.",
@@ -123,7 +125,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A placebo effect means a patient must be lying about improvement.",
+        text: "A placebo response proves the patient's symptoms were fake rather than experienced.",
         isCorrect: false,
       },
       {
@@ -138,22 +140,23 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
     id: "clinical-trials-l1-q06",
     chapter: 1,
     difficulty: "easy",
-    prompt: "Which statement best captures natural history of disease?",
+    prompt:
+      "In a headache study, many untreated patients would improve within three days. Which statement best captures the natural history issue?",
     options: [
       {
         text: "Some conditions improve, worsen, or fluctuate without any intervention.",
         isCorrect: true,
       },
       {
-        text: "Untreated illnesses follow a uniform decline at the same rate.",
+        text: "Untreated patients provide no useful information once treated patients improve.",
         isCorrect: false,
       },
       {
-        text: "Natural history removes the need for comparison groups.",
+        text: "Natural history makes treated improvement easier to interpret without a comparator.",
         isCorrect: false,
       },
       {
-        text: "Natural history shows symptomatic improvement was caused by treatment.",
+        text: "Natural history is relevant only when the disease is fatal and never fluctuates.",
         isCorrect: false,
       },
     ],
@@ -164,7 +167,8 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
     id: "clinical-trials-l1-q07",
     chapter: 1,
     difficulty: "easy",
-    prompt: "Which statements correctly describe regression to the mean?",
+    prompt:
+      "A pain trial enrolls patients when their pain scores are unusually high. Which statements correctly describe regression to the mean in that setting?",
     options: [
       {
         text: "People often seek care or enroll in studies when symptoms are unusually severe.",
@@ -190,7 +194,8 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
     id: "clinical-trials-l1-q08",
     chapter: 1,
     difficulty: "easy",
-    prompt: "Which statements correctly describe selection bias?",
+    prompt:
+      "A trial mainly enrolls healthier, highly motivated volunteers who differ from the broader patient population. Which statements correctly describe selection bias?",
     options: [
       {
         text: "Selection bias can occur when study groups differ before treatment is assessed.",
@@ -216,7 +221,8 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
     id: "clinical-trials-l1-q09",
     chapter: 1,
     difficulty: "easy",
-    prompt: "Which statements correctly describe observer bias?",
+    prompt:
+      "An unblinded clinician assesses borderline outcomes after learning which patients received the experimental drug. Which statements correctly describe observer bias?",
     options: [
       {
         text: "Knowledge of treatment assignment can influence how clinicians assess outcomes.",
@@ -242,7 +248,8 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
     id: "clinical-trials-l1-q10",
     chapter: 1,
     difficulty: "easy",
-    prompt: "Which statements correctly describe publication bias?",
+    prompt:
+      "A reviewer can find several positive trials but suspects negative or inconclusive studies may be missing from the literature. Which statements correctly describe publication bias?",
     options: [
       {
         text: "Studies with positive findings may be more likely to appear in the literature.",
@@ -294,15 +301,15 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "To route participants toward the experimental treatment regardless of comparison needs.",
+        text: "To make the experimental arm larger whenever early responses look promising.",
         isCorrect: false,
       },
       {
-        text: "To prevent participants in the comparison group from improving naturally.",
+        text: "To stop natural recovery, placebo effects, and background care from occurring.",
         isCorrect: false,
       },
       {
-        text: "To replace the need for outcome measurement.",
+        text: "To estimate safety while leaving efficacy to clinician judgment.",
         isCorrect: false,
       },
     ],
@@ -314,22 +321,22 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Which statement best states the fundamental problem of causal inference in treatment research?",
+      "Which statement best states the fundamental counterfactual problem in treatment research?",
     options: [
       {
         text: "The same patient cannot be observed both receiving and not receiving the treatment at the same time.",
         isCorrect: true,
       },
       {
-        text: "Researchers lose outcome information after treatment begins.",
+        text: "The untreated outcome for a treated patient can be directly recovered from the same patient's treated follow-up.",
         isCorrect: false,
       },
       {
-        text: "Treatments work best when studied without a comparison group.",
+        text: "The treated outcome is uninterpretable whenever patients differ at baseline.",
         isCorrect: false,
       },
       {
-        text: "Causality is solved by collecting one anecdote.",
+        text: "Randomization reveals both possible outcomes for each individual participant.",
         isCorrect: false,
       },
     ],
@@ -341,7 +348,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Which stakeholders commonly participate in the modern clinical research ecosystem?",
+      "Which stakeholders commonly participate in the clinical trial ecosystem?",
     options: [
       {
         text: "Sponsors such as pharmaceutical, biotech, device, or academic organizations.",
@@ -583,14 +590,14 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe Contract Research Organizations (CROs)?",
+      "A sponsor outsources monitoring, data management, and project-management work while retaining responsibility for the trial. Which statements correctly describe the Contract Research Organization (CRO) role?",
     options: [
       {
         text: "They can conduct trial activities on behalf of sponsors.",
         isCorrect: true,
       },
       {
-        text: "They approve therapies for marketing on behalf of public regulators.",
+        text: "They can replace regulators by deciding whether the therapy should be approved for marketing.",
         isCorrect: false,
       },
       {
@@ -598,7 +605,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They replace the need for patient consent and ethical oversight.",
+        text: "They remove the sponsor's ethical and regulatory obligations once operations are outsourced.",
         isCorrect: false,
       },
     ],
@@ -610,7 +617,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which responsibilities are commonly associated with investigators and clinical sites?",
+      "At a clinical site, an investigator team interacts directly with participants during a trial. Which responsibilities are commonly associated with that site role?",
     options: [
       {
         text: "Recruiting eligible participants.",
@@ -625,7 +632,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Serving as the central authority that approves therapies for marketing.",
+        text: "Making the final regulatory approval decision after the site's participants complete follow-up.",
         isCorrect: false,
       },
     ],
@@ -637,22 +644,22 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe regulators such as the U.S. Food and Drug Administration (FDA), European Medicines Agency (EMA), or Swissmedic?",
+      "Which statement correctly describes the role of regulators such as the U.S. Food and Drug Administration (FDA), European Medicines Agency (EMA), or Swissmedic?",
     options: [
       {
         text: "They evaluate evidence submitted for therapies or medical products.",
         isCorrect: true,
       },
       {
-        text: "They ignore patient safety when making approval decisions.",
+        text: "They evaluate only commercial demand and leave patient safety to sponsors.",
         isCorrect: false,
       },
       {
-        text: "They have little effect on what evidence is required before marketing.",
+        text: "They mainly provide trial operations staff while CROs decide evidence requirements.",
         isCorrect: false,
       },
       {
-        text: "They are the same organizations as Contract Research Organizations.",
+        text: "They approve protocols ethically at each site but do not evaluate marketing applications.",
         isCorrect: false,
       },
     ],
@@ -664,22 +671,22 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe ethics committees or Institutional Review Boards (IRBs)?",
+      "Before a human-subject trial starts, an independent body reviews risk, consent, and participant protection. Which statement correctly describes ethics committees or Institutional Review Boards (IRBs)?",
     options: [
       {
         text: "They provide independent ethical review of human-subject research.",
         isCorrect: true,
       },
       {
-        text: "They write sponsor marketing copy for approved products.",
+        text: "They replace scientific review by guaranteeing that the trial hypothesis will be positive.",
         isCorrect: false,
       },
       {
-        text: "They make commercial success the expected result of product development.",
+        text: "They operate mainly as sponsor project managers for recruitment and data cleaning.",
         isCorrect: false,
       },
       {
-        text: "They exist to make trial results positive for sponsors.",
+        text: "They approve market access once the trial has produced enough favorable data.",
         isCorrect: false,
       },
     ],
@@ -748,9 +755,18 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
       'Which trial feature most directly addresses the counterfactual question, "What would have happened to these patients without the tested intervention?"',
     options: [
       { text: "A control or comparator group.", isCorrect: true },
-      { text: "A longer brand name for the treatment.", isCorrect: false },
-      { text: "A larger marketing budget.", isCorrect: false },
-      { text: "A more enthusiastic investigator biography.", isCorrect: false },
+      {
+        text: "A longer follow-up period with no comparison arm.",
+        isCorrect: false,
+      },
+      {
+        text: "A mechanistic biomarker measured only in treated patients.",
+        isCorrect: false,
+      },
+      {
+        text: "A larger treated case series without untreated or usual-care patients.",
+        isCorrect: false,
+      },
     ],
     explanation:
       "The counterfactual question is approximated by comparing treated participants with a relevant control or comparator group. Branding, marketing, and investigator enthusiasm do not show what would have happened without the intervention.",
@@ -893,15 +909,15 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Published studies are usually designed and reported without bias.",
+        text: "Peer review guarantees that the visible published studies represent all completed studies.",
         isCorrect: false,
       },
       {
-        text: "Meta-analysis prevents missing studies from mattering.",
+        text: "A meta-analysis of only published studies automatically corrects for missing negative studies.",
         isCorrect: false,
       },
       {
-        text: "Publication decisions are unrelated to the direction of results.",
+        text: "The direction of results affects interpretation only after a treatment is approved.",
         isCorrect: false,
       },
     ],

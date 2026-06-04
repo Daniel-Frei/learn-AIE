@@ -868,7 +868,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements about label smoothing in sequence models are correct?",
+      "During next-token training, a model compares predicted probabilities with a target distribution over the vocabulary. Which statements about label smoothing are correct?",
     options: [
       {
         text: "It replaces a hard one-hot target distribution with a slightly softened version.",
@@ -888,7 +888,7 @@ export const stanfordCME295Lecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Label smoothing lowers the target probability for the correct class slightly and distributes some mass over others, which can improve generalization and calibration.",
+      "Label smoothing changes the target distribution used in the loss: the nominally correct token keeps most probability mass, while a small amount is spread over alternatives. This can reduce overconfidence and improve calibration, but it does not set the correct target probability exactly to one.",
   },
 
   {

@@ -28,7 +28,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
   makeQuestion(
     1,
     "easy",
-    "Which statements correctly describe bacteria and viruses at a high level?",
+    "A clinician is deciding whether an infection is more likely to respond to an antibiotic, antiviral, or vaccine-prevention strategy. Which biology distinctions matter?",
     [
       [
         "Bacteria are living cells with DNA, ribosomes, metabolism, and membranes.",
@@ -56,7 +56,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "Antibiotics usually block viral receptor binding more specifically than antiviral drugs do.",
+        "Antibiotics and antivirals share the same main targets, but viruses are harder to reach inside host cells.",
         false,
       ],
       [
@@ -91,7 +91,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
   makeQuestion(
     4,
     "easy",
-    "Which statements correctly describe vaccines?",
+    "Different vaccine platforms can use an inactivated pathogen, a protein fragment, a viral vector, or messenger RNA. Which principles do those platforms share?",
     [
       [
         "Vaccines train immune recognition in a safer context than dangerous infection.",
@@ -205,14 +205,14 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
   makeQuestion(
     9,
     "easy",
-    "Which statement best describes why model systems are used in biomedical research?",
+    "A therapy is studied first in purified proteins, cell cultures, and animals before human testing. Which statement best describes why those model systems are used?",
     [
       [
         "They simplify biological systems so mechanisms, toxicity, or feasibility can be studied before or alongside human evidence.",
         true,
       ],
       [
-        "They are chosen because simplified systems reproduce all human dosing, toxicity, and heterogeneity.",
+        "They are chosen because each simplified system preserves all human dosing, toxicity, and heterogeneity.",
         false,
       ],
       [
@@ -220,7 +220,7 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         false,
       ],
       [
-        "They are useful only when they exclude living cells, molecules, tissues, or biological readouts.",
+        "They are useful mainly when they remove the biological context that would be needed to interpret the result.",
         false,
       ],
     ],
@@ -229,26 +229,26 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
   makeQuestion(
     10,
     "easy",
-    "Which statements correctly describe the role of clinical evidence in this course?",
+    "A mechanism is plausible and a biomarker improves in early studies. Which conclusions are justified before patient-outcome evidence is strong?",
     [
       [
-        "Clinical evidence tests whether a biological intervention benefits patients in context.",
+        "The mechanism and biomarker result can motivate further testing without proving patient benefit by themselves.",
         true,
       ],
       [
-        "Controls, randomization, blinding, and endpoints help reduce misleading conclusions.",
+        "Controlled clinical evidence helps test whether the intervention improves outcomes in patients.",
         true,
       ],
       [
-        "Clinical trials are important but are a validation layer rather than the core topic of the biology crash course.",
+        "Randomization, blinding, and endpoint choice can help separate treatment effects from bias, expectation, or natural disease course.",
         true,
       ],
       [
-        "Evidence connects mechanism and measurement to patient-relevant claims.",
-        true,
+        "A biomarker change in the expected direction is enough to assume safety and efficacy across patients.",
+        false,
       ],
     ],
-    "Clinical evidence matters because humans are heterogeneous, noisy systems and mechanisms can fail in translation. In this course, trial concepts help students interpret claims without turning the final lecture into a clinical-trials course.",
+    "Mechanisms and biomarkers are valuable evidence, but they do not automatically establish that patients feel, function, or survive better. Clinical study design helps connect biological plausibility and measurements to patient-relevant claims while guarding against misleading explanations.",
   ),
   makeQuestion(
     11,
@@ -460,22 +460,22 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
   makeQuestion(
     20,
     "medium",
-    "Which statement best describes AI's role in modern biomedicine?",
+    "An AI system predicts patient risk from images and genomics with strong retrospective accuracy. Which statement best describes its role before clinical use?",
     [
       [
         "AI can accelerate discovery and interpretation, but results still need biological grounding, reliable measurement, workflow fit, and evidence.",
         true,
       ],
       [
-        "AI removes the need for experiments, diagnostics, clinical validation, or mechanistic understanding.",
+        "High retrospective accuracy can replace biological validation if the model architecture is modern enough.",
         false,
       ],
       [
-        "AI predictions establish causation from correlation in observational datasets.",
+        "A risk prediction establishes the causal mechanism whenever the correlation is stable in the training data.",
         false,
       ],
       [
-        "AI requires error-free, fully measured biological datasets before it can contribute.",
+        "The main bottleneck is model architecture, not labels, measurements, workflow, safety, or evidence.",
         false,
       ],
     ],
@@ -557,15 +557,15 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
         true,
       ],
       [
-        "The model result should override patient symptoms because biomarkers are closer to mechanism.",
+        "The model biomarker should be treated as a validated surrogate because it is closer to mechanism.",
         false,
       ],
       [
-        "The failure proves the drug target is irrelevant in every model and disease setting.",
+        "The failure proves the target is irrelevant in every setting rather than showing a translation gap.",
         false,
       ],
       [
-        "The patient endpoint must be wrong because animal biomarkers cannot mislead translation.",
+        "The symptom endpoint should be ignored if a mechanistic biomarker moved in the expected direction.",
         false,
       ],
     ],
@@ -673,26 +673,26 @@ export const BiologyChemistryForLifeScienceLecture5Questions: Question[] = [
   makeQuestion(
     30,
     "hard",
-    "Which statements correctly describe the revised role of clinical trials in this biology and chemistry course?",
+    "A new therapy changes a surrogate biomarker in a small early study, but patient symptoms and survival have not been tested well. Which statements correctly interpret the evidence?",
     [
       [
-        "Clinical trials are important for testing whether interventions help patients.",
+        "The surrogate biomarker can be a useful signal, but it may not guarantee patient-relevant benefit.",
         true,
       ],
       [
-        "Trial concepts help students distinguish mechanism, association, and patient benefit.",
+        "Stronger evidence would specify endpoints that reflect how patients feel, function, or survive.",
         true,
       ],
       [
-        "Detailed trial operations belong in a dedicated clinical-trials course rather than dominating this crash course.",
+        "A comparison group can help distinguish treatment effects from natural history, selection, or measurement bias.",
         true,
       ],
       [
-        "Treating clinical trials as context keeps the final lecture focused on biology, biotechnology, diagnostics, and evidence.",
-        true,
+        "Molecular plausibility removes the need to test clinical outcomes.",
+        false,
       ],
     ],
-    "Clinical trials remain highly relevant, but they are not the central content of a biology and chemistry crash course. The revised capstone uses trial ideas to interpret biomedical claims while keeping the core on mechanisms, measurements, tools, and translation.",
+    "A surrogate marker can support a biological story, but the claim being tested determines whether the evidence is enough. Patient-relevant endpoints and fair comparisons are needed because mechanisms, biomarkers, and early uncontrolled observations can fail to translate into meaningful benefit.",
   ),
   makeQuestion(
     31,

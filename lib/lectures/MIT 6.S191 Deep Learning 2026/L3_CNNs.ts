@@ -956,7 +956,7 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
     chapter: 3,
     difficulty: "medium",
     prompt:
-      "Which statements about generalization in deep computer vision are most consistent with the lecture?",
+      "A computer-vision model trained on clear centered images is deployed on images with new viewpoints, lighting, scale changes, and occlusions. Which statements describe the generalization problem?",
     options: [
       {
         text: "A vision model should learn features that remain useful despite variations such as viewpoint, illumination, scale, and occlusion.",
@@ -976,6 +976,6 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
       },
     ],
     explanation:
-      "The lecture repeatedly emphasizes that real-world vision is hard because images vary in many ways even within the same class. CNNs help by learning useful features from data, but no architecture alone guarantees complete robustness to every variation.",
+      "Real-world vision is hard because images vary in many ways even within the same class. Convolutional Neural Networks (CNNs) help by learning useful features from data, but no architecture alone guarantees complete robustness to every viewpoint, lighting condition, scale, or occlusion.",
   },
 ];

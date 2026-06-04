@@ -215,21 +215,21 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
     chapter: 0,
     difficulty: "easy",
     prompt:
-      "For \\(a=\\begin{bmatrix}1 \\\\ 2 \\\\ 3\\end{bmatrix}\\) and \\(b=\\begin{bmatrix}4 \\\\ 0 \\\\ -1\\end{bmatrix}\\), which statements are correct?",
+      "Treat \\(a\\cdot b\\) as the Euclidean dot product \\(a^\\top b\\) for \\(a=\\begin{bmatrix}1 \\\\ 2 \\\\ 3\\end{bmatrix}\\) and \\(b=\\begin{bmatrix}4 \\\\ 0 \\\\ -1\\end{bmatrix}\\). Which statements are correct?",
     options: [
       {
-        text: "\\(a\\cdot b=1\\cdot4+2\\cdot0+3\\cdot(-1)\\).",
+        text: "\\(a^\\top b=1\\cdot4+2\\cdot0+3\\cdot(-1)\\).",
         isCorrect: true,
       },
       { text: "\\(a\\cdot b=1\\).", isCorrect: true },
       { text: "\\(a\\cdot b=7\\).", isCorrect: false },
       {
-        text: "The dot product is undefined because the vectors have three components.",
+        text: "The dot product is undefined unless one vector is written horizontally in the prompt.",
         isCorrect: false,
       },
     ],
     explanation:
-      "The dot product is defined for vectors with the same number of components, including three-dimensional vectors. The calculation is \\(1\\cdot4+2\\cdot0+3\\cdot(-1)=4+0-3=1\\). The value 7 comes from ignoring the negative sign or using the wrong operation.",
+      "For column vectors, the matrix-product notation for the dot product is \\(a^\\top b\\), so one vector is transposed conceptually even if the shorthand \\(a\\cdot b\\) is used. The calculation is \\(1\\cdot4+2\\cdot0+3\\cdot(-1)=4+0-3=1\\); the value 7 comes from ignoring the negative sign or using the wrong operation.",
   },
 
   {

@@ -14,6 +14,27 @@ describe("author-questions skill guidance", () => {
   const skill = readRepoFile(".codex/skills/author-questions/SKILL.md");
   const teamPreferences = readRepoFile("docs/team-preferences.md");
 
+  it("covers creation, review, improvement, addition, and targeted rewrites", () => {
+    expect(skill).toContain("## Supported Operations");
+    expect(skill).toContain(
+      "Use the same quality gate for creation, review, and improvement work.",
+    );
+    expect(skill).toContain("Create a new question set from source material");
+    expect(skill).toContain("Add questions to an existing set");
+    expect(skill).toContain("Review an existing set for quality issues");
+    expect(skill).toContain("Rewrite a targeted topic slice");
+    expect(skill).toContain("Combine operations in one pass");
+    expect(skill).toContain(
+      "For review-only tasks, perform the same triage but stop at findings unless the user asked you to edit.",
+    );
+    expect(teamPreferences).toContain(
+      "creating new question sets, adding questions to existing sets, reviewing question quality, improving weak existing questions, and targeted rewrites of topic slices",
+    );
+    expect(teamPreferences).toContain(
+      "the same quality gate applies across those operations",
+    );
+  });
+
   it("asks for a question count instead of using a built-in default", () => {
     expect(skill).toContain("ask for the count before generating questions");
     expect(skill).toContain("do not assume a default count from this skill");
@@ -77,6 +98,29 @@ describe("author-questions skill guidance", () => {
     );
     expect(teamPreferences).toContain(
       "Avoid over-scaffolding a set around one reusable schema.",
+    );
+  });
+
+  it("requires manual diagnosticity triage for every creation or edit", () => {
+    expect(skill).toContain("## Question Quality Gate");
+    expect(skill).toContain(
+      "Run this gate whenever this skill creates, adds, rewrites, fixes, or otherwise edits questions.",
+    );
+    expect(skill).toContain(
+      "Passing deterministic guessability checks is not enough",
+    );
+    expect(skill).toContain("construct target and misconception target");
+    expect(skill).toContain(
+      "weak recognition items were substantially rewritten rather than lightly polished",
+    );
+    expect(skill).toContain(
+      "reports created/changed, reviewed, substantially rewritten, minor-edited, and intentionally retained orientation counts",
+    );
+    expect(teamPreferences).toContain(
+      "When creating, adding, rewriting, fixing, or otherwise editing questions, do a manual low-diagnosticity triage even if automated guessability checks pass",
+    );
+    expect(teamPreferences).toContain(
+      "medium and hard items should not be answerable mainly by recognizing a familiar definition",
     );
   });
 });

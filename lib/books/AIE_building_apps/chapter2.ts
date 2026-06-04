@@ -336,7 +336,7 @@ export const aieChapter2Questions: Question[] = [
     chapter: 2,
     difficulty: "easy",
     prompt:
-      "Which statements describe softmax in the context of language models?",
+      "A language model produces one logit for each token in its vocabulary before choosing a next token. Which statements describe what softmax does?",
     options: [
       {
         text: "It converts logits into a probability distribution over tokens.",
@@ -351,12 +351,12 @@ export const aieChapter2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The vocabulary size determines the dimensionality of the softmax output.",
-        isCorrect: true,
+        text: "Softmax reduces the output to one scalar so only the most likely token remains.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "Softmax turns raw logits into probabilities over the vocabulary, preserving order relationships and ensuring probabilities are non-negative and sum to one.",
+      "Softmax turns raw logits into a probability distribution over the vocabulary, so the output still has one probability per candidate token. It preserves logit ordering while normalizing values to be non-negative and sum to one; choosing a single token happens later during decoding.",
   },
   {
     id: "aie-ch2-q14",

@@ -989,7 +989,8 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
     id: "la-crash-l5-q38",
     chapter: 5,
     difficulty: "hard",
-    prompt: "Which statements correctly describe common misconceptions?",
+    prompt:
+      "Which statements are accurate corrections to common misconceptions about linear algebra in modern AI systems?",
     options: [
       {
         text: "Attention is not simply symbolic reasoning; it is differentiable vector-based routing.",
@@ -1009,7 +1010,7 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
       },
     ],
     explanation:
-      "Attention and deep learning rely on numerical geometry, not just symbolic rules. High-dimensional models still use familiar linear-algebra ideas, and LLMs do not store knowledge as clean database rows.",
+      "Attention and deep learning rely on numerical geometry, not just symbolic rules. High-dimensional models still use familiar linear-algebra ideas, and the database statement is a misconception rather than an accurate correction.",
   },
   {
     id: "la-crash-l5-q39",

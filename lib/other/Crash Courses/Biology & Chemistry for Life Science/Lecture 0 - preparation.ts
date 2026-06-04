@@ -257,14 +257,14 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
     makeQuestion(
       13,
       "easy",
-      "Which statement best describes a drug in pharmacology?",
+      "A patient receives a molecule that binds an enzyme and reduces activity in a disease-relevant pathway. Which description best classifies it as a drug?",
       [
         [
-          "A substance used to change a biological process for diagnosis, prevention, or treatment.",
+          "An intervention intended to perturb a biological process for diagnosis, prevention, or treatment.",
           true,
         ],
         [
-          "A substance that has no biological target or downstream effect.",
+          "A biomarker, because target binding measures disease state but does not alter the pathway.",
           false,
         ],
         [
@@ -272,50 +272,59 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           false,
         ],
         [
-          "A measurement of disease state rather than an intervention that changes biology.",
+          "A diagnostic measurement, because any dose-dependent biological effect rules out drug action.",
           false,
         ],
       ],
-      "A drug perturbs biology, often by binding a protein or changing a pathway. It is different from a biomarker or diagnostic measurement because it is intended to change a process, prevent disease, treat disease, or support diagnosis.",
+      "A drug is an intervention that changes biology, often through a target such as an enzyme, receptor, transporter, or pathway component. Biomarkers and diagnostics measure or classify biological state, while a drug is judged by its intended perturbation and its benefit-risk evidence.",
     ),
     makeQuestion(
       14,
       "easy",
-      "Which statement best describes a biomarker?",
+      "A blood protein level tracks inflammation and may help monitor disease, but changing the protein has not been shown to improve outcomes. Which description best fits the term biomarker?",
       [
-        ["A measurable indicator of biological state.", true],
         [
-          "A measurement that is useful without validation for any decision.",
+          "A measurable indicator of biological state that still needs validation for the decision it supports.",
+          true,
+        ],
+        [
+          "A treatment target whose measurement automatically proves that lowering it will help patients.",
           false,
         ],
         [
-          "A direct cause of disease because it is associated with disease.",
+          "A direct disease cause whenever its value differs between healthy and sick groups.",
           false,
         ],
-        ["A treatment that changes biology rather than measuring it.", false],
+        [
+          "A diagnostic or monitoring tool that is useful for every disease decision once it can be measured.",
+          false,
+        ],
       ],
-      "A biomarker is a measurement that says something about biology, but it still needs validation for the decision it supports. A biomarker can be associated with disease without causing it, and it is not the same thing as a treatment.",
+      "A biomarker is a measurement that says something about biological state, but the measurement has to be validated for a specific use. Association with disease does not automatically make the marker causal, therapeutic, or useful for every clinical decision.",
     ),
     makeQuestion(
       15,
       "easy",
-      "Which statement best describes clinical evidence?",
+      "A therapy has a plausible mechanism and improves a marker in a model system. Which statement best describes the clinical evidence still needed?",
       [
         [
-          "Information used to judge whether a medical claim holds up in patients.",
+          "Patient-level information that tests whether the claim holds up in the intended clinical setting.",
           true,
         ],
-        ["A plausible mechanism that has not been tested in patients.", false],
         [
-          "A biomarker improvement treated as patient benefit without validation.",
+          "A mechanism-only explanation, because a plausible pathway is enough once the target is known.",
           false,
         ],
         [
-          "A result from one simplified model system treated as enough for medical use.",
+          "A biomarker change treated as patient benefit without showing that the marker supports that decision.",
+          false,
+        ],
+        [
+          "A simplified model result treated as sufficient because models remove patient heterogeneity.",
           false,
         ],
       ],
-      "Clinical evidence connects biological claims to patient outcomes. Mechanisms, biomarkers, and model systems can be promising, but medical claims still need evidence that they help real people in the intended setting.",
+      "Clinical evidence connects biological claims to patient outcomes in the setting where the claim will be used. Mechanisms, biomarkers, and model systems can be promising, but they do not by themselves show benefit, safety, or decision usefulness for real patients.",
     ),
     makeQuestion(
       16,
@@ -965,7 +974,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
     makeQuestion(
       54,
       "medium",
-      "Which statements are useful starting points for measurement and evidence?",
+      "A team wants to decide whether a new blood test should guide treatment choice. Which checks belong in that reasoning?",
       [
         [
           "A diagnostic needs enough accuracy for the decision it supports.",
@@ -981,12 +990,12 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
       ],
-      "Modern biomedicine depends on measurement, but measurements need interpretation. A useful biomarker, diagnostic, endpoint, or AI prediction must be connected to the decision and outcome that matter.",
+      "Modern biomedicine depends on measurement, but measurements need interpretation for a specific decision. A useful biomarker, diagnostic, endpoint, or prediction must connect accuracy, mechanism, clinical context, and patient-relevant outcomes rather than merely producing a number.",
     ),
     makeQuestion(
       55,
       "medium",
-      "Which statements are useful starting points for AI in biomedicine?",
+      "An AI model predicts disease risk from images collected at one hospital. Which cautions should a learner keep in view before trusting it for patient care?",
       [
         [
           "AI can help with images, genomics, proteins, drug discovery, and patient stratification.",
@@ -999,7 +1008,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
       ],
-      "AI can accelerate parts of biology and medicine, but it does not remove the need for biological reasoning. Data quality, validation, workflow, safety, and evidence determine whether a system is trustworthy.",
+      "AI can accelerate parts of biology and medicine, but a strong-looking prediction is not enough for patient care. Data quality, population shift, label reliability, biological interpretation, workflow fit, safety, and evidence determine whether the model is trustworthy.",
     ),
     makeQuestion(
       56,
