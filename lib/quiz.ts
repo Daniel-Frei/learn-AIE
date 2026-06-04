@@ -44,6 +44,9 @@ import { BiologyChemistryLifeScienceL4Questions } from "./other/Crash Courses/Bi
 import { BiologyChemistryLifeScienceL5Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 5 - Biomedical Systems, Biotechnology, and Evidence";
 import { ClinicalTrialsLecture1Questions } from "./other/Crash Courses/Clinical Trials/Lecture 1 - Why Clinical Trials Exist";
 import { ClinicalTrialsLecture2Questions } from "./other/Crash Courses/Clinical Trials/Lecture 2 - Designing Clinical Trials";
+import { ClinicalTrialsLecture3Questions } from "./other/Crash Courses/Clinical Trials/Lecture 3 - Statistics and Evidence Interpretation";
+import { ClinicalTrialsLecture4Questions } from "./other/Crash Courses/Clinical Trials/Lecture 4 - Running Clinical Trials";
+import { ClinicalTrialsLecture5Questions } from "./other/Crash Courses/Clinical Trials/Lecture 5 - Modern Clinical Research and The Future";
 import { MIT15773L3DeepLearningForComputerVisionQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L3_Deep Learning for Computer Vision";
 import { MIT15773L4ComputerVisionTransferLearningQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L4_Computer Vision –Transfer Learning and Fine-Tuning";
 import { L5NLPBasicsQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L5_NLP Basics";
@@ -544,6 +547,35 @@ export const QUESTION_SOURCES = [
     questions: ClinicalTrialsLecture2Questions,
   },
   {
+    id: "clinical-trials-l3" as const,
+    label: "Clinical Trials L3",
+    title:
+      "Clinical Trials Crash Course L3: Statistics and Evidence Interpretation",
+    seriesId: "clinical-trials" as const,
+    seriesLabel: "Clinical Trials Crash Course",
+    topic: "Life Science" as const,
+    questions: ClinicalTrialsLecture3Questions,
+  },
+  {
+    id: "clinical-trials-l4" as const,
+    label: "Clinical Trials L4",
+    title: "Clinical Trials Crash Course L4: Running Clinical Trials",
+    seriesId: "clinical-trials" as const,
+    seriesLabel: "Clinical Trials Crash Course",
+    topic: "Life Science" as const,
+    questions: ClinicalTrialsLecture4Questions,
+  },
+  {
+    id: "clinical-trials-l5" as const,
+    label: "Clinical Trials L5",
+    title:
+      "Clinical Trials Crash Course L5: Modern Clinical Research and The Future",
+    seriesId: "clinical-trials" as const,
+    seriesLabel: "Clinical Trials Crash Course",
+    topic: "Life Science" as const,
+    questions: ClinicalTrialsLecture5Questions,
+  },
+  {
     id: "ai-agents-code-harness" as const,
     label: "AI Agents Harness",
     title: "AI Agents: Code as Agent Harness",
@@ -668,6 +700,12 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
     "Clinical trials crash course lesson about why trials exist, bias, placebo effects, causal inference, evidence hierarchy, and the modern trial ecosystem.",
   "clinical-trials-l2":
     "Clinical trials crash course lesson about PICO(T), randomization, blinding, endpoints, development phases, and internal versus external validity.",
+  "clinical-trials-l3":
+    "Clinical trials crash course lesson about treatment effect measures, confidence intervals, p-values, clinical significance, survival analysis, and evidence synthesis.",
+  "clinical-trials-l4":
+    "Clinical trials crash course lesson about protocol execution, site selection, recruitment, data management, GCP, CRO operations, vendors, and operational failure modes.",
+  "clinical-trials-l5":
+    "Clinical trials crash course lesson about medical devices, diagnostics, real-world evidence, decentralized trials, adaptive designs, AI, and end-to-end development risk.",
   "ai-agents-code-harness":
     "AI agents material about code as executable, inspectable, stateful harness infrastructure for reasoning, action, memory, verification, and multi-agent coordination.",
   "langchain-deepagents":
@@ -863,6 +901,9 @@ export { BiologyChemistryLifeScienceL4Questions } from "./other/Crash Courses/Bi
 export { BiologyChemistryLifeScienceL5Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 5 - Biomedical Systems, Biotechnology, and Evidence";
 export { ClinicalTrialsLecture1Questions } from "./other/Crash Courses/Clinical Trials/Lecture 1 - Why Clinical Trials Exist";
 export { ClinicalTrialsLecture2Questions } from "./other/Crash Courses/Clinical Trials/Lecture 2 - Designing Clinical Trials";
+export { ClinicalTrialsLecture3Questions } from "./other/Crash Courses/Clinical Trials/Lecture 3 - Statistics and Evidence Interpretation";
+export { ClinicalTrialsLecture4Questions } from "./other/Crash Courses/Clinical Trials/Lecture 4 - Running Clinical Trials";
+export { ClinicalTrialsLecture5Questions } from "./other/Crash Courses/Clinical Trials/Lecture 5 - Modern Clinical Research and The Future";
 export { CodeAsAgentHarnessQuestions } from "./other/AI agents/Code as Agent Harness";
 export { DeepAgentsQuestions } from "./other/Langchain/Deepagents";
 export { mixedQuestions } from "./other/other";
