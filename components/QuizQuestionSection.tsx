@@ -1,6 +1,7 @@
 // components/QuizQuestionSection.tsx
 "use client";
 
+import { useId } from "react";
 import type { Question } from "../lib/quiz";
 import MathText from "./MathText";
 
@@ -62,6 +63,20 @@ function QuestionContextTooltip({ context }: { context: string }) {
   );
 }
 
+function hasTextSelectionInside(element: HTMLElement): boolean {
+  const selection = window.getSelection();
+  if (!selection || selection.isCollapsed || !selection.toString().trim()) {
+    return false;
+  }
+
+  const anchorNode = selection.anchorNode;
+  const focusNode = selection.focusNode;
+  return (
+    Boolean(anchorNode && element.contains(anchorNode)) ||
+    Boolean(focusNode && element.contains(focusNode))
+  );
+}
+
 export default function QuizQuestionSection({
   availableCount,
   currentIndex,
@@ -75,6 +90,7 @@ export default function QuizQuestionSection({
   toggleOption,
 }: Props) {
   const hasQuestion = availableCount > 0 && !!currentQuestion;
+  const optionIdPrefix = useId();
 
   return (
     <section className="space-y-4">
@@ -149,13 +165,25 @@ export default function QuizQuestionSection({
               }
 
               return (
-                <button
+                <div
                   key={idx}
-                  type="button"
-                  onClick={() => toggleOption(idx)}
-                  className={`w-full text-left border ${borderClass} ${bgClass} rounded-xl px-4 py-3 flex gap-3 items-start transition-colors`}
+                  role="checkbox"
+                  tabIndex={0}
+                  aria-checked={selected}
+                  aria-labelledby={`${optionIdPrefix}-option-${idx}`}
+                  onClick={(event) => {
+                    if (hasTextSelectionInside(event.currentTarget)) return;
+                    toggleOption(idx);
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key !== " " && event.key !== "Enter") return;
+                    event.preventDefault();
+                    toggleOption(idx);
+                  }}
+                  className={`w-full text-left border ${borderClass} ${bgClass} rounded-xl px-4 py-3 flex gap-3 items-start transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950`}
                 >
                   <div
+                    aria-hidden="true"
                     className={`mt-1 h-4 w-4 flex items-center justify-center rounded border ${
                       selected
                         ? "bg-sky-500 border-sky-400"
@@ -168,12 +196,18 @@ export default function QuizQuestionSection({
                       </span>
                     )}
                   </div>
-                  <MathText
-                    text={opt.text}
-                    inline
-                    className="text-sm md:text-base"
-                  />
-                </button>
+                  <span
+                    id={`${optionIdPrefix}-option-${idx}`}
+                    data-testid="answer-option-text"
+                    className="cursor-text select-text"
+                  >
+                    <MathText
+                      text={opt.text}
+                      inline
+                      className="text-sm md:text-base"
+                    />
+                  </span>
+                </div>
               );
             })}
           </div>

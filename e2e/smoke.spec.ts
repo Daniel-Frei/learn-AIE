@@ -130,7 +130,7 @@ test("reveals question elo after answering and resets the timer for the next que
   await page.waitForTimeout(1200);
   await expect(page.getByText(/time:\s*0:0[1-9]\s*\/\s*3:00/i)).toBeVisible();
 
-  await page.locator("section").nth(0).getByRole("button").first().click();
+  await page.locator("section").nth(0).getByRole("checkbox").first().click();
   await page.getByRole("button", { name: /submit answer/i }).click();
   await expect(page.getByText(/question elo:/i)).toBeVisible();
 
@@ -138,4 +138,47 @@ test("reveals question elo after answering and resets the timer for the next que
 
   await expect(page.getByText(/question elo:/i)).toHaveCount(0);
   await expect(page.getByText(/time:\s*0:00\s*\/\s*3:00/i)).toBeVisible();
+});
+
+test("lets users select answer text without toggling the answer", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  await openFilters(page);
+  await page.getByRole("button", { name: /select all topics/i }).click();
+  await page.getByRole("button", { name: /apply selection/i }).click();
+
+  const firstOption = page
+    .locator("section")
+    .nth(0)
+    .getByRole("checkbox")
+    .first();
+  const firstOptionText = page.getByTestId("answer-option-text").first();
+
+  await expect(firstOption).toHaveAttribute("aria-checked", "false");
+
+  const box = await firstOptionText.boundingBox();
+  expect(box, "first answer option text should be visible").not.toBeNull();
+  if (!box) return;
+
+  await page.mouse.move(box.x + 2, box.y + box.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(
+    box.x + Math.min(box.width - 2, 420),
+    box.y + box.height / 2,
+    { steps: 12 },
+  );
+  await page.mouse.up();
+
+  const selectedText = await page.evaluate(
+    () => window.getSelection()?.toString().trim() ?? "",
+  );
+
+  expect(selectedText.length).toBeGreaterThan(0);
+  await expect(firstOption).toHaveAttribute("aria-checked", "false");
+
+  await page.evaluate(() => window.getSelection()?.removeAllRanges());
+  await firstOption.click();
+  await expect(firstOption).toHaveAttribute("aria-checked", "true");
 });

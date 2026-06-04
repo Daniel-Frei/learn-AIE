@@ -6,6 +6,7 @@
 - A Next.js + TypeScript quiz web app focused on deep learning, NLP, transformers, reinforcement learning, supporting math, and selected life-science study content.
 - An Expo React Native mobile app under `apps/mobile` lets users practice the same bundled question bank on iOS/Android while away from the desktop web UI.
 - Users can choose lecture series/books, specific sources, topic categories (`RL`, `DL`, `NLP`, `Math`, `Life Science`), and question Elo ranges, answer multi-select quiz questions, and view explanations. The default question Elo filter range is the full supported `0` to `3000` range.
+- Users can select and copy visible quiz text, including answer-option text, without accidentally toggling answers or causing browser console errors.
 - The quiz reveals each question's shared raw rating as its visible "Elo" label only after the user submits an answer, and shows a per-question timer that starts at zero and caps at 3 minutes.
 - Users can report a visible question with free-text comments; new reports are stored centrally in Supabase Postgres.
 - Each question has an info icon after the prompt; hovering or focusing it shows the short source-context sentence so randomized mixed-source practice still exposes the lecture/chapter context without taking persistent vertical space.

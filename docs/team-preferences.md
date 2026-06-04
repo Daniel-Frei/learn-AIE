@@ -61,6 +61,7 @@ This file captures durable process preferences so future tasks can follow them b
 ## UI Preferences
 
 - During active quiz practice, prioritize the question prompt and answer options over the quiz-set title; keep the title smaller and visually muted.
+- Quiz prompt, answer, and explanation text should remain selectable for copy/paste. Dragging across answer text must not toggle the answer; clicking or keyboard activation should remain the deliberate selection action.
 
 ## Shared Data Operations
 
