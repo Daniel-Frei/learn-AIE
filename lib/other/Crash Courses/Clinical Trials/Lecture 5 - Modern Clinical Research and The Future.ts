@@ -1079,4 +1079,543 @@ export const ClinicalTrialsLecture5Questions: Question[] = [
     explanation:
       "The unifying idea is that clinical trials convert medical uncertainty into trustworthy evidence. Digital tools, RWE, adaptive designs, and AI may change how research is conducted, but the mission remains ethical and reliable learning about human benefit and harm.",
   },
+  {
+    id: "clinical-trials-l5-q41",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "A diagnostic assay reliably measures a blood analyte, and the analyte correlates with disease status, but clinicians are unsure whether using the result changes management. Which distinctions are correct?",
+    options: [
+      {
+        text: "Reliable measurement of the intended analyte is an analytical-validity question.",
+        isCorrect: true,
+      },
+      {
+        text: "Whether the result improves decisions or outcomes is a clinical-utility question.",
+        isCorrect: true,
+      },
+      {
+        text: "Clinical utility follows automatically once the assay measures the analyte precisely.",
+        isCorrect: false,
+      },
+      {
+        text: "Clinical validity means the test is inexpensive enough for routine reimbursement.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Diagnostics require layered evidence. Analytical validity asks whether the test measures correctly, clinical validity asks whether it identifies or predicts the clinical condition, and clinical utility asks whether using it improves decisions or outcomes.",
+  },
+  {
+    id: "clinical-trials-l5-q42",
+    chapter: 5,
+    difficulty: "hard",
+    prompt:
+      "A diagnostic AI has high sensitivity in a curated validation set but lower specificity in routine clinics. Which consequences should be considered before deployment?",
+    options: [
+      {
+        text: "More false positives can increase follow-up testing, anxiety, cost, or unnecessary treatment.",
+        isCorrect: true,
+      },
+      {
+        text: "Performance should be assessed in the intended clinical setting, not only in a curated dataset.",
+        isCorrect: true,
+      },
+      {
+        text: "Clinical utility depends on whether using the test changes management or outcomes favorably.",
+        isCorrect: true,
+      },
+      {
+        text: "High sensitivity alone establishes a favorable benefit-risk profile even when specificity falls in routine clinics.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Diagnostic evidence is not a single accuracy number. Sensitivity, specificity, predictive values, setting, workflow effects, downstream harms, and clinical utility all affect whether the tool should be used.",
+  },
+  {
+    id: "clinical-trials-l5-q43",
+    chapter: 5,
+    difficulty: "easy",
+    prompt:
+      "Which sources can contribute real-world data in clinical research?",
+    options: [
+      {
+        text: "Electronic health records with diagnoses, medications, procedures, and laboratory results.",
+        isCorrect: true,
+      },
+      {
+        text: "Insurance claims with reimbursement-linked diagnoses, treatments, and healthcare utilization.",
+        isCorrect: true,
+      },
+      {
+        text: "Disease registries focused on long-term outcomes in defined patient groups.",
+        isCorrect: true,
+      },
+      {
+        text: "Wearables, pharmacy records, patient apps, and patient-generated data when collected during routine care or follow-up.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Real-world data are generated outside traditional tightly controlled trial visits. They can come from healthcare records, claims, registries, pharmacies, devices, apps, and patient-generated sources, each with different strengths and limitations.",
+  },
+  {
+    id: "clinical-trials-l5-q44",
+    chapter: 5,
+    difficulty: "hard",
+    prompt:
+      "A claims-database study finds fewer hospitalizations among patients prescribed Drug A than among patients prescribed Drug B. What is the strongest causal concern?",
+    options: [
+      {
+        text: "Treatment choice in routine care may reflect disease severity, clinician judgment, access, adherence, or comorbidities that also affect hospitalization.",
+        isCorrect: true,
+      },
+      {
+        text: "Claims data cannot record hospitalizations, so the endpoint is necessarily unavailable.",
+        isCorrect: false,
+      },
+      {
+        text: "Large real-world samples remove confounding by making treatment groups comparable across clinicians, payers, disease severity, adherence patterns, and access to care.",
+        isCorrect: false,
+      },
+      {
+        text: "The result is stronger than a randomized trial because it reflects actual reimbursement.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Real-world data can be large and useful, but treatment is not assigned by chance. Confounding by indication and other baseline differences can make treated groups differ in ways that also drive outcomes.",
+  },
+  {
+    id: "clinical-trials-l5-q45",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "After approval, a therapy is used by hundreds of thousands of patients, including groups excluded from pivotal trials. Which real-world evidence uses are especially relevant?",
+    options: [
+      {
+        text: "Detecting rare adverse events that pre-approval trials were too small or short to observe.",
+        isCorrect: true,
+      },
+      {
+        text: "Studying long-term outcomes, adherence, comparative effectiveness, and broader patient populations.",
+        isCorrect: true,
+      },
+      {
+        text: "Replacing all randomized efficacy evidence because the product is already marketed.",
+        isCorrect: false,
+      },
+      {
+        text: "Ignoring confounding because post-market data are collected after regulators have reviewed the product.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Post-market real-world evidence is valuable for safety, long-term outcomes, and performance in routine care. It complements pre-approval evidence but still needs careful design and interpretation, especially when making causal comparative claims.",
+  },
+  {
+    id: "clinical-trials-l5-q46",
+    chapter: 5,
+    difficulty: "hard",
+    prompt:
+      "A hybrid trial replaces some site visits with telemedicine, home nursing, eConsent, wearable sensors, and local labs. Which tradeoffs should the team anticipate?",
+    options: [
+      {
+        text: "Participation burden may decrease for some patients, potentially improving recruitment or representativeness.",
+        isCorrect: true,
+      },
+      {
+        text: "Technology reliability, patient compliance, privacy, and data-management complexity can become larger operational risks.",
+        isCorrect: true,
+      },
+      {
+        text: "Equity issues can arise if remote tools work better for patients with better connectivity, devices, or digital comfort.",
+        isCorrect: true,
+      },
+      {
+        text: "Hybrid operation removes the need for sites, monitoring, protocol adherence, or endpoint validation.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Decentralized and hybrid methods can reduce travel burden and broaden access, but they introduce new operational and equity risks. Remote data still need validation, privacy protection, compliance monitoring, and integration with the protocol.",
+  },
+  {
+    id: "clinical-trials-l5-q47",
+    chapter: 5,
+    difficulty: "easy",
+    prompt:
+      "Which components can appear in decentralized or hybrid clinical trials?",
+    options: [
+      {
+        text: "Telemedicine visits and remote clinician assessments.",
+        isCorrect: true,
+      },
+      {
+        text: "Home nursing, local laboratories, and direct-to-patient shipments when appropriate.",
+        isCorrect: true,
+      },
+      {
+        text: "Electronic consent with digital materials, comprehension checks, and signatures.",
+        isCorrect: true,
+      },
+      {
+        text: "Wearables, smartphone apps, remote patient-reported outcomes, and remote monitoring.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Decentralized trials move parts of participation away from the traditional site visit. Most future designs are likely to be hybrid, combining remote tools with site-based activities where clinical care, safety, or measurement requires it.",
+  },
+  {
+    id: "clinical-trials-l5-q48",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "An eConsent system includes videos, interactive explanations, comprehension questions, and electronic signatures. Which interpretations are appropriate?",
+    options: [
+      {
+        text: "eConsent can support informed consent, but the study still must ensure understanding, voluntariness, documentation, and participant protection.",
+        isCorrect: true,
+      },
+      {
+        text: "Digital consent may reduce travel or scheduling burden while creating accessibility, identity, privacy, and technology considerations.",
+        isCorrect: true,
+      },
+      {
+        text: "An electronic signature is enough to show valid consent even if the participant cannot understand the materials.",
+        isCorrect: false,
+      },
+      {
+        text: "eConsent removes the need for ethics review because the information is standardized in software.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "eConsent changes the delivery channel, not the ethical standard. A valid process still requires understandable information, voluntary participation, documentation, privacy, accessibility, and oversight.",
+  },
+  {
+    id: "clinical-trials-l5-q49",
+    chapter: 5,
+    difficulty: "hard",
+    prompt:
+      "A Parkinson's trial proposes a wearable-derived digital endpoint based on continuous movement data. Which validation questions are important?",
+    options: [
+      {
+        text: "Whether the sensor measures movement reliably across devices, patients, settings, and time.",
+        isCorrect: true,
+      },
+      {
+        text: "Whether the digital measure corresponds to symptoms, function, or outcomes that matter to patients and clinicians.",
+        isCorrect: true,
+      },
+      {
+        text: "Whether missingness, charging behavior, device removal, and data-processing choices could bias the endpoint.",
+        isCorrect: true,
+      },
+      {
+        text: "Whether continuous data volume is large enough to replace clinical meaning and endpoint validation.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Digital endpoints can be richer than clinic snapshots, but they must be reliable, clinically meaningful, and robust to use patterns and data processing. More data points do not automatically make an endpoint valid.",
+  },
+  {
+    id: "clinical-trials-l5-q50",
+    chapter: 5,
+    difficulty: "hard",
+    prompt: "Which safeguards are essential for adaptive trial designs?",
+    options: [
+      {
+        text: "Adaptation rules should be pre-specified before trial results are known.",
+        isCorrect: true,
+      },
+      {
+        text: "Statistical planning should account for adaptations such as dropping arms, changing randomization, or sample-size re-estimation.",
+        isCorrect: true,
+      },
+      {
+        text: "Governance and data monitoring should protect trial integrity while accumulating data are reviewed.",
+        isCorrect: true,
+      },
+      {
+        text: "Regulatory communication and documentation should make design changes transparent and interpretable.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Adaptive designs can make trials more efficient, but flexibility must be controlled. Pre-specification, statistical planning, governance, monitoring, and documentation prevent adaptations from becoming biased reactions to emerging results.",
+  },
+  {
+    id: "clinical-trials-l5-q51",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "An adaptive trial planned sample-size re-estimation if the observed control event rate was lower than expected. Midway through, the event rate is lower. Which interpretation is strongest?",
+    options: [
+      {
+        text: "Increasing sample size according to the pre-specified rule can help preserve power without inventing a post hoc design change.",
+        isCorrect: true,
+      },
+      {
+        text: "The trial should switch endpoints after seeing the event rate because the original endpoint became inconvenient.",
+        isCorrect: false,
+      },
+      {
+        text: "The lower event rate proves treatment efficacy before the arms are compared.",
+        isCorrect: false,
+      },
+      {
+        text: "Adaptive designs allow any modification that makes the trial more likely to be positive.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Sample-size re-estimation can be a legitimate adaptive feature when the rule is planned in advance and statistically controlled. The goal is to preserve interpretability, not to chase favorable results after looking at emerging data.",
+  },
+  {
+    id: "clinical-trials-l5-q52",
+    chapter: 5,
+    difficulty: "hard",
+    prompt:
+      "A platform trial evaluates several therapies under a common master protocol, allows ineffective arms to leave, and permits new arms to enter over time. Which statements are correct?",
+    options: [
+      {
+        text: "The shared infrastructure can be more efficient than launching separate standalone trials for each therapy.",
+        isCorrect: true,
+      },
+      {
+        text: "The design requires strong governance, statistical planning, operational infrastructure, and regulatory coordination.",
+        isCorrect: true,
+      },
+      {
+        text: "A platform trial is simpler than a fixed two-arm trial because every new arm uses the same interpretation.",
+        isCorrect: false,
+      },
+      {
+        text: "Allowing arms to enter or leave means treatment comparisons no longer need pre-specified rules.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Platform trials can accelerate evidence generation, especially when multiple candidate therapies must be evaluated. Their efficiency comes with complexity, so governance, master-protocol rules, statistical methods, operations, and regulatory alignment are central.",
+  },
+  {
+    id: "clinical-trials-l5-q53",
+    chapter: 5,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly distinguish basket and umbrella trials in precision medicine?",
+    options: [
+      {
+        text: "A basket trial can test one targeted therapy across multiple diseases or tumor types sharing a molecular feature.",
+        isCorrect: true,
+      },
+      {
+        text: "An umbrella trial can study one disease while assigning different therapies based on molecular subgroups.",
+        isCorrect: true,
+      },
+      {
+        text: "Both designs respond to smaller, biologically defined populations that make traditional one-question trials less efficient.",
+        isCorrect: true,
+      },
+      {
+        text: "Basket and umbrella trials avoid the need for biomarkers because treatment assignment is not biology-driven.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Basket and umbrella designs organize evidence around molecular features and precision medicine. A basket follows one therapy across related biological targets in different diseases, while an umbrella divides one disease into treatment-relevant subgroups.",
+  },
+  {
+    id: "clinical-trials-l5-q54",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "Which clinical-research tasks are realistic targets for AI assistance rather than full replacement?",
+    options: [
+      {
+        text: "Searching electronic health records for potentially eligible patients and extracting criteria-relevant information.",
+        isCorrect: true,
+      },
+      {
+        text: "Reviewing prior literature, trial registries, endpoint choices, and competitor development programs.",
+        isCorrect: true,
+      },
+      {
+        text: "Drafting or summarizing protocol sections, medical-writing content, and study-report materials for human review.",
+        isCorrect: true,
+      },
+      {
+        text: "Flagging anomalies, missing data, unusual site behavior, or safety signals for qualified teams to evaluate.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "AI is useful as a clinical-development copilot for search, drafting, summarization, screening, monitoring, and triage. The key is that outputs still require validation, accountability, context, and qualified human judgment.",
+  },
+  {
+    id: "clinical-trials-l5-q55",
+    chapter: 5,
+    difficulty: "hard",
+    prompt:
+      "An AI system identifies patients who appear eligible from electronic health records. What is the most important operational interpretation?",
+    options: [
+      {
+        text: "The model can create a candidate list, but eligibility, consent, safety, and protocol-specific judgment still require human and site confirmation.",
+        isCorrect: true,
+      },
+      {
+        text: "The model output is equivalent to randomization because it uses clinical data from routine care.",
+        isCorrect: false,
+      },
+      {
+        text: "Patients identified by AI can be enrolled without source review because the system already mapped diagnosis codes, medications, procedures, and lab results to eligibility criteria.",
+        isCorrect: false,
+      },
+      {
+        text: "Recruitment AI removes selection concerns because machine ranking is objective.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "AI-assisted recruitment can reduce manual screening burden and help sites find candidates, but it is not enrollment by itself. Trial teams still need eligibility confirmation, consent, safety review, source documentation, fairness checks, and clinical oversight.",
+  },
+  {
+    id: "clinical-trials-l5-q56",
+    chapter: 5,
+    difficulty: "hard",
+    prompt:
+      "Which limitations explain why AI does not replace clinical trials for proving that an intervention helps patients?",
+    options: [
+      {
+        text: "Causal inference still requires credible comparisons and bias control rather than pattern prediction alone.",
+        isCorrect: true,
+      },
+      {
+        text: "Regulatory accountability, patient safety responsibility, and novel clinical judgment remain human and organizational obligations.",
+        isCorrect: true,
+      },
+      {
+        text: "AI systems cannot process medical text, images, or structured data, so they have no operational uses.",
+        isCorrect: false,
+      },
+      {
+        text: "AI-generated narratives are acceptable replacements for data if they are internally consistent.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "AI can assist many trial tasks, but prediction and fluent text do not establish causal benefit-risk. Human accountability, validation, patient safety, regulatory judgment, and controlled evidence remain central.",
+  },
+  {
+    id: "clinical-trials-l5-q57",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "A biotechnology company develops Drug X for a rare inflammatory disease. Which risks remain after preclinical experiments show target engagement and animal-model improvement?",
+    options: [
+      {
+        text: "The biology may not translate from animals to humans or from pathway engagement to patient benefit.",
+        isCorrect: true,
+      },
+      {
+        text: "The Phase II effect may be overestimated, imprecise, or tied to an endpoint that fails in Phase III.",
+        isCorrect: true,
+      },
+      {
+        text: "Recruitment, missing data, underpowering, safety, regulatory expectations, and commercial differentiation may still threaten the program.",
+        isCorrect: true,
+      },
+      {
+        text: "Target engagement removes the need for randomized patient evidence in rare diseases.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "End-to-end development risk spans science, statistics, operations, regulation, and commercial value. Preclinical rationale is necessary but not sufficient because patients, endpoints, safety, recruitment, and evidence standards can still defeat a program.",
+  },
+  {
+    id: "clinical-trials-l5-q58",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "Which materials and judgments commonly matter during regulatory review of a new therapy?",
+    options: [
+      {
+        text: "Evidence of efficacy on meaningful endpoints in the intended population and comparator context.",
+        isCorrect: true,
+      },
+      {
+        text: "Safety data, adverse-event profile, exposure, dose, and benefit-risk assessment.",
+        isCorrect: true,
+      },
+      {
+        text: "Trial conduct, protocol adherence, data quality, missing data, analysis plans, and inspection readiness.",
+        isCorrect: true,
+      },
+      {
+        text: "Whether labeling, risk management, and post-market commitments are needed to support use after approval.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Regulators evaluate more than whether a single p-value is favorable. They judge whether the total evidence supports safe and effective use, whether trial conduct and analysis are credible, and what labeling or post-market obligations are needed.",
+  },
+  {
+    id: "clinical-trials-l5-q59",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "A Phase III trial is statistically positive, but the absolute benefit is small, monitoring burden is high, and cheaper standard options are available. Which development risk is most directly illustrated?",
+    options: [
+      {
+        text: "Commercial and clinical-adoption risk, because statistically valid evidence may still fail to show enough differentiated value for practice.",
+        isCorrect: true,
+      },
+      {
+        text: "Preclinical toxicology risk, because commercial differentiation is determined before human studies.",
+        isCorrect: false,
+      },
+      {
+        text: "Randomization failure, because a small absolute benefit means treatment groups were not comparable.",
+        isCorrect: false,
+      },
+      {
+        text: "Diagnostic analytical-validity risk, because treatment value depends only on laboratory precision.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "A therapy can meet a statistical endpoint and still struggle if the benefit is too small, burdensome, costly, or undifferentiated. Clinical development decisions must consider patient value, alternatives, implementation burden, and commercial feasibility alongside statistical success.",
+  },
+  {
+    id: "clinical-trials-l5-q60",
+    chapter: 5,
+    difficulty: "hard",
+    prompt:
+      "A founder argues that AI simulations and real-world databases will soon make randomized trials unnecessary for most new interventions. What is the strongest response?",
+    options: [
+      {
+        text: "Digital tools and real-world data can make evidence generation more efficient, but causal benefit-risk claims still need designs that control bias and protect patients.",
+        isCorrect: true,
+      },
+      {
+        text: "The founder is correct because large datasets contain every counterfactual needed for causal inference.",
+        isCorrect: false,
+      },
+      {
+        text: "Randomized trials are obsolete once models can predict which patients would respond.",
+        isCorrect: false,
+      },
+      {
+        text: "Real-world evidence is invalid for every regulatory or safety question, so modern tools should not be used.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The likely future combines trials, real-world evidence, decentralized methods, adaptive designs, and AI assistance. These tools can improve speed and reach, but they do not remove the need for credible causal design, validation, oversight, and patient safety.",
+  },
 ];

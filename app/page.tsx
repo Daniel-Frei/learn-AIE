@@ -11,6 +11,7 @@ export default function QuizPage() {
   const {
     selectedSources,
     selectedTopics,
+    selectedQuestionTypes,
     selectionMode,
     difficultyRange,
     applySelection,
@@ -46,6 +47,7 @@ export default function QuizPage() {
           title={title}
           selectedSources={selectedSources}
           selectedTopics={selectedTopics}
+          selectedQuestionTypes={selectedQuestionTypes}
           selectionMode={selectionMode}
           difficultyRange={difficultyRange}
           applySelection={applySelection}

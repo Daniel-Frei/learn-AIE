@@ -7,7 +7,7 @@ description: Create, extend, edit, rebalance, and register Learning AI quiz ques
 
 ## Overview
 
-Create, review, and maintain high-quality multi-select quiz question sets for the Learning AI repo. For new source material, generate one or more question files and register each set so it appears in the app's source selector. For existing question sets, preserve the local style while reviewing quality, adding questions, revising weak items, rebalancing answer patterns, rewriting topic slices, or fixing reported issues.
+Create, review, and maintain high-quality mixed-format quiz question sets for the Learning AI repo. Supported question types are multi-select multiple-choice and assertion-reason MCQs. For new source material, generate one or more question files and register each set so it appears in the app's source selector. For existing question sets, preserve the local style while reviewing quality, adding questions, revising weak items, rebalancing answer patterns, rewriting topic slices, or fixing reported issues.
 
 Use the repo docs as product context. Keep edits scoped to the new question files, `lib/quiz.ts` registration, tests/docs updates when required, and small supporting changes needed for verification.
 
@@ -106,10 +106,19 @@ For new question sets, run the gate over the full draft before finalizing. For a
 
 ## Question Requirements
 
-- Use TypeScript question files with four options per question.
-- Each option must have `isCorrect: true` or `isCorrect: false`; questions are multi-select and more than one option can be correct.
-- Each question must have exactly four options.
-- Option order should avoid predictable patterns. Do not rely on ordering, such as "first ... then ..." dependencies.
+- Use TypeScript question files with the option count required by the question type.
+- Question files may mix two question types:
+  - Multi-select multiple-choice questions. Existing questions can omit `type`; omitted `type` means `multiple-select`. Use exactly four options; each option must have `isCorrect: true` or `isCorrect: false`, and 1, 2, 3, or 4 options can be correct.
+  - Assertion-reason MCQs. Set `type: "assertion-reason"`, write a prompt containing an **Assertion** and a **Reason**, and use the standard fixed five-option order. Exactly one option should be correct.
+- Choose the mix of question types based on the source material, subject, and field. Use assertion-reason items when it is useful to test whether two statements are true and whether the reason explains the assertion; do not force a fixed mix or quota.
+- Multi-select answer options should be order-independent because the frontend randomizes them. Assertion-reason answer options should not rely on randomization and should keep this authored order:
+  - `Assertion is true, Reason is false.`
+  - `Assertion is false, Reason is true.`
+  - `Both are false.`
+  - `Both are true, and the Reason is the correct explanation of the Assertion.`
+  - `Both are true, but the Reason is NOT the correct explanation of the Assertion.`
+- Do not include a trailing instruction sentence such as "Which option correctly evaluates the assertion and reason?" in assertion-reason prompts. Use `Assertion: ...\n\nReason: ...` so the frontend displays the two statements as separate paragraphs.
+- For multi-select questions, option order should avoid predictable patterns. Do not rely on ordering, such as "first ... then ..." dependencies.
 - Questions can cover simple terminology, definitions, core concepts, complex concepts, applications, connections between ideas, and math.
 - Include math-related questions when math is part of the source material. The amount of math should be proportional to its importance in the material.
 - Do not include questions about logistics or administration, such as exams, course structure, or resources.
@@ -179,7 +188,8 @@ Before finalizing a generated or revised set, review it from the perspective of 
 
 ## Answer Distribution
 
-- Across each complete question set, keep 1-, 2-, 3-, and 4-correct-answer questions as balanced as practical unless the user or existing set convention specifies another pattern.
+- Across the multi-select questions in each complete question set, keep 1-, 2-, 3-, and 4-correct-answer questions as balanced as practical unless the user or existing set convention specifies another pattern.
+- For assertion-reason questions, exactly one option should be correct. When a set contains several assertion-reason questions, vary which of the fixed five ordered options is correct as practical.
 - For small or tightly scoped sets, prioritize source coverage and answer quality over exact answer-count balance.
 - "Correct" means `isCorrect: true`, meaning the user should select that option. It does not merely mean whether a statement is factually true in isolation.
 - Mixed phrasing is allowed, such as "which are correct" or "which are false", but the prompt must align exactly with the `isCorrect` flags.
@@ -217,6 +227,7 @@ export const sourceMaterialQuestions: Question[] = [
     id: "source-id-q01",
     chapter: 1,
     difficulty: "easy",
+    type: "multiple-select", // optional; omit this for ordinary multi-select questions if preferred
     prompt: "Question text here.",
     options: [
       { text: "Option 1 text", isCorrect: true },
@@ -230,10 +241,40 @@ export const sourceMaterialQuestions: Question[] = [
 ];
 ```
 
+For assertion-reason questions, use this shape inside the same `Question[]` array:
+
+```ts
+{
+  id: "source-id-q02",
+  chapter: 1,
+  difficulty: "medium",
+  type: "assertion-reason",
+  prompt:
+    "Assertion: Statement to evaluate.\n\nReason: Proposed explanation to evaluate.",
+  options: [
+    { text: "Assertion is true, Reason is false.", isCorrect: false },
+    { text: "Assertion is false, Reason is true.", isCorrect: false },
+    { text: "Both are false.", isCorrect: false },
+    {
+      text: "Both are true, and the Reason is the correct explanation of the Assertion.",
+      isCorrect: true,
+    },
+    {
+      text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
+      isCorrect: false,
+    },
+  ],
+  explanation:
+    "At least two sentences. Explain whether the assertion is true, whether the reason is true, and whether the reason explains the assertion.",
+}
+```
+
 ## Final Checklist
 
-- Exactly four options per question.
-- Multi-select compatible, with 1, 2, 3, or 4 correct answers.
+- Multi-select questions have exactly four options.
+- Multi-select questions are compatible with 1, 2, 3, or 4 correct answers.
+- Assertion-reason questions have exactly five options, set `type: "assertion-reason"`, use the standard assertion/reason options in authored order, and have exactly one correct answer.
+- Mixed question sets choose question type based on what best tests the source material, not a fixed quota.
 - If generating a new set, the user specified the question count or you asked for it before generating questions.
 - Difficulty is exactly `"easy"`, `"medium"`, or `"hard"`, follows any user/source-specified distribution, and otherwise uses a reasonable balanced default when the source material supports it.
 - Final response reports the difficulty balance with `"easy"`, `"medium"`, and `"hard"` counts.

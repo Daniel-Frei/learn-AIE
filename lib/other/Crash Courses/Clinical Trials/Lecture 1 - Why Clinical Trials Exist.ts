@@ -1059,4 +1059,559 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
     explanation:
       "Clinical research is both a scientific and operational system. Trustworthy trials require a strong causal design, ethical oversight, patient-centered conduct, and coordinated work across organizations that fund, run, monitor, regulate, and participate in the research.",
   },
+  {
+    id: "clinical-trials-l1-q41",
+    chapter: 1,
+    difficulty: "medium",
+    type: "assertion-reason",
+    prompt:
+      "Assertion: Improvement after receiving a treatment is not, by itself, enough to show that the treatment caused the improvement.\n\nReason: Natural recovery, placebo effects, regression to the mean, and random variation can all produce improvement without a specific treatment effect.",
+    options: [
+      {
+        text: "Assertion is true, Reason is false.",
+        isCorrect: false,
+      },
+      {
+        text: "Assertion is false, Reason is true.",
+        isCorrect: false,
+      },
+      {
+        text: "Both are false.",
+        isCorrect: false,
+      },
+      {
+        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
+        isCorrect: true,
+      },
+      {
+        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The assertion is true because before-after improvement alone does not answer the causal question. The reason is also true and directly explains the assertion: several non-treatment mechanisms can make patients improve, so a trial needs comparison and design features that separate those mechanisms from a real treatment effect.",
+  },
+  {
+    id: "clinical-trials-l1-q42",
+    chapter: 1,
+    difficulty: "hard",
+    type: "assertion-reason",
+    prompt:
+      "Assertion: A randomized controlled trial is always more informative than any observational study, regardless of execution quality or research question.\n\nReason: Randomization helps reduce confounding by balancing known and unknown baseline factors between treatment groups.",
+    options: [
+      {
+        text: "Assertion is true, Reason is false.",
+        isCorrect: false,
+      },
+      {
+        text: "Assertion is false, Reason is true.",
+        isCorrect: true,
+      },
+      {
+        text: "Both are false.",
+        isCorrect: false,
+      },
+      {
+        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
+        isCorrect: false,
+      },
+      {
+        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The assertion is false because the evidence hierarchy is useful but not mechanical; poor execution, irrelevant populations, invalid measurement, or the wrong research question can make a randomized trial less informative than a strong observational study. The reason is true because randomization is valuable precisely because it reduces systematic baseline differences, including confounders researchers did not measure.",
+  },
+  {
+    id: "clinical-trials-l1-q43",
+    chapter: 1,
+    difficulty: "medium",
+    type: "assertion-reason",
+    prompt:
+      "Assertion: A high-quality systematic review can be strong evidence, but it does not automatically eliminate publication bias.\n\nReason: Systematic reviews and meta-analyses combine information across multiple studies.",
+    options: [
+      {
+        text: "Assertion is true, Reason is false.",
+        isCorrect: false,
+      },
+      {
+        text: "Assertion is false, Reason is true.",
+        isCorrect: false,
+      },
+      {
+        text: "Both are false.",
+        isCorrect: false,
+      },
+      {
+        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
+        isCorrect: false,
+      },
+      {
+        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "The assertion is true because a review can only synthesize the evidence it identifies, and the visible evidence may still overrepresent favorable studies. The reason is also true, but it does not explain why publication bias remains; combining studies can increase precision, while missing negative or inconclusive studies can still distort the overall estimate.",
+  },
+  {
+    id: "clinical-trials-l1-q44",
+    chapter: 1,
+    difficulty: "hard",
+    prompt:
+      "A historically accepted treatment had a plausible theory, long clinical tradition, and many anecdotes of improvement, but later evidence showed it often harmed patients. Which lessons follow for evidence-based medicine?",
+    options: [
+      {
+        text: "Biological plausibility and clinical familiarity can support a hypothesis, but they do not establish net benefit in patients.",
+        isCorrect: true,
+      },
+      {
+        text: "Anecdotes become stronger causal evidence when the underlying theory has been accepted for many years.",
+        isCorrect: false,
+      },
+      {
+        text: "A method can appear to help when clinicians observe natural recovery, transient symptom change, or selective memorable successes.",
+        isCorrect: true,
+      },
+      {
+        text: "Long use in practice makes formal comparison unnecessary unless the treatment is new.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Historical examples such as bloodletting show why plausibility, authority, and memorable clinical impressions can mislead. The core lesson is not that mechanistic thinking is worthless; it is that a treatment claim still needs controlled evidence about benefits and harms in humans.",
+  },
+  {
+    id: "clinical-trials-l1-q45",
+    chapter: 1,
+    difficulty: "medium",
+    prompt:
+      "Which statements correctly describe the counterfactual problem behind treatment evaluation?",
+    options: [
+      {
+        text: "The ideal comparison asks what would have happened to the same patient at the same time under the alternative treatment condition.",
+        isCorrect: true,
+      },
+      {
+        text: "Ordinary clinical observation misses the counterfactual because the clinician sees the treated path, not the untreated path for that same patient.",
+        isCorrect: true,
+      },
+      {
+        text: "Randomized comparisons try to approximate the missing counterfactual by comparing groups that are similar except for assignment.",
+        isCorrect: true,
+      },
+      {
+        text: "The counterfactual problem is solved by following treated patients long enough after therapy starts.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The causal question asks what would have happened under a different treatment choice for the same person, which cannot be directly observed. Randomization and control groups do not reveal that exact alternate history, but they create a credible group-level approximation.",
+  },
+  {
+    id: "clinical-trials-l1-q46",
+    chapter: 1,
+    difficulty: "hard",
+    prompt:
+      "A clinic starts offering a new fatigue treatment to patients who seek care when symptoms are at their worst. Three months later, most report feeling better. Which mechanisms could create that pattern without a specific treatment effect?",
+    options: [
+      {
+        text: "Symptoms may fluctuate downward after patients enter care at an unusually severe point.",
+        isCorrect: true,
+      },
+      {
+        text: "Some patients may improve because the condition naturally waxes and wanes over time.",
+        isCorrect: true,
+      },
+      {
+        text: "Expectations, attention, and the care context may change subjective symptom reports.",
+        isCorrect: true,
+      },
+      {
+        text: "Patients who return for follow-up may differ from those who stop attending the clinic.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "This scenario combines regression to the mean, natural history, placebo/context effects, and follow-up selection. A high improvement rate after treatment is therefore compatible with several noncausal explanations unless the study includes a credible comparison.",
+  },
+  {
+    id: "clinical-trials-l1-q47",
+    chapter: 1,
+    difficulty: "medium",
+    prompt:
+      "Observational evidence suggested that hormone users had lower cardiovascular risk, but randomized trials later showed a less favorable benefit-risk picture. Which interpretations fit that contrast?",
+    options: [
+      {
+        text: "Hormone users may have differed from nonusers in socioeconomic status, health behaviors, healthcare access, or baseline risk.",
+        isCorrect: true,
+      },
+      {
+        text: "The randomized trials were irrelevant because observational studies had already established the causal cardiovascular benefit.",
+        isCorrect: false,
+      },
+      {
+        text: "The example illustrates how a plausible mechanism can coexist with confounding in human outcome data.",
+        isCorrect: true,
+      },
+      {
+        text: "Confounding is limited to measured variables, so unmeasured behavior differences could not have affected the earlier association.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The hormone-therapy example is a classic warning about healthy-user and related confounding. A biological rationale may make an association tempting, but randomized evidence can reveal that the patient groups in observational data were not comparable in causal terms.",
+  },
+  {
+    id: "clinical-trials-l1-q48",
+    chapter: 1,
+    difficulty: "hard",
+    prompt:
+      "A treatment area has many small published studies, most with favorable findings, while trial registries show several completed studies with no available results. Which concerns are justified?",
+    options: [
+      {
+        text: "The published literature may overestimate benefit if positive studies are easier to find than neutral or unfavorable studies.",
+        isCorrect: true,
+      },
+      {
+        text: "A meta-analysis of the published studies can increase precision around a biased evidence base.",
+        isCorrect: true,
+      },
+      {
+        text: "Searching registries and protocols can help detect missing evidence that ordinary database searches might miss.",
+        isCorrect: true,
+      },
+      {
+        text: "Publication bias matters mainly for case reports and does not affect randomized evidence syntheses.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Publication bias means the accessible literature may be a selected subset of the evidence. Meta-analysis can make the pooled estimate look precise, but it cannot fully repair evidence that is missing or selectively reported.",
+  },
+  {
+    id: "clinical-trials-l1-q49",
+    chapter: 1,
+    difficulty: "medium",
+    prompt:
+      "A sponsor funds a multicenter trial, hires a Contract Research Organization (CRO), and submits the results to regulators after independent ethics review. Which role descriptions are accurate?",
+    options: [
+      {
+        text: "The sponsor is responsible for the trial and its evidence package even when work is outsourced.",
+        isCorrect: true,
+      },
+      {
+        text: "The CRO may run operational activities such as monitoring, data management, statistics support, or project management.",
+        isCorrect: true,
+      },
+      {
+        text: "Regulators evaluate whether the submitted evidence supports approval and whether safety has been adequately addressed.",
+        isCorrect: true,
+      },
+      {
+        text: "Ethics committees or Institutional Review Boards review participant protection, consent, and risk before and during human-subject research.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Modern clinical trials are multi-organization systems, but accountability and oversight remain structured. Sponsors, CROs, regulators, and ethics bodies have different responsibilities that together support credible evidence and participant protection.",
+  },
+  {
+    id: "clinical-trials-l1-q50",
+    chapter: 1,
+    difficulty: "hard",
+    prompt:
+      "A single patient experiences an unexpected severe reaction shortly after receiving a new biologic. What is the strongest use of that case report?",
+    options: [
+      {
+        text: "It can generate a safety signal that deserves follow-up, especially if the event is rare or biologically plausible.",
+        isCorrect: true,
+      },
+      {
+        text: "It establishes the event rate because the outcome was severe and temporally close to treatment.",
+        isCorrect: false,
+      },
+      {
+        text: "It ranks above randomized evidence for estimating average benefit because individual detail is richer.",
+        isCorrect: false,
+      },
+      {
+        text: "It removes the need for comparison because rare adverse events are self-explanatory.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Case reports are valuable for noticing unusual events and generating hypotheses, particularly for rare harms. They usually cannot estimate incidence or prove causality because they lack a denominator, a comparison group, and control for alternative explanations.",
+  },
+  {
+    id: "clinical-trials-l1-q51",
+    chapter: 1,
+    difficulty: "medium",
+    prompt:
+      "A trial's primary outcome is a clinician-rated symptom score with borderline cases. Which design choices directly address observer bias?",
+    options: [
+      {
+        text: "Keep outcome assessors unaware of treatment assignment when feasible.",
+        isCorrect: true,
+      },
+      {
+        text: "Use a pre-specified, standardized scoring rubric for assessments.",
+        isCorrect: true,
+      },
+      {
+        text: "Train assessors so similar patient presentations are scored consistently across sites.",
+        isCorrect: true,
+      },
+      {
+        text: "Let assessors review expected treatment mechanisms before rating each participant's outcome.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Observer bias is a major concern when outcomes involve judgment, especially near decision thresholds. Blinded assessment, standard definitions, and training reduce the chance that expectations about the treatment influence how outcomes are recorded.",
+  },
+  {
+    id: "clinical-trials-l1-q52",
+    chapter: 1,
+    difficulty: "easy",
+    prompt:
+      "Which statements correctly describe the evidence hierarchy without treating it as a mechanical rule?",
+    options: [
+      {
+        text: "Expert opinion and case reports can be useful for ideas, rare events, or early signals.",
+        isCorrect: true,
+      },
+      {
+        text: "Observational studies can be informative for rare outcomes, long-term harms, feasibility, and real-world patterns.",
+        isCorrect: true,
+      },
+      {
+        text: "Randomized controlled trials are especially strong for causal treatment comparisons when they are well designed and executed.",
+        isCorrect: true,
+      },
+      {
+        text: "Systematic reviews and meta-analyses depend on the quality, completeness, and similarity of the included studies.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "The hierarchy is a guide to typical causal strength, not a substitute for judgment. Each evidence type has useful roles and limitations, and the value of any study still depends on execution, relevance, completeness, and the question being asked.",
+  },
+  {
+    id: "clinical-trials-l1-q53",
+    chapter: 1,
+    difficulty: "hard",
+    prompt:
+      "People who take vitamin supplements have lower mortality in a large observational dataset. Later work shows supplement users exercise more, smoke less, and have higher incomes. Which conclusions are justified?",
+    options: [
+      {
+        text: "The supplement-mortality association may reflect differences between users and nonusers rather than a supplement effect.",
+        isCorrect: true,
+      },
+      {
+        text: "Adjustment for exercise, smoking, and income proves the supplement effect if the adjusted estimate remains favorable.",
+        isCorrect: false,
+      },
+      {
+        text: "The example illustrates why health behavior and access to care can create misleading treatment associations.",
+        isCorrect: true,
+      },
+      {
+        text: "The association is immune to confounding because mortality is an objective outcome.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Objective outcomes can still be confounded when exposure groups differ at baseline. Measured adjustment may help, but residual and unmeasured confounding can remain, so the observational association should not be treated as definitive causal evidence.",
+  },
+  {
+    id: "clinical-trials-l1-q54",
+    chapter: 1,
+    difficulty: "hard",
+    prompt:
+      "A researcher wants to know whether Drug X caused one patient's recovery. Which statements correctly connect the individual causal question to trial design?",
+    options: [
+      {
+        text: "The exact untreated outcome for that same patient is unavailable once the patient receives Drug X.",
+        isCorrect: true,
+      },
+      {
+        text: "A randomized control group estimates what would happen among comparable patients who did not receive Drug X.",
+        isCorrect: true,
+      },
+      {
+        text: "The trial answer is probabilistic and group-based rather than a direct view of the individual's alternate history.",
+        isCorrect: true,
+      },
+      {
+        text: "If the patient's recovery is dramatic, the counterfactual question no longer matters.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Clinical trials address the unobservable individual counterfactual by creating comparison groups. Even strong trial evidence usually estimates average causal effects and uncertainty, so a dramatic single-patient recovery still needs context.",
+  },
+  {
+    id: "clinical-trials-l1-q55",
+    chapter: 1,
+    difficulty: "medium",
+    prompt:
+      "Which responsibilities reflect the ethical side of trustworthy clinical research?",
+    options: [
+      {
+        text: "Participants should receive understandable information about risks, benefits, alternatives, and voluntary participation.",
+        isCorrect: true,
+      },
+      {
+        text: "Independent review should examine whether risks are justified and participant protections are adequate.",
+        isCorrect: true,
+      },
+      {
+        text: "Safety monitoring should continue because learning from humans creates obligations during the study, not just at approval.",
+        isCorrect: true,
+      },
+      {
+        text: "Patient burden and patient-centered outcomes matter because participants are partners in generating evidence, not merely data sources.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Ethics is not separate from evidence quality; people accept risk and burden so medicine can learn. Informed consent, independent oversight, safety monitoring, and patient-centered outcomes protect participants and improve the relevance of the research.",
+  },
+  {
+    id: "clinical-trials-l1-q56",
+    chapter: 1,
+    difficulty: "hard",
+    prompt:
+      "A systematic review finds a pooled benefit, but most included studies are small, unblinded, and funded by product sponsors. Which interpretations are most defensible?",
+    options: [
+      {
+        text: "The pooled estimate should be interpreted alongside risk of bias, study size, blinding, funding, and consistency.",
+        isCorrect: true,
+      },
+      {
+        text: "Combining studies removes the need to evaluate the credibility of the individual studies.",
+        isCorrect: false,
+      },
+      {
+        text: "If small studies are systematically favorable, the pooled result may be less trustworthy than its numerical precision suggests.",
+        isCorrect: true,
+      },
+      {
+        text: "Sponsorship automatically invalidates each study regardless of methods or transparency.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Evidence synthesis is strongest when the underlying studies are credible and complete. Small, biased, or selectively reported studies can produce a precise-looking pooled estimate that still overstates benefit, while sponsorship is a risk factor to evaluate rather than an automatic disqualifier.",
+  },
+  {
+    id: "clinical-trials-l1-q57",
+    chapter: 1,
+    difficulty: "easy",
+    prompt:
+      "Which examples reflect a patient-centered view of clinical research?",
+    options: [
+      {
+        text: "Selecting outcomes that capture how patients feel, function, or survive.",
+        isCorrect: true,
+      },
+      {
+        text: "Considering visit burden, travel, time, and risk when designing participation.",
+        isCorrect: true,
+      },
+      {
+        text: "Including patient-reported outcomes when symptoms or quality of life are central to the condition.",
+        isCorrect: true,
+      },
+      {
+        text: "Treating participants as passive sources of data after consent is signed.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Modern clinical research increasingly treats patients as people whose outcomes, burden, preferences, and safety matter throughout the trial. Patient-reported outcomes and practical participation burden can be central to whether evidence is meaningful.",
+  },
+  {
+    id: "clinical-trials-l1-q58",
+    chapter: 1,
+    difficulty: "hard",
+    prompt:
+      "A promising treatment idea is moving toward a first controlled trial. Which activities connect the scientific hypothesis to credible human evidence?",
+    options: [
+      {
+        text: "Define the population, intervention, comparator, outcomes, and time frame before evaluating results.",
+        isCorrect: true,
+      },
+      {
+        text: "Choose design features such as randomization, blinding, and control groups to reduce bias where feasible.",
+        isCorrect: true,
+      },
+      {
+        text: "Collect safety data and obtain ethics review because patients face real risk during evidence generation.",
+        isCorrect: true,
+      },
+      {
+        text: "Interpret results in context rather than treating a favorable before-after pattern as a completed causal answer.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "A trial converts a plausible idea into interpretable evidence by specifying the question and controlling major sources of bias. Ethical review, safety collection, and contextual interpretation are part of the same evidence system because human participants are involved.",
+  },
+  {
+    id: "clinical-trials-l1-q59",
+    chapter: 1,
+    difficulty: "medium",
+    prompt:
+      "Which uses of observational studies fit their strengths while respecting their causal limitations?",
+    options: [
+      {
+        text: "Studying rare harms or long-term outcomes that would be difficult to capture in a pre-approval randomized trial.",
+        isCorrect: true,
+      },
+      {
+        text: "Estimating routine-care patterns, adherence, and outcomes in broader patient populations.",
+        isCorrect: true,
+      },
+      {
+        text: "Replacing randomized evidence for any treatment benefit claim whenever the observational sample is large.",
+        isCorrect: false,
+      },
+      {
+        text: "Avoiding concerns about confounding because real-world clinicians choose treatments for practical reasons.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Observational evidence can be extremely useful for safety, long-term outcomes, and real-world practice patterns. Its major limitation is that treatment choice is not assigned by chance, so confounding and selection remain central threats when making causal claims.",
+  },
+  {
+    id: "clinical-trials-l1-q60",
+    chapter: 1,
+    difficulty: "hard",
+    prompt:
+      "A clinician reports that a new treatment helped 18 of 20 patients in routine practice. Which next step most directly tests whether the treatment caused the improvement?",
+    options: [
+      {
+        text: "Run a study with a comparable control group and assignment process that reduces baseline differences between groups.",
+        isCorrect: true,
+      },
+      {
+        text: "Collect more testimonials from patients who improved so the pattern becomes clearer.",
+        isCorrect: false,
+      },
+      {
+        text: "Ask expert clinicians whether the mechanism sounds plausible enough to explain the recoveries.",
+        isCorrect: false,
+      },
+      {
+        text: "Compare patients' symptoms after treatment with their symptoms at their worst pre-treatment visit.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The decisive missing piece is a credible comparison, ideally with assignment that reduces systematic baseline differences. Testimonials, mechanism, and before-after comparisons can suggest hypotheses, but they do not separate treatment effect from natural recovery, regression to the mean, placebo effects, or selection.",
+  },
 ];

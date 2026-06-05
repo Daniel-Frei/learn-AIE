@@ -5,9 +5,12 @@ import type { DifficultyRange, QuestionSelectionMode } from "../lib/useQuiz";
 import {
   ALL_TOPICS,
   ALL_SOURCE_IDS,
+  QUESTION_TYPE_LABELS,
+  QUESTION_TYPES,
   QUESTION_SOURCES,
   SOURCE_SERIES,
   getSeriesIdsForSources,
+  type QuestionType,
   type SourceId,
   type SourceSeriesId,
   type Topic,
@@ -17,12 +20,14 @@ type Props = {
   title: string;
   selectedSources: SourceId[];
   selectedTopics: Topic[];
+  selectedQuestionTypes: QuestionType[];
   selectionMode: QuestionSelectionMode;
   difficultyRange: DifficultyRange;
   applySelection: (payload: {
     sources: SourceId[];
     series: SourceSeriesId[];
     topics: Topic[];
+    questionTypes: QuestionType[];
     mode: QuestionSelectionMode;
     difficultyRange: DifficultyRange;
   }) => void;
@@ -41,6 +46,7 @@ export default function QuizHeader({
   title,
   selectedSources,
   selectedTopics,
+  selectedQuestionTypes,
   selectionMode,
   difficultyRange,
   applySelection,
@@ -59,6 +65,9 @@ export default function QuizHeader({
   const [pendingSources, setPendingSources] =
     useState<SourceId[]>(selectedSources);
   const [pendingTopics, setPendingTopics] = useState<Topic[]>(selectedTopics);
+  const [pendingQuestionTypes, setPendingQuestionTypes] = useState<
+    QuestionType[]
+  >(selectedQuestionTypes);
   const [pendingMode, setPendingMode] =
     useState<QuestionSelectionMode>(selectionMode);
   const [pendingRange, setPendingRange] =
@@ -72,6 +81,10 @@ export default function QuizHeader({
   useEffect(() => {
     setPendingTopics(selectedTopics);
   }, [selectedTopics]);
+
+  useEffect(() => {
+    setPendingQuestionTypes(selectedQuestionTypes);
+  }, [selectedQuestionTypes]);
 
   useEffect(() => {
     setPendingMode(selectionMode);
@@ -120,6 +133,14 @@ export default function QuizHeader({
     );
   };
 
+  const togglePendingQuestionType = (questionType: QuestionType) => {
+    setPendingQuestionTypes((prev) =>
+      prev.includes(questionType)
+        ? prev.filter((type) => type !== questionType)
+        : [...prev, questionType],
+    );
+  };
+
   const handleSelectAllSeries = () => {
     setPendingSources(ALL_SOURCE_IDS);
   };
@@ -137,17 +158,20 @@ export default function QuizHeader({
     const safeSources = Array.from(new Set(pendingSources));
     const safeSeries = Array.from(new Set(pendingSeries));
     const safeTopics = Array.from(new Set(pendingTopics));
+    const safeQuestionTypes = Array.from(new Set(pendingQuestionTypes));
     const clampedRange = clampRange(pendingRange);
 
     applySelection({
       sources: safeSources,
       series: safeSeries,
       topics: safeTopics,
+      questionTypes: safeQuestionTypes,
       mode: pendingMode,
       difficultyRange: clampedRange,
     });
     setPendingSources(safeSources);
     setPendingTopics(safeTopics);
+    setPendingQuestionTypes(safeQuestionTypes);
     setPendingRange(clampedRange);
     setIsSelectorOpen(false);
   };
@@ -155,6 +179,7 @@ export default function QuizHeader({
   const handleCancelSelection = () => {
     setPendingSources(selectedSources);
     setPendingTopics(selectedTopics);
+    setPendingQuestionTypes(selectedQuestionTypes);
     setPendingMode(selectionMode);
     setPendingRange(difficultyRange);
     setIsSelectorOpen(false);
@@ -215,7 +240,8 @@ export default function QuizHeader({
           <div className="flex items-start justify-between gap-4">
             <div>
               <h3 className="text-sm font-semibold text-slate-100">
-                Pick mode, series, lectures, topics and question Elo range
+                Pick mode, question types, series, lectures, topics and question
+                Elo range
               </h3>
               <p className="text-xs text-slate-400">
                 Keep any combination selected. Questions are included if they
@@ -256,6 +282,35 @@ export default function QuizHeader({
               >
                 Climb
               </button>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <div className="text-xs font-semibold text-slate-300">
+              Question types
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {QUESTION_TYPES.map((questionType) => {
+                const checked = pendingQuestionTypes.includes(questionType);
+                return (
+                  <label
+                    key={questionType}
+                    className={`flex items-center gap-2 rounded-md border px-3 py-2 text-xs cursor-pointer ${
+                      checked
+                        ? "border-sky-400 bg-slate-800 text-slate-100"
+                        : "border-slate-700 bg-slate-900/60 text-slate-300"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={checked}
+                      onChange={() => togglePendingQuestionType(questionType)}
+                      className="accent-sky-400 h-4 w-4"
+                    />
+                    {QUESTION_TYPE_LABELS[questionType]}
+                  </label>
+                );
+              })}
             </div>
           </div>
 

@@ -13,11 +13,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import {
   ALL_SOURCE_IDS,
   ALL_TOPICS,
+  QUESTION_TYPE_LABELS,
+  QUESTION_TYPES,
   QUESTION_SOURCES,
   SOURCE_SERIES,
   getSeriesIdsForSources,
   getTitleForSelection,
   type Question,
+  type QuestionType,
   type SourceId,
   type SourceSeriesId,
   type Topic,
@@ -244,6 +247,9 @@ export default function QuizScreen() {
   const [isFilterOpen, setIsFilterOpen] = useState(true);
   const [pendingSources, setPendingSources] = useState<SourceId[]>([]);
   const [pendingTopics, setPendingTopics] = useState<Topic[]>([]);
+  const [pendingQuestionTypes, setPendingQuestionTypes] = useState<
+    QuestionType[]
+  >([...QUESTION_TYPES]);
   const [pendingMode, setPendingMode] =
     useState<QuestionSelectionMode>("standard");
   const [pendingRange, setPendingRange] = useState<DifficultyRange>({
@@ -265,6 +271,10 @@ export default function QuizScreen() {
   useEffect(() => {
     setPendingTopics(quiz.selectedTopics);
   }, [quiz.selectedTopics]);
+
+  useEffect(() => {
+    setPendingQuestionTypes(quiz.selectedQuestionTypes);
+  }, [quiz.selectedQuestionTypes]);
 
   useEffect(() => {
     setPendingMode(quiz.selectionMode);
@@ -312,11 +322,20 @@ export default function QuizScreen() {
     );
   };
 
+  const toggleQuestionType = (questionType: QuestionType) => {
+    setPendingQuestionTypes((prev) =>
+      prev.includes(questionType)
+        ? prev.filter((item) => item !== questionType)
+        : [...prev, questionType],
+    );
+  };
+
   const applyFilters = () => {
     quiz.applySelection({
       sources: pendingSources,
       series: pendingSeries,
       topics: pendingTopics,
+      questionTypes: pendingQuestionTypes,
       mode: pendingMode,
       difficultyRange: pendingRange,
     });
@@ -496,6 +515,28 @@ export default function QuizScreen() {
                 active={pendingMode === "climb"}
                 onPress={() => setPendingMode("climb")}
               />
+            </View>
+
+            <Text style={styles.sectionLabel}>Question types</Text>
+            <View style={styles.wrapRow}>
+              {QUESTION_TYPES.map((questionType) => {
+                const active = pendingQuestionTypes.includes(questionType);
+                return (
+                  <Pressable
+                    key={questionType}
+                    accessibilityRole="checkbox"
+                    accessibilityState={{ checked: active }}
+                    onPress={() => toggleQuestionType(questionType)}
+                    style={[styles.chip, active && styles.chipActive]}
+                  >
+                    <Text
+                      style={[styles.chipText, active && styles.chipTextActive]}
+                    >
+                      {QUESTION_TYPE_LABELS[questionType]}
+                    </Text>
+                  </Pressable>
+                );
+              })}
             </View>
 
             <Text style={styles.sectionLabel}>Topics</Text>

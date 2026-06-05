@@ -1013,4 +1013,544 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
     explanation:
       "Trustworthy evidence depends on asking a precise question, reducing bias, measuring the right outcomes, and understanding the target population. Good design links causal inference with practical relevance rather than treating a trial as a generic data-collection exercise.",
   },
+  {
+    id: "clinical-trials-l2-q41",
+    chapter: 2,
+    difficulty: "medium",
+    prompt:
+      "A sponsor says a new therapy reduces chronic back pain. Which missing design details are most needed to turn that claim into an interpretable PICO(T) question?",
+    options: [
+      {
+        text: "The patient group, including disease duration, severity, prior treatments, and relevant comorbidities.",
+        isCorrect: true,
+      },
+      {
+        text: "The comparator, outcome instrument, clinically relevant time point, and safety follow-up.",
+        isCorrect: true,
+      },
+      {
+        text: "The commercial forecast for the therapy's first year after launch.",
+        isCorrect: false,
+      },
+      {
+        text: "The number of clinicians who believe the mechanism is plausible before the trial starts.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "PICO(T) makes a treatment claim testable by specifying who is studied, what is tested, what it is compared with, what is measured, and when. Commercial interest and expert enthusiasm may influence development, but they do not define the clinical comparison needed for evidence.",
+  },
+  {
+    id: "clinical-trials-l2-q42",
+    chapter: 2,
+    difficulty: "hard",
+    prompt:
+      "A 48-patient trial enrolls slowly over six months and disease stage strongly predicts outcome. Which randomization choices are defensible?",
+    options: [
+      {
+        text: "Block randomization can reduce long temporary imbalances while enrollment is still underway.",
+        isCorrect: true,
+      },
+      {
+        text: "Stratified randomization can balance treatment groups within important disease-stage categories.",
+        isCorrect: true,
+      },
+      {
+        text: "Simple randomization may still be valid, but it has a higher chance of imbalance in a small trial.",
+        isCorrect: true,
+      },
+      {
+        text: "Physician-selected assignment is preferable because physicians can intentionally balance prognosis using clinical judgment.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Small trials are more vulnerable to chance imbalances, especially when enrollment is gradual or a prognostic factor is crucial. Block and stratified methods preserve random assignment while addressing different balance problems that simple randomization may leave to chance.",
+  },
+  {
+    id: "clinical-trials-l2-q43",
+    chapter: 2,
+    difficulty: "hard",
+    prompt:
+      "Which design practices help preserve the value of randomization after the assignment sequence has been generated?",
+    options: [
+      {
+        text: "Conceal the next assignment so enrollment decisions cannot be influenced by anticipated treatment group.",
+        isCorrect: true,
+      },
+      {
+        text: "Use clear eligibility criteria before assignment so post-randomization exclusions do not selectively reshape groups.",
+        isCorrect: true,
+      },
+      {
+        text: "Track baseline characteristics to detect meaningful imbalances that can occur by chance.",
+        isCorrect: true,
+      },
+      {
+        text: "Analyze and report protocol deviations because biased follow-up or adherence can weaken causal interpretation.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Randomization is not just a random-number list; its value depends on protecting the assignment process and preserving comparable groups through conduct and analysis. Allocation concealment, pre-specified criteria, baseline checks, and deviation reporting keep the causal comparison interpretable.",
+  },
+  {
+    id: "clinical-trials-l2-q44",
+    chapter: 2,
+    difficulty: "medium",
+    prompt:
+      "In a diabetes trial, HbA1c improves at 12 months, but cardiovascular events and serious adverse events are still being followed. Which interpretation is most appropriate?",
+    options: [
+      {
+        text: "HbA1c is useful evidence about glycemic control, but patient-important benefit and safety still require outcome and harm assessment.",
+        isCorrect: true,
+      },
+      {
+        text: "HbA1c improvement settles the full benefit-risk question because biomarkers are more objective than clinical outcomes.",
+        isCorrect: false,
+      },
+      {
+        text: "Cardiovascular outcomes are irrelevant once a diabetes drug changes a diabetes biomarker.",
+        isCorrect: false,
+      },
+      {
+        text: "Safety follow-up is mainly a Phase IV concern and should not affect Phase II or Phase III interpretation.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "HbA1c can be an important biomarker, but it is not the entire clinical question. Trial design must connect biomarker effects with safety, patient outcomes, and the specific claim the study is meant to support.",
+  },
+  {
+    id: "clinical-trials-l2-q45",
+    chapter: 2,
+    difficulty: "hard",
+    prompt:
+      "A double-blind drug trial uses matching placebo and concealed randomization codes, with emergency unblinding available for safety. Which statements are correct?",
+    options: [
+      {
+        text: "Matching appearance and concealed codes reduce expectation and assessment differences between groups.",
+        isCorrect: true,
+      },
+      {
+        text: "Emergency unblinding can be compatible with blinding when it is reserved for participant safety and documented.",
+        isCorrect: true,
+      },
+      {
+        text: "Double blinding eliminates the need for objective endpoint definitions and safety monitoring.",
+        isCorrect: false,
+      },
+      {
+        text: "A trial remains fully blinded even if investigators routinely check assignments before rating outcomes.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Blinding is meant to prevent expectations and behavior from differing by assignment, but safety exceptions can be built into the protocol. It does not replace endpoint clarity, safety oversight, or disciplined conduct.",
+  },
+  {
+    id: "clinical-trials-l2-q46",
+    chapter: 2,
+    difficulty: "hard",
+    prompt:
+      "A rehabilitation trial cannot blind participants or therapists. Which strategies can still improve interpretability?",
+    options: [
+      {
+        text: "Use blinded adjudicators for outcomes that require judgment.",
+        isCorrect: true,
+      },
+      {
+        text: "Choose objective or validated endpoints where they match the clinical question.",
+        isCorrect: true,
+      },
+      {
+        text: "Standardize co-interventions and follow-up procedures across groups.",
+        isCorrect: true,
+      },
+      {
+        text: "Drop the comparator group so expectation differences cannot be observed.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Some interventions are inherently difficult to blind, but design can still reduce bias. Blinded assessment, validated outcomes, standardized care, and a relevant comparator preserve more interpretability than abandoning the comparison.",
+  },
+  {
+    id: "clinical-trials-l2-q47",
+    chapter: 2,
+    difficulty: "easy",
+    prompt:
+      "Which statements correctly describe endpoint types used in clinical trials?",
+    options: [
+      {
+        text: "Clinical endpoints directly reflect events or states that matter to patients, such as death, stroke, hospitalization, symptoms, or functioning.",
+        isCorrect: true,
+      },
+      {
+        text: "Patient-reported outcomes capture information directly from patients, such as pain, fatigue, or quality of life.",
+        isCorrect: true,
+      },
+      {
+        text: "Biomarkers are objective biological measurements such as blood pressure, tumor size, viral load, or laboratory values.",
+        isCorrect: true,
+      },
+      {
+        text: "Surrogate endpoints use a biomarker or intermediate measure as a substitute for a clinical outcome.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Endpoint selection determines what a trial is actually testing. Clinical outcomes, patient-reported outcomes, biomarkers, and surrogate endpoints each answer different questions and carry different strengths and limitations.",
+  },
+  {
+    id: "clinical-trials-l2-q48",
+    chapter: 2,
+    difficulty: "medium",
+    prompt:
+      "A pain trial relies on a patient-reported outcome collected through weekly questionnaires. Which design choices strengthen that endpoint?",
+    options: [
+      {
+        text: "Use a validated pain instrument with defined scoring and timing.",
+        isCorrect: true,
+      },
+      {
+        text: "Specify the analysis of change from baseline before looking at treatment results.",
+        isCorrect: true,
+      },
+      {
+        text: "Let each site choose a different pain scale if local clinicians prefer it.",
+        isCorrect: false,
+      },
+      {
+        text: "Treat any favorable comment recorded during follow-up as equivalent to the primary endpoint.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Patient-reported outcomes can be highly relevant, but they need standardized instruments, timing, scoring, and analysis. Otherwise subjective outcomes become vulnerable to inconsistent measurement and selective interpretation.",
+  },
+  {
+    id: "clinical-trials-l2-q49",
+    chapter: 2,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly evaluate surrogate endpoints across different disease settings?",
+    options: [
+      {
+        text: "A surrogate is more credible when prior evidence shows that changing it reliably predicts meaningful patient outcomes in that context.",
+        isCorrect: true,
+      },
+      {
+        text: "A surrogate can fail if the intervention improves the marker while worsening mortality, symptoms, or serious harms.",
+        isCorrect: true,
+      },
+      {
+        text: "Validation depends on the disease, intervention mechanism, endpoint history, and outcome being substituted.",
+        isCorrect: true,
+      },
+      {
+        text: "A biomarker that is easy to measure has the same evidentiary strength across diseases once it changes in the desired direction.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Surrogates are not uniformly good or bad. Their credibility depends on whether the marker is a validated substitute for patient benefit in the relevant disease and intervention context, not merely on convenience or objectivity.",
+  },
+  {
+    id: "clinical-trials-l2-q50",
+    chapter: 2,
+    difficulty: "hard",
+    prompt:
+      "Certain anti-arrhythmic drugs improved electrocardiogram rhythm measures but were later found to increase mortality. Which lessons does this example support?",
+    options: [
+      {
+        text: "Improving an intermediate physiological marker can be misleading when the marker is not a reliable substitute for survival or serious outcomes.",
+        isCorrect: true,
+      },
+      {
+        text: "A treatment can move the intended biological signal while still producing net harm.",
+        isCorrect: true,
+      },
+      {
+        text: "Patient-important outcomes and safety can overturn confidence based on a plausible surrogate.",
+        isCorrect: true,
+      },
+      {
+        text: "Surrogate endpoint trials should be interpreted through evidence history and biological mechanism, not measurement convenience alone.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "The anti-arrhythmic example is a strong warning that a biomarker can move in the desired direction while patients do worse. Surrogates need validation against outcomes that matter, and benefit-risk interpretation must include harms.",
+  },
+  {
+    id: "clinical-trials-l2-q51",
+    chapter: 2,
+    difficulty: "medium",
+    prompt:
+      "A first-in-human study of a potentially toxic oncology drug enrolls patients with advanced cancer rather than healthy volunteers. Which phase-related interpretation is strongest?",
+    options: [
+      {
+        text: "The study can still be Phase I because the central goals are safety, tolerability, dose range, and early pharmacology.",
+        isCorrect: true,
+      },
+      {
+        text: "Any study in patients is Phase II because Phase I always uses healthy volunteers.",
+        isCorrect: false,
+      },
+      {
+        text: "The study is Phase III if the disease is severe enough to justify risk.",
+        isCorrect: false,
+      },
+      {
+        text: "Phase labels depend mainly on whether a CRO or academic site conducts the trial.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Phase labels are tied to development questions, not a rigid participant rule. Many Phase I oncology studies enroll patients because exposing healthy volunteers to cytotoxic or high-risk agents would be inappropriate.",
+  },
+  {
+    id: "clinical-trials-l2-q52",
+    chapter: 2,
+    difficulty: "medium",
+    prompt:
+      "A Phase II program tests three doses and shows the highest dose has more toxicity while the middle dose has similar biomarker response and better tolerability. Which planning conclusions are reasonable?",
+    options: [
+      {
+        text: "Dose selection should weigh early efficacy signals together with safety and tolerability.",
+        isCorrect: true,
+      },
+      {
+        text: "The middle dose may be a better Phase III candidate if it preserves likely benefit with less harm.",
+        isCorrect: true,
+      },
+      {
+        text: "The highest dose should move forward by default because Phase III exists to find safety problems later.",
+        isCorrect: false,
+      },
+      {
+        text: "Phase II dose decisions are unrelated to endpoint choice in later confirmatory trials.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Phase II often reduces uncertainty about whether a drug appears to work and which dose should be tested. A Phase III dose should not be chosen from efficacy signal alone if tolerability or safety would undermine benefit-risk.",
+  },
+  {
+    id: "clinical-trials-l2-q53",
+    chapter: 2,
+    difficulty: "hard",
+    prompt:
+      "A Phase III trial is being designed after a promising Phase II signal. Which choices align with the confirmatory purpose of Phase III?",
+    options: [
+      {
+        text: "Use a population and comparator that support the intended clinical or regulatory claim.",
+        isCorrect: true,
+      },
+      {
+        text: "Choose a primary endpoint whose magnitude can be judged for patient or clinical importance.",
+        isCorrect: true,
+      },
+      {
+        text: "Plan sample size and analysis before results are known to test the main question credibly.",
+        isCorrect: true,
+      },
+      {
+        text: "Rely on the Phase II biomarker result as the primary proof of clinical benefit.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Phase III is usually where development seeks confirmatory evidence that can support practice, labeling, or approval decisions. That requires a relevant population, comparator, endpoint, sample size, and pre-specified analysis rather than recycling a preliminary signal as proof.",
+  },
+  {
+    id: "clinical-trials-l2-q54",
+    chapter: 2,
+    difficulty: "medium",
+    prompt:
+      "Which study questions commonly belong in Phase IV or post-approval research?",
+    options: [
+      {
+        text: "Whether rare adverse events emerge when many more patients receive the product.",
+        isCorrect: true,
+      },
+      {
+        text: "How effectiveness and adherence look in routine clinical practice.",
+        isCorrect: true,
+      },
+      {
+        text: "Whether long-term outcomes differ from those observed in pre-approval trials.",
+        isCorrect: true,
+      },
+      {
+        text: "How the product performs in broader populations that were excluded or underrepresented earlier.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Approval does not end evidence generation. Phase IV and post-market studies often address long-term safety, rare harms, comparative effectiveness, adherence, and performance in broader routine-care populations.",
+  },
+  {
+    id: "clinical-trials-l2-q55",
+    chapter: 2,
+    difficulty: "hard",
+    prompt:
+      "A trial enrolls highly adherent patients aged 40-60 with few comorbidities, uses intensive reminders, and shows benefit. Clinicians treat many older patients with multiple conditions and inconsistent adherence. What is the most precise concern?",
+    options: [
+      {
+        text: "External validity is limited because the trial conditions and participants differ from routine practice.",
+        isCorrect: true,
+      },
+      {
+        text: "Internal validity is absent because narrow eligibility criteria make randomization impossible.",
+        isCorrect: false,
+      },
+      {
+        text: "The result is statistically uninterpretable because pragmatic patients were not enrolled.",
+        isCorrect: false,
+      },
+      {
+        text: "The trial proves the treatment fails in older routine-care populations.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The trial may have strong internal validity for the enrolled population while still raising generalizability concerns. External validity asks whether the result applies to different patients, settings, adherence patterns, and implementation conditions.",
+  },
+  {
+    id: "clinical-trials-l2-q56",
+    chapter: 2,
+    difficulty: "hard",
+    prompt:
+      "A smartphone intervention is first tested with extensive training, frequent reminders, and motivated users, then later tested across routine clinics with minimal support. Which comparisons are correct?",
+    options: [
+      {
+        text: "The first study is more explanatory because it asks whether the intervention can work under favorable conditions.",
+        isCorrect: true,
+      },
+      {
+        text: "The later study is more pragmatic because it asks whether the intervention works in ordinary implementation.",
+        isCorrect: true,
+      },
+      {
+        text: "The pragmatic study is automatically less useful because it accepts more real-world variation.",
+        isCorrect: false,
+      },
+      {
+        text: "The explanatory study fully answers adherence and effectiveness questions for older or less tech-comfortable routine-care patients.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Explanatory and pragmatic trials answer different questions. Explanatory designs help establish whether an intervention has an effect under controlled conditions, while pragmatic designs test performance under routine constraints and broader patient behavior.",
+  },
+  {
+    id: "clinical-trials-l2-q57",
+    chapter: 2,
+    difficulty: "easy",
+    prompt:
+      "Which factors commonly belong in clinical trial eligibility criteria?",
+    options: [
+      {
+        text: "Diagnosis, disease severity, age range, and prior treatment history.",
+        isCorrect: true,
+      },
+      {
+        text: "Comorbidities, interacting medications, pregnancy status, or safety-related exclusions.",
+        isCorrect: true,
+      },
+      {
+        text: "Ability to complete required visits, procedures, follow-up, and informed consent.",
+        isCorrect: true,
+      },
+      {
+        text: "Preference for patients who are expected to respond favorably after investigators know treatment assignment.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Eligibility criteria define who can participate and protect safety, interpretability, and feasibility. They should be specified before assignment rather than used after treatment assignment to select patients who make the result look favorable.",
+  },
+  {
+    id: "clinical-trials-l2-q58",
+    chapter: 2,
+    difficulty: "medium",
+    prompt:
+      "Which statements correctly describe how comparator choice affects trial interpretation?",
+    options: [
+      {
+        text: "A placebo comparator can help isolate specific treatment effect when placebo control is ethical and feasible.",
+        isCorrect: true,
+      },
+      {
+        text: "An active comparator can show whether a new treatment improves on existing standard care.",
+        isCorrect: true,
+      },
+      {
+        text: "No-treatment or usual-care comparators may be appropriate for some pragmatic or behavioral questions.",
+        isCorrect: true,
+      },
+      {
+        text: "The comparator determines what the estimated treatment effect means in practice.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "A treatment effect is always relative to the alternative tested. Placebo, active treatment, usual care, and no-treatment comparators answer different questions and support different clinical interpretations.",
+  },
+  {
+    id: "clinical-trials-l2-q59",
+    chapter: 2,
+    difficulty: "hard",
+    prompt:
+      "A cardiovascular drug lowers LDL cholesterol substantially, but the trial is too short to observe heart attacks, stroke, hospitalization, or survival. Which endpoint critique is strongest?",
+    options: [
+      {
+        text: "The study shows an effect on a biomarker, but the patient-outcome claim depends on whether LDL change is a validated surrogate for this intervention and context.",
+        isCorrect: true,
+      },
+      {
+        text: "The trial proves cardiovascular event reduction because LDL is part of the causal pathway.",
+        isCorrect: false,
+      },
+      {
+        text: "The endpoint is unusable because biomarkers never support clinical development decisions.",
+        isCorrect: false,
+      },
+      {
+        text: "Short follow-up improves certainty because it reduces the number of competing clinical events.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "A biomarker endpoint may be valuable, especially when supported by strong validation history, but it is not automatically equivalent to clinical benefit. The reviewer should ask whether the surrogate is credible for the disease, intervention, and claim being made.",
+  },
+  {
+    id: "clinical-trials-l2-q60",
+    chapter: 2,
+    difficulty: "medium",
+    prompt:
+      "A trial has a clear PICO(T) question, randomization, double blinding, a validated patient-reported primary endpoint, and broad eligibility criteria. Which remaining issue would most directly threaten interpretation?",
+    options: [
+      {
+        text: "High missing primary-endpoint data that differs between treatment groups.",
+        isCorrect: true,
+      },
+      {
+        text: "The use of broad eligibility criteria, which always weakens every causal comparison.",
+        isCorrect: false,
+      },
+      {
+        text: "The presence of a patient-reported outcome, which cannot be meaningful if it is subjective.",
+        isCorrect: false,
+      },
+      {
+        text: "The fact that randomization balances unknown confounders probabilistically rather than by guaranteeing identical groups.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Good design features can still be undermined by biased missing outcome data. Broad eligibility and patient-reported endpoints are not flaws by themselves, and probabilistic balance is an expected feature of randomization rather than a direct defect.",
+  },
 ];

@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
+  DEFAULT_QUESTION_TYPES,
   getQuestionSourceContext,
   getQuestionSourceMetadata,
   getQuestionsForFilters,
   type Question,
+  type QuestionType,
   type SourceId,
   type SourceSeriesId,
   type Topic,
@@ -20,6 +22,7 @@ import {
   DEFAULT_QUESTION_SELECTION_MODE,
   clampDifficultyRange,
   evaluateAnswer,
+  getDisplayOptions,
   getEligibleQuestionIds,
   pickClimbQuestionId,
   QUESTION_TIMER_TICK_MS,
@@ -86,6 +89,9 @@ export function useMobileQuiz() {
 
   const [selectedSources, setSelectedSources] = useState<SourceId[]>([]);
   const [selectedTopics, setSelectedTopics] = useState<Topic[]>([]);
+  const [selectedQuestionTypes, setSelectedQuestionTypes] = useState<
+    QuestionType[]
+  >([...DEFAULT_QUESTION_TYPES]);
   const [selectionMode, setSelectionMode] = useState<QuestionSelectionMode>(
     DEFAULT_QUESTION_SELECTION_MODE,
   );
@@ -95,8 +101,13 @@ export function useMobileQuiz() {
   const [appliedQuestionIds, setAppliedQuestionIds] = useState<string[]>([]);
 
   const sourcePool = useMemo(
-    () => getQuestionsForFilters(selectedSources, selectedTopics),
-    [selectedSources, selectedTopics],
+    () =>
+      getQuestionsForFilters(
+        selectedSources,
+        selectedTopics,
+        selectedQuestionTypes,
+      ),
+    [selectedQuestionTypes, selectedSources, selectedTopics],
   );
   const questionById = useMemo(
     () => new Map(sourcePool.map((question) => [question.id, question])),
@@ -355,7 +366,7 @@ export function useMobileQuiz() {
 
   const shuffledOptions = useMemo(() => {
     if (!currentQuestion) return [];
-    return shuffleItems(currentQuestion.options);
+    return getDisplayOptions(currentQuestion);
   }, [currentQuestion]);
 
   const currentQuestionRating = useMemo(() => {
@@ -434,22 +445,32 @@ export function useMobileQuiz() {
     sources: SourceId[];
     series: SourceSeriesId[];
     topics: Topic[];
+    questionTypes?: QuestionType[];
     mode: QuestionSelectionMode;
     difficultyRange: DifficultyRange;
   }) => {
     const clampedRange = clampDifficultyRange(payload.difficultyRange);
     const uniqueSources = Array.from(new Set(payload.sources));
     const uniqueTopics = Array.from(new Set(payload.topics));
-    const pool = getQuestionsForFilters(uniqueSources, uniqueTopics);
+    const uniqueQuestionTypes = Array.from(
+      new Set(payload.questionTypes ?? DEFAULT_QUESTION_TYPES),
+    );
+    const pool = getQuestionsForFilters(
+      uniqueSources,
+      uniqueTopics,
+      uniqueQuestionTypes,
+    );
     const eligibleIds = getEligibleQuestionIds({
       sources: uniqueSources,
       topics: uniqueTopics,
+      questionTypes: uniqueQuestionTypes,
       difficultyRange: clampedRange,
       ratingState,
     });
 
     setSelectedSources(uniqueSources);
     setSelectedTopics(uniqueTopics);
+    setSelectedQuestionTypes(uniqueQuestionTypes);
     setSelectionMode(payload.mode);
     setDifficultyRange(clampedRange);
     setAppliedQuestionIds(eligibleIds);
@@ -606,6 +627,7 @@ export function useMobileQuiz() {
   return {
     selectedSources,
     selectedTopics,
+    selectedQuestionTypes,
     selectionMode,
     difficultyRange,
     applySelection,

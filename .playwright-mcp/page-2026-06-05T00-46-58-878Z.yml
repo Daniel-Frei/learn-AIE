@@ -1,0 +1,152 @@
+- generic [ref=e3]:
+    - banner [ref=e4]:
+        - generic [ref=e5]:
+            - generic [ref=e6]:
+                - heading "Learning AI" [level=1] [ref=e7]
+                - paragraph [ref=e8]: "Glicko rating: 1500 +/- 350"
+            - generic [ref=e9]:
+                - button "Close selection" [ref=e10] [cursor=pointer]
+                - generic [ref=e11]:
+                    - text: "Answered: 0 Correct: 0 Accuracy:"
+                    - generic [ref=e12]: 0%
+        - generic [ref=e13]:
+            - generic [ref=e14]:
+                - generic [ref=e15]:
+                    - heading "Pick mode, question types, series, lectures, topics and question Elo range" [level=3] [ref=e16]
+                    - paragraph [ref=e17]: Keep any combination selected. Questions are included if they match at least one selected filter.
+                - button "Cancel" [ref=e18] [cursor=pointer]
+            - generic [ref=e19]:
+                - generic [ref=e20]: Mode
+                - generic [ref=e21]:
+                    - button "Standard" [ref=e22] [cursor=pointer]
+                    - button "Climb" [ref=e23] [cursor=pointer]
+            - generic [ref=e24]:
+                - generic [ref=e25]: Question types
+                - generic [ref=e26]:
+                    - generic [ref=e27] [cursor=pointer]:
+                        - checkbox "Multiple-select" [checked] [ref=e28]
+                        - text: Multiple-select
+                    - generic [ref=e29] [cursor=pointer]:
+                        - checkbox "Assertion-reason" [checked] [ref=e30]
+                        - text: Assertion-reason
+            - generic [ref=e31]:
+                - generic [ref=e32]: Glicko rating
+                - button "Reset Glicko rating" [ref=e34] [cursor=pointer]
+            - generic [ref=e35]:
+                - generic [ref=e36]: Topics
+                - generic [ref=e37]:
+                    - generic [ref=e38] [cursor=pointer]:
+                        - checkbox "RL" [ref=e39]
+                        - text: RL
+                    - generic [ref=e40] [cursor=pointer]:
+                        - checkbox "DL" [ref=e41]
+                        - text: DL
+                    - generic [ref=e42] [cursor=pointer]:
+                        - checkbox "NLP" [ref=e43]
+                        - text: NLP
+                    - generic [ref=e44] [cursor=pointer]:
+                        - checkbox "Math" [ref=e45]
+                        - text: Math
+                    - generic [ref=e46] [cursor=pointer]:
+                        - checkbox "Life Science" [ref=e47]
+                        - text: Life Science
+            - generic [ref=e48]:
+                - generic [ref=e49]: Series and lectures
+                - group [ref=e50]:
+                    - generic "AIE Foundations Book AIE Foundations Book 3 lectures/chapters" [ref=e51] [cursor=pointer]:
+                        - generic [ref=e52]:
+                            - checkbox "AIE Foundations Book" [ref=e53]
+                            - text: AIE Foundations Book
+                        - generic [ref=e54]: 3 lectures/chapters
+                - group [ref=e55]:
+                    - generic "AIE Building Apps Book AIE Building Apps Book 3 lectures/chapters" [ref=e56] [cursor=pointer]:
+                        - generic [ref=e57]:
+                            - checkbox "AIE Building Apps Book" [ref=e58]
+                            - text: AIE Building Apps Book
+                        - generic [ref=e59]: 3 lectures/chapters
+                - group [ref=e60]:
+                    - generic "Stanford CME295 Transformers & LLMs Stanford CME295 Transformers & LLMs 4 lectures/chapters" [ref=e61] [cursor=pointer]:
+                        - generic [ref=e62]:
+                            - checkbox "Stanford CME295 Transformers & LLMs" [ref=e63]
+                            - text: Stanford CME295 Transformers & LLMs
+                        - generic [ref=e64]: 4 lectures/chapters
+                - group [ref=e65]:
+                    - generic "Stanford CS224R Deep Reinforcement Learning Stanford CS224R Deep Reinforcement Learning 5 lectures/chapters" [ref=e66] [cursor=pointer]:
+                        - generic [ref=e67]:
+                            - checkbox "Stanford CS224R Deep Reinforcement Learning" [ref=e68]
+                            - text: Stanford CS224R Deep Reinforcement Learning
+                        - generic [ref=e69]: 5 lectures/chapters
+                - group [ref=e70]:
+                    - generic "Other RL Lectures Other RL Lectures 1 lectures/chapters" [ref=e71] [cursor=pointer]:
+                        - generic [ref=e72]:
+                            - checkbox "Other RL Lectures" [ref=e73]
+                            - text: Other RL Lectures
+                        - generic [ref=e74]: 1 lectures/chapters
+                - group [ref=e75]:
+                    - generic "MIT 6.S191 Deep Learning 2026 MIT 6.S191 Deep Learning 2026 6 lectures/chapters" [ref=e76] [cursor=pointer]:
+                        - generic [ref=e77]:
+                            - checkbox "MIT 6.S191 Deep Learning 2026" [ref=e78]
+                            - text: MIT 6.S191 Deep Learning 2026
+                        - generic [ref=e79]: 6 lectures/chapters
+                - group [ref=e80]:
+                    - generic "MIT 15.773 Hands-On Deep Learning 2024 MIT 15.773 Hands-On Deep Learning 2024 11 lectures/chapters" [ref=e81] [cursor=pointer]:
+                        - generic [ref=e82]:
+                            - checkbox "MIT 15.773 Hands-On Deep Learning 2024" [ref=e83]
+                            - text: MIT 15.773 Hands-On Deep Learning 2024
+                        - generic [ref=e84]: 11 lectures/chapters
+                - group [ref=e85]:
+                    - generic "Crash Course Linear Algebra Crash Course Linear Algebra 6 lectures/chapters" [ref=e86] [cursor=pointer]:
+                        - generic [ref=e87]:
+                            - checkbox "Crash Course Linear Algebra" [ref=e88]
+                            - text: Crash Course Linear Algebra
+                        - generic [ref=e89]: 6 lectures/chapters
+                - group [ref=e90]:
+                    - generic "Biology & Chemistry for Life Science Biology & Chemistry for Life Science 6 lectures/chapters" [ref=e91] [cursor=pointer]:
+                        - generic [ref=e92]:
+                            - checkbox "Biology & Chemistry for Life Science" [ref=e93]
+                            - text: Biology & Chemistry for Life Science
+                        - generic [ref=e94]: 6 lectures/chapters
+                - group [ref=e95]:
+                    - generic "Clinical Trials Crash Course Clinical Trials Crash Course 5 lectures/chapters" [ref=e96] [cursor=pointer]:
+                        - generic [ref=e97]:
+                            - checkbox "Clinical Trials Crash Course" [ref=e98]
+                            - text: Clinical Trials Crash Course
+                        - generic [ref=e99]: 5 lectures/chapters
+                - group [ref=e100]:
+                    - generic "AI Agents AI Agents 1 lectures/chapters" [ref=e101] [cursor=pointer]:
+                        - generic [ref=e102]:
+                            - checkbox "AI Agents" [ref=e103]
+                            - text: AI Agents
+                        - generic [ref=e104]: 1 lectures/chapters
+                - group [ref=e105]:
+                    - generic "LangChain LangChain 1 lectures/chapters" [ref=e106] [cursor=pointer]:
+                        - generic [ref=e107]:
+                            - checkbox "LangChain" [ref=e108]
+                            - text: LangChain
+                        - generic [ref=e109]: 1 lectures/chapters
+                - group [ref=e110]:
+                    - generic "Other Sources Other Sources 1 lectures/chapters" [ref=e111] [cursor=pointer]:
+                        - generic [ref=e112]:
+                            - checkbox "Other Sources" [ref=e113]
+                            - text: Other Sources
+                        - generic [ref=e114]: 1 lectures/chapters
+            - generic [ref=e115]:
+                - generic [ref=e116]: "Question Elo range:"
+                - spinbutton [ref=e117]: "0"
+                - generic [ref=e118]: to
+                - spinbutton [ref=e119]: "3000"
+            - generic [ref=e120]:
+                - generic [ref=e121]:
+                    - button "Select all series" [ref=e122] [cursor=pointer]
+                    - button "Select all topics" [ref=e123] [cursor=pointer]
+                    - button "Clear all" [ref=e124] [cursor=pointer]
+                - generic [ref=e125]:
+                    - button "Cancel" [ref=e126] [cursor=pointer]
+                    - button "Apply selection" [ref=e127] [cursor=pointer]
+    - generic [ref=e128]:
+        - generic [ref=e130]: Question 0 of 0
+        - generic [ref=e131]:
+            - heading "No questions for this selection" [level=2] [ref=e132]
+            - paragraph [ref=e133]: Try selecting a series, lecture/chapter, or topic, then adjust the question Elo range if needed.
+    - contentinfo [ref=e134]:
+        - paragraph [ref=e135]: Adjust the filters above to see available questions.

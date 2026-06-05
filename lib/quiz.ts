@@ -55,6 +55,13 @@ import { DeepAgentsQuestions } from "./other/Langchain/Deepagents";
 import { mixedQuestions } from "./other/other";
 
 export type Difficulty = "easy" | "medium" | "hard";
+export const QUESTION_TYPES = ["multiple-select", "assertion-reason"] as const;
+export type QuestionType = (typeof QUESTION_TYPES)[number];
+export const DEFAULT_QUESTION_TYPES: readonly QuestionType[] = QUESTION_TYPES;
+export const QUESTION_TYPE_LABELS: Record<QuestionType, string> = {
+  "multiple-select": "Multiple-select",
+  "assertion-reason": "Assertion-reason",
+};
 export { ALL_TOPICS } from "./questionTopics";
 export type { Topic } from "./questionTopics";
 export type SourceSeriesId =
@@ -75,6 +82,7 @@ export type SourceSeriesId =
 export type Question = {
   id: string;
   chapter: number;
+  type?: QuestionType;
   /**
    * Author-assigned difficulty label (used as a prior).
    * The *empirical* difficulty score [0,1] is computed from user stats
@@ -88,6 +96,12 @@ export type Question = {
   }[];
   explanation: string;
 };
+
+export function getQuestionType(
+  question: Pick<Question, "type">,
+): QuestionType {
+  return question.type ?? "multiple-select";
+}
 
 export type QuestionSourceMetadata = {
   sourceId: SourceId;
@@ -787,18 +801,26 @@ export function getQuestionsForSources(sourceIds: SourceId[]): Question[] {
   return getQuestionsForFilters(sourceIds, []);
 }
 
-// Helper: get questions for selected sources and topics
+// Helper: get questions for selected sources, topics, and question types
 export function getQuestionsForFilters(
   sourceIds: SourceId[],
   topics: Topic[],
+  questionTypes: readonly QuestionType[] = DEFAULT_QUESTION_TYPES,
 ): Question[] {
   if (sourceIds.length === 0 && topics.length === 0) return [];
 
   const activeSources = new Set(sourceIds);
   const activeTopics = new Set(topics);
+  const activeQuestionTypes = new Set(questionTypes);
+  if (activeQuestionTypes.size === 0) return [];
+
   return QUESTION_SOURCES.filter(
     (s) => activeSources.has(s.id) || activeTopics.has(s.topic),
-  ).flatMap((s) => s.questions);
+  ).flatMap((s) =>
+    s.questions.filter((question) =>
+      activeQuestionTypes.has(getQuestionType(question)),
+    ),
+  );
 }
 
 export function getQuestionSourceMetadata(

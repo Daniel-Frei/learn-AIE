@@ -2,10 +2,12 @@ import { describe, expect, it } from "vitest";
 import {
   ALL_SOURCE_IDS,
   ALL_TOPICS,
+  QUESTION_TYPES,
   QUESTION_SOURCE_CONTEXT,
   SOURCE_SERIES,
   QUESTION_SOURCES,
   allQuestions,
+  getQuestionType,
   getSeriesIdsForSources,
   getQuestionSourceContext,
   getQuestionSourceMetadata,
@@ -69,6 +71,37 @@ describe("quiz source registry helpers", () => {
 
   it("returns no questions when both source and topic filters are empty", () => {
     expect(getQuestionsForFilters([], [])).toEqual([]);
+  });
+
+  it("defaults old questions to multiple-select and filters by question type", () => {
+    expect(QUESTION_TYPES).toEqual(["multiple-select", "assertion-reason"]);
+    expect(getQuestionType(QUESTION_SOURCES[0].questions[0])).toBe(
+      "multiple-select",
+    );
+
+    const assertionReasonQuestions = getQuestionsForFilters(
+      ["clinical-trials-l1"],
+      [],
+      ["assertion-reason"],
+    );
+    const multipleSelectQuestions = getQuestionsForFilters(
+      ["clinical-trials-l1"],
+      [],
+      ["multiple-select"],
+    );
+
+    expect(assertionReasonQuestions).toHaveLength(3);
+    expect(
+      assertionReasonQuestions.every(
+        (question) => getQuestionType(question) === "assertion-reason",
+      ),
+    ).toBe(true);
+    expect(
+      multipleSelectQuestions.every(
+        (question) => getQuestionType(question) === "multiple-select",
+      ),
+    ).toBe(true);
+    expect(getQuestionsForFilters(["clinical-trials-l1"], [], [])).toEqual([]);
   });
 
   it("combines source and topic filters using OR semantics", () => {

@@ -2,7 +2,7 @@
 "use client";
 
 import { useId } from "react";
-import type { Question } from "../lib/quiz";
+import { getQuestionType, type Question } from "../lib/quiz";
 import MathText from "./MathText";
 
 type Option = {
@@ -77,6 +77,60 @@ function hasTextSelectionInside(element: HTMLElement): boolean {
   );
 }
 
+function parseAssertionReasonPrompt(prompt: string) {
+  const match = prompt.match(
+    /^Assertion:\s*([\s\S]*?)\n\s*\nReason:\s*([\s\S]*)$/,
+  );
+  if (!match) return null;
+
+  return {
+    assertion: match[1].trim(),
+    reason: match[2].trim(),
+  };
+}
+
+function QuestionPrompt({
+  question,
+  questionContext,
+}: {
+  question: Question;
+  questionContext: string | null;
+}) {
+  const isAssertionReason = getQuestionType(question) === "assertion-reason";
+  const assertionReasonPrompt = isAssertionReason
+    ? parseAssertionReasonPrompt(question.prompt)
+    : null;
+
+  if (assertionReasonPrompt) {
+    return (
+      <div className="relative space-y-3 text-lg md:text-xl font-semibold leading-relaxed">
+        <p>
+          <span>Assertion:</span>{" "}
+          <MathText text={assertionReasonPrompt.assertion} inline />
+        </p>
+        <p>
+          <span>Reason:</span>{" "}
+          <MathText text={assertionReasonPrompt.reason} inline />
+          {questionContext && (
+            <QuestionContextTooltip context={questionContext} />
+          )}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative">
+      <MathText
+        text={question.prompt}
+        inline
+        className="text-lg md:text-xl font-semibold leading-relaxed"
+      />
+      {questionContext && <QuestionContextTooltip context={questionContext} />}
+    </div>
+  );
+}
+
 export default function QuizQuestionSection({
   availableCount,
   currentIndex,
@@ -131,16 +185,10 @@ export default function QuizQuestionSection({
         </div>
       ) : (
         <>
-          <div className="relative">
-            <MathText
-              text={currentQuestion!.prompt}
-              inline
-              className="text-lg md:text-xl font-semibold leading-relaxed"
-            />
-            {questionContext && (
-              <QuestionContextTooltip context={questionContext} />
-            )}
-          </div>
+          <QuestionPrompt
+            question={currentQuestion}
+            questionContext={questionContext}
+          />
 
           <div className="space-y-3">
             {shuffledOptions.map((opt, idx) => {
@@ -199,7 +247,7 @@ export default function QuizQuestionSection({
                   <span
                     id={`${optionIdPrefix}-option-${idx}`}
                     data-testid="answer-option-text"
-                    className="cursor-text select-text"
+                    className="cursor-pointer select-text"
                   >
                     <MathText
                       text={opt.text}

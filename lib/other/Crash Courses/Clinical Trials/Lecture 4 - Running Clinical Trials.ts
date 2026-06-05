@@ -1079,4 +1079,543 @@ export const ClinicalTrialsLecture4Questions: Question[] = [
     explanation:
       "Clinical trials are distributed operational systems, not just scientific ideas. The lifecycle runs from protocol and startup through recruitment, conduct, monitoring, cleaning, lock, analysis, and reporting, with many specialized roles needed to produce credible and ethical evidence.",
   },
+  {
+    id: "clinical-trials-l4-q41",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "A protocol amendment relaxes an eligibility criterion and changes a laboratory schedule after sites report recruitment and visit-burden problems. Which operational consequences are likely?",
+    options: [
+      {
+        text: "Sites may need retraining, revised consent documents, and updated study instructions before applying the change.",
+        isCorrect: true,
+      },
+      {
+        text: "Ethics, regulatory, EDC, vendor, and monitoring plans may need updates depending on the amendment.",
+        isCorrect: true,
+      },
+      {
+        text: "The amendment automatically improves trial quality because it was made after real site feedback.",
+        isCorrect: false,
+      },
+      {
+        text: "The amendment affects operations but cannot affect data interpretation because the scientific question is unchanged.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Amendments are formal changes with downstream operational and interpretive consequences. They can solve feasibility problems, but they may also require approvals, retraining, system changes, documentation, and careful interpretation of participants enrolled under different protocol versions.",
+  },
+  {
+    id: "clinical-trials-l4-q42",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "A sponsor is selecting sites for a global Phase III trial. Which signals should be weighed before activation?",
+    options: [
+      {
+        text: "Whether the site sees enough eligible patients for the protocol's diagnosis, severity, and exclusion criteria.",
+        isCorrect: true,
+      },
+      {
+        text: "Prior performance in activation speed, enrollment, data quality, and protocol compliance.",
+        isCorrect: true,
+      },
+      {
+        text: "Staff, equipment, competing trials, country startup timelines, and regulatory or contract complexity.",
+        isCorrect: true,
+      },
+      {
+        text: "The investigator's enthusiasm alone, because operational systems can compensate for weak patient access and limited coordinator capacity.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Site selection is a feasibility and quality decision, not just a relationship decision. Sponsors and CROs often use epidemiology, investigator experience, startup history, patient access, site capacity, and country constraints to decide where a trial can realistically enroll and produce reliable data.",
+  },
+  {
+    id: "clinical-trials-l4-q43",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "A trial needs 600 randomized participants, and feasibility predicts a high screen-failure rate. Which operational implications follow?",
+    options: [
+      {
+        text: "Sites must identify and approach more potential participants than the final randomized target.",
+        isCorrect: true,
+      },
+      {
+        text: "Screening logs and eligibility documentation become important for diagnosing why candidates fail screening.",
+        isCorrect: true,
+      },
+      {
+        text: "High screen-failure rates can increase costs, staff burden, and timeline pressure.",
+        isCorrect: true,
+      },
+      {
+        text: "A patient who signs consent and is evaluated for eligibility is screened, while a participant formally entering the assigned study pathway is enrolled or randomized.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Recruitment targets hide a larger screening workload when many candidates fail eligibility. Understanding screened versus enrolled participants helps teams forecast burden, revise recruitment strategy, and identify protocol criteria that may be undermining feasibility.",
+  },
+  {
+    id: "clinical-trials-l4-q44",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "Which task best represents the practical role of a study coordinator at a clinical site?",
+    options: [
+      {
+        text: "Coordinating screening logs, visit scheduling, consent documentation, data entry, query responses, samples, patients, and monitor communication.",
+        isCorrect: true,
+      },
+      {
+        text: "Approving the therapy for marketing once the primary endpoint is positive.",
+        isCorrect: false,
+      },
+      {
+        text: "Replacing the sponsor's responsibility for the protocol and safety oversight.",
+        isCorrect: false,
+      },
+      {
+        text: "Writing the final statistical analysis plan after database lock.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Study coordinators often carry much of the day-to-day site execution work that makes a protocol real. They do not replace sponsors, regulators, or statisticians, but poor coordinator support can seriously damage recruitment, visit completion, documentation, and data quality.",
+  },
+  {
+    id: "clinical-trials-l4-q45",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "A participant's blood pressure is measured at a visit, entered into Electronic Data Capture (EDC), flagged as implausible, queried, corrected, and later included in the locked database. Which statements describe that data journey?",
+    options: [
+      {
+        text: "The original chart, worksheet, device output, or lab record is source data.",
+        isCorrect: true,
+      },
+      {
+        text: "The EDC value should be traceable back to the source record and any later correction should be documented.",
+        isCorrect: true,
+      },
+      {
+        text: "Once the value is typed into EDC, the source record no longer matters for verification.",
+        isCorrect: false,
+      },
+      {
+        text: "A query means the value must be deleted rather than corrected, explained, or verified.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Clinical data move from real observations into controlled study systems and then through review, queries, cleaning, and lock. Traceability from EDC back to source data is central to data integrity and regulatory inspection readiness.",
+  },
+  {
+    id: "clinical-trials-l4-q46",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly distinguish a regulated Electronic Data Capture (EDC) system from an ordinary spreadsheet?",
+    options: [
+      {
+        text: "EDC systems use permissions, validation checks, audit trails, and controlled data-entry workflows.",
+        isCorrect: true,
+      },
+      {
+        text: "EDC supports sponsor and CRO review, query generation, data export, and inspection traceability.",
+        isCorrect: true,
+      },
+      {
+        text: "EDC setup is tied to case report form design and the protocol's schedule of assessments.",
+        isCorrect: true,
+      },
+      {
+        text: "EDC eliminates the need for source data, monitoring, coding, reconciliation, or data cleaning.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "EDC is a controlled clinical data system, not just a table. It helps structure collection and review, but it does not remove the need for source records, quality checks, query resolution, medical review, coding, reconciliation, and monitoring.",
+  },
+  {
+    id: "clinical-trials-l4-q47",
+    chapter: 4,
+    difficulty: "easy",
+    prompt: "Which tasks should generally be complete before database lock?",
+    options: [
+      {
+        text: "Required data have been entered and key missing-data issues have been addressed.",
+        isCorrect: true,
+      },
+      {
+        text: "Open queries have been resolved or appropriately documented.",
+        isCorrect: true,
+      },
+      {
+        text: "Relevant coding, reconciliation, medical review, and quality checks have been completed.",
+        isCorrect: true,
+      },
+      {
+        text: "The team has agreed that no further ordinary data changes should occur before final analysis.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Database lock marks the transition from data cleaning to final analysis. It should occur after the team has resolved the data issues needed for a credible final dataset, not simply because the last participant completed the last visit.",
+  },
+  {
+    id: "clinical-trials-l4-q48",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "A trial has hundreds of open queries, many older than 60 days, while the planned database lock date is approaching. Which risks are most direct?",
+    options: [
+      {
+        text: "Final analysis and reporting may be delayed because unresolved data issues block lock.",
+        isCorrect: true,
+      },
+      {
+        text: "Data quality may suffer if sites cannot correct, explain, or verify questionable entries.",
+        isCorrect: true,
+      },
+      {
+        text: "Query aging improves inspection readiness because changes are avoided until the end.",
+        isCorrect: false,
+      },
+      {
+        text: "Open queries matter for site convenience but not for endpoint interpretability.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Query aging is an operational warning sign because unresolved questions can affect data quality, timelines, and database lock. Old queries may also reveal site engagement problems, EDC design issues, or inadequate monitoring follow-up.",
+  },
+  {
+    id: "clinical-trials-l4-q49",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly apply ALCOA or ALCOA+ data-integrity principles?",
+    options: [
+      {
+        text: "A lab value should be attributable to the person or system that recorded it.",
+        isCorrect: true,
+      },
+      {
+        text: "A source record should be contemporaneous and original enough to show what was observed at the time.",
+        isCorrect: true,
+      },
+      {
+        text: "Corrections should preserve traceability rather than overwriting history without explanation.",
+        isCorrect: true,
+      },
+      {
+        text: "Legibility matters for paper notes but not for electronic records because EDC data are typed.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "ALCOA emphasizes that data should be attributable, legible, contemporaneous, original, and accurate, with ALCOA+ adding concepts such as complete, consistent, enduring, and available. Electronic systems still need readable, traceable, accurate records and audit trails.",
+  },
+  {
+    id: "clinical-trials-l4-q50",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "A regulator inspects a trial site and sponsor after a pivotal study. Which materials or processes are likely inspection targets?",
+    options: [
+      {
+        text: "Informed consent records, eligibility evidence, source data, and protocol deviations.",
+        isCorrect: true,
+      },
+      {
+        text: "Adverse-event reporting, safety follow-up, and medical review documentation.",
+        isCorrect: true,
+      },
+      {
+        text: "Monitoring records, Trial Master File completeness, and site-file documentation.",
+        isCorrect: true,
+      },
+      {
+        text: "Investigational product accountability, data integrity, and audit trails.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Regulatory inspections examine whether participants were protected and whether the data can be trusted. Consent, safety, source data, monitoring, documentation, investigational product accountability, and audit trails all connect conduct to credible evidence.",
+  },
+  {
+    id: "clinical-trials-l4-q51",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "A sponsor hires a CRO to run monitoring, data management, and project management for a trial. Which statement best describes responsibility?",
+    options: [
+      {
+        text: "The CRO executes delegated work, but the sponsor remains ultimately responsible for trial oversight and the submitted evidence.",
+        isCorrect: true,
+      },
+      {
+        text: "The CRO becomes the legal sponsor as soon as operational tasks are outsourced.",
+        isCorrect: false,
+      },
+      {
+        text: "The sponsor's responsibility is limited to paying invoices and reviewing milestone dashboards after a full-service contract is signed.",
+        isCorrect: false,
+      },
+      {
+        text: "Regulators evaluate CRO procedures instead of sponsor oversight when work is outsourced.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Outsourcing changes who performs tasks, not who owns the trial. Sponsors must oversee delegated work, ensure quality, and remain accountable for the evidence package and participant protection.",
+  },
+  {
+    id: "clinical-trials-l4-q52",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "Which statements correctly distinguish full-service outsourcing from a functional-service provider model?",
+    options: [
+      {
+        text: "In a full-service model, one CRO may handle many coordinated operational functions for a study.",
+        isCorrect: true,
+      },
+      {
+        text: "In a functional-service provider model, the sponsor may use contracted staff or teams for selected functions such as monitoring, data management, or programming.",
+        isCorrect: true,
+      },
+      {
+        text: "The functional-service provider model means the sponsor has no operational management role.",
+        isCorrect: false,
+      },
+      {
+        text: "Full-service outsourcing prevents vendor delays because every vendor becomes part of the same company.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Outsourcing models differ in how work is packaged and managed. Full-service models concentrate many functions under a CRO, while functional-service models provide specific capabilities, but both still require sponsor oversight and cross-team coordination.",
+  },
+  {
+    id: "clinical-trials-l4-q53",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "A trial uses a central lab, imaging vendor, ePRO vendor, randomization-and-supply system, wearable vendor, and home nursing vendor. Which operational risks should the team manage?",
+    options: [
+      {
+        text: "Vendor delays can delay endpoint data, site readiness, recruitment, or database lock.",
+        isCorrect: true,
+      },
+      {
+        text: "Inconsistent imaging reads, wearable failures, or ePRO usability problems can threaten endpoint quality.",
+        isCorrect: true,
+      },
+      {
+        text: "Randomization or supply-system problems can disrupt assignment, dosing, or investigational product accountability.",
+        isCorrect: true,
+      },
+      {
+        text: "Adding vendors simplifies the trial because each vendor removes the need for sponsor-CRO coordination.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Vendors add specialized capability, but every vendor adds interfaces, timelines, quality risks, and communication needs. Operational teams must manage vendor performance because failures can affect data completeness, endpoint consistency, dosing, participant burden, and lock timing.",
+  },
+  {
+    id: "clinical-trials-l4-q54",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "Which activities are part of investigational product management in a drug trial?",
+    options: [
+      {
+        text: "Manufacturing, labeling, packaging, and shipping study drug or placebo according to trial requirements.",
+        isCorrect: true,
+      },
+      {
+        text: "Tracking storage conditions, temperature excursions, accountability, returns, and destruction.",
+        isCorrect: true,
+      },
+      {
+        text: "Coordinating supply with randomization, dosing schedules, site activation, and country import requirements.",
+        isCorrect: true,
+      },
+      {
+        text: "Documenting which participant received which study product when the blind can be preserved or appropriately controlled.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Investigational product management is a core operational and compliance function. The trial must ensure the right product reaches the right sites and participants under controlled conditions, with accountability and documentation that support safety and interpretability.",
+  },
+  {
+    id: "clinical-trials-l4-q55",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "A trial was powered assuming a 10% control event rate, but improved standard care lowers the actual event rate to 5%. What is the most direct statistical-operational consequence?",
+    options: [
+      {
+        text: "The trial may observe fewer events than planned, reducing power unless sample size, follow-up, or design assumptions are addressed.",
+        isCorrect: true,
+      },
+      {
+        text: "The treatment effect doubles automatically because the control event rate was lower, even if the treatment and control risks move together.",
+        isCorrect: false,
+      },
+      {
+        text: "Recruitment quality improves because fewer control patients have events.",
+        isCorrect: false,
+      },
+      {
+        text: "The primary endpoint becomes unnecessary because standard care improved.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Event-driven and power assumptions depend on how often endpoint events occur. If the actual event rate is lower than expected, the trial may need more participants, longer follow-up, or revised assumptions to maintain its ability to detect a meaningful effect.",
+  },
+  {
+    id: "clinical-trials-l4-q56",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "A protocol requires weekly clinic visits, repeated biopsies, long questionnaires, central imaging, and complex travel for a frail population. Which failure risks are most directly increased?",
+    options: [
+      {
+        text: "Recruitment and retention may suffer because participation burden is high.",
+        isCorrect: true,
+      },
+      {
+        text: "Missing data and protocol deviations may increase because required procedures are hard to complete.",
+        isCorrect: true,
+      },
+      {
+        text: "Internal validity is guaranteed because complex procedures collect more data.",
+        isCorrect: false,
+      },
+      {
+        text: "The protocol becomes easier for sites because every visit has more assessments.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Protocol complexity can make a scientifically attractive design operationally fragile. Excessive procedures can slow enrollment, increase dropouts, create missing endpoint data, strain sites, and raise costs.",
+  },
+  {
+    id: "clinical-trials-l4-q57",
+    chapter: 4,
+    difficulty: "easy",
+    prompt:
+      "Which sequence correctly reflects common trial operations after the protocol is finalized?",
+    options: [
+      {
+        text: "Sites and vendors are selected, contracts and approvals proceed, systems are built, and sites are activated.",
+        isCorrect: true,
+      },
+      {
+        text: "Participants are identified, consented, screened, enrolled or randomized, treated, monitored, and followed.",
+        isCorrect: true,
+      },
+      {
+        text: "After last patient last visit, data cleaning, query resolution, coding, reconciliation, lock, analysis, and reporting occur.",
+        isCorrect: true,
+      },
+      {
+        text: "Final analysis usually occurs before data cleaning so sites know which queries matter.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Trial operations move through startup, activation, recruitment, conduct, follow-up, data cleaning, database lock, analysis, and reporting. Analysis should be based on a cleaned and locked dataset rather than using results to decide which data issues to fix.",
+  },
+  {
+    id: "clinical-trials-l4-q58",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "Which operational metrics can serve as early warning signals before the final analysis is available?",
+    options: [
+      {
+        text: "Time from site selection to activation and number of sites activated.",
+        isCorrect: true,
+      },
+      {
+        text: "Screening counts, screen-failure rate, enrollment rate, and dropout rate.",
+        isCorrect: true,
+      },
+      {
+        text: "Data-entry timeliness, open queries, query aging, and missing endpoint data.",
+        isCorrect: true,
+      },
+      {
+        text: "Monitoring completion, protocol deviations, and serious adverse event reporting timeliness.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Operational metrics let teams detect problems while they can still intervene. They connect daily execution to scientific credibility because recruitment, retention, deviations, safety reporting, missing data, and query backlogs can all threaten the final evidence.",
+  },
+  {
+    id: "clinical-trials-l4-q59",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "The final participant completes the final scheduled visit, but coding, reconciliation, query resolution, and medical review are unfinished. What is the best interpretation?",
+    options: [
+      {
+        text: "Last patient last visit has occurred, but database lock and final analysis are not yet ready.",
+        isCorrect: true,
+      },
+      {
+        text: "Final statistical analysis should begin because patient visits are complete.",
+        isCorrect: false,
+      },
+      {
+        text: "Unresolved queries no longer matter once no new participant visits remain.",
+        isCorrect: false,
+      },
+      {
+        text: "The clinical study report can be finalized before coding and reconciliation because those are operational details.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Last patient last visit is a milestone, not the same as a final dataset. Clinical operations still need data cleaning, query closure, coding, reconciliation, review, lock, and analysis before reliable reporting can occur.",
+  },
+  {
+    id: "clinical-trials-l4-q60",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "A site repeatedly misses primary endpoint assessments, reports serious adverse events late, and stores study drug outside required temperature limits. Which response best fits trial operations and GCP?",
+    options: [
+      {
+        text: "Escalate, document, retrain or pause the site as needed, assess participant safety and data impact, and preserve traceable corrective actions.",
+        isCorrect: true,
+      },
+      {
+        text: "Wait until database lock because site issues can be handled in the statistical analysis plan.",
+        isCorrect: false,
+      },
+      {
+        text: "Exclude the site quietly from efficacy analysis without documenting the conduct problems.",
+        isCorrect: false,
+      },
+      {
+        text: "Treat the problems as vendor delays because all site conduct failures are outsourced to the CRO.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The scenario affects patient safety, endpoint integrity, investigational product accountability, and regulatory compliance. GCP-oriented operations require timely escalation, documentation, corrective and preventive actions, and assessment of whether participants and data have been compromised.",
+  },
 ];

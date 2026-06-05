@@ -80,6 +80,32 @@ describe("author-questions skill guidance", () => {
     );
   });
 
+  it("supports mixed multi-select and assertion-reason question sets", () => {
+    expect(skill).toContain(
+      "Supported question types are multi-select multiple-choice and assertion-reason MCQs.",
+    );
+    expect(skill).toContain('Set `type: "assertion-reason"`');
+    expect(skill).toContain(
+      "Choose the mix of question types based on the source material, subject, and field.",
+    );
+    expect(skill).toContain(
+      "Assertion-reason answer options should not rely on randomization",
+    );
+    expect(skill).toContain("Both are false.");
+    expect(skill).toContain(
+      'Do not include a trailing instruction sentence such as "Which option correctly evaluates the assertion and reason?"',
+    );
+    expect(skill).toContain(
+      "vary which of the fixed five ordered options is correct as practical",
+    );
+    expect(teamPreferences).toContain(
+      "Question-bank files may mix `multiple-select` and `assertion-reason` questions.",
+    );
+    expect(teamPreferences).toContain(
+      "use the standard fixed five-option assertion/reason order",
+    );
+  });
+
   it("guards against generic answer-recognition patterns", () => {
     expect(skill).toContain(
       'Avoid making the correct answer the only "reasonable middle" option',

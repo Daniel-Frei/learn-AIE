@@ -7,6 +7,7 @@ import {
   clampDifficultyRange,
   DEFAULT_DIFFICULTY_RANGE,
   evaluateAnswer,
+  getDisplayOptions,
   getEligibleQuestionIds,
   pickClimbQuestionId,
   shuffleItems,
@@ -44,6 +45,47 @@ describe("quiz session helpers", () => {
     });
   });
 
+  it("keeps assertion-reason options ordered while shuffling multiple-select options", () => {
+    const options = [
+      { text: "Assertion is true, Reason is false.", isCorrect: false },
+      { text: "Assertion is false, Reason is true.", isCorrect: false },
+      { text: "Both are false.", isCorrect: false },
+      {
+        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
+        isCorrect: true,
+      },
+      {
+        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
+        isCorrect: false,
+      },
+    ];
+    const multipleSelectQuestion: Question = {
+      id: "multi-question",
+      chapter: 1,
+      difficulty: "easy",
+      prompt: "Multiple select",
+      options,
+      explanation: "",
+    };
+    const assertionReasonQuestion: Question = {
+      ...multipleSelectQuestion,
+      id: "assertion-reason-question",
+      type: "assertion-reason",
+      prompt: "Assertion-reason",
+    };
+
+    expect(
+      getDisplayOptions(multipleSelectQuestion, () => 0).map(
+        (option) => option.text,
+      ),
+    ).not.toEqual(options.map((option) => option.text));
+    expect(
+      getDisplayOptions(assertionReasonQuestion, () => 0).map(
+        (option) => option.text,
+      ),
+    ).toEqual(options.map((option) => option.text));
+  });
+
   it("clamps difficulty ranges to supported Elo bounds", () => {
     expect(clampDifficultyRange({ min: -100, max: 4000 })).toEqual({
       min: 0,
@@ -74,6 +116,24 @@ describe("quiz session helpers", () => {
 
     expect(eligibleIds.length).toBeGreaterThan(0);
     expect(eligibleIds.every((id) => sourceIds.has(id))).toBe(true);
+  });
+
+  it("filters eligible questions by question type", () => {
+    const ratingState = createDefaultRatingState();
+
+    const eligibleIds = getEligibleQuestionIds({
+      sources: ["clinical-trials-l1"],
+      topics: [],
+      questionTypes: ["assertion-reason"],
+      difficultyRange: { min: 1200, max: 1700 },
+      ratingState,
+    });
+
+    expect(eligibleIds).toEqual([
+      "clinical-trials-l1-q41",
+      "clinical-trials-l1-q42",
+      "clinical-trials-l1-q43",
+    ]);
   });
 
   it("picks a climb question near the participant rating", () => {

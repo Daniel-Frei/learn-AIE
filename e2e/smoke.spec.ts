@@ -2,7 +2,7 @@ import { expect, type Page, test } from "@playwright/test";
 
 async function openFilters(page: Page) {
   const panelHeading = page.getByText(
-    /pick mode, series, lectures, topics and question elo range/i,
+    /pick mode, question types, series, lectures, topics and question elo range/i,
   );
   const toggle = page.getByRole("button", {
     name: /choose filters|close selection/i,
@@ -48,9 +48,15 @@ test("renders core quiz controls on the home page", async ({ page }) => {
   ).toBeVisible();
   await expect(
     page.getByText(
-      /pick mode, series, lectures, topics and question elo range/i,
+      /pick mode, question types, series, lectures, topics and question elo range/i,
     ),
   ).toBeVisible();
+  await expect(
+    page.getByRole("checkbox", { name: /multiple-select/i }),
+  ).toBeChecked();
+  await expect(
+    page.getByRole("checkbox", { name: /assertion-reason/i }),
+  ).toBeChecked();
   await expect(page.getByRole("spinbutton").nth(0)).toHaveValue("0");
   await expect(page.getByRole("spinbutton").nth(1)).toHaveValue("3000");
   await expect(
@@ -157,6 +163,7 @@ test("lets users select answer text without toggling the answer", async ({
   const firstOptionText = page.getByTestId("answer-option-text").first();
 
   await expect(firstOption).toHaveAttribute("aria-checked", "false");
+  await expect(firstOptionText).toHaveCSS("cursor", "pointer");
 
   const box = await firstOptionText.boundingBox();
   expect(box, "first answer option text should be visible").not.toBeNull();

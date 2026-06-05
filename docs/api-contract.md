@@ -159,6 +159,8 @@ Load the current anonymous participant rating state, global question difficulty 
 
 Persist one quiz answer for an anonymous participant and update both participant and question Glicko entities in shared storage.
 
+Question type is resolved from the bundled question bank on the client. Both `multiple-select` and `assertion-reason` questions use the same answer submission shape; assertion-reason questions are scored as a single selected correct option even though the API receives only the final binary result and mistake count.
+
 ### Request Body
 
 ```ts

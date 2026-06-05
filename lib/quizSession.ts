@@ -1,6 +1,9 @@
 import {
+  DEFAULT_QUESTION_TYPES,
+  getQuestionType,
   getQuestionsForFilters,
   type Question,
+  type QuestionType,
   type SourceId,
   type Topic,
 } from "./quiz";
@@ -64,14 +67,22 @@ export function clampDifficultyRange(range: DifficultyRange): DifficultyRange {
 export function getEligibleQuestionIds(payload: {
   sources: SourceId[];
   topics: Topic[];
+  questionTypes?: readonly QuestionType[];
   difficultyRange: DifficultyRange;
   ratingState: RatingStateV2;
 }): string[] {
   const clampedRange = clampDifficultyRange(payload.difficultyRange);
   const uniqueSources = Array.from(new Set(payload.sources));
   const uniqueTopics = Array.from(new Set(payload.topics));
+  const uniqueQuestionTypes = Array.from(
+    new Set(payload.questionTypes ?? DEFAULT_QUESTION_TYPES),
+  );
 
-  return getQuestionsForFilters(uniqueSources, uniqueTopics)
+  return getQuestionsForFilters(
+    uniqueSources,
+    uniqueTopics,
+    uniqueQuestionTypes,
+  )
     .filter((question) => {
       const rating = getQuestionRatingEstimate(
         question.id,
@@ -81,6 +92,17 @@ export function getEligibleQuestionIds(payload: {
       return rating >= clampedRange.min && rating <= clampedRange.max;
     })
     .map((question) => question.id);
+}
+
+export function getDisplayOptions(
+  question: Question,
+  random: () => number = Math.random,
+): QuizOption[] {
+  if (getQuestionType(question) === "assertion-reason") {
+    return [...question.options];
+  }
+
+  return shuffleItems(question.options, random);
 }
 
 export function pickClimbQuestionId(

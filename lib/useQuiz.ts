@@ -9,9 +9,11 @@ import {
 } from "./client/participantStorage";
 import {
   allQuestions,
+  DEFAULT_QUESTION_TYPES,
   getQuestionSourceContext,
   getQuestionSourceMetadata,
   getQuestionsForFilters,
+  type QuestionType,
   type SourceId,
   type Topic,
 } from "./quiz";
@@ -28,6 +30,7 @@ import {
   DEFAULT_QUESTION_SELECTION_MODE,
   clampDifficultyRange,
   evaluateAnswer,
+  getDisplayOptions,
   getEligibleQuestionIds,
   pickClimbQuestionId,
   QUESTION_TIMER_TICK_MS,
@@ -51,6 +54,7 @@ const QUESTION_METADATA: QuestionMetadataMap = Object.fromEntries(
 export function useQuiz() {
   const initialSources: SourceId[] = [];
   const initialTopics: Topic[] = [];
+  const initialQuestionTypes: QuestionType[] = [...DEFAULT_QUESTION_TYPES];
   const initialRange: DifficultyRange = DEFAULT_DIFFICULTY_RANGE;
   const initialMode: QuestionSelectionMode = DEFAULT_QUESTION_SELECTION_MODE;
 
@@ -67,6 +71,8 @@ export function useQuiz() {
   const [selectedSources, setSelectedSources] =
     useState<SourceId[]>(initialSources);
   const [selectedTopics, setSelectedTopics] = useState<Topic[]>(initialTopics);
+  const [selectedQuestionTypes, setSelectedQuestionTypes] =
+    useState<QuestionType[]>(initialQuestionTypes);
   const [selectionMode, setSelectionMode] =
     useState<QuestionSelectionMode>(initialMode);
 
@@ -77,8 +83,12 @@ export function useQuiz() {
   const [appliedQuestionIds, setAppliedQuestionIds] = useState<string[]>([]);
 
   const sourcePool = useMemo(() => {
-    return getQuestionsForFilters(selectedSources, selectedTopics);
-  }, [selectedSources, selectedTopics]);
+    return getQuestionsForFilters(
+      selectedSources,
+      selectedTopics,
+      selectedQuestionTypes,
+    );
+  }, [selectedQuestionTypes, selectedSources, selectedTopics]);
 
   const questionById = useMemo(() => {
     return new Map(sourcePool.map((q) => [q.id, q]));
@@ -243,7 +253,7 @@ export function useQuiz() {
 
   const shuffledOptions = useMemo(() => {
     if (!currentQuestion) return [];
-    return shuffleItems(currentQuestion.options);
+    return getDisplayOptions(currentQuestion);
   }, [currentQuestion]);
 
   const currentQuestionRating = useMemo(() => {
@@ -367,23 +377,33 @@ export function useQuiz() {
     sources: SourceId[];
     series: string[];
     topics: Topic[];
+    questionTypes?: QuestionType[];
     mode: QuestionSelectionMode;
     difficultyRange: DifficultyRange;
   }) => {
     const clampedRange = clampDifficultyRange(payload.difficultyRange);
     const uniqueSources = Array.from(new Set(payload.sources));
     const uniqueTopics = Array.from(new Set(payload.topics));
+    const uniqueQuestionTypes = Array.from(
+      new Set(payload.questionTypes ?? DEFAULT_QUESTION_TYPES),
+    );
 
-    const pool = getQuestionsForFilters(uniqueSources, uniqueTopics);
+    const pool = getQuestionsForFilters(
+      uniqueSources,
+      uniqueTopics,
+      uniqueQuestionTypes,
+    );
     const eligibleIds = getEligibleQuestionIds({
       sources: uniqueSources,
       topics: uniqueTopics,
+      questionTypes: uniqueQuestionTypes,
       difficultyRange: clampedRange,
       ratingState,
     });
 
     setSelectedSources(uniqueSources);
     setSelectedTopics(uniqueTopics);
+    setSelectedQuestionTypes(uniqueQuestionTypes);
     setSelectionMode(payload.mode);
     setDifficultyRange(clampedRange);
     setAppliedQuestionIds(eligibleIds);
@@ -490,6 +510,7 @@ export function useQuiz() {
     // configuration
     selectedSources,
     selectedTopics,
+    selectedQuestionTypes,
     selectionMode,
     difficultyRange,
     applySelection,

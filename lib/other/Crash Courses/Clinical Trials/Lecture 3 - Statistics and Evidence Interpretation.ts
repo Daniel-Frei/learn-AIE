@@ -1079,4 +1079,543 @@ export const ClinicalTrialsLecture3Questions: Question[] = [
     explanation:
       "Clinical trial interpretation should not collapse a result into positive or negative. A strong interpretation combines effect size, uncertainty, clinical relevance, statistical evidence, safety, endpoint quality, prior evidence, and context such as disease severity and feasibility.",
   },
+  {
+    id: "clinical-trials-l3-q41",
+    chapter: 3,
+    difficulty: "medium",
+    prompt:
+      "An outcome occurs in 40% of control patients and 20% of treated patients. Which interpretations correctly compare risk ratio and odds ratio?",
+    options: [
+      {
+        text: "The risk ratio is 0.5 because treatment risk is half of control risk.",
+        isCorrect: true,
+      },
+      {
+        text: "The odds ratio is farther from 1 than the risk ratio and can sound like a larger effect if read as a risk ratio.",
+        isCorrect: true,
+      },
+      {
+        text: "The odds ratio and risk ratio must be equal whenever the same trial uses the same event counts and follow-up window.",
+        isCorrect: false,
+      },
+      {
+        text: "The odds ratio is the absolute risk reduction expressed on a different scale.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "With risks of 40% and 20%, the risk ratio is 0.5, while the odds ratio is 0.25 divided by 0.667, or about 0.375. Odds ratios can exaggerate perceived effects for common outcomes when readers mistakenly interpret them as risk ratios.",
+  },
+  {
+    id: "clinical-trials-l3-q42",
+    chapter: 3,
+    difficulty: "hard",
+    prompt:
+      "A logistic regression reports an odds ratio for a common adverse event. Which cautions should a clinical reader apply?",
+    options: [
+      {
+        text: "Ask whether the outcome is rare enough for the odds ratio to approximate a risk ratio.",
+        isCorrect: true,
+      },
+      {
+        text: "Check whether the model was chosen for statistical reasons rather than because odds are the most intuitive clinical scale.",
+        isCorrect: true,
+      },
+      {
+        text: "Consider translating results into absolute risks or risk differences when possible.",
+        isCorrect: true,
+      },
+      {
+        text: "Treat the odds ratio as the percent of patients who avoided the event.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Odds ratios are common in logistic regression and case-control settings, but they are frequently misread. Clinical interpretation is clearer when readers consider outcome frequency and, when possible, translate the estimate into risks, risk differences, or patient-level impact.",
+  },
+  {
+    id: "clinical-trials-l3-q43",
+    chapter: 3,
+    difficulty: "easy",
+    prompt:
+      "Which pieces of information does a confidence interval help communicate about a treatment estimate?",
+    options: [
+      {
+        text: "The direction and range of effect sizes compatible with the observed data under the model.",
+        isCorrect: true,
+      },
+      {
+        text: "Whether the estimate is precise or uncertain.",
+        isCorrect: true,
+      },
+      {
+        text: "Whether clinically important benefit, no effect, or clinically important harm remain plausible.",
+        isCorrect: true,
+      },
+      {
+        text: "How much information the study contributes relative to a point estimate alone.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "A confidence interval is often more informative than a point estimate because it shows uncertainty and compatible effect sizes. It helps readers see whether the data support a narrow conclusion or remain consistent with several clinically different possibilities.",
+  },
+  {
+    id: "clinical-trials-l3-q44",
+    chapter: 3,
+    difficulty: "hard",
+    prompt:
+      "Which statement is the most technically careful interpretation of a frequentist 95% confidence interval?",
+    options: [
+      {
+        text: "If the same sampling and interval-construction procedure were repeated many times, about 95% of those intervals would contain the true parameter.",
+        isCorrect: true,
+      },
+      {
+        text: "There is exactly a 95% probability that this particular calculated interval contains the true treatment effect, so the limits are direct probability boundaries for this study.",
+        isCorrect: false,
+      },
+      {
+        text: "The interval contains 95% of individual patient responses observed in the trial.",
+        isCorrect: false,
+      },
+      {
+        text: "The interval is the range of treatment effects that regulators are required to accept as clinically meaningful.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "In frequentist terms, the probability statement applies to the long-run behavior of the interval procedure, not to a fixed interval after it has been calculated. In practical clinical communication, the interval is still useful as a display of uncertainty around plausible effect sizes.",
+  },
+  {
+    id: "clinical-trials-l3-q45",
+    chapter: 3,
+    difficulty: "medium",
+    prompt:
+      "A symptom scale improves by 2 points, with a 95% confidence interval from 0.1 to 3.9 points. The minimal clinically important difference is 3 points. Which interpretations are appropriate?",
+    options: [
+      {
+        text: "The interval includes effects smaller than the clinically important threshold and effects larger than that threshold.",
+        isCorrect: true,
+      },
+      {
+        text: "The result should be described with uncertainty about whether the average benefit is clinically meaningful.",
+        isCorrect: true,
+      },
+      {
+        text: "The point estimate alone proves the treatment meets the clinically important threshold.",
+        isCorrect: false,
+      },
+      {
+        text: "A confidence interval crossing the threshold means the outcome instrument was invalid.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The point estimate is below the minimal clinically important difference, while the interval includes both trivial and meaningful average effects. That makes the clinical interpretation uncertain rather than clearly positive or clearly irrelevant.",
+  },
+  {
+    id: "clinical-trials-l3-q46",
+    chapter: 3,
+    difficulty: "hard",
+    prompt:
+      "Two similar trials report p = 0.048 and p = 0.06 for comparable endpoints. Which reasoning is sound?",
+    options: [
+      {
+        text: "The evidence should be interpreted using effect size, confidence intervals, endpoint importance, prior evidence, and study quality rather than a sharp mental divide.",
+        isCorrect: true,
+      },
+      {
+        text: "The two p-values can reflect similar evidence even though one crosses the conventional 0.05 threshold and the other does not.",
+        isCorrect: true,
+      },
+      {
+        text: "The threshold is a convention, not a biological boundary that separates working from non-working treatments.",
+        isCorrect: true,
+      },
+      {
+        text: "The p = 0.06 study shows that the treatment has no effect because it is not statistically significant.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "P-values near a threshold should not be interpreted as qualitatively opposite results without looking at the rest of the evidence. Clinical and statistical interpretation depends on magnitude, uncertainty, design, endpoint relevance, and the total evidence base.",
+  },
+  {
+    id: "clinical-trials-l3-q47",
+    chapter: 3,
+    difficulty: "medium",
+    prompt:
+      "Which statements correctly describe how sample size can affect statistical and clinical interpretation?",
+    options: [
+      {
+        text: "A very large study can produce a small p-value for a tiny effect.",
+        isCorrect: true,
+      },
+      {
+        text: "A small study can estimate a potentially meaningful effect imprecisely and fail to reach conventional statistical significance.",
+        isCorrect: true,
+      },
+      {
+        text: "The number of events affects the precision of many treatment-effect estimates.",
+        isCorrect: true,
+      },
+      {
+        text: "Sample size and event count should be considered along with clinical importance and confidence intervals.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Statistical significance is partly a function of information size. A huge study can make trivial effects statistically detectable, while a small study can leave a clinically important effect uncertain, so effect size and confidence intervals remain central.",
+  },
+  {
+    id: "clinical-trials-l3-q48",
+    chapter: 3,
+    difficulty: "hard",
+    prompt:
+      "A 25-patient pilot trial estimates a 10 mmHg blood-pressure reduction with p = 0.07 and a wide confidence interval. Which interpretation is strongest?",
+    options: [
+      {
+        text: "The finding is uncertain but may justify a larger study if the plausible effects include clinically meaningful benefit and safety is acceptable.",
+        isCorrect: true,
+      },
+      {
+        text: "The treatment has been shown ineffective because the p-value is above 0.05.",
+        isCorrect: false,
+      },
+      {
+        text: "The point estimate is enough to recommend treatment because 10 mmHg is clinically meaningful.",
+        isCorrect: false,
+      },
+      {
+        text: "The confidence interval can be ignored because the p-value already gives the full uncertainty assessment.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "A small pilot study can be too imprecise for a definitive conclusion even when the point estimate is clinically interesting. The correct next interpretation depends on uncertainty, safety, disease context, and whether a better-powered trial is warranted.",
+  },
+  {
+    id: "clinical-trials-l3-q49",
+    chapter: 3,
+    difficulty: "easy",
+    prompt:
+      "Which statements correctly describe censoring in time-to-event analysis?",
+    options: [
+      {
+        text: "A participant who remains event-free when follow-up ends contributes partial information up to the last observed time.",
+        isCorrect: true,
+      },
+      {
+        text: "A participant lost to follow-up before experiencing the event may be censored at the last known event-free time.",
+        isCorrect: true,
+      },
+      {
+        text: "Survival analysis uses censoring because some event times are not fully observed.",
+        isCorrect: true,
+      },
+      {
+        text: "Censored participants are counted as having the event at the study's final time point.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Censoring records that the full event time is unknown while retaining what is known about follow-up. Treating censored patients as if they all had events at study end would distort the time-to-event analysis.",
+  },
+  {
+    id: "clinical-trials-l3-q50",
+    chapter: 3,
+    difficulty: "hard",
+    prompt: "Which practices are important when reading Kaplan-Meier curves?",
+    options: [
+      {
+        text: "Compare the size and timing of curve separation, not just whether one curve is above the other.",
+        isCorrect: true,
+      },
+      {
+        text: "Check the number at risk because late curve tails can be unstable when few patients remain under observation.",
+        isCorrect: true,
+      },
+      {
+        text: "Consider censoring patterns and follow-up duration when judging reliability.",
+        isCorrect: true,
+      },
+      {
+        text: "Interpret the curves together with effect estimates, confidence intervals, endpoint meaning, and safety.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Kaplan-Meier curves show event-free probability over time, but visual separation alone is not enough. Number at risk, censoring, follow-up, uncertainty, endpoint meaning, and safety all affect whether the curve difference is reliable and clinically important.",
+  },
+  {
+    id: "clinical-trials-l3-q51",
+    chapter: 3,
+    difficulty: "medium",
+    prompt:
+      "A study reports a hazard ratio of 0.75 for hospitalization. Which interpretation is most accurate?",
+    options: [
+      {
+        text: "The estimated event rate over time is lower in the treatment group, roughly 25% lower under the model assumptions.",
+        isCorrect: true,
+      },
+      {
+        text: "Exactly 25% fewer treated patients were hospitalized by the end of follow-up.",
+        isCorrect: false,
+      },
+      {
+        text: "The treatment increased median time to hospitalization by 25 months.",
+        isCorrect: false,
+      },
+      {
+        text: "The absolute hospitalization risk reduction is 25 percentage points.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "A hazard ratio compares event rates over time among those still at risk; it is not the same as cumulative risk reduction, median difference, or absolute risk reduction. Absolute event rates and Kaplan-Meier curves are needed to judge patient-level impact.",
+  },
+  {
+    id: "clinical-trials-l3-q52",
+    chapter: 3,
+    difficulty: "hard",
+    prompt:
+      "Which survival-pattern situations can make a single hazard ratio incomplete or potentially misleading?",
+    options: [
+      {
+        text: "The treatment effect is delayed, so curves overlap early and separate later.",
+        isCorrect: true,
+      },
+      {
+        text: "The effect is strong early but wanes or reverses later, making hazards non-proportional.",
+        isCorrect: true,
+      },
+      {
+        text: "The Kaplan-Meier curves and number-at-risk table are reported alongside the hazard ratio.",
+        isCorrect: false,
+      },
+      {
+        text: "The analysis includes a pre-specified time-to-event endpoint.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "A hazard ratio often summarizes an average relative event-rate pattern over time and can hide non-proportional hazards. Delayed, waning, crossing, or subgroup-specific effects require looking beyond the single number.",
+  },
+  {
+    id: "clinical-trials-l3-q53",
+    chapter: 3,
+    difficulty: "hard",
+    prompt:
+      "An oncology trial reports median overall survival of 14 versus 11 months, hazard ratio 0.78, p = 0.01, and substantially higher grade 3 toxicity. Which interpretations are appropriate?",
+    options: [
+      {
+        text: "The survival results suggest benefit, but toxicity and quality of life are part of the clinical meaning.",
+        isCorrect: true,
+      },
+      {
+        text: "The median survival gain and hazard ratio describe different aspects of the time-to-event result.",
+        isCorrect: true,
+      },
+      {
+        text: "A statistically significant survival result still needs context such as alternatives, disease severity, and patient values.",
+        isCorrect: true,
+      },
+      {
+        text: "The p-value makes the toxicity imbalance irrelevant to benefit-risk interpretation.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "A survival benefit can be clinically important, but treatment decisions depend on more than the efficacy p-value. Median gain, hazard ratio, toxicity, quality of life, alternatives, and patient context together determine benefit-risk.",
+  },
+  {
+    id: "clinical-trials-l3-q54",
+    chapter: 3,
+    difficulty: "medium",
+    prompt:
+      "Which components commonly appear in a forest plot for a meta-analysis?",
+    options: [
+      {
+        text: "Individual study point estimates with horizontal confidence intervals.",
+        isCorrect: true,
+      },
+      {
+        text: "A vertical no-effect line, such as 1 for ratios or 0 for mean differences.",
+        isCorrect: true,
+      },
+      {
+        text: "Study weights, often represented by marker size.",
+        isCorrect: true,
+      },
+      {
+        text: "A pooled estimate, often shown as a diamond whose width reflects uncertainty.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Forest plots summarize individual studies and the combined estimate visually. The no-effect line, confidence intervals, study weights, and pooled diamond help readers judge direction, precision, influence, and consistency.",
+  },
+  {
+    id: "clinical-trials-l3-q55",
+    chapter: 3,
+    difficulty: "hard",
+    prompt:
+      "A meta-analysis combines trials with different disease severities, doses, endpoint definitions, follow-up lengths, and study quality. Which interpretations are appropriate?",
+    options: [
+      {
+        text: "Clinical and methodological heterogeneity should be assessed before treating the pooled estimate as a single answer.",
+        isCorrect: true,
+      },
+      {
+        text: "Subgroup, sensitivity, or narrative interpretation may be needed if differences among studies are important.",
+        isCorrect: true,
+      },
+      {
+        text: "A pooled estimate is automatically stronger than each included study regardless of whether the studies ask comparable questions.",
+        isCorrect: false,
+      },
+      {
+        text: "Heterogeneity is resolved by increasing the number of studies even when their interventions and endpoints differ materially.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Meta-analysis is not simply arithmetic across anything labeled with the same disease. Readers must ask whether the populations, interventions, endpoints, follow-up, and methods are similar enough for a pooled estimate to be meaningful.",
+  },
+  {
+    id: "clinical-trials-l3-q56",
+    chapter: 3,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly describe funnel plots and publication bias?",
+    options: [
+      {
+        text: "A visibly asymmetric funnel plot can raise concern that small negative or inconclusive studies are missing.",
+        isCorrect: true,
+      },
+      {
+        text: "Funnel plot asymmetry is a signal to investigate, not definitive proof of publication bias.",
+        isCorrect: true,
+      },
+      {
+        text: "Other explanations for asymmetry can include heterogeneity, small-study effects, or methodological differences.",
+        isCorrect: true,
+      },
+      {
+        text: "A symmetric funnel plot proves the evidence base is complete and unbiased.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Funnel plots are tools for detecting patterns consistent with missing evidence, but they are not definitive. Asymmetry can have several causes, and apparent symmetry does not guarantee that every relevant study was found or reported fully.",
+  },
+  {
+    id: "clinical-trials-l3-q57",
+    chapter: 3,
+    difficulty: "medium",
+    prompt:
+      "A trial's composite endpoint combines hospitalization and biomarker worsening. The result is statistically significant, but most events are biomarker worsening. What is the strongest critique?",
+    options: [
+      {
+        text: "The patient importance of the composite depends on which components drive the result and how meaningful those components are.",
+        isCorrect: true,
+      },
+      {
+        text: "Composite endpoints are invalid whenever their components have different clinical importance.",
+        isCorrect: false,
+      },
+      {
+        text: "Statistical significance of the composite proves that hospitalization was reduced.",
+        isCorrect: false,
+      },
+      {
+        text: "A biomarker component is more clinically important than hospitalization because it is measured earlier.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Composite endpoints can be useful, but interpretation depends on component importance and which events drive the effect. A positive composite may be less clinically compelling if the treatment mostly changes a less patient-important biomarker component.",
+  },
+  {
+    id: "clinical-trials-l3-q58",
+    chapter: 3,
+    difficulty: "medium",
+    prompt:
+      "A rare-disease trial is small, has p = 0.09, and estimates an effect larger than the pre-specified meaningful threshold. Which contextual factors can matter for deciding whether more development is justified?",
+    options: [
+      {
+        text: "Disease severity, unmet need, natural-history evidence, and whether the endpoint matters to patients.",
+        isCorrect: true,
+      },
+      {
+        text: "The width and direction of the confidence interval, including whether meaningful benefit and harm remain plausible.",
+        isCorrect: true,
+      },
+      {
+        text: "The ability to ignore safety because statistical significance was not reached.",
+        isCorrect: false,
+      },
+      {
+        text: "The rule that rare-disease trials must be treated as positive whenever the point estimate is favorable.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Rare-disease evidence often requires careful judgment about uncertainty and total evidence, not automatic acceptance or dismissal. A promising but imprecise result may justify further study when disease burden, endpoint relevance, natural history, and safety support that path.",
+  },
+  {
+    id: "clinical-trials-l3-q59",
+    chapter: 3,
+    difficulty: "medium",
+    prompt:
+      "Which issues should be checked before trusting a trial abstract that simply says the study was positive?",
+    options: [
+      {
+        text: "The absolute effect size and the metric used to describe it.",
+        isCorrect: true,
+      },
+      {
+        text: "The confidence interval, event count, missing data, and whether the analysis was pre-specified.",
+        isCorrect: true,
+      },
+      {
+        text: "Endpoint meaning, safety, patient burden, and available alternatives.",
+        isCorrect: true,
+      },
+      {
+        text: "Whether the result fits with prior evidence, study quality, and possible reporting bias.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "A positive label compresses many important questions into one word. Sound interpretation looks at effect size, uncertainty, design, endpoint relevance, missing data, safety, alternatives, and the broader evidence base.",
+  },
+  {
+    id: "clinical-trials-l3-q60",
+    chapter: 3,
+    difficulty: "hard",
+    prompt:
+      "A sponsor highlights a 50% relative risk reduction from 2% to 1% for a mild outcome, with narrow confidence intervals and low toxicity. Which interpretation is strongest?",
+    options: [
+      {
+        text: "The result is statistically precise and proportionally large, but the absolute benefit is 1 percentage point and must be judged against outcome importance, cost, burden, and alternatives.",
+        isCorrect: true,
+      },
+      {
+        text: "A 50% relative reduction is enough to show major clinical value regardless of baseline risk.",
+        isCorrect: false,
+      },
+      {
+        text: "A narrow confidence interval makes the number needed to treat irrelevant.",
+        isCorrect: false,
+      },
+      {
+        text: "Low toxicity means clinical significance follows automatically from statistical significance.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Relative effects can sound impressive when baseline risk is low, so absolute risk reduction and number needed to treat are essential. Precision and low toxicity help interpretation, but clinical value still depends on the outcome's importance, burden, cost, and alternatives.",
+  },
 ];

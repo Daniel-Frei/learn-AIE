@@ -2,7 +2,12 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { ALL_TOPICS, QUESTION_SOURCES } from "@/lib/quiz";
+import {
+  ALL_TOPICS,
+  QUESTION_SOURCES,
+  QUESTION_TYPES,
+  getQuestionType,
+} from "@/lib/quiz";
 
 const testDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(testDir, "../..");
@@ -106,6 +111,66 @@ describe("question file registration", () => {
       missingRegisteredTopics,
       "Registered source topics must be added to ALL_TOPICS for API validation and UI filters.",
     ).toEqual([]);
+  });
+
+  it("keeps registered questions aligned with their question type contract", () => {
+    const knownQuestionTypes = new Set<string>(QUESTION_TYPES);
+    const violations = QUESTION_SOURCES.flatMap((source) =>
+      source.questions.flatMap((question) => {
+        const messages: string[] = [];
+        const questionType = getQuestionType(question);
+        const correctCount = question.options.filter(
+          (option) => option.isCorrect,
+        ).length;
+
+        if (!knownQuestionTypes.has(questionType)) {
+          messages.push(`unknown type ${questionType}`);
+        }
+
+        if (questionType === "assertion-reason") {
+          const expectedOptions = [
+            "Assertion is true, Reason is false.",
+            "Assertion is false, Reason is true.",
+            "Both are false.",
+            "Both are true, and the Reason is the correct explanation of the Assertion.",
+            "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
+          ];
+          const hasFixedOptions = expectedOptions.every(
+            (text, index) => question.options[index]?.text === text,
+          );
+          if (correctCount !== 1) {
+            messages.push(`has ${correctCount} correct options`);
+          }
+          if (question.options.length !== expectedOptions.length) {
+            messages.push(`has ${question.options.length} options`);
+          }
+          if (!hasFixedOptions) {
+            messages.push("does not use fixed assertion-reason option order");
+          }
+          if (!/^Assertion:[\s\S]+\n\nReason:[\s\S]+$/.test(question.prompt)) {
+            messages.push(
+              "does not use Assertion/blank-line/Reason prompt format",
+            );
+          }
+          if (/which option correctly evaluates/i.test(question.prompt)) {
+            messages.push("includes redundant assertion-reason instruction");
+          }
+        } else {
+          if (question.options.length !== 4) {
+            messages.push(`has ${question.options.length} options`);
+          }
+          if (correctCount < 1 || correctCount > 4) {
+            messages.push(`has ${correctCount} correct options`);
+          }
+        }
+
+        return messages.map(
+          (message) => `${source.id}/${question.id}: ${message}`,
+        );
+      }),
+    );
+
+    expect(violations).toEqual([]);
   });
 
   it("keeps question report topic storage open to future topics", () => {
