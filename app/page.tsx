@@ -27,11 +27,11 @@ export default function QuizPage() {
     toggleOption,
     submitAnswer,
     nextQuestion,
-    answeredCount,
-    correctCount,
     accuracy,
     userRating,
     userRatingRd,
+    userRatingDelta,
+    questionRatingDelta,
     submitQuestionReport,
     resetParticipantRating,
   } = useQuiz();
@@ -51,11 +51,10 @@ export default function QuizPage() {
           selectionMode={selectionMode}
           difficultyRange={difficultyRange}
           applySelection={applySelection}
-          answeredCount={answeredCount}
-          correctCount={correctCount}
           accuracy={accuracy}
           userRating={userRating}
           userRatingRd={userRatingRd}
+          userRatingDelta={userRatingDelta}
           resetParticipantRating={resetParticipantRating}
         />
 
@@ -63,6 +62,7 @@ export default function QuizPage() {
           availableCount={availableCount}
           currentIndex={currentIndex}
           questionRating={currentQuestionRating}
+          questionRatingDelta={questionRatingDelta}
           questionElapsedMs={questionElapsedMs}
           questionContext={currentQuestionContext}
           currentQuestion={currentQuestion}

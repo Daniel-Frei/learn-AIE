@@ -61,6 +61,8 @@ This file captures durable process preferences so future tasks can follow them b
 ## UI Preferences
 
 - During active quiz practice, prioritize the question prompt and answer options over the quiz-set title; keep the title smaller and visually muted.
+- In the quiz header, keep the top-right practice stat focused on right-aligned accuracy; do not show separate answered/correct counters there during active practice.
+- After a quiz answer is submitted, apply the rating update optimistically, show small muted up/down rating deltas inline after the participant rating and revealed question rating, and clear those deltas when the user advances. Keep reserved space for the revealed question Elo line so the prompt/options do not jump on submit.
 - Quiz prompt, answer, and explanation text should remain selectable for copy/paste. Dragging across answer text must not toggle the answer; clicking or keyboard activation should remain the deliberate selection action.
 
 ## Shared Data Operations
@@ -71,6 +73,7 @@ This file captures durable process preferences so future tasks can follow them b
 
 - For question-bank files under `/lib` (excluding `/lib/llm`), keep answer patterns roughly balanced across 1, 2, 3, and 4 correct-answer questions.
 - Question-bank files may mix `multiple-select` and `assertion-reason` questions. Use assertion-reason items when the source material benefits from testing whether two statements are true and whether the reason explains the assertion; do not force a fixed mix, because the right question type depends on the subject and field.
+- Assertion-reason questions should usually be capped at no more than `20%` of a newly authored source-material question set unless the user explicitly asks for a higher share.
 - Assertion-reason questions should set `type: "assertion-reason"`, use the standard fixed five-option assertion/reason order, have exactly one correct option, and keep those options in authored order. The five options are: assertion true/reason false, assertion false/reason true, both false, both true with the reason explaining the assertion, and both true without the reason explaining the assertion. Multiple-select questions can omit `type` because they default to `multiple-select`, and their answer options are randomized during practice.
 - Exact quarter splits are preferred when practical, but approximate balance is acceptable when a file size or authoring constraints make exact `25%` buckets awkward.
 - For question-bank files under `/lib` (excluding `/lib/llm`), do not require an equal static difficulty-label split unless the user, source material, existing set convention, or local docs ask for one. When no difficulty split is specified, use a roughly balanced `easy`/`medium`/`hard` mix by default where practical, and always report the final difficulty counts back to the user.
@@ -96,6 +99,7 @@ This file captures durable process preferences so future tasks can follow them b
 - Crash Course Linear Algebra Lecture 0 should stay focused on prerequisite AP/A-level linear algebra rather than AI applications, helping students practice the math needed for later lecture question sets.
 - Crash Course Linear Algebra Lecture 0 should explicitly prepare students for recurring notation and terminology such as \(\mathbb{R}^n\), subscripts, transposes, summations, norms, matrix shapes, span, basis, rank, determinants, inverses, eigenvectors, and Singular Value Decomposition (SVD).
 - Crash Course Linear Algebra Lecture 2-5 expansions should deepen mathematical rigor and applied linear algebra practice, with questions that test computation, shape reasoning, transformations, gradients, decompositions, attention, RL value functions, and conceptual transfer rather than surface recall.
+- Crash Course Probability expansions should emphasize mathematical rigor and applied fluency: event notation, probability-mass calculations, PMF validity, random-variable notation, expected value, empirical expected loss, calibration arithmetic, variance, and AI probability interpretation rather than only verbal definition recall.
 - Biology & Chemistry for Life Science Lecture 0 should stay easier than L1-L5 and focus on prerequisite concepts and terminology that students need before attempting the lecture question sets.
 - Biology & Chemistry for Life Science Lecture 0 should use plausible same-topic distractors rather than category-mismatch joke options, and its static difficulty labels should be allowed to skew heavily toward easy/medium when that better serves no-prior-knowledge preparation.
 - For preparation question sets, answer options should teach useful same-topic contrasts. Avoid random cross-topic distractors that only teach that a concept is not an unrelated statistic, study-design term, drug concept, or other category mismatch.

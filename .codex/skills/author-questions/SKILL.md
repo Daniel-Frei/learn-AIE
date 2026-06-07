@@ -110,7 +110,7 @@ For new question sets, run the gate over the full draft before finalizing. For a
 - Question files may mix two question types:
   - Multi-select multiple-choice questions. Existing questions can omit `type`; omitted `type` means `multiple-select`. Use exactly four options; each option must have `isCorrect: true` or `isCorrect: false`, and 1, 2, 3, or 4 options can be correct.
   - Assertion-reason MCQs. Set `type: "assertion-reason"`, write a prompt containing an **Assertion** and a **Reason**, and use the standard fixed five-option order. Exactly one option should be correct.
-- Choose the mix of question types based on the source material, subject, and field. Use assertion-reason items when it is useful to test whether two statements are true and whether the reason explains the assertion; do not force a fixed mix or quota.
+- Choose the mix of question types based on the source material, subject, and field.
 - Multi-select answer options should be order-independent because the frontend randomizes them. Assertion-reason answer options should not rely on randomization and should keep this authored order:
   - `Assertion is true, Reason is false.`
   - `Assertion is false, Reason is true.`
@@ -265,7 +265,7 @@ For assertion-reason questions, use this shape inside the same `Question[]` arra
     },
   ],
   explanation:
-    "At least two sentences. Explain whether the assertion is true, whether the reason is true, and whether the reason explains the assertion.",
+    "At least two sentences (at least 200 characters). Explain whether the assertion is true, whether the reason is true, and whether the reason explains the assertion.",
 }
 ```
 

@@ -997,7 +997,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Fine-tuning tasks are expected to be rank one in this picture.",
+        text: "Fine-tuning tasks are expected to require only rank-one updates.",
         isCorrect: false,
       },
     ],

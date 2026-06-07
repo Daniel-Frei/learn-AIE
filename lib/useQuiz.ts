@@ -22,6 +22,7 @@ import {
   createDefaultRatingState,
   getQuestionRatingEstimate,
   QUESTION_TIME_LIMIT_MS,
+  recordAnswer,
   type QuestionMetadataMap,
   type RatingStateV2,
 } from "./ratingEngine";
@@ -50,6 +51,15 @@ export type { DifficultyRange, QuestionSelectionMode } from "./quizSession";
 const QUESTION_METADATA: QuestionMetadataMap = Object.fromEntries(
   allQuestions.map((q) => [q.id, { label: q.difficulty }]),
 );
+
+type AnswerRatingSnapshot = {
+  questionId: string;
+  userRating: number;
+  userRatingRd: number;
+  questionRating: number;
+  userDelta: number;
+  questionDelta: number;
+};
 
 export function useQuiz() {
   const initialSources: SourceId[] = [];
@@ -115,6 +125,8 @@ export function useQuiz() {
   const [frozenQuestionTimerMs, setFrozenQuestionTimerMs] = useState<
     number | null
   >(null);
+  const [answerRatingSnapshot, setAnswerRatingSnapshot] =
+    useState<AnswerRatingSnapshot | null>(null);
   const questionStartedAtRef = useRef<number | null>(null);
 
   const applyRemoteState = (response: QuizStateResponse) => {
@@ -227,6 +239,13 @@ export function useQuiz() {
 
   const currentQuestionId = currentQuestion?.id ?? null;
 
+  const visibleAnswerRatingSnapshot =
+    showResult &&
+    currentQuestionId &&
+    answerRatingSnapshot?.questionId === currentQuestionId
+      ? answerRatingSnapshot
+      : null;
+
   const currentQuestionContext = useMemo(() => {
     if (!currentQuestion) return null;
     return getQuestionSourceContext(currentQuestion.id);
@@ -256,7 +275,7 @@ export function useQuiz() {
     return getDisplayOptions(currentQuestion);
   }, [currentQuestion]);
 
-  const currentQuestionRating = useMemo(() => {
+  const ratingStateQuestionRating = useMemo(() => {
     if (!currentQuestion) return null;
     return getQuestionRatingEstimate(
       currentQuestion.id,
@@ -264,6 +283,8 @@ export function useQuiz() {
       ratingState,
     ).rating;
   }, [currentQuestion, ratingState]);
+  const currentQuestionRating =
+    visibleAnswerRatingSnapshot?.questionRating ?? ratingStateQuestionRating;
 
   const displayedQuestionTimerMs =
     showResult && frozenQuestionTimerMs !== null
@@ -285,6 +306,7 @@ export function useQuiz() {
     setSelectedIndexes([]);
     setQuestionTimerMs(0);
     setFrozenQuestionTimerMs(null);
+    setAnswerRatingSnapshot(null);
     questionStartedAtRef.current = null;
     setQuestionSessionId((id) => id + 1);
 
@@ -414,6 +436,7 @@ export function useQuiz() {
     setShowResult(null);
     setQuestionTimerMs(0);
     setFrozenQuestionTimerMs(null);
+    setAnswerRatingSnapshot(null);
     questionStartedAtRef.current = null;
     setQuestionSessionId((id) => id + 1);
 
@@ -453,6 +476,7 @@ export function useQuiz() {
       applyRemoteState(response);
       markLegacyMigrationCompleted(participantId);
       saveRatingState(createDefaultRatingState());
+      setAnswerRatingSnapshot(null);
 
       return true;
     } catch (err) {
@@ -473,7 +497,41 @@ export function useQuiz() {
 
     const { isCorrect, mistakeCount } = evaluation;
 
+    const userRatingBefore = ratingState.user.rating;
+    const questionRatingBefore = getQuestionRatingEstimate(
+      currentQuestion.id,
+      currentQuestion.difficulty,
+      ratingState,
+    ).rating;
+    const optimisticRatingState = recordAnswer(
+      ratingState,
+      currentQuestion.id,
+      currentQuestion.difficulty,
+      isCorrect,
+      Date.now(),
+      {
+        elapsedMs,
+        mistakeCount,
+      },
+    );
+    const optimisticQuestionRating =
+      optimisticRatingState.questions[currentQuestion.id];
+
     setFrozenQuestionTimerMs(elapsedMs);
+    setRatingState(optimisticRatingState);
+    setAnswerRatingSnapshot(
+      optimisticQuestionRating
+        ? {
+            questionId: currentQuestion.id,
+            userRating: optimisticRatingState.user.rating,
+            userRatingRd: optimisticRatingState.user.rd,
+            questionRating: optimisticQuestionRating.rating,
+            userDelta: optimisticRatingState.user.rating - userRatingBefore,
+            questionDelta:
+              optimisticQuestionRating.rating - questionRatingBefore,
+          }
+        : null,
+    );
     setShowResult({ isCorrect });
     setAnsweredCount((n) => n + 1);
     setCorrectCount((n) => n + (isCorrect ? 1 : 0));
@@ -521,6 +579,7 @@ export function useQuiz() {
     currentQuestion,
     currentQuestionContext,
     currentQuestionRating,
+    questionRatingDelta: visibleAnswerRatingSnapshot?.questionDelta ?? null,
     questionElapsedMs: displayedQuestionTimerMs,
     shuffledOptions,
 
@@ -535,8 +594,11 @@ export function useQuiz() {
     answeredCount,
     correctCount,
     accuracy,
-    userRating: ratingState.user.rating,
-    userRatingRd: ratingState.user.rd,
+    userRating:
+      visibleAnswerRatingSnapshot?.userRating ?? ratingState.user.rating,
+    userRatingRd:
+      visibleAnswerRatingSnapshot?.userRatingRd ?? ratingState.user.rd,
+    userRatingDelta: visibleAnswerRatingSnapshot?.userDelta ?? null,
     totalReportCount,
     currentQuestionReportCount,
 

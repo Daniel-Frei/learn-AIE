@@ -380,7 +380,7 @@ export const ClinicalTrialsLecture2Questions: Question[] = [
       { text: "Outcome and time.", isCorrect: true },
     ],
     explanation:
-      "This example specifies the major elements needed to evaluate a clinical claim: who is included, what is tested, what it is compared against, what is measured, and when. Clear specification makes the trial interpretable and prevents vague claims from standing in for evidence.",
+      "This example specifies the major elements needed to evaluate a clinical claim: adults with chronic back pain are the population, the new drug is the intervention, standard therapy is the comparator, and pain reduction at 12 weeks gives the outcome and time point. Clear specification makes the trial interpretable and prevents vague claims from standing in for evidence.",
   },
   {
     id: "clinical-trials-l2-q17",

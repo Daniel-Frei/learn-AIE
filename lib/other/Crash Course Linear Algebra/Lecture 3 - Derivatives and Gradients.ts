@@ -1310,7 +1310,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
       "For a value-learning loss \\(L=(t-Q_\\theta(s,a))^2\\), treating target \\(t\\) as fixed, which statements are correct?",
     options: [
       {
-        text: "\\(\\frac{\\partial L}{\\partial Q_\\theta}=2(Q_\\theta(s,a)-t)\\).",
+        text: "If \\(q=Q_\\theta(s,a)\\), then \\(\\frac{\\partial L}{\\partial q}=2(q-t)\\).",
         isCorrect: true,
       },
       {
@@ -1327,7 +1327,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
       },
     ],
     explanation:
-      "The derivative of \\((t-Q)^2\\) with respect to \\(Q\\) is \\(2(Q-t)\\). To update parameters, the chain rule multiplies this scalar error derivative by how \\(Q_\\theta\\) changes with \\(\\theta\\). When prediction equals target, the squared-error gradient vanishes.",
+      "Writing \\(q=Q_\\theta(s,a)\\) makes the scalar derivative unambiguous: \\(\\frac{\\partial}{\\partial q}(t-q)^2=2(q-t)\\). To update parameters, the chain rule multiplies this scalar error derivative by how \\(Q_\\theta(s,a)\\) changes with \\(\\theta\\). When prediction equals target, the squared-error gradient vanishes.",
   },
   {
     id: "la-crash-l3-q53",

@@ -4,6 +4,7 @@
 import { useId } from "react";
 import { getQuestionType, type Question } from "../lib/quiz";
 import MathText from "./MathText";
+import RatingDeltaIndicator from "./RatingDeltaIndicator";
 
 type Option = {
   text: string;
@@ -14,6 +15,7 @@ type Props = {
   availableCount: number;
   currentIndex: number;
   questionRating: number | null;
+  questionRatingDelta: number | null;
   questionElapsedMs: number;
   questionContext: string | null;
   currentQuestion: Question | null;
@@ -103,7 +105,10 @@ function QuestionPrompt({
 
   if (assertionReasonPrompt) {
     return (
-      <div className="relative space-y-3 text-lg md:text-xl font-semibold leading-relaxed">
+      <div
+        data-testid="question-prompt"
+        className="relative space-y-3 text-lg md:text-xl font-semibold leading-relaxed"
+      >
         <p>
           <span>Assertion:</span>{" "}
           <MathText text={assertionReasonPrompt.assertion} inline />
@@ -120,7 +125,7 @@ function QuestionPrompt({
   }
 
   return (
-    <div className="relative">
+    <div data-testid="question-prompt" className="relative">
       <MathText
         text={question.prompt}
         inline
@@ -135,6 +140,7 @@ export default function QuizQuestionSection({
   availableCount,
   currentIndex,
   questionRating,
+  questionRatingDelta,
   questionElapsedMs,
   questionContext,
   currentQuestion,
@@ -148,27 +154,44 @@ export default function QuizQuestionSection({
 
   return (
     <section className="space-y-4">
-      <div className="text-xs uppercase tracking-wide text-slate-400 flex justify-between">
+      <div className="flex min-h-10 justify-between text-xs uppercase tracking-wide text-slate-400">
         <span>
           Question {hasQuestion ? currentIndex + 1 : 0} of {availableCount}
         </span>
         {hasQuestion && (
-          <span className="text-right flex flex-col sm:flex-row sm:items-center sm:gap-3">
-            {showResult && questionRating !== null && (
-              <span>
-                Question Elo:{" "}
-                <span className="font-semibold text-slate-100">
-                  {formatQuestionRating(questionRating)}
-                </span>
-              </span>
-            )}
-            <span>
+          <span className="text-right flex min-w-44 flex-col items-end gap-1">
+            <span data-testid="question-timer" className="block leading-4">
               Time:{" "}
               <span className="font-semibold text-slate-100">
                 {formatElapsedMs(questionElapsedMs)}
               </span>{" "}
               / 3:00
             </span>
+            {showResult && questionRating !== null && (
+              <span
+                data-testid="question-rating-line"
+                className="block min-h-4 leading-4"
+              >
+                Question Elo:{" "}
+                <span className="font-semibold text-slate-100">
+                  {formatQuestionRating(questionRating)}
+                </span>
+                {questionRatingDelta !== null && (
+                  <>
+                    {" "}
+                    <RatingDeltaIndicator
+                      delta={questionRatingDelta}
+                      label="Question Elo"
+                      testId="question-rating-delta"
+                      className="align-middle"
+                    />
+                  </>
+                )}
+              </span>
+            )}
+            {!showResult && (
+              <span aria-hidden="true" className="block min-h-4 leading-4" />
+            )}
           </span>
         )}
       </div>

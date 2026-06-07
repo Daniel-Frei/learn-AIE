@@ -120,12 +120,12 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The dot product does not have to be positive.",
+        text: "For other vector pairs, a dot product can be negative.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The algebraic computation gives \\(1*3 + 2*4 = 11\\). The geometric interpretation expresses the dot product as \\(\\|a\\|\\|b\\|\\cos\\theta\\). However, the dot product can be negative if the vectors point in opposite directions.",
+      "The algebraic computation gives \\(1*3 + 2*4 = 11\\), so this specific dot product is positive. The geometric interpretation expresses the dot product as \\(\\|a\\|\\|b\\|\\cos\\theta\\), and other vector pairs can have a negative dot product when they point more than 90 degrees apart.",
   },
 
   {
@@ -695,10 +695,13 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
       { text: "The dot product equals 0.", isCorrect: true },
       { text: "The vectors are orthogonal.", isCorrect: true },
       { text: "Cosine similarity equals 0.", isCorrect: true },
-      { text: "The vectors must have equal length.", isCorrect: false },
+      {
+        text: "Orthogonality requires one of the vectors to be the zero vector.",
+        isCorrect: false,
+      },
     ],
     explanation:
-      "The vectors share no overlapping dimensions with nonzero values, so their dot product is zero. This means they are orthogonal and have cosine similarity equal to zero. Orthogonality does not require equal magnitude.",
+      "The vectors share no overlapping dimensions with nonzero values, so their dot product is zero. This means they are orthogonal and have cosine similarity equal to zero. Orthogonality can happen between nonzero vectors, so it does not require either vector to be the zero vector.",
   },
 
   {
@@ -838,12 +841,12 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It works when the matrix has the same number of rows and columns.",
+        text: "It only works when the matrix has the same number of rows and columns.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Matrix–vector multiplication combines input features through weighted sums to produce outputs. This is exactly how linear layers operate in neural networks. The matrix does not need to be square; its shape determines the output dimension.",
+      "Matrix–vector multiplication combines input features through weighted sums to produce outputs. This is exactly how linear layers operate in neural networks. The matrix only needs an input-compatible number of columns; it does not need to be square, and its row count determines the output dimension.",
   },
 
   {

@@ -36,6 +36,7 @@ import { CrashCourseLinearAlgebraL2Questions } from "./other/Crash Course Linear
 import { CrashCourseLinearAlgebraL3Questions } from "./other/Crash Course Linear Algebra/Lecture 3 - Derivatives and Gradients";
 import { CrashCourseLinearAlgebraL4Questions } from "./other/Crash Course Linear Algebra/Lecture 4 - Eigenvectors, SVD, and Representation Learning";
 import { CrashCourseLinearAlgebraL5Questions } from "./other/Crash Course Linear Algebra/Lecture 5 - Linear Algebra in LLMs and RL";
+import { CrashCourseProbabilityL1Questions } from "./other/Crash Courses/Probability/Lecture 1 - overview";
 import { BiologyChemistryLifeScienceL0Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 0 - preparation";
 import { BiologyChemistryLifeScienceL1Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 1 - Chemistry of Life";
 import { BiologyChemistryLifeScienceL2Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 2 - Cells as Information-Processing Systems";
@@ -73,6 +74,7 @@ export type SourceSeriesId =
   | "mit-6s191-2026"
   | "mit-15773-2024"
   | "crash-course-linear-algebra"
+  | "crash-course-probability"
   | "biology-chemistry-life-science"
   | "clinical-trials"
   | "ai-agents"
@@ -484,6 +486,15 @@ export const QUESTION_SOURCES = [
     questions: CrashCourseLinearAlgebraL5Questions,
   },
   {
+    id: "crash-probability-l1" as const,
+    label: "Crash Course Probability L1",
+    title: "Crash Course Probability L1: Probability as the Language of AI",
+    seriesId: "crash-course-probability" as const,
+    seriesLabel: "Crash Course Probability",
+    topic: "Math" as const,
+    questions: CrashCourseProbabilityL1Questions,
+  },
+  {
     id: "bio-chem-life-l0" as const,
     label: "Biology & Chemistry L0",
     title: "Biology & Chemistry for Life Science L0: Preparation",
@@ -698,6 +709,8 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
     "Linear algebra lesson about eigenvectors, covariance, PCA, SVD, low-rank structure, embeddings, LoRA, and representation learning.",
   "crash-linalg-l5":
     "Linear algebra synthesis lesson about attention, matrix stacks, RL value functions, optimization landscapes, and AI geometry.",
+  "crash-probability-l1":
+    "Probability lesson about AI uncertainty, sample spaces, events, random variables, discrete distributions, expectation, variance, calibration, and prediction.",
   "bio-chem-life-l0":
     "Life-science preparation practice covering prerequisite chemistry, cells, genes, disease, drugs, biomarkers, biotech, and evidence vocabulary.",
   "bio-chem-life-l1":
@@ -915,6 +928,7 @@ export { CrashCourseLinearAlgebraL2Questions } from "./other/Crash Course Linear
 export { CrashCourseLinearAlgebraL3Questions } from "./other/Crash Course Linear Algebra/Lecture 3 - Derivatives and Gradients";
 export { CrashCourseLinearAlgebraL4Questions } from "./other/Crash Course Linear Algebra/Lecture 4 - Eigenvectors, SVD, and Representation Learning";
 export { CrashCourseLinearAlgebraL5Questions } from "./other/Crash Course Linear Algebra/Lecture 5 - Linear Algebra in LLMs and RL";
+export { CrashCourseProbabilityL1Questions } from "./other/Crash Courses/Probability/Lecture 1 - overview";
 export { BiologyChemistryLifeScienceL0Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 0 - preparation";
 export { BiologyChemistryLifeScienceL1Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 1 - Chemistry of Life";
 export { BiologyChemistryLifeScienceL2Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 2 - Cells as Information-Processing Systems";

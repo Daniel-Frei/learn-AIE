@@ -130,19 +130,65 @@ test("reveals question elo after answering and resets the timer for the next que
   await expect(contextTooltip).toBeVisible();
 
   await expect(page.getByText(/question elo:/i)).toHaveCount(0);
+  await expect(page.getByTestId("question-rating-line")).toHaveCount(0);
   await expect(page.getByText(/difficulty:/i)).toHaveCount(0);
+  await expect(page.getByText(/answered:/i)).toHaveCount(0);
+  await expect(page.getByText(/correct:/i)).toHaveCount(0);
+  await expect(page.getByTestId("quiz-accuracy")).toHaveCSS(
+    "text-align",
+    "right",
+  );
   await expect(page.getByText(/time:\s*0:00\s*\/\s*3:00/i)).toBeVisible();
 
   await page.waitForTimeout(1200);
   await expect(page.getByText(/time:\s*0:0[1-9]\s*\/\s*3:00/i)).toBeVisible();
 
+  const promptBeforeSubmit = await page
+    .getByTestId("question-prompt")
+    .boundingBox();
+  expect(promptBeforeSubmit).not.toBeNull();
+
+  await page.route("**/api/answers", async (route) => {
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await route.continue();
+  });
+  const answerResponse = page.waitForResponse(
+    (response) =>
+      response.url().includes("/api/answers") &&
+      response.request().method() === "POST",
+  );
+
   await page.locator("section").nth(0).getByRole("checkbox").first().click();
   await page.getByRole("button", { name: /submit answer/i }).click();
-  await expect(page.getByText(/question elo:/i)).toBeVisible();
+  await expect(page.getByText(/question elo:/i)).toBeVisible({
+    timeout: 500,
+  });
+  const promptAfterSubmit = await page
+    .getByTestId("question-prompt")
+    .boundingBox();
+  expect(
+    Math.abs((promptAfterSubmit?.y ?? 0) - (promptBeforeSubmit?.y ?? 0)),
+  ).toBeLessThanOrEqual(1);
+  const timeBox = await page.getByTestId("question-timer").boundingBox();
+  const questionRatingBox = await page
+    .getByTestId("question-rating-line")
+    .boundingBox();
+  expect(timeBox, "timer should be visible").not.toBeNull();
+  expect(questionRatingBox, "question rating should be visible").not.toBeNull();
+  expect(questionRatingBox!.y).toBeGreaterThan(timeBox!.y);
+  await expect(page.getByTestId("question-rating-line")).toHaveText(
+    /question elo:.*[+-]\d+/i,
+  );
+  await expect(page.getByTestId("user-rating-delta")).toHaveText(/[+-]\d+/);
+  await expect(page.getByTestId("question-rating-delta")).toHaveText(/[+-]\d+/);
+  await answerResponse;
 
   await page.getByRole("button", { name: /next question/i }).click();
 
   await expect(page.getByText(/question elo:/i)).toHaveCount(0);
+  await expect(page.getByTestId("question-rating-line")).toHaveCount(0);
+  await expect(page.getByTestId("user-rating-delta")).toHaveCount(0);
+  await expect(page.getByTestId("question-rating-delta")).toHaveCount(0);
   await expect(page.getByText(/time:\s*0:00\s*\/\s*3:00/i)).toBeVisible();
 });
 

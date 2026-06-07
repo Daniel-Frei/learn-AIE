@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { DifficultyRange, QuestionSelectionMode } from "../lib/useQuiz";
+import RatingDeltaIndicator from "./RatingDeltaIndicator";
 import {
   ALL_TOPICS,
   ALL_SOURCE_IDS,
@@ -31,11 +32,10 @@ type Props = {
     mode: QuestionSelectionMode;
     difficultyRange: DifficultyRange;
   }) => void;
-  answeredCount: number;
-  correctCount: number;
   accuracy: number;
   userRating: number;
   userRatingRd: number;
+  userRatingDelta: number | null;
   resetParticipantRating: () => Promise<boolean>;
 };
 
@@ -50,11 +50,10 @@ export default function QuizHeader({
   selectionMode,
   difficultyRange,
   applySelection,
-  answeredCount,
-  correctCount,
   accuracy,
   userRating,
   userRatingRd,
+  userRatingDelta,
   resetParticipantRating,
 }: Props) {
   const [isSelectorOpen, setIsSelectorOpen] = useState(true);
@@ -200,16 +199,29 @@ export default function QuizHeader({
           <h1 className="text-base md:text-lg font-medium text-slate-300">
             {title}
           </h1>
-          <p className="text-xs text-slate-400 mt-2">
-            Glicko rating:{" "}
-            <span className="font-semibold text-slate-100">
-              {Math.round(userRating)}
-            </span>{" "}
-            +/-{" "}
-            <span className="font-semibold text-slate-100">
-              {Math.round(userRatingRd)}
-            </span>
-          </p>
+          <div className="mt-2">
+            <p className="text-xs text-slate-400">
+              Glicko rating:{" "}
+              <span className="font-semibold text-slate-100">
+                {Math.round(userRating)}
+              </span>{" "}
+              +/-{" "}
+              <span className="font-semibold text-slate-100">
+                {Math.round(userRatingRd)}
+              </span>
+              {userRatingDelta !== null && (
+                <>
+                  {" "}
+                  <RatingDeltaIndicator
+                    delta={userRatingDelta}
+                    label="Glicko rating"
+                    testId="user-rating-delta"
+                    className="align-middle"
+                  />
+                </>
+              )}
+            </p>
+          </div>
         </div>
 
         <div className="flex flex-col items-start md:items-end gap-2 w-full md:w-auto">
@@ -221,15 +233,10 @@ export default function QuizHeader({
             {isSelectorOpen ? "Close selection" : "Choose filters"}
           </button>
 
-          <div className="text-xs text-slate-400">
-            Answered:{" "}
-            <span className="font-semibold text-slate-200">
-              {answeredCount}
-            </span>{" "}
-            Correct:{" "}
-            <span className="font-semibold text-emerald-300">
-              {correctCount}
-            </span>{" "}
+          <div
+            data-testid="quiz-accuracy"
+            className="w-full text-left text-xs text-slate-400 md:text-right"
+          >
             Accuracy: <span className="font-semibold">{accuracy}%</span>
           </div>
         </div>
