@@ -37,6 +37,8 @@ import { CrashCourseLinearAlgebraL3Questions } from "./other/Crash Course Linear
 import { CrashCourseLinearAlgebraL4Questions } from "./other/Crash Course Linear Algebra/Lecture 4 - Eigenvectors, SVD, and Representation Learning";
 import { CrashCourseLinearAlgebraL5Questions } from "./other/Crash Course Linear Algebra/Lecture 5 - Linear Algebra in LLMs and RL";
 import { CrashCourseProbabilityL1Questions } from "./other/Crash Courses/Probability/Lecture 1 - overview";
+import { CrashCourseProbabilityL2Questions } from "./other/Crash Courses/Probability/Lecture 2 - Conditional Probability, Bayes, and Dependence";
+import { CrashCourseProbabilityL3Questions } from "./other/Crash Courses/Probability/Lecture 3 - Likelihood, Loss, Softmax, and Deep Learning";
 import { BiologyChemistryLifeScienceL0Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 0 - preparation";
 import { BiologyChemistryLifeScienceL1Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 1 - Chemistry of Life";
 import { BiologyChemistryLifeScienceL2Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 2 - Cells as Information-Processing Systems";
@@ -495,6 +497,26 @@ export const QUESTION_SOURCES = [
     questions: CrashCourseProbabilityL1Questions,
   },
   {
+    id: "crash-probability-l2" as const,
+    label: "Crash Course Probability L2",
+    title:
+      "Crash Course Probability L2: Conditional Probability, Bayes, and Dependence",
+    seriesId: "crash-course-probability" as const,
+    seriesLabel: "Crash Course Probability",
+    topic: "Math" as const,
+    questions: CrashCourseProbabilityL2Questions,
+  },
+  {
+    id: "crash-probability-l3" as const,
+    label: "Crash Course Probability L3",
+    title:
+      "Crash Course Probability L3: Likelihood, Loss, Softmax, and Deep Learning",
+    seriesId: "crash-course-probability" as const,
+    seriesLabel: "Crash Course Probability",
+    topic: "Math" as const,
+    questions: CrashCourseProbabilityL3Questions,
+  },
+  {
     id: "bio-chem-life-l0" as const,
     label: "Biology & Chemistry L0",
     title: "Biology & Chemistry for Life Science L0: Preparation",
@@ -711,6 +733,10 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
     "Linear algebra synthesis lesson about attention, matrix stacks, RL value functions, optimization landscapes, and AI geometry.",
   "crash-probability-l1":
     "Probability lesson about AI uncertainty, sample spaces, events, random variables, discrete distributions, expectation, variance, calibration, and prediction.",
+  "crash-probability-l2":
+    "Probability lesson about conditional probability, joint and marginal probability, marginalization, independence, Bayes' theorem, base rates, and prediction as P(y | x).",
+  "crash-probability-l3":
+    "Probability lesson about logits, softmax, likelihood, log-likelihood, negative log-likelihood, cross-entropy, entropy, and probabilistic neural-network training.",
   "bio-chem-life-l0":
     "Life-science preparation practice covering prerequisite chemistry, cells, genes, disease, drugs, biomarkers, biotech, and evidence vocabulary.",
   "bio-chem-life-l1":
@@ -929,6 +955,8 @@ export { CrashCourseLinearAlgebraL3Questions } from "./other/Crash Course Linear
 export { CrashCourseLinearAlgebraL4Questions } from "./other/Crash Course Linear Algebra/Lecture 4 - Eigenvectors, SVD, and Representation Learning";
 export { CrashCourseLinearAlgebraL5Questions } from "./other/Crash Course Linear Algebra/Lecture 5 - Linear Algebra in LLMs and RL";
 export { CrashCourseProbabilityL1Questions } from "./other/Crash Courses/Probability/Lecture 1 - overview";
+export { CrashCourseProbabilityL2Questions } from "./other/Crash Courses/Probability/Lecture 2 - Conditional Probability, Bayes, and Dependence";
+export { CrashCourseProbabilityL3Questions } from "./other/Crash Courses/Probability/Lecture 3 - Likelihood, Loss, Softmax, and Deep Learning";
 export { BiologyChemistryLifeScienceL0Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 0 - preparation";
 export { BiologyChemistryLifeScienceL1Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 1 - Chemistry of Life";
 export { BiologyChemistryLifeScienceL2Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 2 - Cells as Information-Processing Systems";
