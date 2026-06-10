@@ -1,5 +1,7 @@
 import type { Topic, SourceId, SourceSeriesId } from "./quiz";
 
+export type QuestionReportStatus = "open" | "resolved";
+
 export type QuestionReportSnapshot = {
   sourceId: SourceId;
   sourceLabel: string;
@@ -14,6 +16,9 @@ export type QuestionReport = {
   questionId: string;
   comment: string;
   reportedAt: string;
+  status: QuestionReportStatus;
+  resolvedAt: string | null;
+  resolutionNote: string | null;
   snapshot: QuestionReportSnapshot;
 };
 
@@ -34,6 +39,10 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 function sanitizeString(value: unknown): string {
   return typeof value === "string" ? value : "";
+}
+
+function sanitizeStatus(value: unknown): QuestionReportStatus {
+  return value === "resolved" ? "resolved" : "open";
 }
 
 function sanitizeSnapshot(value: unknown): QuestionReportSnapshot | null {
@@ -74,6 +83,9 @@ function sanitizeReport(value: unknown): QuestionReport | null {
   const questionId = sanitizeString(value.questionId);
   const comment = sanitizeString(value.comment).trim();
   const reportedAt = sanitizeString(value.reportedAt);
+  const status = sanitizeStatus(value.status);
+  const resolvedAt = sanitizeString(value.resolvedAt) || null;
+  const resolutionNote = sanitizeString(value.resolutionNote).trim() || null;
   const snapshot = sanitizeSnapshot(value.snapshot);
 
   if (!id || !questionId || !comment || !reportedAt || !snapshot) {
@@ -85,6 +97,9 @@ function sanitizeReport(value: unknown): QuestionReport | null {
     questionId,
     comment,
     reportedAt,
+    status,
+    resolvedAt,
+    resolutionNote,
     snapshot,
   };
 }
@@ -147,6 +162,9 @@ export function appendQuestionReport(
     questionId: draft.questionId,
     comment,
     reportedAt: options?.reportedAt ?? new Date().toISOString(),
+    status: "open",
+    resolvedAt: null,
+    resolutionNote: null,
     snapshot: draft.snapshot,
   };
 

@@ -72,6 +72,9 @@ type QuestionReportRow = {
   question_id: string;
   comment: string;
   reported_at: string;
+  status?: string | null;
+  resolved_at?: string | null;
+  resolution_note?: string | null;
   source_id: string;
   source_label: string;
   series_id: string;
@@ -139,6 +142,9 @@ function mapQuestionReportRow(row: QuestionReportRow): StoredQuestionReport {
     questionId: row.question_id,
     comment: row.comment,
     reportedAt: row.reported_at,
+    status: row.status === "resolved" ? "resolved" : "open",
+    resolvedAt: row.resolved_at ?? null,
+    resolutionNote: row.resolution_note ?? null,
     snapshot,
   };
 }
@@ -431,7 +437,7 @@ class SupabaseQuizDataStore implements QuizDataStore {
   async listQuestionReports(): Promise<StoredQuestionReport[]> {
     const data = await fetchAllRows<QuestionReportRow>(
       this.client.from("question_reports"),
-      "id, participant_id, question_id, comment, reported_at, source_id, source_label, series_id, series_label, topic, prompt",
+      "id, participant_id, question_id, comment, reported_at, status, resolved_at, resolution_note, source_id, source_label, series_id, series_label, topic, prompt",
       "id",
     );
 
@@ -458,6 +464,9 @@ class SupabaseQuizDataStore implements QuizDataStore {
         question_id: report.questionId,
         comment: report.comment,
         reported_at: report.reportedAt,
+        status: report.status,
+        resolved_at: report.resolvedAt,
+        resolution_note: report.resolutionNote,
         source_id: report.snapshot.sourceId,
         source_label: report.snapshot.sourceLabel,
         series_id: report.snapshot.seriesId,

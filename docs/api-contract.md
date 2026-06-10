@@ -75,7 +75,7 @@ Generate a targeted explanation for a quiz question answer and follow-up chat tu
 
 ### Purpose
 
-Load the current anonymous participant rating state, global question difficulty state, and report-count summary from the shared database.
+Load the current anonymous participant rating state, global question difficulty state, and open report-count summary from the shared database.
 
 ### Query Parameters
 
@@ -128,8 +128,8 @@ Load the current anonymous participant rating state, global question difficulty 
     >;
   }
   reportSummary: {
-    totalReportCount: number;
-    countsByQuestion: Record<string, number>;
+    totalReportCount: number; // open reports only
+    countsByQuestion: Record<string, number>; // open reports by question
   }
   legacyMigrationCompleted: boolean;
 }
@@ -294,8 +294,8 @@ Persist a shared append-only question-quality report.
 
 ```ts
 {
-  totalReportCount: number;
-  questionReportCount: number;
+  totalReportCount: number; // open reports only
+  questionReportCount: number; // open reports for this question
 }
 ```
 
@@ -320,6 +320,8 @@ Persist a shared append-only question-quality report.
 ### Notes For Backend Integrators
 
 - Reports are append-only in the shared database; multiple reports for the same `questionId` remain separate entries.
+- Each report stores `reported_at` as the original submission time. Reviewers should mark handled reports with `status = 'resolved'`, `resolved_at`, and an optional `resolution_note` instead of deleting rows.
+- Report summaries count only rows with `status = 'open'`; resolved rows remain available for reviewer history but no longer appear as active report counts.
 - Report submission rejects empty fields, comments over `2,000` characters, prompt snapshots over `4,000` characters, labels/ids over `200` characters, and topics outside the configured `lib/questionTopics.ALL_TOPICS` list.
 - The API validator owns the current accepted topic list. The `question_reports.topic` database constraint intentionally checks only that topic text is present and bounded, not that it belongs to a closed enum, so future quiz topics do not need another report-table schema migration.
 
@@ -364,7 +366,7 @@ Import one participant's legacy local browser rating data into the shared databa
 - Mobile profile sync uses Supabase Auth directly:
   - Auth user id is used as `participants.participant_id`.
   - `participants`, `question_ratings`, `answer_attempts`, and `question_reports` are accessed with RLS policies from `supabase/migrations/20260511160000_mobile_profiles_rls.sql`.
-  - Mobile clients can read only `id` and `question_id` from shared question reports for counts; report comments and prompt snapshots remain server-side.
+  - Mobile clients can read only `id`, `question_id`, and `status` from shared question reports for open counts; report comments, resolution notes, and prompt snapshots remain server-side.
   - Answers are queued locally when offline, then flushed to Supabase when the user signs in and sync is reachable.
   - Question reports require a signed-in profile and are submitted to Supabase; old locally queued mobile reports are ignored.
 - Question content is still bundled from the repository question bank; Supabase sync currently covers ratings, attempts, reports, and profile state, not remote question-bank content.

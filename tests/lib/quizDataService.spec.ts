@@ -3,6 +3,7 @@ import type { QuestionReportDraft } from "@/lib/questionReportsStore";
 import { createDefaultRatingState, recordAnswer } from "@/lib/ratingEngine";
 import {
   exportCurrentRatingState,
+  getQuizState,
   migrateLocalStateForParticipant,
   recordQuizAnswerForParticipant,
   resetParticipantRatingForParticipant,
@@ -202,6 +203,9 @@ describe("quiz data service", () => {
       questionId: question.questionId,
       comment: "Needs review",
       reportedAt: "2026-05-02T00:00:00.000Z",
+      status: "open",
+      resolvedAt: null,
+      resolutionNote: null,
       snapshot: reportDraft.snapshot,
     });
 
@@ -230,6 +234,50 @@ describe("quiz data service", () => {
     );
     await expect(store.getParticipant(participant.id)).resolves.toMatchObject({
       legacyMigratedAt: participant.legacyMigratedAt,
+    });
+  });
+
+  it("keeps resolved reports stored but excludes them from active report summaries", async () => {
+    const store = new InMemoryQuizDataStore();
+    await store.appendQuestionReport({
+      id: "report-open",
+      participantId: participant.id,
+      questionId: question.questionId,
+      comment: "Needs review",
+      reportedAt: "2026-05-02T00:00:00.000Z",
+      status: "open",
+      resolvedAt: null,
+      resolutionNote: null,
+      snapshot: reportDraft.snapshot,
+    });
+    await store.appendQuestionReport({
+      id: "report-resolved",
+      participantId: participant.id,
+      questionId: question.questionId,
+      comment: "Already fixed",
+      reportedAt: "2026-05-01T00:00:00.000Z",
+      status: "resolved",
+      resolvedAt: "2026-05-03T00:00:00.000Z",
+      resolutionNote: "Question wording updated.",
+      snapshot: reportDraft.snapshot,
+    });
+
+    const state = await getQuizState(participant.id, store);
+    const storedReports = await store.listQuestionReports();
+
+    expect(state.reportSummary).toEqual({
+      totalReportCount: 1,
+      countsByQuestion: {
+        [question.questionId]: 1,
+      },
+    });
+    expect(storedReports).toHaveLength(2);
+    expect(
+      storedReports.find((report) => report.id === "report-resolved"),
+    ).toMatchObject({
+      status: "resolved",
+      reportedAt: "2026-05-01T00:00:00.000Z",
+      resolvedAt: "2026-05-03T00:00:00.000Z",
     });
   });
 

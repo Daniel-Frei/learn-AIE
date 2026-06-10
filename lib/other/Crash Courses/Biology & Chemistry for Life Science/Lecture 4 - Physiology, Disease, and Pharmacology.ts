@@ -490,7 +490,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
   makeQuestion(
     23,
     "hard",
-    "Which statements correctly explain why organ systems cannot be treated as independent modules?",
+    "Which mechanisms couple organ systems so physiology and disease cannot be modeled as isolated modules?",
     [
       ["The cardiovascular system transports hormones and immune cells.", true],
       [
@@ -502,11 +502,11 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         true,
       ],
       [
-        "Immune inflammation can alter metabolism, vascular function, and neural signaling.",
-        true,
+        "Each organ system has sealed feedback loops that prevent hormones or immune signals from affecting other tissues.",
+        false,
       ],
     ],
-    "Organ systems are coupled through transport, signals, feedback, and shared resources. This coupling is why disease in one system often affects others and why therapies can produce broad consequences.",
+    "Organ systems are coupled through transport, neural regulation, endocrine signaling, feedback, and shared resources. Hormones and immune signals routinely affect multiple tissues, so a disease or therapy in one system can have broad downstream consequences rather than staying sealed inside one module.",
   ),
   makeQuestion(
     24,

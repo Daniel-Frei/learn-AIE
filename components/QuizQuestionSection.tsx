@@ -159,7 +159,7 @@ export default function QuizQuestionSection({
           Question {hasQuestion ? currentIndex + 1 : 0} of {availableCount}
         </span>
         {hasQuestion && (
-          <span className="text-right flex min-w-44 flex-col items-end gap-1">
+          <span className="text-right flex min-w-52 flex-col items-end gap-1">
             <span data-testid="question-timer" className="block leading-4">
               Time:{" "}
               <span className="font-semibold text-slate-100">
@@ -170,7 +170,7 @@ export default function QuizQuestionSection({
             {showResult && questionRating !== null && (
               <span
                 data-testid="question-rating-line"
-                className="block min-h-4 leading-4"
+                className="block min-h-4 whitespace-nowrap leading-4"
               >
                 Question Elo:{" "}
                 <span className="font-semibold text-slate-100">

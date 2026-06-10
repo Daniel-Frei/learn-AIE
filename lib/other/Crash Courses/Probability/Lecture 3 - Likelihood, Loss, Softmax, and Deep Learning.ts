@@ -1230,7 +1230,7 @@ export const CrashCourseProbabilityL3Questions: Question[] = [
     chapter: 3,
     difficulty: "hard",
     prompt:
-      "A soft target is \\(p=(0.7,0.2,0.1)\\). Model A predicts \\(q_A=(0.7,0.2,0.1)\\), while Model B predicts \\(q_B=(0.9,0.05,0.05)\\). Which statements are correct?",
+      "For classes ordered as \\((\\text{cat},\\text{dog},\\text{fox})\\), a soft target is \\(p=(0.7,0.2,0.1)\\). Model A predicts \\(q_A=(0.7,0.2,0.1)\\), while Model B predicts \\(q_B=(0.9,0.05,0.05)\\). Which statements are correct?",
     options: [
       {
         text: "Model A minimizes cross-entropy among model distributions that can match \\(p\\) exactly.",

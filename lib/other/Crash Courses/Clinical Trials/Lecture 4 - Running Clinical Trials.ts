@@ -492,7 +492,7 @@ export const ClinicalTrialsLecture4Questions: Question[] = [
     chapter: 4,
     difficulty: "hard",
     prompt:
-      "Which tasks should be substantially complete before database lock in a regulated clinical trial?",
+      "A regulated trial is about to lock the database for its prespecified analysis. Which tasks must be complete or formally controlled before lock?",
     options: [
       {
         text: "Required data entry and query resolution.",
@@ -512,7 +512,7 @@ export const ClinicalTrialsLecture4Questions: Question[] = [
       },
     ],
     explanation:
-      "Database lock is the point where the clinical database is treated as final for analysis. It should follow data entry, query resolution, coding, reconciliation, medical review, and quality checks, not outcome-driven changes to the planned analysis.",
+      "Database lock is the point where the clinical database is treated as final for the planned analysis, so open data-cleaning work should already be complete or controlled through the study's formal process. It should follow data entry, query resolution, coding, reconciliation, medical review, and quality checks, not outcome-driven switching to whichever endpoint looks strongest.",
   },
   {
     id: "clinical-trials-l4-q20",

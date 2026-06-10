@@ -192,6 +192,9 @@ describe("Supabase quiz data store adapter", () => {
           question_id: "q-a",
           comment: "Needs review",
           reported_at: "2026-05-02T00:00:00.000Z",
+          status: "resolved",
+          resolved_at: "2026-05-05T00:00:00.000Z",
+          resolution_note: "Question updated.",
           source_id: "mit15773-l4",
           source_label: "MIT 15.773 L4",
           series_id: "mit-15773-2024",
@@ -293,6 +296,8 @@ describe("Supabase quiz data store adapter", () => {
       expect.objectContaining({
         id: "report-existing",
         participantId: "participant-a",
+        status: "resolved",
+        resolvedAt: "2026-05-05T00:00:00.000Z",
         snapshot: expect.objectContaining({ topic: "DL" }),
       }),
     ]);
@@ -309,6 +314,9 @@ describe("Supabase quiz data store adapter", () => {
       questionId: "q-b",
       comment: "Bad wording",
       reportedAt: "2026-05-04T00:00:00.000Z",
+      status: "open",
+      resolvedAt: null,
+      resolutionNote: null,
       snapshot: {
         sourceId: "mit15773-l4",
         sourceLabel: "MIT 15.773 L4",
@@ -322,6 +330,9 @@ describe("Supabase quiz data store adapter", () => {
     expect(db.rows.question_reports.get("report-new")).toMatchObject({
       id: "report-new",
       participant_id: "participant-b",
+      status: "open",
+      resolved_at: null,
+      resolution_note: null,
       source_id: "mit15773-l4",
       prompt: "Snapshot prompt",
     });

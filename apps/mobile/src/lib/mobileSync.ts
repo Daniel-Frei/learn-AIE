@@ -39,6 +39,7 @@ type QuestionRatingRow = {
 type QuestionReportRow = {
   id: string;
   question_id: string;
+  status?: string | null;
 };
 
 function participantToRow(
@@ -101,13 +102,14 @@ function rowToUser(row: ParticipantRow | null): RatingEntity {
 
 function buildReportSummary(reports: QuestionReportRow[]): ReportSummary {
   const countsByQuestion: Record<string, number> = {};
-  for (const report of reports) {
+  const openReports = reports.filter((report) => report.status !== "resolved");
+  for (const report of openReports) {
     countsByQuestion[report.question_id] =
       (countsByQuestion[report.question_id] ?? 0) + 1;
   }
 
   return {
-    totalReportCount: reports.length,
+    totalReportCount: openReports.length,
     countsByQuestion,
   };
 }
@@ -234,6 +236,9 @@ async function flushReports(
             question_id: report.draft.questionId,
             comment: report.draft.comment,
             reported_at: report.reportedAt,
+            status: "open",
+            resolved_at: null,
+            resolution_note: null,
             source_id: report.draft.snapshot.sourceId,
             source_label: report.draft.snapshot.sourceLabel,
             series_id: report.draft.snapshot.seriesId,
@@ -279,7 +284,7 @@ export async function pullRemoteMobileState(participantId: string): Promise<{
     fetchAllRows<QuestionReportRow>(
       supabase,
       "question_reports",
-      "id, question_id",
+      "id, question_id, status",
       "id",
     ),
   ]);

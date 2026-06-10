@@ -12,6 +12,7 @@ const MAX_REPORT_COMMENT_CHARS = 2_000;
 const MAX_REPORT_PROMPT_CHARS = 4_000;
 const MAX_LABEL_CHARS = 200;
 const VALID_TOPICS: ReadonlySet<string> = new Set(ALL_TOPICS);
+const MALFORMED_JSON = Symbol("malformed-json");
 
 function isBoundedString(value: unknown, maxLength: number): value is string {
   return (
@@ -46,10 +47,20 @@ function isValidQuestionReportPayload(
   );
 }
 
+async function readQuestionReportBody(
+  req: NextRequest,
+): Promise<unknown | typeof MALFORMED_JSON> {
+  try {
+    return (await req.json()) as unknown;
+  } catch {
+    return MALFORMED_JSON;
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
-    const body = (await req.json()) as unknown;
-    if (!isValidQuestionReportPayload(body)) {
+    const body = await readQuestionReportBody(req);
+    if (body === MALFORMED_JSON || !isValidQuestionReportPayload(body)) {
       return NextResponse.json(
         { error: "Invalid request payload for question report." },
         { status: 400 },

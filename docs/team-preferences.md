@@ -52,6 +52,7 @@ This file captures durable process preferences so future tasks can follow them b
 - The unit-test command enforces at least 95% statements, branches, functions, and lines for the configured core logic/API coverage scope.
 - Prioritize tests for quiz source selection/title logic, difficulty rating behavior, and API validation/error handling.
 - For question reporting, prefer append-only shared database entries and include source/prompt snapshot context for reviewer triage.
+- Do not delete handled question reports from shared storage. Mark them `resolved` with `resolved_at` and, when useful, a short `resolution_note`; active report counts should include only open reports.
 - When adding a quiz topic, update the central `lib/questionTopics.ts` list and the API/product docs. Do not add topic-specific Supabase `question_reports.topic` enum constraints; reports should accept future configured topics without another report-table schema migration.
 - Do not revive browser-local report storage or report export/import UI; legacy local reports should be ignored.
 - For shared quiz data, use anonymous per-device participants in v1: question difficulty is global, but each participant keeps their own rating/climb state.
@@ -63,7 +64,7 @@ This file captures durable process preferences so future tasks can follow them b
 - During active quiz practice, prioritize the question prompt and answer options over the quiz-set title; keep the title smaller and visually muted.
 - In the quiz header, keep the top-right practice stat focused on right-aligned accuracy; do not show separate answered/correct counters there during active practice.
 - After a quiz answer is submitted, apply the rating update optimistically, show small muted up/down rating deltas inline after the participant rating and revealed question rating, and clear those deltas when the user advances. Keep reserved space for the revealed question Elo line so the prompt/options do not jump on submit.
-- Quiz prompt, answer, and explanation text should remain selectable for copy/paste. Dragging across answer text must not toggle the answer; clicking or keyboard activation should remain the deliberate selection action.
+- Quiz prompt, answer, explanation, and learning-page text should remain selectable for copy/paste. Dragging across answer text must not toggle the answer; clicking or keyboard activation should remain the deliberate selection action. Keep the root React selection-permission error filter narrow so it suppresses the known `__reactFiber` / `correspondingUseElement` selection noise without hiding unrelated app errors.
 
 ## Shared Data Operations
 
@@ -84,8 +85,10 @@ This file captures durable process preferences so future tasks can follow them b
 - When rebalancing question banks, prefer minimal statement edits and corresponding `isCorrect` updates rather than rewriting whole questions.
 - In the filter menu, series/book checkboxes summarize the underlying individual question sets: selecting a series selects all of its question sets, and selecting any individual question set marks its parent series without expanding to sibling sets.
 - For quiz prompts and explanations, prefer self-contained wording that does not assume the user attended the lecture.
+- Every question should stand alone under randomized mixed-source practice. Do not write prompts or explanations that refer to another question, a previous answer, a next question, an equation from another item, or source context that may not be visible.
 - For question-bank files under `/lib`, explanations should be more than `150` characters; if validation finds a shorter explanation, expand it to at least `250` characters.
 - The `.codex/skills/author-questions` skill should be used for creating new question sets, adding questions to existing sets, reviewing question quality, improving weak existing questions, and targeted rewrites of topic slices; the same quality gate applies across those operations.
+- The `.codex/skills/author-learning-experience` skill should be used for creating new in-app learning pages from lecture, chapter, transcript, slides, or topic overview material. Generated learning pages should inspect the current app architecture first, register against existing quiz `SourceId`s, use shared learning primitives, update `docs/*`, and stay inside the app instead of creating PowerPoints, iframes, standalone static sites, or long copied lecture summaries.
 - Questions should test real concept understanding rather than surface recall or answer elimination. Difficulty should reflect the knowledge, reasoning, transfer, or math required, while answer options should remain high-quality and similarly plausible.
 - For source-material-derived question sets, practicing all questions to mastery should teach roughly the same core conceptual knowledge as reading and fully understanding the source material.
 - Avoid low-quality distractors that can be ruled out by wording cues, extreme absolutes, category mismatch, or absurdity; wrong options should be plausible alternatives that diagnose common misunderstandings.

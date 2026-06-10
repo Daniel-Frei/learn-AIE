@@ -60,6 +60,14 @@ describe("question report helpers", () => {
         (report) => report.questionId === "mit15773-l4-q1",
       ),
     ).toBe(true);
+    expect(afterSecond.reports.map((report) => report.status)).toEqual([
+      "open",
+      "open",
+    ]);
+    expect(afterSecond.reports.map((report) => report.reportedAt)).toEqual([
+      "2026-03-16T10:00:00.000Z",
+      "2026-03-16T11:00:00.000Z",
+    ]);
   });
 
   it("drops malformed persisted reports while keeping valid entries", () => {
@@ -71,6 +79,9 @@ describe("question report helpers", () => {
           questionId: "q-valid",
           comment: "  Keep me  ",
           reportedAt: "2026-03-16T13:00:00.000Z",
+          status: "resolved",
+          resolvedAt: "2026-03-17T13:00:00.000Z",
+          resolutionNote: "  Fixed wording  ",
           snapshot: sampleSnapshot,
         },
         null,
@@ -103,6 +114,9 @@ describe("question report helpers", () => {
         expect.objectContaining({
           id: "r-valid",
           comment: "Keep me",
+          status: "resolved",
+          resolvedAt: "2026-03-17T13:00:00.000Z",
+          resolutionNote: "Fixed wording",
         }),
       ],
     });
@@ -134,6 +148,9 @@ describe("question report helpers", () => {
       id: expect.stringMatching(/^report-12345-/),
       questionId: "q-generated",
       comment: "Generated report",
+      status: "open",
+      resolvedAt: null,
+      resolutionNote: null,
     });
     expect(
       createQuestionReport({

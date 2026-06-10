@@ -13,15 +13,15 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Because transformers cannot be understood unless they are replaced by recurrent neural networks.",
+        text: "Because the simplified view is the same as replacing transformers with recurrent neural networks.",
         isCorrect: false,
       },
       {
-        text: "Because positional embeddings are unnecessary and can be removed in more detailed formulations.",
+        text: "Because positional embeddings are decorative details in more detailed formulations.",
         isCorrect: false,
       },
       {
-        text: "Because the architecture only works when described without mathematical details.",
+        text: "Because the architecture is best described by avoiding mathematical details.",
         isCorrect: false,
       },
     ],
@@ -44,11 +44,11 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Positional embeddings must always be fixed rather than trainable vectors.",
+        text: "Positional embeddings are created by pooling token embeddings before the encoder.",
         isCorrect: false,
       },
       {
-        text: "They are created by averaging all token embeddings into a single vector before entering the encoder.",
+        text: "They are created by pooling token embeddings into one sequence vector before entering the encoder.",
         isCorrect: false,
       },
     ],
@@ -75,7 +75,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It guarantees that attention cost grows only linearly with sequence length.",
+        text: "It makes attention cost grow linearly with sequence length.",
         isCorrect: false,
       },
     ],
@@ -129,7 +129,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "The encoder could no longer be stacked into multiple layers.",
+        text: "The encoder loses the ability to be stacked into multiple layers.",
         isCorrect: false,
       },
     ],
@@ -151,7 +151,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "By forcing all attention heads to learn the same transformation.",
+        text: "By forcing attention heads to learn an identical transformation.",
         isCorrect: false,
       },
       {
@@ -178,7 +178,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They must always be initialized to identical values across all heads, otherwise the model becomes unstable.",
+        text: "The heads are initialized to identical values so the model remains stable.",
         isCorrect: false,
       },
       {
@@ -228,7 +228,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is used to ensure that all attention heads become identical at convergence.",
+        text: "It is used to make attention heads identical at convergence.",
         isCorrect: false,
       },
       {
@@ -236,7 +236,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It guarantees that all token embeddings have unit norm.",
+        text: "It normalizes token embeddings to unit norm.",
         isCorrect: false,
       },
     ],
@@ -334,11 +334,11 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Only the final output softmax is trained; the rest of the network is always fixed.",
+        text: "The final output softmax is trained while the rest of the network stays fixed.",
         isCorrect: false,
       },
       {
-        text: "Only the stand-alone token embeddings are trained, while attention parameters are fixed.",
+        text: "The stand-alone token embeddings are trained while attention parameters stay fixed.",
         isCorrect: false,
       },
       {
@@ -354,7 +354,7 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements about sequence classification with transformer encoders are correct?",
+      "For transformer encoder sequence classification, which statements correctly compare mean pooling with a learned \\(<CLS>\\) representation?",
     options: [
       {
         text: "A simple approach is to average contextual embeddings across tokens.",
@@ -369,12 +369,12 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Averaging contextual embeddings can lose information compared with a learned sequence representation.",
-        isCorrect: true,
+        text: "Mean pooling gives the same trained aggregation behavior as a dedicated \\(<CLS>\\) representation.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "Averaging token embeddings is a simple baseline, but it can lose some of the richer structure present in the sequence. A special \\(<CLS>\\) token provides a learned sequence-level representation, which is one reason it is widely used for sequence classification.",
+      "Averaging contextual embeddings is a simple baseline, but it treats token representations uniformly and can discard structure that matters for the sequence label. A dedicated \\(<CLS>\\) representation is trained as a sequence-level summary, so it is not equivalent to mean pooling.",
   },
   {
     id: "mit15773-l8-q15",
@@ -515,7 +515,8 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
     id: "mit15773-l8-q20",
     chapter: 1,
     difficulty: "easy",
-    prompt: "Which statements about BERT are correct?",
+    prompt:
+      "Which statements about BERT as a pretrained transformer encoder are correct?",
     options: [
       {
         text: "BERT is based on the transformer encoder architecture.",
@@ -530,12 +531,12 @@ export const TransformersSelfSupervisedLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "BERT can also be a strong pretrained starting point for sequence labeling tasks.",
-        isCorrect: true,
+        text: "BERT's encoder pretraining is the same objective as left-to-right decoder generation.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "The lecture positioned BERT as the text analogue of a strong pretrained encoder such as ResNet in vision. Its masked-language-model style pretraining and its built-in \\(<CLS>\\) token make it especially practical for many standard NLP tasks.",
+      "The lecture positioned BERT as the text analogue of a strong pretrained encoder such as ResNet in vision. Its masked-language-model style pretraining and built-in \\(<CLS>\\) token make it practical for encoder tasks, but that pretraining objective is not the same as left-to-right decoder-only generation.",
   },
 
   {

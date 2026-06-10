@@ -2,7 +2,7 @@ import { expect, type Page, test } from "@playwright/test";
 
 async function openFilters(page: Page) {
   const panelHeading = page.getByText(
-    /pick mode, series, lectures, topics and question elo range/i,
+    /pick mode, question types, series, lectures, topics and question elo range/i,
   );
   const toggle = page.getByRole("button", {
     name: /choose filters|close selection/i,

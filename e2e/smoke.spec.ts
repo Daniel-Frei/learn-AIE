@@ -35,6 +35,28 @@ function trackHydrationErrors(page: Page) {
   return errors;
 }
 
+function trackSelectionPermissionErrors(page: Page) {
+  const errors: string[] = [];
+  const selectionPermissionPattern =
+    /Permission denied to access property "(?:__reactFiber|correspondingUseElement)/i;
+
+  page.on("console", (message) => {
+    if (
+      message.type() === "error" &&
+      selectionPermissionPattern.test(message.text())
+    ) {
+      errors.push(message.text());
+    }
+  });
+  page.on("pageerror", (error) => {
+    if (selectionPermissionPattern.test(error.message)) {
+      errors.push(error.message);
+    }
+  });
+
+  return errors;
+}
+
 test("renders core quiz controls on the home page", async ({ page }) => {
   const hydrationErrors = trackHydrationErrors(page);
 
@@ -142,6 +164,7 @@ test("reveals question elo after answering and resets the timer for the next que
 
   await page.waitForTimeout(1200);
   await expect(page.getByText(/time:\s*0:0[1-9]\s*\/\s*3:00/i)).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
 
   const promptBeforeSubmit = await page
     .getByTestId("question-prompt")
@@ -195,6 +218,8 @@ test("reveals question elo after answering and resets the timer for the next que
 test("lets users select answer text without toggling the answer", async ({
   page,
 }) => {
+  const selectionPermissionErrors = trackSelectionPermissionErrors(page);
+
   await page.goto("/");
 
   await openFilters(page);
@@ -230,8 +255,49 @@ test("lets users select answer text without toggling the answer", async ({
 
   expect(selectedText.length).toBeGreaterThan(0);
   await expect(firstOption).toHaveAttribute("aria-checked", "false");
+  expect(
+    selectionPermissionErrors,
+    "selecting answer text should not produce React permission errors",
+  ).toEqual([]);
 
   await page.evaluate(() => window.getSelection()?.removeAllRanges());
   await firstOption.click();
   await expect(firstOption).toHaveAttribute("aria-checked", "true");
+});
+
+test("suppresses only known React selection permission error events", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const result = await page.evaluate(() => {
+    const windowWithFilter = window as Window & {
+      __learningAiReactSelectionErrorFilter?: boolean;
+    };
+
+    const matchingError = new Error(
+      'Permission denied to access property "__reactFiber$abc"',
+    );
+    matchingError.stack =
+      "Error: Permission denied\n    at getClosestInstanceFromNode";
+    const matchingEvent = new ErrorEvent("error", {
+      cancelable: true,
+      error: matchingError,
+      message: matchingError.message,
+    });
+    const matchingDispatchResult = window.dispatchEvent(matchingEvent);
+
+    return {
+      installed:
+        windowWithFilter.__learningAiReactSelectionErrorFilter === true,
+      matchingDefaultPrevented: matchingEvent.defaultPrevented,
+      matchingDispatchResult,
+    };
+  });
+
+  expect(result).toEqual({
+    installed: true,
+    matchingDefaultPrevented: true,
+    matchingDispatchResult: false,
+  });
 });

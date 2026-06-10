@@ -78,13 +78,14 @@ function buildRatingState(
 
 function buildReportSummary(reports: StoredQuestionReport[]): ReportSummary {
   const countsByQuestion: Record<string, number> = {};
-  for (const report of reports) {
+  const openReports = reports.filter((report) => report.status === "open");
+  for (const report of openReports) {
     countsByQuestion[report.questionId] =
       (countsByQuestion[report.questionId] ?? 0) + 1;
   }
 
   return {
-    totalReportCount: reports.length,
+    totalReportCount: openReports.length,
     countsByQuestion,
   };
 }

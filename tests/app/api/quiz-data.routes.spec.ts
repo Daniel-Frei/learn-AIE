@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { NextRequest } from "next/server";
+import type { QuestionReportDraft } from "@/lib/questionReportsStore";
 import { ALL_TOPICS } from "@/lib/questionTopics";
 import { createDefaultRatingState, recordAnswer } from "@/lib/ratingEngine";
 import {
@@ -177,7 +178,7 @@ describe("shared quiz data routes", () => {
     const { POST } = await import("@/app/api/question-reports/route");
     const { GET } = await import("@/app/api/quiz-state/route");
 
-    const draft = {
+    const draft: QuestionReportDraft = {
       questionId: "mit15773-l4-q1",
       comment: "Prompt is ambiguous.",
       snapshot: {
@@ -211,6 +212,18 @@ describe("shared quiz data routes", () => {
     expect(firstBody.totalReportCount).toBe(1);
     expect(secondBody.totalReportCount).toBe(2);
     expect(secondBody.questionReportCount).toBe(2);
+
+    await store.appendQuestionReport({
+      id: "resolved-report",
+      participantId: "participant-a",
+      questionId: draft.questionId,
+      comment: "Already fixed.",
+      reportedAt: "2026-05-01T00:00:00.000Z",
+      status: "resolved",
+      resolvedAt: "2026-05-02T00:00:00.000Z",
+      resolutionNote: "Question wording updated.",
+      snapshot: draft.snapshot,
+    });
 
     const stateRes = await GET(
       buildRequest(
@@ -449,6 +462,20 @@ describe("shared quiz data routes", () => {
 
     const res = await POST(
       buildRequest("http://localhost/api/question-reports", "POST", []),
+    );
+    const body = await res.json();
+
+    expect(res.status).toBe(400);
+    expect(body).toEqual({
+      error: "Invalid request payload for question report.",
+    });
+  });
+
+  it("returns 400 for malformed question report JSON", async () => {
+    const { POST } = await import("@/app/api/question-reports/route");
+
+    const res = await POST(
+      buildMalformedJsonRequest("http://localhost/api/question-reports"),
     );
     const body = await res.json();
 

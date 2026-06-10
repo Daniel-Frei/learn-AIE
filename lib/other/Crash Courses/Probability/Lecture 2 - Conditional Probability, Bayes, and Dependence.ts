@@ -297,7 +297,7 @@ export const CrashCourseProbabilityL2Questions: Question[] = [
     chapter: 2,
     difficulty: "medium",
     prompt:
-      "A table gives \\(P(\\text{infection})=0.35\\) and \\(P(\\text{infection}\\mid\\text{fever})=0.75\\). Which conclusion is justified?",
+      "In one dataset, \\(P(\\text{infection})=0.35\\) while \\(P(\\text{infection}\\mid\\text{fever})=0.75\\). Which conclusions follow from this comparison?",
     options: [
       {
         text: "Infection and fever are dependent in this table.",
@@ -317,7 +317,7 @@ export const CrashCourseProbabilityL2Questions: Question[] = [
       },
     ],
     explanation:
-      "The conditional probability differs from the marginal probability, so knowing fever changes the probability of infection. Being a valid probability between 0 and 1 does not imply independence.",
+      "The conditional probability differs from the marginal probability, so knowing fever changes the probability of infection in this dataset. Independent events would satisfy \\(P(\\text{infection}\\mid\\text{fever})=P(\\text{infection})\\), while merely being between 0 and 1 is required for any probability and says nothing about independence.",
   },
   {
     id: "crash-probability-l2-q14",
@@ -854,7 +854,7 @@ export const CrashCourseProbabilityL2Questions: Question[] = [
     chapter: 2,
     difficulty: "hard",
     prompt:
-      'Using the same spam table, are spam and "contains prize" independent?',
+      'A spam table has \\(P(\\text{spam})=0.50\\), \\(P(\\text{contains prize})=0.60\\), and \\(P(\\text{spam},\\text{contains prize})=0.45\\), so \\(P(\\text{spam}\\mid\\text{contains prize})=0.75\\). Are spam and "contains prize" independent?',
     options: [
       {
         text: "No, because \\(P(\\text{spam}\\mid\\text{contains prize})=0.75\\) differs from \\(P(\\text{spam})=0.50\\).",

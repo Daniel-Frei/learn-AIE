@@ -39,6 +39,7 @@ import { CrashCourseLinearAlgebraL5Questions } from "./other/Crash Course Linear
 import { CrashCourseProbabilityL1Questions } from "./other/Crash Courses/Probability/Lecture 1 - overview";
 import { CrashCourseProbabilityL2Questions } from "./other/Crash Courses/Probability/Lecture 2 - Conditional Probability, Bayes, and Dependence";
 import { CrashCourseProbabilityL3Questions } from "./other/Crash Courses/Probability/Lecture 3 - Likelihood, Loss, Softmax, and Deep Learning";
+import { CrashCourseProbabilityL4Questions } from "./other/Crash Courses/Probability/Lecture 4 - Probability Over Time - Reinforcement Learning";
 import { BiologyChemistryLifeScienceL0Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 0 - preparation";
 import { BiologyChemistryLifeScienceL1Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 1 - Chemistry of Life";
 import { BiologyChemistryLifeScienceL2Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 2 - Cells as Information-Processing Systems";
@@ -517,6 +518,16 @@ export const QUESTION_SOURCES = [
     questions: CrashCourseProbabilityL3Questions,
   },
   {
+    id: "crash-probability-l4" as const,
+    label: "Crash Course Probability L4",
+    title:
+      "Crash Course Probability L4: Probability Over Time: Reinforcement Learning",
+    seriesId: "crash-course-probability" as const,
+    seriesLabel: "Crash Course Probability",
+    topic: "Math" as const,
+    questions: CrashCourseProbabilityL4Questions,
+  },
+  {
     id: "bio-chem-life-l0" as const,
     label: "Biology & Chemistry L0",
     title: "Biology & Chemistry for Life Science L0: Preparation",
@@ -737,6 +748,8 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
     "Probability lesson about conditional probability, joint and marginal probability, marginalization, independence, Bayes' theorem, base rates, and prediction as P(y | x).",
   "crash-probability-l3":
     "Probability lesson about logits, softmax, likelihood, log-likelihood, negative log-likelihood, cross-entropy, entropy, and probabilistic neural-network training.",
+  "crash-probability-l4":
+    "Probability lesson about reinforcement learning over time: states, actions, rewards, transitions, policies, expected return, values, and exploration.",
   "bio-chem-life-l0":
     "Life-science preparation practice covering prerequisite chemistry, cells, genes, disease, drugs, biomarkers, biotech, and evidence vocabulary.",
   "bio-chem-life-l1":
@@ -957,6 +970,7 @@ export { CrashCourseLinearAlgebraL5Questions } from "./other/Crash Course Linear
 export { CrashCourseProbabilityL1Questions } from "./other/Crash Courses/Probability/Lecture 1 - overview";
 export { CrashCourseProbabilityL2Questions } from "./other/Crash Courses/Probability/Lecture 2 - Conditional Probability, Bayes, and Dependence";
 export { CrashCourseProbabilityL3Questions } from "./other/Crash Courses/Probability/Lecture 3 - Likelihood, Loss, Softmax, and Deep Learning";
+export { CrashCourseProbabilityL4Questions } from "./other/Crash Courses/Probability/Lecture 4 - Probability Over Time - Reinforcement Learning";
 export { BiologyChemistryLifeScienceL0Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 0 - preparation";
 export { BiologyChemistryLifeScienceL1Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 1 - Chemistry of Life";
 export { BiologyChemistryLifeScienceL2Questions } from "./other/Crash Courses/Biology & Chemistry for Life Science/Lecture 2 - Cells as Information-Processing Systems";

@@ -207,7 +207,7 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "MSE is appropriate only for classification tasks.",
+        text: "MSE is designed for choosing among class labels directly.",
         isCorrect: false,
       },
       {
@@ -231,7 +231,7 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
       "Which statements about stochastic gradient descent (SGD) are true?",
     options: [
       {
-        text: "It computes gradients using the entire dataset at every update step.",
+        text: "It computes gradients from the full training set before each update.",
         isCorrect: false,
       },
       {
@@ -243,7 +243,7 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It always converges faster in terms of wall-clock time.",
+        text: "It converges faster in wall-clock time for any dataset size.",
         isCorrect: false,
       },
     ],
@@ -262,11 +262,11 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It requires using the entire dataset at every update step.",
+        text: "It uses the full dataset to compute each parameter update.",
         isCorrect: false,
       },
       {
-        text: "It eliminates all gradient noise.",
+        text: "It removes stochastic variation from minibatch gradient estimates.",
         isCorrect: false,
       },
       {
@@ -286,7 +286,7 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
       "Which of the following are true about the empirical loss \\( J(\\mathbf{w}) = \\frac{1}{N} \\sum_{i=1}^N L_i(\\mathbf{w}) \\)?",
     options: [
       {
-        text: "It averages loss across only the test samples.",
+        text: "It averages loss across held-out test samples during training.",
         isCorrect: false,
       },
       {
@@ -530,27 +530,28 @@ export const L1_IntroductionToNeuralNetworksAndDeepLearning: Question[] = [
     id: "mit6s191-l1-q20",
     chapter: 1,
     difficulty: "easy",
-    prompt: "Which statement about deep neural networks is correct?",
+    prompt:
+      "Which statement describes the basic computation used by a feedforward deep neural network?",
     options: [
       {
-        text: "They are constructed by stacking linear transformations and nonlinear activations.",
+        text: "They compose learned linear transformations with nonlinear activation functions across layers.",
         isCorrect: true,
       },
       {
-        text: "They eliminate the need for any training data.",
+        text: "They choose fixed weights directly from input features instead of learning from examples.",
         isCorrect: false,
       },
       {
-        text: "They always outperform simpler models.",
+        text: "They use stacked linear maps without nonlinear activations to model complex boundaries.",
         isCorrect: false,
       },
       {
-        text: "They guarantee perfect predictions with enough layers.",
+        text: "They improve predictions by increasing layer count without needing optimization.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Deep networks are built by composing linear layers and nonlinearities. They require training data and careful optimization. While powerful, they do not guarantee perfect performance.",
+      "A feedforward deep network repeatedly applies learned linear transformations and nonlinear activation functions, which lets the composition represent more complex functions than a single linear model. Depth does not remove the need for training data, does not guarantee superiority over simpler models on every task, and does not ensure perfect predictions.",
   },
 
   {

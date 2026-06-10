@@ -149,4 +149,19 @@ describe("author-questions skill guidance", () => {
       "medium and hard items should not be answerable mainly by recognizing a familiar definition",
     );
   });
+
+  it("requires questions to stand alone under randomized mixed-source practice", () => {
+    expect(skill).toContain(
+      "Every question must stand alone because practice can randomize question order and mix questions from different source sets.",
+    );
+    expect(skill).toContain(
+      "Do not refer to other questions or depend on a previous prompt, answer, explanation, image, equation, or source-context card.",
+    );
+    expect(skill).toContain(
+      "No prompt or explanation depends on seeing another question first; every question is independent under randomized mixed-source practice.",
+    );
+    expect(teamPreferences).toContain(
+      "Every question should stand alone under randomized mixed-source practice.",
+    );
+  });
 });

@@ -7,9 +7,9 @@
 - An Expo React Native mobile app under `apps/mobile` lets users practice the same bundled question bank on iOS/Android while away from the desktop web UI.
 - Users can choose lecture series/books, specific sources, topic categories (`RL`, `DL`, `NLP`, `Math`, `Life Science`), question types, and question Elo ranges, answer quiz questions, and view explanations. The default question-type filter selects both `multiple-select` and `assertion-reason`, and the default question Elo filter range is the full supported `0` to `3000` range.
 - The question bank supports mixed question sets with `multiple-select` questions and assertion-reason MCQs. Multiple-select answer options are randomized for practice, while assertion-reason questions use a fixed ordered five-option answer set, including "Both are false", because the option positions encode the answer logic.
-- Users can select and copy visible quiz text, including answer-option text, without accidentally toggling answers or causing browser console errors.
+- Users can select and copy visible app text, including quiz answer text and learning-page text, without accidentally toggling answers or causing browser console errors. The app filters a narrow known React delegated-event permission error that can be triggered by text selection in some browsers/dev overlays, while unrelated runtime errors should still surface.
 - The quiz reveals each question's shared raw rating as its visible "Elo" label only after the user submits an answer, shows the latest per-answer question rating delta inline after that rating, and shows a per-question timer that starts at zero and caps at 3 minutes. The time line keeps reserved space for the later question Elo line so the prompt and options do not shift down when an answer is submitted.
-- Users can report a visible question with free-text comments; new reports are stored centrally in Supabase Postgres.
+- Users can report a visible question with free-text comments; new reports are stored centrally in Supabase Postgres with the original report timestamp and an open/resolved review status.
 - Each question has an info icon after the prompt; hovering or focusing it shows the short source-context sentence so randomized mixed-source practice still exposes the lecture/chapter context without taking persistent vertical space.
 - Users can switch between:
   - `standard` mode (randomized from filtered pool)
@@ -19,9 +19,16 @@
 ## Current Behavior
 
 - Main quiz UI lives in `/app/page.tsx`.
+- The web app includes a learning layer:
+  - `/learn` lists available in-app learning experiences.
+  - `/learn/[sourceId]` renders a source-specific scrollable interactive learning page keyed to the existing quiz `SourceId`.
+  - The app-level navigation exposes `Questions` and `Learning` outside the quiz card.
+  - Learning pages use shared app components, styling, and route conventions, but topic pages may include custom local interactions where the concept benefits from them.
+  - Learning pages can transition into matching MCQs with `/?source=<SourceId>`, which preselects and applies that quiz source.
 - On Windows, users can install a per-user Start Menu shortcut named `Learning AI`; launching it refreshes stale local Next.js dev artifacts, then runs `make start` from the cloned repository.
 - Question banks are maintained in `lib/*` and `lib/lectures/*`.
-- Quiz source registry includes MIT 6.S191 2025 lectures L1-L6, Crash Course Linear Algebra L0-L5, Crash Course Probability L1-L3, Biology & Chemistry for Life Science L0-L5, AI Agents Code as Agent Harness, and LangChain Deep Agents as selectable practice sources.
+- Quiz source registry includes Stanford CME295 Transformers & LLMs L1-L4, MIT 6.S191 2025 lectures L1-L6, Crash Course Linear Algebra L0-L5, Crash Course Probability L1-L4, Biology & Chemistry for Life Science L0-L5, AI Agents Code as Agent Harness, and LangChain Deep Agents as selectable practice sources.
+- Stanford CME295 Lecture 1 has a web learning experience page that prepares students for the MCQs with an interactive sequence covering NLP task types, tokenization tradeoffs, one-hot versus learned embeddings, recurrent-model limits, queries/keys/values, self-attention, encoder-decoder transformer flow, positional encodings, masking, cross-attention, multi-head attention, and label smoothing.
 - Crash Course Linear Algebra L0 provides prerequisite AP/A-level-style linear algebra practice on notation and terminology, coordinates, vector magnitude and direction, unit vectors, dot products, projection, span, basis, matrices, determinants, systems, and rank.
 - Crash Course Linear Algebra L1 includes supplemental applied math practice on vectors, norms, dot products, cosine similarity, and matrix-vector multiplication for A-level/AP-style reinforcement.
 - Crash Course Linear Algebra L2 includes 60 questions with applied matrix-transformation practice on composition, shape reasoning, geometric transformations, rank, LoRA, transpose, symmetry, attention, and more rigorous computation.
@@ -31,6 +38,8 @@
 - Crash Course Probability L1 includes 60 questions on probability as the language of AI: uncertainty, sample spaces, outcomes, events, random variables, Bernoulli and categorical distributions, probability mass, prediction versus decision, calibration, expectation, expected loss/reward, variance, entropy preview, RL, LLMs, and diffusion models, with a stronger emphasis on notation fluency, probability-mass calculations, expected-loss arithmetic, calibration counts, variance calculations, and applied AI probability reasoning.
 - Crash Course Probability L2 includes 60 questions on conditional probability, joint probability, marginal probability, marginalization, independence, dependence, conditional independence, Bayes' theorem, base rates, reversed-conditionals, Naive Bayes, Bayesian uncertainty, LLM context updating, supervised prediction as \(P(y \mid x)\), RL transition and policy distributions, and diffusion denoising conditionals, with additional rigor around conditional tables, normalization, posterior odds, chain-rule factorization, conditional distribution validity, and applied event algebra.
 - Crash Course Probability L3 includes 60 questions on logits, softmax, likelihood, log-likelihood, negative log-likelihood, cross-entropy, one-hot and soft target distributions, LLM next-token training, entropy, temperature, RL policy entropy, and the probabilistic training pipeline for neural networks, with additional rigor around softmax odds, temperature algebra, log-sum-exp loss form, softmax-cross-entropy gradients, empirical NLL notation, entropy maxima, KL-divergence intuition, and applied minibatch objectives.
+- Crash Course Probability L3 has a web learning experience page. It prepares students for the MCQs with a scrollable interactive sequence covering logits, softmax, likelihood, negative log-likelihood, cross-entropy, entropy, and common misconceptions around accuracy versus probability.
+- Crash Course Probability L4 includes 60 questions on reinforcement learning as probabilistic decision-making over time: states, actions, rewards, transition probabilities, stochastic environments, the Markov property, Markov Decision Process notation, policies, policy networks, RLHF, discounted return, expected return, value functions, deep RL method families, exploration, exploitation, epsilon-greedy behavior, and entropy-guided exploration, with additional rigor around trajectory probabilities, Bellman-style expectations, policy-weighted value formulas, softmax action selection, policy entropy calculations, partial observability, continuous-space notation, and discounted-return bounds.
 - Biology & Chemistry for Life Science L0 provides 60 prerequisite questions on core biology, chemistry, and AP/A-level basics needed before the course, skewing toward easy/medium practice rather than an equal static difficulty split: atoms, molecules, bonds, pH, water, macromolecules, amino acids, proteins, cells, membranes, metabolism, genetics, evolution, immunity, disease, drugs, biomarkers, biotechnology, AI, and basic evidence reasoning.
 - Biology & Chemistry for Life Science L1 covers chemistry-of-life fundamentals: atoms, bonds, water, hydrophobic effects, biological macromolecules, proteins, enzymes, ATP, metabolism, and structure-function reasoning.
 - Biology & Chemistry for Life Science L2 covers cells as organized information-processing systems: organelles, membranes, transport, gradients, signaling, feedback, division, apoptosis, cancer, and immunity.
@@ -39,6 +48,7 @@
 - Biology & Chemistry for Life Science L5 covers biomedical systems, biotechnology, and evidence: infection, host response, vaccines, antimicrobials, resistance, recombinant medicines, therapeutic modalities, diagnostics, biomarkers, model systems, translational limits, concise clinical-evidence context, and AI in biomedicine.
 - Clinical trials and research evidence are treated as context inside the Biology & Chemistry for Life Science crash course, not as the capstone subject; deeper trial-design coverage remains in the separate Clinical Trials Crash Course.
 - Clinical Trials Crash Course L1-L5 each includes 60 questions and covers why clinical trials exist, how trials are designed, how trial results are interpreted, how trials are operationally run, and where modern clinical research is heading: causal inference, placebo effects, natural recovery, regression to the mean, confounding, selection/observer/publication bias, evidence hierarchy, sponsors, investigators, CROs, regulators, patients, PICO(T), randomization methods, blinding, endpoints, Phase I-IV development, internal versus external validity, treatment effect measures, confidence intervals, p-values, clinical significance, survival analysis, hazard ratios, forest plots, meta-analysis, evidence-synthesis pitfalls, protocol development, site selection, recruitment, data collection, EDC, database lock, Good Clinical Practice, CRO operations, vendors, investigational product management, operational failure modes, medical devices, diagnostics, Software as a Medical Device, real-world evidence, decentralized and hybrid trials, adaptive/platform/basket/umbrella designs, AI-assisted clinical development, and end-to-end development risk.
+- Clinical Trials Crash Course L3 has a web learning experience page that prepares students for the MCQs with interactive interpretation practice on absolute versus relative effects, NNT, confidence intervals, p-values, clinical significance, survival curves, hazard ratios, forest plots, and evidence-synthesis pitfalls.
 - AI Agents Code as Agent Harness covers 60 questions on code as executable, inspectable, and stateful harness infrastructure: reasoning, acting, environment modeling, planning, memory, tool use, Plan-Execute-Verify control, harness optimization, multi-agent orchestration, applications, and open problems.
 - Explanation endpoint exists at `/api/explain` and proxies to an LLM helper in `lib/llm/explain.ts`.
 - Mobile uses local-first profile sync:
@@ -58,8 +68,9 @@
 - Question answer attempts store the elapsed time and mistake count alongside the binary result for later auditability.
 - Question reports are append-only in the shared database:
   - Each submit creates a separate report entry, even for the same question.
-  - Each report stores the `questionId`, comment, report date, and a source/prompt snapshot for reviewer context.
-  - Mobile clients can read only report ids and question ids for counts, not report comments or prompt snapshots.
+  - Each report stores the `questionId`, comment, report date, open/resolved status, optional resolution timestamp/note, and a source/prompt snapshot for reviewer context.
+  - Resolved reports remain stored for history and auditability, but user-facing report counts and quiz-state summaries count only open reports.
+  - Mobile clients can read only report ids, question ids, and status for counts, not report comments, resolution notes, or prompt snapshots.
 - Legacy local rating data is migrated once per participant into the shared database on first load, using an approximate replay for historical answer counts.
 - Legacy browser-local question reports and old mobile queued local reports are ignored so reporting starts from the shared database state.
 
@@ -69,6 +80,7 @@
 - No backend service in this repository besides Next.js API routes.
 - No login/auth system in this phase; anonymous participants are sufficient for the small trusted user group.
 - No mobile file import/export for ratings or reports in the first mobile version.
+- Mobile learning-experience screens are out of scope for the first web learning-layer pass.
 
 ## Documentation Rule
 

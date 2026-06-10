@@ -1,0 +1,4 @@
+interface:
+  display_name: "Author Learning Experience"
+  short_description: "Create in-app learning pages"
+  default_prompt: "Use $author-learning-experience to create an in-app learning page from this lecture material."

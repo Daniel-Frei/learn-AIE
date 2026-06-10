@@ -37,6 +37,7 @@ type Props = {
   userRatingRd: number;
   userRatingDelta: number | null;
   resetParticipantRating: () => Promise<boolean>;
+  defaultSelectorOpen?: boolean;
 };
 
 const QUESTION_ELO_FILTER_MIN = 0;
@@ -55,8 +56,9 @@ export default function QuizHeader({
   userRatingRd,
   userRatingDelta,
   resetParticipantRating,
+  defaultSelectorOpen = true,
 }: Props) {
-  const [isSelectorOpen, setIsSelectorOpen] = useState(true);
+  const [isSelectorOpen, setIsSelectorOpen] = useState(defaultSelectorOpen);
   const [isResettingRating, setIsResettingRating] = useState(false);
   const [resetRatingStatus, setResetRatingStatus] = useState<string | null>(
     null,

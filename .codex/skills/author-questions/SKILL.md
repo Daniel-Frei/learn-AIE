@@ -7,7 +7,7 @@ description: Create, extend, edit, rebalance, and register Learning AI quiz ques
 
 ## Overview
 
-Create, review, and maintain high-quality mixed-format quiz question sets for the Learning AI repo. Supported question types are multi-select multiple-choice and assertion-reason MCQs. For new source material, generate one or more question files and register each set so it appears in the app's source selector. For existing question sets, preserve the local style while reviewing quality, adding questions, revising weak items, rebalancing answer patterns, rewriting topic slices, or fixing reported issues.
+Create, review, and maintain high-quality mixed-format quiz question sets for the Learning AI repo. Supported question types are multi-select multiple-choice and assertion-reason MCQs. For new source material, generate one or more question files and register each set so it appears in the app's source selector. For existing question sets, preserve the local style while reviewing quality, adding questions, revising weak items, rebalancing answer patterns, rewriting topic slices, or fixing reported issues. Every question must stand alone because practice can randomize question order and mix questions from different source sets.
 
 Use the repo docs as product context. Keep edits scoped to the new question files, `lib/quiz.ts` registration, tests/docs updates when required, and small supporting changes needed for verification.
 
@@ -123,6 +123,8 @@ For new question sets, run the gate over the full draft before finalizing. For a
 - Include math-related questions when math is part of the source material. The amount of math should be proportional to its importance in the material.
 - Do not include questions about logistics or administration, such as exams, course structure, or resources.
 - Do not refer to the source material directly in prompts. Avoid phrases like "in the lecture", "in the transcript", "in the chapter", "in the paper", "the equation above", or "the slides show".
+- Do not refer to other questions or depend on a previous prompt, answer, explanation, image, equation, or source-context card. Avoid phrases like "the previous question", "the next question", "as above", "from earlier", "this same example", or "the equation in another question".
+- Each question must be self-contained because the frontend can randomize question order and interleave questions from different question sets. If a concept needs setup, include the necessary setup inside that question or rewrite it so no setup is needed.
 - Questions should test whether learners really understand the concepts and can use them, not only whether they can recognize familiar wording or eliminate obviously wrong statements.
 - Difficulty should come from the level of knowledge, reasoning, transfer, or math required by the concept, not from tricky wording or low-quality answer options.
 
@@ -236,7 +238,7 @@ export const sourceMaterialQuestions: Question[] = [
       { text: "Option 4 text", isCorrect: false },
     ],
     explanation:
-      "At least two sentences (at least 200 characters). Explain why correct options are correct and why incorrect options are incorrect.",
+      "At least two sentences (at least 200 characters). Explain why correct options are correct and why incorrect options are incorrect. Provide knowledge required to understand the question.",
   },
 ];
 ```
@@ -265,7 +267,7 @@ For assertion-reason questions, use this shape inside the same `Question[]` arra
     },
   ],
   explanation:
-    "At least two sentences (at least 200 characters). Explain whether the assertion is true, whether the reason is true, and whether the reason explains the assertion.",
+    "At least two sentences (at least 200 characters). Explain whether the assertion is true, whether the reason is true, and whether the reason explains the assertion. Provide knowledge required to understand the question.",
 }
 ```
 
@@ -284,6 +286,7 @@ For assertion-reason questions, use this shape inside the same `Question[]` arra
 - Passing the deterministic guessability test was not used as the sole evidence of question quality.
 - Targeted guessability test passes for each created or edited registered question set, or any failure has been fixed at the question level.
 - No prompt depends on seeing the source material, transcript, chapter, paper, or slides.
+- No prompt or explanation depends on seeing another question first; every question is independent under randomized mixed-source practice.
 - Every explanation has at least two sentences and covers all options.
 - Math uses escaped LaTeX delimiters inside TypeScript strings.
 - Question IDs are unique across the repo.

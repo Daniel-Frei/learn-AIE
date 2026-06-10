@@ -1,7 +1,7 @@
 // lib/useQuiz.ts
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   getOrCreateParticipantId,
   hasCompletedLegacyMigration,
@@ -61,12 +61,43 @@ type AnswerRatingSnapshot = {
   questionDelta: number;
 };
 
-export function useQuiz() {
-  const initialSources: SourceId[] = [];
-  const initialTopics: Topic[] = [];
-  const initialQuestionTypes: QuestionType[] = [...DEFAULT_QUESTION_TYPES];
-  const initialRange: DifficultyRange = DEFAULT_DIFFICULTY_RANGE;
-  const initialMode: QuestionSelectionMode = DEFAULT_QUESTION_SELECTION_MODE;
+export type InitialQuizSelection = {
+  sources?: readonly SourceId[];
+  topics?: readonly Topic[];
+  questionTypes?: readonly QuestionType[];
+  mode?: QuestionSelectionMode;
+  difficultyRange?: DifficultyRange;
+};
+
+const EMPTY_INITIAL_SELECTION: InitialQuizSelection = {};
+
+export function useQuiz(
+  initialSelection: InitialQuizSelection = EMPTY_INITIAL_SELECTION,
+) {
+  const initialSources: SourceId[] = useMemo(
+    () => Array.from(new Set(initialSelection.sources ?? [])),
+    [initialSelection.sources],
+  );
+  const initialTopics: Topic[] = useMemo(
+    () => Array.from(new Set(initialSelection.topics ?? [])),
+    [initialSelection.topics],
+  );
+  const initialQuestionTypes: QuestionType[] = useMemo(
+    () =>
+      Array.from(
+        new Set(initialSelection.questionTypes ?? DEFAULT_QUESTION_TYPES),
+      ),
+    [initialSelection.questionTypes],
+  );
+  const initialRange: DifficultyRange = useMemo(
+    () =>
+      clampDifficultyRange(
+        initialSelection.difficultyRange ?? DEFAULT_DIFFICULTY_RANGE,
+      ),
+    [initialSelection.difficultyRange],
+  );
+  const initialMode: QuestionSelectionMode =
+    initialSelection.mode ?? DEFAULT_QUESTION_SELECTION_MODE;
 
   // Keep initial render deterministic across SSR + hydration.
   const [ratingState, setRatingState] = useState<RatingStateV2>(() =>
@@ -395,71 +426,103 @@ export function useQuiz() {
     }
   };
 
-  const applySelection = (payload: {
-    sources: SourceId[];
-    series: string[];
-    topics: Topic[];
-    questionTypes?: QuestionType[];
-    mode: QuestionSelectionMode;
-    difficultyRange: DifficultyRange;
-  }) => {
-    const clampedRange = clampDifficultyRange(payload.difficultyRange);
-    const uniqueSources = Array.from(new Set(payload.sources));
-    const uniqueTopics = Array.from(new Set(payload.topics));
-    const uniqueQuestionTypes = Array.from(
-      new Set(payload.questionTypes ?? DEFAULT_QUESTION_TYPES),
-    );
+  const applySelection = useCallback(
+    (payload: {
+      sources: SourceId[];
+      series: string[];
+      topics: Topic[];
+      questionTypes?: QuestionType[];
+      mode: QuestionSelectionMode;
+      difficultyRange: DifficultyRange;
+    }) => {
+      const clampedRange = clampDifficultyRange(payload.difficultyRange);
+      const uniqueSources = Array.from(new Set(payload.sources));
+      const uniqueTopics = Array.from(new Set(payload.topics));
+      const uniqueQuestionTypes = Array.from(
+        new Set(payload.questionTypes ?? DEFAULT_QUESTION_TYPES),
+      );
 
-    const pool = getQuestionsForFilters(
-      uniqueSources,
-      uniqueTopics,
-      uniqueQuestionTypes,
-    );
-    const eligibleIds = getEligibleQuestionIds({
-      sources: uniqueSources,
-      topics: uniqueTopics,
-      questionTypes: uniqueQuestionTypes,
-      difficultyRange: clampedRange,
-      ratingState,
+      const pool = getQuestionsForFilters(
+        uniqueSources,
+        uniqueTopics,
+        uniqueQuestionTypes,
+      );
+      const eligibleIds = getEligibleQuestionIds({
+        sources: uniqueSources,
+        topics: uniqueTopics,
+        questionTypes: uniqueQuestionTypes,
+        difficultyRange: clampedRange,
+        ratingState,
+      });
+
+      setSelectedSources(uniqueSources);
+      setSelectedTopics(uniqueTopics);
+      setSelectedQuestionTypes(uniqueQuestionTypes);
+      setSelectionMode(payload.mode);
+      setDifficultyRange(clampedRange);
+      setAppliedQuestionIds(eligibleIds);
+      setAnsweredCount(0);
+      setCorrectCount(0);
+      setCurrentIndex(0);
+      setSelectedIndexes([]);
+      setShowResult(null);
+      setQuestionTimerMs(0);
+      setFrozenQuestionTimerMs(null);
+      setAnswerRatingSnapshot(null);
+      questionStartedAtRef.current = null;
+      setQuestionSessionId((id) => id + 1);
+
+      if (payload.mode === "climb") {
+        const eligibleSet = new Set(eligibleIds);
+        const eligibleQuestions = pool.filter((q) => eligibleSet.has(q.id));
+        const firstQuestionId = pickClimbQuestionId(
+          eligibleQuestions,
+          ratingState,
+          [],
+        );
+        setClimbQuestionId(firstQuestionId);
+        setClimbRecentIds(firstQuestionId ? [firstQuestionId] : []);
+        setQuestionOrder([]);
+        return;
+      }
+
+      setQuestionOrder(
+        shuffleItems(Array.from({ length: eligibleIds.length }, (_, i) => i)),
+      );
+      setClimbQuestionId(null);
+      setClimbRecentIds([]);
+    },
+    [ratingState],
+  );
+
+  const didApplyInitialSelectionRef = useRef(false);
+
+  useEffect(() => {
+    if (didApplyInitialSelectionRef.current) return;
+    if (initialSources.length === 0 && initialTopics.length === 0) return;
+
+    const frameId = window.requestAnimationFrame(() => {
+      if (didApplyInitialSelectionRef.current) return;
+      didApplyInitialSelectionRef.current = true;
+      applySelection({
+        sources: initialSources,
+        series: [],
+        topics: initialTopics,
+        questionTypes: initialQuestionTypes,
+        mode: initialMode,
+        difficultyRange: initialRange,
+      });
     });
 
-    setSelectedSources(uniqueSources);
-    setSelectedTopics(uniqueTopics);
-    setSelectedQuestionTypes(uniqueQuestionTypes);
-    setSelectionMode(payload.mode);
-    setDifficultyRange(clampedRange);
-    setAppliedQuestionIds(eligibleIds);
-    setAnsweredCount(0);
-    setCorrectCount(0);
-    setCurrentIndex(0);
-    setSelectedIndexes([]);
-    setShowResult(null);
-    setQuestionTimerMs(0);
-    setFrozenQuestionTimerMs(null);
-    setAnswerRatingSnapshot(null);
-    questionStartedAtRef.current = null;
-    setQuestionSessionId((id) => id + 1);
-
-    if (payload.mode === "climb") {
-      const eligibleSet = new Set(eligibleIds);
-      const eligibleQuestions = pool.filter((q) => eligibleSet.has(q.id));
-      const firstQuestionId = pickClimbQuestionId(
-        eligibleQuestions,
-        ratingState,
-        [],
-      );
-      setClimbQuestionId(firstQuestionId);
-      setClimbRecentIds(firstQuestionId ? [firstQuestionId] : []);
-      setQuestionOrder([]);
-      return;
-    }
-
-    setQuestionOrder(
-      shuffleItems(Array.from({ length: eligibleIds.length }, (_, i) => i)),
-    );
-    setClimbQuestionId(null);
-    setClimbRecentIds([]);
-  };
+    return () => window.cancelAnimationFrame(frameId);
+  }, [
+    applySelection,
+    initialMode,
+    initialQuestionTypes,
+    initialRange,
+    initialSources,
+    initialTopics,
+  ]);
 
   const resetParticipantRating = async (): Promise<boolean> => {
     if (!participantId) return false;
