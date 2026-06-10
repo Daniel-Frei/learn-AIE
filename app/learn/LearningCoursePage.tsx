@@ -1,50 +1,68 @@
 import Link from "next/link";
-import { getLearningCoursePath, getLearningCourses } from "../../lib/learning";
+import {
+  getLearningExperiencePath,
+  type LearningCourse,
+} from "../../lib/learning";
 
-export default function LearningIndexPage() {
-  const courses = getLearningCourses();
+type LearningCoursePageProps = {
+  course: LearningCourse;
+};
 
+export default function LearningCoursePage({
+  course,
+}: LearningCoursePageProps) {
   return (
     <main className="min-h-[calc(100vh-4.25rem)] bg-slate-950 text-slate-50">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-10 md:py-12">
+        <nav aria-label="Learning breadcrumb" className="text-sm">
+          <Link
+            href="/learn"
+            className="font-semibold text-sky-300 hover:text-sky-200"
+          >
+            Learning
+          </Link>
+        </nav>
+
         <section className="max-w-3xl space-y-3">
           <p className="text-sm font-semibold uppercase tracking-wide text-sky-300">
-            Learning
+            Course
           </p>
           <h1 className="text-3xl font-semibold tracking-normal text-slate-50 md:text-4xl">
-            Choose a course
+            {course.label}
           </h1>
           <p className="text-base leading-7 text-slate-300">
-            Learning experiences are grouped by course so you can open the
-            relevant sequence first, then choose the lecture or topic you want
-            to prepare for.
+            Choose a focused learning experience for this course, then move into
+            the matching question set when you are ready.
+          </p>
+          <p className="text-sm font-semibold text-emerald-300">
+            {course.experiences.length} learning pages /{" "}
+            {course.totalDurationMinutes} min
           </p>
         </section>
 
         <section
-          aria-label="Available learning courses"
+          aria-label={`${course.label} learning experiences`}
           className="grid gap-4 md:grid-cols-2"
         >
-          {courses.map((course) => (
+          {course.experiences.map((experience) => (
             <Link
-              key={course.seriesId}
-              href={getLearningCoursePath(course.seriesId)}
+              key={experience.sourceId}
+              href={getLearningExperiencePath(experience)}
               className="group rounded-lg border border-slate-800 bg-slate-900 p-5 transition-colors hover:border-sky-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
               <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
-                <span>{course.experiences.length} learning pages</span>
+                <span>{experience.durationMinutes} min</span>
                 <span aria-hidden="true">/</span>
-                <span>{course.totalDurationMinutes} min</span>
+                <span>{experience.level}</span>
               </div>
               <h2 className="mt-3 text-xl font-semibold text-slate-50 group-hover:text-sky-200">
-                {course.label}
+                {experience.shortTitle}
               </h2>
               <p className="mt-2 text-sm leading-6 text-slate-300">
-                Open the course to choose a focused learning experience before
-                starting the matching multiple-choice practice.
+                {experience.summary}
               </p>
               <p className="mt-4 text-sm font-semibold text-sky-300">
-                Open course
+                Open learning page
               </p>
             </Link>
           ))}

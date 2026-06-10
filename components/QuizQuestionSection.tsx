@@ -170,27 +170,24 @@ export default function QuizQuestionSection({
             {showResult && questionRating !== null && (
               <span
                 data-testid="question-rating-line"
-                className="block min-h-4 whitespace-nowrap leading-4"
+                className="flex min-h-6 items-center justify-end gap-1 whitespace-nowrap leading-4"
               >
                 Question Elo:{" "}
                 <span className="font-semibold text-slate-100">
                   {formatQuestionRating(questionRating)}
                 </span>
                 {questionRatingDelta !== null && (
-                  <>
-                    {" "}
-                    <RatingDeltaIndicator
-                      delta={questionRatingDelta}
-                      label="Question Elo"
-                      testId="question-rating-delta"
-                      className="align-middle"
-                    />
-                  </>
+                  <RatingDeltaIndicator
+                    delta={questionRatingDelta}
+                    label="Question Elo"
+                    testId="question-rating-delta"
+                    className="align-middle leading-4"
+                  />
                 )}
               </span>
             )}
             {!showResult && (
-              <span aria-hidden="true" className="block min-h-4 leading-4" />
+              <span aria-hidden="true" className="block min-h-6 leading-4" />
             )}
           </span>
         )}

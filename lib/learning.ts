@@ -1,4 +1,10 @@
-import { ALL_SOURCE_IDS, QUESTION_SOURCES, type SourceId } from "./quiz";
+import {
+  ALL_SOURCE_IDS,
+  QUESTION_SOURCES,
+  SOURCE_SERIES,
+  type SourceId,
+  type SourceSeriesId,
+} from "./quiz";
 
 export type LearningExperience = {
   sourceId: SourceId;
@@ -9,6 +15,13 @@ export type LearningExperience = {
   level: string;
   sourceMaterialPath: string;
   outcomes: string[];
+};
+
+export type LearningCourse = {
+  seriesId: SourceSeriesId;
+  label: string;
+  experiences: readonly LearningExperience[];
+  totalDurationMinutes: number;
 };
 
 export const LEARNING_EXPERIENCES = [
@@ -30,6 +43,23 @@ export const LEARNING_EXPERIENCES = [
     ],
   },
   {
+    sourceId: "cme295-lect2",
+    shortTitle: "Transformer Upgrade Knobs",
+    title: "Stanford CME295 Lecture 2: Transformer-Based Models & Tricks",
+    summary:
+      "Tune positional encodings, attention-score tricks, normalization, efficient attention patterns, and BERT-style encoder-only pretraining.",
+    durationMinutes: 16,
+    level: "After CME295 Lecture 1",
+    sourceMaterialPath:
+      "lib/lectures/Stanford CME295 Transformers & LLMs/transcripts-and-files/lecture 2 - transcript.md",
+    outcomes: [
+      "Compare learned, sinusoidal, relative-bias, ALiBi, and RoPE position strategies.",
+      "Explain why modern transformers use pre-norm, RMSNorm, sparse attention, MQA, and GQA.",
+      "Choose between encoder-decoder, encoder-only, and decoder-only transformer families.",
+      "Trace BERT inputs, MLM/NSP pretraining, fine-tuning, DistilBERT, and RoBERTa changes.",
+    ],
+  },
+  {
     sourceId: "crash-probability-l3",
     shortTitle: "Likelihood, Loss, Softmax",
     title:
@@ -45,6 +75,24 @@ export const LEARNING_EXPERIENCES = [
       "Use softmax as a normalization step, not a magic classifier.",
       "Connect likelihood, negative log-likelihood, and cross-entropy.",
       "Recognize entropy as uncertainty in a categorical distribution.",
+    ],
+  },
+  {
+    sourceId: "crash-probability-l4",
+    shortTitle: "RL Over Time",
+    title:
+      "Crash Course Probability L4: Probability Over Time: Reinforcement Learning",
+    summary:
+      "Use a gridworld decision lab to connect transition probabilities, policies, discounted return, value functions, and exploration.",
+    durationMinutes: 15,
+    level: "After Probability Lectures 1-3",
+    sourceMaterialPath:
+      "lib/other/Crash Courses/Probability/transcripts-and-files/Lecture 4 - overview.md",
+    outcomes: [
+      "Trace the state-action-reward-next-state loop.",
+      "Separate environment transitions from policy probabilities.",
+      "Compute expected one-step return from stochastic outcomes.",
+      "Explain why discounting, value functions, and exploration matter.",
     ],
   },
   {
@@ -67,6 +115,10 @@ export const LEARNING_EXPERIENCES = [
   },
 ] as const satisfies readonly LearningExperience[];
 
+const QUESTION_SOURCE_BY_ID = new Map(
+  QUESTION_SOURCES.map((source) => [source.id, source]),
+);
+
 export function getLearningExperience(
   sourceId: string,
 ): LearningExperience | null {
@@ -80,9 +132,61 @@ export function getLearningExperience(
 export function getQuestionSourceForLearningExperience(
   experience: Pick<LearningExperience, "sourceId">,
 ) {
+  return QUESTION_SOURCE_BY_ID.get(experience.sourceId) ?? null;
+}
+
+export function getLearningCourses(): LearningCourse[] {
+  return SOURCE_SERIES.flatMap((series) => {
+    const experiences = LEARNING_EXPERIENCES.filter((experience) => {
+      const source = getQuestionSourceForLearningExperience(experience);
+      return source?.seriesId === series.id;
+    });
+
+    if (experiences.length === 0) return [];
+
+    return [
+      {
+        seriesId: series.id,
+        label: series.label,
+        experiences,
+        totalDurationMinutes: experiences.reduce(
+          (sum, experience) => sum + experience.durationMinutes,
+          0,
+        ),
+      },
+    ];
+  });
+}
+
+export function getLearningCourse(seriesId: string): LearningCourse | null {
   return (
-    QUESTION_SOURCES.find((source) => source.id === experience.sourceId) ?? null
+    getLearningCourses().find((course) => course.seriesId === seriesId) ?? null
   );
+}
+
+export function getLearningExperienceCourse(
+  experience: Pick<LearningExperience, "sourceId">,
+): Pick<LearningCourse, "seriesId" | "label"> | null {
+  const source = getQuestionSourceForLearningExperience(experience);
+  if (!source) return null;
+
+  return {
+    seriesId: source.seriesId,
+    label: source.seriesLabel,
+  };
+}
+
+export function getLearningCoursePath(seriesId: SourceSeriesId): string {
+  return `/learn/${seriesId}`;
+}
+
+export function getLearningExperiencePath(
+  experience: Pick<LearningExperience, "sourceId">,
+): string {
+  const course = getLearningExperienceCourse(experience);
+  return course
+    ? `${getLearningCoursePath(course.seriesId)}/${experience.sourceId}`
+    : `/learn/${experience.sourceId}`;
 }
 
 export function getDuplicateLearningExperienceSourceIds(
