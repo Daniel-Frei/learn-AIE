@@ -152,6 +152,9 @@ For new question sets, run the gate over the full draft before finalizing. For a
 - Prefer prompts that ask the learner to apply, predict, compare, explain, calculate, or transfer a concept. Pure recognition of a familiar sentence should be reserved for intentional easy orientation questions.
 - Across `lib/` topics, vary the prompt form to match the material. Clinical, procedural, or experimental topics may support scenarios; foundational, mathematical, or abstract topics often work better as direct comparisons, boundary cases, mechanisms, calculations, or consequence questions.
 - Do not add a scenario sentence merely to make a direct concept question look applied. The setup should be referenced by, constrain, or change the interpretation of the answer options.
+- Use compact Markdown tables in prompts when the learner needs to compare several conditions, probability values, scenarios, cases, model states, trial arms, matrix-like quantities, or calculation inputs. Prefer a table over a dense sentence when the table makes the reasoning easier to inspect.
+- Introduce what the table represents before the table, use meaningful row and column labels, and make answer options refer to labels or quantities rather than visual position alone.
+- Do not use a table as decoration or to hide missing explanation. If the table needs special context, include that context in the prompt so the question still stands alone.
 - Watch for stems whose everyday language gives away the answer, such as terms that already imply stability, evidence, usefulness, feedback, or decision relevance. In those cases, ask for a concrete mechanism, condition, exception, or consequence.
 - For "why", "what explains", and "best describes" prompts, make all options plausible answers to that same prompt. Do not make the correct option the only one that addresses context, evidence, tradeoffs, uncertainty, or limitations.
 - When the source repeatedly uses a broad template, such as information flow, selection pressure, error analysis, optimization tradeoffs, evidence chains, or system boundaries, anchor each question to the concrete version from the source rather than asking for the generic template again.
@@ -168,6 +171,8 @@ For new question sets, run the gate over the full draft before finalizing. For a
 - Avoid wrong answers that are false only because they collapse a general chain from mechanism to measurement to deployment, decision, or outcome. Strong distractors should preserve most of the chain but make one meaningful mistake about which link is sufficient, missing, reversed, or out of scope.
 - Absolute or high-certainty language such as "always", "never", "only", "every", "all", "none", "cannot", "impossible", "guarantees", "proves", or "complete" is not banned, but it is high risk. Use it only when the source, math, or formal definition supports the exact quantifier, and avoid making these cues correlate mostly with incorrect options.
 - Keep option specificity, detail level, and plausibility roughly comparable. If the correct option is much more concrete, technical, or carefully hedged than the incorrect options, rewrite the distractors to be closer competitors.
+- For multi-select questions, do not make the correct answer recognizable as the only math-heavy, formula-heavy, calculation-heavy, or KaTeX/LaTeX option. If a formula is useful, add plausible competing formulas, calculations, dimensions, or boundary cases as distractors, or rewrite the prompt so the math is part of the reasoning instead of a visual answer cue.
+- Do not remove useful math merely to avoid a math-salience cue. The fix is balanced, same-neighborhood mathematical alternatives, not avoiding formulas when math is central to the source material.
 - Every distractor should pass the "real learner" test: a learner with a partial misconception could plausibly select it for a substantive reason.
 - For multi-select items with several true options, avoid making all true options broad introductory facts and all false options absurd. Mix specificity and plausibility so selecting all correct options requires discriminating understanding.
 
@@ -181,6 +186,7 @@ Before finalizing a generated or revised set, review it from the perspective of 
 - If rejecting semantic oddballs, category mismatches, or options from a different reasoning layer would get many options right, rewrite those distractors into same-neighborhood misconceptions.
 - If the stem itself reveals the answer frame, such as context-dependence, validation, uncertainty, model limits, or a missing comparison, make the prompt more concrete and make all options plausible within that frame.
 - If the longest, most technical, or most carefully hedged option is usually correct, revise so incorrect options have comparable detail and credibility.
+- For multi-select questions, simulate "select the only option with substantial math, a long formula, a calculation, or KaTeX/LaTeX." If that works, add plausible competing mathematical distractors or remove gratuitous formula salience from conceptual prompts.
 - For "best describes" questions, make all four options candidate descriptions of the same thing. Do not make the incorrect options mostly claims about what the concept does not do.
 - Prefer near-miss distractors created by changing one meaningful detail of the correct concept: component inclusion, scope, precondition, feedback signal, direction of causality, authority boundary, failure mode, or tradeoff.
 - Do not let difficulty come from trick wording. The question should be hard because the tested distinction is substantive, while the options remain clear and fair.
@@ -199,8 +205,10 @@ Before finalizing a generated or revised set, review it from the perspective of 
 ## Explanations
 
 - Explanations should help users understand the topic covered by the prompt and answer statements.
+- Users read explanations after submitting an answer, when the UI already shows which choices are correct or incorrect. Focus on why each choice has that status rather than restating the status.
 - Each explanation must be at least two sentences.
 - Explain why correct options are correct and why incorrect options are incorrect.
+- Avoid explanations that merely repeat an answer option, quote it back, or label it as a misconception without adding the missing concept. Bad: `The option "All swans are white" is incorrect.` Better: `Black swans living in Australia disprove the universal claim, so the statement overgeneralizes from limited observations.`
 - Do not refer to answer order, such as "option A" or "the second answer".
 - Use simple, teaching-oriented language.
 - When in doubt, prefer a slightly longer explanation over one that is too short.
@@ -209,6 +217,7 @@ Before finalizing a generated or revised set, review it from the perspective of 
 
 - Write out acronyms at least once, for example `Recurrent Neural Network (RNN)`.
 - Use math notation where relevant and proportional to the source material.
+- Math is welcome when it tests or teaches the source material. In multi-select answer options, keep math salience balanced enough that learners cannot guess by choosing the only option with a formula or long calculation.
 - For math, wrap LaTeX in:
   - Inline math: `\( ... \)`
   - Block math: `\[ ... \]`
@@ -216,6 +225,8 @@ Before finalizing a generated or revised set, review it from the perspective of 
   - `\\( ... \\)`
   - `\\[ ... \\]`
 - Use standard LaTeX syntax, such as `\\frac{a}{b}`, `\\sum`, `\\theta`, and `\\pi`.
+- Prompts may include GitHub-Flavored Markdown tables. Prefer a template literal for multi-line prompts with tables, include a blank line before and after the table, and keep tables compact enough to read on mobile.
+- Table cells can include escaped inline LaTeX, but avoid making the correct option obvious by placing math only in one answer option or one unusually prominent table cell.
 
 ## TypeScript Template
 
@@ -241,6 +252,19 @@ export const sourceMaterialQuestions: Question[] = [
       "At least two sentences (at least 200 characters). Explain why correct options are correct and why incorrect options are incorrect. Provide knowledge required to understand the question.",
   },
 ];
+```
+
+For table-based prompts, prefer a template literal so the Markdown stays readable:
+
+```ts
+prompt: `A latent-variable model uses these probabilities:
+
+| Hidden state | Prior | Likelihood of \\(X=x\\) |
+| --- | ---: | ---: |
+| \\(Z=0\\) | 0.3 | 0.8 |
+| \\(Z=1\\) | 0.7 | 0.2 |
+
+What is \\(P(X=x)\\)?`,
 ```
 
 For assertion-reason questions, use this shape inside the same `Question[]` array:
@@ -282,11 +306,13 @@ For assertion-reason questions, use this shape inside the same `Question[]` arra
 - Final response reports the difficulty balance with `"easy"`, `"medium"`, and `"hard"` counts.
 - Answer options are plausible enough that the learner needs concept understanding rather than elimination of obviously wrong distractors.
 - Adversarial answer review has been applied: absolutes, overclaims, option length/detail, and obvious false-option cues do not let a generic heuristic score well.
+- Multi-select math questions do not make the correct answer the only math-heavy or KaTeX/LaTeX-heavy option; when formulas are used, plausible competing formulas or calculations are present where appropriate.
 - For every created, added, rewritten, fixed, or otherwise edited question, low-diagnosticity risk has been triaged by construct target and misconception target, and weak recognition items were substantially rewritten rather than lightly polished.
 - Passing the deterministic guessability test was not used as the sole evidence of question quality.
 - Targeted guessability test passes for each created or edited registered question set, or any failure has been fixed at the question level.
 - No prompt depends on seeing the source material, transcript, chapter, paper, or slides.
 - No prompt or explanation depends on seeing another question first; every question is independent under randomized mixed-source practice.
+- Prompt tables, when used, are valid GitHub-Flavored Markdown, compact, labeled, introduced by the prompt, and self-contained.
 - Every explanation has at least two sentences and covers all options.
 - Math uses escaped LaTeX delimiters inside TypeScript strings.
 - Question IDs are unique across the repo.

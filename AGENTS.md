@@ -55,7 +55,10 @@ If any command fails, include the exact error output and fix the root cause.
 
 ## Dependency policy (safe default)
 
-- Ask before adding ANY new entry under `"dependencies"` (runtime/production deps).
+- Runtime dependencies are allowed when they materially improve the central product or learning experience.
+- Prefer existing dependencies and browser-native APIs when they are enough.
+- Keep dependency additions focused and minimal; do not add broad libraries for small conveniences.
+- Ask before adding a runtime dependency when the dependency is not clearly central to the requested work or when there is a reasonable dependency-free alternative.
 - DevDependencies are OK if truly necessary (tests/tooling), but still prefer minimal.
 - If adding a dep, explain: why needed, alternatives considered, and why dep vs devDep.
 

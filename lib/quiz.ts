@@ -36,6 +36,7 @@ import { CrashCourseLinearAlgebraL2Questions } from "./other/Crash Course Linear
 import { CrashCourseLinearAlgebraL3Questions } from "./other/Crash Course Linear Algebra/Lecture 3 - Derivatives and Gradients";
 import { CrashCourseLinearAlgebraL4Questions } from "./other/Crash Course Linear Algebra/Lecture 4 - Eigenvectors, SVD, and Representation Learning";
 import { CrashCourseLinearAlgebraL5Questions } from "./other/Crash Course Linear Algebra/Lecture 5 - Linear Algebra in LLMs and RL";
+import { CrashCourseProbabilityL0Questions } from "./other/Crash Courses/Probability/Lecture 0 - Probability Prerequisites";
 import { CrashCourseProbabilityL1Questions } from "./other/Crash Courses/Probability/Lecture 1 - overview";
 import { CrashCourseProbabilityL2Questions } from "./other/Crash Courses/Probability/Lecture 2 - Conditional Probability, Bayes, and Dependence";
 import { CrashCourseProbabilityL3Questions } from "./other/Crash Courses/Probability/Lecture 3 - Likelihood, Loss, Softmax, and Deep Learning";
@@ -490,6 +491,16 @@ export const QUESTION_SOURCES = [
     questions: CrashCourseLinearAlgebraL5Questions,
   },
   {
+    id: "crash-probability-l0" as const,
+    label: "Crash Course Probability L0",
+    title: "Crash Course Probability L0: Probability Prerequisites",
+    seriesId: "crash-course-probability" as const,
+    seriesLabel: "Crash Course Probability",
+    topic: "Math" as const,
+    questions: CrashCourseProbabilityL0Questions,
+    balance: false,
+  },
+  {
     id: "crash-probability-l1" as const,
     label: "Crash Course Probability L1",
     title: "Crash Course Probability L1: Probability as the Language of AI",
@@ -753,6 +764,8 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
     "Linear algebra lesson about eigenvectors, covariance, PCA, SVD, low-rank structure, embeddings, LoRA, and representation learning.",
   "crash-linalg-l5":
     "Linear algebra synthesis lesson about attention, matrix stacks, RL value functions, optimization landscapes, and AI geometry.",
+  "crash-probability-l0":
+    "Pure applied math prereqs: ratios/odds, algebra, normalization, functions, sequences, sums/products, weights, exponents/logs, dimensions, Gaussians, complements, geometric sums.",
   "crash-probability-l1":
     "Probability lesson about AI uncertainty, sample spaces, events, random variables, discrete distributions, expectation, variance, calibration, and prediction.",
   "crash-probability-l2":
@@ -980,6 +993,7 @@ export { CrashCourseLinearAlgebraL2Questions } from "./other/Crash Course Linear
 export { CrashCourseLinearAlgebraL3Questions } from "./other/Crash Course Linear Algebra/Lecture 3 - Derivatives and Gradients";
 export { CrashCourseLinearAlgebraL4Questions } from "./other/Crash Course Linear Algebra/Lecture 4 - Eigenvectors, SVD, and Representation Learning";
 export { CrashCourseLinearAlgebraL5Questions } from "./other/Crash Course Linear Algebra/Lecture 5 - Linear Algebra in LLMs and RL";
+export { CrashCourseProbabilityL0Questions } from "./other/Crash Courses/Probability/Lecture 0 - Probability Prerequisites";
 export { CrashCourseProbabilityL1Questions } from "./other/Crash Courses/Probability/Lecture 1 - overview";
 export { CrashCourseProbabilityL2Questions } from "./other/Crash Courses/Probability/Lecture 2 - Conditional Probability, Bayes, and Dependence";
 export { CrashCourseProbabilityL3Questions } from "./other/Crash Courses/Probability/Lecture 3 - Likelihood, Loss, Softmax, and Deep Learning";

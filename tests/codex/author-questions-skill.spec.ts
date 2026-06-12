@@ -127,6 +127,24 @@ describe("author-questions skill guidance", () => {
     );
   });
 
+  it("guards against math salience becoming an answer cue", () => {
+    expect(skill).toContain(
+      "do not make the correct answer recognizable as the only math-heavy",
+    );
+    expect(skill).toContain(
+      "Do not remove useful math merely to avoid a math-salience cue.",
+    );
+    expect(skill).toContain(
+      'simulate "select the only option with substantial math, a long formula, a calculation, or KaTeX/LaTeX."',
+    );
+    expect(teamPreferences).toContain(
+      "do not make correct answers recognizable as the only option with substantial math",
+    );
+    expect(teamPreferences).toContain(
+      "add plausible competing formulas, calculations, dimensions, or boundary cases",
+    );
+  });
+
   it("requires manual diagnosticity triage for every creation or edit", () => {
     expect(skill).toContain("## Question Quality Gate");
     expect(skill).toContain(
@@ -162,6 +180,25 @@ describe("author-questions skill guidance", () => {
     );
     expect(teamPreferences).toContain(
       "Every question should stand alone under randomized mixed-source practice.",
+    );
+  });
+
+  it("allows compact prompt tables when they improve readability", () => {
+    expect(skill).toContain("Use compact Markdown tables in prompts");
+    expect(skill).toContain("GitHub-Flavored Markdown tables");
+    expect(skill).toContain(
+      "Introduce what the table represents before the table",
+    );
+    expect(skill).toContain("meaningful row and column labels");
+    expect(skill).toContain("template literal for multi-line prompts");
+    expect(skill).toContain(
+      "Prompt tables, when used, are valid GitHub-Flavored Markdown",
+    );
+    expect(teamPreferences).toContain(
+      "Quiz prompts may use compact GitHub-Flavored Markdown tables",
+    );
+    expect(teamPreferences).toContain(
+      "Tables should be introduced by the prompt",
     );
   });
 });

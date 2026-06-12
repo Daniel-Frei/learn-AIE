@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   getLearningExperiencePath,
+  getLearningExperienceSequenceLabel,
   type LearningCourse,
 } from "../../lib/learning";
 
@@ -50,11 +51,9 @@ export default function LearningCoursePage({
               href={getLearningExperiencePath(experience)}
               className="group rounded-lg border border-slate-800 bg-slate-900 p-5 transition-colors hover:border-sky-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
             >
-              <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
-                <span>{experience.durationMinutes} min</span>
-                <span aria-hidden="true">/</span>
-                <span>{experience.level}</span>
-              </div>
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                {getLearningExperienceSequenceLabel(experience)}
+              </p>
               <h2 className="mt-3 text-xl font-semibold text-slate-50 group-hover:text-sky-200">
                 {experience.shortTitle}
               </h2>

@@ -7,7 +7,9 @@ import {
   getLearningCourses,
   getLearningExperience,
   getLearningExperiencePath,
+  getLearningExperienceSequenceLabel,
   getQuestionSourceForLearningExperience,
+  getQuestionSourceSequenceLabel,
   getUnknownLearningExperienceSourceIds,
 } from "@/lib/learning";
 import { QUESTION_SOURCES } from "@/lib/quiz";
@@ -55,6 +57,14 @@ describe("learning experience registry", () => {
       "Stanford CME295 Transformers & LLMs/transcripts-and-files/lecture 2 - transcript.md",
     );
 
+    const cmeLecture3Experience = getLearningExperience("cme295-lect3");
+    expect(cmeLecture3Experience?.title).toContain(
+      "Large Language Models, MoE & Inference",
+    );
+    expect(cmeLecture3Experience?.sourceMaterialPath).toContain(
+      "Stanford CME295 Transformers & LLMs/transcripts-and-files/lecture 3 - transcript.md",
+    );
+
     const probabilityExperience = getLearningExperience("crash-probability-l3");
     expect(probabilityExperience?.title).toContain("Likelihood, Loss, Softmax");
 
@@ -64,6 +74,16 @@ describe("learning experience registry", () => {
     expect(probabilityL4Experience?.title).toContain("Probability Over Time");
     expect(probabilityL4Experience?.sourceMaterialPath).toContain(
       "Probability/transcripts-and-files/Lecture 4 - overview.md",
+    );
+
+    const probabilityL5Experience = getLearningExperience(
+      "crash-probability-l5",
+    );
+    expect(probabilityL5Experience?.title).toContain(
+      "Sampling, Latent Variables, and Diffusion Models",
+    );
+    expect(probabilityL5Experience?.sourceMaterialPath).toContain(
+      "Probability/transcripts-and-files/Lecture 5 - overview.md",
     );
 
     const clinicalTrialsExperience =
@@ -92,9 +112,20 @@ describe("learning experience registry", () => {
     expect(
       probabilityCourse?.experiences.map((experience) => experience.sourceId),
     ).toEqual(
-      expect.arrayContaining(["crash-probability-l3", "crash-probability-l4"]),
+      expect.arrayContaining([
+        "crash-probability-l3",
+        "crash-probability-l4",
+        "crash-probability-l5",
+      ]),
     );
     expect(probabilityCourse?.totalDurationMinutes).toBeGreaterThan(0);
+
+    const stanfordCourse = getLearningCourse("stanford-cme295");
+    expect(
+      stanfordCourse?.experiences.map((experience) => experience.sourceId),
+    ).toEqual(
+      expect.arrayContaining(["cme295-lect1", "cme295-lect2", "cme295-lect3"]),
+    );
 
     expect(getLearningCourse("missing-course")).toBeNull();
     expect(getLearningCoursePath("crash-course-probability")).toBe(
@@ -108,6 +139,56 @@ describe("learning experience registry", () => {
         "/learn/crash-course-probability/crash-probability-l3",
       );
     }
+
+    const probabilityL5Experience = getLearningExperience(
+      "crash-probability-l5",
+    );
+    expect(probabilityL5Experience).not.toBeNull();
+    if (probabilityL5Experience) {
+      expect(getLearningExperiencePath(probabilityL5Experience)).toBe(
+        "/learn/crash-course-probability/crash-probability-l5",
+      );
+    }
+  });
+
+  it("derives lecture and chapter labels for course cards", () => {
+    const stanfordLecture3 = getLearningExperience("cme295-lect3");
+    expect(stanfordLecture3).not.toBeNull();
+    if (stanfordLecture3) {
+      expect(getLearningExperienceSequenceLabel(stanfordLecture3)).toBe(
+        "Lecture 3",
+      );
+    }
+
+    const probabilityLecture5 = getLearningExperience("crash-probability-l5");
+    expect(probabilityLecture5).not.toBeNull();
+    if (probabilityLecture5) {
+      expect(getLearningExperienceSequenceLabel(probabilityLecture5)).toBe(
+        "Lecture 5",
+      );
+    }
+
+    expect(
+      getQuestionSourceSequenceLabel({
+        id: "chapter-5",
+        label: "Chapter 5 only",
+        title: "Chapter 5 Quiz - Large Language Models",
+      }),
+    ).toBe("Chapter 5");
+    expect(
+      getQuestionSourceSequenceLabel({
+        id: "aie-build-app-ch2",
+        label: "AIE build app - Chap 2",
+        title: "AIE Building Apps Chapter 2",
+      }),
+    ).toBe("Chapter 2");
+  });
+
+  it("sorts course learning experiences by registered source order", () => {
+    const stanfordCourse = getLearningCourse("stanford-cme295");
+    expect(
+      stanfordCourse?.experiences.map((experience) => experience.sourceId),
+    ).toEqual(["cme295-lect1", "cme295-lect2", "cme295-lect3"]);
   });
 
   it("detects unknown learning source ids", () => {
@@ -125,11 +206,15 @@ describe("quiz source query parsing", () => {
   it("accepts a known source id from the source query parameter", () => {
     expect(parseQuizSourceParam("cme295-lect1")).toBe("cme295-lect1");
     expect(parseQuizSourceParam("cme295-lect2")).toBe("cme295-lect2");
+    expect(parseQuizSourceParam("cme295-lect3")).toBe("cme295-lect3");
     expect(parseQuizSourceParam("crash-probability-l3")).toBe(
       "crash-probability-l3",
     );
     expect(parseQuizSourceParam("crash-probability-l4")).toBe(
       "crash-probability-l4",
+    );
+    expect(parseQuizSourceParam("crash-probability-l5")).toBe(
+      "crash-probability-l5",
     );
     expect(parseQuizSourceParam("clinical-trials-l3")).toBe(
       "clinical-trials-l3",

@@ -2,6 +2,7 @@ import {
   ALL_SOURCE_IDS,
   QUESTION_SOURCES,
   SOURCE_SERIES,
+  type QuestionSource,
   type SourceId,
   type SourceSeriesId,
 } from "./quiz";
@@ -60,6 +61,23 @@ export const LEARNING_EXPERIENCES = [
     ],
   },
   {
+    sourceId: "cme295-lect3",
+    shortTitle: "LLM Inference Workbench",
+    title: "Stanford CME295 Lecture 3: Large Language Models, MoE & Inference",
+    summary:
+      "Run a generation workbench that connects decoder-only LLMs, MoE routing, decoding controls, prompting strategies, and inference optimizations.",
+    durationMinutes: 18,
+    level: "After CME295 Lectures 1-2",
+    sourceMaterialPath:
+      "lib/lectures/Stanford CME295 Transformers & LLMs/transcripts-and-files/lecture 3 - transcript.md",
+    outcomes: [
+      "Define modern LLMs as scaled decoder-only next-token models.",
+      "Trace sparse MoE routing, top-k expert selection, and routing collapse.",
+      "Compare greedy, beam, top-k, top-p, temperature, and guided decoding.",
+      "Choose inference optimizations such as KV caching, GQA, PagedAttention, latent attention, speculative decoding, and multi-token prediction.",
+    ],
+  },
+  {
     sourceId: "crash-probability-l3",
     shortTitle: "Likelihood, Loss, Softmax",
     title:
@@ -96,6 +114,24 @@ export const LEARNING_EXPERIENCES = [
     ],
   },
   {
+    sourceId: "crash-probability-l5",
+    shortTitle: "Generation Sampling Lab",
+    title:
+      "Crash Course Probability L5: Sampling, Latent Variables, and Diffusion Models",
+    summary:
+      "Control token sampling, latent variables, and denoising steps to see how learned probability becomes generated output.",
+    durationMinutes: 16,
+    level: "After Probability Lectures 1-4",
+    sourceMaterialPath:
+      "lib/other/Crash Courses/Probability/transcripts-and-files/Lecture 5 - overview.md",
+    outcomes: [
+      "Distinguish greedy decoding, sampling, top-k, and top-p strategies.",
+      "Explain how temperature changes randomness without adding knowledge.",
+      "Use latent variables as hidden structure behind generated data.",
+      "Trace diffusion from Gaussian noise through learned reverse denoising.",
+    ],
+  },
+  {
     sourceId: "clinical-trials-l3",
     shortTitle: "Statistics and Evidence Interpretation",
     title:
@@ -119,6 +155,10 @@ const QUESTION_SOURCE_BY_ID = new Map(
   QUESTION_SOURCES.map((source) => [source.id, source]),
 );
 
+const QUESTION_SOURCE_INDEX_BY_ID = new Map(
+  QUESTION_SOURCES.map((source, index) => [source.id, index]),
+);
+
 export function getLearningExperience(
   sourceId: string,
 ): LearningExperience | null {
@@ -135,12 +175,48 @@ export function getQuestionSourceForLearningExperience(
   return QUESTION_SOURCE_BY_ID.get(experience.sourceId) ?? null;
 }
 
+export function getQuestionSourceSequenceLabel(
+  source: Pick<QuestionSource, "id" | "label" | "title">,
+): string {
+  const searchableText = `${source.label} ${source.title} ${source.id}`;
+  const chapterMatch = searchableText.match(/\b(?:chapter|chap)\.?\s*(\d+)\b/i);
+  if (chapterMatch) return `Chapter ${chapterMatch[1]}`;
+
+  const lectureMatch =
+    searchableText.match(/\blecture\s*(\d+)\b/i) ??
+    searchableText.match(/\blect\s*(\d+)\b/i) ??
+    searchableText.match(/\bl(\d+)\b/i);
+  if (lectureMatch) return `Lecture ${lectureMatch[1]}`;
+
+  return source.label;
+}
+
+export function getLearningExperienceSequenceLabel(
+  experience: Pick<LearningExperience, "sourceId">,
+): string {
+  const source = getQuestionSourceForLearningExperience(experience);
+  return source ? getQuestionSourceSequenceLabel(source) : experience.sourceId;
+}
+
+function getLearningExperienceSourceIndex(
+  experience: Pick<LearningExperience, "sourceId">,
+): number {
+  return (
+    QUESTION_SOURCE_INDEX_BY_ID.get(experience.sourceId) ??
+    Number.MAX_SAFE_INTEGER
+  );
+}
+
 export function getLearningCourses(): LearningCourse[] {
   return SOURCE_SERIES.flatMap((series) => {
     const experiences = LEARNING_EXPERIENCES.filter((experience) => {
       const source = getQuestionSourceForLearningExperience(experience);
       return source?.seriesId === series.id;
-    });
+    }).sort(
+      (first, second) =>
+        getLearningExperienceSourceIndex(first) -
+        getLearningExperienceSourceIndex(second),
+    );
 
     if (experiences.length === 0) return [];
 

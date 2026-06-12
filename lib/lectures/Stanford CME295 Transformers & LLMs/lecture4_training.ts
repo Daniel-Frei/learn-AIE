@@ -36,7 +36,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Pre-training optimizes next-token prediction over massive, diverse corpora. This stage dominates cost because it involves huge datasets and very large models, but it yields general language representations reusable across tasks.",
+      "Pre-training optimizes next-token prediction over massive, diverse corpora. This stage dominates cost because it involves huge datasets and very large models, but it yields general language representations reusable across tasks. Core ideas: The model is trained to predict the next token given previous tokens; Training data typically includes natural language text and source code; Pre-training aims to capture general structure of language rather than a single task; Pre-training is usually the most computationally expensive training stage.",
   },
 
   {
@@ -64,7 +64,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Transfer learning exploits shared structure across language tasks. A general pre-trained model can be adapted with relatively little additional data, making training more efficient than starting from random initialization.",
+      "Transfer learning exploits shared structure across language tasks. A general pre-trained model can be adapted with relatively little additional data, making training more efficient than starting from random initialization. Core ideas: A pre-trained model is reused instead of training from scratch for each task; Knowledge learned on one language task can help performance on another; Fine-tuning adapts a general model to a more specific objective; Transfer learning reduces the amount of task-specific data needed.",
   },
 
   {
@@ -88,7 +88,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Common Crawl–like datasets aggregate massive amounts of public web text. For LLMs, scale is usually discussed in terms of tokens processed, which directly affects compute cost and training dynamics.",
+      "Common Crawl–like datasets aggregate massive amounts of public web text. For LLMs, scale is usually discussed in terms of tokens processed, which directly affects compute cost and training dynamics. Core ideas: they contain text scraped from a wide range of public websites; they often include multilingual content; they are commonly used in large-scale language model pre-training; they are measured in scale by number of tokens rather than number of documents.",
   },
 
   {
@@ -116,7 +116,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Total FLOPs provide a coarse but useful measure of training cost. While exact formulas vary, compute generally increases with the number of parameters, number of tokens, and architectural details.",
+      "Total FLOPs provide a coarse but useful measure of training cost. While exact formulas vary, compute generally increases with the number of parameters, number of tokens, and architectural details. Core ideas: they count arithmetic operations involving floating point numbers; they are often used to estimate total training compute cost; they scale roughly with both model size and dataset size; they depend on architectural choices such as dense versus sparse models.",
   },
 
   {
@@ -141,7 +141,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "FLOPs quantify total work, while FLOPs per second quantify speed. Because the same acronym is used, interpretation relies heavily on context such as whether hardware or training cost is being discussed.",
+      "FLOPs quantify total work, while FLOPs per second quantify speed. Because the same acronym is used, interpretation relies heavily on context such as whether hardware or training cost is being discussed. Core ideas: FLOPs measure total computation required; FLOPs per second measure hardware throughput; Graphics processing unit specifications often report FLOPs per second; Context usually determines which meaning of FLOPs is intended.",
   },
 
   {
@@ -169,7 +169,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Scaling law studies showed smooth, predictable improvements as model size, data size, and compute increase. These findings motivated the rapid growth of LLMs over recent years.",
+      "Scaling law studies showed smooth, predictable improvements as model size, data size, and compute increase. These findings motivated the rapid growth of LLMs over recent years. Core ideas: Increasing model size tends to reduce training loss; Increasing dataset size tends to improve performance; Increasing available compute often yields better models; These relationships were studied systematically in large experimental studies.",
   },
 
   {
@@ -197,7 +197,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Compute-optimal scaling emphasizes balancing parameters and data. Under-training large models wastes capacity, while over-training small models wastes compute; empirical studies identify sweet spots.",
+      "Compute-optimal scaling emphasizes balancing parameters and data. Under-training large models wastes capacity, while over-training small models wastes compute; empirical studies identify sweet spots. Core ideas: For a fixed compute budget, there is an optimal trade-off between model size and data size; Training too large a model on too little data can be inefficient; Models may benefit from more training tokens rather than more parameters; Optimal scaling relationships can be estimated empirically for a given setup.",
   },
 
   {
@@ -225,7 +225,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "A knowledge cutoff reflects the temporal limit of pre-training data. Because knowledge is embedded in weights, updating facts without harming other capabilities is challenging.",
+      "A knowledge cutoff reflects the temporal limit of pre-training data. Because knowledge is embedded in weights, updating facts without harming other capabilities is challenging. Core ideas: it refers to the latest date of data included during pre-training; The model cannot directly know events occurring after this date; Knowledge cutoff information is often listed in model documentation; Updating knowledge after cutoff is non-trivial without retraining or fine-tuning.",
   },
 
   {
@@ -253,7 +253,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Pre-training at scale is expensive, energy-intensive, and raises concerns about memorization and data freshness. These challenges motivate careful dataset curation and post-training methods.",
+      "Pre-training at scale is expensive, energy-intensive, and raises concerns about memorization and data freshness. These challenges motivate careful dataset curation and post-training methods. Core ideas: High financial cost due to compute requirements; Significant energy consumption and environmental impact; Risk of memorizing or reproducing training data; Difficulty of updating specific knowledge after training.",
   },
 
   {
@@ -275,7 +275,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "They support massive parallel computation.", isCorrect: true },
     ],
     explanation:
-      "LLM training involves dense linear algebra, which GPUs handle efficiently. Their parallelism and high throughput make them the dominant hardware choice for large-scale training.",
+      "LLM training involves dense linear algebra, which GPUs handle efficiently. Their parallelism and high throughput make them the dominant hardware choice for large-scale training. Core ideas: they are optimized for large matrix multiplications; Transformer models rely heavily on linear algebra operations; they provide high floating point throughput; they support massive parallel computation.",
   },
 
   {
@@ -303,7 +303,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "The forward pass computes predictions and loss. Intermediate activations are crucial because they are reused in the backward pass to compute gradients.",
+      "The forward pass computes predictions and loss. Intermediate activations are crucial because they are reused in the backward pass to compute gradients. Core ideas: Input data is propagated through the network layers; Intermediate activations are computed at each layer; A loss value is computed by comparing outputs to targets; Activations are typically needed later for gradient computation.",
   },
 
   {
@@ -331,7 +331,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "The backward pass propagates error signals backward through the network. It relies on stored activations and applies the chain rule to compute parameter gradients.",
+      "The backward pass propagates error signals backward through the network. It relies on stored activations and applies the chain rule to compute parameter gradients. Core ideas: Gradients of the loss with respect to parameters are computed; The chain rule from calculus is applied layer by layer; Gradients must be stored or accumulated before weight updates; Backward computation typically requires access to forward activations.",
   },
 
   // ============================================================
@@ -363,7 +363,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Adam-like optimizers track first and second moments of gradients to adapt updates. They still rely on standard gradient computation via backpropagation.",
+      "Adam-like optimizers track first and second moments of gradients to adapt updates. They still rely on standard gradient computation via backpropagation. Core idea: they maintain moving averages of past gradients. Common misconceptions: they store no additional optimizer state in memory; they adjust a single global learning rate identically for every parameter; they eliminate the need to compute gradients.",
   },
 
   {
@@ -388,7 +388,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Training memory includes parameters, optimizer states, gradients, and activations. Longer sequences and larger batches significantly increase activation memory.",
+      "Training memory includes parameters, optimizer states, gradients, and activations. Longer sequences and larger batches significantly increase activation memory. Core idea: Model parameters occupy memory. Common misconceptions: Optimizer states never dominate memory requirements; Activations are independent of batch size and sequence length; Memory usage is independent of context length.",
   },
 
   {
@@ -415,7 +415,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Data parallelism replicates the model across devices while splitting data. Gradient synchronization introduces communication costs that limit scalability.",
+      "Data parallelism replicates the model across devices while splitting data. Gradient synchronization introduces communication costs that limit scalability. Core idea: Each device processes a different subset of the training batch. Common misconceptions: Each device holds only the layers it computes rather than a full copy of the model parameters; Gradients never need to be aggregated across devices; it removes all communication overhead between devices.",
   },
 
   {
@@ -437,7 +437,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It eliminates communication costs entirely.", isCorrect: false },
     ],
     explanation:
-      "ZeRO partitions different training states across devices to save memory. While effective, it increases communication overhead due to frequent state exchanges.",
+      "ZeRO partitions different training states across devices to save memory. While effective, it increases communication overhead due to frequent state exchanges. Core ideas: it reduces memory duplication across devices; it can shard optimizer states across GPUs. Common misconceptions: it can shard gradients or parameters without any coordination across devices; it eliminates communication costs entirely.",
   },
 
   {
@@ -464,7 +464,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'Model parallelism distributes parts of the model itself across devices. This enables training of models larger than single-device memory limits. To reason through the choices, select the statements that match the criterion in the prompt: "It splits computation of a single model across devices."; "It is useful when a model does not fit on one device.". Do not select statements that miss that criterion: "It can be applied only across different training batches rather than within one batch."; "It requires duplicating all parameters on each device.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Model parallelism distributes parts of the model itself across devices. This enables training of models larger than single-device memory limits. Core ideas: it splits computation of a single model across devices; it is useful when a model does not fit on one device. Common misconceptions: it can be applied only across different training batches rather than within one batch; it requires duplicating all parameters on each device.",
   },
 
   {
@@ -492,7 +492,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Expert parallelism leverages sparse activation: only selected experts run per input. This reduces compute but introduces routing and communication complexity.",
+      "Expert parallelism leverages sparse activation: only selected experts run per input. This reduces compute but introduces routing and communication complexity. Core ideas: Different experts can be placed on different devices; Expert routing decisions affect communication patterns. Common misconceptions: Only a single fixed expert is activated for every input; All experts must be evaluated for every token.",
   },
 
   {
@@ -519,7 +519,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'Pipeline parallelism slices the model depth-wise. While it helps with memory limits, it introduces pipeline bubbles and scheduling complexity. To reason through the choices, select the statements that match the criterion in the prompt: "Different layers of the model can be assigned to different devices."; "It can improve utilization for very deep models.". Do not select statements that miss that criterion: "Forward and backward passes cannot be staged across devices."; "It requires all layers to run on a single device.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Pipeline parallelism slices the model depth-wise. While it helps with memory limits, it introduces pipeline bubbles and scheduling complexity. Core ideas: Different layers of the model can be assigned to different devices; it can improve utilization for very deep models. Common misconceptions: Forward and backward passes cannot be staged across devices; it requires all layers to run on a single device.",
   },
 
   {
@@ -547,7 +547,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Although GPUs are fast at math, attention often becomes memory-bound. Data movement and softmax dependencies can be larger bottlenecks than raw compute.",
+      "Although GPUs are fast at math, attention often becomes memory-bound. Data movement and softmax dependencies can be larger bottlenecks than raw compute. Core ideas: Memory reads and writes can dominate runtime; Self-attention involves multiple large matrix multiplications. Common misconceptions: Softmax normalization removes all data dependencies in attention kernels; Attention computation is limited only by arithmetic throughput.",
   },
 
   {
@@ -569,7 +569,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'GPUs combine large, slower HBM with small, fast SRAM. Optimizations often aim to keep computation within SRAM to reduce costly memory transfers. To reason through the choices, select the statements that match the criterion in the prompt: "HBM is large but slower than on-chip memory."; "SRAM is much faster but much smaller.". Do not select statements that miss that criterion: "Using SRAM effectively matters only for model storage, not computation speed."; "SRAM capacity is typically measured in gigabytes.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "GPUs combine large, slower HBM with small, fast SRAM. Optimizations often aim to keep computation within SRAM to reduce costly memory transfers. Core ideas: HBM is large but slower than on-chip memory; SRAM is much faster but much smaller. Common misconceptions: Using SRAM effectively matters only for model storage, not computation speed; SRAM capacity is typically measured in gigabytes.",
   },
 
   {
@@ -596,7 +596,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "FlashAttention reorganizes computation to be IO-aware. The math is unchanged, but data movement is drastically reduced, yielding speed and memory benefits.",
+      "FlashAttention reorganizes computation to be IO-aware. The math is unchanged, but data movement is drastically reduced, yielding speed and memory benefits. Core ideas: it reduces memory reads and writes during attention computation; it uses tiling to fit intermediate results into fast on-chip memory. Common misconceptions: it computes approximate attention by changing the mathematical result slightly; it changes the mathematical definition of self-attention.",
   },
 
   {
@@ -618,7 +618,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "They always increase overall training time.", isCorrect: false },
     ],
     explanation:
-      "Recomputation saves memory by discarding activations and recomputing them later. With IO-efficient methods like FlashAttention, this can even reduce runtime.",
+      "Recomputation saves memory by discarding activations and recomputing them later. With IO-efficient methods like FlashAttention, this can even reduce runtime. Core ideas: they trade additional compute for reduced memory usage; they can lower peak memory requirements. Common misconceptions: Activations are never recomputed during the backward pass; they always increase overall training time.",
   },
 
   {
@@ -643,7 +643,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'Different floating point formats trade off precision and range. Fewer bits reduce memory and speed up computation but can introduce numerical error. To reason through the choices, select the statements that match the criterion in the prompt: "They allocate bits to represent sign, exponent, and mantissa."; "Lower-precision formats use fewer bits.". Do not select statements that miss that criterion: "Precision has no effect on numerical granularity."; "All floating point formats have identical dynamic range.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Different floating point formats trade off precision and range. Fewer bits reduce memory and speed up computation but can introduce numerical error. Core ideas: they allocate bits to represent sign, exponent, and mantissa; Lower-precision formats use fewer bits. Common misconceptions: Precision has no effect on numerical granularity; All floating point formats have identical dynamic range.",
   },
 
   {
@@ -667,7 +667,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Mixed precision training leverages low-precision arithmetic for speed and memory savings while keeping critical quantities, like weights, in higher precision to maintain stability.",
+      "Mixed precision training leverages low-precision arithmetic for speed and memory savings while keeping critical quantities, like weights, in higher precision to maintain stability. Core ideas: Some computations use lower-precision arithmetic; Memory usage can be reduced significantly. Common misconceptions: Model weights are always stored only in lower precision during mixed precision training; it requires changing the model architecture.",
   },
 
   // ============================================================
@@ -692,7 +692,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "They always involve human annotation.", isCorrect: false },
     ],
     explanation:
-      'Pre-training uses self-supervision: the text itself provides targets. This differs from supervised fine-tuning, which uses labeled input–output pairs. To reason through the choices, select the statements that match the criterion in the prompt: "They typically involve predicting the next token.". Do not select statements that miss that criterion: "They require labeled task-specific outputs."; "They are self-supervised only when paired with labeled task-specific outputs."; "They always involve human annotation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Pre-training uses self-supervision: the text itself provides targets. This differs from supervised fine-tuning, which uses labeled input–output pairs. Core idea: they typically involve predicting the next token. Common misconceptions: they require labeled task-specific outputs; they are self-supervised only when paired with labeled task-specific outputs; they always involve human annotation.",
   },
 
   {
@@ -717,7 +717,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Batch size directly affects memory and can influence convergence behavior. Extremely large batches often require careful tuning of learning rates and optimizers.",
+      "Batch size directly affects memory and can influence convergence behavior. Extremely large batches often require careful tuning of learning rates and optimizers. Core idea: Larger batch sizes increase activation memory. Common misconceptions: Batch size has no effect on memory usage; Very large batches never change optimization dynamics when the learning rate is tuned; Batch size is unrelated to gradient computation.",
   },
 
   {
@@ -741,7 +741,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'Quantization trades precision for efficiency. While it often reduces memory and can improve speed, it may also degrade accuracy if applied carelessly. To reason through the choices, select the statements that match the criterion in the prompt: "It reduces numerical precision of stored values.". Do not select statements that miss that criterion: "It can reduce memory footprint only if model accuracy improves."; "It always improves model accuracy."; "It can increase computation speed on suitable hardware.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Quantization trades precision for efficiency. While it often reduces memory and can improve speed, it may also degrade accuracy if applied carelessly. Core idea: it reduces numerical precision of stored values. Common misconceptions: it can reduce memory footprint only if model accuracy improves; it always improves model accuracy; it can increase computation speed on suitable hardware.",
   },
 
   {
@@ -765,7 +765,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'SFT adapts a pre-trained model using labeled examples. Loss is applied only to the output portion, keeping the conditioning input fixed. To reason through the choices, select the statements that match the criterion in the prompt: "It uses labeled input–output pairs.". Do not select statements that miss that criterion: "It modifies only a separate classifier head and leaves all pre-trained model weights unchanged."; "Loss is computed over both input and output tokens."; "It replaces the pre-training objective entirely.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "SFT adapts a pre-trained model using labeled examples. Loss is applied only to the output portion, keeping the conditioning input fixed. Core idea: it uses labeled input–output pairs. Common misconceptions: it modifies only a separate classifier head and leaves all pre-trained model weights unchanged; Loss is computed over both input and output tokens; it replaces the pre-training objective entirely.",
   },
 
   {
@@ -789,7 +789,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'Instruction tuning teaches models how to act as assistants. It improves helpfulness but does not guarantee correctness or eliminate hallucinations. To reason through the choices, select the statements that match the criterion in the prompt: "It is a form of supervised fine-tuning.". Do not select statements that miss that criterion: "It trains models to respond helpfully without using user prompts or instructions."; "It requires training on the entire pre-training corpus again."; "It guarantees factual correctness of all outputs.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Instruction tuning teaches models how to act as assistants. It improves helpfulness but does not guarantee correctness or eliminate hallucinations. Core idea: it is a form of supervised fine-tuning. Common misconceptions: it trains models to respond helpfully without using user prompts or instructions; it requires training on the entire pre-training corpus again; it guarantees factual correctness of all outputs.",
   },
 
   // ============================================================
@@ -825,7 +825,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Greedy decoding deterministically chooses the highest-probability token at each step. While simple and fast, it often leads to repetitive or locally optimal outputs rather than globally coherent ones.",
+      "Greedy decoding deterministically chooses the highest-probability token at each step. While simple and fast, it often leads to repetitive or locally optimal outputs rather than globally coherent ones. Core idea: it selects the most probable token at each step. Common misconceptions: it maintains multiple candidate sequences simultaneously; it samples tokens according to the output probability distribution; it explicitly optimizes long-term sequence diversity.",
   },
 
   {
@@ -850,7 +850,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It only affects beam search decoding.", isCorrect: false },
     ],
     explanation:
-      "Temperature rescales logits before the softmax. Higher temperature increases randomness by flattening the distribution, while lower temperature makes outputs more deterministic.",
+      "Temperature rescales logits before the softmax. Higher temperature increases randomness by flattening the distribution, while lower temperature makes outputs more deterministic. Core idea: it controls how peaked or flat the output probability distribution is. Common misconceptions: it changes the model architecture during inference; it guarantees more factually correct outputs; it only affects beam search decoding.",
   },
 
   {
@@ -878,7 +878,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "KV caching stores previously computed keys and values so they can be reused for subsequent decoding steps. This significantly reduces inference cost for long sequences.",
+      "KV caching stores previously computed keys and values so they can be reused for subsequent decoding steps. This significantly reduces inference cost for long sequences. Core idea: it avoids recomputing attention for previous tokens. Common misconceptions: it compresses model parameters into lower precision; it enables parallel decoding of future tokens; it replaces the attention mechanism entirely.",
   },
 
   {
@@ -905,7 +905,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Beam search keeps the top-k candidate sequences according to cumulative probability. It improves global sequence likelihood but can reduce diversity and increase computation.",
+      "Beam search keeps the top-k candidate sequences according to cumulative probability. It improves global sequence likelihood but can reduce diversity and increase computation. Core idea: it tracks multiple high-probability partial sequences at each step. Common misconceptions: it always produces more diverse outputs than sampling; it samples tokens independently at each step; it removes the need for a language model probability distribution.",
   },
 
   {
@@ -930,7 +930,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Sparse MoE models activate only a few experts per token, allowing total parameter counts to grow without proportionally increasing compute at inference time.",
+      "Sparse MoE models activate only a few experts per token, allowing total parameter counts to grow without proportionally increasing compute at inference time. Core idea: Only a subset of parameters is activated per input. Common misconceptions: All experts are evaluated in parallel for every token; they reduce training data requirements; they eliminate the need for attention mechanisms.",
   },
 
   {
@@ -952,7 +952,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "The gating network computes routing decisions that determine which experts are activated for each input token, directly influencing compute and communication patterns.",
+      "The gating network computes routing decisions that determine which experts are activated for each input token, directly influencing compute and communication patterns. Core idea: it selects which experts process a given input. Common misconceptions: it normalizes attention weights; it replaces gradient-based optimization; it enforces model sparsity during inference only.",
   },
 
   {
@@ -980,7 +980,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Factual knowledge is encoded implicitly across many weights. Editing specific facts without degrading other capabilities is a challenging open research problem.",
+      "Factual knowledge is encoded implicitly across many weights. Editing specific facts without degrading other capabilities is a challenging open research problem. Core idea: Knowledge is distributed across many parameters. Common misconceptions: Gradients cannot be computed after pre-training; Transformer architectures forbid weight updates; The tokenizer prevents new information from being added.",
   },
 
   // ================= ALL TRUE =================
@@ -1007,7 +1007,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'SFT uses carefully curated examples to shape model behavior. Compared to pre-training, the datasets are smaller but higher quality and task-focused. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It consists of input–output pairs."; "It is much smaller than pre-training datasets."; "It aims to align model behavior with desired outputs."; "It typically focuses on higher-quality curated data.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "SFT uses carefully curated examples to shape model behavior. Compared to pre-training, the datasets are smaller but higher quality and task-focused. Core ideas: it consists of input–output pairs; it is much smaller than pre-training datasets; it aims to align model behavior with desired outputs; it typically focuses on higher-quality curated data.",
   },
 
   {
@@ -1034,7 +1034,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'Instruction tuning conditions the model on user prompts and applies loss only to the response, making the model behave more like a helpful assistant. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It trains models to follow natural language instructions."; "It is a special case of supervised fine-tuning."; "Loss is applied only to the generated response."; "It improves usefulness in interactive settings.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Instruction tuning conditions the model on user prompts and applies loss only to the response, making the model behave more like a helpful assistant. Core ideas: it trains models to follow natural language instructions; it is a special case of supervised fine-tuning; Loss is applied only to the generated response; it improves usefulness in interactive settings.",
   },
 
   {
@@ -1059,7 +1059,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Models can overfit to popular benchmarks.", isCorrect: true },
     ],
     explanation:
-      "LLM evaluation is difficult because performance depends on data distribution, subjective preferences, and benchmark design. No single metric fully captures model quality.",
+      "LLM evaluation is difficult because performance depends on data distribution, subjective preferences, and benchmark design. No single metric fully captures model quality. Core ideas: Benchmarks can be sensitive to training data overlap; Single metrics rarely capture all desired behaviors; User preferences can be subjective and inconsistent; Models can overfit to popular benchmarks.",
   },
 
   {
@@ -1084,7 +1084,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It reflects only next-token prediction loss.", isCorrect: true },
     ],
     explanation:
-      'MMLU evaluates models across diverse tasks to approximate general language competence. It goes beyond raw loss by testing downstream abilities. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It aggregates performance across many different tasks."; "It aims to measure broad language understanding."; "It is commonly used to compare general-purpose models."; "It reflects only next-token prediction loss.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "MMLU evaluates models across diverse tasks to approximate general language competence. It goes beyond raw loss by testing downstream abilities. Core ideas: it aggregates performance across many different tasks; it aims to measure broad language understanding; it is commonly used to compare general-purpose models; it reflects only next-token prediction loss.",
   },
 
   // ================= EXACTLY 3 TRUE =================
@@ -1107,7 +1107,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It is completely immune to manipulation.", isCorrect: false },
     ],
     explanation:
-      "Preference-based evaluation uses human or model judgments to compare outputs. While flexible and intuitive, it can be biased or gamed under certain conditions.",
+      "Preference-based evaluation uses human or model judgments to compare outputs. While flexible and intuitive, it can be biased or gamed under certain conditions. Core ideas: it relies on pairwise comparisons between model outputs; Human judgment often plays a role. Common misconceptions: it captures subjective notions of quality without requiring any human or model judgment; it is completely immune to manipulation.",
   },
 
   {
@@ -1131,7 +1131,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'Alignment aims to make models helpful and safe. While SFT and preference tuning improve alignment, they do not eliminate all risks or errors. To reason through the choices, select the statements that match the criterion in the prompt: "It refers to shaping model behavior toward human goals."; "It typically occurs after pre-training.". Do not select statements that miss that criterion: "It includes supervised fine-tuning and preference tuning, but only during pre-training."; "It guarantees perfect safety and correctness.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Alignment aims to make models helpful and safe. While SFT and preference tuning improve alignment, they do not eliminate all risks or errors. Core ideas: it refers to shaping model behavior toward human goals; it typically occurs after pre-training. Common misconceptions: it includes supervised fine-tuning and preference tuning, but only during pre-training; it guarantees perfect safety and correctness.",
   },
 
   {
@@ -1155,7 +1155,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'LoRA fine-tunes models efficiently by learning low-rank updates while keeping base weights fixed, reducing memory and compute costs. To reason through the choices, select the statements that match the criterion in the prompt: "It freezes the original pre-trained weights."; "It introduces additional low-rank trainable matrices.". Do not select statements that miss that criterion: "It significantly reduces the number of trainable parameters without adding any new trainable matrices."; "It requires retraining the entire model from scratch.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "LoRA fine-tunes models efficiently by learning low-rank updates while keeping base weights fixed, reducing memory and compute costs. Core ideas: it freezes the original pre-trained weights; it introduces additional low-rank trainable matrices. Common misconceptions: it significantly reduces the number of trainable parameters without adding any new trainable matrices; it requires retraining the entire model from scratch.",
   },
 
   {
@@ -1179,7 +1179,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It eliminates numerical error entirely.", isCorrect: false },
     ],
     explanation:
-      "QLoRA combines quantization with LoRA to drastically reduce memory usage while retaining training stability by keeping adapter weights in higher precision.",
+      "QLoRA combines quantization with LoRA to drastically reduce memory usage while retaining training stability by keeping adapter weights in higher precision. Core ideas: Base model weights are stored in quantized form; it enables fine-tuning large models on limited hardware. Common misconceptions: LoRA adapters are typically quantized to the same 4-bit format as the frozen base model during training; it eliminates numerical error entirely.",
   },
 
   {
@@ -1204,7 +1204,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'NF4 is designed for normally distributed weights and uses quantiles rather than uniform bins, yielding better accuracy at very low bit-widths. To reason through the choices, select the statements that match the criterion in the prompt: "It assumes weights follow an approximately normal distribution."; "It uses non-uniform quantization bins.". Do not select statements that miss that criterion: "It improves memory efficiency for frozen weights without any quantization error."; "It is identical to standard 4-bit linear quantization.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "NF4 is designed for normally distributed weights and uses quantiles rather than uniform bins, yielding better accuracy at very low bit-widths. Core ideas: it assumes weights follow an approximately normal distribution; it uses non-uniform quantization bins. Common misconceptions: it improves memory efficiency for frozen weights without any quantization error; it is identical to standard 4-bit linear quantization.",
   },
 
   {
@@ -1232,7 +1232,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Empirically, LoRA benefits from higher learning rates and smaller batch sizes. Its low-rank structure changes optimization dynamics compared to full fine-tuning.",
+      "Empirically, LoRA benefits from higher learning rates and smaller batch sizes. Its low-rank structure changes optimization dynamics compared to full fine-tuning. Core ideas: Very large batch sizes can hurt LoRA performance; LoRA often uses higher learning rates than full fine-tuning; Training dynamics differ from full-rank weight updates; Batch size can interact with optimization behavior during LoRA training.",
   },
 
   {
@@ -1259,7 +1259,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Mixed-precision training balances speed and stability by using lower precision for most computations while preserving critical values in higher precision.",
+      "Mixed-precision training balances speed and stability by using lower precision for most computations while preserving critical values in higher precision. Core ideas: it uses different numerical precisions for different operations; it can reduce memory usage and increase throughput; Model weights are often maintained in higher precision; it can often be used without changing the task loss function itself.",
   },
 
   {
@@ -1286,7 +1286,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'FlashAttention leverages fast on-chip memory to recompute activations cheaply, reducing memory traffic and sometimes even improving overall runtime. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Activations may be recomputed during the backward pass."; "It trades additional computation for lower memory usage."; "It can reduce overall runtime despite recomputation."; "It still computes exact attention rather than an approximation.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "FlashAttention leverages fast on-chip memory to recompute activations cheaply, reducing memory traffic and sometimes even improving overall runtime. Core ideas: Activations may be recomputed during the backward pass; it trades additional computation for lower memory usage; it can reduce overall runtime despite recomputation; it still computes exact attention rather than an approximation.",
   },
 
   {
@@ -1307,7 +1307,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'Benchmarks guide progress but are imperfect proxies for real-world usefulness. Human judgment remains important for many aspects of model quality. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They can shape model training incentives."; "They may fail to capture real user satisfaction."; "They are often domain-specific."; "They do not eliminate the need for human evaluation.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Benchmarks guide progress but are imperfect proxies for real-world usefulness. Human judgment remains important for many aspects of model quality. Core ideas: they can shape model training incentives; they may fail to capture real user satisfaction; they are often domain-specific; they do not eliminate the need for human evaluation.",
   },
 
   {
@@ -1331,7 +1331,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'Alignment datasets are curated to shape behavior and safety. While model-generated data can assist, human oversight is still common. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They often include safety-focused examples."; "They aim to discourage harmful or unsafe outputs."; "They are typically much smaller than pre-training data."; "They often rely on some human input or curation.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Alignment datasets are curated to shape behavior and safety. While model-generated data can assist, human oversight is still common. Core ideas: they often include safety-focused examples; they aim to discourage harmful or unsafe outputs; they are typically much smaller than pre-training data; they often rely on some human input or curation.",
   },
 
   {
@@ -1349,7 +1349,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It does not replace pre-training entirely.", isCorrect: true },
     ],
     explanation:
-      "Preference tuning adjusts models using human or synthetic preference feedback, complementing supervised fine-tuning rather than replacing earlier stages.",
+      "Preference tuning adjusts models using human or synthetic preference feedback, complementing supervised fine-tuning rather than replacing earlier stages. Core ideas: it optimizes models using preference signals; it often follows supervised fine-tuning; it can use pairwise ranking losses; it does not replace pre-training entirely.",
   },
 
   {
@@ -1373,7 +1373,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Optimizing likelihood or benchmark scores does not guarantee helpfulness. Alignment and evaluation require additional signals beyond loss minimization.",
+      "Optimizing likelihood or benchmark scores does not guarantee helpfulness. Alignment and evaluation require additional signals beyond loss minimization. Core ideas: Training objectives may not align with user satisfaction; Benchmarks can be optimized without improving real usefulness; Evaluation depends on task distribution; Loss minimization alone does not guarantee helpful behavior.",
   },
 
   {
@@ -1400,7 +1400,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'Scaling laws capture smooth empirical trends but do not provide strict guarantees, especially for downstream or aligned behaviors. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They describe empirical relationships between model size, data, and loss."; "They motivated increasing model and dataset sizes."; "They suggest diminishing returns at fixed compute."; "They do not provide exact guarantees for downstream task performance.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Scaling laws capture smooth empirical trends but do not provide strict guarantees, especially for downstream or aligned behaviors. Core ideas: they describe empirical relationships between model size, data, and loss; they motivated increasing model and dataset sizes; they suggest diminishing returns at fixed compute; they do not provide exact guarantees for downstream task performance.",
   },
 
   {
@@ -1422,7 +1422,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'Compute constraints affect all stages of training and deployment. They drive innovation in parallelism, efficiency, and model design. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They motivate parallelism strategies."; "They influence architecture and optimization choices."; "They limit feasible model and dataset sizes."; "They still matter after pre-training because they constrain adaptation and deployment.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Compute constraints affect all stages of training and deployment. They drive innovation in parallelism, efficiency, and model design. Core ideas: they motivate parallelism strategies; they influence architecture and optimization choices; they limit feasible model and dataset sizes; they still matter after pre-training because they constrain adaptation and deployment.",
   },
 
   // ============================================================
@@ -1454,7 +1454,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "Mid-training keeps the same objective as pre-training but changes the data mixture. It helps align representations toward domains of interest before task-specific fine-tuning.",
+      "Mid-training keeps the same objective as pre-training but changes the data mixture. It helps align representations toward domains of interest before task-specific fine-tuning. Core ideas: it adapts the data distribution while keeping the same next-token objective; it occurs after pre-training and before supervised fine-tuning; it targets domains closer to downstream use cases; it does not replace the need for later fine-tuning or alignment steps.",
   },
 
   {
@@ -1482,7 +1482,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "In supervised fine-tuning, the model conditions on the input and is trained only on the response tokens. Although the loss function is still cross-entropy, the masking makes the objective meaningfully different from pre-training.",
+      "In supervised fine-tuning, the model conditions on the input and is trained only on the response tokens. Although the loss function is still cross-entropy, the masking makes the objective meaningfully different from pre-training. Core ideas: Loss is applied only to the generated output tokens; Input tokens are used as conditioning context; Teacher forcing is still used on the generated output tokens even though loss is not applied to the prompt tokens; The objective differs from pre-training despite using cross-entropy.",
   },
 
   {
@@ -1503,7 +1503,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'Instruction tuning is supervised fine-tuning focused on user-facing tasks. It adapts a pre-trained model rather than training from scratch. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It teaches the model to respond helpfully to prompts."; "It is a form of supervised fine-tuning."; "It uses curated instruction–response pairs."; "It does not require retraining from random initialization.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Instruction tuning is supervised fine-tuning focused on user-facing tasks. It adapts a pre-trained model rather than training from scratch. Core ideas: it teaches the model to respond helpfully to prompts; it is a form of supervised fine-tuning; it uses curated instruction–response pairs; it does not require retraining from random initialization.",
   },
 
   {
@@ -1528,7 +1528,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      "SFT data mixtures span many task types and are often partially synthetic. Exact matching to inference prompts is unnecessary as long as the distribution is reasonably aligned.",
+      "SFT data mixtures span many task types and are often partially synthetic. Exact matching to inference prompts is unnecessary as long as the distribution is reasonably aligned. Core ideas: it often includes many task categories; it may combine human-written and model-generated examples; it is usually much smaller than pre-training data; it does not have to match inference prompts exactly to be useful.",
   },
 
   {
@@ -1556,7 +1556,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'Large models can memorize rare or repeated samples. Fine-tuning and decoding choices can reduce but not eliminate this risk. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Models can reproduce rare training examples verbatim."; "Memorization risk increases with repeated exposure to data."; "Sampling temperature can affect surface-level repetition."; "Memorization is not completely eliminated by fine-tuning.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Large models can memorize rare or repeated samples. Fine-tuning and decoding choices can reduce but not eliminate this risk. Core ideas: Models can reproduce rare training examples verbatim; Memorization risk increases with repeated exposure to data; Sampling temperature can affect surface-level repetition; Memorization is not completely eliminated by fine-tuning.",
   },
 
   {
@@ -1580,7 +1580,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Benchmarks evolve over time.", isCorrect: true },
     ],
     explanation:
-      "Benchmarks measure targeted abilities but are imperfect proxies for usefulness. Overlap and gaming can distort results, motivating continual benchmark updates.",
+      "Benchmarks measure targeted abilities but are imperfect proxies for usefulness. Overlap and gaming can distort results, motivating continual benchmark updates. Core ideas: Benchmarks approximate specific capabilities; High benchmark scores do not guarantee user satisfaction; Training data overlap can inflate benchmark results; Benchmarks evolve over time.",
   },
 
   {
@@ -1602,7 +1602,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'MMLU focuses on task performance rather than likelihood. It does not directly capture training efficiency or compute usage. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It aggregates results across many tasks."; "It evaluates downstream capabilities rather than raw loss."; "It reflects broad language competence."; "It does not directly measure training compute efficiency.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "MMLU focuses on task performance rather than likelihood. It does not directly capture training efficiency or compute usage. Core ideas: it aggregates results across many tasks; it evaluates downstream capabilities rather than raw loss; it reflects broad language competence; it does not directly measure training compute efficiency.",
   },
 
   {
@@ -1620,7 +1620,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'Preference-based systems reflect human judgments but are sensitive to sampling, bias, and strategic manipulation. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Users compare outputs pairwise."; "It captures subjective quality signals."; "Early comparisons can bias rankings."; "It is not immune to adversarial behavior.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Preference-based systems reflect human judgments but are sensitive to sampling, bias, and strategic manipulation. Core ideas: Users compare outputs pairwise; it captures subjective quality signals; Early comparisons can bias rankings; it is not immune to adversarial behavior.",
   },
 
   {
@@ -1641,7 +1641,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'Alignment shapes behavior but does not eliminate errors or misuse. It is a post-pretraining process involving multiple techniques. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It aims to make models helpful and harmless."; "It includes supervised fine-tuning and preference tuning."; "It occurs after pre-training."; "It does not guarantee correct behavior in all cases.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Alignment shapes behavior but does not eliminate errors or misuse. It is a post-pretraining process involving multiple techniques. Core ideas: it aims to make models helpful and harmless; it includes supervised fine-tuning and preference tuning; it occurs after pre-training; it does not guarantee correct behavior in all cases.",
   },
 
   {
@@ -1659,7 +1659,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It does not replace pre-training.", isCorrect: true },
     ],
     explanation:
-      'Preference tuning refines behavior using rankings or comparisons. It complements but does not replace earlier training stages. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It uses relative judgments rather than absolute labels."; "It often follows supervised fine-tuning."; "It can optimize for user satisfaction."; "It does not replace pre-training.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Preference tuning refines behavior using rankings or comparisons. It complements but does not replace earlier training stages. Core ideas: it uses relative judgments rather than absolute labels; it often follows supervised fine-tuning; it can optimize for user satisfaction; it does not replace pre-training.",
   },
 
   {
@@ -1677,7 +1677,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'LoRA adds trainable low-rank matrices without altering the base architecture. This yields large efficiency gains during fine-tuning. To reason through the choices, select the statements that match the criterion in the prompt: "Base model weights remain frozen."; "Only low-rank matrices are trained."; "It reduces memory and compute cost.". Do not select statements that miss that criterion: "It requires modifying the model architecture.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "LoRA adds trainable low-rank matrices without altering the base architecture. This yields large efficiency gains during fine-tuning. Core ideas: Base model weights remain frozen; Only low-rank matrices are trained; it reduces memory and compute cost. Common misconceptions: it requires modifying the model architecture.",
   },
 
   {
@@ -1695,7 +1695,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'The rank trades off capacity and efficiency. Increasing it can help but often yields diminishing returns. To reason through the choices, select the statements that match the criterion in the prompt: "It controls the capacity of the adaptation."; "Lower rank reduces trainable parameters."; "It is typically much smaller than the original weight dimension.". Do not select statements that miss that criterion: "Higher rank always improves performance.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "The rank trades off capacity and efficiency. Increasing it can help but often yields diminishing returns. Core ideas: it controls the capacity of the adaptation; Lower rank reduces trainable parameters; it is typically much smaller than the original weight dimension. Common misconceptions: Higher rank always improves performance.",
   },
 
   {
@@ -1713,7 +1713,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Training is identical to dense fine-tuning.", isCorrect: false },
     ],
     explanation:
-      'Empirical results show LoRA benefits from different hyperparameters. Its low-rank structure alters optimization behavior. To reason through the choices, select the statements that match the criterion in the prompt: "Higher learning rates are often used."; "Very large batch sizes can degrade performance."; "Optimization differs from full fine-tuning.". Do not select statements that miss that criterion: "Training is identical to dense fine-tuning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Empirical results show LoRA benefits from different hyperparameters. Its low-rank structure alters optimization behavior. Core ideas: Higher learning rates are often used; Very large batch sizes can degrade performance; Optimization differs from full fine-tuning. Common misconceptions: Training is identical to dense fine-tuning.",
   },
 
   {
@@ -1732,7 +1732,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It must be applied to every layer to work.", isCorrect: false },
     ],
     explanation:
-      'LoRA can be inserted in multiple components. Empirical work shows feedforward layers are especially effective. To reason through the choices, select the statements that match the criterion in the prompt: "It can be applied to attention projections."; "It can be applied to feedforward layers."; "Feedforward placement often yields strong gains.". Do not select statements that miss that criterion: "It must be applied to every layer to work.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "LoRA can be inserted in multiple components. Empirical work shows feedforward layers are especially effective. Core ideas: it can be applied to attention projections; it can be applied to feedforward layers; Feedforward placement often yields strong gains. Common misconceptions: it must be applied to every layer to work.",
   },
 
   {
@@ -1747,7 +1747,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It eliminates quantization error.", isCorrect: false },
     ],
     explanation:
-      'QLoRA combines aggressive quantization with LoRA adapters to drastically reduce memory usage while maintaining training stability. To reason through the choices, select the statements that match the criterion in the prompt: "Frozen base weights are quantized."; "LoRA adapters remain high precision."; "It enables fine-tuning on limited hardware.". Do not select statements that miss that criterion: "It eliminates quantization error.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "QLoRA combines aggressive quantization with LoRA adapters to drastically reduce memory usage while maintaining training stability. Core ideas: Frozen base weights are quantized; LoRA adapters remain high precision; it enables fine-tuning on limited hardware. Common misconceptions: it eliminates quantization error.",
   },
 
   {
@@ -1766,7 +1766,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'NF4 exploits weight distribution structure to minimize error at very low precision. It differs fundamentally from uniform quantization. To reason through the choices, select the statements that match the criterion in the prompt: "It assumes normally distributed weights."; "It uses quantiles rather than uniform bins."; "It is designed for frozen model weights.". Do not select statements that miss that criterion: "It is identical to standard 4-bit quantization.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "NF4 exploits weight distribution structure to minimize error at very low precision. It differs fundamentally from uniform quantization. Core ideas: it assumes normally distributed weights; it uses quantiles rather than uniform bins; it is designed for frozen model weights. Common misconceptions: it is identical to standard 4-bit quantization.",
   },
 
   {
@@ -1784,7 +1784,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "All formats behave identically numerically.", isCorrect: false },
     ],
     explanation:
-      'Different formats balance range and granularity differently. These trade-offs directly affect training stability and efficiency. To reason through the choices, select the statements that match the criterion in the prompt: "They trade precision for range."; "Brain Float 16 keeps a larger exponent range."; "Lower precision reduces memory usage.". Do not select statements that miss that criterion: "All formats behave identically numerically.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Different formats balance range and granularity differently. These trade-offs directly affect training stability and efficiency. Core ideas: they trade precision for range; Brain Float 16 keeps a larger exponent range; Lower precision reduces memory usage. Common misconceptions: All formats behave identically numerically.",
   },
 
   {
@@ -1802,7 +1802,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It removes the need for numerical care.", isCorrect: false },
     ],
     explanation:
-      'Mixed precision exploits hardware capabilities but still requires care to avoid instability and overflow. To reason through the choices, select the statements that match the criterion in the prompt: "Weights are often kept in higher precision."; "Forward and backward passes may use lower precision."; "It can improve throughput and reduce memory.". Do not select statements that miss that criterion: "It removes the need for numerical care.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Mixed precision exploits hardware capabilities but still requires care to avoid instability and overflow. Core ideas: Weights are often kept in higher precision; Forward and backward passes may use lower precision; it can improve throughput and reduce memory. Common misconceptions: it removes the need for numerical care.",
   },
 
   {
@@ -1817,7 +1817,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Range choice is irrelevant to performance.", isCorrect: false },
     ],
     explanation:
-      'Quantization accuracy depends strongly on how ranges are chosen. Poor calibration can severely degrade model quality. To reason through the choices, select the statements that match the criterion in the prompt: "Range affects representable values."; "Zero-point and scale can define mapping."; "Poor range selection increases error.". Do not select statements that miss that criterion: "Range choice is irrelevant to performance.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Quantization accuracy depends strongly on how ranges are chosen. Poor calibration can severely degrade model quality. Core ideas: Range affects representable values; Zero-point and scale can define mapping; Poor range selection increases error. Common misconceptions: Range choice is irrelevant to performance.",
   },
 
   {
@@ -1832,7 +1832,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It approximates softmax.", isCorrect: false },
     ],
     explanation:
-      'FlashAttention reorganizes computation without changing the mathematical result. Its speedups come from IO efficiency. To reason through the choices, select the statements that match the criterion in the prompt: "It reduces high-bandwidth memory traffic."; "It uses tiling into fast on-chip memory."; "It computes exact attention.". Do not select statements that miss that criterion: "It approximates softmax.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "FlashAttention reorganizes computation without changing the mathematical result. Its speedups come from IO efficiency. Core ideas: it reduces high-bandwidth memory traffic; it uses tiling into fast on-chip memory; it computes exact attention. Common misconceptions: it approximates softmax.",
   },
 
   {
@@ -1854,7 +1854,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It always increases runtime.", isCorrect: false },
     ],
     explanation:
-      'Recomputation trades compute for memory. With fast kernels, it can reduce runtime by minimizing memory traffic. To reason through the choices, select the statements that match the criterion in the prompt: "Some activations are discarded during the forward pass."; "They are recomputed during the backward pass."; "This can reduce peak memory usage.". Do not select statements that miss that criterion: "It always increases runtime.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Recomputation trades compute for memory. With fast kernels, it can reduce runtime by minimizing memory traffic. Core ideas: Some activations are discarded during the forward pass; they are recomputed during the backward pass; this can reduce peak memory usage. Common misconceptions: it always increases runtime.",
   },
 
   {
@@ -1875,7 +1875,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "All GPU memory has equal speed.", isCorrect: false },
     ],
     explanation:
-      'GPUs rely on multiple memory tiers. Efficient kernels minimize access to slower memory. To reason through the choices, select the statements that match the criterion in the prompt: "High-bandwidth memory is larger but slower than SRAM."; "Static random-access memory is close to compute units."; "Memory access often dominates runtime.". Do not select statements that miss that criterion: "All GPU memory has equal speed.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "GPUs rely on multiple memory tiers. Efficient kernels minimize access to slower memory. Core ideas: High-bandwidth memory is larger but slower than SRAM; Static random-access memory is close to compute units; Memory access often dominates runtime. Common misconceptions: All GPU memory has equal speed.",
   },
 
   {
@@ -1890,7 +1890,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Models are partitioned across devices.", isCorrect: false },
     ],
     explanation:
-      'Data parallelism replicates the model and splits data. Synchronization costs limit scaling. To reason through the choices, select the statements that match the criterion in the prompt: "Each device processes different data."; "Gradients must be synchronized."; "Communication introduces overhead.". Do not select statements that miss that criterion: "Models are partitioned across devices.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Data parallelism replicates the model and splits data. Synchronization costs limit scaling. Core ideas: Each device processes different data; Gradients must be synchronized; Communication introduces overhead. Common misconceptions: Models are partitioned across devices.",
   },
 
   {
@@ -1906,7 +1906,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It removes communication entirely.", isCorrect: false },
     ],
     explanation:
-      'ZeRO reduces memory duplication but increases coordination between devices. To reason through the choices, select the statements that match the criterion in the prompt: "It shards optimizer states."; "It can shard gradients and parameters."; "It reduces per-device memory.". Do not select statements that miss that criterion: "It removes communication entirely.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "ZeRO reduces memory duplication but increases coordination between devices. Core ideas: it shards optimizer states; it can shard gradients and parameters; it reduces per-device memory. Common misconceptions: it removes communication entirely.",
   },
 
   {
@@ -1924,7 +1924,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It duplicates all parameters everywhere.", isCorrect: false },
     ],
     explanation:
-      'Model parallelism partitions the model itself. This enables scale but adds coordination overhead. To reason through the choices, select the statements that match the criterion in the prompt: "It splits model computation across devices."; "It allows training models larger than one GPU."; "It can increase communication complexity.". Do not select statements that miss that criterion: "It duplicates all parameters everywhere.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Model parallelism partitions the model itself. This enables scale but adds coordination overhead. Core ideas: it splits model computation across devices; it allows training models larger than one GPU; it can increase communication complexity. Common misconceptions: it duplicates all parameters everywhere.",
   },
 
   {
@@ -1942,7 +1942,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "All layers execute simultaneously.", isCorrect: false },
     ],
     explanation:
-      'Pipeline parallelism trades latency and scheduling complexity for memory scalability. To reason through the choices, select the statements that match the criterion in the prompt: "Different layers are assigned to different devices."; "It can improve memory utilization."; "Pipeline bubbles can reduce efficiency.". Do not select statements that miss that criterion: "All layers execute simultaneously.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Pipeline parallelism trades latency and scheduling complexity for memory scalability. Core ideas: Different layers are assigned to different devices; it can improve memory utilization; Pipeline bubbles can reduce efficiency. Common misconceptions: All layers execute simultaneously.",
   },
 
   {
@@ -1957,7 +1957,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "All experts are always active.", isCorrect: false },
     ],
     explanation:
-      'Expert parallelism exploits sparsity but introduces routing and load-balancing challenges. To reason through the choices, select the statements that match the criterion in the prompt: "Experts can reside on different devices."; "Only selected experts run per token."; "Routing affects communication.". Do not select statements that miss that criterion: "All experts are always active.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Expert parallelism exploits sparsity but introduces routing and load-balancing challenges. Core ideas: Experts can reside on different devices; Only selected experts run per token; Routing affects communication. Common misconceptions: All experts are always active.",
   },
 
   {
@@ -1975,7 +1975,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'Empirical results show scale dominates architecture choice within common transformer families. To reason through the choices, select the statements that match the criterion in the prompt: "Performance improves predictably with scale."; "Model size, data size, and compute interact."; "Optimal scaling depends on compute budget.". Do not select statements that miss that criterion: "Architecture choice dominates scaling behavior.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Empirical results show scale dominates architecture choice within common transformer families. Core ideas: Performance improves predictably with scale; Model size, data size, and compute interact; Optimal scaling depends on compute budget. Common misconceptions: Architecture choice dominates scaling behavior.",
   },
 
   {
@@ -1993,7 +1993,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'Compute-optimal scaling guides design but still relies on empirical validation. To reason through the choices, select the statements that match the criterion in the prompt: "It balances parameters and data."; "Undertraining wastes model capacity."; "Overtraining small models wastes compute.". Do not select statements that miss that criterion: "It eliminates the need for scaling experiments.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Compute-optimal scaling guides design but still relies on empirical validation. Core ideas: it balances parameters and data; Undertraining wastes model capacity; Overtraining small models wastes compute. Common misconceptions: it eliminates the need for scaling experiments.",
   },
 
   {
@@ -2011,7 +2011,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       },
     ],
     explanation:
-      'Knowledge cutoff limits what the model can know intrinsically. External tools are required to overcome it. To reason through the choices, select the statements that match the criterion in the prompt: "It reflects the latest training data date."; "Models lack direct knowledge beyond it."; "It is usually documented.". Do not select statements that miss that criterion: "It can be bypassed without updating weights.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Knowledge cutoff limits what the model can know intrinsically. External tools are required to overcome it. Core ideas: it reflects the latest training data date; Models lack direct knowledge beyond it; it is usually documented. Common misconceptions: it can be bypassed without updating weights.",
   },
 
   {
@@ -2026,7 +2026,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It is a solved problem.", isCorrect: false },
     ],
     explanation:
-      'Editing model knowledge remains an open challenge due to entangled representations. To reason through the choices, select the statements that match the criterion in the prompt: "It is difficult without side effects."; "Knowledge is distributed across parameters."; "Local edits can cause global regressions.". Do not select statements that miss that criterion: "It is a solved problem.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Editing model knowledge remains an open challenge due to entangled representations. Core ideas: it is difficult without side effects; Knowledge is distributed across parameters; Local edits can cause global regressions. Common misconceptions: it is a solved problem.",
   },
 
   {
@@ -2041,7 +2041,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Sampling increases output diversity.", isCorrect: true },
     ],
     explanation:
-      'Sampling trades determinism for diversity. It does not ensure correctness. To reason through the choices, select the statements that match the criterion in the prompt: "Temperature controls randomness."; "Sampling explores lower-probability tokens."; "Sampling increases output diversity.". Do not select statements that miss that criterion: "Sampling guarantees factual correctness.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Sampling trades determinism for diversity. It does not ensure correctness. Core ideas: Temperature controls randomness; Sampling explores lower-probability tokens; Sampling increases output diversity. Common misconceptions: Sampling guarantees factual correctness.",
   },
 
   {
@@ -2056,7 +2056,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It maximizes sequence-level diversity.", isCorrect: false },
     ],
     explanation:
-      'Greedy decoding is fast and simple but often suboptimal for long sequences. To reason through the choices, select the statements that match the criterion in the prompt: "It selects the highest-probability token."; "It is deterministic."; "It can lead to repetitive outputs.". Do not select statements that miss that criterion: "It maximizes sequence-level diversity.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Greedy decoding is fast and simple but often suboptimal for long sequences. Core ideas: it selects the highest-probability token; it is deterministic; it can lead to repetitive outputs. Common misconceptions: it maximizes sequence-level diversity.",
   },
 
   {
@@ -2074,7 +2074,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It samples stochastically.", isCorrect: false },
     ],
     explanation:
-      'Beam search balances exploration and likelihood but is deterministic. To reason through the choices, select the statements that match the criterion in the prompt: "It tracks multiple candidate sequences."; "It approximates global likelihood maximization."; "It often reduces diversity.". Do not select statements that miss that criterion: "It samples stochastically.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Beam search balances exploration and likelihood but is deterministic. Core ideas: it tracks multiple candidate sequences; it approximates global likelihood maximization; it often reduces diversity. Common misconceptions: it samples stochastically.",
   },
 
   {
@@ -2092,7 +2092,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It affects training loss.", isCorrect: false },
     ],
     explanation:
-      'KV caching trades memory for speed during inference. It does not affect training objectives. To reason through the choices, select the statements that match the criterion in the prompt: "It avoids recomputing past attention."; "It reduces inference cost for long sequences."; "It increases memory usage.". Do not select statements that miss that criterion: "It affects training loss.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "KV caching trades memory for speed during inference. It does not affect training objectives. Core ideas: it avoids recomputing past attention; it reduces inference cost for long sequences; it increases memory usage. Common misconceptions: it affects training loss.",
   },
 
   {
@@ -2107,7 +2107,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Cost is independent of data size.", isCorrect: false },
     ],
     explanation:
-      'Compute cost scales strongly with data and model size. Optimization techniques target this bottleneck. To reason through the choices, select the statements that match the criterion in the prompt: "Pre-training dominates total cost."; "Fine-tuning is comparatively cheap."; "Hardware efficiency matters significantly.". Do not select statements that miss that criterion: "Cost is independent of data size.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Compute cost scales strongly with data and model size. Optimization techniques target this bottleneck. Core ideas: Pre-training dominates total cost; Fine-tuning is comparatively cheap; Hardware efficiency matters significantly. Common misconceptions: Cost is independent of data size.",
   },
 
   {
@@ -2122,7 +2122,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Environmental cost is negligible.", isCorrect: false },
     ],
     explanation:
-      'Energy use is a growing concern in large-scale training. Efficiency directly affects sustainability. To reason through the choices, select the statements that match the criterion in the prompt: "Training consumes significant energy."; "Reporting carbon cost is becoming common."; "Efficiency improvements reduce impact.". Do not select statements that miss that criterion: "Environmental cost is negligible.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Energy use is a growing concern in large-scale training. Efficiency directly affects sustainability. Core ideas: Training consumes significant energy; Reporting carbon cost is becoming common; Efficiency improvements reduce impact. Common misconceptions: Environmental cost is negligible.",
   },
 
   {
@@ -2137,7 +2137,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "One score captures everything.", isCorrect: false },
     ],
     explanation:
-      'Evaluation requires multiple perspectives. Single metrics rarely suffice. To reason through the choices, select the statements that match the criterion in the prompt: "Benchmarks may not reflect real use."; "Optimization can overfit metrics."; "User satisfaction is multifaceted.". Do not select statements that miss that criterion: "One score captures everything.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Evaluation requires multiple perspectives. Single metrics rarely suffice. Core ideas: Benchmarks may not reflect real use; Optimization can overfit metrics; User satisfaction is multifaceted. Common misconceptions: One score captures everything.",
   },
 
   {
@@ -2152,7 +2152,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Preferences are always aligned with truth.", isCorrect: false },
     ],
     explanation:
-      'Preference-based metrics reflect subjective tastes, which can conflict with factuality or safety goals. To reason through the choices, select the statements that match the criterion in the prompt: "Users may value style over correctness."; "Preferences vary across populations."; "Preference signals can conflict with safety.". Do not select statements that miss that criterion: "Preferences are always aligned with truth.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Preference-based metrics reflect subjective tastes, which can conflict with factuality or safety goals. Core ideas: Users may value style over correctness; Preferences vary across populations; Preference signals can conflict with safety. Common misconceptions: Preferences are always aligned with truth.",
   },
 
   {
@@ -2170,7 +2170,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Assistants emerge without supervision.", isCorrect: false },
     ],
     explanation:
-      'Assistant behavior arises from post-training alignment, not from raw next-token prediction. To reason through the choices, select the statements that match the criterion in the prompt: "Helpfulness is shaped during fine-tuning."; "Pre-training alone does not produce assistants."; "Safety behaviors can be learned.". Do not select statements that miss that criterion: "Assistants emerge without supervision.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Assistant behavior arises from post-training alignment, not from raw next-token prediction. Core ideas: Helpfulness is shaped during fine-tuning; Pre-training alone does not produce assistants; Safety behaviors can be learned. Common misconceptions: Assistants emerge without supervision.",
   },
 
   {
@@ -2185,7 +2185,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "It is implemented purely via rules.", isCorrect: false },
     ],
     explanation:
-      'Rejection behavior is often learned, not rule-based. It balances safety against usability. To reason through the choices, select the statements that match the criterion in the prompt: "It can be learned via training data."; "It may reduce user satisfaction."; "It supports safety goals.". Do not select statements that miss that criterion: "It is implemented purely via rules.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Rejection behavior is often learned, not rule-based. It balances safety against usability. Core ideas: it can be learned via training data; it may reduce user satisfaction; it supports safety goals. Common misconceptions: it is implemented purely via rules.",
   },
 
   {
@@ -2203,7 +2203,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Data quality matters more than size in SFT.", isCorrect: true },
     ],
     explanation:
-      'SFT emphasizes quality over scale. Reuse helps but does not solve alignment fully. To reason through the choices, select the statements that match the criterion in the prompt: "High-quality datasets are reused across models."; "Curation cost is amortized."; "Data quality matters more than size in SFT.". Do not select statements that miss that criterion: "Reuse guarantees perfect alignment.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "SFT emphasizes quality over scale. Reuse helps but does not solve alignment fully. Core ideas: High-quality datasets are reused across models; Curation cost is amortized; Data quality matters more than size in SFT. Common misconceptions: Reuse guarantees perfect alignment.",
   },
 
   {
@@ -2221,7 +2221,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Distribution shift is irrelevant in LLMs.", isCorrect: false },
     ],
     explanation:
-      'Mismatch between training and inference distributions is a core generalization challenge. To reason through the choices, select the statements that match the criterion in the prompt: "Inference prompts may differ from training prompts."; "Shift affects generalization."; "Better data coverage reduces risk.". Do not select statements that miss that criterion: "Distribution shift is irrelevant in LLMs.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Mismatch between training and inference distributions is a core generalization challenge. Core ideas: Inference prompts may differ from training prompts; Shift affects generalization; Better data coverage reduces risk. Common misconceptions: Distribution shift is irrelevant in LLMs.",
   },
 
   {
@@ -2237,7 +2237,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "Learning rate is irrelevant.", isCorrect: false },
     ],
     explanation:
-      'Learning rate is a critical hyperparameter, especially in low-rank adaptation. To reason through the choices, select the statements that match the criterion in the prompt: "It affects convergence speed."; "LoRA often uses higher learning rates."; "Too high values can destabilize training.". Do not select statements that miss that criterion: "Learning rate is irrelevant.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Learning rate is a critical hyperparameter, especially in low-rank adaptation. Core ideas: it affects convergence speed; LoRA often uses higher learning rates; Too high values can destabilize training. Common misconceptions: Learning rate is irrelevant.",
   },
 
   {
@@ -2253,6 +2253,6 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
       { text: "All stages have equal cost.", isCorrect: false },
     ],
     explanation:
-      'LLM training is staged. Pre-training is dominant in cost, while later stages refine usefulness and alignment. To reason through the choices, select the statements that match the criterion in the prompt: "Pre-training learns general representations."; "Fine-tuning aligns models to tasks."; "Preference tuning refines behavior.". Do not select statements that miss that criterion: "All stages have equal cost.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "LLM training is staged. Pre-training is dominant in cost, while later stages refine usefulness and alignment. Core ideas: Pre-training learns general representations; Fine-tuning aligns models to tasks; Preference tuning refines behavior. Common misconceptions: All stages have equal cost.",
   },
 ];

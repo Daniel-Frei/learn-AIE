@@ -35,7 +35,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "A language model estimates probabilities over token sequences. Generation emerges from repeatedly sampling or selecting the next token conditioned on the previously generated ones.",
+      "A language model estimates probabilities over token sequences. Generation emerges from repeatedly sampling or selecting the next token conditioned on the previously generated ones. Core ideas: it assigns probabilities to sequences of tokens; it models the likelihood of the next token given previous tokens; Its predictions are based on a learned statistical or neural representation; it can be used to generate text by repeatedly predicting next tokens.",
   },
 
   {
@@ -63,7 +63,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "LLMs are defined not only by being language models, but also by their scale in parameters, data, and compute. Transformers have become the dominant architecture enabling this scaling.",
+      "LLMs are defined not only by being language models, but also by their scale in parameters, data, and compute. Transformers have become the dominant architecture enabling this scaling. Core ideas: they typically contain billions or more parameters; they are trained on extremely large datasets measured in tokens; they require substantial computational resources for training; they are commonly implemented using Transformer architectures.",
   },
 
   {
@@ -88,7 +88,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Decoder-only models rely on masked self-attention and autoregressive prediction. By removing the encoder, they simplify the architecture while remaining powerful for generation tasks.",
+      "Decoder-only models rely on masked self-attention and autoregressive prediction. By removing the encoder, they simplify the architecture while remaining powerful for generation tasks. Core ideas: they use masked self-attention to prevent access to future tokens; they predict tokens autoregressively; they remove the encoder and cross-attention components; they are commonly used for text-to-text generation tasks.",
   },
 
   {
@@ -113,7 +113,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "MoE models increase total parameter count while activating only a subset per input. This allows higher capacity models without proportionally increasing computation at inference.",
+      "MoE models increase total parameter count while activating only a subset per input. This allows higher capacity models without proportionally increasing computation at inference. Core ideas: they consist of multiple expert subnetworks; A gating or routing mechanism selects which experts to use; they aim to increase model capacity without activating all parameters; they can reduce inference compute compared to dense models.",
   },
 
   {
@@ -140,7 +140,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Sparse MoEs activate only the top-K experts chosen by a router. This design keeps inference cost manageable while still benefiting from a large pool of parameters.",
+      "Sparse MoEs activate only the top-K experts chosen by a router. This design keeps inference cost manageable while still benefiting from a large pool of parameters. Core ideas: Only a subset of experts is activated for each input; The number of active experts is typically controlled by a hyperparameter K; they are designed to save compute during forward passes; they rely on a routing mechanism to select experts.",
   },
 
   {
@@ -168,7 +168,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      'FLOPs provide a hardware-agnostic way to estimate computational workload. Architectural choices like MoE versus dense layers directly affect FLOPs. To reason through the choices, select every statement because each one matches the criterion in the prompt: "FLOPs count floating point operations such as additions and multiplications."; "They are used as a proxy for computational cost."; "They depend on model architecture and input length."; "They are commonly used to compare dense and sparse models.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "FLOPs provide a hardware-agnostic way to estimate computational workload. Architectural choices like MoE versus dense layers directly affect FLOPs. Core ideas: FLOPs count floating point operations such as additions and multiplications; they are used as a proxy for computational cost; they depend on model architecture and input length; they are commonly used to compare dense and sparse models.",
   },
 
   {
@@ -196,7 +196,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "At each step, the model predicts a probability distribution for the next token. Generation proceeds autoregressively until an end-of-sequence token or another stopping rule is reached.",
+      "At each step, the model predicts a probability distribution for the next token. Generation proceeds autoregressively until an end-of-sequence token or another stopping rule is reached. Core ideas: The model outputs a probability distribution over the vocabulary; The distribution is typically produced using a softmax layer; Each decoding step conditions on previously generated tokens; The process is repeated until a stopping condition is met.",
   },
 
   {
@@ -224,7 +224,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Temperature modifies how sharply probabilities are distributed. Lower values favor high-probability tokens, while higher values encourage exploration and diversity.",
+      "Temperature modifies how sharply probabilities are distributed. Lower values favor high-probability tokens, while higher values encourage exploration and diversity. Core ideas: Temperature rescales logits before the softmax; Lower temperatures make the distribution more peaked; Higher temperatures make the distribution more uniform; Temperature affects diversity of generated text.",
   },
 
   {
@@ -251,7 +251,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "In-context learning leverages the prompt itself to steer behavior. The model’s parameters remain fixed, but performance can change dramatically based on prompt design.",
+      "In-context learning leverages the prompt itself to steer behavior. The model’s parameters remain fixed, but performance can change dramatically based on prompt design. Core ideas: it allows models to adapt behavior without changing weights; it relies on information provided in the prompt context; Few-shot learning provides example input–output pairs; Zero-shot learning uses instructions without examples.",
   },
 
   // ============================================================
@@ -277,12 +277,12 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They are primarily designed for autoregressive text generation.",
+        text: "They are primarily designed for left-to-right autoregressive text generation with causal masking.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Encoder-only models such as BERT focus on producing rich representations rather than generating text. Autoregressive generation is instead characteristic of decoder-only models.",
+      "Encoder-only models such as BERT focus on producing rich representations rather than generating text. Autoregressive generation is instead characteristic of decoder-only models. Core ideas: they are typically used for representation learning tasks; they output contextual embeddings for input tokens; they commonly use a special classification token for downstream tasks. Common misconceptions: they are primarily designed for left-to-right autoregressive text generation with causal masking.",
   },
 
   {
@@ -303,10 +303,13 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         text: "It can lead to locally optimal but globally suboptimal sequences.",
         isCorrect: true,
       },
-      { text: "It maximizes sequence diversity by design.", isCorrect: false },
+      {
+        text: "It maximizes sequence diversity by sampling from many lower-probability alternatives at each step.",
+        isCorrect: false,
+      },
     ],
     explanation:
-      "Greedy decoding is simple and fast but often produces repetitive or suboptimal text. Because it commits early, it may miss better sequences that require short-term sacrifices.",
+      "Greedy decoding is simple and fast but often produces repetitive or suboptimal text. Because it commits early, it may miss better sequences that require short-term sacrifices. Core ideas: it selects the token with the highest probability at each step; it is deterministic given fixed model outputs; it can lead to locally optimal but globally suboptimal sequences. Common misconceptions: it maximizes sequence diversity by sampling from many lower-probability alternatives at each step.",
   },
 
   {
@@ -328,12 +331,12 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It always produces highly diverse and creative outputs.",
+        text: "It produces highly diverse creative outputs by sampling broadly from the vocabulary.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Beam search tracks several hypotheses to improve likelihood, but it often reduces diversity. This makes it suitable for structured tasks rather than creative generation.",
+      "Beam search tracks several hypotheses to improve likelihood, but it often reduces diversity. This makes it suitable for structured tasks rather than creative generation. Core ideas: it keeps multiple candidate sequences during generation; it aims to approximate globally high-probability sequences; it is commonly used in tasks like machine translation. Common misconceptions: it produces highly diverse creative outputs by sampling broadly from the vocabulary.",
   },
 
   {
@@ -352,12 +355,12 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
       { text: "It introduces stochasticity into generation.", isCorrect: true },
       {
-        text: "It guarantees selection of the most probable token.",
+        text: "It selects the highest-probability token deterministically from the truncated set.",
         isCorrect: false,
       },
     ],
     explanation:
-      'Top-k sampling balances randomness and control by limiting the candidate set. The final choice remains stochastic within the selected top-k tokens. To reason through the choices, select the statements that match the criterion in the prompt: "It restricts sampling to the k most probable tokens."; "It prevents extremely low-probability tokens from being sampled."; "It introduces stochasticity into generation.". Do not select statements that miss that criterion: "It guarantees selection of the most probable token.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Top-k sampling balances randomness and control by limiting the candidate set. The final choice remains stochastic within the selected top-k tokens. Core ideas: it restricts sampling to the k most probable tokens; it prevents extremely low-probability tokens from being sampled; it introduces stochasticity into generation. Common misconceptions: it selects the highest-probability token deterministically from the truncated set.",
   },
 
   {
@@ -376,10 +379,13 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         text: "Auxiliary losses can encourage more balanced expert usage.",
         isCorrect: true,
       },
-      { text: "It is beneficial for model generalization.", isCorrect: false },
+      {
+        text: "It improves model generalization by concentrating training examples on a small expert subset.",
+        isCorrect: false,
+      },
     ],
     explanation:
-      'Routing collapse limits the benefits of MoE by underutilizing experts. Regularization techniques are used to encourage more uniform routing. To reason through the choices, select the statements that match the criterion in the prompt: "It occurs when only a few experts receive most inputs."; "It can reduce effective model capacity."; "Auxiliary losses can encourage more balanced expert usage.". Do not select statements that miss that criterion: "It is beneficial for model generalization.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Routing collapse limits the benefits of MoE by underutilizing experts. Regularization techniques are used to encourage more uniform routing. Core ideas: it occurs when only a few experts receive most inputs; it can reduce effective model capacity; Auxiliary losses can encourage more balanced expert usage. Common misconceptions: it improves model generalization by concentrating training examples on a small expert subset.",
   },
 
   {
@@ -399,12 +405,12 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
       { text: "The router is typically a learned function.", isCorrect: true },
       {
-        text: "Routing decisions are fixed and not trainable.",
+        text: "Routing decisions are fixed before training and reused for every token in every layer.",
         isCorrect: false,
       },
     ],
     explanation:
-      'MoE routing is dynamic and learned. Tokens may be sent to different experts depending on layer and context, increasing expressiveness. To reason through the choices, select the statements that match the criterion in the prompt: "Routing decisions can be made at the token level."; "Different layers may route tokens to different experts."; "The router is typically a learned function.". Do not select statements that miss that criterion: "Routing decisions are fixed and not trainable.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "MoE routing is dynamic and learned. Tokens may be sent to different experts depending on layer and context, increasing expressiveness. Core ideas: Routing decisions can be made at the token level; Different layers may route tokens to different experts; The router is typically a learned function. Common misconceptions: Routing decisions are fixed before training and reused for every token in every layer.",
   },
 
   {
@@ -422,10 +428,13 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       { text: "It filters invalid next-token choices.", isCorrect: true },
-      { text: "It requires retraining the language model.", isCorrect: false },
+      {
+        text: "It requires retraining the language model so invalid token sequences become impossible.",
+        isCorrect: false,
+      },
     ],
     explanation:
-      'Guided decoding operates at inference time by restricting token choices. It does not modify model weights but controls valid generation paths. To reason through the choices, select the statements that match the criterion in the prompt: "It constrains which tokens are allowed during generation."; "It can enforce structured output formats such as JSON."; "It filters invalid next-token choices.". Do not select statements that miss that criterion: "It requires retraining the language model.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Guided decoding operates at inference time by restricting token choices. It does not modify model weights but controls valid generation paths. Core ideas: it constrains which tokens are allowed during generation; it can enforce structured output formats such as JSON; it filters invalid next-token choices. Common misconceptions: it requires retraining the language model so invalid token sequences become impossible.",
   },
 
   {
@@ -443,7 +452,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Increasing it always improves model accuracy.",
+        text: "Increasing it improves model accuracy because more tokens automatically make retrieval easier.",
         isCorrect: false,
       },
       {
@@ -452,7 +461,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Longer context windows allow more information but increase cost and may suffer from issues like context rot. More context is not always better. To reason through the choices, select the statements that match the criterion in the prompt: "It refers to the number of tokens a model can process at once."; "It is also called context window or context size."; "It affects computational cost of self-attention.". Do not select statements that miss that criterion: "Increasing it always improves model accuracy.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Longer context windows allow more information but increase cost and may suffer from issues like context rot. More context is not always better. Core ideas: it refers to the number of tokens a model can process at once; it is also called context window or context size; it affects computational cost of self-attention. Common misconceptions: Increasing it improves model accuracy because more tokens automatically make retrieval easier.",
   },
 
   {
@@ -470,10 +479,13 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       { text: "It increases the number of generated tokens.", isCorrect: true },
-      { text: "It always reduces inference latency.", isCorrect: false },
+      {
+        text: "It reduces inference latency because the model emits shorter answers while reasoning.",
+        isCorrect: false,
+      },
     ],
     explanation:
-      'Chain-of-thought improves reasoning by making intermediate steps explicit, but it increases token count and therefore latency and cost. To reason through the choices, select the statements that match the criterion in the prompt: "It encourages models to produce intermediate reasoning steps."; "It often improves performance on reasoning tasks."; "It increases the number of generated tokens.". Do not select statements that miss that criterion: "It always reduces inference latency.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Chain-of-thought improves reasoning by making intermediate steps explicit, but it increases token count and therefore latency and cost. Core ideas: it encourages models to produce intermediate reasoning steps; it often improves performance on reasoning tasks; it increases the number of generated tokens. Common misconceptions: it reduces inference latency because the model emits shorter answers while reasoning.",
   },
 
   // ============================================================
@@ -492,13 +504,13 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "They rely exclusively on masked self-attention.",
+        text: "They rely primarily on decoder-style masked self-attention rather than encoder-decoder separation.",
         isCorrect: false,
       },
       { text: "They cannot be trained on text data.", isCorrect: false },
     ],
     explanation:
-      "Encoder–decoder models combine bidirectional encoding with autoregressive decoding. Masked self-attention is only used in the decoder, not the encoder.",
+      "Encoder–decoder models combine bidirectional encoding with autoregressive decoding. Masked self-attention is only used in the decoder, not the encoder. Core ideas: they use both an encoder and a decoder; they are well suited for sequence-to-sequence tasks. Common misconceptions: they rely primarily on decoder-style masked self-attention rather than encoder-decoder separation; they cannot be trained on text data.",
   },
 
   {
@@ -515,11 +527,14 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         text: "It adapts the candidate set size dynamically.",
         isCorrect: true,
       },
-      { text: "It always samples exactly p tokens.", isCorrect: false },
+      {
+        text: "It samples exactly p tokens from the vocabulary on every step rather than using p as a cumulative probability-mass threshold.",
+        isCorrect: false,
+      },
       { text: "It removes randomness from generation.", isCorrect: false },
     ],
     explanation:
-      'Top-p sampling selects a variable number of tokens based on cumulative probability. This allows flexibility while maintaining stochasticity. To reason through the choices, select the statements that match the criterion in the prompt: "It samples from the smallest set of tokens whose cumulative probability exceeds p."; "It adapts the candidate set size dynamically.". Do not select statements that miss that criterion: "It always samples exactly p tokens."; "It removes randomness from generation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Top-p sampling selects a variable number of tokens based on cumulative probability. This allows flexibility while maintaining stochasticity. Core ideas: it samples from the smallest set of tokens whose cumulative probability exceeds p; it adapts the candidate set size dynamically. Common misconceptions: it samples exactly p tokens from the vocabulary on every step rather than using p as a cumulative probability-mass threshold; it removes randomness from generation.",
   },
 
   {
@@ -533,11 +548,14 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       { text: "Its outputs sum to one.", isCorrect: true },
-      { text: "It is independent of temperature scaling.", isCorrect: false },
+      {
+        text: "It is independent of temperature scaling because logits are normalized after sampling decisions are made.",
+        isCorrect: false,
+      },
       { text: "It is only used during training.", isCorrect: false },
     ],
     explanation:
-      'Softmax normalizes logits into probabilities and is affected by temperature. It is used during both training and inference. To reason through the choices, select the statements that match the criterion in the prompt: "It converts logits into a probability distribution."; "Its outputs sum to one.". Do not select statements that miss that criterion: "It is independent of temperature scaling."; "It is only used during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Softmax normalizes logits into probabilities and is affected by temperature. It is used during both training and inference. Core ideas: it converts logits into a probability distribution; Its outputs sum to one. Common misconceptions: it is independent of temperature scaling because logits are normalized after sampling decisions are made; it is only used during training.",
   },
 
   {
@@ -551,11 +569,14 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       { text: "It can improve robustness of final answers.", isCorrect: true },
-      { text: "It requires modifying model weights.", isCorrect: false },
+      {
+        text: "It requires modifying model weights so the model learns a permanent reasoning ensemble.",
+        isCorrect: false,
+      },
       { text: "It reduces inference cost.", isCorrect: false },
     ],
     explanation:
-      'Self-consistency relies on multiple generations and majority voting. While it improves accuracy, it increases inference cost rather than reducing it. To reason through the choices, select the statements that match the criterion in the prompt: "It aggregates answers from multiple sampled reasoning paths."; "It can improve robustness of final answers.". Do not select statements that miss that criterion: "It requires modifying model weights."; "It reduces inference cost.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Self-consistency relies on multiple generations and majority voting. While it improves accuracy, it increases inference cost rather than reducing it. Core ideas: it aggregates answers from multiple sampled reasoning paths; it can improve robustness of final answers. Common misconceptions: it requires modifying model weights so the model learns a permanent reasoning ensemble; it reduces inference cost.",
   },
 
   {
@@ -573,11 +594,14 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         text: "It indicates how likely an expert is to be selected.",
         isCorrect: true,
       },
-      { text: "It is always uniform across experts.", isCorrect: false },
+      {
+        text: "It is uniform across experts because the router assigns equal probability to each expert.",
+        isCorrect: false,
+      },
       { text: "It is unrelated to training objectives.", isCorrect: false },
     ],
     explanation:
-      'Routing probabilities come from a learned router and can be uneven. Training objectives often include terms to encourage balanced expert usage. To reason through the choices, select the statements that match the criterion in the prompt: "It can be produced using a softmax over experts."; "It indicates how likely an expert is to be selected.". Do not select statements that miss that criterion: "It is always uniform across experts."; "It is unrelated to training objectives.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Routing probabilities come from a learned router and can be uneven. Training objectives often include terms to encourage balanced expert usage. Core ideas: it can be produced using a softmax over experts; it indicates how likely an expert is to be selected. Common misconceptions: it is uniform across experts because the router assigns equal probability to each expert; it is unrelated to training objectives.",
   },
 
   {
@@ -595,11 +619,14 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         text: "They increase total parameter count without proportional compute increase.",
         isCorrect: true,
       },
-      { text: "They always outperform dense models.", isCorrect: false },
+      {
+        text: "They outperform dense models under any dataset, routing, and optimization setup.",
+        isCorrect: false,
+      },
       { text: "They eliminate the need for large datasets.", isCorrect: false },
     ],
     explanation:
-      'MoE models can be more sample efficient due to higher capacity, but they still require large datasets and careful training to outperform dense models. To reason through the choices, select the statements that match the criterion in the prompt: "They can reach strong performance with fewer training steps."; "They increase total parameter count without proportional compute increase.". Do not select statements that miss that criterion: "They always outperform dense models."; "They eliminate the need for large datasets.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "MoE models can be more sample efficient due to higher capacity, but they still require large datasets and careful training to outperform dense models. Core ideas: they can reach strong performance with fewer training steps; they increase total parameter count without proportional compute increase. Common misconceptions: they outperform dense models under any dataset, routing, and optimization setup; they eliminate the need for large datasets.",
   },
 
   {
@@ -613,11 +640,14 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         isCorrect: true,
       },
       { text: "They can take any real value.", isCorrect: true },
-      { text: "They are already probabilities.", isCorrect: false },
+      {
+        text: "They are probabilities after normalization and therefore already sum to one before softmax.",
+        isCorrect: false,
+      },
       { text: "They must sum to one.", isCorrect: false },
     ],
     explanation:
-      'Logits are unnormalized scores. Softmax transforms them into probabilities that sum to one. To reason through the choices, select the statements that match the criterion in the prompt: "They are raw scores output by a model before softmax."; "They can take any real value.". Do not select statements that miss that criterion: "They are already probabilities."; "They must sum to one.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Logits are unnormalized scores. Softmax transforms them into probabilities that sum to one. Core ideas: they are raw scores output by a model before softmax; they can take any real value. Common misconceptions: they are probabilities after normalization and therefore already sum to one before softmax; they must sum to one.",
   },
 
   {
@@ -636,12 +666,12 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Hardware effects can introduce nondeterminism.",
+        text: "Hardware kernels behave identically across devices once sampling is disabled.",
         isCorrect: false,
       },
     ],
     explanation:
-      "While model computations are deterministic, sampling and hardware-level effects can introduce variability. Even temperature zero may not be perfectly deterministic in practice.",
+      "While model computations are deterministic, sampling and hardware-level effects can introduce variability. Even temperature zero may not be perfectly deterministic in practice. Core ideas: The Transformer computations are deterministic given fixed inputs; Sampling introduces nondeterminism. Common misconceptions: Temperature zero guarantees identical outputs in practice; Hardware kernels behave identically across devices once sampling is disabled.",
   },
 
   {
@@ -659,14 +689,17 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         text: "This is because the feed-forward block has many parameters.",
         isCorrect: true,
       },
-      { text: "Experts replace the attention mechanism.", isCorrect: false },
+      {
+        text: "Experts replace the attention mechanism itself rather than the feed-forward sublayer.",
+        isCorrect: false,
+      },
       {
         text: "Experts remove the need for normalization layers.",
         isCorrect: false,
       },
     ],
     explanation:
-      'The feed-forward network dominates parameter count, making it a natural location for MoE layers. Attention and normalization layers remain unchanged. To reason through the choices, select the statements that match the criterion in the prompt: "Experts are commonly placed in the feed-forward network block."; "This is because the feed-forward block has many parameters.". Do not select statements that miss that criterion: "Experts replace the attention mechanism."; "Experts remove the need for normalization layers.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "The feed-forward network dominates parameter count, making it a natural location for MoE layers. Attention and normalization layers remain unchanged. Core ideas: Experts are commonly placed in the feed-forward network block; this is because the feed-forward block has many parameters. Common misconceptions: Experts replace the attention mechanism itself rather than the feed-forward sublayer; Experts remove the need for normalization layers.",
   },
 
   // ============================================================
@@ -680,7 +713,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     prompt: "Which statement best defines a large language model (LLM)?",
     options: [
       {
-        text: "A small neural network trained on labeled data only.",
+        text: "A small supervised text classifier trained on labeled examples with limited scale and compute.",
         isCorrect: false,
       },
       {
@@ -691,7 +724,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "A rule-based text generation system.", isCorrect: false },
     ],
     explanation:
-      'LLMs are defined by scale in parameters, data, and compute, not merely by producing embeddings or using rules. To reason through the choices, select the statements that match the criterion in the prompt: "A language model with large parameter count, data, and compute.". Do not select statements that miss that criterion: "A small neural network trained on labeled data only."; "Any model that produces embeddings."; "A rule-based text generation system.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "LLMs are defined by scale in parameters, data, and compute, not merely by producing embeddings or using rules. Core idea: A language model with large parameter count, data, and compute. Common misconceptions: A small supervised text classifier trained on labeled examples with limited scale and compute; Any model that produces embeddings; A rule-based text generation system.",
   },
 
   {
@@ -701,7 +734,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     prompt: "Which statement correctly describes greedy decoding?",
     options: [
       {
-        text: "It samples from a truncated probability distribution.",
+        text: "It samples stochastically from a truncated probability distribution after applying top-k or top-p filtering.",
         isCorrect: false,
       },
       {
@@ -715,7 +748,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Greedy decoding always chooses the most probable token, making it simple but often suboptimal. To reason through the choices, select the statements that match the criterion in the prompt: "It selects the highest-probability token at each step.". Do not select statements that miss that criterion: "It samples from a truncated probability distribution."; "It maintains multiple candidate sequences."; "It requires auxiliary losses during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Greedy decoding always chooses the most probable token, making it simple but often suboptimal. Core idea: it selects the highest-probability token at each step. Common misconceptions: it samples stochastically from a truncated probability distribution after applying top-k or top-p filtering; it maintains multiple candidate sequences; it requires auxiliary losses during training.",
   },
 
   {
@@ -740,7 +773,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Sequence probabilities are products of token probabilities, which shrink with length. Length normalization is often added to counteract this bias. To reason through the choices, select the statements that match the criterion in the prompt: "Multiplying probabilities less than one reduces total sequence probability.". Do not select statements that miss that criterion: "Probabilities greater than one accumulate with length."; "Beam search ignores end-of-sequence tokens."; "Beam search uses temperature scaling by default.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Sequence probabilities are products of token probabilities, which shrink with length. Length normalization is often added to counteract this bias. Core idea: Multiplying probabilities less than one reduces total sequence probability. Common misconceptions: Probabilities greater than one accumulate with length; Beam search ignores end-of-sequence tokens; Beam search uses temperature scaling by default.",
   },
 
   {
@@ -758,7 +791,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "The model switches to dense computation.", isCorrect: false },
     ],
     explanation:
-      'Routing collapse occurs when the router repeatedly selects the same experts, reducing the benefit of having multiple experts. To reason through the choices, select the statements that match the criterion in the prompt: "Only a small subset of experts dominates routing decisions.". Do not select statements that miss that criterion: "All experts are used equally at all times."; "Routing becomes random and untrainable."; "The model switches to dense computation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Routing collapse occurs when the router repeatedly selects the same experts, reducing the benefit of having multiple experts. Core idea: Only a small subset of experts dominates routing decisions. Common misconceptions: All experts are used equally at all times; Routing becomes random and untrainable; The model switches to dense computation.",
   },
 
   {
@@ -779,7 +812,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It requires beam search to function.", isCorrect: false },
     ],
     explanation:
-      'Top-p sampling chooses from the smallest set of tokens whose cumulative probability exceeds p, allowing adaptive control of diversity. To reason through the choices, select the statements that match the criterion in the prompt: "It samples from a dynamically sized set based on cumulative probability.". Do not select statements that miss that criterion: "It samples only the single most likely token."; "It removes all randomness from decoding."; "It requires beam search to function.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Top-p sampling chooses from the smallest set of tokens whose cumulative probability exceeds p, allowing adaptive control of diversity. Core idea: it samples from a dynamically sized set based on cumulative probability. Common misconceptions: it samples only the single most likely token; it removes all randomness from decoding; it requires beam search to function.",
   },
 
   {
@@ -801,7 +834,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Auxiliary losses are added to guide routing behavior, helping prevent collapse and improving overall expert usage. To reason through the choices, select the statements that match the criterion in the prompt: "They encourage balanced expert utilization.". Do not select statements that miss that criterion: "They increase vocabulary size."; "They replace the main language modeling loss."; "They eliminate the need for routing networks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Auxiliary losses are added to guide routing behavior, helping prevent collapse and improving overall expert usage. Core idea: they encourage balanced expert utilization. Common misconceptions: they increase vocabulary size; they replace the main language modeling loss; they eliminate the need for routing networks.",
   },
 
   {
@@ -825,7 +858,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It only occurs in encoder-only models.", isCorrect: false },
     ],
     explanation:
-      'Context rot refers to degradation in effective information use as context length increases, especially in the presence of distractors. To reason through the choices, select the statements that match the criterion in the prompt: "Models may struggle to retrieve relevant information as context grows.". Do not select statements that miss that criterion: "Models improve retrieval accuracy with longer context."; "Context rot is caused by overfitting during training."; "It only occurs in encoder-only models.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Context rot refers to degradation in effective information use as context length increases, especially in the presence of distractors. Core idea: Models may struggle to retrieve relevant information as context grows. Common misconceptions: Models improve retrieval accuracy with longer context; Context rot is caused by overfitting during training; it only occurs in encoder-only models.",
   },
 
   {
@@ -846,7 +879,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "The model requires labeled demonstrations.", isCorrect: false },
     ],
     explanation:
-      'Zero-shot prompting relies solely on instructions and the model’s pre-trained knowledge, without providing example input–output pairs. To reason through the choices, select the statements that match the criterion in the prompt: "The model is given instructions without examples.". Do not select statements that miss that criterion: "The model is fine-tuned on new examples."; "The model updates its weights at inference time."; "The model requires labeled demonstrations.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Zero-shot prompting relies solely on instructions and the model’s pre-trained knowledge, without providing example input–output pairs. Core idea: The model is given instructions without examples. Common misconceptions: The model is fine-tuned on new examples; The model updates its weights at inference time; The model requires labeled demonstrations.",
   },
 
   // ============================================================
@@ -882,7 +915,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "KV caching reuses previously computed keys and values so that each new token only computes its own query, key, and value. This significantly reduces inference cost for long sequences.",
+      "KV caching reuses previously computed keys and values so that each new token only computes its own query, key, and value. This significantly reduces inference cost for long sequences. Core ideas: it stores key and value tensors from previous tokens; it avoids recomputing attention components for past tokens; it reduces redundant computation during autoregressive decoding; it is primarily used during inference rather than training.",
   },
 
   {
@@ -910,7 +943,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Self-attention requires interactions between tokens, which leads to quadratic scaling. KV caching mitigates recomputation but memory usage still grows with context length.",
+      "Self-attention requires interactions between tokens, which leads to quadratic scaling. KV caching mitigates recomputation but memory usage still grows with context length. Core ideas: Each new token must attend to all previous tokens; Attention computation scales quadratically with sequence length; Memory requirements grow with stored key–value tensors; Longer contexts increase both compute and memory pressure.",
   },
 
   {
@@ -935,7 +968,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "GQA groups queries to share keys and values, reducing memory and compute cost. It offers a compromise between full multi-head attention and the more extreme multi-query attention.",
+      "GQA groups queries to share keys and values, reducing memory and compute cost. It offers a compromise between full multi-head attention and the more extreme multi-query attention. Core ideas: Multiple query heads can share the same key and value heads; it reduces memory usage of the KV cache; it lies between multi-head attention and multi-query attention; it is commonly used in modern large language models.",
   },
 
   {
@@ -962,7 +995,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "MQA uses one shared key and value representation across all query heads. This dramatically reduces memory footprint, especially during inference, at the cost of reduced modeling flexibility.",
+      "MQA uses one shared key and value representation across all query heads. This dramatically reduces memory footprint, especially during inference, at the cost of reduced modeling flexibility. Core ideas: All query heads share a single set of key and value heads; it significantly reduces KV cache memory usage; it trades some expressiveness for efficiency; it can improve inference speed for long contexts.",
   },
 
   {
@@ -990,7 +1023,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "PagedAttention manages key/value cache memory dynamically using fixed-size blocks rather than one large contiguous maximum-length allocation per request. That design reduces wasted reserved memory and fragmentation, which helps serving systems scale to many concurrent requests.",
+      "PagedAttention manages key/value cache memory dynamically using fixed-size blocks rather than one large contiguous maximum-length allocation per request. That design reduces wasted reserved memory and fragmentation, which helps serving systems scale to many concurrent requests. Core ideas: it allocates KV cache memory in fixed-size blocks; it reduces internal and external memory fragmentation; it avoids reserving the full maximum context length upfront. Common misconceptions: it stores each request's entire KV cache as one contiguous allocation sized to the maximum context length.",
   },
 
   {
@@ -1018,7 +1051,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Latent attention stores compressed representations instead of full keys and values. This reduces memory footprint while still allowing reconstruction for attention computation.",
+      "Latent attention stores compressed representations instead of full keys and values. This reduces memory footprint while still allowing reconstruction for attention computation. Core ideas: Keys and values are stored in a lower-dimensional latent space; Compression reduces memory usage of the KV cache; Decompression matrices reconstruct keys and values when needed; Compression can be shared across attention heads.",
   },
 
   {
@@ -1045,7 +1078,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Speculative decoding accelerates generation by batching validation of draft tokens. The acceptance–rejection mechanism guarantees correctness with respect to the target model.",
+      "Speculative decoding accelerates generation by batching validation of draft tokens. The acceptance–rejection mechanism guarantees correctness with respect to the target model. Core ideas: A smaller draft model proposes multiple tokens; A larger target model validates the proposed tokens; Acceptance–rejection ensures correct target-model distribution; it aims to generate multiple tokens per target-model forward pass.",
   },
 
   {
@@ -1072,7 +1105,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "MTP extends training to predict multiple tokens per step. At inference, this allows faster generation by validating several tokens at once within the same model.",
+      "MTP extends training to predict multiple tokens per step. At inference, this allows faster generation by validating several tokens at once within the same model. Core ideas: The model predicts several future tokens at once; Multiple prediction heads are trained jointly; Draft and target predictions come from the same model; it modifies the training objective compared to next-token prediction.",
   },
 
   {
@@ -1094,7 +1127,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Inference optimizations focus on efficiency rather than changing model behavior. The goal is faster, cheaper generation with minimal or no quality loss.",
+      "Inference optimizations focus on efficiency rather than changing model behavior. The goal is faster, cheaper generation with minimal or no quality loss. Core ideas: they reduce latency of text generation; they lower memory usage during inference; they improve throughput when serving many users; they aim to preserve output quality while improving efficiency.",
   },
 
   // ============================================================
@@ -1125,7 +1158,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "During training, full sequences are processed simultaneously, so past keys and values are recomputed anyway. KV caching mainly targets inference-time efficiency.",
+      "During training, full sequences are processed simultaneously, so past keys and values are recomputed anyway. KV caching mainly targets inference-time efficiency. Core ideas: KV caching is generally unnecessary during teacher-forced training; Training typically processes full sequences in parallel; KV caching is mainly beneficial for autoregressive inference. Common misconceptions: KV caching is required for gradient computation.",
   },
 
   {
@@ -1153,7 +1186,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Routing uses contextual token embeddings produced by attention. Each layer learns its own routing behavior, enabling different experts to specialize per layer.",
+      "Routing uses contextual token embeddings produced by attention. Each layer learns its own routing behavior, enabling different experts to specialize per layer. Core ideas: Routing is typically computed after the self-attention sublayer; Routing decisions are based on token representations; Each Transformer layer usually has its own router. Common misconceptions: Routing is shared across all layers by default.",
   },
 
   {
@@ -1178,7 +1211,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It always eliminates rejection cases.", isCorrect: false },
     ],
     explanation:
-      "Speculative decoding batches validation to reduce expensive target-model calls. Rejections can still occur, but overall speedups are often substantial.",
+      "Speculative decoding batches validation to reduce expensive target-model calls. Rejections can still occur, but overall speedups are often substantial. Core ideas: it reduces the number of target-model forward passes; it benefits from the fact that inference is often memory-bound; it can generate several tokens per validation step. Common misconceptions: it always eliminates rejection cases.",
   },
 
   {
@@ -1202,7 +1235,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It guarantees incorrect answers.", isCorrect: false },
     ],
     explanation:
-      'Context rot describes reduced ability to leverage relevant information in long inputs. It increases difficulty but does not guarantee failure. To reason through the choices, select the statements that match the criterion in the prompt: "It refers to degradation in effective information use with long contexts."; "Distractor tokens can worsen retrieval performance."; "It can occur even if the answer is present in the context.". Do not select statements that miss that criterion: "It guarantees incorrect answers.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Context rot describes reduced ability to leverage relevant information in long inputs. It increases difficulty but does not guarantee failure. Core ideas: it refers to degradation in effective information use with long contexts; Distractor tokens can worsen retrieval performance; it can occur even if the answer is present in the context. Common misconceptions: it guarantees incorrect answers.",
   },
 
   {
@@ -1229,7 +1262,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Well-structured prompts guide the model more effectively. Each component helps clarify what the model should do and how it should respond. To reason through the choices, select the statements that match the criterion in the prompt: "Prompts can include context, instructions, input, and constraints."; "Different prompt components serve different functional roles."; "Constraints can restrict output format or content.". Do not select statements that miss that criterion: "Prompt structure has no impact on model behavior.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Well-structured prompts guide the model more effectively. Each component helps clarify what the model should do and how it should respond. Core ideas: Prompts can include context, instructions, input, and constraints; Different prompt components serve different functional roles; Constraints can restrict output format or content. Common misconceptions: Prompt structure has no impact on model behavior.",
   },
 
   {
@@ -1250,7 +1283,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It updates the model’s parameters.", isCorrect: false },
     ],
     explanation:
-      'Few-shot prompting conditions behavior through examples rather than weight updates. The trade-off is increased token usage and latency. To reason through the choices, select the statements that match the criterion in the prompt: "It includes example input–output pairs in the prompt."; "It often improves task performance."; "It increases context length and inference cost.". Do not select statements that miss that criterion: "It updates the model’s parameters.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Few-shot prompting conditions behavior through examples rather than weight updates. The trade-off is increased token usage and latency. Core ideas: it includes example input–output pairs in the prompt; it often improves task performance; it increases context length and inference cost. Common misconceptions: it updates the model’s parameters.",
   },
 
   {
@@ -1272,7 +1305,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It guarantees logically correct reasoning.", isCorrect: false },
     ],
     explanation:
-      'Chain-of-thought improves transparency and debugging. However, exposed reasoning can still be flawed or misleading. To reason through the choices, select the statements that match the criterion in the prompt: "It exposes intermediate reasoning steps as tokens."; "It can help identify reasoning errors."; "It makes debugging easier compared to opaque outputs.". Do not select statements that miss that criterion: "It guarantees logically correct reasoning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Chain-of-thought improves transparency and debugging. However, exposed reasoning can still be flawed or misleading. Core ideas: it exposes intermediate reasoning steps as tokens; it can help identify reasoning errors; it makes debugging easier compared to opaque outputs. Common misconceptions: it guarantees logically correct reasoning.",
   },
 
   {
@@ -1299,7 +1332,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Even with deterministic decoding strategies, hardware and numerical effects can introduce variability. Absolute determinism is difficult to guarantee. To reason through the choices, select the statements that match the criterion in the prompt: "Sampling introduces randomness into token selection."; "Floating-point operations can introduce nondeterminism."; "Parallel hardware execution can affect numerical results.". Do not select statements that miss that criterion: "Determinism is guaranteed at temperature zero in practice.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Even with deterministic decoding strategies, hardware and numerical effects can introduce variability. Absolute determinism is difficult to guarantee. Core ideas: Sampling introduces randomness into token selection; Floating-point operations can introduce nondeterminism; Parallel hardware execution can affect numerical results. Common misconceptions: Determinism is guaranteed at temperature zero in practice.",
   },
 
   {
@@ -1317,7 +1350,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Most inference optimizations operate on execution rather than learning. They are essential for practical deployment of large models. To reason through the choices, select the statements that match the criterion in the prompt: "They do not require retraining the model."; "They can be combined with each other."; "They are crucial for large-scale deployment.". Do not select statements that miss that criterion: "They fundamentally change the model architecture.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Most inference optimizations operate on execution rather than learning. They are essential for practical deployment of large models. Core ideas: they do not require retraining the model; they can be combined with each other; they are crucial for large-scale deployment. Common misconceptions: they fundamentally change the model architecture.",
   },
 
   // ============================================================
@@ -1342,7 +1375,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Fragmentation is irrelevant for KV caching.", isCorrect: false },
     ],
     explanation:
-      'Memory fragmentation wastes space and reduces efficiency. Managing fragmentation is critical for scalable inference systems. To reason through the choices, select the statements that match the criterion in the prompt: "Internal fragmentation refers to unused reserved memory."; "External fragmentation refers to scattered free memory blocks.". Do not select statements that miss that criterion: "Fragmentation improves cache locality."; "Fragmentation is irrelevant for KV caching.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Memory fragmentation wastes space and reduces efficiency. Managing fragmentation is critical for scalable inference systems. Core ideas: Internal fragmentation refers to unused reserved memory; External fragmentation refers to scattered free memory blocks. Common misconceptions: Fragmentation improves cache locality; Fragmentation is irrelevant for KV caching.",
   },
 
   {
@@ -1364,7 +1397,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Acceptance–rejection ensures correctness while allowing speedups. Rejections trigger corrective sampling to preserve the target distribution. To reason through the choices, select the statements that match the criterion in the prompt: "Accepted tokens match the target model distribution."; "Rejected tokens require resampling.". Do not select statements that miss that criterion: "All draft tokens are always accepted."; "Acceptance eliminates the need for validation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Acceptance–rejection ensures correctness while allowing speedups. Rejections trigger corrective sampling to preserve the target distribution. Core ideas: Accepted tokens match the target model distribution; Rejected tokens require resampling. Common misconceptions: All draft tokens are always accepted; Acceptance eliminates the need for validation.",
   },
 
   {
@@ -1392,7 +1425,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Multi-token prediction changes the training objective but does not remove autoregressive structure or attention mechanisms. To reason through the choices, select the statements that match the criterion in the prompt: "They differ from standard next-token prediction objectives."; "They require predicting future tokens jointly.". Do not select statements that miss that criterion: "They eliminate the need for autoregressive decoding."; "They remove the need for attention mechanisms.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Multi-token prediction changes the training objective but does not remove autoregressive structure or attention mechanisms. Core ideas: they differ from standard next-token prediction objectives; they require predicting future tokens jointly. Common misconceptions: they eliminate the need for autoregressive decoding; they remove the need for attention mechanisms.",
   },
 
   {
@@ -1410,7 +1443,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Both remove randomness from generation.", isCorrect: false },
     ],
     explanation:
-      'Top-k and top-p sampling introduce controlled randomness. They reduce unlikely tokens but remain stochastic. To reason through the choices, select the statements that match the criterion in the prompt: "Both restrict the set of candidate tokens."; "Both aim to balance diversity and coherence.". Do not select statements that miss that criterion: "Both guarantee identical outputs across runs."; "Both remove randomness from generation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Top-k and top-p sampling introduce controlled randomness. They reduce unlikely tokens but remain stochastic. Core ideas: Both restrict the set of candidate tokens; Both aim to balance diversity and coherence. Common misconceptions: Both guarantee identical outputs across runs; Both remove randomness from generation.",
   },
 
   {
@@ -1428,7 +1461,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Probabilities can exceed one.", isCorrect: false },
     ],
     explanation:
-      'Logits can take any real value and are converted into probabilities via softmax. Probabilities are bounded between zero and one. To reason through the choices, select the statements that match the criterion in the prompt: "Logits are unnormalized scores."; "Probabilities are obtained after applying softmax.". Do not select statements that miss that criterion: "Logits must be positive."; "Probabilities can exceed one.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Logits can take any real value and are converted into probabilities via softmax. Probabilities are bounded between zero and one. Core ideas: Logits are unnormalized scores; Probabilities are obtained after applying softmax. Common misconceptions: Logits must be positive; Probabilities can exceed one.",
   },
 
   {
@@ -1449,7 +1482,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Temperature is only used during training.", isCorrect: false },
     ],
     explanation:
-      'Temperature rescales logits at inference time. It affects sampling behavior without altering learned parameters. To reason through the choices, select the statements that match the criterion in the prompt: "Lower temperature sharpens the probability distribution."; "Higher temperature flattens the distribution.". Do not select statements that miss that criterion: "Temperature changes model weights."; "Temperature is only used during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Temperature rescales logits at inference time. It affects sampling behavior without altering learned parameters. Core ideas: Lower temperature sharpens the probability distribution; Higher temperature flattens the distribution. Common misconceptions: Temperature changes model weights; Temperature is only used during training.",
   },
 
   {
@@ -1473,7 +1506,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      'MoE models scale capacity by adding experts while keeping active computation limited. Routing determines which parameters are used. To reason through the choices, select the statements that match the criterion in the prompt: "MoE increases total parameter count."; "Active parameters per token can remain constant.". Do not select statements that miss that criterion: "All parameters are used in every forward pass."; "Capacity scaling removes the need for routing.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "MoE models scale capacity by adding experts while keeping active computation limited. Routing determines which parameters are used. Core ideas: MoE increases total parameter count; Active parameters per token can remain constant. Common misconceptions: All parameters are used in every forward pass; Capacity scaling removes the need for routing.",
   },
 
   {
@@ -1494,7 +1527,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Batching eliminates all bottlenecks.", isCorrect: false },
     ],
     explanation:
-      'Memory bandwidth and cache access are major bottlenecks in inference. Many optimizations target reducing memory movement. To reason through the choices, select the statements that match the criterion in the prompt: "Inference is often memory-bound rather than compute-bound."; "KV cache access can dominate latency.". Do not select statements that miss that criterion: "More parameters always mean faster inference."; "Batching eliminates all bottlenecks.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Memory bandwidth and cache access are major bottlenecks in inference. Many optimizations target reducing memory movement. Core ideas: Inference is often memory-bound rather than compute-bound; KV cache access can dominate latency. Common misconceptions: More parameters always mean faster inference; Batching eliminates all bottlenecks.",
   },
 
   {
@@ -1515,7 +1548,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Prompting replaces model training entirely.", isCorrect: false },
     ],
     explanation:
-      'Prompting is powerful but imperfect. It guides behavior probabilistically rather than enforcing hard guarantees. To reason through the choices, select the statements that match the criterion in the prompt: "Behavior can be modified without fine-tuning."; "Instructions influence generation style.". Do not select statements that miss that criterion: "Prompting guarantees perfect adherence to constraints."; "Prompting replaces model training entirely.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Prompting is powerful but imperfect. It guides behavior probabilistically rather than enforcing hard guarantees. Core ideas: Behavior can be modified without fine-tuning; Instructions influence generation style. Common misconceptions: Prompting guarantees perfect adherence to constraints; Prompting replaces model training entirely.",
   },
 
   // ============================================================
@@ -1537,7 +1570,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It changes the Transformer architecture.", isCorrect: false },
     ],
     explanation:
-      'KV caching prevents redundant computation by reusing previously computed attention components for earlier tokens. To reason through the choices, select the statements that match the criterion in the prompt: "It avoids recomputing keys and values for past tokens.". Do not select statements that miss that criterion: "It removes the need for attention entirely."; "It reduces vocabulary size."; "It changes the Transformer architecture.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "KV caching prevents redundant computation by reusing previously computed attention components for earlier tokens. Core idea: it avoids recomputing keys and values for past tokens. Common misconceptions: it removes the need for attention entirely; it reduces vocabulary size; it changes the Transformer architecture.",
   },
 
   {
@@ -1555,7 +1588,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Attention is replaced by routing.", isCorrect: false },
     ],
     explanation:
-      'GQA reduces memory by allowing multiple queries to share keys and values while preserving more flexibility than MQA. To reason through the choices, select the statements that match the criterion in the prompt: "Queries are grouped to share key and value heads.". Do not select statements that miss that criterion: "Each query has its own key and value heads."; "Attention is computed without softmax."; "Attention is replaced by routing.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "GQA reduces memory by allowing multiple queries to share keys and values while preserving more flexibility than MQA. Core idea: Queries are grouped to share key and value heads. Common misconceptions: Each query has its own key and value heads; Attention is computed without softmax; Attention is replaced by routing.",
   },
 
   {
@@ -1570,7 +1603,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Model parameters decrease.", isCorrect: false },
     ],
     explanation:
-      'Routing collapse undermines MoE benefits by underutilizing experts. Auxiliary losses help mitigate this issue. To reason through the choices, select the statements that match the criterion in the prompt: "Only a few experts dominate usage.". Do not select statements that miss that criterion: "Experts become too diverse."; "Routing becomes deterministic."; "Model parameters decrease.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Routing collapse undermines MoE benefits by underutilizing experts. Auxiliary losses help mitigate this issue. Core idea: Only a few experts dominate usage. Common misconceptions: Experts become too diverse; Routing becomes deterministic; Model parameters decrease.",
   },
 
   {
@@ -1589,7 +1622,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Acceptance removes randomness.", isCorrect: false },
     ],
     explanation:
-      'Acceptance ensures that generated tokens match the target model’s distribution, preserving correctness while accelerating decoding. To reason through the choices, select the statements that match the criterion in the prompt: "Tokens are accepted when draft probability is consistent with target probability.". Do not select statements that miss that criterion: "Draft tokens are always accepted."; "Acceptance ignores the target model."; "Acceptance removes randomness.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Acceptance ensures that generated tokens match the target model’s distribution, preserving correctness while accelerating decoding. Core idea: Tokens are accepted when draft probability is consistent with target probability. Common misconceptions: Draft tokens are always accepted; Acceptance ignores the target model; Acceptance removes randomness.",
   },
 
   {
@@ -1607,7 +1640,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "The batch size during training.", isCorrect: false },
     ],
     explanation:
-      'Context length defines how many tokens a model can attend to at once. It directly affects attention cost and memory usage. To reason through the choices, select the statements that match the criterion in the prompt: "The maximum number of tokens processed in a single pass.". Do not select statements that miss that criterion: "The number of parameters in the model."; "The number of experts in an MoE model."; "The batch size during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Context length defines how many tokens a model can attend to at once. It directly affects attention cost and memory usage. Core idea: The maximum number of tokens processed in a single pass. Common misconceptions: The number of parameters in the model; The number of experts in an MoE model; The batch size during training.",
   },
 
   {
@@ -1626,7 +1659,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Temperature scaling causes collapse.", isCorrect: false },
     ],
     explanation:
-      'Sequence probability is the product of conditional probabilities. Multiplying values below one causes the total probability to shrink with length. To reason through the choices, select the statements that match the criterion in the prompt: "Joint probability multiplies many values less than one.". Do not select statements that miss that criterion: "Probabilities increase with each token."; "Softmax enforces decay."; "Temperature scaling causes collapse.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Sequence probability is the product of conditional probabilities. Multiplying values below one causes the total probability to shrink with length. Core idea: Joint probability multiplies many values less than one. Common misconceptions: Probabilities increase with each token; Softmax enforces decay; Temperature scaling causes collapse.",
   },
 
   {
@@ -1645,7 +1678,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Incompatibility with sampling.", isCorrect: false },
     ],
     explanation:
-      'Chain-of-thought improves reasoning and interpretability but increases token count, latency, and cost. To reason through the choices, select the statements that match the criterion in the prompt: "Improved reasoning at the cost of more tokens.". Do not select statements that miss that criterion: "Lower accuracy for reasoning tasks."; "Reduced interpretability."; "Incompatibility with sampling.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Chain-of-thought improves reasoning and interpretability but increases token count, latency, and cost. Core idea: Improved reasoning at the cost of more tokens. Common misconceptions: Lower accuracy for reasoning tasks; Reduced interpretability; Incompatibility with sampling.",
   },
 
   {
@@ -1664,7 +1697,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "To remove attention mechanisms.", isCorrect: false },
     ],
     explanation:
-      'Inference-time approximations aim to make generation faster and cheaper while preserving output quality as much as possible. To reason through the choices, select the statements that match the criterion in the prompt: "To reduce cost and latency with minimal quality loss.". Do not select statements that miss that criterion: "To retrain the model faster."; "To change the training objective."; "To remove attention mechanisms.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Inference-time approximations aim to make generation faster and cheaper while preserving output quality as much as possible. Core idea: To reduce cost and latency with minimal quality loss. Common misconceptions: To retrain the model faster; To change the training objective; To remove attention mechanisms.",
   },
 
   // ============================================================
@@ -1697,7 +1730,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Autoregressive generation predicts tokens sequentially. At each step, the model conditions on all previously generated tokens until a stopping condition is reached.",
+      "Autoregressive generation predicts tokens sequentially. At each step, the model conditions on all previously generated tokens until a stopping condition is reached. Core ideas: Tokens are generated one at a time; Each token is conditioned on previously generated tokens; Generation stops based on a stopping criterion such as an end-of-sequence token; The same model is reused at every decoding step.",
   },
 
   {
@@ -1722,7 +1755,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "Greedy decoding commits to locally optimal choices that may block better long-term sequences. This often results in repetitive or less coherent outputs.",
+      "Greedy decoding commits to locally optimal choices that may block better long-term sequences. This often results in repetitive or less coherent outputs. Core ideas: it optimizes local token probability rather than global sequence probability; Early token choices can restrict later high-probability continuations; it cannot revise earlier decisions; it often leads to repetitive or generic outputs.",
   },
 
   {
@@ -1750,7 +1783,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Beam search prioritizes likelihood and consistency, which reduces diversity. This makes it less suitable for creative or conversational tasks. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It favors high-likelihood but low-diversity outputs."; "It tends to converge to similar or generic sequences."; "It optimizes likelihood rather than creativity."; "It increases computational cost relative to sampling.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Beam search prioritizes likelihood and consistency, which reduces diversity. This makes it less suitable for creative or conversational tasks. Core ideas: it favors high-likelihood but low-diversity outputs; it tends to converge to similar or generic sequences; it optimizes likelihood rather than creativity; it increases computational cost relative to sampling.",
   },
 
   {
@@ -1774,7 +1807,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Sampling draws tokens from the model’s predicted distribution. This allows diversity and creativity while remaining probabilistically grounded. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Tokens are sampled according to a probability distribution."; "Higher-probability tokens are more likely to be selected."; "Low-probability tokens can still be sampled."; "Sampling introduces nondeterminism into generation.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Sampling draws tokens from the model’s predicted distribution. This allows diversity and creativity while remaining probabilistically grounded. Core ideas: Tokens are sampled according to a probability distribution; Higher-probability tokens are more likely to be selected; Low-probability tokens can still be sampled; Sampling introduces nondeterminism into generation.",
   },
 
   {
@@ -1802,7 +1835,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Temperature modifies the sharpness of the probability distribution. It affects randomness at inference time without altering learned parameters. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Temperature rescales logits before normalization."; "Lower temperature increases confidence in top tokens."; "Higher temperature increases entropy of the distribution."; "Temperature influences sampling behavior without changing model weights.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Temperature modifies the sharpness of the probability distribution. It affects randomness at inference time without altering learned parameters. Core ideas: Temperature rescales logits before normalization; Lower temperature increases confidence in top tokens; Higher temperature increases entropy of the distribution; Temperature influences sampling behavior without changing model weights.",
   },
 
   {
@@ -1827,7 +1860,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      'MoE models increase capacity by adding experts while activating only a subset. This allows very large models with controlled inference cost. To reason through the choices, select every statement because each one matches the criterion in the prompt: "To increase model capacity without linearly increasing compute."; "To activate only a subset of parameters per token."; "To scale to very large parameter counts."; "To reduce inference cost compared to dense models of equal size.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "MoE models increase capacity by adding experts while activating only a subset. This allows very large models with controlled inference cost. Core ideas: To increase model capacity without linearly increasing compute; To activate only a subset of parameters per token; To scale to very large parameter counts; To reduce inference cost compared to dense models of equal size.",
   },
 
   {
@@ -1855,7 +1888,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      "The feed-forward network is parameter-heavy and computationally expensive. Replacing it with MoE layers yields large capacity gains with minimal architectural disruption.",
+      "The feed-forward network is parameter-heavy and computationally expensive. Replacing it with MoE layers yields large capacity gains with minimal architectural disruption. Core ideas: it contains a large fraction of the model’s parameters; it dominates FLOPs compared to attention layers; Replacing it yields significant capacity gains; it preserves the structure of attention mechanisms.",
   },
 
   {
@@ -1880,7 +1913,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Routing per token allows the model to dynamically select experts based on contextual needs, improving efficiency and specialization. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Different tokens may require different expert specializations."; "Token-level routing increases expressiveness."; "Routing can adapt dynamically to context."; "It allows fine-grained allocation of compute.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Routing per token allows the model to dynamically select experts based on contextual needs, improving efficiency and specialization. Core ideas: Different tokens may require different expert specializations; Token-level routing increases expressiveness; Routing can adapt dynamically to context; it allows fine-grained allocation of compute.",
   },
 
   // ============================================================
@@ -1908,7 +1941,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It always produces deterministic output.", isCorrect: false },
     ],
     explanation:
-      'Top-k sampling restricts candidate tokens but still samples randomly within that subset, maintaining diversity. To reason through the choices, select the statements that match the criterion in the prompt: "It limits sampling to the k most likely tokens."; "It prevents extremely unlikely tokens from being selected."; "It preserves stochasticity within the selected set.". Do not select statements that miss that criterion: "It always produces deterministic output.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Top-k sampling restricts candidate tokens but still samples randomly within that subset, maintaining diversity. Core ideas: it limits sampling to the k most likely tokens; it prevents extremely unlikely tokens from being selected; it preserves stochasticity within the selected set. Common misconceptions: it always produces deterministic output.",
   },
 
   {
@@ -1930,7 +1963,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Auxiliary losses supplement the main objective to promote balanced expert usage. They help prevent collapse without replacing the core task loss. To reason through the choices, select the statements that match the criterion in the prompt: "They penalize uneven expert utilization."; "They encourage more uniform routing distributions."; "They mitigate routing collapse.". Do not select statements that miss that criterion: "They replace the main language modeling loss.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Auxiliary losses supplement the main objective to promote balanced expert usage. They help prevent collapse without replacing the core task loss. Core ideas: they penalize uneven expert utilization; they encourage more uniform routing distributions; they mitigate routing collapse. Common misconceptions: they replace the main language modeling loss.",
   },
 
   {
@@ -1948,7 +1981,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It requires retraining the model.", isCorrect: false },
     ],
     explanation:
-      'Guided decoding constrains token selection at inference time. It does not modify model weights. To reason through the choices, select the statements that match the criterion in the prompt: "It restricts the set of valid next tokens."; "It can enforce structured output constraints."; "It operates during inference.". Do not select statements that miss that criterion: "It requires retraining the model.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Guided decoding constrains token selection at inference time. It does not modify model weights. Core ideas: it restricts the set of valid next tokens; it can enforce structured output constraints; it operates during inference. Common misconceptions: it requires retraining the model.",
   },
 
   {
@@ -1972,7 +2005,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Longer context always improves performance.", isCorrect: false },
     ],
     explanation:
-      'While longer contexts allow more information, they also increase cost and can harm effective retrieval due to context rot. To reason through the choices, select the statements that match the criterion in the prompt: "Longer context increases attention computation cost."; "Very long contexts can degrade retrieval accuracy."; "Context rot can occur even when answers are present.". Do not select statements that miss that criterion: "Longer context always improves performance.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "While longer contexts allow more information, they also increase cost and can harm effective retrieval due to context rot. Core ideas: Longer context increases attention computation cost; Very long contexts can degrade retrieval accuracy; Context rot can occur even when answers are present. Common misconceptions: Longer context always improves performance.",
   },
 
   {
@@ -1996,7 +2029,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It removes the need for sampling.", isCorrect: false },
     ],
     explanation:
-      'Speculative decoding accelerates generation while preserving correctness. Sampling and validation are still required. To reason through the choices, select the statements that match the criterion in the prompt: "It uses a smaller draft model to propose tokens."; "It validates draft tokens using a larger target model."; "It preserves the target model’s output distribution.". Do not select statements that miss that criterion: "It removes the need for sampling.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Speculative decoding accelerates generation while preserving correctness. Sampling and validation are still required. Core ideas: it uses a smaller draft model to propose tokens; it validates draft tokens using a larger target model; it preserves the target model’s output distribution. Common misconceptions: it removes the need for sampling.",
   },
 
   {
@@ -2014,7 +2047,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It eliminates autoregressive decoding.", isCorrect: false },
     ],
     explanation:
-      'Multi-token prediction accelerates inference by predicting several tokens at once, but decoding remains fundamentally autoregressive. To reason through the choices, select the statements that match the criterion in the prompt: "The model predicts multiple future tokens per step."; "It changes the training objective."; "It can reduce inference latency.". Do not select statements that miss that criterion: "It eliminates autoregressive decoding.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Multi-token prediction accelerates inference by predicting several tokens at once, but decoding remains fundamentally autoregressive. Core ideas: The model predicts multiple future tokens per step; it changes the training objective; it can reduce inference latency. Common misconceptions: it eliminates autoregressive decoding.",
   },
 
   {
@@ -2032,7 +2065,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It enforces logical correctness.", isCorrect: false },
     ],
     explanation:
-      'Chain-of-thought improves reasoning but does not guarantee correctness. It also increases cost due to longer outputs. To reason through the choices, select the statements that match the criterion in the prompt: "It encourages explicit intermediate reasoning."; "It often improves reasoning task accuracy."; "It increases inference token count.". Do not select statements that miss that criterion: "It enforces logical correctness.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Chain-of-thought improves reasoning but does not guarantee correctness. It also increases cost due to longer outputs. Core ideas: it encourages explicit intermediate reasoning; it often improves reasoning task accuracy; it increases inference token count. Common misconceptions: it enforces logical correctness.",
   },
 
   {
@@ -2047,7 +2080,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It reduces computational cost.", isCorrect: false },
     ],
     explanation:
-      'Self-consistency trades additional computation for improved robustness by aggregating multiple sampled solutions. To reason through the choices, select the statements that match the criterion in the prompt: "It samples multiple reasoning paths."; "It aggregates answers via majority voting."; "It can improve robustness of final answers.". Do not select statements that miss that criterion: "It reduces computational cost.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Self-consistency trades additional computation for improved robustness by aggregating multiple sampled solutions. Core ideas: it samples multiple reasoning paths; it aggregates answers via majority voting; it can improve robustness of final answers. Common misconceptions: it reduces computational cost.",
   },
 
   // ============================================================
@@ -2072,7 +2105,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It requires gradient updates.", isCorrect: false },
     ],
     explanation:
-      'In-context learning steers behavior through the prompt alone. Model parameters remain unchanged. To reason through the choices, select the statements that match the criterion in the prompt: "It adapts behavior without updating model weights."; "It relies on information provided in the prompt.". Do not select statements that miss that criterion: "It permanently changes the model."; "It requires gradient updates.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "In-context learning steers behavior through the prompt alone. Model parameters remain unchanged. Core ideas: it adapts behavior without updating model weights; it relies on information provided in the prompt. Common misconceptions: it permanently changes the model; it requires gradient updates.",
   },
 
   {
@@ -2090,7 +2123,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It fine-tunes the model.", isCorrect: false },
     ],
     explanation:
-      'Zero-shot prompting depends on clear instructions and pretrained knowledge, without examples or weight updates. To reason through the choices, select the statements that match the criterion in the prompt: "It uses instructions without examples."; "It relies on the model’s pretrained knowledge.". Do not select statements that miss that criterion: "It requires labeled demonstrations."; "It fine-tunes the model.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Zero-shot prompting depends on clear instructions and pretrained knowledge, without examples or weight updates. Core ideas: it uses instructions without examples; it relies on the model’s pretrained knowledge. Common misconceptions: it requires labeled demonstrations; it fine-tunes the model.",
   },
 
   {
@@ -2105,7 +2138,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It removes the need for instructions.", isCorrect: false },
     ],
     explanation:
-      'Few-shot examples help alignment but consume context and do not guarantee generalization beyond the examples. To reason through the choices, select the statements that match the criterion in the prompt: "It can improve task alignment."; "It increases context length and cost.". Do not select statements that miss that criterion: "It guarantees generalization."; "It removes the need for instructions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Few-shot examples help alignment but consume context and do not guarantee generalization beyond the examples. Core ideas: it can improve task alignment; it increases context length and cost. Common misconceptions: it guarantees generalization; it removes the need for instructions.",
   },
 
   {
@@ -2123,7 +2156,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "They only matter during training.", isCorrect: false },
     ],
     explanation:
-      'Context windows constrain attention scope and heavily influence inference cost and feasibility. To reason through the choices, select the statements that match the criterion in the prompt: "They limit how many tokens can be attended to."; "They affect memory and compute usage.". Do not select statements that miss that criterion: "They are unrelated to attention."; "They only matter during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Context windows constrain attention scope and heavily influence inference cost and feasibility. Core ideas: they limit how many tokens can be attended to; they affect memory and compute usage. Common misconceptions: they are unrelated to attention; they only matter during training.",
   },
 
   {
@@ -2138,7 +2171,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It is only used in encoder-only models.", isCorrect: false },
     ],
     explanation:
-      'KV cache memory scales with sequence length and can dominate inference costs, especially for long contexts. To reason through the choices, select the statements that match the criterion in the prompt: "It grows with sequence length."; "It can become a bottleneck during inference.". Do not select statements that miss that criterion: "It is constant regardless of context."; "It is only used in encoder-only models.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "KV cache memory scales with sequence length and can dominate inference costs, especially for long contexts. Core ideas: it grows with sequence length; it can become a bottleneck during inference. Common misconceptions: it is constant regardless of context; it is only used in encoder-only models.",
   },
 
   {
@@ -2156,7 +2189,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Determinism is guaranteed on GPUs.", isCorrect: false },
     ],
     explanation:
-      'The model itself is deterministic, but sampling and numerical effects introduce nondeterminism during inference. To reason through the choices, select the statements that match the criterion in the prompt: "Sampling introduces randomness."; "Floating-point arithmetic can cause variation.". Do not select statements that miss that criterion: "Transformers are probabilistic by design."; "Determinism is guaranteed on GPUs.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "The model itself is deterministic, but sampling and numerical effects introduce nondeterminism during inference. Core ideas: Sampling introduces randomness; Floating-point arithmetic can cause variation. Common misconceptions: Transformers are probabilistic by design; Determinism is guaranteed on GPUs.",
   },
 
   {
@@ -2171,7 +2204,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Changing model semantics.", isCorrect: false },
     ],
     explanation:
-      'Inference optimizations aim to improve speed and scalability without changing what the model computes. To reason through the choices, select the statements that match the criterion in the prompt: "Reducing latency."; "Improving throughput.". Do not select statements that miss that criterion: "Increasing training data."; "Changing model semantics.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Inference optimizations aim to improve speed and scalability without changing what the model computes. Core ideas: Reducing latency; Improving throughput. Common misconceptions: Increasing training data; Changing model semantics.",
   },
 
   {
@@ -2187,7 +2220,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "They eliminate attention computation.", isCorrect: false },
     ],
     explanation:
-      'Approximate techniques reduce cost while aiming to maintain similar output distributions. They do not remove core mechanisms like attention. To reason through the choices, select the statements that match the criterion in the prompt: "They trade exactness for speed."; "They aim to preserve output quality.". Do not select statements that miss that criterion: "They always change model predictions."; "They eliminate attention computation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Approximate techniques reduce cost while aiming to maintain similar output distributions. They do not remove core mechanisms like attention. Core ideas: they trade exactness for speed; they aim to preserve output quality. Common misconceptions: they always change model predictions; they eliminate attention computation.",
   },
 
   // ============================================================
@@ -2213,7 +2246,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Softmax outputs are fixed.", isCorrect: false },
     ],
     explanation:
-      'Sampling introduces randomness when selecting tokens from a probability distribution, leading to different outputs. To reason through the choices, select the statements that match the criterion in the prompt: "Randomness is introduced during token selection.". Do not select statements that miss that criterion: "The model weights change at inference time."; "The Transformer is nondeterministic internally."; "Softmax outputs are fixed.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Sampling introduces randomness when selecting tokens from a probability distribution, leading to different outputs. Core idea: Randomness is introduced during token selection. Common misconceptions: The model weights change at inference time; The Transformer is nondeterministic internally; Softmax outputs are fixed.",
   },
 
   {
@@ -2231,7 +2264,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Attention stops functioning.", isCorrect: false },
     ],
     explanation:
-      'Context rot refers to degradation in effective information use as context length grows, especially with distractors. To reason through the choices, select the statements that match the criterion in the prompt: "Relevant information becomes harder to retrieve in long contexts.". Do not select statements that miss that criterion: "Models forget earlier training data."; "The model overfits to recent tokens only."; "Attention stops functioning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Context rot refers to degradation in effective information use as context length grows, especially with distractors. Core idea: Relevant information becomes harder to retrieve in long contexts. Common misconceptions: Models forget earlier training data; The model overfits to recent tokens only; Attention stops functioning.",
   },
 
   {
@@ -2259,7 +2292,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       },
     ],
     explanation:
-      'MoE models scale total parameters by adding experts while keeping active computation limited through routing. To reason through the choices, select the statements that match the criterion in the prompt: "Only a subset of experts is activated per token.". Do not select statements that miss that criterion: "All parameters are used in every forward pass."; "Attention layers scale linearly with parameters."; "Routing removes the need for large datasets.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "MoE models scale total parameters by adding experts while keeping active computation limited through routing. Core idea: Only a subset of experts is activated per token. Common misconceptions: All parameters are used in every forward pass; Attention layers scale linearly with parameters; Routing removes the need for large datasets.",
   },
 
   {
@@ -2278,7 +2311,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Reduced parameter count.", isCorrect: false },
     ],
     explanation:
-      'Speculative decoding accelerates inference by batching validation while preserving the target model’s output distribution. To reason through the choices, select the statements that match the criterion in the prompt: "Faster inference with preserved output distribution.". Do not select statements that miss that criterion: "Improved training convergence."; "Higher model accuracy."; "Reduced parameter count.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Speculative decoding accelerates inference by batching validation while preserving the target model’s output distribution. Core idea: Faster inference with preserved output distribution. Common misconceptions: Improved training convergence; Higher model accuracy; Reduced parameter count.",
   },
 
   {
@@ -2296,7 +2329,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "It guarantees perfect control.", isCorrect: false },
     ],
     explanation:
-      'Prompting steers behavior probabilistically via context, without modifying the model’s weights. To reason through the choices, select the statements that match the criterion in the prompt: "It conditions model behavior through context.". Do not select statements that miss that criterion: "It permanently alters model parameters."; "It replaces the need for training."; "It guarantees perfect control.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Prompting steers behavior probabilistically via context, without modifying the model’s weights. Core idea: it conditions model behavior through context. Common misconceptions: it permanently alters model parameters; it replaces the need for training; it guarantees perfect control.",
   },
 
   {
@@ -2318,6 +2351,6 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
       { text: "Avoid probabilistic decoding.", isCorrect: false },
     ],
     explanation:
-      'Modern LLM design balances scale with efficiency and controllability, using techniques like MoE, sampling, and inference optimizations. To reason through the choices, select the statements that match the criterion in the prompt: "Balance scale, efficiency, and controllability.". Do not select statements that miss that criterion: "Maximize parameter count regardless of cost."; "Eliminate autoregressive generation."; "Avoid probabilistic decoding.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Modern LLM design balances scale with efficiency and controllability, using techniques like MoE, sampling, and inference optimizations. Core idea: Balance scale, efficiency, and controllability. Common misconceptions: Maximize parameter count regardless of cost; Eliminate autoregressive generation; Avoid probabilistic decoding.",
   },
 ];

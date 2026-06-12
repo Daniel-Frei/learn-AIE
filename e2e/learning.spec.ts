@@ -52,10 +52,33 @@ test("lists learning experiences for a selected course", async ({ page }) => {
     page.getByRole("link", { name: /likelihood, loss, softmax/i }),
   ).toBeVisible();
   await expect(page.getByRole("link", { name: /rl over time/i })).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /generation sampling lab/i }),
+  ).toBeVisible();
 
   await page.getByRole("link", { name: /rl over time/i }).click();
   await expect(page).toHaveURL(
     /\/learn\/crash-course-probability\/crash-probability-l4$/,
+  );
+});
+
+test("labels and sorts course learning experiences by source sequence", async ({
+  page,
+}) => {
+  await page.goto("/learn/stanford-cme295");
+
+  const courseCards = page.locator(
+    'section[aria-label="Stanford CME295 Transformers & LLMs learning experiences"] a',
+  );
+  await expect(courseCards).toHaveCount(3);
+
+  const cardTexts = await courseCards.allTextContents();
+  expect(cardTexts[0]).toContain("Lecture 1");
+  expect(cardTexts[1]).toContain("Lecture 2");
+  expect(cardTexts[2]).toContain("Lecture 3");
+  expect(cardTexts.join("\n")).not.toMatch(/15 min|16 min|18 min/i);
+  expect(cardTexts.join("\n")).not.toMatch(
+    /Introductory NLP with ML basics|After CME295 Lecture/i,
   );
 });
 
@@ -151,6 +174,54 @@ test("renders the Stanford CME295 Lecture 2 learning page and supports interacti
   await expect(positionCheck.getByRole("status")).toHaveText(/correct/i);
 });
 
+test("renders the Stanford CME295 Lecture 3 learning page and supports interactions", async ({
+  page,
+}) => {
+  await page.goto("/learn/stanford-cme295/cme295-lect3");
+
+  await expect(
+    page.getByRole("heading", { name: /run the llm generation control room/i }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /next-token decoding control room/i }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /token-level expert routing lab/i }),
+  ).toBeVisible();
+  await expect(page.locator(".katex-display").first()).toBeVisible();
+  await expect(page.getByText(/\\\[.*P\(t_i\)/)).toHaveCount(0);
+
+  const generationRoom = page.getByTestId("generation-control-room");
+  await generationRoom.getByRole("button", { name: /^Greedy$/i }).click();
+  await generationRoom.getByRole("button", { name: /^Top-p$/i }).click();
+  await expect(generationRoom.getByRole("status")).toHaveText(
+    /smallest probability mass/i,
+  );
+
+  const moeLab = page.getByTestId("moe-router-lab");
+  await moeLab.getByRole("button", { name: /collapsed router/i }).click();
+  await expect(moeLab.getByRole("status")).toHaveText(/narrow part/i);
+
+  const optimizationMap = page.getByTestId("inference-optimization-map");
+  await optimizationMap
+    .getByRole("button", { name: /^PagedAttention$/i })
+    .click();
+  await expect(optimizationMap.getByRole("status")).toHaveText(
+    /non-contiguous pages/i,
+  );
+
+  const speculativeCheck = page.getByTestId("speculative-check");
+  await speculativeCheck
+    .getByRole("button", { name: /replaces the target model/i })
+    .click();
+  await expect(speculativeCheck.getByRole("status")).toHaveText(/not yet/i);
+
+  await speculativeCheck
+    .getByRole("button", { name: /draft model proposes several tokens/i })
+    .click();
+  await expect(speculativeCheck.getByRole("status")).toHaveText(/correct/i);
+});
+
 test("renders the Probability L3 learning page and supports checks", async ({
   page,
 }) => {
@@ -235,6 +306,54 @@ test("renders the Probability L4 learning page and supports gridworld checks", a
   await expect(markovCheck.getByRole("status")).toHaveText(/correct/i);
 });
 
+test("renders the Probability L5 learning page and supports generation labs", async ({
+  page,
+}) => {
+  await page.goto("/learn/crash-course-probability/crash-probability-l5");
+
+  await expect(
+    page.getByRole("heading", {
+      name: /turn uncertainty into generated output/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /sampling distribution lab/i }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /diffusion denoising path/i }),
+  ).toBeVisible();
+  await expect(page.locator(".katex-display").first()).toBeVisible();
+  await expect(page.getByText(/\$\$x\\sim/)).toHaveCount(0);
+
+  const samplingLab = page.getByTestId("sampling-lab");
+  await samplingLab.getByRole("button", { name: /^Greedy$/i }).click();
+  await expect(page.getByTestId("sampling-summary")).toHaveText(
+    /greedy selects mat/i,
+  );
+  await samplingLab.getByRole("button", { name: /draw next sample/i }).click();
+  await samplingLab.getByRole("button", { name: /^Top-k$/i }).click();
+  await expect(page.getByTestId("sampling-summary")).toHaveText(
+    /top-k selects mat/i,
+  );
+
+  const temperatureCheck = page.getByTestId("temperature-knowledge-check");
+  await temperatureCheck
+    .getByRole("button", { name: /adds new knowledge/i })
+    .click();
+  await expect(temperatureCheck.getByRole("status")).toHaveText(/not yet/i);
+  await temperatureCheck
+    .getByRole("button", { name: /flattens the distribution/i })
+    .click();
+  await expect(temperatureCheck.getByRole("status")).toHaveText(/correct/i);
+
+  const diffusionLab = page.getByTestId("diffusion-path-lab");
+  await diffusionLab.getByRole("button", { name: /Seed B/i }).click();
+  await diffusionLab.getByRole("button", { name: /Denoise one step/i }).click();
+  await expect(page.getByTestId("diffusion-summary")).toHaveText(
+    /Seed B \/ t=4/i,
+  );
+});
+
 test("keeps the learning page usable at mobile width", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/learn/crash-course-probability/crash-probability-l3");
@@ -281,11 +400,43 @@ test("keeps the Stanford CME295 Lecture 2 learning page usable at mobile width",
   expect(scrollWidth).toBeLessThanOrEqual(viewportWidth + 1);
 });
 
+test("keeps the Stanford CME295 Lecture 3 learning page usable at mobile width", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/learn/stanford-cme295/cme295-lect3");
+
+  await expect(
+    page.getByRole("link", { name: /start questions/i }),
+  ).toBeVisible();
+  const scrollWidth = await page.evaluate(
+    () => document.documentElement.scrollWidth,
+  );
+  const viewportWidth = await page.evaluate(() => window.innerWidth);
+  expect(scrollWidth).toBeLessThanOrEqual(viewportWidth + 1);
+});
+
 test("keeps the Probability L4 learning page usable at mobile width", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/learn/crash-course-probability/crash-probability-l4");
+
+  await expect(
+    page.getByRole("link", { name: /start questions/i }),
+  ).toBeVisible();
+  const scrollWidth = await page.evaluate(
+    () => document.documentElement.scrollWidth,
+  );
+  const viewportWidth = await page.evaluate(() => window.innerWidth);
+  expect(scrollWidth).toBeLessThanOrEqual(viewportWidth + 1);
+});
+
+test("keeps the Probability L5 learning page usable at mobile width", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/learn/crash-course-probability/crash-probability-l5");
 
   await expect(
     page.getByRole("link", { name: /start questions/i }),
@@ -383,6 +534,27 @@ test("transitions from Stanford CME295 Lecture 2 learning into its quiz source",
   });
 });
 
+test("transitions from Stanford CME295 Lecture 3 learning into its quiz source", async ({
+  page,
+}) => {
+  await page.goto("/learn/stanford-cme295/cme295-lect3");
+
+  await page.getByRole("link", { name: /start questions/i }).click();
+
+  await expect(page).toHaveURL(/\/\?source=cme295-lect3$/);
+  await expect(
+    page.getByRole("heading", {
+      name: /stanford cme295 lecture 3: large language models, moe & inference/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /choose filters/i }),
+  ).toBeVisible();
+  await expect(page.getByText(/question 1 of 100/i)).toBeVisible({
+    timeout: 10000,
+  });
+});
+
 test("transitions from learning into the matching quiz source", async ({
   page,
 }) => {
@@ -415,6 +587,27 @@ test("transitions from Probability L4 learning into its quiz source", async ({
   await expect(
     page.getByRole("heading", {
       name: /crash course probability l4: probability over time: reinforcement learning/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /choose filters/i }),
+  ).toBeVisible();
+  await expect(page.getByText(/question 1 of 60/i)).toBeVisible({
+    timeout: 10000,
+  });
+});
+
+test("transitions from Probability L5 learning into its quiz source", async ({
+  page,
+}) => {
+  await page.goto("/learn/crash-course-probability/crash-probability-l5");
+
+  await page.getByRole("link", { name: /start questions/i }).click();
+
+  await expect(page).toHaveURL(/\/\?source=crash-probability-l5$/);
+  await expect(
+    page.getByRole("heading", {
+      name: /crash course probability l5: sampling, latent variables, and diffusion models/i,
     }),
   ).toBeVisible();
   await expect(
