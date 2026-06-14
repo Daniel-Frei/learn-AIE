@@ -70,13 +70,14 @@ test("labels and sorts course learning experiences by source sequence", async ({
   const courseCards = page.locator(
     'section[aria-label="Stanford CME295 Transformers & LLMs learning experiences"] a',
   );
-  await expect(courseCards).toHaveCount(3);
+  await expect(courseCards).toHaveCount(4);
 
   const cardTexts = await courseCards.allTextContents();
   expect(cardTexts[0]).toContain("Lecture 1");
   expect(cardTexts[1]).toContain("Lecture 2");
   expect(cardTexts[2]).toContain("Lecture 3");
-  expect(cardTexts.join("\n")).not.toMatch(/15 min|16 min|18 min/i);
+  expect(cardTexts[3]).toContain("Lecture 4");
+  expect(cardTexts.join("\n")).not.toMatch(/15 min|16 min|18 min|19 min/i);
   expect(cardTexts.join("\n")).not.toMatch(
     /Introductory NLP with ML basics|After CME295 Lecture/i,
   );
@@ -180,46 +181,110 @@ test("renders the Stanford CME295 Lecture 3 learning page and supports interacti
   await page.goto("/learn/stanford-cme295/cme295-lect3");
 
   await expect(
-    page.getByRole("heading", { name: /run the llm generation control room/i }),
+    page.getByRole("heading", {
+      name: /follow one request through llm inference/i,
+    }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: /next-token decoding control room/i }),
+    page.getByRole("heading", {
+      name: /trace one request through the llm runtime/i,
+    }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: /token-level expert routing lab/i }),
+    page.getByRole("heading", {
+      name: /place each technique before comparing tradeoffs/i,
+    }),
   ).toBeVisible();
   await expect(page.locator(".katex-display").first()).toBeVisible();
   await expect(page.getByText(/\\\[.*P\(t_i\)/)).toHaveCount(0);
 
-  const generationRoom = page.getByTestId("generation-control-room");
-  await generationRoom.getByRole("button", { name: /^Greedy$/i }).click();
-  await generationRoom.getByRole("button", { name: /^Top-p$/i }).click();
-  await expect(generationRoom.getByRole("status")).toHaveText(
-    /smallest probability mass/i,
+  const runtimeLab = page.getByTestId("llm-runtime-lab");
+  await runtimeLab.getByRole("button", { name: /next-token policy/i }).click();
+  await runtimeLab.getByRole("button", { name: /Guided JSON/i }).click();
+  await expect(runtimeLab.getByRole("status")).toHaveText(/external grammar/i);
+
+  await runtimeLab.getByRole("button", { name: /MoE/i }).click();
+  await runtimeLab.getByRole("button", { name: /^Collapsed$/i }).click();
+  await expect(runtimeLab.getByRole("status")).toHaveText(
+    /Most tokens route to one expert/i,
   );
 
-  const moeLab = page.getByTestId("moe-router-lab");
-  await moeLab.getByRole("button", { name: /collapsed router/i }).click();
-  await expect(moeLab.getByRole("status")).toHaveText(/narrow part/i);
-
-  const optimizationMap = page.getByTestId("inference-optimization-map");
-  await optimizationMap
-    .getByRole("button", { name: /^PagedAttention$/i })
-    .click();
-  await expect(optimizationMap.getByRole("status")).toHaveText(
+  await runtimeLab.getByRole("button", { name: /Cache/i }).click();
+  await runtimeLab.getByRole("button", { name: /^PagedAttention$/i }).click();
+  await expect(runtimeLab.getByRole("status")).toHaveText(
     /non-contiguous pages/i,
   );
 
-  const speculativeCheck = page.getByTestId("speculative-check");
-  await speculativeCheck
-    .getByRole("button", { name: /replaces the target model/i })
-    .click();
-  await expect(speculativeCheck.getByRole("status")).toHaveText(/not yet/i);
+  await runtimeLab.getByRole("button", { name: /Accelerate/i }).click();
+  await runtimeLab.getByRole("button", { name: /^MTP$/i }).click();
+  await expect(runtimeLab.getByRole("status")).toHaveText(
+    /extra heads predict future positions/i,
+  );
 
-  await speculativeCheck
-    .getByRole("button", { name: /draft model proposes several tokens/i })
+  const routingCheck = page.getByTestId("routing-collapse-check");
+  await routingCheck
+    .getByRole("button", { name: /top-p sampling instead of beam search/i })
     .click();
-  await expect(speculativeCheck.getByRole("status")).toHaveText(/correct/i);
+  await expect(routingCheck.getByRole("status")).toHaveText(/not yet/i);
+
+  await routingCheck
+    .getByRole("button", { name: /router has collapsed/i })
+    .click();
+  await expect(routingCheck.getByRole("status")).toHaveText(/correct/i);
+});
+
+test("renders the Stanford CME295 Lecture 4 learning page and supports interactions", async ({
+  page,
+}) => {
+  await page.goto("/learn/stanford-cme295/cme295-lect4");
+
+  await expect(
+    page.getByRole("heading", { name: /run the llm training pipeline/i }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /follow one model from raw continuation to tuned behavior/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /match the memory object to the optimization lever/i,
+    }),
+  ).toBeVisible();
+  await expect(page.locator(".katex-display").first()).toBeVisible();
+  await expect(page.getByText(/\\\[.*C_\{\\mathrm/)).toHaveCount(0);
+
+  const lifecycle = page.getByTestId("training-lifecycle-workbench");
+  await lifecycle.getByRole("button", { name: /stage 3\s+sft/i }).click();
+  await expect(lifecycle.getByRole("status")).toHaveText(
+    /instruction-tuned model/i,
+  );
+
+  const scalingLab = page.getByTestId("scaling-budget-lab");
+  await scalingLab
+    .getByRole("button", { name: /gpt-3-style example/i })
+    .click();
+  await expect(scalingLab.getByRole("status")).toHaveText(/undertrained/i);
+
+  const memoryLab = page.getByTestId("memory-optimization-lab");
+  await memoryLab.getByRole("button", { name: /^FlashAttention$/i }).click();
+  await expect(memoryLab.getByRole("status")).toHaveText(/exact attention/i);
+
+  const loraWorkbench = page.getByTestId("lora-workbench");
+  await loraWorkbench.getByRole("button", { name: /^QLoRA$/i }).click();
+  await expect(loraWorkbench.getByRole("status")).toHaveText(
+    /frozen W0 is stored quantized/i,
+  );
+
+  const flashCheck = page.getByTestId("flashattention-check");
+  await flashCheck
+    .getByRole("button", { name: /approximates attention/i })
+    .click();
+  await expect(flashCheck.getByRole("status")).toHaveText(/not yet/i);
+  await flashCheck
+    .getByRole("button", { name: /reduces slow hbm reads/i })
+    .click();
+  await expect(flashCheck.getByRole("status")).toHaveText(/correct/i);
 });
 
 test("renders the Probability L3 learning page and supports checks", async ({
@@ -320,6 +385,28 @@ test("renders the Probability L5 learning page and supports generation labs", as
     page.getByRole("heading", { name: /sampling distribution lab/i }),
   ).toBeVisible();
   await expect(
+    page.getByRole("heading", {
+      name: /generation is a distribution, a rule, then a draw/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /what each control means/i }),
+  ).toBeVisible();
+  await expect(page.getByText(/what the lab numbers mean/i)).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: /latent house probe/i }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /marginalize over hidden alternatives/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /forward noise first, learned reverse process second/i,
+    }),
+  ).toBeVisible();
+  await expect(
     page.getByRole("heading", { name: /diffusion denoising path/i }),
   ).toBeVisible();
   await expect(page.locator(".katex-display").first()).toBeVisible();
@@ -345,6 +432,13 @@ test("renders the Probability L5 learning page and supports generation labs", as
     .getByRole("button", { name: /flattens the distribution/i })
     .click();
   await expect(temperatureCheck.getByRole("status")).toHaveText(/correct/i);
+
+  const latentProbe = page.getByTestId("latent-variable-probe");
+  await latentProbe
+    .getByLabel(/probe style latent factor/i)
+    .selectOption("modern");
+  await expect(latentProbe.getByText(/style: Modern/i)).toBeVisible();
+  await expect(latentProbe.getByText(/flat roof/i)).toBeVisible();
 
   const diffusionLab = page.getByTestId("diffusion-path-lab");
   await diffusionLab.getByRole("button", { name: /Seed B/i }).click();
@@ -405,6 +499,22 @@ test("keeps the Stanford CME295 Lecture 3 learning page usable at mobile width",
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/learn/stanford-cme295/cme295-lect3");
+
+  await expect(
+    page.getByRole("link", { name: /start questions/i }),
+  ).toBeVisible();
+  const scrollWidth = await page.evaluate(
+    () => document.documentElement.scrollWidth,
+  );
+  const viewportWidth = await page.evaluate(() => window.innerWidth);
+  expect(scrollWidth).toBeLessThanOrEqual(viewportWidth + 1);
+});
+
+test("keeps the Stanford CME295 Lecture 4 learning page usable at mobile width", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/learn/stanford-cme295/cme295-lect4");
 
   await expect(
     page.getByRole("link", { name: /start questions/i }),
@@ -550,7 +660,28 @@ test("transitions from Stanford CME295 Lecture 3 learning into its quiz source",
   await expect(
     page.getByRole("button", { name: /choose filters/i }),
   ).toBeVisible();
-  await expect(page.getByText(/question 1 of 100/i)).toBeVisible({
+  await expect(page.getByText(/question 1 of 80/i)).toBeVisible({
+    timeout: 10000,
+  });
+});
+
+test("transitions from Stanford CME295 Lecture 4 learning into its quiz source", async ({
+  page,
+}) => {
+  await page.goto("/learn/stanford-cme295/cme295-lect4");
+
+  await page.getByRole("link", { name: /start questions/i }).click();
+
+  await expect(page).toHaveURL(/\/\?source=cme295-lect4$/);
+  await expect(
+    page.getByRole("heading", {
+      name: /stanford cme295 lecture 4: llm training, scaling & alignment/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /choose filters/i }),
+  ).toBeVisible();
+  await expect(page.getByText(/question 1 of 80/i)).toBeVisible({
     timeout: 10000,
   });
 });

@@ -11,7 +11,6 @@ import {
   MisconceptionCallout,
   QuizTransitionButton,
   RecapSection,
-  WorkedExample,
 } from "../LearningPrimitives";
 
 type Props = {
@@ -27,6 +26,7 @@ type TokenOption = {
 
 type DisplayToken = TokenOption & {
   baseProbability: number;
+  temperatureProbability: number;
   eligible: boolean;
 };
 
@@ -199,6 +199,7 @@ function getTemperatureScaledTokens(temperature: number): DisplayToken[] {
     label: token.label,
     probability: exponentials[index] / total,
     baseProbability: token.probability,
+    temperatureProbability: exponentials[index] / total,
     eligible: true,
   }));
 }
@@ -321,62 +322,237 @@ function getNoisyCell(
   return getFinalCell(seed, x, y);
 }
 
-function GenerationLoopVisual() {
+function GenerationLotteryVisual() {
+  const draw = 0.53;
+  const sampledToken =
+    BASE_TOKENS.map((token, index) => ({
+      ...token,
+      cumulative: BASE_TOKENS.slice(0, index + 1).reduce(
+        (sum, item) => sum + item.probability,
+        0,
+      ),
+    })).find((token) => draw <= token.cumulative) ??
+    BASE_TOKENS[BASE_TOKENS.length - 1];
+
+  return (
+    <div className="rounded-lg border border-slate-800 bg-slate-900 p-5">
+      <div className="rounded-md border border-cyan-400/30 bg-cyan-950/20 px-4 py-3">
+        <p className="text-xs font-semibold uppercase text-cyan-200">Prompt</p>
+        <p className="mt-1 text-sm font-semibold text-slate-50">
+          The animal sat on the ...
+        </p>
+      </div>
+
+      <div className="mt-4 space-y-2">
+        <p className="text-xs font-semibold uppercase text-slate-400">
+          Learned next-token distribution
+        </p>
+        {BASE_TOKENS.map((token) => (
+          <div
+            key={token.label}
+            className="grid grid-cols-[3.5rem_1fr_3rem] items-center gap-3 text-sm"
+          >
+            <span className="font-semibold text-slate-100">{token.label}</span>
+            <div className="h-3 overflow-hidden rounded-full bg-slate-800">
+              <div
+                className="h-full rounded-full bg-cyan-300"
+                style={{ width: `${token.probability * 100}%` }}
+              />
+            </div>
+            <span className="font-mono text-xs text-slate-300">
+              {formatProbability(token.probability)}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-5 rounded-md border border-emerald-400/40 bg-emerald-950/20 px-4 py-3">
+        <p className="text-xs font-semibold uppercase text-emerald-200">
+          One possible sampled output
+        </p>
+        <p className="mt-1 text-sm leading-6 text-slate-200">
+          A random draw of <span className="font-mono">{draw.toFixed(2)}</span>{" "}
+          lands on <span className="font-semibold">{sampledToken.label}</span>.
+          Greedy decoding would choose{" "}
+          <span className="font-semibold">{BASE_TOKENS[0].label}</span> every
+          time.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function GenerationMentalModel() {
   const stages = [
     {
-      label: "Learned distribution",
-      body: "many possible outputs",
-      accent: "bg-sky-300",
+      title: "1. The model predicts a distribution",
+      body: "Before anything is generated, the model has assigned probability mass to possible next tokens or image states.",
+      accent: "border-cyan-400/50 bg-cyan-950/20 text-cyan-100",
     },
     {
-      label: "Sampling control",
-      body: "temperature, top-k, top-p",
-      accent: "bg-amber-300",
+      title: "2. A decoding rule changes how it is used",
+      body: "Temperature reshapes probabilities. Top-k and top-p remove part of the tail. Greedy skips randomness and takes the maximum.",
+      accent: "border-amber-400/50 bg-amber-950/20 text-amber-100",
     },
     {
-      label: "Concrete sample",
-      body: "one token, image, or action",
-      accent: "bg-emerald-300",
+      title: "3. Sampling realizes one output",
+      body: "The learner sees one token, one image, or one action, but many other outputs can still be valid under the same condition.",
+      accent: "border-emerald-400/50 bg-emerald-950/20 text-emerald-100",
     },
   ] as const;
 
   return (
-    <div className="rounded-lg border border-slate-800 bg-slate-900 p-5">
-      <div className="grid gap-3">
-        {stages.map((stage, index) => (
-          <div key={stage.label} className="flex items-center gap-3">
-            <div
-              className={`h-3 w-3 shrink-0 rounded-full ${stage.accent}`}
-              aria-hidden="true"
-            />
-            <div className="flex-1 rounded-md border border-slate-700 bg-slate-950 px-4 py-3">
-              <p className="text-sm font-semibold text-slate-100">
-                {stage.label}
-              </p>
-              <p className="text-xs text-slate-400">{stage.body}</p>
-            </div>
-            {index < stages.length - 1 && (
-              <span className="text-lg font-semibold text-slate-400">
-                -&gt;
-              </span>
-            )}
-          </div>
-        ))}
-      </div>
-      <div className="mt-5 grid grid-cols-5 gap-2" aria-hidden="true">
-        {BASE_TOKENS.map((token) => (
-          <div key={token.label} className="space-y-2">
-            <div className="flex h-24 items-end rounded-md bg-slate-950 p-2">
-              <div
-                className="w-full rounded-sm bg-cyan-300"
-                style={{ height: `${Math.max(8, token.probability * 100)}%` }}
-              />
-            </div>
-            <p className="text-center text-xs font-semibold text-slate-300">
-              {token.label}
+    <section className="rounded-lg border border-slate-800 bg-slate-900 p-5">
+      <p className="text-xs font-semibold uppercase text-cyan-300">
+        Before the lab
+      </p>
+      <h2 className="mt-2 text-xl font-semibold text-slate-50">
+        Generation is a distribution, a rule, then a draw
+      </h2>
+      <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-300">
+        Keep these three objects separate. A trained model supplies the
+        probabilities; a decoding strategy decides which probabilities are
+        allowed and how sharp they are; a sample is the one outcome that gets
+        realized.
+      </p>
+      <div className="mt-5 grid gap-3 md:grid-cols-3">
+        {stages.map((stage) => (
+          <div
+            key={stage.title}
+            className={`rounded-md border p-4 ${stage.accent}`}
+          >
+            <h3 className="text-sm font-semibold">{stage.title}</h3>
+            <p className="mt-2 text-sm leading-6 text-slate-300">
+              {stage.body}
             </p>
           </div>
         ))}
+      </div>
+    </section>
+  );
+}
+
+function DecodingVocabularyPanel() {
+  const rows = [
+    {
+      term: "Greedy",
+      effect: "Choose the largest probability directly.",
+      caution: "Stable, but can be dull or locally short-sighted.",
+    },
+    {
+      term: "Sampling",
+      effect: "Draw according to the probability mass.",
+      caution: "Creates variation, but the long tail can be risky.",
+    },
+    {
+      term: "Top-k",
+      effect: "Keep the k most likely tokens, then renormalize.",
+      caution: "Fixed-size candidate set; here the lab uses k=3.",
+    },
+    {
+      term: "Top-p",
+      effect: "Keep the smallest high-probability prefix whose mass reaches p.",
+      caution: "Variable-size candidate set; here the lab uses p=0.90.",
+    },
+    {
+      term: "Temperature",
+      effect: "Divide logits by T before softmax.",
+      caution: "Changes odds and entropy, not the model's knowledge.",
+    },
+    {
+      term: "Entropy",
+      effect: "Measure how spread out the used distribution is.",
+      caution: "Higher entropy means more diversity, not higher truth.",
+    },
+  ] as const;
+
+  return (
+    <section className="rounded-lg border border-slate-800 bg-slate-900 p-5">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
+        <div className="lg:w-72">
+          <p className="text-xs font-semibold uppercase text-amber-300">
+            Decode controls before sliders
+          </p>
+          <h2 className="mt-2 text-xl font-semibold text-slate-50">
+            What each control means
+          </h2>
+          <p className="mt-2 text-sm leading-6 text-slate-300">
+            The sampling lab uses one prompt and one base distribution so the
+            only thing changing is the decoding rule.
+          </p>
+        </div>
+        <div className="min-w-0 flex-1 overflow-x-auto rounded-md border border-slate-700">
+          <table className="min-w-full border-collapse text-left text-sm">
+            <thead className="bg-slate-950 text-slate-100">
+              <tr>
+                <th className="px-3 py-2 font-semibold">Control</th>
+                <th className="px-3 py-2 font-semibold">What changes</th>
+                <th className="px-3 py-2 font-semibold">What to watch</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-800 bg-slate-950/40">
+              {rows.map((row) => (
+                <tr key={row.term}>
+                  <td className="whitespace-nowrap px-3 py-3 font-semibold text-slate-100">
+                    {row.term}
+                  </td>
+                  <td className="px-3 py-3 leading-6 text-slate-300">
+                    {row.effect}
+                  </td>
+                  <td className="px-3 py-3 leading-6 text-slate-300">
+                    {row.caution}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SamplingDrawStrip({
+  tokens,
+  draw,
+}: {
+  tokens: readonly DisplayToken[];
+  draw: number;
+}) {
+  return (
+    <div className="rounded-md border border-slate-700 bg-slate-950 p-3">
+      <div className="flex items-center justify-between gap-3 text-xs text-slate-400">
+        <span>Random draw on [0, 1]</span>
+        <span className="font-mono text-slate-300">u = {draw.toFixed(2)}</span>
+      </div>
+      <div className="relative mt-3 flex h-8 overflow-hidden rounded-md bg-slate-800">
+        {tokens.map((token) => (
+          <div
+            key={token.label}
+            title={`${token.label}: ${formatProbability(token.probability)}`}
+            className={`h-full border-r border-slate-950/70 ${
+              token.eligible ? "bg-cyan-300" : "bg-slate-700"
+            }`}
+            style={{ width: `${token.probability * 100}%` }}
+          />
+        ))}
+        <div
+          className="absolute inset-y-0 w-0.5 bg-emerald-300"
+          style={{ left: `${draw * 100}%` }}
+          aria-hidden="true"
+        />
+      </div>
+      <div className="mt-2 flex flex-wrap gap-2">
+        {tokens
+          .filter((token) => token.eligible)
+          .map((token) => (
+            <span
+              key={token.label}
+              className="rounded border border-slate-700 px-2 py-1 text-xs text-slate-300"
+            >
+              {token.label}: {formatProbability(token.probability)}
+            </span>
+          ))}
       </div>
     </div>
   );
@@ -414,9 +590,9 @@ function SamplingDistributionLab() {
             Sampling distribution lab
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">
-            The prompt is &quot;The animal sat on the ...&quot;. Change the
-            decoding rule and temperature, then draw a sample from the adjusted
-            distribution.
+            The prompt is &quot;The animal sat on the ...&quot;. Start with the
+            model&apos;s base probabilities, optionally reshape them with
+            temperature, then apply the decoding rule before drawing one token.
           </p>
         </div>
         <p
@@ -431,6 +607,21 @@ function SamplingDistributionLab() {
 
       <div className="mt-5 grid gap-5 md:grid-cols-[0.9fr_1.1fr]">
         <div className="space-y-5">
+          <div className="rounded-md border border-slate-700 bg-slate-950 p-3 text-xs leading-5 text-slate-300">
+            <p className="font-semibold text-slate-100">
+              What the lab numbers mean
+            </p>
+            <p className="mt-1">
+              <span className="font-semibold text-slate-100">Base</span> is the
+              original model probability.{" "}
+              <span className="font-semibold text-slate-100">After T</span> is
+              after temperature scaling.{" "}
+              <span className="font-semibold text-slate-100">Used</span> is the
+              final sampling probability after greedy/top-k/top-p filtering and
+              renormalization.
+            </p>
+          </div>
+
           <div>
             <p className="text-sm font-semibold text-slate-100">
               Decoding strategy
@@ -502,6 +693,7 @@ function SamplingDistributionLab() {
         </div>
 
         <div className="grid gap-3">
+          <SamplingDrawStrip tokens={displayTokens} draw={draw} />
           {displayTokens.map((token) => {
             const isSelected = token.label === selectedToken.label;
             return (
@@ -520,7 +712,8 @@ function SamplingDistributionLab() {
                     {token.label}
                   </span>
                   <span className="font-mono text-slate-300">
-                    base {formatProbability(token.baseProbability)} / used{" "}
+                    base {formatProbability(token.baseProbability)} / after T{" "}
+                    {formatProbability(token.temperatureProbability)} / used{" "}
                     {formatProbability(token.probability)}
                   </span>
                 </div>
@@ -669,19 +862,25 @@ function LatentVariableMixer() {
     .join(", ");
 
   return (
-    <section className="rounded-lg border border-slate-800 bg-slate-900 p-5">
+    <section
+      data-testid="latent-variable-probe"
+      className="rounded-lg border border-slate-800 bg-slate-900 p-5"
+    >
       <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase text-amber-300">
             Hidden structure
           </p>
           <h2 className="mt-2 text-xl font-semibold text-slate-50">
-            Latent house mixer
+            Latent house probe
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">
-            The visible image is not generated from pixels independently. Hidden
-            variables such as style, lighting, season, and viewpoint explain
-            coordinated structure in the output.
+            The visible image is not generated from pixels independently. In a
+            model, hidden variables such as style, lighting, season, and
+            viewpoint are sampled or inferred behind the scenes. The controls
+            here are probes: they let you inspect one possible hidden-state
+            explanation, not directly control a real model&apos;s latent
+            variables.
           </p>
         </div>
         <MathText
@@ -692,13 +891,21 @@ function LatentVariableMixer() {
 
       <div className="mt-5 grid gap-5 md:grid-cols-[0.9fr_1.1fr]">
         <div className="grid gap-4">
+          <div className="rounded-md border border-amber-400/40 bg-amber-950/20 p-3 text-sm leading-6 text-amber-50">
+            <p className="font-semibold">Probe a possible hidden state</p>
+            <p className="mt-1 text-slate-300">
+              In the probability notation, z is hidden. Selecting values here is
+              like asking: if this were the hidden cause, what visible x would
+              it make more likely?
+            </p>
+          </div>
           {(Object.keys(LATENT_OPTIONS) as LatentKey[]).map((key) => (
             <label key={key} className="block space-y-2">
               <span className="text-sm font-semibold capitalize text-slate-100">
-                {key}
+                Probe {key}
               </span>
               <select
-                aria-label={`${key} latent variable`}
+                aria-label={`Probe ${key} latent factor`}
                 value={latent[key]}
                 onChange={(event) =>
                   setLatent((current) => ({
@@ -726,8 +933,28 @@ function LatentVariableMixer() {
             </p>
             <p className="mt-2 text-sm leading-6 text-slate-300">
               A generated house with {visibleDescription}. The latent variables
-              are hidden causes in the model, even when a human can infer them
-              from the image.
+              are hidden causes in the model; a viewer may infer them from
+              evidence, but the generated pixels are the observed data.
+            </p>
+          </div>
+          <div className="grid gap-2 rounded-md border border-slate-700 bg-slate-950 p-3 text-sm leading-6 text-slate-300">
+            <p>
+              <span className="font-semibold text-slate-100">
+                Sampled hidden factor:
+              </span>{" "}
+              z is drawn from P(z)
+            </p>
+            <p>
+              <span className="font-semibold text-slate-100">
+                Visible output from that factor:
+              </span>{" "}
+              x is drawn from P(x | z)
+            </p>
+            <p>
+              <span className="font-semibold text-slate-100">
+                Inference runs the question backward:
+              </span>{" "}
+              which hidden z would explain this visible x?
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -740,6 +967,192 @@ function LatentVariableMixer() {
               </span>
             ))}
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LatentMarginalizationExample() {
+  const rows = [
+    {
+      state: "alpine",
+      prior: 0.3,
+      likelihood: 0.8,
+    },
+    {
+      state: "modern",
+      prior: 0.7,
+      likelihood: 0.2,
+    },
+  ] as const;
+  const total = rows.reduce((sum, row) => sum + row.prior * row.likelihood, 0);
+
+  return (
+    <section className="rounded-lg border border-slate-800 bg-slate-900 p-5">
+      <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+        <div>
+          <p className="text-xs font-semibold uppercase text-amber-300">
+            Worked example
+          </p>
+          <h2 className="mt-2 text-xl font-semibold text-slate-50">
+            Marginalize over hidden alternatives
+          </h2>
+          <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-300">
+            Suppose the visible event is R = &quot;the generated house has a red
+            roof&quot;. You do not observe the hidden style directly, so the
+            visible probability sums over possible hidden styles.
+          </p>
+        </div>
+        <MathText
+          text={String.raw`\[P(R)=\sum_z P(z)P(R\mid z)\]`}
+          className="overflow-x-auto rounded-md border border-amber-400/40 bg-amber-950/20 px-3 py-2 text-sm text-amber-100"
+        />
+      </div>
+
+      <div className="mt-5 overflow-x-auto rounded-md border border-slate-700">
+        <table className="min-w-full border-collapse text-left text-sm">
+          <thead className="bg-slate-950 text-slate-100">
+            <tr>
+              <th className="px-3 py-2 font-semibold">Hidden style z</th>
+              <th className="px-3 py-2 font-semibold">Prior P(z)</th>
+              <th className="px-3 py-2 font-semibold">
+                Red-roof likelihood P(R | z)
+              </th>
+              <th className="px-3 py-2 font-semibold">Contribution</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-800 bg-slate-950/40">
+            {rows.map((row) => (
+              <tr key={row.state}>
+                <td className="px-3 py-3 font-semibold text-slate-100">
+                  {row.state}
+                </td>
+                <td className="px-3 py-3 font-mono text-slate-300">
+                  {formatProbability(row.prior)}
+                </td>
+                <td className="px-3 py-3 font-mono text-slate-300">
+                  {formatProbability(row.likelihood)}
+                </td>
+                <td className="px-3 py-3 font-mono text-slate-300">
+                  {formatProbability(row.prior * row.likelihood)}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+          <tfoot className="bg-slate-950 text-slate-100">
+            <tr>
+              <td className="px-3 py-3 font-semibold" colSpan={3}>
+                Total visible probability P(R)
+              </td>
+              <td className="px-3 py-3 font-mono font-semibold">
+                {formatProbability(total)}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <p className="mt-4 text-sm leading-6 text-slate-300">
+        The common mistake is to add the likelihoods 0.8 and 0.2 directly. Each
+        conditional probability must stay paired with the prior probability of
+        the hidden state it conditions on.
+      </p>
+    </section>
+  );
+}
+
+function DiffusionNotationPrimer() {
+  const symbols = [
+    {
+      label: String.raw`\(x_0\)`,
+      meaning: "a clean data sample, such as a real image",
+    },
+    {
+      label: String.raw`\(x_t\)`,
+      meaning: "the same sample after t noising steps",
+    },
+    {
+      label: String.raw`\(x_T\)`,
+      meaning: "the late noisy state, close to pure Gaussian noise",
+    },
+    {
+      label: String.raw`\(\mathcal{N}(0,I)\)`,
+      meaning:
+        "standard Gaussian noise: mean 0, identity covariance I, independent unit-variance coordinates",
+    },
+    {
+      label: String.raw`\(p_\theta(x_{t-1}\mid x_t,c)\)`,
+      meaning:
+        "the learned reverse denoising model with parameters theta and condition c, such as a text prompt",
+    },
+  ] as const;
+
+  return (
+    <section className="rounded-lg border border-slate-800 bg-slate-900 p-5">
+      <p className="text-xs font-semibold uppercase text-rose-300">
+        Notation before denoising
+      </p>
+      <h2 className="mt-2 text-xl font-semibold text-slate-50">
+        Forward noise first, learned reverse process second
+      </h2>
+      <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-300">
+        Diffusion training creates a controlled noising path from clean data to
+        almost pure noise. Generation runs the learned direction backward: start
+        from noise, then repeatedly predict a slightly cleaner sample.
+      </p>
+
+      <div className="mt-5 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="grid gap-3">
+          <div className="rounded-md border border-slate-700 bg-slate-950 p-4">
+            <p className="text-sm font-semibold text-slate-100">
+              Forward noising used during training
+            </p>
+            <MathText
+              text={String.raw`\[x_0\rightarrow x_1\rightarrow\cdots\rightarrow x_T,\quad x_T\approx\mathcal{N}(0,I)\]`}
+              className="mt-3 overflow-x-auto text-slate-100"
+            />
+            <p className="mt-3 text-sm leading-6 text-slate-300">
+              I is the identity matrix: it says each coordinate has variance 1
+              and no covariance with the others in this simplified noise model.
+            </p>
+          </div>
+          <div className="rounded-md border border-slate-700 bg-slate-950 p-4">
+            <p className="text-sm font-semibold text-slate-100">
+              Reverse denoising used for generation
+            </p>
+            <MathText
+              text={String.raw`\[x_T\rightarrow x_{T-1}\rightarrow\cdots\rightarrow x_0\]`}
+              className="mt-3 overflow-x-auto text-slate-100"
+            />
+            <p className="mt-3 text-sm leading-6 text-slate-300">
+              The reverse process is learned; it is not just undoing a stored
+              exact corruption path.
+            </p>
+          </div>
+        </div>
+
+        <div className="overflow-x-auto rounded-md border border-slate-700">
+          <table className="min-w-full border-collapse text-left text-sm">
+            <thead className="bg-slate-950 text-slate-100">
+              <tr>
+                <th className="px-3 py-2 font-semibold">Symbol</th>
+                <th className="px-3 py-2 font-semibold">Meaning here</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-800 bg-slate-950/40">
+              {symbols.map((symbol) => (
+                <tr key={symbol.label}>
+                  <td className="whitespace-nowrap px-3 py-3 text-slate-100">
+                    <MathText text={symbol.label} inline />
+                  </td>
+                  <td className="px-3 py-3 leading-6 text-slate-300">
+                    {symbol.meaning}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -766,9 +1179,10 @@ function DiffusionPathLab() {
             Diffusion denoising path
           </h2>
           <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">
-            Diffusion starts from Gaussian-like noise and repeatedly predicts a
-            small move toward cleaner structure. Different noise seeds can
-            satisfy the same prompt in different ways.
+            This lab shows the learned reverse direction: start from
+            Gaussian-like noise and repeatedly predict a small move toward
+            cleaner structure. Different noise seeds can satisfy the same prompt
+            in different ways.
           </p>
         </div>
         <p
@@ -862,7 +1276,8 @@ function DiffusionPathLab() {
               className="w-full accent-rose-300"
             />
             <p className="text-xs leading-5 text-slate-400">
-              t=5 is high uncertainty. t=0 is the denoised generated sample.
+              t=5 is high uncertainty near x_T. t=0 is the denoised generated
+              sample x_0.
             </p>
           </label>
 
@@ -910,39 +1325,18 @@ export default function CrashProbabilityL5LearningPage({ experience }: Props) {
         summary="Generative AI does not store one answer. It learns probability structure, adjusts how that distribution is used, then samples tokens, latent variables, actions, or denoising paths."
         meta={`${experience.durationMinutes} min interactive prep / ${experience.level}`}
         outcomes={experience.outcomes}
-        visual={<GenerationLoopVisual />}
+        visual={<GenerationLotteryVisual />}
       />
 
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-10 md:py-12">
-        <SamplingDistributionLab />
+        <GenerationMentalModel />
 
-        <section className="grid gap-4 md:grid-cols-3">
-          <ConceptCard title="Distribution" label="Possibilities">
-            <p>
-              A model first assigns probability mass across possible next
-              tokens, images, actions, or hidden variables. Nothing has been
-              generated yet.
-            </p>
-          </ConceptCard>
-          <ConceptCard title="Decoder" label="Rule">
-            <p>
-              Greedy, sampling, top-k, top-p, temperature, or guidance controls
-              how the learned distribution is used at inference time.
-            </p>
-          </ConceptCard>
-          <ConceptCard title="Sample" label="Concrete output">
-            <p>
-              A sample is one realized outcome. Many different samples can be
-              valid under the same prompt because the prompt leaves details
-              unspecified.
-            </p>
-          </ConceptCard>
-        </section>
+        <DecodingVocabularyPanel />
 
         <FormulaBlock
           title="Temperature changes odds, not knowledge"
           formula={String.raw`\[P(y_i)=\frac{e^{z_i/T}}{\sum_j e^{z_j/T}}\]`}
-          explanation="A smaller positive T sharpens logit differences and lowers entropy. A larger T flattens probabilities and raises diversity. Neither setting adds facts or fixes a wrong model belief by itself."
+          explanation="A smaller positive T sharpens logit differences and lowers entropy. A larger T flattens probabilities and raises diversity. This happens before the sample is drawn, and neither setting adds facts or fixes a wrong model belief by itself."
         />
 
         <CheckForUnderstanding
@@ -971,17 +1365,13 @@ export default function CrashProbabilityL5LearningPage({ experience }: Props) {
           ]}
         />
 
+        <SamplingDistributionLab />
+
         <LatentVariableMixer />
 
-        <WorkedExample
-          title="Worked example: marginalizing a latent variable"
-          setup="A hidden style Z affects whether the generated house has a red roof. Suppose P(Z=alpine)=0.30, P(red roof | alpine)=0.80, P(Z=modern)=0.70, and P(red roof | modern)=0.20."
-          steps={[
-            "Pair each conditional probability with the latent state it conditions on.",
-            "Sum over hidden alternatives: P(red roof)=0.30*0.80 + 0.70*0.20.",
-            "The result is 0.38. The visible output probability comes from weighting each hidden cause by its prior probability.",
-          ]}
-        />
+        <LatentMarginalizationExample />
+
+        <DiffusionNotationPrimer />
 
         <DiffusionPathLab />
 

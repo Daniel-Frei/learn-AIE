@@ -7,120 +7,119 @@ export const stanfordCME295Lecture2Questions: Question[] = [
   // normalization, sparse attention, model families, BERT
   // ============================================================
 
-  // ============================================================
-  // Q1–Q25: ALL TRUE (4 correct answers)
+  // Q1-Q20: MATH-FOCUSED REPLACEMENTS
   // ============================================================
 
   {
     id: "cme295-lect2-q01",
     chapter: 2,
-    difficulty: "easy",
+    difficulty: "medium",
     prompt:
-      "Which statements correctly describe why transformers require explicit position information?",
+      "For a sinusoidal positional-encoding pair at frequency \\(\\omega_i\\), define \\(p_m^{(i)}=(\\sin(\\omega_i m), \\cos(\\omega_i m))\\). Which expression equals the dot product \\(p_m^{(i)} \\cdot p_n^{(i)}\\)?",
     options: [
       {
-        text: "Self-attention allows tokens to interact without an inherent notion of order.",
+        text: "\\(\\cos(\\omega_i(m-n))\\)",
         isCorrect: true,
       },
       {
-        text: "Unlike recurrent neural networks, transformers do not process tokens sequentially.",
-        isCorrect: true,
+        text: "\\(\\sin(\\omega_i(m-n))\\)",
+        isCorrect: false,
       },
       {
-        text: "Without position information, token representations would be permutation-invariant.",
-        isCorrect: true,
+        text: "\\(\\cos(\\omega_i(m+n))\\)",
+        isCorrect: false,
       },
       {
-        text: "Injecting position information helps the model reason about relative and absolute order.",
-        isCorrect: true,
+        text: "\\(\\omega_i mn\\)",
+        isCorrect: false,
       },
     ],
     explanation:
-      "Because self-attention connects all tokens directly, transformers need explicit mechanisms to encode order and relative positions. Core ideas: Self-attention allows tokens to interact without an inherent notion of order; Unlike recurrent neural networks, transformers do not process tokens sequentially; Without position information, token representations would be permutation-invariant; Injecting position information helps the model reason about relative and absolute order.",
+      "The dot product is \\(\\sin(\\omega_i m)\\sin(\\omega_i n)+\\cos(\\omega_i m)\\cos(\\omega_i n)\\), which equals \\(\\cos(\\omega_i(m-n))\\) by the cosine difference identity. The other expressions either use sine instead of the cosine identity, depend on the sum rather than the offset, or replace the trigonometric similarity with an unrelated product.",
   },
 
   {
     id: "cme295-lect2-q02",
     chapter: 2,
-    difficulty: "easy",
+    difficulty: "hard",
     prompt:
-      "Which properties are true of learned absolute position embeddings?",
+      "The sinusoidal construction can write \\(\\omega_i=10000^{-2i/d_{\\text{model}}}\\). If \\(d_{\\text{model}}=4\\) and \\(i=1\\), what is \\(\\omega_i\\)?",
     options: [
       {
-        text: "Each position index is associated with a trainable embedding vector.",
+        text: "\\(10000^{-1/2}=\\frac{1}{100}\\)",
         isCorrect: true,
       },
       {
-        text: "Position embeddings are added to token embeddings before attention.",
-        isCorrect: true,
+        text: "\\(10000^{-1}=\\frac{1}{10000}\\)",
+        isCorrect: false,
       },
       {
-        text: "The maximum usable position is limited by the range seen during training.",
-        isCorrect: true,
+        text: "\\(10000^{-1/4}=\\frac{1}{10}\\)",
+        isCorrect: false,
       },
       {
-        text: "The embeddings are optimized via gradient descent together with other parameters.",
-        isCorrect: true,
+        text: "\\(10000^{1/2}=100\\)",
+        isCorrect: false,
       },
     ],
     explanation:
-      "Learned absolute embeddings treat positions like tokens, but they do not extrapolate beyond trained sequence lengths. Core ideas: Each position index is associated with a trainable embedding vector; Position embeddings are added to token embeddings before attention; The maximum usable position is limited by the range seen during training; The embeddings are optimized via gradient descent together with other parameters.",
+      "Substituting \\(d_{\\text{model}}=4\\) and \\(i=1\\) gives the exponent \\(-2/4=-1/2\\), so \\(10000^{-1/2}=1/\\sqrt{10000}=1/100\\). The other choices come from using the wrong exponent, dropping the minus sign, or confusing the fourth root with the square root.",
   },
 
   {
     id: "cme295-lect2-q03",
     chapter: 2,
-    difficulty: "easy",
+    difficulty: "medium",
     prompt:
-      "Which statements correctly characterize sinusoidal (hard-coded) position embeddings?",
+      "For one sinusoidal 2D pair, why does comparing a position with itself produce the largest possible pairwise dot-product contribution?",
     options: [
       {
-        text: "They use sine and cosine functions with different frequencies across dimensions.",
+        text: "The offset is zero, so the contribution becomes \\(\\cos(0)=1\\).",
         isCorrect: true,
       },
       {
-        text: "They allow extrapolation to sequence lengths not seen during training.",
-        isCorrect: true,
+        text: "The offset is zero, so the contribution becomes \\(\\sin(0)=1\\).",
+        isCorrect: false,
       },
       {
-        text: "Their dot products depend on the relative distance between positions.",
-        isCorrect: true,
+        text: "The frequency \\(\\omega_i\\) becomes zero whenever the two positions match.",
+        isCorrect: false,
       },
       {
-        text: "They match the embedding dimensionality of token representations.",
-        isCorrect: true,
+        text: "The attention softmax forces every diagonal query-key score to equal one.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "Sinusoidal embeddings encode position using fixed trigonometric functions that naturally reflect relative distances. Core ideas: they use sine and cosine functions with different frequencies across dimensions; they allow extrapolation to sequence lengths not seen during training; Their dot products depend on the relative distance between positions; they match the embedding dimensionality of token representations.",
+      "The relevant identity reduces the pair contribution to \\(\\cos(\\omega_i(m-n))\\), and when \\(m=n\\), the argument is zero. \\(\\sin(0)\\) is zero rather than one, \\(\\omega_i\\) is fixed by dimension rather than by equality of positions, and the softmax does not impose a fixed diagonal value.",
   },
 
   {
     id: "cme295-lect2-q04",
     chapter: 2,
-    difficulty: "medium",
+    difficulty: "easy",
     prompt:
-      "Which statements about relative position information in attention are correct?",
+      "In scaled dot-product attention, a logit uses \\(q \\cdot k / \\sqrt{d_k}\\) before the softmax. If \\(q \\cdot k=16\\), \\(d_k=64\\), and no positional bias is added, what is the scaled logit?",
     options: [
       {
-        text: "Relative position information can be injected directly into attention score computation.",
+        text: "\\(2\\)",
         isCorrect: true,
       },
       {
-        text: "Bias terms added to query–key scores can encode distance information.",
-        isCorrect: true,
+        text: "\\(16\\)",
+        isCorrect: false,
       },
       {
-        text: "Relative approaches focus on how far apart tokens are rather than their absolute indices.",
-        isCorrect: true,
+        text: "\\(128\\)",
+        isCorrect: false,
       },
       {
-        text: "Relative formulations align more directly with how similarity is used in attention.",
-        isCorrect: true,
+        text: "\\(\\frac{1}{2}\\)",
+        isCorrect: false,
       },
     ],
     explanation:
-      "Since attention relies on similarity scores, encoding relative distance directly in those scores is often more natural. Core ideas: Relative position information can be injected directly into attention score computation; Bias terms added to query–key scores can encode distance information; Relative approaches focus on how far apart tokens are rather than their absolute indices; Relative formulations align more directly with how similarity is used in attention.",
+      "The scaling denominator is \\(\\sqrt{64}=8\\), so the logit is \\(16/8=2\\). The other values come from forgetting the square root, multiplying by the scale, or dividing by the wrong quantity.",
   },
 
   {
@@ -128,27 +127,27 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "medium",
     prompt:
-      "Which properties apply to the T5 relative position bias mechanism?",
+      "A T5-style relative position bias can be written as \\(\\ell_{mn}=q_m k_n^T/\\sqrt{d_k}+b_{h,\\operatorname{bucket}(n-m)}\\) before the softmax. Which statements are correct?",
     options: [
       {
-        text: "It adds a learned bias term to the attention logits.",
+        text: "The bias changes attention logits before normalization, so the softmax still produces weights that sum to one.",
         isCorrect: true,
       },
       {
-        text: "Distances between positions are bucketized before bias lookup.",
+        text: "Two token pairs in the same distance bucket and attention head receive the same learned bias term.",
         isCorrect: true,
       },
       {
-        text: "The bias is added inside the softmax normalization.",
-        isCorrect: true,
+        text: "The bias is multiplied into the value vectors after the softmax has already computed attention weights.",
+        isCorrect: false,
       },
       {
-        text: "Different attention heads can learn different bias values.",
-        isCorrect: true,
+        text: "The bias is a learned absolute position vector that is added once to the input token embedding.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "T5 introduces learnable relative biases per head, enabling flexible distance-aware attention. Core ideas: it adds a learned bias term to the attention logits; Distances between positions are bucketized before bias lookup; The bias is added inside the softmax normalization; Different attention heads can learn different bias values.",
+      "The T5 mechanism modifies the score that enters the softmax, so the resulting attention weights are still normalized probabilities. It is a relative, bucketized, head-specific logit bias, not a post-softmax value multiplier or an absolute input embedding.",
   },
 
   {
@@ -156,143 +155,143 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "medium",
     prompt:
-      "Which statements are correct about Attention with Linear Biases (ALiBi)?",
+      "Suppose an Attention with Linear Biases (ALiBi) head uses bias \\(-a|m-n|\\) with \\(a=0.25\\). Which calculations are correct?",
     options: [
       {
-        text: "ALiBi uses a deterministic linear function of relative distance.",
+        text: "A token pair at distance \\(8\\) receives bias \\(-2.0\\).",
         isCorrect: true,
       },
       {
-        text: "It does not rely on learned position embeddings.",
+        text: "A token pair at distance \\(2\\) receives bias \\(-0.5\\), so the distance-8 pair is penalized \\(1.5\\) logits more.",
         isCorrect: true,
       },
       {
-        text: "The bias grows linearly as positions become farther apart.",
-        isCorrect: true,
+        text: "A token pair at distance \\(8\\) receives bias \\(+2.0\\), increasing its logit relative to nearby tokens.",
+        isCorrect: false,
       },
       {
-        text: "It is designed to support length extrapolation at inference time.",
-        isCorrect: true,
+        text: "The penalty is the same for distances \\(2\\) and \\(8\\) because ALiBi ignores the magnitude of the offset.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "ALiBi encodes distance with simple linear penalties, avoiding learned embeddings while enabling long-context generalization. Core ideas: ALiBi uses a deterministic linear function of relative distance; it does not rely on learned position embeddings; The bias grows linearly as positions become farther apart; it is designed to support length extrapolation at inference time.",
+      "With the stated slope, distance \\(8\\) gives \\(-0.25\\times 8=-2.0\\), and distance \\(2\\) gives \\(-0.5\\). The sign matters because ALiBi is used as a distance penalty, and its magnitude changes linearly with relative distance.",
   },
 
   {
     id: "cme295-lect2-q07",
     chapter: 2,
-    difficulty: "medium",
+    difficulty: "hard",
     prompt:
-      "Which statements correctly describe Rotary Position Embeddings (RoPE)?",
+      "Rotary Position Embeddings (RoPE) use 2D rotation blocks. If \\(R(\\pi/2)=\\begin{bmatrix}0&-1\\\\1&0\\end{bmatrix}\\) and \\(x=(2,1)\\), which statements are correct?",
     options: [
       {
-        text: "RoPE rotates query and key vectors as a function of position.",
+        text: "\\(R(\\pi/2)x=(-1,2)\\).",
         isCorrect: true,
       },
       {
-        text: "Rotations are implemented using block-wise 2D rotation matrices.",
+        text: "The vector norm remains \\(\\sqrt{5}\\) after rotation.",
         isCorrect: true,
       },
       {
-        text: "The resulting attention scores depend on relative position differences.",
-        isCorrect: true,
+        text: "\\(R(\\pi/2)x=(1,-2)\\).",
+        isCorrect: false,
       },
       {
-        text: "RoPE is widely used in modern large language models.",
-        isCorrect: true,
+        text: "The vector norm becomes \\(3\\) because rotation adds the coordinates.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "RoPE integrates positional information directly into attention via rotations, making similarity depend on relative offsets. Core ideas: RoPE rotates query and key vectors as a function of position; Rotations are implemented using block-wise 2D rotation matrices; The resulting attention scores depend on relative position differences; RoPE is widely used in modern large language models.",
+      "Multiplying by the rotation matrix gives \\((0\\cdot2-1\\cdot1, 1\\cdot2+0\\cdot1)=(-1,2)\\). Rotations preserve Euclidean norm, so the length stays \\(\\sqrt{2^2+1^2}=\\sqrt{5}\\); the other vector has the wrong rotation direction, and summing coordinates is not how norms transform.",
   },
 
   {
     id: "cme295-lect2-q08",
     chapter: 2,
-    difficulty: "hard",
+    difficulty: "medium",
     prompt:
-      "Which statements about the mathematical intuition of RoPE are correct?",
+      "Layer normalization over \\(x=(1,3)\\) uses \\(\\mu=\\frac{1}{d}\\sum_j x_j\\) and variance \\(\\frac{1}{d}\\sum_j(x_j-\\mu)^2\\). With \\(\\epsilon=0\\), which intermediate quantities are correct?",
     options: [
       {
-        text: "Rotating both queries and keys preserves vector norms.",
+        text: "The mean is \\(2\\).",
         isCorrect: true,
       },
       {
-        text: "Dot products after rotation encode relative position through angle differences.",
+        text: "The variance is \\(1\\).",
         isCorrect: true,
       },
       {
-        text: "Higher-frequency dimensions vary faster across positions.",
-        isCorrect: true,
+        text: "The centered vector is \\((1,-1)\\).",
+        isCorrect: false,
       },
       {
-        text: "The construction generalizes sinusoidal embeddings into the attention space.",
-        isCorrect: true,
+        text: "With \\(\\gamma=(2,2)\\) and \\(\\beta=(0,0)\\), the final output is \\((-1,1)\\).",
+        isCorrect: false,
       },
     ],
     explanation:
-      "RoPE extends sinusoidal ideas by embedding them directly into query–key interactions via rotations. Core ideas: Rotating both queries and keys preserves vector norms; Dot products after rotation encode relative position through angle differences; Higher-frequency dimensions vary faster across positions; The construction generalizes sinusoidal embeddings into the attention space.",
+      "The average of \\(1\\) and \\(3\\) is \\(2\\), and the squared deviations are \\(1\\) and \\(1\\), so the variance is \\(1\\). The centered vector is \\((-1,1)\\), and multiplying the normalized vector by \\(\\gamma=(2,2)\\) would give \\((-2,2)\\), not \\((-1,1)\\).",
   },
 
   {
     id: "cme295-lect2-q09",
     chapter: 2,
-    difficulty: "medium",
+    difficulty: "hard",
     prompt:
-      "Which statements about attention weight decay with RoPE are correct?",
+      "RMSNorm over \\(x=(3,4)\\) with \\(\\gamma=(1,1)\\) and \\(\\epsilon=0\\) divides by \\(\\sqrt{\\frac{1}{d}\\sum_j x_j^2}\\). Which statements are correct?",
     options: [
       {
-        text: "Attention scores exhibit a long-term decay as distance increases.",
+        text: "The root mean square is \\(\\frac{5}{\\sqrt{2}}\\).",
         isCorrect: true,
       },
       {
-        text: "The decay is not strictly monotonic due to oscillatory trigonometric components.",
+        text: "The normalized output is \\((\\frac{3\\sqrt{2}}{5}, \\frac{4\\sqrt{2}}{5})\\).",
         isCorrect: true,
       },
       {
-        text: "Closer tokens tend to have higher similarity than distant ones.",
+        text: "The squared norm of the normalized output is \\(2\\).",
         isCorrect: true,
       },
       {
-        text: "Upper bounds on similarity can be derived analytically.",
-        isCorrect: true,
+        text: "RMSNorm first subtracts the mean, producing \\((-0.5,0.5)\\) before scaling.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "RoPE yields attention behaviors where similarity weakens with distance, matching linguistic intuition. Core ideas: Attention scores exhibit a long-term decay as distance increases; The decay is not strictly monotonic due to oscillatory trigonometric components; Closer tokens tend to have higher similarity than distant ones; Upper bounds on similarity can be derived analytically.",
+      "The RMS is \\(\\sqrt{(9+16)/2}=5/\\sqrt{2}\\), so each coordinate is multiplied by \\(\\sqrt{2}/5\\). RMSNorm does not do LayerNorm's mean subtraction step, and after dividing by the RMS the average squared component is one, giving squared norm \\(d=2\\).",
   },
 
   {
     id: "cme295-lect2-q10",
     chapter: 2,
-    difficulty: "easy",
+    difficulty: "hard",
     prompt:
-      "Which statements correctly describe the purpose of layer normalization in transformers?",
+      "Assume full attention over length \\(n\\) uses \\(n^2\\) query-key score computations, while sliding-window attention uses roughly \\(n w\\) when each token attends to \\(w\\) keys. For \\(n=4096\\) and \\(w=128\\), which statements are correct?",
     options: [
       {
-        text: "It stabilizes training by normalizing activations.",
+        text: "Full attention uses \\(4096^2=16{,}777{,}216\\) score computations.",
         isCorrect: true,
       },
       {
-        text: "It reduces sensitivity to scale variations across dimensions.",
+        text: "Sliding-window attention uses about \\(4096\\times128=524{,}288\\) score computations.",
         isCorrect: true,
       },
       {
-        text: "It improves convergence speed during optimization.",
+        text: "The full-attention count is \\(32\\) times the sliding-window count under these assumptions.",
         isCorrect: true,
       },
       {
-        text: "It introduces learnable scaling and shifting parameters.",
-        isCorrect: true,
+        text: "Sliding-window attention uses \\(32\\) times more score computations than full attention in this setup.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "Layer normalization standardizes activations per token, improving numerical stability and training dynamics. Core ideas: it stabilizes training by normalizing activations; it reduces sensitivity to scale variations across dimensions; it improves convergence speed during optimization; it introduces learnable scaling and shifting parameters.",
+      "\\(4096^2\\) is about 16.8 million, while \\(4096\\times128\\) is about 0.52 million. Dividing the two counts gives \\(4096/128=32\\), so the stated windowed pattern is cheaper, not more expensive.",
   },
 
   // ============================================================
-  // Q11–Q25: ALL TRUE (4 correct answers)
+  // Q11-Q20: MATH-FOCUSED REPLACEMENTS CONTINUED
   // ============================================================
 
   {
@@ -300,55 +299,55 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe limitations of learned absolute position embeddings?",
+      "For an autoregressive key-value cache, approximate stored elements as \\(2nh_{kv}d_{head}\\), counting both keys and values. With \\(n=2048\\), \\(d_{head}=128\\), fp16 storage at 2 bytes per element, and 32 query heads, which statements are correct?",
     options: [
       {
-        text: "They cannot naturally extrapolate to sequence lengths unseen during training.",
+        text: "Multi-head attention with \\(h_{kv}=32\\) uses \\(33{,}554{,}432\\) bytes, or 32 MiB.",
         isCorrect: true,
       },
       {
-        text: "They may encode dataset-specific positional biases.",
+        text: "Multi-query attention with \\(h_{kv}=1\\) uses 1 MiB under the same assumptions.",
         isCorrect: true,
       },
       {
-        text: "They require a fixed maximum sequence length during training.",
+        text: "Grouped-query attention with \\(h_{kv}=8\\) uses 8 MiB under the same assumptions.",
         isCorrect: true,
       },
       {
-        text: "They are learned jointly with token embeddings via gradient descent.",
-        isCorrect: true,
+        text: "Multi-query attention uses the same cache size as full multi-head attention because the query head count remains 32.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "Learned absolute position embeddings are tied to the training distribution and sequence length, limiting generalization. Core ideas: they cannot naturally extrapolate to sequence lengths unseen during training; they may encode dataset-specific positional biases; they require a fixed maximum sequence length during training; they are learned jointly with token embeddings via gradient descent.",
+      "The cache size scales with the number of key/value heads, not merely with the number of query heads. Plugging in \\(h_{kv}=32,8,1\\) gives 32 MiB, 8 MiB, and 1 MiB respectively, which is why MQA and GQA reduce decoding memory.",
   },
 
   {
     id: "cme295-lect2-q12",
     chapter: 2,
-    difficulty: "medium",
+    difficulty: "easy",
     prompt:
-      "Which statements correctly explain why relative position information is more natural for attention mechanisms?",
+      "In BERT-style Masked Language Modeling (MLM), 15% of input tokens are selected for prediction; of those selected tokens, 80% become [MASK], 10% become random tokens, and 10% are left unchanged. For 1000 input tokens, which statements are correct?",
     options: [
       {
-        text: "Attention compares pairs of tokens via similarity scores.",
+        text: "150 tokens are selected for the MLM prediction objective.",
         isCorrect: true,
       },
       {
-        text: "Relative distance directly affects query–key interactions.",
+        text: "120 tokens are replaced by [MASK].",
         isCorrect: true,
       },
       {
-        text: "Absolute indices are less relevant than pairwise offsets.",
+        text: "30 selected tokens are either random replacements or left unchanged.",
         isCorrect: true,
       },
       {
-        text: "Injecting position info into attention aligns with the dot-product formulation.",
-        isCorrect: true,
+        text: "All 1000 tokens directly contribute to the MLM loss because the model is bidirectional.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "Attention fundamentally operates on token pairs, making relative position information a better inductive bias. Core ideas: Attention compares pairs of tokens via similarity scores; Relative distance directly affects query–key interactions; Absolute indices are less relevant than pairwise offsets; Injecting position info into attention aligns with the dot-product formulation.",
+      "Fifteen percent of 1000 is 150; 80% of 150 is 120, and the two 10% branches contribute 15 tokens each. Bidirectionality gives contextual information, but the MLM prediction loss is applied to the selected subset, not every token.",
   },
 
   {
@@ -356,27 +355,27 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "hard",
     prompt:
-      "Which properties of sinusoidal position embeddings enable relative-distance awareness?",
+      "For a single RoPE 2D block, let \\(q=k=(1,0)\\), \\(\\theta=\\pi/3\\), and positions \\(m=2\\), \\(n=5\\). Which calculations are consistent with the rotated query-key dot product?",
     options: [
       {
-        text: "Dot products between embeddings depend on position differences.",
+        text: "The relative angle is \\((n-m)\\theta=\\pi\\).",
         isCorrect: true,
       },
       {
-        text: "Trigonometric identities link cosine and sine of offsets.",
+        text: "The resulting dot product is \\(\\cos(\\pi)=-1\\).",
         isCorrect: true,
       },
       {
-        text: "Multiple frequencies encode both short- and long-range structure.",
+        text: "Using \\((m-n)\\theta=-\\pi\\) gives the same cosine value.",
         isCorrect: true,
       },
       {
-        text: "Cosine similarity peaks when positions are identical.",
+        text: "The score depends on the position offset here rather than on the absolute indices alone.",
         isCorrect: true,
       },
     ],
     explanation:
-      "Sinusoidal embeddings are constructed so that similarity reflects relative position via trigonometric structure. Core ideas: Dot products between embeddings depend on position differences; Trigonometric identities link cosine and sine of offsets; Multiple frequencies encode both short- and long-range structure; Cosine similarity peaks when positions are identical.",
+      "RoPE's rotation algebra makes the dot product depend on an angle difference, so the relevant offset is \\(5-2=3\\) blocks of \\(\\pi/3\\). Because cosine is even, \\(\\cos(\\pi)\\) and \\(\\cos(-\\pi)\\) agree, illustrating why relative distance enters the score.",
   },
 
   {
@@ -384,52 +383,55 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "easy",
     prompt:
-      "Which statements correctly describe where positional encodings are applied in the original Transformer?",
+      "The BERT model-size table gives BERT-Tiny \\((L=2,H=128,A=2)\\), BERT-Small \\((L=4,H=512,A=8)\\), BERT-Base \\((L=12,H=768,A=12)\\), and BERT-Large \\((L=24,H=1024,A=16)\\). Which calculations are correct?",
     options: [
       {
-        text: "They are added to token embeddings before entering attention layers.",
+        text: "BERT-Base has per-head hidden size \\(768/12=64\\).",
         isCorrect: true,
       },
       {
-        text: "They have the same dimensionality as token embeddings.",
+        text: "BERT-Large has per-head hidden size \\(1024/16=64\\).",
         isCorrect: true,
       },
       {
-        text: "They affect attention indirectly via input representations.",
+        text: "BERT-Small has per-head hidden size \\(512/8=64\\).",
         isCorrect: true,
       },
       {
-        text: "They are applied identically across all attention heads.",
+        text: "BERT-Base has \\(12/2=6\\) times as many layers as BERT-Tiny.",
         isCorrect: true,
       },
     ],
     explanation:
-      "Original positional encodings are added to inputs, influencing attention only indirectly. Core ideas: they are added to token embeddings before entering attention layers; they have the same dimensionality as token embeddings; they affect attention indirectly via input representations; they are applied identically across all attention heads.",
+      "The table's \\(H/A\\) ratio is 64 for the listed Small, Base, and Large configurations, matching the common per-head dimension. The layer comparison is also direct: 12 layers in Base divided by 2 layers in Tiny gives a factor of 6.",
   },
 
   {
     id: "cme295-lect2-q15",
     chapter: 2,
-    difficulty: "medium",
+    difficulty: "easy",
     prompt:
-      "Which statements correctly describe the motivation behind Rotary Position Embeddings (RoPE)?",
+      "Next Sentence Prediction (NSP) samples sentence pairs so that 50% are consecutive and 50% are not. In a balanced batch of 512 sentence pairs, which statements are correct?",
     options: [
       {
-        text: "They inject positional information directly into attention computation.",
+        text: "The expected number of consecutive pairs is 256.",
         isCorrect: true,
       },
       {
-        text: "They encode relative position through query–key interactions.",
+        text: "The expected number of non-consecutive pairs is 256.",
         isCorrect: true,
       },
       {
-        text: "They avoid learning explicit position embeddings.",
+        text: "The positive-class prior is \\(0.5\\).",
         isCorrect: true,
       },
-      { text: "They preserve vector norms under rotation.", isCorrect: true },
+      {
+        text: "A classifier that always predicts consecutive would have 50% accuracy on this balanced construction.",
+        isCorrect: true,
+      },
     ],
     explanation:
-      "RoPE rotates queries and keys so that attention scores naturally depend on relative positions. Core ideas: they inject positional information directly into attention computation; they encode relative position through query–key interactions; they avoid learning explicit position embeddings; they preserve vector norms under rotation.",
+      "Half of 512 is 256, so the intended construction has equal positive and negative examples in expectation. Because the labels are balanced, a constant classifier that always chooses one class gets only half correct, which is why the task is a binary classification proxy rather than a generation objective.",
   },
 
   {
@@ -437,131 +439,139 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "hard",
     prompt:
-      "Which statements correctly describe the mathematical structure of RoPE in higher dimensions?",
+      "In distillation, a student distribution \\(s\\) can be trained against a teacher distribution \\(t\\). If \\(t=(0,1,0)\\) and \\(s=(0.2,0.6,0.2)\\), which statements are correct?",
     options: [
       {
-        text: "The embedding dimension is partitioned into 2D blocks.",
+        text: "The hard-label cross-entropy is \\(-\\log(0.6)\\).",
         isCorrect: true,
       },
       {
-        text: "Each block is rotated independently using a rotation matrix.",
+        text: "For this one-hot teacher, \\(D_{KL}(t\\|s)=-\\log(0.6)\\) because the teacher entropy is zero.",
         isCorrect: true,
       },
       {
-        text: "Rotation angles vary across dimensions via different frequencies.",
+        text: "For a soft teacher such as \\(t=(0.7,0.2,0.1)\\), the KL term is \\(\\sum_i t_i\\log(t_i/s_i)\\).",
         isCorrect: true,
       },
       {
-        text: "The construction generalizes 2D rotations to higher-dimensional spaces.",
+        text: "Matching the full teacher distribution can transfer more information than matching only the argmax class.",
         isCorrect: true,
       },
     ],
     explanation:
-      "RoPE extends 2D rotations to higher dimensions by applying block-wise rotations with varying frequencies. Core ideas: The embedding dimension is partitioned into 2D blocks; Each block is rotated independently using a rotation matrix; Rotation angles vary across dimensions via different frequencies; The construction generalizes 2D rotations to higher-dimensional spaces.",
+      "With a one-hot teacher on the second class, cross-entropy reduces to the negative log probability the student assigns to that class. Soft distillation generalizes this by comparing full probability distributions with KL divergence, preserving information about non-argmax classes that hard labels discard.",
   },
 
   {
     id: "cme295-lect2-q17",
     chapter: 2,
-    difficulty: "medium",
-    prompt: "Which statements about RoPE-induced attention decay are correct?",
+    difficulty: "hard",
+    prompt:
+      "A sinusoidal positional embedding has \\(d=6\\), so it contains three sine/cosine frequency pairs. If two positions are identical, which statements are correct?",
     options: [
       {
-        text: "Attention similarity has an upper bound that decays with distance.",
+        text: "Each 2D pair contributes \\(\\cos(0)=1\\) to the dot product.",
         isCorrect: true,
       },
       {
-        text: "The decay is oscillatory due to trigonometric functions.",
+        text: "The unnormalized dot product between the two positional embeddings is \\(3\\).",
         isCorrect: true,
       },
       {
-        text: "Nearby tokens are generally more similar than distant ones.",
+        text: "If each embedding has norm \\(\\sqrt{3}\\), their cosine similarity is \\(3/(\\sqrt{3}\\sqrt{3})=1\\).",
         isCorrect: true,
       },
       {
-        text: "The decay behavior can be analyzed mathematically.",
+        text: "For non-identical positions, each pair contributes a term of the form \\(\\cos(\\omega_i(m-n))\\).",
         isCorrect: true,
       },
     ],
     explanation:
-      "RoPE induces a distance-aware similarity structure with long-term decay and oscillations. Core ideas: Attention similarity has an upper bound that decays with distance; The decay is oscillatory due to trigonometric functions; Nearby tokens are generally more similar than distant ones; The decay behavior can be analyzed mathematically.",
+      "Each sine/cosine pair has unit norm and contributes one when the positions match, so three pairs give a dot product of three. Normalizing by the two norms gives cosine similarity one, while nonzero offsets introduce the frequency-dependent cosine terms that make relative distance matter.",
   },
 
   {
     id: "cme295-lect2-q18",
     chapter: 2,
-    difficulty: "easy",
+    difficulty: "medium",
     prompt:
-      "Which statements correctly describe the role of residual connections with normalization?",
+      "A decoder has 32 query heads. Full multi-head attention uses 32 key/value heads, grouped-query attention (GQA) uses 8 key/value heads, and multi-query attention (MQA) uses 1 key/value head. Which cache-ratio statements are correct?",
     options: [
       {
-        text: "They help preserve gradient flow in deep networks.",
+        text: "GQA uses \\(8/32=1/4\\) as many key/value cache entries as full multi-head attention.",
         isCorrect: true,
       },
       {
-        text: "They combine sublayer outputs with the original input.",
+        text: "MQA uses \\(1/32\\) as many key/value cache entries as full multi-head attention.",
         isCorrect: true,
       },
       {
-        text: "They are used together with normalization for stability.",
+        text: "GQA with 8 key/value heads uses 8 times as many key/value cache entries as MQA.",
         isCorrect: true,
       },
       {
-        text: "They reduce training degradation as depth increases.",
+        text: "The query head count can remain 32 even when key/value heads are shared.",
         isCorrect: true,
       },
     ],
     explanation:
-      "Residual connections stabilize deep transformer training and work closely with normalization layers. Core ideas: they help preserve gradient flow in deep networks; they combine sublayer outputs with the original input; they are used together with normalization for stability; they reduce training degradation as depth increases.",
+      "The memory reduction tracks how many key/value heads are stored, not how many query projections are used. GQA sits between full MHA and MQA: it is cheaper than storing 32 K/V heads, but it stores more K/V states than the single shared set used by MQA.",
   },
 
   {
     id: "cme295-lect2-q19",
     chapter: 2,
-    difficulty: "medium",
+    difficulty: "hard",
     prompt:
-      "Which statements correctly describe differences between post-norm and pre-norm Transformers?",
+      "A sliding-window attention layer lets each token directly attend up to 2 positions left and 2 positions right, plus itself. Ignoring sequence boundaries, which receptive-field calculations are correct after stacking local-attention layers?",
     options: [
       {
-        text: "Post-norm applies normalization after the residual addition.",
+        text: "After one layer, a token has direct access to positions at offsets from \\(-2\\) to \\(+2\\).",
         isCorrect: true,
       },
       {
-        text: "Pre-norm applies normalization before the sublayer.",
+        text: "After two layers, information can travel as far as offset \\(4\\) through intermediate tokens.",
         isCorrect: true,
       },
       {
-        text: "Pre-norm improves training stability for deep models.",
+        text: "After three layers, the effective offset reach is up to \\(6\\) on each side.",
         isCorrect: true,
       },
       {
-        text: "Modern large models typically prefer pre-norm.",
+        text: "After three layers, the effective receptive field can include \\(13\\) positions counting the center token.",
         isCorrect: true,
       },
     ],
     explanation:
-      "Pre-norm Transformers are more stable at scale and are now the standard choice. Core ideas: Post-norm applies normalization after the residual addition; Pre-norm applies normalization before the sublayer; Pre-norm improves training stability for deep models; Modern large models typically prefer pre-norm.",
+      "Local attention does not give global access in one layer, but stacked layers let information hop through neighboring tokens. With radius 2, each layer can expand reach by roughly 2 positions per side, so three layers reach offsets \\(-6\\) through \\(+6\\), or 13 positions including the center.",
   },
 
   {
     id: "cme295-lect2-q20",
     chapter: 2,
-    difficulty: "easy",
-    prompt: "Which statements correctly describe RMSNorm?",
+    difficulty: "hard",
+    prompt:
+      "For an activation vector \\(x\\in\\mathbb{R}^d\\), compare LayerNorm and RMSNorm. Which formula statements are correct?",
     options: [
       {
-        text: "It normalizes activations using root mean square.",
+        text: "LayerNorm uses \\(\\mu=\\frac{1}{d}\\sum_{j=1}^d x_j\\) as the per-token feature mean.",
         isCorrect: true,
       },
-      { text: "It omits the mean subtraction step.", isCorrect: true },
-      { text: "It learns a scaling parameter but no bias.", isCorrect: true },
       {
-        text: "It reduces parameter count compared to LayerNorm.",
+        text: "LayerNorm divides by \\(\\sqrt{\\frac{1}{d}\\sum_{j=1}^d(x_j-\\mu)^2+\\epsilon}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "RMSNorm divides by \\(\\sqrt{\\frac{1}{d}\\sum_{j=1}^d x_j^2+\\epsilon}\\) without subtracting the mean.",
+        isCorrect: true,
+      },
+      {
+        text: "Both methods can include a learned multiplicative scale \\(\\gamma\\).",
         isCorrect: true,
       },
     ],
     explanation:
-      "RMSNorm simplifies normalization while preserving performance and reducing parameters. Core ideas: it normalizes activations using root mean square; it omits the mean subtraction step; it learns a scaling parameter but no bias; it reduces parameter count compared to LayerNorm.",
+      "LayerNorm centers each token's feature vector and rescales it by its feature standard deviation, then typically applies learned scale and shift. RMSNorm keeps the rescaling idea but uses the root mean square directly, which omits mean subtraction and commonly omits the learned bias.",
   },
 
   {
@@ -1006,12 +1016,12 @@ export const stanfordCME295Lecture2Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Sliding window attention increases memory usage.",
-        isCorrect: false,
+        text: "Stacking local-attention layers can expand the effective receptive field beyond a single window.",
+        isCorrect: true,
       },
     ],
     explanation:
-      "Sparse attention reduces complexity but requires multiple layers for global context. Core ideas: Full self-attention has O(n²) complexity; Sparse attention reduces worst-case complexity. Common misconceptions: Local attention preserves global connectivity in a single layer; Sliding window attention increases memory usage.",
+      "Full attention forms pairwise query-key scores, so its cost grows quadratically with sequence length. Sparse or sliding-window attention can reduce the per-layer cost, and stacked local layers can pass information farther over depth, but one local layer still does not provide direct global connectivity.",
   },
 
   {
@@ -1021,7 +1031,10 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     prompt: "Which statements about RMSNorm vs LayerNorm are correct?",
     options: [
       { text: "RMSNorm removes mean subtraction.", isCorrect: true },
-      { text: "LayerNorm has fewer parameters.", isCorrect: false },
+      {
+        text: "LayerNorm subtracts the feature mean before scaling by a feature standard deviation.",
+        isCorrect: true,
+      },
       {
         text: "RMSNorm keeps performance comparable in practice.",
         isCorrect: true,
@@ -1032,7 +1045,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "RMSNorm simplifies normalization while retaining similar performance. Core ideas: RMSNorm removes mean subtraction; RMSNorm keeps performance comparable in practice. Common misconceptions: LayerNorm has fewer parameters; LayerNorm is avoided in Transformers because residual branches already normalize activations.",
+      "LayerNorm centers each token's feature vector and rescales it, while RMSNorm keeps the rescaling idea but skips mean subtraction. RMSNorm can be lighter while retaining comparable behavior in modern transformers, but LayerNorm is not made unnecessary by residual connections.",
   },
 
   {
@@ -1043,11 +1056,14 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     options: [
       { text: "GQA shares K/V projections within groups.", isCorrect: true },
       { text: "MQA shares K/V projections across all heads.", isCorrect: true },
-      { text: "MQA increases memory usage.", isCorrect: false },
+      {
+        text: "Both GQA and MQA reduce key/value cache memory relative to full multi-head attention.",
+        isCorrect: true,
+      },
       { text: "GQA eliminates query diversity.", isCorrect: false },
     ],
     explanation:
-      "Both methods reduce K/V redundancy while preserving query diversity. Core ideas: GQA shares K/V projections within groups; MQA shares K/V projections across all heads. Common misconceptions: MQA increases memory usage; GQA eliminates query diversity.",
+      "Both methods reduce key/value redundancy while preserving multiple query heads. MQA is the most aggressive sharing pattern, while GQA shares within groups; neither is meant to eliminate query diversity.",
   },
 
   {
@@ -1066,10 +1082,13 @@ export const stanfordCME295Lecture2Questions: Question[] = [
         isCorrect: false,
       },
       { text: "RoPE supports length extrapolation.", isCorrect: true },
-      { text: "T5 relative bias cannot be extended.", isCorrect: false },
+      {
+        text: "Attention with Linear Biases (ALiBi) is designed to extrapolate through a deterministic distance bias.",
+        isCorrect: true,
+      },
     ],
     explanation:
-      "Hardcoded and relative methods generalize better to unseen lengths. Core ideas: Sinusoidal encodings extrapolate naturally to longer sequences; RoPE supports length extrapolation. Common misconceptions: Learned absolute embeddings extrapolate automatically; T5 relative bias cannot be extended.",
+      "Formula-based and relative-position methods are less tied to a fixed learned table of absolute positions. Learned absolute embeddings do not automatically provide vectors beyond their trained range, while sinusoidal encodings, RoPE, and ALiBi are all motivated partly by better behavior outside the training context length.",
   },
 
   {
@@ -1082,12 +1101,18 @@ export const stanfordCME295Lecture2Questions: Question[] = [
         text: "They are easier to scale with next-token prediction.",
         isCorrect: true,
       },
-      { text: "They require NSP-style objectives.", isCorrect: false },
+      {
+        text: "They use causal masking so each generated position cannot attend to future tokens.",
+        isCorrect: true,
+      },
       { text: "They dominate modern LLM architectures.", isCorrect: true },
-      { text: "They use bidirectional attention.", isCorrect: false },
+      {
+        text: "They remove cross-attention unless a separate encoder-decoder variant is intentionally built.",
+        isCorrect: true,
+      },
     ],
     explanation:
-      "Decoder-only models scale well with simple objectives and causal attention. Core ideas: they are easier to scale with next-token prediction; they dominate modern LLM architectures. Common misconceptions: they require NSP-style objectives; they use bidirectional attention.",
+      "Decoder-only models align naturally with next-token prediction and generation, which made them attractive for scaling modern large language models. They rely on causal self-attention rather than BERT-style bidirectional attention, and the plain decoder-only family does not need cross-attention to a separate encoder.",
   },
 
   {
@@ -1552,27 +1577,27 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "easy",
     prompt:
-      "Which statement best describes what the [CLS] token representation is typically used for in BERT?",
+      "Which statements correctly explain why a transformer needs an explicit position signal?",
     options: [
       {
-        text: "It is commonly fed into a classification head for sequence-level prediction.",
+        text: "Self-attention compares tokens as a set of query-key-value vectors rather than processing them one step at a time.",
         isCorrect: true,
       },
       {
-        text: "It is a special token that enforces causal masking in the encoder.",
-        isCorrect: false,
+        text: "Without a position signal, the attention computation has no built-in way to distinguish the same tokens in a different order.",
+        isCorrect: true,
       },
       {
-        text: "It is only used to separate sentence A from sentence B.",
-        isCorrect: false,
+        text: "Adding or injecting position information lets the model make similarity depend partly on order or distance.",
+        isCorrect: true,
       },
       {
-        text: "It is ignored by self-attention and only used during fine-tuning.",
-        isCorrect: false,
+        text: "The position signal can be supplied at the input embedding level or directly inside attention logits or query-key interactions.",
+        isCorrect: true,
       },
     ],
     explanation:
-      "The [CLS] embedding is designed as an aggregate sequence representation and is often used for sentence/sequence classification. Core idea: it is commonly fed into a classification head for sequence-level prediction. Common misconceptions: it is a special token that enforces causal masking in the encoder; it is only used to separate sentence A from sentence B; it is ignored by self-attention and only used during fine-tuning.",
+      "Self-attention itself is not a recurrent scan, so order must enter through an explicit mechanism. The original transformer added position encodings to inputs, while later approaches such as T5 bias, ALiBi, and RoPE move positional effects closer to the attention score calculation.",
   },
 
   {
@@ -1580,27 +1605,27 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "medium",
     prompt:
-      "Which statement correctly distinguishes encoder-only from decoder-only transformers?",
+      "A transformer was trained with learned absolute position embeddings for positions 1 through 512 and is then asked to process 1024-token inputs. Which statements correctly diagnose the position-embedding issue?",
     options: [
       {
-        text: "Encoder-only models are typically bidirectional, while decoder-only models are typically causal.",
+        text: "The learned embedding table directly supplies vectors only for the positions it was trained or parameterized to cover.",
         isCorrect: true,
       },
       {
-        text: "Encoder-only models require cross-attention layers by definition.",
-        isCorrect: false,
+        text: "A formula-based sinusoidal encoding can be evaluated for positions beyond those seen during training.",
+        isCorrect: true,
       },
       {
-        text: "Decoder-only models cannot be trained with next-token prediction.",
-        isCorrect: false,
+        text: "Relative-position methods avoid relying only on a separate learned vector for each absolute index.",
+        isCorrect: true,
       },
       {
-        text: "Decoder-only models always include a separate encoder for inputs.",
-        isCorrect: false,
+        text: "A learned absolute table may also absorb training-set-specific positional regularities rather than a clean distance rule.",
+        isCorrect: true,
       },
     ],
     explanation:
-      "Encoder-only models attend both left and right; decoder-only models use causal masking for autoregressive generation. Core idea: Encoder-only models are typically bidirectional, while decoder-only models are typically causal. Common misconceptions: Encoder-only models require cross-attention layers by definition; Decoder-only models cannot be trained with next-token prediction; Decoder-only models always include a separate encoder for inputs.",
+      "Learned absolute embeddings are simple and trainable, but they tie position handling to a finite table and the training distribution. The lecture contrasts that with hard-coded sinusoidal functions and relative or attention-level methods, which are motivated partly by extrapolation and distance-aware attention.",
   },
 
   {
@@ -1634,27 +1659,28 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     id: "cme295-lect2-q79",
     chapter: 2,
     difficulty: "medium",
-    prompt: "Which statement about T5 relative position bias is correct?",
+    prompt:
+      "Which statements correctly distinguish T5-style relative position bias from Rotary Position Embeddings (RoPE)?",
     options: [
       {
-        text: "It adds a learnable bias (often via bucketized distances) directly to attention logits.",
+        text: "T5-style bias adds learned distance-dependent terms to attention logits before the softmax.",
         isCorrect: true,
       },
       {
-        text: "It rotates queries and keys using deterministic trigonometric matrices.",
-        isCorrect: false,
+        text: "T5-style bias can bucket relative offsets so several distances share a learned bias value.",
+        isCorrect: true,
       },
       {
-        text: "It encodes position only by modifying token embeddings at the input layer.",
-        isCorrect: false,
+        text: "RoPE rotates query and key vectors, making their dot product depend on relative angle differences.",
+        isCorrect: true,
       },
       {
-        text: "It forces attention to be local (sliding window) in every layer.",
-        isCorrect: false,
+        text: "Both methods act closer to the attention score computation than merely adding an absolute position vector to token embeddings.",
+        isCorrect: true,
       },
     ],
     explanation:
-      "T5-style relative position bias modifies the attention score computation with learned distance-dependent terms. Core idea: it adds a learnable bias (often via bucketized distances) directly to attention logits. Common misconceptions: it rotates queries and keys using deterministic trigonometric matrices; it encodes position only by modifying token embeddings at the input layer; it forces attention to be local (sliding window) in every layer.",
+      "T5 and RoPE both move positional information into the attention mechanism, but they do it differently. T5 adds learned relative logit biases, while RoPE changes the query-key geometry through deterministic rotations.",
   },
 
   {
@@ -1662,27 +1688,27 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "easy",
     prompt:
-      "Which statement about ALiBi (Attention with Linear Biases) is correct?",
+      "Which statements correctly characterize Attention with Linear Biases (ALiBi)?",
     options: [
       {
         text: "It uses a deterministic linear bias based on relative position distance.",
         isCorrect: true,
       },
       {
-        text: "It requires an encoder–decoder architecture to function.",
-        isCorrect: false,
+        text: "It is added to attention logits before the softmax rather than to value vectors after attention.",
+        isCorrect: true,
       },
       {
-        text: "It learns a separate embedding vector for each absolute position.",
-        isCorrect: false,
+        text: "It avoids learning a separate absolute embedding vector for every position index.",
+        isCorrect: true,
       },
       {
-        text: "It replaces the softmax normalization with a sigmoid.",
-        isCorrect: false,
+        text: "It was proposed as a way to train on shorter sequences while testing on longer ones.",
+        isCorrect: true,
       },
     ],
     explanation:
-      "ALiBi introduces a simple, fixed linear bias into attention scores to encourage distance-aware behavior and extrapolation. Core idea: it uses a deterministic linear bias based on relative position distance. Common misconceptions: it requires an encoder–decoder architecture to function; it learns a separate embedding vector for each absolute position; it replaces the softmax normalization with a sigmoid.",
+      "ALiBi keeps the attention softmax but changes the logits with a deterministic distance-based term. Its main contrast with learned absolute embeddings is that it uses a simple relative bias instead of a finite learned position table.",
   },
 
   {
@@ -1770,27 +1796,28 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     id: "cme295-lect2-q84",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Which statement about WordPiece tokenization is correct?",
+    prompt:
+      "Which statements correctly describe BERT-style input processing before the encoder stack?",
     options: [
       {
-        text: "It represents text using subword units learned from data rather than only whole words.",
+        text: "WordPiece tokenization represents text with learned subword units rather than only whole words.",
         isCorrect: true,
       },
       {
-        text: "It is a byte-level method with exactly 256 tokens.",
-        isCorrect: false,
+        text: "A [CLS] token is placed at the beginning so its contextualized representation can support sequence-level classification.",
+        isCorrect: true,
       },
       {
-        text: "It guarantees one token per word in all languages.",
-        isCorrect: false,
+        text: "[SEP] tokens mark boundaries between paired segments and the end of the input.",
+        isCorrect: true,
       },
       {
-        text: "It avoids using any merge rules or vocabulary learning.",
-        isCorrect: false,
+        text: "Token, position, and segment embeddings are added before the encoder processes the sequence.",
+        isCorrect: true,
       },
     ],
     explanation:
-      "WordPiece is a subword tokenizer: it learns a vocabulary of pieces that can compose many words efficiently. Core idea: it represents text using subword units learned from data rather than only whole words. Common misconceptions: it is a byte-level method with exactly 256 tokens; it guarantees one token per word in all languages; it avoids using any merge rules or vocabulary learning.",
+      "BERT's input pipeline combines tokenization and several embedding signals before bidirectional self-attention. WordPiece handles subwords, [CLS] and [SEP] provide structural tokens, and segment embeddings help mark sentence-pair membership.",
   },
 
   {
@@ -1798,27 +1825,27 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "medium",
     prompt:
-      "Which statement about BERT’s Next Sentence Prediction (NSP) objective is correct?",
+      "Which statements correctly describe the self-supervised signals used in original BERT pretraining?",
     options: [
       {
-        text: "It is a binary classification task that predicts whether sentence B follows sentence A in the corpus.",
+        text: "Next Sentence Prediction (NSP) is a binary classification task that predicts whether sentence B follows sentence A in the corpus.",
         isCorrect: true,
       },
       {
-        text: "It is required for BERT to perform masked language modeling.",
-        isCorrect: false,
+        text: "Masked Language Modeling (MLM) predicts selected original tokens from bidirectional context.",
+        isCorrect: true,
       },
       {
-        text: "It directly trains the model to generate the next sentence autoregressively.",
-        isCorrect: false,
+        text: "Both MLM labels and NSP labels can be constructed from raw text without manual task labels.",
+        isCorrect: true,
       },
       {
-        text: "It is implemented by adding causal masking to the encoder.",
-        isCorrect: false,
+        text: "The NSP classification signal is read from a sequence-level representation rather than from a causal decoder.",
+        isCorrect: true,
       },
     ],
     explanation:
-      "NSP classifies if a pair of sentences is consecutive; it is not an autoregressive generation objective. Core idea: it is a binary classification task that predicts whether sentence B follows sentence A in the corpus. Common misconceptions: it is required for BERT to perform masked language modeling; it directly trains the model to generate the next sentence autoregressively; it is implemented by adding causal masking to the encoder.",
+      "Original BERT combines MLM with NSP to learn contextual encoder representations from unlabeled corpora. MLM uses masked-token prediction, while NSP is a sentence-pair classification task rather than autoregressive next-sentence generation.",
   },
 
   {
@@ -1853,54 +1880,55 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     id: "cme295-lect2-q87",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Which statement about DistilBERT is correct?",
+    prompt: "Which statements about DistilBERT are correct?",
     options: [
       {
-        text: "It compresses BERT using knowledge distillation to keep performance while reducing size/latency.",
+        text: "It compresses BERT using knowledge distillation to keep performance while reducing size and latency.",
         isCorrect: true,
       },
       {
-        text: "It expands BERT by doubling the number of layers.",
-        isCorrect: false,
+        text: "It trains a smaller student model to mimic information from a larger teacher model.",
+        isCorrect: true,
       },
       {
-        text: "It replaces attention with recurrence to improve scaling.",
-        isCorrect: false,
+        text: "Its motivation is lower inference cost while retaining much of BERT's downstream usefulness.",
+        isCorrect: true,
       },
       {
-        text: "It can only be trained with labeled downstream datasets.",
-        isCorrect: false,
+        text: "It is an efficiency-oriented BERT-family variant rather than a replacement of self-attention with recurrence.",
+        isCorrect: true,
       },
     ],
     explanation:
-      "DistilBERT is a smaller student trained to mimic a larger teacher’s behavior (often BERT), improving efficiency. Core idea: it compresses BERT using knowledge distillation to keep performance while reducing size/latency. Common misconceptions: it expands BERT by doubling the number of layers; it replaces attention with recurrence to improve scaling; it can only be trained with labeled downstream datasets.",
+      "DistilBERT is presented as a compression strategy: a smaller student learns from a larger BERT-like teacher. The point is efficiency and latency reduction while preserving much of the representational value, not changing the model family to recurrence.",
   },
 
   {
     id: "cme295-lect2-q88",
     chapter: 2,
     difficulty: "hard",
-    prompt: "Which statement about KL divergence in distillation is correct?",
+    prompt:
+      "A teacher assigns probabilities \\(t=(0.7,0.2,0.1)\\), while a student assigns \\(s=(0.6,0.3,0.1)\\). Which statement best describes the KL-divergence term used in distillation?",
     options: [
       {
-        text: "It measures how well the student distribution approximates the teacher distribution.",
+        text: "It penalizes the student when its full probability distribution differs from the teacher's soft distribution, not only when the top class changes.",
         isCorrect: true,
       },
       {
-        text: "It is only defined when the teacher outputs hard one-hot labels.",
+        text: "It reduces to ordinary hard-label cross-entropy only because the teacher assigns nonzero probability to three classes.",
         isCorrect: false,
       },
       {
-        text: "It is the same as mean squared error on logits in all cases.",
+        text: "It should be computed directly on the unnormalized logits, because applying softmax would discard the teacher's dark knowledge.",
         isCorrect: false,
       },
       {
-        text: "It eliminates the need for any probability normalization like softmax.",
+        text: "It is symmetric, so \\(D_{KL}(t\\|s)\\) and \\(D_{KL}(s\\|t)\\) impose identical gradients on the student.",
         isCorrect: false,
       },
     ],
     explanation:
-      "KL divergence compares probability distributions; distillation often matches the teacher’s soft probabilities (soft targets). Core idea: it measures how well the student distribution approximates the teacher distribution. Common misconceptions: it is only defined when the teacher outputs hard one-hot labels; it is the same as mean squared error on logits in all cases; it eliminates the need for any probability normalization like softmax.",
+      "Distillation can use the teacher's whole soft distribution, so KL divergence penalizes probability mass that shifts between non-top classes as well as the top class. It is computed on normalized distributions, is not just MSE on logits, and is not symmetric in the teacher-student direction.",
   },
 
   {
@@ -1936,48 +1964,55 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "medium",
     prompt:
-      "Which statement about teacher forcing in encoder–decoder training is correct?",
+      "During encoder-decoder training, the target prefix is \\([\\text{<bos>}, y_1, y_2]\\) and the model is learning to predict \\([y_1,y_2,y_3]\\). Which statement correctly describes teacher forcing?",
     options: [
       {
-        text: "It feeds the ground-truth previous tokens to the decoder during training to predict the next output tokens.",
+        text: "The decoder conditions on the ground-truth previous target tokens during training, even though inference must condition on tokens it has generated.",
         isCorrect: true,
       },
       {
-        text: "It removes the need for an attention mechanism in the decoder.",
+        text: "The decoder conditions on its own sampled token at every training step so the training distribution exactly matches inference.",
         isCorrect: false,
       },
       {
-        text: "It means the model only trains on single-token sequences.",
+        text: "The encoder receives the target prefix, while the decoder receives only the source sequence and predicts all targets independently.",
         isCorrect: false,
       },
-      { text: "It is only used for encoder-only models.", isCorrect: false },
+      {
+        text: "The method applies only to encoder-only masked language models, because decoders never observe previous target tokens during training.",
+        isCorrect: false,
+      },
     ],
     explanation:
-      "Teacher forcing stabilizes sequence training by conditioning on the true previous outputs rather than the model’s own sampled outputs. Core idea: it feeds the ground-truth previous tokens to the decoder during training to predict the next output tokens. Common misconceptions: it removes the need for an attention mechanism in the decoder; it means the model only trains on single-token sequences; it is only used for encoder-only models.",
+      "Teacher forcing trains the decoder with the true previous target tokens as context, which makes next-token supervision stable and parallelizable across a known target sequence. At inference the model no longer has those ground-truth prefixes, so it must condition on its own generated tokens instead.",
   },
 
   {
     id: "cme295-lect2-q91",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Which statement about encoder–decoder transformers is correct?",
+    prompt:
+      "A translation model reads a full source sentence and then generates the target sentence left-to-right. Which statement correctly matches the encoder-decoder Transformer pattern?",
     options: [
       {
-        text: "They commonly use cross-attention from decoder states to encoder outputs.",
+        text: "The decoder uses causal self-attention over generated target prefixes and cross-attention to the encoder's source representations.",
         isCorrect: true,
       },
       {
-        text: "They remove the decoder entirely and only keep encoders.",
+        text: "The encoder uses causal masking over the source sentence, while the decoder uses bidirectional attention over the future target tokens.",
         isCorrect: false,
       },
-      { text: "They cannot be used for translation tasks.", isCorrect: false },
       {
-        text: "They require causal masking in the encoder self-attention.",
+        text: "The decoder replaces cross-attention with segment embeddings, so source and target tokens are processed as one BERT-style pair.",
+        isCorrect: false,
+      },
+      {
+        text: "The architecture is encoder-only during training and becomes decoder-only at inference by dropping the source representations.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Encoder–decoder models (classic transformer) encode a source sequence and decode a target sequence using cross-attention. Core idea: they commonly use cross-attention from decoder states to encoder outputs. Common misconceptions: they remove the decoder entirely and only keep encoders; they cannot be used for translation tasks; they require causal masking in the encoder self-attention.",
+      "In the classic encoder-decoder Transformer, the encoder builds source representations and the decoder generates target tokens causally while cross-attending to those source states. Segment embeddings do not replace cross-attention, and the source encoder is typically allowed bidirectional self-attention.",
   },
 
   {
@@ -1985,27 +2020,27 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "hard",
     prompt:
-      "Which statement about why positional information is ideally reflected inside attention logits is correct?",
+      "Two inputs contain the same token embeddings but in different orders. Which statement best explains why later positional methods move position effects into the attention score computation?",
     options: [
       {
-        text: "Attention logits (query–key scores) directly determine which tokens are treated as similar, so encoding position there is a direct inductive bias.",
+        text: "Attention logits decide which token pairs are treated as similar, so making those logits depend on relative position directly changes the routing of information.",
         isCorrect: true,
       },
       {
-        text: "Adding positional encodings to token embeddings guarantees attention weights become a function only of relative distance.",
+        text: "Adding absolute positional vectors to inputs guarantees every later attention layer depends only on relative distance, regardless of content.",
         isCorrect: false,
       },
       {
-        text: "Position should be encoded only in the value vectors, not in queries or keys.",
+        text: "Position should affect only value vectors, because query-key scores should remain completely permutation-invariant.",
         isCorrect: false,
       },
       {
-        text: "Positional information is unnecessary because self-attention already has an inherent ordering.",
+        text: "Once a model uses multiple heads, self-attention has an inherent token order even without any positional signal.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Since attention routing is decided by logits, encoding position within that computation can make distance effects more explicit than only adding to inputs. Core idea: Attention logits (query–key scores) directly determine which tokens are treated as similar, so encoding position there is a direct inductive bias. Common misconceptions: Adding positional encodings to token embeddings guarantees attention weights become a function only of relative distance; Position should be encoded only in the value vectors, not in queries or keys; Positional information is unnecessary because self-attention already has an inherent ordering.",
+      "Attention logits route information by determining which token pairs receive high weight. Methods such as relative bias and RoPE therefore make order or distance affect the actual query-key comparison, whereas absolute input embeddings alone do not guarantee purely relative-distance attention.",
   },
 
   {
@@ -2040,27 +2075,28 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     id: "cme295-lect2-q94",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Which statement about segment embeddings in BERT is correct?",
+    prompt:
+      "A BERT input is formed as `[CLS] sentence A [SEP] sentence B [SEP]`. Which statement correctly identifies the role of segment embeddings?",
     options: [
       {
-        text: "They indicate whether a token belongs to sentence A or sentence B in paired inputs.",
+        text: "They add a learned sentence-A/sentence-B signal so the encoder can distinguish the two segments in paired-input tasks.",
         isCorrect: true,
       },
       {
-        text: "They uniquely encode each token’s absolute position index.",
+        text: "They replace absolute position embeddings by assigning a distinct vector to each token index in the sequence.",
         isCorrect: false,
       },
       {
-        text: "They replace the need for positional embeddings entirely.",
+        text: "They mark which tokens were selected for MLM prediction, while [MASK] embeddings carry the sentence-pair signal.",
         isCorrect: false,
       },
       {
-        text: "They are fixed sinusoidal vectors, not learned parameters.",
+        text: "They provide the WordPiece subword identity, while token embeddings only indicate segment membership.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Segment embeddings are a learned ‘sentence ID’ signal added to token representations to help with paired-sentence tasks. Core idea: they indicate whether a token belongs to sentence A or sentence B in paired inputs. Common misconceptions: they uniquely encode each token’s absolute position index; they replace the need for positional embeddings entirely; they are fixed sinusoidal vectors, not learned parameters.",
+      "BERT adds segment embeddings alongside token and position embeddings so the encoder can tell which tokens belong to sentence A versus sentence B. They are not token identities, MLM markers, or absolute position indexes; those roles are handled by separate input components.",
   },
 
   {
@@ -2096,27 +2132,27 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "medium",
     prompt:
-      "Which statement about why decoder-only models became dominant in large language modeling is correct?",
+      "Which statement best explains why decoder-only Transformers are a natural fit for large-scale language generation?",
     options: [
       {
-        text: "They scale well with a simple next-token prediction objective aligned with text generation.",
+        text: "Their causal objective trains the same conditional next-token distribution that is used when generating text autoregressively.",
         isCorrect: true,
       },
       {
-        text: "They require span corruption to work effectively.",
+        text: "They use bidirectional masking during pretraining and then switch to causal masking only for fine-tuning.",
         isCorrect: false,
       },
       {
-        text: "They are inherently better at bidirectional sentence understanding than encoder-only models.",
+        text: "They avoid the attention softmax at long context by replacing key-value caches with masked language modeling.",
         isCorrect: false,
       },
       {
-        text: "They eliminate attention complexity by removing the softmax.",
+        text: "They depend on encoder cross-attention to a separately encoded source sequence for ordinary open-ended text generation.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Decoder-only training on next-token prediction is simple, scalable, and directly matches many generation-style applications. Core idea: they scale well with a simple next-token prediction objective aligned with text generation. Common misconceptions: they require span corruption to work effectively; they are inherently better at bidirectional sentence understanding than encoder-only models; they eliminate attention complexity by removing the softmax.",
+      "Decoder-only LMs use the same causal next-token factorization during training and generation, which makes the objective simple and well aligned with open-ended text generation. That does not make them bidirectional encoders, remove attention costs, or require an encoder source sequence.",
   },
 
   {
@@ -2152,27 +2188,27 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "hard",
     prompt:
-      "Which statement about why normalization helps optimization is correct?",
+      "A deep Transformer block repeatedly adds residual streams and applies attention/MLP sublayers. Which statement best explains why normalization helps optimization?",
     options: [
       {
-        text: "It reduces extreme activation scale variation across layers, improving stability and convergence during gradient-based training.",
+        text: "It keeps each token's hidden-state scale more controlled across layers, which makes gradient-based training more stable.",
         isCorrect: true,
       },
       {
-        text: "It guarantees the model cannot overfit by constraining all parameters.",
+        text: "It makes residual connections unnecessary, because normalized sublayers no longer need an identity path for gradient flow.",
         isCorrect: false,
       },
       {
-        text: "It removes the need for non-linear activations in feed-forward networks.",
+        text: "It turns attention into a convex operation, so all training runs converge to the same global optimum.",
         isCorrect: false,
       },
       {
-        text: "It makes attention complexity linear in sequence length.",
+        text: "It lowers the asymptotic cost of full self-attention from \\(O(n^2)\\) to \\(O(n)\\) by rescaling activations.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Normalization primarily stabilizes the scale of activations/gradients (often discussed as addressing internal covariate shift), aiding training dynamics. Core idea: it reduces extreme activation scale variation across layers, improving stability and convergence during gradient-based training. Common misconceptions: it guarantees the model cannot overfit by constraining all parameters; it removes the need for non-linear activations in feed-forward networks; it makes attention complexity linear in sequence length.",
+      "Normalization controls hidden-state scale before or after sublayers, which helps deep residual Transformer stacks train stably. It complements residual paths and nonlinear MLPs; it does not change the asymptotic self-attention cost or turn the optimization problem into a convex one.",
   },
 
   {
@@ -2180,24 +2216,27 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "medium",
     prompt:
-      "Which statement about why MLM and NSP were attractive pretraining tasks is correct?",
+      "Which statement best explains why BERT's MLM and NSP objectives were self-supervised rather than manually labeled tasks?",
     options: [
       {
-        text: "They can be constructed from unlabeled corpora using self-supervision (masking tokens and forming sentence pairs).",
+        text: "The masked-token labels and sentence-pair labels can be created from raw text by hiding tokens and sampling adjacent or non-adjacent sentence pairs.",
         isCorrect: true,
       },
       {
-        text: "They require manual human labeling of the correct token for each masked position.",
+        text: "Human annotators must label each masked token because the original token is removed before the training example is stored.",
         isCorrect: false,
       },
       {
-        text: "They directly train the model to generate long-form text autoregressively.",
+        text: "They are self-supervised because BERT uses causal masking, so the label for every position is the next token to the right.",
         isCorrect: false,
       },
-      { text: "They eliminate the need for tokenization.", isCorrect: false },
+      {
+        text: "They avoid labels by training only on whether WordPiece tokens are cased or uncased, not on token identity or sentence relationships.",
+        isCorrect: false,
+      },
     ],
     explanation:
-      "MLM and NSP are self-supervised objectives: the “labels” come from the text itself (original tokens and known sentence adjacency). Core idea: they can be constructed from unlabeled corpora using self-supervision (masking tokens and forming sentence pairs). Common misconceptions: they require manual human labeling of the correct token for each masked position; they directly train the model to generate long-form text autoregressively; they eliminate the need for tokenization.",
+      "MLM labels are the original tokens hidden from the input, and NSP labels can be generated by choosing real adjacent sentence pairs or sampled mismatches from the corpus. Those labels come from raw text construction rather than human annotation, and they differ from causal next-token generation.",
   },
 
   {
@@ -2205,26 +2244,26 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "easy",
     prompt:
-      "Which statement about why sinusoidal positional encodings can generalize to longer lengths is correct?",
+      "A model uses fixed sinusoidal positional encodings and is evaluated at a position index larger than any used during training. Which statement is correct?",
     options: [
       {
-        text: "They are defined by a fixed analytic function of position, so you can compute embeddings for unseen positions without learning new parameters.",
+        text: "The encoding vector can still be computed from the same sine/cosine formulas, although task performance may still depend on whether the model learned to use longer-range patterns.",
         isCorrect: true,
       },
       {
-        text: "They store a separate trainable vector for every possible position up to infinity.",
+        text: "The model must append newly learned position vectors before inference, because sinusoidal encodings are finite lookup tables.",
         isCorrect: false,
       },
       {
-        text: "They rely on bucketizing distances into a finite set of learned bins.",
+        text: "Extrapolation works only by bucketizing all unseen distances into the same learned relative-position bin.",
         isCorrect: false,
       },
       {
-        text: "They require the model to be encoder–decoder rather than decoder-only.",
+        text: "The formula guarantees identical behavior at longer lengths, so no degradation can occur from the changed context distribution.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Because sinusoidal encodings are formula-based, you can compute them for positions beyond those seen during training. Core idea: they are defined by a fixed analytic function of position, so you can compute embeddings for unseen positions without learning new parameters. Common misconceptions: they store a separate trainable vector for every possible position up to infinity; they rely on bucketizing distances into a finite set of learned bins; they require the model to be encoder–decoder rather than decoder-only.",
+      "Sinusoidal encodings are analytic functions of the position index, so there is no finite learned table that blocks computing a vector for a larger index. That only solves the representation lookup problem; the model may still generalize imperfectly if longer contexts differ from its training distribution.",
   },
 ];

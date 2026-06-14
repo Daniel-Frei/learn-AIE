@@ -1,2258 +1,1588 @@
 import { Question } from "../../quiz";
 
+type Lecture4Difficulty = "easy" | "medium" | "hard";
+type OptionSeed = readonly [text: string, isCorrect: boolean];
+
+function makeQuestion(
+  number: number,
+  difficulty: Lecture4Difficulty,
+  prompt: string,
+  optionSeeds: readonly OptionSeed[],
+  explanation: string,
+): Question {
+  if (optionSeeds.length !== 4) {
+    throw new Error(`CME295 Lecture 4 question ${number} needs 4 options.`);
+  }
+
+  return {
+    id: `cme295-lect4-q${String(number).padStart(2, "0")}`,
+    chapter: 4,
+    difficulty,
+    prompt,
+    options: optionSeeds.map(([text, isCorrect]) => ({ text, isCorrect })),
+    explanation,
+  };
+}
+
 export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
-  // ============================================================
-  // Lecture 4 – LLM Training (Pre-training, Scaling, Parallelism,
-  // FlashAttention, Quantization, SFT, LoRA)
-  // Q1–Q50 (first half)
-  // ============================================================
-
-  // ============================================================
-  // Q1–Q12: ALL TRUE (12 questions)
-  // ============================================================
-
-  {
-    id: "cme295-lect4-q01",
-    chapter: 4,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly describe the goal of pre-training large language models?",
-    options: [
-      {
-        text: "The model is trained to predict the next token given previous tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "Training data typically includes natural language text and source code.",
-        isCorrect: true,
-      },
-      {
-        text: "Pre-training aims to capture general structure of language rather than a single task.",
-        isCorrect: true,
-      },
-      {
-        text: "Pre-training is usually the most computationally expensive training stage.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Pre-training optimizes next-token prediction over massive, diverse corpora. This stage dominates cost because it involves huge datasets and very large models, but it yields general language representations reusable across tasks. Core ideas: The model is trained to predict the next token given previous tokens; Training data typically includes natural language text and source code; Pre-training aims to capture general structure of language rather than a single task; Pre-training is usually the most computationally expensive training stage.",
-  },
-
-  {
-    id: "cme295-lect4-q02",
-    chapter: 4,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly describe transfer learning in the context of language models?",
-    options: [
-      {
-        text: "A pre-trained model is reused instead of training from scratch for each task.",
-        isCorrect: true,
-      },
-      {
-        text: "Knowledge learned on one language task can help performance on another.",
-        isCorrect: true,
-      },
-      {
-        text: "Fine-tuning adapts a general model to a more specific objective.",
-        isCorrect: true,
-      },
-      {
-        text: "Transfer learning reduces the amount of task-specific data needed.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Transfer learning exploits shared structure across language tasks. A general pre-trained model can be adapted with relatively little additional data, making training more efficient than starting from random initialization. Core ideas: A pre-trained model is reused instead of training from scratch for each task; Knowledge learned on one language task can help performance on another; Fine-tuning adapts a general model to a more specific objective; Transfer learning reduces the amount of task-specific data needed.",
-  },
-
-  {
-    id: "cme295-lect4-q03",
-    chapter: 4,
-    difficulty: "easy",
-    prompt: "Which statements about Common Crawl–style datasets are correct?",
-    options: [
-      {
-        text: "They contain text scraped from a wide range of public websites.",
-        isCorrect: true,
-      },
-      { text: "They often include multilingual content.", isCorrect: true },
-      {
-        text: "They are commonly used in large-scale language model pre-training.",
-        isCorrect: true,
-      },
-      {
-        text: "They are measured in scale by number of tokens rather than number of documents.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Common Crawl–like datasets aggregate massive amounts of public web text. For LLMs, scale is usually discussed in terms of tokens processed, which directly affects compute cost and training dynamics. Core ideas: they contain text scraped from a wide range of public websites; they often include multilingual content; they are commonly used in large-scale language model pre-training; they are measured in scale by number of tokens rather than number of documents.",
-  },
-
-  {
-    id: "cme295-lect4-q04",
-    chapter: 4,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe floating point operations (FLOPs) as used in LLM training discussions?",
-    options: [
-      {
-        text: "They count arithmetic operations involving floating point numbers.",
-        isCorrect: true,
-      },
-      {
-        text: "They are often used to estimate total training compute cost.",
-        isCorrect: true,
-      },
-      {
-        text: "They scale roughly with both model size and dataset size.",
-        isCorrect: true,
-      },
-      {
-        text: "They depend on architectural choices such as dense versus sparse models.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Total FLOPs provide a coarse but useful measure of training cost. While exact formulas vary, compute generally increases with the number of parameters, number of tokens, and architectural details. Core ideas: they count arithmetic operations involving floating point numbers; they are often used to estimate total training compute cost; they scale roughly with both model size and dataset size; they depend on architectural choices such as dense versus sparse models.",
-  },
-
-  {
-    id: "cme295-lect4-q05",
-    chapter: 4,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe the distinction between FLOPs and FLOPs per second?",
-    options: [
-      { text: "FLOPs measure total computation required.", isCorrect: true },
-      {
-        text: "FLOPs per second measure hardware throughput.",
-        isCorrect: true,
-      },
-      {
-        text: "Graphics processing unit specifications often report FLOPs per second.",
-        isCorrect: true,
-      },
-      {
-        text: "Context usually determines which meaning of FLOPs is intended.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "FLOPs quantify total work, while FLOPs per second quantify speed. Because the same acronym is used, interpretation relies heavily on context such as whether hardware or training cost is being discussed. Core ideas: FLOPs measure total computation required; FLOPs per second measure hardware throughput; Graphics processing unit specifications often report FLOPs per second; Context usually determines which meaning of FLOPs is intended.",
-  },
-
-  {
-    id: "cme295-lect4-q06",
-    chapter: 4,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe empirical scaling laws for language models?",
-    options: [
-      {
-        text: "Increasing model size tends to reduce training loss.",
-        isCorrect: true,
-      },
-      {
-        text: "Increasing dataset size tends to improve performance.",
-        isCorrect: true,
-      },
-      {
-        text: "Increasing available compute often yields better models.",
-        isCorrect: true,
-      },
-      {
-        text: "These relationships were studied systematically in large experimental studies.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Scaling law studies showed smooth, predictable improvements as model size, data size, and compute increase. These findings motivated the rapid growth of LLMs over recent years. Core ideas: Increasing model size tends to reduce training loss; Increasing dataset size tends to improve performance; Increasing available compute often yields better models; These relationships were studied systematically in large experimental studies.",
-  },
-
-  {
-    id: "cme295-lect4-q07",
-    chapter: 4,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly characterize the idea behind compute-optimal training (often associated with the Chinchilla results)?",
-    options: [
-      {
-        text: "For a fixed compute budget, there is an optimal trade-off between model size and data size.",
-        isCorrect: true,
-      },
-      {
-        text: "Training too large a model on too little data can be inefficient.",
-        isCorrect: true,
-      },
-      {
-        text: "Models may benefit from more training tokens rather than more parameters.",
-        isCorrect: true,
-      },
-      {
-        text: "Optimal scaling relationships can be estimated empirically for a given setup.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Compute-optimal scaling emphasizes balancing parameters and data. Under-training large models wastes capacity, while over-training small models wastes compute; empirical studies identify sweet spots. Core ideas: For a fixed compute budget, there is an optimal trade-off between model size and data size; Training too large a model on too little data can be inefficient; Models may benefit from more training tokens rather than more parameters; Optimal scaling relationships can be estimated empirically for a given setup.",
-  },
-
-  {
-    id: "cme295-lect4-q08",
-    chapter: 4,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly describe the concept of a knowledge cutoff in language models?",
-    options: [
-      {
-        text: "It refers to the latest date of data included during pre-training.",
-        isCorrect: true,
-      },
-      {
-        text: "The model cannot directly know events occurring after this date.",
-        isCorrect: true,
-      },
-      {
-        text: "Knowledge cutoff information is often listed in model documentation.",
-        isCorrect: true,
-      },
-      {
-        text: "Updating knowledge after cutoff is non-trivial without retraining or fine-tuning.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "A knowledge cutoff reflects the temporal limit of pre-training data. Because knowledge is embedded in weights, updating facts without harming other capabilities is challenging. Core ideas: it refers to the latest date of data included during pre-training; The model cannot directly know events occurring after this date; Knowledge cutoff information is often listed in model documentation; Updating knowledge after cutoff is non-trivial without retraining or fine-tuning.",
-  },
-
-  {
-    id: "cme295-lect4-q09",
-    chapter: 4,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe challenges associated with LLM pre-training?",
-    options: [
-      {
-        text: "High financial cost due to compute requirements.",
-        isCorrect: true,
-      },
-      {
-        text: "Significant energy consumption and environmental impact.",
-        isCorrect: true,
-      },
-      {
-        text: "Risk of memorizing or reproducing training data.",
-        isCorrect: true,
-      },
-      {
-        text: "Difficulty of updating specific knowledge after training.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Pre-training at scale is expensive, energy-intensive, and raises concerns about memorization and data freshness. These challenges motivate careful dataset curation and post-training methods. Core ideas: High financial cost due to compute requirements; Significant energy consumption and environmental impact; Risk of memorizing or reproducing training data; Difficulty of updating specific knowledge after training.",
-  },
-
-  {
-    id: "cme295-lect4-q10",
-    chapter: 4,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly describe why graphics processing units (GPUs) are well suited for LLM training?",
-    options: [
-      {
-        text: "They are optimized for large matrix multiplications.",
-        isCorrect: true,
-      },
-      {
-        text: "Transformer models rely heavily on linear algebra operations.",
-        isCorrect: true,
-      },
-      { text: "They provide high floating point throughput.", isCorrect: true },
-      { text: "They support massive parallel computation.", isCorrect: true },
-    ],
-    explanation:
-      "LLM training involves dense linear algebra, which GPUs handle efficiently. Their parallelism and high throughput make them the dominant hardware choice for large-scale training. Core ideas: they are optimized for large matrix multiplications; Transformer models rely heavily on linear algebra operations; they provide high floating point throughput; they support massive parallel computation.",
-  },
-
-  {
-    id: "cme295-lect4-q11",
-    chapter: 4,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe the forward pass during neural network training?",
-    options: [
-      {
-        text: "Input data is propagated through the network layers.",
-        isCorrect: true,
-      },
-      {
-        text: "Intermediate activations are computed at each layer.",
-        isCorrect: true,
-      },
-      {
-        text: "A loss value is computed by comparing outputs to targets.",
-        isCorrect: true,
-      },
-      {
-        text: "Activations are typically needed later for gradient computation.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "The forward pass computes predictions and loss. Intermediate activations are crucial because they are reused in the backward pass to compute gradients. Core ideas: Input data is propagated through the network layers; Intermediate activations are computed at each layer; A loss value is computed by comparing outputs to targets; Activations are typically needed later for gradient computation.",
-  },
-
-  {
-    id: "cme295-lect4-q12",
-    chapter: 4,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe the backward pass in neural network training?",
-    options: [
-      {
-        text: "Gradients of the loss with respect to parameters are computed.",
-        isCorrect: true,
-      },
-      {
-        text: "The chain rule from calculus is applied layer by layer.",
-        isCorrect: true,
-      },
-      {
-        text: "Gradients must be stored or accumulated before weight updates.",
-        isCorrect: true,
-      },
-      {
-        text: "Backward computation typically requires access to forward activations.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "The backward pass propagates error signals backward through the network. It relies on stored activations and applies the chain rule to compute parameter gradients. Core ideas: Gradients of the loss with respect to parameters are computed; The chain rule from calculus is applied layer by layer; Gradients must be stored or accumulated before weight updates; Backward computation typically requires access to forward activations.",
-  },
-
-  // ============================================================
-  // Q13–Q25: EXACTLY 3 TRUE
-  // ============================================================
-
-  {
-    id: "cme295-lect4-q13",
-    chapter: 4,
-    difficulty: "easy",
-    prompt:
-      "Which statements about optimizers such as Adaptive Moment Estimation (Adam) are correct?",
-    options: [
-      {
-        text: "They maintain moving averages of past gradients.",
-        isCorrect: true,
-      },
-      {
-        text: "They store no additional optimizer state in memory.",
-        isCorrect: false,
-      },
-      {
-        text: "They adjust a single global learning rate identically for every parameter.",
-        isCorrect: false,
-      },
-      {
-        text: "They eliminate the need to compute gradients.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Adam-like optimizers track first and second moments of gradients to adapt updates. They still rely on standard gradient computation via backpropagation. Core idea: they maintain moving averages of past gradients. Common misconceptions: they store no additional optimizer state in memory; they adjust a single global learning rate identically for every parameter; they eliminate the need to compute gradients.",
-  },
-
-  {
-    id: "cme295-lect4-q14",
-    chapter: 4,
-    difficulty: "medium",
-    prompt:
-      "Which statements about memory usage during LLM training are correct?",
-    options: [
-      { text: "Model parameters occupy memory.", isCorrect: true },
-      {
-        text: "Optimizer states never dominate memory requirements.",
-        isCorrect: false,
-      },
-      {
-        text: "Activations are independent of batch size and sequence length.",
-        isCorrect: false,
-      },
-      {
-        text: "Memory usage is independent of context length.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Training memory includes parameters, optimizer states, gradients, and activations. Longer sequences and larger batches significantly increase activation memory. Core idea: Model parameters occupy memory. Common misconceptions: Optimizer states never dominate memory requirements; Activations are independent of batch size and sequence length; Memory usage is independent of context length.",
-  },
-
-  {
-    id: "cme295-lect4-q15",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about data parallelism are correct?",
-    options: [
-      {
-        text: "Each device processes a different subset of the training batch.",
-        isCorrect: true,
-      },
-      {
-        text: "Each device holds only the layers it computes rather than a full copy of the model parameters.",
-        isCorrect: false,
-      },
-      {
-        text: "Gradients never need to be aggregated across devices.",
-        isCorrect: false,
-      },
-      {
-        text: "It removes all communication overhead between devices.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Data parallelism replicates the model across devices while splitting data. Gradient synchronization introduces communication costs that limit scalability. Core idea: Each device processes a different subset of the training batch. Common misconceptions: Each device holds only the layers it computes rather than a full copy of the model parameters; Gradients never need to be aggregated across devices; it removes all communication overhead between devices.",
-  },
-
-  {
-    id: "cme295-lect4-q16",
-    chapter: 4,
-    difficulty: "hard",
-    prompt:
-      "Which statements about Zero Redundancy Optimization (ZeRO) are correct?",
-    options: [
-      {
-        text: "It reduces memory duplication across devices.",
-        isCorrect: true,
-      },
-      { text: "It can shard optimizer states across GPUs.", isCorrect: true },
-      {
-        text: "It can shard gradients or parameters without any coordination across devices.",
-        isCorrect: false,
-      },
-      { text: "It eliminates communication costs entirely.", isCorrect: false },
-    ],
-    explanation:
-      "ZeRO partitions different training states across devices to save memory. While effective, it increases communication overhead due to frequent state exchanges. Core ideas: it reduces memory duplication across devices; it can shard optimizer states across GPUs. Common misconceptions: it can shard gradients or parameters without any coordination across devices; it eliminates communication costs entirely.",
-  },
-
-  {
-    id: "cme295-lect4-q17",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about model parallelism are correct?",
-    options: [
-      {
-        text: "It splits computation of a single model across devices.",
-        isCorrect: true,
-      },
-      {
-        text: "It can be applied only across different training batches rather than within one batch.",
-        isCorrect: false,
-      },
-      {
-        text: "It is useful when a model does not fit on one device.",
-        isCorrect: true,
-      },
-      {
-        text: "It requires duplicating all parameters on each device.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Model parallelism distributes parts of the model itself across devices. This enables training of models larger than single-device memory limits. Core ideas: it splits computation of a single model across devices; it is useful when a model does not fit on one device. Common misconceptions: it can be applied only across different training batches rather than within one batch; it requires duplicating all parameters on each device.",
-  },
-
-  {
-    id: "cme295-lect4-q18",
-    chapter: 4,
-    difficulty: "hard",
-    prompt:
-      "Which statements about expert parallelism in mixture-of-experts models are correct?",
-    options: [
-      {
-        text: "Different experts can be placed on different devices.",
-        isCorrect: true,
-      },
-      {
-        text: "Only a single fixed expert is activated for every input.",
-        isCorrect: false,
-      },
-      {
-        text: "Expert routing decisions affect communication patterns.",
-        isCorrect: true,
-      },
-      {
-        text: "All experts must be evaluated for every token.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Expert parallelism leverages sparse activation: only selected experts run per input. This reduces compute but introduces routing and communication complexity. Core ideas: Different experts can be placed on different devices; Expert routing decisions affect communication patterns. Common misconceptions: Only a single fixed expert is activated for every input; All experts must be evaluated for every token.",
-  },
-
-  {
-    id: "cme295-lect4-q19",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about pipeline parallelism are correct?",
-    options: [
-      {
-        text: "Different layers of the model can be assigned to different devices.",
-        isCorrect: true,
-      },
-      {
-        text: "Forward and backward passes cannot be staged across devices.",
-        isCorrect: false,
-      },
-      {
-        text: "It can improve utilization for very deep models.",
-        isCorrect: true,
-      },
-      {
-        text: "It requires all layers to run on a single device.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Pipeline parallelism slices the model depth-wise. While it helps with memory limits, it introduces pipeline bubbles and scheduling complexity. Core ideas: Different layers of the model can be assigned to different devices; it can improve utilization for very deep models. Common misconceptions: Forward and backward passes cannot be staged across devices; it requires all layers to run on a single device.",
-  },
-
-  {
-    id: "cme295-lect4-q20",
-    chapter: 4,
-    difficulty: "hard",
-    prompt:
-      "Which statements about attention computation bottlenecks are correct?",
-    options: [
-      {
-        text: "Memory reads and writes can dominate runtime.",
-        isCorrect: true,
-      },
-      {
-        text: "Self-attention involves multiple large matrix multiplications.",
-        isCorrect: true,
-      },
-      {
-        text: "Softmax normalization removes all data dependencies in attention kernels.",
-        isCorrect: false,
-      },
-      {
-        text: "Attention computation is limited only by arithmetic throughput.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Although GPUs are fast at math, attention often becomes memory-bound. Data movement and softmax dependencies can be larger bottlenecks than raw compute. Core ideas: Memory reads and writes can dominate runtime; Self-attention involves multiple large matrix multiplications. Common misconceptions: Softmax normalization removes all data dependencies in attention kernels; Attention computation is limited only by arithmetic throughput.",
-  },
-
-  {
-    id: "cme295-lect4-q21",
-    chapter: 4,
-    difficulty: "medium",
-    prompt:
-      "Which statements about high-bandwidth memory (HBM) and static random-access memory (SRAM) on GPUs are correct?",
-    options: [
-      { text: "HBM is large but slower than on-chip memory.", isCorrect: true },
-      { text: "SRAM is much faster but much smaller.", isCorrect: true },
-      {
-        text: "Using SRAM effectively matters only for model storage, not computation speed.",
-        isCorrect: false,
-      },
-      {
-        text: "SRAM capacity is typically measured in gigabytes.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "GPUs combine large, slower HBM with small, fast SRAM. Optimizations often aim to keep computation within SRAM to reduce costly memory transfers. Core ideas: HBM is large but slower than on-chip memory; SRAM is much faster but much smaller. Common misconceptions: Using SRAM effectively matters only for model storage, not computation speed; SRAM capacity is typically measured in gigabytes.",
-  },
-
-  {
-    id: "cme295-lect4-q22",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about FlashAttention are correct?",
-    options: [
-      {
-        text: "It reduces memory reads and writes during attention computation.",
-        isCorrect: true,
-      },
-      {
-        text: "It uses tiling to fit intermediate results into fast on-chip memory.",
-        isCorrect: true,
-      },
-      {
-        text: "It computes approximate attention by changing the mathematical result slightly.",
-        isCorrect: false,
-      },
-      {
-        text: "It changes the mathematical definition of self-attention.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "FlashAttention reorganizes computation to be IO-aware. The math is unchanged, but data movement is drastically reduced, yielding speed and memory benefits. Core ideas: it reduces memory reads and writes during attention computation; it uses tiling to fit intermediate results into fast on-chip memory. Common misconceptions: it computes approximate attention by changing the mathematical result slightly; it changes the mathematical definition of self-attention.",
-  },
-
-  {
-    id: "cme295-lect4-q23",
-    chapter: 4,
-    difficulty: "hard",
-    prompt:
-      "Which statements about recomputation strategies in training are correct?",
-    options: [
-      {
-        text: "They trade additional compute for reduced memory usage.",
-        isCorrect: true,
-      },
-      {
-        text: "Activations are never recomputed during the backward pass.",
-        isCorrect: false,
-      },
-      { text: "They can lower peak memory requirements.", isCorrect: true },
-      { text: "They always increase overall training time.", isCorrect: false },
-    ],
-    explanation:
-      "Recomputation saves memory by discarding activations and recomputing them later. With IO-efficient methods like FlashAttention, this can even reduce runtime. Core ideas: they trade additional compute for reduced memory usage; they can lower peak memory requirements. Common misconceptions: Activations are never recomputed during the backward pass; they always increase overall training time.",
-  },
-
-  {
-    id: "cme295-lect4-q24",
-    chapter: 4,
-    difficulty: "medium",
-    prompt:
-      "Which statements about floating point representations are correct?",
-    options: [
-      {
-        text: "They allocate bits to represent sign, exponent, and mantissa.",
-        isCorrect: true,
-      },
-      { text: "Lower-precision formats use fewer bits.", isCorrect: true },
-      {
-        text: "Precision has no effect on numerical granularity.",
-        isCorrect: false,
-      },
-      {
-        text: "All floating point formats have identical dynamic range.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Different floating point formats trade off precision and range. Fewer bits reduce memory and speed up computation but can introduce numerical error. Core ideas: they allocate bits to represent sign, exponent, and mantissa; Lower-precision formats use fewer bits. Common misconceptions: Precision has no effect on numerical granularity; All floating point formats have identical dynamic range.",
-  },
-
-  {
-    id: "cme295-lect4-q25",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about mixed precision training are correct?",
-    options: [
-      {
-        text: "Some computations use lower-precision arithmetic.",
-        isCorrect: true,
-      },
-      {
-        text: "Model weights are always stored only in lower precision during mixed precision training.",
-        isCorrect: false,
-      },
-      { text: "Memory usage can be reduced significantly.", isCorrect: true },
-      {
-        text: "It requires changing the model architecture.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Mixed precision training leverages low-precision arithmetic for speed and memory savings while keeping critical quantities, like weights, in higher precision to maintain stability. Core ideas: Some computations use lower-precision arithmetic; Memory usage can be reduced significantly. Common misconceptions: Model weights are always stored only in lower precision during mixed precision training; it requires changing the model architecture.",
-  },
-
-  // ============================================================
-  // Q26–Q37: EXACTLY 2 TRUE
-  // ============================================================
-
-  {
-    id: "cme295-lect4-q26",
-    chapter: 4,
-    difficulty: "easy",
-    prompt: "Which statements about pre-training objectives are correct?",
-    options: [
-      {
-        text: "They typically involve predicting the next token.",
-        isCorrect: true,
-      },
-      { text: "They require labeled task-specific outputs.", isCorrect: false },
-      {
-        text: "They are self-supervised only when paired with labeled task-specific outputs.",
-        isCorrect: false,
-      },
-      { text: "They always involve human annotation.", isCorrect: false },
-    ],
-    explanation:
-      "Pre-training uses self-supervision: the text itself provides targets. This differs from supervised fine-tuning, which uses labeled input–output pairs. Core idea: they typically involve predicting the next token. Common misconceptions: they require labeled task-specific outputs; they are self-supervised only when paired with labeled task-specific outputs; they always involve human annotation.",
-  },
-
-  {
-    id: "cme295-lect4-q27",
-    chapter: 4,
-    difficulty: "medium",
-    prompt:
-      "Which statements about batch size effects in training are correct?",
-    options: [
-      {
-        text: "Larger batch sizes increase activation memory.",
-        isCorrect: true,
-      },
-      { text: "Batch size has no effect on memory usage.", isCorrect: false },
-      {
-        text: "Very large batches never change optimization dynamics when the learning rate is tuned.",
-        isCorrect: false,
-      },
-      {
-        text: "Batch size is unrelated to gradient computation.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Batch size directly affects memory and can influence convergence behavior. Extremely large batches often require careful tuning of learning rates and optimizers. Core idea: Larger batch sizes increase activation memory. Common misconceptions: Batch size has no effect on memory usage; Very large batches never change optimization dynamics when the learning rate is tuned; Batch size is unrelated to gradient computation.",
-  },
-
-  {
-    id: "cme295-lect4-q28",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about quantization are correct?",
-    options: [
-      {
-        text: "It reduces numerical precision of stored values.",
-        isCorrect: true,
-      },
-      {
-        text: "It can reduce memory footprint only if model accuracy improves.",
-        isCorrect: false,
-      },
-      { text: "It always improves model accuracy.", isCorrect: false },
-      {
-        text: "It can increase computation speed on suitable hardware.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Quantization trades precision for efficiency. While it often reduces memory and can improve speed, it may also degrade accuracy if applied carelessly. Core idea: it reduces numerical precision of stored values. Common misconceptions: it can reduce memory footprint only if model accuracy improves; it always improves model accuracy; it can increase computation speed on suitable hardware.",
-  },
-
-  {
-    id: "cme295-lect4-q29",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about supervised fine-tuning (SFT) are correct?",
-    options: [
-      { text: "It uses labeled input–output pairs.", isCorrect: true },
-      {
-        text: "It modifies only a separate classifier head and leaves all pre-trained model weights unchanged.",
-        isCorrect: false,
-      },
-      {
-        text: "Loss is computed over both input and output tokens.",
-        isCorrect: false,
-      },
-      {
-        text: "It replaces the pre-training objective entirely.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "SFT adapts a pre-trained model using labeled examples. Loss is applied only to the output portion, keeping the conditioning input fixed. Core idea: it uses labeled input–output pairs. Common misconceptions: it modifies only a separate classifier head and leaves all pre-trained model weights unchanged; Loss is computed over both input and output tokens; it replaces the pre-training objective entirely.",
-  },
-
-  {
-    id: "cme295-lect4-q30",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about instruction tuning are correct?",
-    options: [
-      { text: "It is a form of supervised fine-tuning.", isCorrect: true },
-      {
-        text: "It trains models to respond helpfully without using user prompts or instructions.",
-        isCorrect: false,
-      },
-      {
-        text: "It requires training on the entire pre-training corpus again.",
-        isCorrect: false,
-      },
-      {
-        text: "It guarantees factual correctness of all outputs.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Instruction tuning teaches models how to act as assistants. It improves helpfulness but does not guarantee correctness or eliminate hallucinations. Core idea: it is a form of supervised fine-tuning. Common misconceptions: it trains models to respond helpfully without using user prompts or instructions; it requires training on the entire pre-training corpus again; it guarantees factual correctness of all outputs.",
-  },
-
-  // ============================================================
-  // Q31–Q65: continuation
-  // Answer-pattern distribution in this block:
-  // - Q31–Q42: EXACTLY 1 TRUE
-  // - Q43–Q54: ALL TRUE
-  // - Q55–Q65: EXACTLY 3 TRUE
-  // ============================================================
-
-  {
-    id: "cme295-lect4-q31",
-    chapter: 4,
-    difficulty: "easy",
-    prompt:
-      "Which statement best characterizes greedy decoding in language model inference?",
-    options: [
-      {
-        text: "It selects the most probable token at each step.",
-        isCorrect: true,
-      },
-      {
-        text: "It maintains multiple candidate sequences simultaneously.",
-        isCorrect: false,
-      },
-      {
-        text: "It samples tokens according to the output probability distribution.",
-        isCorrect: false,
-      },
-      {
-        text: "It explicitly optimizes long-term sequence diversity.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Greedy decoding deterministically chooses the highest-probability token at each step. While simple and fast, it often leads to repetitive or locally optimal outputs rather than globally coherent ones. Core idea: it selects the most probable token at each step. Common misconceptions: it maintains multiple candidate sequences simultaneously; it samples tokens according to the output probability distribution; it explicitly optimizes long-term sequence diversity.",
-  },
-
-  {
-    id: "cme295-lect4-q32",
-    chapter: 4,
-    difficulty: "easy",
-    prompt:
-      "Which statement correctly describes the role of temperature in token sampling?",
-    options: [
-      {
-        text: "It controls how peaked or flat the output probability distribution is.",
-        isCorrect: true,
-      },
-      {
-        text: "It changes the model architecture during inference.",
-        isCorrect: false,
-      },
-      {
-        text: "It guarantees more factually correct outputs.",
-        isCorrect: false,
-      },
-      { text: "It only affects beam search decoding.", isCorrect: false },
-    ],
-    explanation:
-      "Temperature rescales logits before the softmax. Higher temperature increases randomness by flattening the distribution, while lower temperature makes outputs more deterministic. Core idea: it controls how peaked or flat the output probability distribution is. Common misconceptions: it changes the model architecture during inference; it guarantees more factually correct outputs; it only affects beam search decoding.",
-  },
-
-  {
-    id: "cme295-lect4-q33",
-    chapter: 4,
-    difficulty: "medium",
-    prompt:
-      "Which statement correctly describes the key motivation behind key–value (KV) caching during autoregressive decoding?",
-    options: [
-      {
-        text: "It avoids recomputing attention for previous tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "It compresses model parameters into lower precision.",
-        isCorrect: false,
-      },
-      {
-        text: "It enables parallel decoding of future tokens.",
-        isCorrect: false,
-      },
-      {
-        text: "It replaces the attention mechanism entirely.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "KV caching stores previously computed keys and values so they can be reused for subsequent decoding steps. This significantly reduces inference cost for long sequences. Core idea: it avoids recomputing attention for previous tokens. Common misconceptions: it compresses model parameters into lower precision; it enables parallel decoding of future tokens; it replaces the attention mechanism entirely.",
-  },
-
-  {
-    id: "cme295-lect4-q34",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statement correctly describes beam search decoding?",
-    options: [
-      {
-        text: "It tracks multiple high-probability partial sequences at each step.",
-        isCorrect: true,
-      },
-      {
-        text: "It always produces more diverse outputs than sampling.",
-        isCorrect: false,
-      },
-      {
-        text: "It samples tokens independently at each step.",
-        isCorrect: false,
-      },
-      {
-        text: "It removes the need for a language model probability distribution.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Beam search keeps the top-k candidate sequences according to cumulative probability. It improves global sequence likelihood but can reduce diversity and increase computation. Core idea: it tracks multiple high-probability partial sequences at each step. Common misconceptions: it always produces more diverse outputs than sampling; it samples tokens independently at each step; it removes the need for a language model probability distribution.",
-  },
-
-  {
-    id: "cme295-lect4-q35",
-    chapter: 4,
-    difficulty: "hard",
-    prompt:
-      "Which statement correctly explains why mixture-of-experts (MoE) models can scale parameter counts efficiently?",
-    options: [
-      {
-        text: "Only a subset of parameters is activated per input.",
-        isCorrect: true,
-      },
-      {
-        text: "All experts are evaluated in parallel for every token.",
-        isCorrect: false,
-      },
-      { text: "They reduce training data requirements.", isCorrect: false },
-      {
-        text: "They eliminate the need for attention mechanisms.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Sparse MoE models activate only a few experts per token, allowing total parameter counts to grow without proportionally increasing compute at inference time. Core idea: Only a subset of parameters is activated per input. Common misconceptions: All experts are evaluated in parallel for every token; they reduce training data requirements; they eliminate the need for attention mechanisms.",
-  },
-
-  {
-    id: "cme295-lect4-q36",
-    chapter: 4,
-    difficulty: "medium",
-    prompt:
-      "Which statement best describes the purpose of a gating network in mixture-of-experts models?",
-    options: [
-      {
-        text: "It selects which experts process a given input.",
-        isCorrect: true,
-      },
-      { text: "It normalizes attention weights.", isCorrect: false },
-      { text: "It replaces gradient-based optimization.", isCorrect: false },
-      {
-        text: "It enforces model sparsity during inference only.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "The gating network computes routing decisions that determine which experts are activated for each input token, directly influencing compute and communication patterns. Core idea: it selects which experts process a given input. Common misconceptions: it normalizes attention weights; it replaces gradient-based optimization; it enforces model sparsity during inference only.",
-  },
-
-  {
-    id: "cme295-lect4-q37",
-    chapter: 4,
-    difficulty: "hard",
-    prompt:
-      "Which statement correctly characterizes why updating factual knowledge in a trained language model is difficult?",
-    options: [
-      {
-        text: "Knowledge is distributed across many parameters.",
-        isCorrect: true,
-      },
-      {
-        text: "Gradients cannot be computed after pre-training.",
-        isCorrect: false,
-      },
-      {
-        text: "Transformer architectures forbid weight updates.",
-        isCorrect: false,
-      },
-      {
-        text: "The tokenizer prevents new information from being added.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Factual knowledge is encoded implicitly across many weights. Editing specific facts without degrading other capabilities is a challenging open research problem. Core idea: Knowledge is distributed across many parameters. Common misconceptions: Gradients cannot be computed after pre-training; Transformer architectures forbid weight updates; The tokenizer prevents new information from being added.",
-  },
-
-  // ================= ALL TRUE =================
-
-  {
-    id: "cme295-lect4-q38",
-    chapter: 4,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe supervised fine-tuning (SFT) data?",
-    options: [
-      { text: "It consists of input–output pairs.", isCorrect: true },
-      {
-        text: "It is much smaller than pre-training datasets.",
-        isCorrect: true,
-      },
-      {
-        text: "It aims to align model behavior with desired outputs.",
-        isCorrect: true,
-      },
-      {
-        text: "It typically focuses on higher-quality curated data.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "SFT uses carefully curated examples to shape model behavior. Compared to pre-training, the datasets are smaller but higher quality and task-focused. Core ideas: it consists of input–output pairs; it is much smaller than pre-training datasets; it aims to align model behavior with desired outputs; it typically focuses on higher-quality curated data.",
-  },
-
-  {
-    id: "cme295-lect4-q39",
-    chapter: 4,
-    difficulty: "easy",
-    prompt: "Which statements correctly describe instruction tuning?",
-    options: [
-      {
-        text: "It trains models to follow natural language instructions.",
-        isCorrect: true,
-      },
-      {
-        text: "It is a special case of supervised fine-tuning.",
-        isCorrect: true,
-      },
-      {
-        text: "Loss is applied only to the generated response.",
-        isCorrect: true,
-      },
-      {
-        text: "It improves usefulness in interactive settings.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Instruction tuning conditions the model on user prompts and applies loss only to the response, making the model behave more like a helpful assistant. Core ideas: it trains models to follow natural language instructions; it is a special case of supervised fine-tuning; Loss is applied only to the generated response; it improves usefulness in interactive settings.",
-  },
-
-  {
-    id: "cme295-lect4-q40",
-    chapter: 4,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe evaluation challenges for large language models?",
-    options: [
-      {
-        text: "Benchmarks can be sensitive to training data overlap.",
-        isCorrect: true,
-      },
-      {
-        text: "Single metrics rarely capture all desired behaviors.",
-        isCorrect: true,
-      },
-      {
-        text: "User preferences can be subjective and inconsistent.",
-        isCorrect: true,
-      },
-      { text: "Models can overfit to popular benchmarks.", isCorrect: true },
-    ],
-    explanation:
-      "LLM evaluation is difficult because performance depends on data distribution, subjective preferences, and benchmark design. No single metric fully captures model quality. Core ideas: Benchmarks can be sensitive to training data overlap; Single metrics rarely capture all desired behaviors; User preferences can be subjective and inconsistent; Models can overfit to popular benchmarks.",
-  },
-
-  {
-    id: "cme295-lect4-q41",
-    chapter: 4,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly describe Massive Multitask Language Understanding (MMLU)?",
-    options: [
-      {
-        text: "It aggregates performance across many different tasks.",
-        isCorrect: true,
-      },
-      {
-        text: "It aims to measure broad language understanding.",
-        isCorrect: true,
-      },
-      {
-        text: "It is commonly used to compare general-purpose models.",
-        isCorrect: true,
-      },
-      { text: "It reflects only next-token prediction loss.", isCorrect: true },
-    ],
-    explanation:
-      "MMLU evaluates models across diverse tasks to approximate general language competence. It goes beyond raw loss by testing downstream abilities. Core ideas: it aggregates performance across many different tasks; it aims to measure broad language understanding; it is commonly used to compare general-purpose models; it reflects only next-token prediction loss.",
-  },
-
-  // ================= EXACTLY 3 TRUE =================
-
-  {
-    id: "cme295-lect4-q42",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about preference-based evaluation are correct?",
-    options: [
-      {
-        text: "It relies on pairwise comparisons between model outputs.",
-        isCorrect: true,
-      },
-      { text: "Human judgment often plays a role.", isCorrect: true },
-      {
-        text: "It captures subjective notions of quality without requiring any human or model judgment.",
-        isCorrect: false,
-      },
-      { text: "It is completely immune to manipulation.", isCorrect: false },
-    ],
-    explanation:
-      "Preference-based evaluation uses human or model judgments to compare outputs. While flexible and intuitive, it can be biased or gamed under certain conditions. Core ideas: it relies on pairwise comparisons between model outputs; Human judgment often plays a role. Common misconceptions: it captures subjective notions of quality without requiring any human or model judgment; it is completely immune to manipulation.",
-  },
-
-  {
-    id: "cme295-lect4-q43",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about alignment in language models are correct?",
-    options: [
-      {
-        text: "It refers to shaping model behavior toward human goals.",
-        isCorrect: true,
-      },
-      { text: "It typically occurs after pre-training.", isCorrect: true },
-      {
-        text: "It includes supervised fine-tuning and preference tuning, but only during pre-training.",
-        isCorrect: false,
-      },
-      {
-        text: "It guarantees perfect safety and correctness.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Alignment aims to make models helpful and safe. While SFT and preference tuning improve alignment, they do not eliminate all risks or errors. Core ideas: it refers to shaping model behavior toward human goals; it typically occurs after pre-training. Common misconceptions: it includes supervised fine-tuning and preference tuning, but only during pre-training; it guarantees perfect safety and correctness.",
-  },
-
-  {
-    id: "cme295-lect4-q44",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about Low-Rank Adaptation (LoRA) are correct?",
-    options: [
-      { text: "It freezes the original pre-trained weights.", isCorrect: true },
-      {
-        text: "It introduces additional low-rank trainable matrices.",
-        isCorrect: true,
-      },
-      {
-        text: "It significantly reduces the number of trainable parameters without adding any new trainable matrices.",
-        isCorrect: false,
-      },
-      {
-        text: "It requires retraining the entire model from scratch.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "LoRA fine-tunes models efficiently by learning low-rank updates while keeping base weights fixed, reducing memory and compute costs. Core ideas: it freezes the original pre-trained weights; it introduces additional low-rank trainable matrices. Common misconceptions: it significantly reduces the number of trainable parameters without adding any new trainable matrices; it requires retraining the entire model from scratch.",
-  },
-
-  {
-    id: "cme295-lect4-q45",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about quantized LoRA (QLoRA) are correct?",
-    options: [
-      {
-        text: "Base model weights are stored in quantized form.",
-        isCorrect: true,
-      },
-      {
-        text: "LoRA adapters are typically quantized to the same 4-bit format as the frozen base model during training.",
-        isCorrect: false,
-      },
-      {
-        text: "It enables fine-tuning large models on limited hardware.",
-        isCorrect: true,
-      },
-      { text: "It eliminates numerical error entirely.", isCorrect: false },
-    ],
-    explanation:
-      "QLoRA combines quantization with LoRA to drastically reduce memory usage while retaining training stability by keeping adapter weights in higher precision. Core ideas: Base model weights are stored in quantized form; it enables fine-tuning large models on limited hardware. Common misconceptions: LoRA adapters are typically quantized to the same 4-bit format as the frozen base model during training; it eliminates numerical error entirely.",
-  },
-
-  {
-    id: "cme295-lect4-q46",
-    chapter: 4,
-    difficulty: "hard",
-    prompt:
-      "Which statements about NormalFloat 4 (NF4) quantization are correct?",
-    options: [
-      {
-        text: "It assumes weights follow an approximately normal distribution.",
-        isCorrect: true,
-      },
-      { text: "It uses non-uniform quantization bins.", isCorrect: true },
-      {
-        text: "It improves memory efficiency for frozen weights without any quantization error.",
-        isCorrect: false,
-      },
-      {
-        text: "It is identical to standard 4-bit linear quantization.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "NF4 is designed for normally distributed weights and uses quantiles rather than uniform bins, yielding better accuracy at very low bit-widths. Core ideas: it assumes weights follow an approximately normal distribution; it uses non-uniform quantization bins. Common misconceptions: it improves memory efficiency for frozen weights without any quantization error; it is identical to standard 4-bit linear quantization.",
-  },
-
-  {
-    id: "cme295-lect4-q47",
-    chapter: 4,
-    difficulty: "medium",
-    prompt:
-      "Which statements about batch size effects in LoRA training are correct?",
-    options: [
-      {
-        text: "Very large batch sizes can hurt LoRA performance.",
-        isCorrect: true,
-      },
-      {
-        text: "LoRA often uses higher learning rates than full fine-tuning.",
-        isCorrect: true,
-      },
-      {
-        text: "Training dynamics differ from full-rank weight updates.",
-        isCorrect: true,
-      },
-      {
-        text: "Batch size can interact with optimization behavior during LoRA training.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Empirically, LoRA benefits from higher learning rates and smaller batch sizes. Its low-rank structure changes optimization dynamics compared to full fine-tuning. Core ideas: Very large batch sizes can hurt LoRA performance; LoRA often uses higher learning rates than full fine-tuning; Training dynamics differ from full-rank weight updates; Batch size can interact with optimization behavior during LoRA training.",
-  },
-
-  {
-    id: "cme295-lect4-q48",
-    chapter: 4,
-    difficulty: "easy",
-    prompt: "Which statements about mixed-precision training are correct?",
-    options: [
-      {
-        text: "It uses different numerical precisions for different operations.",
-        isCorrect: true,
-      },
-      {
-        text: "It can reduce memory usage and increase throughput.",
-        isCorrect: true,
-      },
-      {
-        text: "Model weights are often maintained in higher precision.",
-        isCorrect: true,
-      },
-      {
-        text: "It can often be used without changing the task loss function itself.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Mixed-precision training balances speed and stability by using lower precision for most computations while preserving critical values in higher precision. Core ideas: it uses different numerical precisions for different operations; it can reduce memory usage and increase throughput; Model weights are often maintained in higher precision; it can often be used without changing the task loss function itself.",
-  },
-
-  {
-    id: "cme295-lect4-q49",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about FlashAttention recomputation are correct?",
-    options: [
-      {
-        text: "Activations may be recomputed during the backward pass.",
-        isCorrect: true,
-      },
-      {
-        text: "It trades additional computation for lower memory usage.",
-        isCorrect: true,
-      },
-      {
-        text: "It can reduce overall runtime despite recomputation.",
-        isCorrect: true,
-      },
-      {
-        text: "It still computes exact attention rather than an approximation.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "FlashAttention leverages fast on-chip memory to recompute activations cheaply, reducing memory traffic and sometimes even improving overall runtime. Core ideas: Activations may be recomputed during the backward pass; it trades additional computation for lower memory usage; it can reduce overall runtime despite recomputation; it still computes exact attention rather than an approximation.",
-  },
-
-  {
-    id: "cme295-lect4-q50",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about evaluation benchmarks are correct?",
-    options: [
-      { text: "They can shape model training incentives.", isCorrect: true },
-      {
-        text: "They may fail to capture real user satisfaction.",
-        isCorrect: true,
-      },
-      { text: "They are often domain-specific.", isCorrect: true },
-      {
-        text: "They do not eliminate the need for human evaluation.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Benchmarks guide progress but are imperfect proxies for real-world usefulness. Human judgment remains important for many aspects of model quality. Core ideas: they can shape model training incentives; they may fail to capture real user satisfaction; they are often domain-specific; they do not eliminate the need for human evaluation.",
-  },
-
-  {
-    id: "cme295-lect4-q51",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about alignment data are correct?",
-    options: [
-      { text: "They often include safety-focused examples.", isCorrect: true },
-      {
-        text: "They aim to discourage harmful or unsafe outputs.",
-        isCorrect: true,
-      },
-      {
-        text: "They are typically much smaller than pre-training data.",
-        isCorrect: true,
-      },
-      {
-        text: "They often rely on some human input or curation.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Alignment datasets are curated to shape behavior and safety. While model-generated data can assist, human oversight is still common. Core ideas: they often include safety-focused examples; they aim to discourage harmful or unsafe outputs; they are typically much smaller than pre-training data; they often rely on some human input or curation.",
-  },
-
-  {
-    id: "cme295-lect4-q52",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about preference tuning are correct?",
-    options: [
-      {
-        text: "It optimizes models using preference signals.",
-        isCorrect: true,
-      },
-      { text: "It often follows supervised fine-tuning.", isCorrect: true },
-      { text: "It can use pairwise ranking losses.", isCorrect: true },
-      { text: "It does not replace pre-training entirely.", isCorrect: true },
-    ],
-    explanation:
-      "Preference tuning adjusts models using human or synthetic preference feedback, complementing supervised fine-tuning rather than replacing earlier stages. Core ideas: it optimizes models using preference signals; it often follows supervised fine-tuning; it can use pairwise ranking losses; it does not replace pre-training entirely.",
-  },
-
-  {
-    id: "cme295-lect4-q53",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about training–evaluation mismatch are correct?",
-    options: [
-      {
-        text: "Training objectives may not align with user satisfaction.",
-        isCorrect: true,
-      },
-      {
-        text: "Benchmarks can be optimized without improving real usefulness.",
-        isCorrect: true,
-      },
-      { text: "Evaluation depends on task distribution.", isCorrect: true },
-      {
-        text: "Loss minimization alone does not guarantee helpful behavior.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Optimizing likelihood or benchmark scores does not guarantee helpfulness. Alignment and evaluation require additional signals beyond loss minimization. Core ideas: Training objectives may not align with user satisfaction; Benchmarks can be optimized without improving real usefulness; Evaluation depends on task distribution; Loss minimization alone does not guarantee helpful behavior.",
-  },
-
-  {
-    id: "cme295-lect4-q54",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about scaling laws are correct?",
-    options: [
-      {
-        text: "They describe empirical relationships between model size, data, and loss.",
-        isCorrect: true,
-      },
-      {
-        text: "They motivated increasing model and dataset sizes.",
-        isCorrect: true,
-      },
-      {
-        text: "They suggest diminishing returns at fixed compute.",
-        isCorrect: true,
-      },
-      {
-        text: "They do not provide exact guarantees for downstream task performance.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Scaling laws capture smooth empirical trends but do not provide strict guarantees, especially for downstream or aligned behaviors. Core ideas: they describe empirical relationships between model size, data, and loss; they motivated increasing model and dataset sizes; they suggest diminishing returns at fixed compute; they do not provide exact guarantees for downstream task performance.",
-  },
-
-  {
-    id: "cme295-lect4-q55",
-    chapter: 4,
-    difficulty: "hard",
-    prompt:
-      "Which statements about compute constraints in LLM training are correct?",
-    options: [
-      { text: "They motivate parallelism strategies.", isCorrect: true },
-      {
-        text: "They influence architecture and optimization choices.",
-        isCorrect: true,
-      },
-      { text: "They limit feasible model and dataset sizes.", isCorrect: true },
-      {
-        text: "They still matter after pre-training because they constrain adaptation and deployment.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Compute constraints affect all stages of training and deployment. They drive innovation in parallelism, efficiency, and model design. Core ideas: they motivate parallelism strategies; they influence architecture and optimization choices; they limit feasible model and dataset sizes; they still matter after pre-training because they constrain adaptation and deployment.",
-  },
-
-  // ============================================================
-  // Q56–Q100: FINAL BLOCK
-  // ============================================================
-
-  {
-    id: "cme295-lect4-q56",
-    chapter: 4,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly describe the purpose of mid-training in large language models?",
-    options: [
-      {
-        text: "It adapts the data distribution while keeping the same next-token objective.",
-        isCorrect: true,
-      },
-      {
-        text: "It occurs after pre-training and before supervised fine-tuning.",
-        isCorrect: true,
-      },
-      {
-        text: "It targets domains closer to downstream use cases.",
-        isCorrect: true,
-      },
-      {
-        text: "It does not replace the need for later fine-tuning or alignment steps.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Mid-training keeps the same objective as pre-training but changes the data mixture. It helps align representations toward domains of interest before task-specific fine-tuning. Core ideas: it adapts the data distribution while keeping the same next-token objective; it occurs after pre-training and before supervised fine-tuning; it targets domains closer to downstream use cases; it does not replace the need for later fine-tuning or alignment steps.",
-  },
-
-  {
-    id: "cme295-lect4-q57",
-    chapter: 4,
-    difficulty: "medium",
-    prompt:
-      "Which statements about supervised fine-tuning loss computation are correct?",
-    options: [
-      {
-        text: "Loss is applied only to the generated output tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "Input tokens are used as conditioning context.",
-        isCorrect: true,
-      },
-      {
-        text: "Teacher forcing is still used on the generated output tokens even though loss is not applied to the prompt tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "The objective differs from pre-training despite using cross-entropy.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "In supervised fine-tuning, the model conditions on the input and is trained only on the response tokens. Although the loss function is still cross-entropy, the masking makes the objective meaningfully different from pre-training. Core ideas: Loss is applied only to the generated output tokens; Input tokens are used as conditioning context; Teacher forcing is still used on the generated output tokens even though loss is not applied to the prompt tokens; The objective differs from pre-training despite using cross-entropy.",
-  },
-
-  {
-    id: "cme295-lect4-q58",
-    chapter: 4,
-    difficulty: "easy",
-    prompt: "Which statements correctly describe instruction tuning?",
-    options: [
-      {
-        text: "It teaches the model to respond helpfully to prompts.",
-        isCorrect: true,
-      },
-      { text: "It is a form of supervised fine-tuning.", isCorrect: true },
-      { text: "It uses curated instruction–response pairs.", isCorrect: true },
-      {
-        text: "It does not require retraining from random initialization.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Instruction tuning is supervised fine-tuning focused on user-facing tasks. It adapts a pre-trained model rather than training from scratch. Core ideas: it teaches the model to respond helpfully to prompts; it is a form of supervised fine-tuning; it uses curated instruction–response pairs; it does not require retraining from random initialization.",
-  },
-
-  {
-    id: "cme295-lect4-q59",
-    chapter: 4,
-    difficulty: "medium",
-    prompt:
-      "Which statements about data mixture in supervised fine-tuning are correct?",
-    options: [
-      { text: "It often includes many task categories.", isCorrect: true },
-      {
-        text: "It may combine human-written and model-generated examples.",
-        isCorrect: true,
-      },
-      {
-        text: "It is usually much smaller than pre-training data.",
-        isCorrect: true,
-      },
-      {
-        text: "It does not have to match inference prompts exactly to be useful.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "SFT data mixtures span many task types and are often partially synthetic. Exact matching to inference prompts is unnecessary as long as the distribution is reasonably aligned. Core ideas: it often includes many task categories; it may combine human-written and model-generated examples; it is usually much smaller than pre-training data; it does not have to match inference prompts exactly to be useful.",
-  },
-
-  {
-    id: "cme295-lect4-q60",
-    chapter: 4,
-    difficulty: "hard",
-    prompt:
-      "Which statements about memorization in large language models are correct?",
-    options: [
-      {
-        text: "Models can reproduce rare training examples verbatim.",
-        isCorrect: true,
-      },
-      {
-        text: "Memorization risk increases with repeated exposure to data.",
-        isCorrect: true,
-      },
-      {
-        text: "Sampling temperature can affect surface-level repetition.",
-        isCorrect: true,
-      },
-      {
-        text: "Memorization is not completely eliminated by fine-tuning.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Large models can memorize rare or repeated samples. Fine-tuning and decoding choices can reduce but not eliminate this risk. Core ideas: Models can reproduce rare training examples verbatim; Memorization risk increases with repeated exposure to data; Sampling temperature can affect surface-level repetition; Memorization is not completely eliminated by fine-tuning.",
-  },
-
-  {
-    id: "cme295-lect4-q61",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about benchmark evaluation are correct?",
-    options: [
-      {
-        text: "Benchmarks approximate specific capabilities.",
-        isCorrect: true,
-      },
-      {
-        text: "High benchmark scores do not guarantee user satisfaction.",
-        isCorrect: true,
-      },
-      {
-        text: "Training data overlap can inflate benchmark results.",
-        isCorrect: true,
-      },
-      { text: "Benchmarks evolve over time.", isCorrect: true },
-    ],
-    explanation:
-      "Benchmarks measure targeted abilities but are imperfect proxies for usefulness. Overlap and gaming can distort results, motivating continual benchmark updates. Core ideas: Benchmarks approximate specific capabilities; High benchmark scores do not guarantee user satisfaction; Training data overlap can inflate benchmark results; Benchmarks evolve over time.",
-  },
-
-  {
-    id: "cme295-lect4-q62",
-    chapter: 4,
-    difficulty: "hard",
-    prompt:
-      "Which statements about Massive Multitask Language Understanding (MMLU) are correct?",
-    options: [
-      { text: "It aggregates results across many tasks.", isCorrect: true },
-      {
-        text: "It evaluates downstream capabilities rather than raw loss.",
-        isCorrect: true,
-      },
-      { text: "It reflects broad language competence.", isCorrect: true },
-      {
-        text: "It does not directly measure training compute efficiency.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "MMLU focuses on task performance rather than likelihood. It does not directly capture training efficiency or compute usage. Core ideas: it aggregates results across many tasks; it evaluates downstream capabilities rather than raw loss; it reflects broad language competence; it does not directly measure training compute efficiency.",
-  },
-
-  {
-    id: "cme295-lect4-q63",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about preference-based evaluation are correct?",
-    options: [
-      { text: "Users compare outputs pairwise.", isCorrect: true },
-      { text: "It captures subjective quality signals.", isCorrect: true },
-      { text: "Early comparisons can bias rankings.", isCorrect: true },
-      {
-        text: "It is not immune to adversarial behavior.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Preference-based systems reflect human judgments but are sensitive to sampling, bias, and strategic manipulation. Core ideas: Users compare outputs pairwise; it captures subjective quality signals; Early comparisons can bias rankings; it is not immune to adversarial behavior.",
-  },
-
-  {
-    id: "cme295-lect4-q64",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about alignment in language models are correct?",
-    options: [
-      { text: "It aims to make models helpful and harmless.", isCorrect: true },
-      {
-        text: "It includes supervised fine-tuning and preference tuning.",
-        isCorrect: true,
-      },
-      { text: "It occurs after pre-training.", isCorrect: true },
-      {
-        text: "It does not guarantee correct behavior in all cases.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Alignment shapes behavior but does not eliminate errors or misuse. It is a post-pretraining process involving multiple techniques. Core ideas: it aims to make models helpful and harmless; it includes supervised fine-tuning and preference tuning; it occurs after pre-training; it does not guarantee correct behavior in all cases.",
-  },
-
-  {
-    id: "cme295-lect4-q65",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about preference tuning are correct?",
-    options: [
-      {
-        text: "It uses relative judgments rather than absolute labels.",
-        isCorrect: true,
-      },
-      { text: "It often follows supervised fine-tuning.", isCorrect: true },
-      { text: "It can optimize for user satisfaction.", isCorrect: true },
-      { text: "It does not replace pre-training.", isCorrect: true },
-    ],
-    explanation:
-      "Preference tuning refines behavior using rankings or comparisons. It complements but does not replace earlier training stages. Core ideas: it uses relative judgments rather than absolute labels; it often follows supervised fine-tuning; it can optimize for user satisfaction; it does not replace pre-training.",
-  },
-
-  {
-    id: "cme295-lect4-q66",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about Low-Rank Adaptation (LoRA) are correct?",
-    options: [
-      { text: "Base model weights remain frozen.", isCorrect: true },
-      { text: "Only low-rank matrices are trained.", isCorrect: true },
-      { text: "It reduces memory and compute cost.", isCorrect: true },
-      {
-        text: "It requires modifying the model architecture.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "LoRA adds trainable low-rank matrices without altering the base architecture. This yields large efficiency gains during fine-tuning. Core ideas: Base model weights remain frozen; Only low-rank matrices are trained; it reduces memory and compute cost. Common misconceptions: it requires modifying the model architecture.",
-  },
-
-  {
-    id: "cme295-lect4-q67",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about the LoRA rank hyperparameter are correct?",
-    options: [
-      { text: "It controls the capacity of the adaptation.", isCorrect: true },
-      { text: "Lower rank reduces trainable parameters.", isCorrect: true },
-      { text: "Higher rank always improves performance.", isCorrect: false },
-      {
-        text: "It is typically much smaller than the original weight dimension.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "The rank trades off capacity and efficiency. Increasing it can help but often yields diminishing returns. Core ideas: it controls the capacity of the adaptation; Lower rank reduces trainable parameters; it is typically much smaller than the original weight dimension. Common misconceptions: Higher rank always improves performance.",
-  },
-
-  {
-    id: "cme295-lect4-q68",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about LoRA training dynamics are correct?",
-    options: [
-      { text: "Higher learning rates are often used.", isCorrect: true },
-      {
-        text: "Very large batch sizes can degrade performance.",
-        isCorrect: true,
-      },
-      { text: "Optimization differs from full fine-tuning.", isCorrect: true },
-      { text: "Training is identical to dense fine-tuning.", isCorrect: false },
-    ],
-    explanation:
-      "Empirical results show LoRA benefits from different hyperparameters. Its low-rank structure alters optimization behavior. Core ideas: Higher learning rates are often used; Very large batch sizes can degrade performance; Optimization differs from full fine-tuning. Common misconceptions: Training is identical to dense fine-tuning.",
-  },
-
-  {
-    id: "cme295-lect4-q69",
-    chapter: 4,
-    difficulty: "hard",
-    prompt:
-      "Which statements about where LoRA is applied in transformers are correct?",
-    options: [
-      { text: "It can be applied to attention projections.", isCorrect: true },
-      { text: "It can be applied to feedforward layers.", isCorrect: true },
-      {
-        text: "Feedforward placement often yields strong gains.",
-        isCorrect: true,
-      },
-      { text: "It must be applied to every layer to work.", isCorrect: false },
-    ],
-    explanation:
-      "LoRA can be inserted in multiple components. Empirical work shows feedforward layers are especially effective. Core ideas: it can be applied to attention projections; it can be applied to feedforward layers; Feedforward placement often yields strong gains. Common misconceptions: it must be applied to every layer to work.",
-  },
-
-  {
-    id: "cme295-lect4-q70",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about quantized LoRA (QLoRA) are correct?",
-    options: [
-      { text: "Frozen base weights are quantized.", isCorrect: true },
-      { text: "LoRA adapters remain high precision.", isCorrect: true },
-      { text: "It enables fine-tuning on limited hardware.", isCorrect: true },
-      { text: "It eliminates quantization error.", isCorrect: false },
-    ],
-    explanation:
-      "QLoRA combines aggressive quantization with LoRA adapters to drastically reduce memory usage while maintaining training stability. Core ideas: Frozen base weights are quantized; LoRA adapters remain high precision; it enables fine-tuning on limited hardware. Common misconceptions: it eliminates quantization error.",
-  },
-
-  {
-    id: "cme295-lect4-q71",
-    chapter: 4,
-    difficulty: "hard",
-    prompt:
-      "Which statements about NormalFloat 4 (NF4) quantization are correct?",
-    options: [
-      { text: "It assumes normally distributed weights.", isCorrect: true },
-      { text: "It uses quantiles rather than uniform bins.", isCorrect: true },
-      { text: "It is designed for frozen model weights.", isCorrect: true },
-      {
-        text: "It is identical to standard 4-bit quantization.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "NF4 exploits weight distribution structure to minimize error at very low precision. It differs fundamentally from uniform quantization. Core ideas: it assumes normally distributed weights; it uses quantiles rather than uniform bins; it is designed for frozen model weights. Common misconceptions: it is identical to standard 4-bit quantization.",
-  },
-
-  {
-    id: "cme295-lect4-q72",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about floating-point formats are correct?",
-    options: [
-      { text: "They trade precision for range.", isCorrect: true },
-      {
-        text: "Brain Float 16 keeps a larger exponent range.",
-        isCorrect: true,
-      },
-      { text: "Lower precision reduces memory usage.", isCorrect: true },
-      { text: "All formats behave identically numerically.", isCorrect: false },
-    ],
-    explanation:
-      "Different formats balance range and granularity differently. These trade-offs directly affect training stability and efficiency. Core ideas: they trade precision for range; Brain Float 16 keeps a larger exponent range; Lower precision reduces memory usage. Common misconceptions: All formats behave identically numerically.",
-  },
-
-  {
-    id: "cme295-lect4-q73",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about mixed precision training are correct?",
-    options: [
-      { text: "Weights are often kept in higher precision.", isCorrect: true },
-      {
-        text: "Forward and backward passes may use lower precision.",
-        isCorrect: true,
-      },
-      { text: "It can improve throughput and reduce memory.", isCorrect: true },
-      { text: "It removes the need for numerical care.", isCorrect: false },
-    ],
-    explanation:
-      "Mixed precision exploits hardware capabilities but still requires care to avoid instability and overflow. Core ideas: Weights are often kept in higher precision; Forward and backward passes may use lower precision; it can improve throughput and reduce memory. Common misconceptions: it removes the need for numerical care.",
-  },
-
-  {
-    id: "cme295-lect4-q74",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about quantization ranges are correct?",
-    options: [
-      { text: "Range affects representable values.", isCorrect: true },
-      { text: "Zero-point and scale can define mapping.", isCorrect: true },
-      { text: "Poor range selection increases error.", isCorrect: true },
-      { text: "Range choice is irrelevant to performance.", isCorrect: false },
-    ],
-    explanation:
-      "Quantization accuracy depends strongly on how ranges are chosen. Poor calibration can severely degrade model quality. Core ideas: Range affects representable values; Zero-point and scale can define mapping; Poor range selection increases error. Common misconceptions: Range choice is irrelevant to performance.",
-  },
-
-  {
-    id: "cme295-lect4-q75",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about FlashAttention are correct?",
-    options: [
-      { text: "It reduces high-bandwidth memory traffic.", isCorrect: true },
-      { text: "It uses tiling into fast on-chip memory.", isCorrect: true },
-      { text: "It computes exact attention.", isCorrect: true },
-      { text: "It approximates softmax.", isCorrect: false },
-    ],
-    explanation:
-      "FlashAttention reorganizes computation without changing the mathematical result. Its speedups come from IO efficiency. Core ideas: it reduces high-bandwidth memory traffic; it uses tiling into fast on-chip memory; it computes exact attention. Common misconceptions: it approximates softmax.",
-  },
-
-  {
-    id: "cme295-lect4-q76",
-    chapter: 4,
-    difficulty: "hard",
-    prompt:
-      "Which statements about recomputation in FlashAttention are correct?",
-    options: [
-      {
-        text: "Some activations are discarded during the forward pass.",
-        isCorrect: true,
-      },
-      {
-        text: "They are recomputed during the backward pass.",
-        isCorrect: true,
-      },
-      { text: "This can reduce peak memory usage.", isCorrect: true },
-      { text: "It always increases runtime.", isCorrect: false },
-    ],
-    explanation:
-      "Recomputation trades compute for memory. With fast kernels, it can reduce runtime by minimizing memory traffic. Core ideas: Some activations are discarded during the forward pass; they are recomputed during the backward pass; this can reduce peak memory usage. Common misconceptions: it always increases runtime.",
-  },
-
-  {
-    id: "cme295-lect4-q77",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about GPU memory hierarchy are correct?",
-    options: [
-      {
-        text: "High-bandwidth memory is larger but slower than SRAM.",
-        isCorrect: true,
-      },
-      {
-        text: "Static random-access memory is close to compute units.",
-        isCorrect: true,
-      },
-      { text: "Memory access often dominates runtime.", isCorrect: true },
-      { text: "All GPU memory has equal speed.", isCorrect: false },
-    ],
-    explanation:
-      "GPUs rely on multiple memory tiers. Efficient kernels minimize access to slower memory. Core ideas: High-bandwidth memory is larger but slower than SRAM; Static random-access memory is close to compute units; Memory access often dominates runtime. Common misconceptions: All GPU memory has equal speed.",
-  },
-
-  {
-    id: "cme295-lect4-q78",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about data parallelism are correct?",
-    options: [
-      { text: "Each device processes different data.", isCorrect: true },
-      { text: "Gradients must be synchronized.", isCorrect: true },
-      { text: "Communication introduces overhead.", isCorrect: true },
-      { text: "Models are partitioned across devices.", isCorrect: false },
-    ],
-    explanation:
-      "Data parallelism replicates the model and splits data. Synchronization costs limit scaling. Core ideas: Each device processes different data; Gradients must be synchronized; Communication introduces overhead. Common misconceptions: Models are partitioned across devices.",
-  },
-
-  {
-    id: "cme295-lect4-q79",
-    chapter: 4,
-    difficulty: "hard",
-    prompt:
-      "Which statements about Zero Redundancy Optimization (ZeRO) are correct?",
-    options: [
-      { text: "It shards optimizer states.", isCorrect: true },
-      { text: "It can shard gradients and parameters.", isCorrect: true },
-      { text: "It reduces per-device memory.", isCorrect: true },
-      { text: "It removes communication entirely.", isCorrect: false },
-    ],
-    explanation:
-      "ZeRO reduces memory duplication but increases coordination between devices. Core ideas: it shards optimizer states; it can shard gradients and parameters; it reduces per-device memory. Common misconceptions: it removes communication entirely.",
-  },
-
-  {
-    id: "cme295-lect4-q80",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about model parallelism are correct?",
-    options: [
-      { text: "It splits model computation across devices.", isCorrect: true },
-      {
-        text: "It allows training models larger than one GPU.",
-        isCorrect: true,
-      },
-      { text: "It can increase communication complexity.", isCorrect: true },
-      { text: "It duplicates all parameters everywhere.", isCorrect: false },
-    ],
-    explanation:
-      "Model parallelism partitions the model itself. This enables scale but adds coordination overhead. Core ideas: it splits model computation across devices; it allows training models larger than one GPU; it can increase communication complexity. Common misconceptions: it duplicates all parameters everywhere.",
-  },
-
-  {
-    id: "cme295-lect4-q81",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about pipeline parallelism are correct?",
-    options: [
-      {
-        text: "Different layers are assigned to different devices.",
-        isCorrect: true,
-      },
-      { text: "It can improve memory utilization.", isCorrect: true },
-      { text: "Pipeline bubbles can reduce efficiency.", isCorrect: true },
-      { text: "All layers execute simultaneously.", isCorrect: false },
-    ],
-    explanation:
-      "Pipeline parallelism trades latency and scheduling complexity for memory scalability. Core ideas: Different layers are assigned to different devices; it can improve memory utilization; Pipeline bubbles can reduce efficiency. Common misconceptions: All layers execute simultaneously.",
-  },
-
-  {
-    id: "cme295-lect4-q82",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about expert parallelism are correct?",
-    options: [
-      { text: "Experts can reside on different devices.", isCorrect: true },
-      { text: "Only selected experts run per token.", isCorrect: true },
-      { text: "Routing affects communication.", isCorrect: true },
-      { text: "All experts are always active.", isCorrect: false },
-    ],
-    explanation:
-      "Expert parallelism exploits sparsity but introduces routing and load-balancing challenges. Core ideas: Experts can reside on different devices; Only selected experts run per token; Routing affects communication. Common misconceptions: All experts are always active.",
-  },
-
-  {
-    id: "cme295-lect4-q83",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about scaling laws are correct?",
-    options: [
-      { text: "Performance improves predictably with scale.", isCorrect: true },
-      { text: "Model size, data size, and compute interact.", isCorrect: true },
-      { text: "Optimal scaling depends on compute budget.", isCorrect: true },
-      {
-        text: "Architecture choice dominates scaling behavior.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Empirical results show scale dominates architecture choice within common transformer families. Core ideas: Performance improves predictably with scale; Model size, data size, and compute interact; Optimal scaling depends on compute budget. Common misconceptions: Architecture choice dominates scaling behavior.",
-  },
-
-  {
-    id: "cme295-lect4-q84",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about compute-optimal training are correct?",
-    options: [
-      { text: "It balances parameters and data.", isCorrect: true },
-      { text: "Undertraining wastes model capacity.", isCorrect: true },
-      { text: "Overtraining small models wastes compute.", isCorrect: true },
-      {
-        text: "It eliminates the need for scaling experiments.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Compute-optimal scaling guides design but still relies on empirical validation. Core ideas: it balances parameters and data; Undertraining wastes model capacity; Overtraining small models wastes compute. Common misconceptions: it eliminates the need for scaling experiments.",
-  },
-
-  {
-    id: "cme295-lect4-q85",
-    chapter: 4,
-    difficulty: "easy",
-    prompt: "Which statements about knowledge cutoff are correct?",
-    options: [
-      { text: "It reflects the latest training data date.", isCorrect: true },
-      { text: "Models lack direct knowledge beyond it.", isCorrect: true },
-      { text: "It is usually documented.", isCorrect: true },
-      {
-        text: "It can be bypassed without updating weights.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Knowledge cutoff limits what the model can know intrinsically. External tools are required to overcome it. Core ideas: it reflects the latest training data date; Models lack direct knowledge beyond it; it is usually documented. Common misconceptions: it can be bypassed without updating weights.",
-  },
-
-  {
-    id: "cme295-lect4-q86",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about knowledge editing are correct?",
-    options: [
-      { text: "It is difficult without side effects.", isCorrect: true },
-      { text: "Knowledge is distributed across parameters.", isCorrect: true },
-      { text: "Local edits can cause global regressions.", isCorrect: true },
-      { text: "It is a solved problem.", isCorrect: false },
-    ],
-    explanation:
-      "Editing model knowledge remains an open challenge due to entangled representations. Core ideas: it is difficult without side effects; Knowledge is distributed across parameters; Local edits can cause global regressions. Common misconceptions: it is a solved problem.",
-  },
-
-  {
-    id: "cme295-lect4-q87",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about inference sampling are correct?",
-    options: [
-      { text: "Temperature controls randomness.", isCorrect: true },
-      { text: "Sampling explores lower-probability tokens.", isCorrect: true },
-      { text: "Sampling guarantees factual correctness.", isCorrect: false },
-      { text: "Sampling increases output diversity.", isCorrect: true },
-    ],
-    explanation:
-      "Sampling trades determinism for diversity. It does not ensure correctness. Core ideas: Temperature controls randomness; Sampling explores lower-probability tokens; Sampling increases output diversity. Common misconceptions: Sampling guarantees factual correctness.",
-  },
-
-  {
-    id: "cme295-lect4-q88",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about greedy decoding are correct?",
-    options: [
-      { text: "It selects the highest-probability token.", isCorrect: true },
-      { text: "It is deterministic.", isCorrect: true },
-      { text: "It can lead to repetitive outputs.", isCorrect: true },
-      { text: "It maximizes sequence-level diversity.", isCorrect: false },
-    ],
-    explanation:
-      "Greedy decoding is fast and simple but often suboptimal for long sequences. Core ideas: it selects the highest-probability token; it is deterministic; it can lead to repetitive outputs. Common misconceptions: it maximizes sequence-level diversity.",
-  },
-
-  {
-    id: "cme295-lect4-q89",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about beam search are correct?",
-    options: [
-      { text: "It tracks multiple candidate sequences.", isCorrect: true },
-      {
-        text: "It approximates global likelihood maximization.",
-        isCorrect: true,
-      },
-      { text: "It often reduces diversity.", isCorrect: true },
-      { text: "It samples stochastically.", isCorrect: false },
-    ],
-    explanation:
-      "Beam search balances exploration and likelihood but is deterministic. Core ideas: it tracks multiple candidate sequences; it approximates global likelihood maximization; it often reduces diversity. Common misconceptions: it samples stochastically.",
-  },
-
-  {
-    id: "cme295-lect4-q90",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about key–value caching are correct?",
-    options: [
-      { text: "It avoids recomputing past attention.", isCorrect: true },
-      {
-        text: "It reduces inference cost for long sequences.",
-        isCorrect: true,
-      },
-      { text: "It increases memory usage.", isCorrect: true },
-      { text: "It affects training loss.", isCorrect: false },
-    ],
-    explanation:
-      "KV caching trades memory for speed during inference. It does not affect training objectives. Core ideas: it avoids recomputing past attention; it reduces inference cost for long sequences; it increases memory usage. Common misconceptions: it affects training loss.",
-  },
-
-  {
-    id: "cme295-lect4-q91",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about training cost are correct?",
-    options: [
-      { text: "Pre-training dominates total cost.", isCorrect: true },
-      { text: "Fine-tuning is comparatively cheap.", isCorrect: true },
-      { text: "Hardware efficiency matters significantly.", isCorrect: true },
-      { text: "Cost is independent of data size.", isCorrect: false },
-    ],
-    explanation:
-      "Compute cost scales strongly with data and model size. Optimization techniques target this bottleneck. Core ideas: Pre-training dominates total cost; Fine-tuning is comparatively cheap; Hardware efficiency matters significantly. Common misconceptions: Cost is independent of data size.",
-  },
-
-  {
-    id: "cme295-lect4-q92",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about environmental impact are correct?",
-    options: [
-      { text: "Training consumes significant energy.", isCorrect: true },
-      { text: "Reporting carbon cost is becoming common.", isCorrect: true },
-      { text: "Efficiency improvements reduce impact.", isCorrect: true },
-      { text: "Environmental cost is negligible.", isCorrect: false },
-    ],
-    explanation:
-      "Energy use is a growing concern in large-scale training. Efficiency directly affects sustainability. Core ideas: Training consumes significant energy; Reporting carbon cost is becoming common; Efficiency improvements reduce impact. Common misconceptions: Environmental cost is negligible.",
-  },
-
-  {
-    id: "cme295-lect4-q93",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about evaluation mismatch are correct?",
-    options: [
-      { text: "Benchmarks may not reflect real use.", isCorrect: true },
-      { text: "Optimization can overfit metrics.", isCorrect: true },
-      { text: "User satisfaction is multifaceted.", isCorrect: true },
-      { text: "One score captures everything.", isCorrect: false },
-    ],
-    explanation:
-      "Evaluation requires multiple perspectives. Single metrics rarely suffice. Core ideas: Benchmarks may not reflect real use; Optimization can overfit metrics; User satisfaction is multifaceted. Common misconceptions: One score captures everything.",
-  },
-
-  {
-    id: "cme295-lect4-q94",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about user preference evaluation are correct?",
-    options: [
-      { text: "Users may value style over correctness.", isCorrect: true },
-      { text: "Preferences vary across populations.", isCorrect: true },
-      { text: "Preference signals can conflict with safety.", isCorrect: true },
-      { text: "Preferences are always aligned with truth.", isCorrect: false },
-    ],
-    explanation:
-      "Preference-based metrics reflect subjective tastes, which can conflict with factuality or safety goals. Core ideas: Users may value style over correctness; Preferences vary across populations; Preference signals can conflict with safety. Common misconceptions: Preferences are always aligned with truth.",
-  },
-
-  {
-    id: "cme295-lect4-q95",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about assistant behavior are correct?",
-    options: [
-      { text: "Helpfulness is shaped during fine-tuning.", isCorrect: true },
-      {
-        text: "Pre-training alone does not produce assistants.",
-        isCorrect: true,
-      },
-      { text: "Safety behaviors can be learned.", isCorrect: true },
-      { text: "Assistants emerge without supervision.", isCorrect: false },
-    ],
-    explanation:
-      "Assistant behavior arises from post-training alignment, not from raw next-token prediction. Core ideas: Helpfulness is shaped during fine-tuning; Pre-training alone does not produce assistants; Safety behaviors can be learned. Common misconceptions: Assistants emerge without supervision.",
-  },
-
-  {
-    id: "cme295-lect4-q96",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about rejection behavior in models are correct?",
-    options: [
-      { text: "It can be learned via training data.", isCorrect: true },
-      { text: "It may reduce user satisfaction.", isCorrect: true },
-      { text: "It supports safety goals.", isCorrect: true },
-      { text: "It is implemented purely via rules.", isCorrect: false },
-    ],
-    explanation:
-      "Rejection behavior is often learned, not rule-based. It balances safety against usability. Core ideas: it can be learned via training data; it may reduce user satisfaction; it supports safety goals. Common misconceptions: it is implemented purely via rules.",
-  },
-
-  {
-    id: "cme295-lect4-q97",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about training data reuse are correct?",
-    options: [
-      {
-        text: "High-quality datasets are reused across models.",
-        isCorrect: true,
-      },
-      { text: "Curation cost is amortized.", isCorrect: true },
-      { text: "Reuse guarantees perfect alignment.", isCorrect: false },
-      { text: "Data quality matters more than size in SFT.", isCorrect: true },
-    ],
-    explanation:
-      "SFT emphasizes quality over scale. Reuse helps but does not solve alignment fully. Core ideas: High-quality datasets are reused across models; Curation cost is amortized; Data quality matters more than size in SFT. Common misconceptions: Reuse guarantees perfect alignment.",
-  },
-
-  {
-    id: "cme295-lect4-q98",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about distribution shift are correct?",
-    options: [
-      {
-        text: "Inference prompts may differ from training prompts.",
-        isCorrect: true,
-      },
-      { text: "Shift affects generalization.", isCorrect: true },
-      { text: "Better data coverage reduces risk.", isCorrect: true },
-      { text: "Distribution shift is irrelevant in LLMs.", isCorrect: false },
-    ],
-    explanation:
-      "Mismatch between training and inference distributions is a core generalization challenge. Core ideas: Inference prompts may differ from training prompts; Shift affects generalization; Better data coverage reduces risk. Common misconceptions: Distribution shift is irrelevant in LLMs.",
-  },
-
-  {
-    id: "cme295-lect4-q99",
-    chapter: 4,
-    difficulty: "medium",
-    prompt:
-      "Which statements about learning rate choice in fine-tuning are correct?",
-    options: [
-      { text: "It affects convergence speed.", isCorrect: true },
-      { text: "LoRA often uses higher learning rates.", isCorrect: true },
-      { text: "Too high values can destabilize training.", isCorrect: true },
-      { text: "Learning rate is irrelevant.", isCorrect: false },
-    ],
-    explanation:
-      "Learning rate is a critical hyperparameter, especially in low-rank adaptation. Core ideas: it affects convergence speed; LoRA often uses higher learning rates; Too high values can destabilize training. Common misconceptions: Learning rate is irrelevant.",
-  },
-
-  {
-    id: "cme295-lect4-q100",
-    chapter: 4,
-    difficulty: "hard",
-    prompt:
-      "Which statements about the overall LLM training pipeline are correct?",
-    options: [
-      { text: "Pre-training learns general representations.", isCorrect: true },
-      { text: "Fine-tuning aligns models to tasks.", isCorrect: true },
-      { text: "Preference tuning refines behavior.", isCorrect: true },
-      { text: "All stages have equal cost.", isCorrect: false },
-    ],
-    explanation:
-      "LLM training is staged. Pre-training is dominant in cost, while later stages refine usefulness and alignment. Core ideas: Pre-training learns general representations; Fine-tuning aligns models to tasks; Preference tuning refines behavior. Common misconceptions: All stages have equal cost.",
-  },
+  makeQuestion(
+    1,
+    "easy",
+    "A decoder-only language model is trained on the sequence `[BOS] A teddy bear is reading`. Which statements describe the pretraining objective?",
+    [
+      [
+        "The model predicts each next token from the tokens that come before it.",
+        true,
+      ],
+      [
+        "The target can be ordinary text or code, because both are token sequences.",
+        true,
+      ],
+      [
+        "The model receives a human preference score for every generated answer during this stage.",
+        false,
+      ],
+      [
+        "The model is trained mainly on curated user-assistant conversations at this stage.",
+        false,
+      ],
+    ],
+    "Pretraining for the models described here is autoregressive next-token prediction over very large token corpora. Human preference scores and user-assistant dialogs belong to later post-training stages, not to the base pretraining objective.",
+  ),
+  makeQuestion(
+    2,
+    "easy",
+    "Which data sources fit the broad mixture used for large-scale language-model pretraining?",
+    [
+      ["Web text such as Common Crawl and Wikipedia-like pages.", true],
+      ["Source code from repositories or programming forums.", true],
+      [
+        "Multilingual text that helps the model learn non-English patterns.",
+        true,
+      ],
+      [
+        "Small hand-labeled classification tables with one label per document.",
+        false,
+      ],
+    ],
+    "Large language-model pretraining uses broad text and code mixtures so the model learns many token patterns before task-specific tuning. Small labeled classification tables may be useful for supervised tasks, but they do not match the scale or form of the pretraining corpus.",
+  ),
+  makeQuestion(
+    3,
+    "easy",
+    "A paper reports that a training run used \\(10^{25}\\) FLOPs, while a GPU vendor reports 1,000 TFLOP/s throughput. Which statements distinguish the two quantities?",
+    [
+      ["FLOPs count total floating-point operations performed.", true],
+      ["FLOP/s describes how quickly hardware can execute operations.", true],
+      [
+        "The two quantities are interchangeable because both measure the number of model parameters.",
+        false,
+      ],
+      [
+        "FLOP/s is the loss value minimized during next-token prediction.",
+        false,
+      ],
+    ],
+    "FLOPs measure total arithmetic work, while FLOP/s measures hardware speed. Confusing the two hides the difference between how much work a training run requires and how quickly a device can perform that work.",
+  ),
+  makeQuestion(
+    4,
+    "medium",
+    "Use the rough scaling heuristic \\(C \\propto N \\times D\\), where \\(N\\) is parameters and \\(D\\) is training tokens. If both \\(N\\) and \\(D\\) double, what happens to the rough compute estimate?",
+    [
+      ["It increases by about 4x.", true],
+      ["It increases by about 2x because a single factor changes.", false],
+      [
+        "It stays constant because larger models are more sample efficient.",
+        false,
+      ],
+      [
+        "It decreases because more data reduces the need for parameters.",
+        false,
+      ],
+    ],
+    "The simplified compute model multiplies the parameter count by the number of training tokens, so doubling both factors gives \\(2N \\times 2D = 4ND\\). Sample efficiency matters for loss, but it does not make the arithmetic work vanish.",
+  ),
+  makeQuestion(
+    5,
+    "medium",
+    "A compute-optimal rule of thumb says a model should see about 20 training tokens per parameter. Roughly how many tokens would that suggest for a 70B-parameter model?",
+    [
+      ["About 1.4T tokens.", true],
+      ["About 70B tokens.", false],
+      ["About 3.5B tokens.", false],
+      [
+        "About 20T tokens for every billion parameters, or 1,400T tokens total.",
+        false,
+      ],
+    ],
+    "The calculation is \\(70\\text{B} \\times 20 = 1{,}400\\text{B}\\), which is 1.4 trillion tokens. This is a rule of thumb for balancing parameters and data under a compute budget, not a universal law for every architecture or data mixture.",
+  ),
+  makeQuestion(
+    6,
+    "hard",
+    "GPT-3-style pretraining used about 175B parameters and 300B tokens. Which statements follow from comparing this to a 20-token-per-parameter compute-optimal target?",
+    [
+      ["The run used about 1.7 training tokens per parameter.", true],
+      [
+        "A 20-token-per-parameter target would be about 3.5T tokens for 175B parameters.",
+        true,
+      ],
+      [
+        "The 300B-token run was data-heavy relative to the 20-token-per-parameter rule.",
+        false,
+      ],
+      [
+        "The ratio proves that the model had too few parameters for its data.",
+        false,
+      ],
+    ],
+    "The token-per-parameter ratio is approximately \\(300/175 \\approx 1.7\\), far below 20. That comparison motivates the undertrained-model interpretation, but it is still an empirical scaling argument rather than a proof that only one design would work.",
+  ),
+  makeQuestion(
+    7,
+    "medium",
+    "Two teams process the same number of tokens. Team A trains a larger model than Team B. Which statements correctly describe the sample-efficiency claim from scaling-law studies?",
+    [
+      [
+        "The larger model can reach lower loss after seeing the same number of tokens.",
+        true,
+      ],
+      [
+        "The larger model can still be wasteful if the fixed compute budget would have been better spent on more data.",
+        true,
+      ],
+      [
+        "The larger model automatically removes the need to tune data mixture quality.",
+        false,
+      ],
+      [
+        "The larger model is sample efficient because it performs fewer floating-point operations per token.",
+        false,
+      ],
+    ],
+    "Sample efficiency means larger models can make better use of a given amount of data, not that they are cheaper per token. Compute-optimal training still asks whether the chosen parameter count and token count are balanced for the available budget.",
+  ),
+  makeQuestion(
+    8,
+    "easy",
+    "Which issues follow from storing model knowledge in weights learned from a fixed pretraining corpus?",
+    [
+      [
+        "The model has an intrinsic knowledge cutoff tied to the data it was trained on.",
+        true,
+      ],
+      [
+        "Editing one fact in the weights can have side effects on other behavior.",
+        true,
+      ],
+      ["The model can memorize or reproduce pieces of training data.", true],
+      [
+        "The model automatically knows any event that happens after deployment.",
+        false,
+      ],
+    ],
+    "A base model only learns from data that was available during training, so fresh facts need retrieval, retraining, or another update mechanism. Because knowledge is distributed across parameters, targeted edits and memorization control are difficult engineering problems.",
+  ),
+  makeQuestion(
+    9,
+    "easy",
+    "Which statements correctly describe transfer learning in the LLM training pipeline?",
+    [
+      [
+        "A general pretrained model is reused instead of starting every task from random weights.",
+        true,
+      ],
+      [
+        "Later tuning can adapt the model toward spam detection, sentiment extraction, assistant behavior, or another task.",
+        true,
+      ],
+      [
+        "Transfer learning means pretraining is skipped because the final task data is enough.",
+        false,
+      ],
+      [
+        "Transfer learning requires each downstream task to use a separate tokenizer and architecture.",
+        false,
+      ],
+    ],
+    "Transfer learning is the staged reuse of a broadly trained model for later tasks. The point is to avoid learning general language structure from scratch for every use case, while still allowing task-specific tuning.",
+  ),
+  makeQuestion(
+    10,
+    "medium",
+    "A team has a fixed accelerator budget. Which design choices are part of the compute-optimal scaling tradeoff?",
+    [
+      ["How many model parameters to train.", true],
+      ["How many training tokens to process.", true],
+      ["Whether the architecture and hardware change the FLOP constant.", true],
+      [
+        "Whether to ignore data quality because the parameter count alone determines loss.",
+        false,
+      ],
+    ],
+    "Compute-optimal scaling is a tradeoff among model size, data size, and implementation details under a fixed budget. Data quality still matters because more tokens are not equally useful if they are duplicated, noisy, or poorly matched to the target domain.",
+  ),
+  makeQuestion(
+    11,
+    "medium",
+    "A corpus contains 2 million documents, each averaging 750 tokens after tokenization. What is the approximate corpus size in tokens?",
+    [
+      ["1.5 billion tokens.", true],
+      ["1.5 million tokens.", false],
+      ["750 million tokens.", false],
+      ["2.75 trillion tokens.", false],
+    ],
+    "The token count is \\(2{,}000{,}000 \\times 750 = 1{,}500{,}000{,}000\\), or 1.5 billion tokens. LLM dataset scale is usually discussed in tokens because token count directly affects training compute and optimization steps.",
+  ),
+  makeQuestion(
+    12,
+    "easy",
+    "A pretrained base model responds to a user question by continuing with encyclopedia-style facts rather than giving practical advice. Which statements best explain the behavior?",
+    [
+      [
+        "The base model has learned likely text continuations, not necessarily assistant-style helpfulness.",
+        true,
+      ],
+      [
+        "Instruction tuning can shift the same base model toward direct answers to user requests.",
+        true,
+      ],
+      [
+        "The behavior proves that pretraining failed to learn language structure.",
+        false,
+      ],
+      [
+        "The behavior is caused by FlashAttention changing the attention output.",
+        false,
+      ],
+    ],
+    "A base model can understand many token patterns but still behave like a continuation engine. Supervised fine-tuning and instruction tuning teach the model the response style and task framing expected from an assistant.",
+  ),
+  makeQuestion(
+    13,
+    "easy",
+    "During a large-model training step, which objects may need GPU memory?",
+    [
+      ["Model parameters.", true],
+      ["Forward-pass activations.", true],
+      ["Gradients from the backward pass.", true],
+      ["Optimizer state such as Adam moments.", true],
+    ],
+    "Training requires much more memory than just the final model weights. Activations, gradients, and optimizer state can dominate the memory budget, especially with long context lengths, large batches, and adaptive optimizers.",
+  ),
+  makeQuestion(
+    14,
+    "medium",
+    "A team doubles the microbatch size while keeping sequence length and model architecture fixed. Which training-memory effects are most directly expected?",
+    [
+      ["Activation memory generally increases.", true],
+      [
+        "The parameter memory for a dense model generally stays the same.",
+        true,
+      ],
+      ["The self-attention matrix for each sequence becomes shorter.", false],
+      [
+        "The Adam optimizer state disappears because more examples are processed together.",
+        false,
+      ],
+    ],
+    "More examples in a microbatch require more intermediate activations to be stored for backpropagation. The model parameters and optimizer state are properties of the model and optimizer, not of the number of examples in one microbatch.",
+  ),
+  makeQuestion(
+    15,
+    "medium",
+    "For one attention head with sequence length \\(L=2{,}048\\), how many entries are in the dense score matrix \\(QK^\\top\\) before masking or softmax?",
+    [
+      ["\\(2{,}048^2 = 4{,}194{,}304\\) entries.", true],
+      ["\\(2\\times 2{,}048 = 4{,}096\\) entries.", false],
+      ["\\(2{,}048\\log_2 2{,}048 = 22{,}528\\) entries.", false],
+      ["\\(2{,}048\\) entries because each token only scores itself.", false],
+    ],
+    "Dense self-attention compares each query position with each key position, producing an \\(L\\times L\\) score matrix for each head. This quadratic shape is why long context length pressures activation memory and motivates IO-aware attention kernels.",
+  ),
+  makeQuestion(
+    16,
+    "hard",
+    "A model has 10B parameters and an optimizer stores two FP32 Adam moment values per parameter. Ignoring gradients and the parameters themselves, how much memory do the two moment buffers require?",
+    [
+      [
+        "About 80 GB, because \\(10\\text{B}\\times 2\\times 4\\) bytes = 80B bytes.",
+        true,
+      ],
+      [
+        "About 20 GB, because \\(10\\text{B}\\times 2\\) bytes = 20B bytes.",
+        false,
+      ],
+      [
+        "About 10 GB, because \\(10\\text{B}\\times 1\\) byte = 10B bytes.",
+        false,
+      ],
+      [
+        "About 160 GB, because \\(10\\text{B}\\times 4\\times 4\\) bytes = 160B bytes.",
+        false,
+      ],
+    ],
+    "Each FP32 value is 4 bytes, and two moment buffers store two such values per parameter. This simple calculation shows why optimizer state is a major memory object during training, even before counting parameters, gradients, and activations.",
+  ),
+  makeQuestion(
+    17,
+    "medium",
+    "Which statements correctly describe ordinary data parallelism?",
+    [
+      ["Each device processes a different slice of the batch.", true],
+      [
+        "Each device typically holds a full copy of the model parameters.",
+        true,
+      ],
+      [
+        "Each device owns a different contiguous range of transformer layers.",
+        false,
+      ],
+      [
+        "It removes the need to synchronize gradients before a shared update.",
+        false,
+      ],
+    ],
+    "Data parallelism splits data while replicating the model, so the devices must communicate gradient information to make a consistent update. Layer ownership is a model-parallel or pipeline-parallel idea, not ordinary data parallelism.",
+  ),
+  makeQuestion(
+    18,
+    "medium",
+    "A 90B-parameter dense model cannot fit a full copy of its weights on one GPU. Why is plain data parallelism alone insufficient?",
+    [
+      [
+        "Plain data parallelism still requires each device to hold the full model copy.",
+        true,
+      ],
+      [
+        "It can split examples across devices while still replicating parameter memory.",
+        true,
+      ],
+      [
+        "The system needs sharding, model parallelism, offload, or related memory-saving work to fit the state.",
+        true,
+      ],
+      [
+        "Plain data parallelism is primarily a decoding-time sampling method.",
+        false,
+      ],
+    ],
+    "The memory blocker is the full model replica on each device. Splitting the batch helps activation memory per device, but it does not solve the problem of a model whose parameters and optimizer state cannot fit on one GPU.",
+  ),
+  makeQuestion(
+    19,
+    "medium",
+    "Which statements correctly match ZeRO stages to what gets sharded?",
+    [
+      ["ZeRO-1 shards optimizer state.", true],
+      ["ZeRO-2 shards optimizer state and gradients.", true],
+      ["ZeRO-3 shards optimizer state, gradients, and parameters.", true],
+      [
+        "ZeRO stages work by turning every transformer layer into a separate tokenizer.",
+        false,
+      ],
+    ],
+    "Zero Redundancy Optimization reduces duplicated training state across devices. The stages progressively shard optimizer state, gradients, and then parameters, but they do not change tokenization or the mathematical role of transformer layers.",
+  ),
+  makeQuestion(
+    20,
+    "hard",
+    "A replicated optimizer state takes 96 GB per GPU. If ZeRO-style sharding splits only that optimizer state evenly across 8 GPUs, what is the per-GPU optimizer-state footprint?",
+    [
+      ["12 GB per GPU.", true],
+      ["8 GB per GPU.", false],
+      ["96 GB per GPU, because \\(96/8=96\\) for optimizer state.", false],
+      ["768 GB per GPU, because each device stores every shard.", false],
+    ],
+    "Even sharding divides the replicated object by the number of devices, so \\(96/8=12\\) GB per GPU. Real systems also pay communication and scheduling costs to gather needed shards at the right time.",
+  ),
+  makeQuestion(
+    21,
+    "medium",
+    "Which methods are forms of model parallelism rather than ordinary data parallelism?",
+    [
+      ["Tensor parallelism for splitting large matrix operations.", true],
+      ["Pipeline parallelism for assigning layer ranges to devices.", true],
+      [
+        "Expert parallelism for placing MoE experts on different devices.",
+        true,
+      ],
+      [
+        "Randomly shuffling the examples before making a single-device batch.",
+        false,
+      ],
+    ],
+    "Model parallelism partitions model computation, while data parallelism partitions examples. Tensor, pipeline, and expert parallelism split different parts of the model computation across accelerators.",
+  ),
+  makeQuestion(
+    22,
+    "medium",
+    "A transformer block contains a very large matrix multiplication and an MoE feed-forward layer. Which statements match parallelism choices to the bottleneck?",
+    [
+      [
+        "Tensor parallelism can split large matrix multiplications across devices.",
+        true,
+      ],
+      [
+        "Expert parallelism can place different experts on different devices.",
+        true,
+      ],
+      [
+        "Pipeline parallelism is the method that samples top-p tokens at inference time.",
+        false,
+      ],
+      [
+        "Data parallelism makes a single matrix multiplication smaller by slicing its columns.",
+        false,
+      ],
+    ],
+    "Tensor parallelism is about splitting tensor operations, while expert parallelism is about distributing expert modules. Top-p sampling is a decoding method, and ordinary data parallelism does not slice one matrix multiplication.",
+  ),
+  makeQuestion(
+    23,
+    "hard",
+    "A 24-layer decoder is placed on 4 pipeline stages with equal layer counts. How many layers does each stage own in the simplest balanced split?",
+    [
+      ["6 layers per stage.", true],
+      ["4 layers per stage.", false],
+      ["24 layers per stage.", false],
+      ["96 layers per stage.", false],
+    ],
+    "The simplest equal split assigns \\(24/4=6\\) layers to each stage. Pipeline parallelism can reduce per-device memory for layers, but it introduces scheduling issues such as pipeline bubbles.",
+  ),
+  makeQuestion(
+    24,
+    "medium",
+    "Which statements correctly describe expert parallelism for a sparse MoE layer?",
+    [
+      ["Different experts can be stored on different devices.", true],
+      [
+        "Token routing can create communication and load-balancing challenges.",
+        true,
+      ],
+      [
+        "Most tokens run the full expert set before routing scores are applied.",
+        false,
+      ],
+      [
+        "Expert parallelism replaces the next-token objective with majority voting.",
+        false,
+      ],
+    ],
+    "Expert parallelism uses the sparsity of MoE layers to distribute expert modules, but routed tokens may need to travel to the device that owns a selected expert. The language-model objective remains next-token prediction unless another training objective is explicitly added.",
+  ),
+  makeQuestion(
+    25,
+    "hard",
+    "A training system uses data parallelism plus ZeRO plus tensor parallelism. Which tradeoffs should the team expect?",
+    [
+      ["Lower per-device memory pressure than naive replication.", true],
+      ["More device-to-device communication than a single-GPU run.", true],
+      ["More complex scheduling and state movement.", true],
+      ["No need to compute gradients.", false],
+    ],
+    "Parallelism methods help a large run fit and scale, but they introduce coordination costs. None of these methods removes the need for backpropagation; they reorganize where the training work and state live.",
+  ),
+  makeQuestion(
+    26,
+    "easy",
+    "Which statements correctly describe the forward, backward, and update phases of training?",
+    [
+      ["The forward pass computes activations and loss.", true],
+      ["The backward pass computes gradients.", true],
+      [
+        "The optimizer update changes parameters using gradient information.",
+        true,
+      ],
+      [
+        "The update phase is where the tokenizer decides the vocabulary size for the first time.",
+        false,
+      ],
+    ],
+    "The training loop computes predictions and loss, propagates gradient information backward, and then updates parameters with an optimizer. Tokenizer design is a preprocessing/model-design issue, not the optimizer update step.",
+  ),
+  makeQuestion(
+    27,
+    "medium",
+    "Why are forward-pass activations usually stored during training?",
+    [
+      [
+        "They are needed to compute gradients efficiently during the backward pass.",
+        true,
+      ],
+      [
+        "They connect each layer output to the loss that is differentiated later.",
+        true,
+      ],
+      [
+        "They are stored because the model will reuse them as a KV cache during all future inference requests.",
+        false,
+      ],
+      [
+        "They replace the trainable parameters after the first optimizer step.",
+        false,
+      ],
+    ],
+    "Backpropagation needs information from the forward computation to calculate gradients with respect to parameters. KV caching is an inference optimization for autoregressive decoding, not the reason training stores activations.",
+  ),
+  makeQuestion(
+    28,
+    "medium",
+    "A team increases both context length and batch size. Which statements explain why memory pressure rises?",
+    [
+      [
+        "More tokens per sequence create more attention and activation values.",
+        true,
+      ],
+      [
+        "More sequences per batch require storing more per-example activations.",
+        true,
+      ],
+      [
+        "Longer context can make attention-related memory grow quadratically in sequence length.",
+        true,
+      ],
+      [
+        "Increasing context length reduces the number of layers in the model.",
+        false,
+      ],
+    ],
+    "Training memory grows with both how many examples are processed and how many token positions each example contains. Self-attention is especially sensitive to sequence length because the dense attention score shape is tied to pairs of positions.",
+  ),
+  makeQuestion(
+    29,
+    "medium",
+    "An H100-class GPU has memory on the order of tens of GB, but a training run needs hundreds of GB of parameters, optimizer state, gradients, and activations. Which conclusion is most appropriate?",
+    [
+      [
+        "The training system must distribute state, computation, or both across devices.",
+        true,
+      ],
+      [
+        "The model must be converted into a recurrent neural network before training.",
+        false,
+      ],
+      [
+        "The optimizer state can be ignored because it is not used for updates.",
+        false,
+      ],
+      [
+        "The context length should not affect memory because attention is constant-size.",
+        false,
+      ],
+    ],
+    "The memory mismatch motivates distributed training and memory-saving optimizations. Changing the architecture family is not the direct conclusion, and optimizer state plus long-context activations are real parts of the memory budget.",
+  ),
+  makeQuestion(
+    30,
+    "hard",
+    "A model stores BF16 parameters using 2 bytes per parameter and two FP32 Adam moments using 8 bytes total per parameter. Which statements are correct for optimizer state versus parameter memory?",
+    [
+      [
+        "The Adam moments can take about 4x as much memory as the BF16 parameters.",
+        true,
+      ],
+      ["For 30B parameters, BF16 parameter storage is about 60 GB.", true],
+      [
+        "The Adam moments require no memory because they are recomputed from the current batch only.",
+        false,
+      ],
+      [
+        "Using BF16 parameters automatically makes all optimizer state BF16 as well.",
+        false,
+      ],
+    ],
+    "Two FP32 moments use \\(2\\times 4=8\\) bytes per parameter, which is four times the 2 bytes used by BF16 parameter storage. Optimizer implementation choices vary, but adaptive optimizer state is a central memory cost during large-model training.",
+  ),
+  makeQuestion(
+    31,
+    "hard",
+    "Let \\(Q\\in\\mathbb{R}^{L\\times d}\\), \\(K\\in\\mathbb{R}^{L\\times d}\\), and \\(V\\in\\mathbb{R}^{L\\times d_v}\\). What is the shape of the standard attention output \\(\\mathrm{softmax}(QK^\\top/\\sqrt d)V\\)?",
+    [
+      ["\\(L\\times d_v\\).", true],
+      ["\\(d\\times d_v\\).", false],
+      ["\\(L\\times L\\).", false],
+      ["\\(d_v\\times L\\).", false],
+    ],
+    "\\(QK^\\top\\) has shape \\(L\\times L\\), and multiplying the normalized scores by \\(V\\) returns one output vector per query position. The output therefore has the sequence dimension \\(L\\) and the value dimension \\(d_v\\).",
+  ),
+  makeQuestion(
+    32,
+    "medium",
+    "In a straightforward attention implementation, which intermediate objects are commonly written to and read from high-bandwidth memory (HBM)?",
+    [
+      ["The attention score matrix \\(S=QK^\\top/\\sqrt d\\).", true],
+      ["The post-softmax probability matrix \\(P\\).", true],
+      ["A separately trained reward model for every attention head.", false],
+      ["A permanent natural-language explanation for each token pair.", false],
+    ],
+    "A standard implementation can materialize large score and probability matrices, creating expensive HBM traffic. Reward models and textual explanations are unrelated to the low-level attention kernel.",
+  ),
+  makeQuestion(
+    33,
+    "medium",
+    "Which statements correctly distinguish FlashAttention from approximate sparse attention?",
+    [
+      [
+        "FlashAttention computes the same mathematical attention result as standard attention, up to normal numerical behavior.",
+        true,
+      ],
+      ["Its speedup comes from IO-aware tiling and reduced HBM traffic.", true],
+      [
+        "It speeds up attention by dropping low-probability keys before softmax.",
+        false,
+      ],
+      [
+        "It replaces the value matrix \\(V\\) with a learned reward model.",
+        false,
+      ],
+    ],
+    "FlashAttention is exact attention reorganized around GPU memory hierarchy. It is not the same idea as sparsifying attention patterns or changing the probability distribution by pruning keys.",
+  ),
+  makeQuestion(
+    34,
+    "hard",
+    "Which statements describe the tiling strategy behind FlashAttention?",
+    [
+      [
+        "Blocks of \\(Q\\), \\(K\\), and \\(V\\) are loaded into fast SRAM.",
+        true,
+      ],
+      ["Partial attention outputs are computed block by block.", true],
+      [
+        "The implementation avoids materializing the full probability matrix in HBM.",
+        true,
+      ],
+      [
+        "The implementation stores a full copy of every layer on every GPU expert.",
+        false,
+      ],
+    ],
+    "The key systems idea is to keep small blocks near compute and avoid repeated slow memory movement for giant intermediate matrices. Storing full model layers on every expert is not part of the FlashAttention algorithm.",
+  ),
+  makeQuestion(
+    35,
+    "medium",
+    "Which statements about recomputation in FlashAttention-style backward passes are correct?",
+    [
+      ["Some forward intermediates can be discarded rather than stored.", true],
+      ["Needed values can be recomputed during the backward pass.", true],
+      [
+        "The tradeoff can reduce memory traffic enough to improve runtime.",
+        true,
+      ],
+      [
+        "Recomputation still uses the needed inputs to recover exact intermediate quantities.",
+        true,
+      ],
+    ],
+    "The recomputation strategy uses the original inputs to regenerate needed quantities instead of storing every intermediate. It trades arithmetic for lower memory movement and storage while preserving the mathematical computation needed for gradients.",
+  ),
+  makeQuestion(
+    36,
+    "hard",
+    "A kernel does 15% more arithmetic but cuts slow HBM traffic enough that wall-clock time falls. Which explanation matches the FlashAttention lesson?",
+    [
+      [
+        "Runtime can be limited by memory IO, so more FLOPs can still be faster when memory traffic falls.",
+        true,
+      ],
+      [
+        "Arithmetic count determines runtime independently of memory hierarchy.",
+        false,
+      ],
+      [
+        "The kernel must be approximate because exact algorithms cannot recompute values.",
+        false,
+      ],
+      ["The speedup must come from changing the learned model weights.", false],
+    ],
+    "GPU runtime is not determined only by total arithmetic; memory movement can dominate. FlashAttention exploits this by reducing HBM reads and writes while preserving the exact attention computation.",
+  ),
+  makeQuestion(
+    37,
+    "hard",
+    "For sequence length \\(L=4{,}096\\), how many entries would a full attention probability matrix \\(P\\) contain for one head?",
+    [
+      ["\\(4{,}096^2 = 16{,}777{,}216\\) entries.", true],
+      ["\\(4{,}096\\) entries.", false],
+      ["\\(4{,}096\\times 12 = 49{,}152\\) entries.", false],
+      ["\\(\\sqrt{4{,}096}=64\\) entries.", false],
+    ],
+    "A dense attention probability matrix compares every query position with every key position, so it has \\(L^2\\) entries. FlashAttention avoids storing that full matrix in HBM, which becomes increasingly valuable as context length grows.",
+  ),
+  makeQuestion(
+    38,
+    "medium",
+    "Which statements correctly compare HBM and SRAM on a GPU?",
+    [
+      [
+        "HBM is much larger and is the main GPU memory visible in hardware specifications.",
+        true,
+      ],
+      [
+        "SRAM is smaller but closer to compute units and faster to access.",
+        true,
+      ],
+      [
+        "Attention kernels can improve speed by reducing unnecessary HBM movement.",
+        true,
+      ],
+      [
+        "HBM and SRAM have identical size and latency, so tiling cannot matter.",
+        false,
+      ],
+    ],
+    "The memory hierarchy is central to IO-aware attention. HBM provides capacity, while SRAM provides fast on-chip storage for small tiles that can be processed near the compute units.",
+  ),
+  makeQuestion(
+    39,
+    "medium",
+    "Which statements correctly compare FP16, FP32, FP64, and BF16-style floating-point formats?",
+    [
+      [
+        "FP32 uses more bits than FP16 and can represent more mantissa precision.",
+        true,
+      ],
+      [
+        "BF16 keeps an exponent width like FP32 but uses fewer mantissa bits.",
+        true,
+      ],
+      [
+        "FP64 and FP16 use the same number of bits and therefore the same memory.",
+        false,
+      ],
+      [
+        "The sign bit alone determines the numerical precision of a floating-point format.",
+        false,
+      ],
+    ],
+    "Floating-point formats allocate bits among sign, exponent, and mantissa fields. Lower-precision formats save memory and can increase throughput, but the exact exponent and mantissa allocation affects numerical behavior.",
+  ),
+  makeQuestion(
+    40,
+    "medium",
+    "A tensor has 1 billion scalar values. Ignoring overhead, how much memory is saved by storing it in FP16 instead of FP32?",
+    [
+      [
+        "About 2 GB, because FP32 uses 4 bytes and FP16 uses 2 bytes per value.",
+        true,
+      ],
+      ["About 1 MB, because the format name only changes metadata.", false],
+      ["No memory is saved because both formats use 32 bits.", false],
+      ["About 16 GB, because FP16 uses 16 bytes per value.", false],
+    ],
+    "FP32 uses 4 bytes per scalar and FP16 uses 2 bytes per scalar, so 1 billion values drop from about 4 GB to about 2 GB. The exact storage can include overhead, but the basic precision-memory tradeoff is the point.",
+  ),
+  makeQuestion(
+    41,
+    "medium",
+    "Which statements correctly describe mixed precision training?",
+    [
+      [
+        "Forward activations may be computed or stored in lower precision.",
+        true,
+      ],
+      [
+        "Backward gradient computations may use lower precision where safe.",
+        true,
+      ],
+      [
+        "Sensitive master weights or updates can be kept in higher precision.",
+        true,
+      ],
+      ["Mixed precision means tensors are rounded to one bit.", false],
+    ],
+    "Mixed precision is selective: it uses lower precision where it buys speed or memory without unacceptable loss, while preserving higher precision where accumulation error would be harmful. It is not a blanket conversion of all training values to the lowest possible precision.",
+  ),
+  makeQuestion(
+    42,
+    "medium",
+    "Which statements explain why lower precision can speed up training on modern accelerators?",
+    [
+      ["Lower-precision values can reduce memory bandwidth pressure.", true],
+      [
+        "Hardware often has higher throughput for lower-precision matrix operations.",
+        true,
+      ],
+      [
+        "The speedup comes from representation and hardware efficiency, not from changing the loss objective.",
+        true,
+      ],
+      [
+        "Precision choices still need validation because overly coarse formats can hurt stability.",
+        true,
+      ],
+    ],
+    "The practical benefits are memory and throughput, not magic quality improvements or removal of optimization. Numerical choices still need care because too little precision can destabilize or degrade training.",
+  ),
+  makeQuestion(
+    43,
+    "medium",
+    "Which statements correctly describe quantization in the training or fine-tuning context?",
+    [
+      ["It represents weights or other values with fewer bits.", true],
+      [
+        "It can reduce memory footprint and sometimes improve throughput.",
+        true,
+      ],
+      ["It keeps quality unchanged across model and layer choices.", false],
+      [
+        "It changes a decoder-only transformer into an encoder-only model.",
+        false,
+      ],
+    ],
+    "Quantization changes numeric representation, not the high-level transformer architecture. It can be very useful for memory and speed, but quality depends on the format, the layer, and whether computations need dequantized or higher-precision paths.",
+  ),
+  makeQuestion(
+    44,
+    "hard",
+    "Which statements explain why mixed precision often keeps important weights or updates in higher precision?",
+    [
+      ["Repeated low-precision updates can accumulate rounding error.", true],
+      [
+        "Small update directions can be lost if the format is too coarse.",
+        true,
+      ],
+      [
+        "Higher precision can preserve small accumulated changes that low precision may round away.",
+        true,
+      ],
+      [
+        "Keeping some state in higher precision is a numerical-stability choice, not a tokenization choice.",
+        true,
+      ],
+    ],
+    "The concern is numerical stability in the training dynamics: small updates and accumulated state can be damaged by overly coarse formats. Master weights or sensitive update state are often preserved at higher precision even when activations or gradients use lower precision.",
+  ),
+  makeQuestion(
+    45,
+    "hard",
+    "If context length doubles from \\(L\\) to \\(2L\\), how does the number of entries in a dense attention score matrix change?",
+    [
+      ["It increases by 4x, from \\(L^2\\) to \\((2L)^2=4L^2\\).", true],
+      ["It increases by 2x, from \\(L^2\\) to \\(2L^2\\).", false],
+      [
+        "It stays constant at \\(L^2\\) because the model has the same number of layers.",
+        false,
+      ],
+      [
+        "It decreases to \\(L^2/2\\) because masking removes future positions.",
+        false,
+      ],
+    ],
+    "A dense attention matrix contains one score for each query-key position pair, so its size is quadratic in sequence length. Causal masking changes which scores are usable, but a straightforward dense representation still scales with the number of token pairs.",
+  ),
+  makeQuestion(
+    46,
+    "hard",
+    "A training run doubles both sequence length and batch size. Which statements follow for activation pressure in a decoder-only transformer?",
+    [
+      [
+        "The number of token positions in the batch doubles from the batch-size change alone.",
+        true,
+      ],
+      [
+        "Attention-related per-sequence score storage can grow by about 4x from the sequence-length change alone.",
+        true,
+      ],
+      [
+        "The two changes are harmless because activations depend only on vocabulary size.",
+        false,
+      ],
+      [
+        "The model skips gradient computation because there are more tokens per step.",
+        false,
+      ],
+    ],
+    "Batch size affects how many examples produce activations, and sequence length affects how many token positions and attention pairs exist inside each example. Both changes can increase memory pressure even if parameter count is unchanged.",
+  ),
+  makeQuestion(
+    47,
+    "medium",
+    "A colleague claims FlashAttention speeds up training by approximating softmax with a cheaper heuristic. Which response is most accurate?",
+    [
+      [
+        "FlashAttention is designed to compute exact attention while reorganizing memory access.",
+        true,
+      ],
+      [
+        "The claim is right because FlashAttention drops half the keys before softmax.",
+        false,
+      ],
+      [
+        "The claim is right because FlashAttention replaces attention with a recurrent layer.",
+        false,
+      ],
+      [
+        "The claim is right because FlashAttention changes the training labels.",
+        false,
+      ],
+    ],
+    "The central distinction is exactness: FlashAttention changes how the computation is scheduled on GPU memory, not the mathematical attention formula. Approximating attention, changing architectures, or changing labels would be different interventions.",
+  ),
+  makeQuestion(
+    48,
+    "easy",
+    "Which statements correctly distinguish training-time and inference-time GPU requirements?",
+    [
+      [
+        "Training stores gradients and optimizer state, while inference usually does not.",
+        true,
+      ],
+      [
+        "Autoregressive inference can store KV cache to avoid recomputing previous keys and values.",
+        true,
+      ],
+      [
+        "Training stores forward activations so the backward pass can compute gradients.",
+        true,
+      ],
+      ["Inference runs without a backward pass or optimizer update.", true],
+    ],
+    "Training and inference stress hardware differently. Training must support forward, backward, and optimizer updates, while inference focuses on fast generation and often trades memory for speed through KV caching.",
+  ),
+  makeQuestion(
+    49,
+    "easy",
+    "Which statements correctly describe supervised fine-tuning (SFT)?",
+    [
+      [
+        "It trains from pretrained weights rather than from random initialization.",
+        true,
+      ],
+      [
+        "It uses input-output examples that demonstrate desired behavior.",
+        true,
+      ],
+      [
+        "It can use a much smaller supervised dataset than the pretraining corpus.",
+        true,
+      ],
+      [
+        "It adapts behavior after pretraining and before later alignment stages.",
+        true,
+      ],
+    ],
+    "SFT adapts a pretrained model using supervised examples, often to make it follow tasks or instructions. It is still neural training, not a switch to rules or a repeat of broad pretraining without target outputs.",
+  ),
+  makeQuestion(
+    50,
+    "medium",
+    "An instruction-tuning example is `[BOS] Write a short story. Sure, here is a story...`. Where is the supervised loss typically applied?",
+    [
+      ["On the target response tokens conditioned on the instruction.", true],
+      ["Only on the instruction tokens before the response begins.", false],
+      [
+        "Only on a final scalar user vote after the whole response is generated.",
+        false,
+      ],
+      [
+        "Only on the GPU memory addresses touched by the attention kernel.",
+        false,
+      ],
+    ],
+    "In SFT, the instruction is context and the desired response is the supervised continuation to predict. User votes and memory addresses belong to other topics: preference evaluation and low-level kernel implementation.",
+  ),
+  makeQuestion(
+    51,
+    "easy",
+    "Which examples fit instruction-tuning data for making a model more assistant-like?",
+    [
+      ["A user instruction paired with a helpful answer.", true],
+      ["A math or reasoning prompt paired with a worked response.", true],
+      [
+        "A safety-related prompt paired with an appropriate refusal or redirection.",
+        true,
+      ],
+      ["A raw dump of shuffled tokens with no input-output structure.", false],
+    ],
+    "Instruction tuning teaches a model how to answer requests, solve prompted tasks, and handle safety-sensitive situations. Raw shuffled text does not demonstrate the input-output behavior expected from an assistant.",
+  ),
+  makeQuestion(
+    52,
+    "easy",
+    "Which statements correctly compare pretraining scale with SFT scale?",
+    [
+      [
+        "Pretraining commonly uses hundreds of billions to trillions of tokens.",
+        true,
+      ],
+      ["SFT can use thousands to millions of high-quality examples.", true],
+      ["SFT uses more examples than pretraining uses tokens.", false],
+      [
+        "Pretraining mainly uses assistant-dialog examples with hand-written answers.",
+        false,
+      ],
+    ],
+    "Pretraining is broad and enormous, while SFT is narrower and more curated. The smaller SFT scale works because it starts from a base model that already learned general language and code patterns.",
+  ),
+  makeQuestion(
+    53,
+    "medium",
+    "A team instruction-tunes mostly on textbook-style answers, then deploys the model for terse customer-support chats full of abbreviations. Which risk is most directly illustrated?",
+    [
+      [
+        "Prompt-distribution mismatch between SFT data and deployment use.",
+        true,
+      ],
+      ["The Chinchilla token-per-parameter rule being exactly 1:1.", false],
+      ["FlashAttention becoming approximate on short prompts.", false],
+      ["ZeRO sharding replacing the loss function.", false],
+    ],
+    "The problem is that SFT behavior generalizes best when the training prompt distribution resembles the prompts the model will face. Scaling ratios, attention kernels, and optimizer-state sharding do not explain this particular deployment mismatch.",
+  ),
+  makeQuestion(
+    54,
+    "medium",
+    "A model is SFT-trained on one prompt-response pair and later receives the exact same prompt with nonzero sampling temperature. Which statements are reasonable?",
+    [
+      [
+        "The response may have a similar style without reproducing the exact wording.",
+        true,
+      ],
+      [
+        "Higher temperature can make lower-probability continuations more likely.",
+        true,
+      ],
+      ["The model will output the training response word for word.", false],
+      [
+        "Temperature changes the stored SFT dataset before inference begins.",
+        false,
+      ],
+    ],
+    "SFT changes the model distribution, but inference sampling still draws from a probability distribution. Nonzero temperature can create variation, while exact memorized reproduction is a risk to analyze rather than a guarantee.",
+  ),
+  makeQuestion(
+    55,
+    "easy",
+    "Which benchmark-to-capability matches are appropriate?",
+    [
+      ["MMLU: broad multitask knowledge and reasoning.", true],
+      ["GSM8K: grade-school math word problems.", true],
+      ["HumanEval: code generation tasks.", true],
+      ["HBM bandwidth: a direct score for factual answer quality.", false],
+    ],
+    "MMLU, GSM8K, and HumanEval are evaluation benchmarks for different model capabilities. HBM bandwidth is a hardware characteristic; it can affect speed, but it is not a direct factuality or reasoning benchmark.",
+  ),
+  makeQuestion(
+    56,
+    "hard",
+    "Why can training on the benchmark task confound model comparison even if the exact test examples are not included?",
+    [
+      [
+        "A model exposed to the task format may learn strategies specific to that evaluation.",
+        true,
+      ],
+      [
+        "Two models are harder to compare if one saw auxiliary data from the benchmark domain and the other did not.",
+        true,
+      ],
+      [
+        "A sudden benchmark jump can reflect task exposure rather than a general capability jump.",
+        true,
+      ],
+      [
+        "Task exposure matters less than the inference hardware kernel used for the benchmark.",
+        false,
+      ],
+    ],
+    "Benchmark validity depends on more than avoiding exact test-set leakage. Training on the same task distribution can change what a score means, especially when comparing models with different data mixtures.",
+  ),
+  makeQuestion(
+    57,
+    "medium",
+    "Which statements correctly describe arena-style pairwise preference evaluation?",
+    [
+      ["Users compare two model responses to the same prompt.", true],
+      ["The system aggregates pairwise preferences into a ranking.", true],
+      [
+        "The resulting score can reflect user taste as well as model quality.",
+        true,
+      ],
+      ["The preferred answer is factually correct by definition.", false],
+    ],
+    "Arena-style evaluation puts a number on user preference, which is useful but not the same as ground-truth factuality. A preferred answer can be more confident, stylish, or agreeable while still being wrong or unsafe.",
+  ),
+  makeQuestion(
+    58,
+    "medium",
+    "Which limitations can affect user-preference leaderboards?",
+    [
+      ["Cold-start or unequal exposure for newly added models.", true],
+      ["Users may not know which response is factual.", true],
+      [
+        "Preferences may penalize safety refusals that are intended behavior.",
+        true,
+      ],
+      [
+        "The voting process can be vulnerable to manipulation or model-identification tricks.",
+        true,
+      ],
+    ],
+    "Preference leaderboards are useful but brittle: exposure, manipulation, factuality blind spots, population mismatch, and safety preferences can all affect results. They should be interpreted alongside task benchmarks and expert evaluation, not as a complete measure of model quality.",
+  ),
+  makeQuestion(
+    59,
+    "easy",
+    "Which statements correctly describe alignment stages in the LLM lifecycle?",
+    [
+      [
+        "Fine-tuning can make a pretrained model better suited to specific tasks.",
+        true,
+      ],
+      ["Preference tuning can further shape behavior after SFT.", true],
+      [
+        "Instruction tuning is one supervised fine-tuning route toward alignment.",
+        true,
+      ],
+      [
+        "Alignment removes harmful behavior through a closed-form mathematical formula.",
+        false,
+      ],
+    ],
+    "Alignment refers to post-pretraining work that makes the model behave more like the intended system, including fine-tuning and preference-based methods. It improves behavior but does not provide a proof that all failures are gone.",
+  ),
+  makeQuestion(
+    60,
+    "medium",
+    "What is mid-training in the model lifecycle described here?",
+    [
+      [
+        "A stage after broad pretraining that continues the pretraining objective on data closer to target tasks.",
+        true,
+      ],
+      [
+        "A stage before broad pretraining that uses pairwise preference votes instead of token prediction.",
+        false,
+      ],
+      [
+        "A replacement for tokenization that runs inside FlashAttention.",
+        false,
+      ],
+      ["A preference-voting website for ranking deployed chatbots.", false],
+    ],
+    "Mid-training keeps the language-modeling style objective but shifts the data toward domains or tasks the builders care about. It is not a benchmark leaderboard, tokenizer mechanism, or attention kernel.",
+  ),
+  makeQuestion(
+    61,
+    "medium",
+    "Which statements describe high-quality SFT data curation?",
+    [
+      [
+        "Human-written examples can be used when expert judgment is needed.",
+        true,
+      ],
+      [
+        "Synthetic examples can supplement human data when quality is controlled.",
+        true,
+      ],
+      ["The prompt distribution should resemble the intended use cases.", true],
+      [
+        "Reusing curated datasets can amortize the cost of high-quality human or synthetic data collection.",
+        true,
+      ],
+    ],
+    "SFT data quality is about useful demonstrations, coverage, and fit to the target prompt distribution. Curated datasets are expensive to build, so reuse can be valuable as long as the examples still cover the target behaviors and prompt distribution.",
+  ),
+  makeQuestion(
+    62,
+    "hard",
+    "A product team must choose a model for coding help, factual tutoring, and safe customer support. Which evaluation signals are relevant?",
+    [
+      ["Code benchmarks such as HumanEval-style tasks.", true],
+      [
+        "Factual and reasoning benchmarks, interpreted with data-mixture caveats.",
+        true,
+      ],
+      ["Expert review of factuality and safety behavior.", true],
+      [
+        "User-preference tests that capture perceived helpfulness and style.",
+        true,
+      ],
+    ],
+    "No single score captures all the product needs in this scenario. A sensible evaluation combines task benchmarks, expert factuality and safety checks, and user preference measurements while accounting for how the models were trained.",
+  ),
+  makeQuestion(
+    63,
+    "medium",
+    "A model refuses to answer a harmful request, and many casual users downvote it because it did not comply. Which statements are correct?",
+    [
+      [
+        "Preference votes can conflict with a product's intended safety policy.",
+        true,
+      ],
+      [
+        "A refusal can be a desired behavior even if some users dislike it.",
+        true,
+      ],
+      ["The downvotes prove the model is less aligned in every sense.", false],
+      ["The downvotes prove that SFT cannot teach assistant behavior.", false],
+    ],
+    "User preference is not the same as the product's complete objective. Safety, factuality, and policy adherence may intentionally trade off against immediate user satisfaction in some prompts.",
+  ),
+  makeQuestion(
+    64,
+    "easy",
+    "A raw pretrained model answers `Can I put my teddy bear in the washer?` with material facts about teddy bears. An instruction-tuned model says to check the label and prefer hand washing. What changed most directly?",
+    [
+      [
+        "The model behavior was tuned toward answering the user's instruction helpfully.",
+        true,
+      ],
+      [
+        "The attention formula was replaced by a washing-machine simulator.",
+        false,
+      ],
+      [
+        "The model became smaller because all optimizer state was deleted at inference time.",
+        false,
+      ],
+      [
+        "The model learned the answer through FlashAttention approximating softmax.",
+        false,
+      ],
+    ],
+    "Instruction tuning teaches the model how to respond to user requests, not only how to continue plausible text. The teddy-bear example illustrates behavior tuning, not a change to attention math or GPU memory management.",
+  ),
+  makeQuestion(
+    65,
+    "medium",
+    "Which statements correctly interpret the LoRA update \\(W = W_0 + BA\\)?",
+    [
+      ["\\(W_0\\) is the frozen pretrained weight matrix.", true],
+      ["\\(B\\) and \\(A\\) are trainable low-rank adapter factors.", true],
+      [
+        "The product \\(BA\\) acts as the learned update to the base matrix.",
+        true,
+      ],
+      [
+        "\\(BA\\) is the beam-search table \\(B_{\\mathrm{beam}}A_{\\mathrm{answer}}\\) over final generated words.",
+        false,
+      ],
+    ],
+    "LoRA freezes the base weights and learns a low-rank update through smaller matrices. The formula describes a parameter update inside the model, not a decoding-time list of completed tokens.",
+  ),
+  makeQuestion(
+    66,
+    "hard",
+    "A full matrix has shape \\(4096\\times4096\\). A LoRA update uses rank \\(r=8\\), with \\(B\\in\\mathbb{R}^{4096\\times8}\\) and \\(A\\in\\mathbb{R}^{8\\times4096}\\). How many trainable adapter parameters are in \\(B\\) and \\(A\\) together?",
+    [
+      ["65,536 parameters.", true],
+      ["16,777,216 parameters.", false],
+      ["32,768 parameters.", false],
+      ["8 parameters.", false],
+    ],
+    "The adapter count is \\(4096\\times8 + 8\\times4096 = 65{,}536\\). The full matrix has \\(4096^2=16{,}777{,}216\\) entries, which shows why low-rank adaptation can be much cheaper.",
+  ),
+  makeQuestion(
+    67,
+    "hard",
+    "Using the same \\(4096\\times4096\\) matrix and rank \\(r=8\\) LoRA update, approximately what fraction of full-matrix parameters are trainable in the adapter?",
+    [
+      [
+        "About 0.39%, because \\(65{,}536 / 16{,}777{,}216 \\approx 0.0039\\).",
+        true,
+      ],
+      [
+        "About 39%, because \\(8/2048 \\approx 0.0039\\) is treated as 39%.",
+        false,
+      ],
+      ["About 8%, because \\(r=8\\) directly gives the percentage.", false],
+      [
+        "About 100%, because LoRA directly updates the entries of \\(W_0\\) during adapter training.",
+        false,
+      ],
+    ],
+    "The adapter has 65,536 trainable parameters compared with 16,777,216 entries in the full matrix, so the trainable fraction is under one percent. LoRA changes the effective matrix through a low-rank update while leaving \\(W_0\\) frozen during adapter training.",
+  ),
+  makeQuestion(
+    68,
+    "medium",
+    "Why is swapping LoRA adapters useful for task specialization?",
+    [
+      [
+        "Different adapter matrices can encode different task-specific updates.",
+        true,
+      ],
+      [
+        "The same frozen base model can be paired with a spam adapter, sentiment adapter, or translation adapter.",
+        true,
+      ],
+      [
+        "Adapters are smaller to store and move than a full copy of the base model.",
+        true,
+      ],
+      [
+        "Adapter swapping can support several tasks without retraining the full base weights each time.",
+        true,
+      ],
+    ],
+    "LoRA separates the large reusable base model from small task-specific updates. This makes it practical to train or store specialized behavior without duplicating every pretrained parameter for every task.",
+  ),
+  makeQuestion(
+    69,
+    "medium",
+    "Which statements describe where LoRA adapters may be applied in transformer models?",
+    [
+      [
+        "The original LoRA paper emphasized attention projection matrices.",
+        true,
+      ],
+      [
+        "Modern guidance often applies LoRA to both attention and feed-forward blocks, with feed-forward blocks especially important.",
+        true,
+      ],
+      [
+        "LoRA is applied to model weight matrices rather than to raw token strings.",
+        true,
+      ],
+      [
+        "LoRA works by replacing every transformer layer with a benchmark evaluator.",
+        false,
+      ],
+    ],
+    "LoRA is applied to model weight matrices, not to raw strings or benchmark code. Later empirical guidance expanded beyond the original attention-only emphasis and highlights feed-forward blocks as important adaptation locations.",
+  ),
+  makeQuestion(
+    70,
+    "hard",
+    "Which empirical training-dynamics differences are associated with LoRA fine-tuning?",
+    [
+      ["LoRA often uses a higher learning rate than full fine-tuning.", true],
+      [
+        "LoRA can perform worse with very large batch sizes compared with full fine-tuning.",
+        true,
+      ],
+      [
+        "The low-rank parameterization can change the optimization dynamics.",
+        true,
+      ],
+      ["LoRA removes the need to choose learning rate or batch size.", false],
+    ],
+    "LoRA is not just full fine-tuning with fewer parameters; the low-rank factors change how optimization behaves. Learning rate, batch size, rank, and adapter placement remain real design choices.",
+  ),
+  makeQuestion(
+    71,
+    "medium",
+    "Which statements correctly describe QLoRA?",
+    [
+      [
+        "The frozen base weights can be stored in a quantized format to save memory.",
+        true,
+      ],
+      [
+        "The trainable LoRA adapter path can still use higher-precision computation.",
+        true,
+      ],
+      [
+        "QLoRA targets fine-tuning memory pressure rather than changing the high-level task objective.",
+        true,
+      ],
+      [
+        "QLoRA keeps the base model available while reducing the memory needed to store it.",
+        true,
+      ],
+    ],
+    "QLoRA combines quantized frozen base weights with trainable low-rank adapters. The goal is to make fine-tuning feasible under tighter VRAM budgets while preserving the base model as the foundation for the adapter update.",
+  ),
+  makeQuestion(
+    72,
+    "hard",
+    "Which statements correctly describe NormalFloat 4 (NF4) quantization?",
+    [
+      [
+        "It uses 4-bit values designed around normally distributed weights.",
+        true,
+      ],
+      [
+        "It places quantization levels by normal-distribution quantiles rather than uniform fixed-width buckets.",
+        true,
+      ],
+      [
+        "It is useful because neural weights often concentrate near the center of the distribution.",
+        true,
+      ],
+      [
+        "It is a weight quantization method rather than tokenizer compression.",
+        true,
+      ],
+    ],
+    "NF4 allocates its limited codes according to a normal-distribution assumption, which uses 4-bit capacity more effectively for typical weight distributions. It is a weight quantization method, not FP64 storage or tokenizer compression.",
+  ),
+  makeQuestion(
+    73,
+    "hard",
+    "Which statements describe the double-quantization idea in QLoRA-style methods?",
+    [
+      ["First, the model weights are quantized.", true],
+      [
+        "Second, the quantization constants used to map values are themselves quantized.",
+        true,
+      ],
+      [
+        "The second quantization can save additional memory beyond single quantization.",
+        true,
+      ],
+      [
+        "It is a representation trick, not a second full pretraining run.",
+        true,
+      ],
+    ],
+    "Double quantization compresses both the weights and the metadata or constants needed for quantization. It is not a second full pretraining run; it is an additional memory-saving representation trick.",
+  ),
+  makeQuestion(
+    74,
+    "medium",
+    "A QLoRA implementation reports about 16x VRAM savings for fine-tuning and an additional 6% savings from double quantization. Which statements correctly interpret those numbers?",
+    [
+      [
+        "A 16x saving would reduce a 160 GB footprint to roughly 10 GB for the part being compared.",
+        true,
+      ],
+      ["The extra 6% is smaller than the main 16x quantization effect.", true],
+      ["The savings make smaller-GPU fine-tuning more feasible.", true],
+      [
+        "The numbers describe memory savings rather than a direct factuality improvement.",
+        true,
+      ],
+    ],
+    "The 16x figure is a memory-footprint comparison, not an answer-quality multiplier. Quantization savings can make fine-tuning feasible on smaller GPUs, while quality still depends on model, data, training, and evaluation.",
+  ),
+  makeQuestion(
+    75,
+    "hard",
+    "Which statements correctly describe the LoRA rank \\(r\\) tradeoff?",
+    [
+      [
+        "Increasing \\(r\\) increases the number of trainable adapter parameters.",
+        true,
+      ],
+      [
+        "A larger \\(r\\) can represent a richer update than a very small \\(r\\).",
+        true,
+      ],
+      [
+        "The best rank \\(r\\) is a design choice that can depend on task, model, and resources.",
+        true,
+      ],
+      [
+        "Setting \\(r=0\\) would remove the useful trainable update rather than maximize expressiveness.",
+        true,
+      ],
+    ],
+    "Rank controls the capacity and cost of the low-rank update. A zero-rank update would add no useful trainable matrix product, while higher ranks trade more parameters for more adaptation capacity.",
+  ),
+  makeQuestion(
+    76,
+    "hard",
+    "A full fine-tune would train a \\(2048\\times2048\\) matrix. A LoRA adapter with \\(r=4\\) trains \\(2048\\times4 + 4\\times2048\\) parameters. Which statements are correct?",
+    [
+      ["The full matrix has 4,194,304 entries.", true],
+      ["The LoRA adapter has 16,384 trainable entries.", true],
+      [
+        "The adapter trains less than \\(1\\%\\) as many parameters as the full matrix.",
+        true,
+      ],
+      [
+        "The adapter is cheaper even though it has two factors, because \\(r=4\\) is small relative to 2048.",
+        true,
+      ],
+    ],
+    "The full matrix has \\(2048^2=4{,}194{,}304\\) entries, while the adapter has \\(2\\times2048\\times4=16{,}384\\). Two small factors are still far cheaper than one huge dense matrix in this example.",
+  ),
+  makeQuestion(
+    77,
+    "medium",
+    "Which statements distinguish LoRA from mixture-of-experts routing?",
+    [
+      [
+        "LoRA adds trainable low-rank updates to selected weight matrices.",
+        true,
+      ],
+      [
+        "MoE routing chooses expert subnetworks for token representations during a forward pass.",
+        true,
+      ],
+      [
+        "Both techniques can affect feed-forward layers, but they solve different problems.",
+        true,
+      ],
+      ["LoRA does not perform token-level expert routing.", true],
+    ],
+    "LoRA is a parameter-efficient fine-tuning method, while MoE routing is a conditional-computation architecture. They can both touch feed-forward parts of a transformer, but LoRA does not perform token-level expert routing.",
+  ),
+  makeQuestion(
+    78,
+    "easy",
+    "Which statements correctly compare LoRA with other parameter-efficient tuning methods mentioned alongside it?",
+    [
+      [
+        "Prefix tuning and adapters are alternative parameter-efficient methods.",
+        true,
+      ],
+      [
+        "LoRA is widely used because it can train a small number of additional parameters.",
+        true,
+      ],
+      [
+        "These methods are motivated by the cost of full supervised fine-tuning.",
+        true,
+      ],
+      [
+        "These methods adapt an existing pretrained model rather than rebuilding the pretraining dataset from scratch.",
+        true,
+      ],
+    ],
+    "Parameter-efficient tuning methods are alternatives to updating every base-model weight. They are motivated by memory and compute constraints during adaptation, not by a requirement to repeat broad pretraining.",
+  ),
+  makeQuestion(
+    79,
+    "hard",
+    "Which statements correctly describe computation and storage in QLoRA-style fine-tuning?",
+    [
+      [
+        "Frozen base weights may be stored quantized to reduce VRAM usage.",
+        true,
+      ],
+      [
+        "Trainable adapter matrices can be kept in a higher-precision format such as BF16.",
+        true,
+      ],
+      [
+        "Quantized base weights can be dequantized or used through kernels that support the needed computation path.",
+        true,
+      ],
+      [
+        "The frozen base weights remain necessary; the adapter modifies rather than replaces the full model.",
+        true,
+      ],
+    ],
+    "QLoRA keeps the base model, but stores it compactly and trains small adapters. The adapter alone is not the full model; it modifies the behavior of the frozen base through a low-rank update path.",
+  ),
+  makeQuestion(
+    80,
+    "hard",
+    "A team wants to build a useful assistant from scratch-like resources and then adapt it cheaply to several tasks. Which lifecycle statements are correct?",
+    [
+      [
+        "Pretraining teaches broad next-token prediction from large text and code mixtures.",
+        true,
+      ],
+      [
+        "Training optimizations make the large run fit and finish by managing memory, precision, and parallelism.",
+        true,
+      ],
+      [
+        "SFT and later preference tuning shape the model toward desired assistant behavior.",
+        true,
+      ],
+      [
+        "LoRA or QLoRA can cheaply adapt the pretrained model without full-weight fine-tuning for every task.",
+        true,
+      ],
+    ],
+    "The LLM lifecycle is staged: broad pretraining builds a base model, systems optimizations make the run practical, and post-training changes behavior. Parameter-efficient methods then make task adaptation cheaper than full fine-tuning for every use case.",
+  ),
 ];

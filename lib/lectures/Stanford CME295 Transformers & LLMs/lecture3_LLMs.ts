@@ -1,2356 +1,1801 @@
 import { Question } from "../../quiz";
 
+type Lecture3Difficulty = "easy" | "medium" | "hard";
+type OptionSeed = readonly [text: string, isCorrect: boolean];
+
+function makeQuestion(
+  number: number,
+  difficulty: Lecture3Difficulty,
+  prompt: string,
+  optionSeeds: readonly OptionSeed[],
+  explanation: string,
+): Question {
+  if (optionSeeds.length !== 4) {
+    throw new Error(`CME295 Lecture 3 question ${number} needs 4 options.`);
+  }
+
+  return {
+    id: `cme295-lect3-q${String(number).padStart(2, "0")}`,
+    chapter: 3,
+    difficulty,
+    prompt,
+    options: optionSeeds.map(([text, isCorrect]) => ({ text, isCorrect })),
+    explanation,
+  };
+}
+
 export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
-  // ============================================================
-  // Lecture 3 – Large Language Models (LLMs), MoE, Generation,
-  // Prompting, Inference Optimizations
-  // Q1–Q35 (first batch)
-  // ============================================================
-
-  // ============================================================
-  // Q1–Q9: ALL TRUE (≈9 questions)
-  // ============================================================
-
-  {
-    id: "cme295-lect3-q01",
-    chapter: 3,
-    difficulty: "easy",
-    prompt: "Which statements correctly describe what a language model does?",
-    options: [
-      {
-        text: "It assigns probabilities to sequences of tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "It models the likelihood of the next token given previous tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "Its predictions are based on a learned statistical or neural representation.",
-        isCorrect: true,
-      },
-      {
-        text: "It can be used to generate text by repeatedly predicting next tokens.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "A language model estimates probabilities over token sequences. Generation emerges from repeatedly sampling or selecting the next token conditioned on the previously generated ones. Core ideas: it assigns probabilities to sequences of tokens; it models the likelihood of the next token given previous tokens; Its predictions are based on a learned statistical or neural representation; it can be used to generate text by repeatedly predicting next tokens.",
-  },
-
-  {
-    id: "cme295-lect3-q02",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly characterize modern large language models (LLMs)?",
-    options: [
-      {
-        text: "They typically contain billions or more parameters.",
-        isCorrect: true,
-      },
-      {
-        text: "They are trained on extremely large datasets measured in tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "They require substantial computational resources for training.",
-        isCorrect: true,
-      },
-      {
-        text: "They are commonly implemented using Transformer architectures.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "LLMs are defined not only by being language models, but also by their scale in parameters, data, and compute. Transformers have become the dominant architecture enabling this scaling. Core ideas: they typically contain billions or more parameters; they are trained on extremely large datasets measured in tokens; they require substantial computational resources for training; they are commonly implemented using Transformer architectures.",
-  },
-
-  {
-    id: "cme295-lect3-q03",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly describe decoder-only Transformer models?",
-    options: [
-      {
-        text: "They use masked self-attention to prevent access to future tokens.",
-        isCorrect: true,
-      },
-      { text: "They predict tokens autoregressively.", isCorrect: true },
-      {
-        text: "They remove the encoder and cross-attention components.",
-        isCorrect: true,
-      },
-      {
-        text: "They are commonly used for text-to-text generation tasks.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Decoder-only models rely on masked self-attention and autoregressive prediction. By removing the encoder, they simplify the architecture while remaining powerful for generation tasks. Core ideas: they use masked self-attention to prevent access to future tokens; they predict tokens autoregressively; they remove the encoder and cross-attention components; they are commonly used for text-to-text generation tasks.",
-  },
-
-  {
-    id: "cme295-lect3-q04",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe Mixture-of-Experts (MoE) models?",
-    options: [
-      { text: "They consist of multiple expert subnetworks.", isCorrect: true },
-      {
-        text: "A gating or routing mechanism selects which experts to use.",
-        isCorrect: true,
-      },
-      {
-        text: "They aim to increase model capacity without activating all parameters.",
-        isCorrect: true,
-      },
-      {
-        text: "They can reduce inference compute compared to dense models.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "MoE models increase total parameter count while activating only a subset per input. This allows higher capacity models without proportionally increasing computation at inference. Core ideas: they consist of multiple expert subnetworks; A gating or routing mechanism selects which experts to use; they aim to increase model capacity without activating all parameters; they can reduce inference compute compared to dense models.",
-  },
-
-  {
-    id: "cme295-lect3-q05",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe sparse MoE models?",
-    options: [
-      {
-        text: "Only a subset of experts is activated for each input.",
-        isCorrect: true,
-      },
-      {
-        text: "The number of active experts is typically controlled by a hyperparameter K.",
-        isCorrect: true,
-      },
-      {
-        text: "They are designed to save compute during forward passes.",
-        isCorrect: true,
-      },
-      {
-        text: "They rely on a routing mechanism to select experts.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Sparse MoEs activate only the top-K experts chosen by a router. This design keeps inference cost manageable while still benefiting from a large pool of parameters. Core ideas: Only a subset of experts is activated for each input; The number of active experts is typically controlled by a hyperparameter K; they are designed to save compute during forward passes; they rely on a routing mechanism to select experts.",
-  },
-
-  {
-    id: "cme295-lect3-q06",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe the role of FLOPs in LLM discussions?",
-    options: [
-      {
-        text: "FLOPs count floating point operations such as additions and multiplications.",
-        isCorrect: true,
-      },
-      {
-        text: "They are used as a proxy for computational cost.",
-        isCorrect: true,
-      },
-      {
-        text: "They depend on model architecture and input length.",
-        isCorrect: true,
-      },
-      {
-        text: "They are commonly used to compare dense and sparse models.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "FLOPs provide a hardware-agnostic way to estimate computational workload. Architectural choices like MoE versus dense layers directly affect FLOPs. Core ideas: FLOPs count floating point operations such as additions and multiplications; they are used as a proxy for computational cost; they depend on model architecture and input length; they are commonly used to compare dense and sparse models.",
-  },
-
-  {
-    id: "cme295-lect3-q07",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly describe next-token prediction in LLMs?",
-    options: [
-      {
-        text: "The model outputs a probability distribution over the vocabulary.",
-        isCorrect: true,
-      },
-      {
-        text: "The distribution is typically produced using a softmax layer.",
-        isCorrect: true,
-      },
-      {
-        text: "Each decoding step conditions on previously generated tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "The process is repeated until a stopping condition is met.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "At each step, the model predicts a probability distribution for the next token. Generation proceeds autoregressively until an end-of-sequence token or another stopping rule is reached. Core ideas: The model outputs a probability distribution over the vocabulary; The distribution is typically produced using a softmax layer; Each decoding step conditions on previously generated tokens; The process is repeated until a stopping condition is met.",
-  },
-
-  {
-    id: "cme295-lect3-q08",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe temperature in token sampling?",
-    options: [
-      {
-        text: "Temperature rescales logits before the softmax.",
-        isCorrect: true,
-      },
-      {
-        text: "Lower temperatures make the distribution more peaked.",
-        isCorrect: true,
-      },
-      {
-        text: "Higher temperatures make the distribution more uniform.",
-        isCorrect: true,
-      },
-      {
-        text: "Temperature affects diversity of generated text.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Temperature modifies how sharply probabilities are distributed. Lower values favor high-probability tokens, while higher values encourage exploration and diversity. Core ideas: Temperature rescales logits before the softmax; Lower temperatures make the distribution more peaked; Higher temperatures make the distribution more uniform; Temperature affects diversity of generated text.",
-  },
-
-  {
-    id: "cme295-lect3-q09",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe in-context learning?",
-    options: [
-      {
-        text: "It allows models to adapt behavior without changing weights.",
-        isCorrect: true,
-      },
-      {
-        text: "It relies on information provided in the prompt context.",
-        isCorrect: true,
-      },
-      {
-        text: "Few-shot learning provides example input–output pairs.",
-        isCorrect: true,
-      },
-      {
-        text: "Zero-shot learning uses instructions without examples.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "In-context learning leverages the prompt itself to steer behavior. The model’s parameters remain fixed, but performance can change dramatically based on prompt design. Core ideas: it allows models to adapt behavior without changing weights; it relies on information provided in the prompt context; Few-shot learning provides example input–output pairs; Zero-shot learning uses instructions without examples.",
-  },
-
-  // ============================================================
-  // Q10–Q18: THREE TRUE
-  // ============================================================
-
-  {
-    id: "cme295-lect3-q10",
-    chapter: 3,
-    difficulty: "easy",
-    prompt: "Which statements about encoder-only models are correct?",
-    options: [
-      {
-        text: "They are typically used for representation learning tasks.",
-        isCorrect: true,
-      },
-      {
-        text: "They output contextual embeddings for input tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "They commonly use a special classification token for downstream tasks.",
-        isCorrect: true,
-      },
-      {
-        text: "They are primarily designed for left-to-right autoregressive text generation with causal masking.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Encoder-only models such as BERT focus on producing rich representations rather than generating text. Autoregressive generation is instead characteristic of decoder-only models. Core ideas: they are typically used for representation learning tasks; they output contextual embeddings for input tokens; they commonly use a special classification token for downstream tasks. Common misconceptions: they are primarily designed for left-to-right autoregressive text generation with causal masking.",
-  },
-
-  {
-    id: "cme295-lect3-q11",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about greedy decoding are correct?",
-    options: [
-      {
-        text: "It selects the token with the highest probability at each step.",
-        isCorrect: true,
-      },
-      {
-        text: "It is deterministic given fixed model outputs.",
-        isCorrect: true,
-      },
-      {
-        text: "It can lead to locally optimal but globally suboptimal sequences.",
-        isCorrect: true,
-      },
-      {
-        text: "It maximizes sequence diversity by sampling from many lower-probability alternatives at each step.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Greedy decoding is simple and fast but often produces repetitive or suboptimal text. Because it commits early, it may miss better sequences that require short-term sacrifices. Core ideas: it selects the token with the highest probability at each step; it is deterministic given fixed model outputs; it can lead to locally optimal but globally suboptimal sequences. Common misconceptions: it maximizes sequence diversity by sampling from many lower-probability alternatives at each step.",
-  },
-
-  {
-    id: "cme295-lect3-q12",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about beam search are correct?",
-    options: [
-      {
-        text: "It keeps multiple candidate sequences during generation.",
-        isCorrect: true,
-      },
-      {
-        text: "It aims to approximate globally high-probability sequences.",
-        isCorrect: true,
-      },
-      {
-        text: "It is commonly used in tasks like machine translation.",
-        isCorrect: true,
-      },
-      {
-        text: "It produces highly diverse creative outputs by sampling broadly from the vocabulary.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Beam search tracks several hypotheses to improve likelihood, but it often reduces diversity. This makes it suitable for structured tasks rather than creative generation. Core ideas: it keeps multiple candidate sequences during generation; it aims to approximate globally high-probability sequences; it is commonly used in tasks like machine translation. Common misconceptions: it produces highly diverse creative outputs by sampling broadly from the vocabulary.",
-  },
-
-  {
-    id: "cme295-lect3-q13",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about top-k sampling are correct?",
-    options: [
-      {
-        text: "It restricts sampling to the k most probable tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "It prevents extremely low-probability tokens from being sampled.",
-        isCorrect: true,
-      },
-      { text: "It introduces stochasticity into generation.", isCorrect: true },
-      {
-        text: "It selects the highest-probability token deterministically from the truncated set.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Top-k sampling balances randomness and control by limiting the candidate set. The final choice remains stochastic within the selected top-k tokens. Core ideas: it restricts sampling to the k most probable tokens; it prevents extremely low-probability tokens from being sampled; it introduces stochasticity into generation. Common misconceptions: it selects the highest-probability token deterministically from the truncated set.",
-  },
-
-  {
-    id: "cme295-lect3-q14",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statements about routing collapse in MoE models are correct?",
-    options: [
-      {
-        text: "It occurs when only a few experts receive most inputs.",
-        isCorrect: true,
-      },
-      { text: "It can reduce effective model capacity.", isCorrect: true },
-      {
-        text: "Auxiliary losses can encourage more balanced expert usage.",
-        isCorrect: true,
-      },
-      {
-        text: "It improves model generalization by concentrating training examples on a small expert subset.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Routing collapse limits the benefits of MoE by underutilizing experts. Regularization techniques are used to encourage more uniform routing. Core ideas: it occurs when only a few experts receive most inputs; it can reduce effective model capacity; Auxiliary losses can encourage more balanced expert usage. Common misconceptions: it improves model generalization by concentrating training examples on a small expert subset.",
-  },
-
-  {
-    id: "cme295-lect3-q15",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statements about expert routing in Transformers are correct?",
-    options: [
-      {
-        text: "Routing decisions can be made at the token level.",
-        isCorrect: true,
-      },
-      {
-        text: "Different layers may route tokens to different experts.",
-        isCorrect: true,
-      },
-      { text: "The router is typically a learned function.", isCorrect: true },
-      {
-        text: "Routing decisions are fixed before training and reused for every token in every layer.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "MoE routing is dynamic and learned. Tokens may be sent to different experts depending on layer and context, increasing expressiveness. Core ideas: Routing decisions can be made at the token level; Different layers may route tokens to different experts; The router is typically a learned function. Common misconceptions: Routing decisions are fixed before training and reused for every token in every layer.",
-  },
-
-  {
-    id: "cme295-lect3-q16",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about guided decoding are correct?",
-    options: [
-      {
-        text: "It constrains which tokens are allowed during generation.",
-        isCorrect: true,
-      },
-      {
-        text: "It can enforce structured output formats such as JSON.",
-        isCorrect: true,
-      },
-      { text: "It filters invalid next-token choices.", isCorrect: true },
-      {
-        text: "It requires retraining the language model so invalid token sequences become impossible.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Guided decoding operates at inference time by restricting token choices. It does not modify model weights but controls valid generation paths. Core ideas: it constrains which tokens are allowed during generation; it can enforce structured output formats such as JSON; it filters invalid next-token choices. Common misconceptions: it requires retraining the language model so invalid token sequences become impossible.",
-  },
-
-  {
-    id: "cme295-lect3-q17",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about context length are correct?",
-    options: [
-      {
-        text: "It refers to the number of tokens a model can process at once.",
-        isCorrect: true,
-      },
-      {
-        text: "It is also called context window or context size.",
-        isCorrect: true,
-      },
-      {
-        text: "Increasing it improves model accuracy because more tokens automatically make retrieval easier.",
-        isCorrect: false,
-      },
-      {
-        text: "It affects computational cost of self-attention.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Longer context windows allow more information but increase cost and may suffer from issues like context rot. More context is not always better. Core ideas: it refers to the number of tokens a model can process at once; it is also called context window or context size; it affects computational cost of self-attention. Common misconceptions: Increasing it improves model accuracy because more tokens automatically make retrieval easier.",
-  },
-
-  {
-    id: "cme295-lect3-q18",
-    chapter: 3,
-    difficulty: "hard",
-    prompt: "Which statements about chain-of-thought prompting are correct?",
-    options: [
-      {
-        text: "It encourages models to produce intermediate reasoning steps.",
-        isCorrect: true,
-      },
-      {
-        text: "It often improves performance on reasoning tasks.",
-        isCorrect: true,
-      },
-      { text: "It increases the number of generated tokens.", isCorrect: true },
-      {
-        text: "It reduces inference latency because the model emits shorter answers while reasoning.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Chain-of-thought improves reasoning by making intermediate steps explicit, but it increases token count and therefore latency and cost. Core ideas: it encourages models to produce intermediate reasoning steps; it often improves performance on reasoning tasks; it increases the number of generated tokens. Common misconceptions: it reduces inference latency because the model emits shorter answers while reasoning.",
-  },
-
-  // ============================================================
-  // Q19–Q27: TWO TRUE
-  // ============================================================
-
-  {
-    id: "cme295-lect3-q19",
-    chapter: 3,
-    difficulty: "easy",
-    prompt: "Which statements about encoder–decoder models are correct?",
-    options: [
-      { text: "They use both an encoder and a decoder.", isCorrect: true },
-      {
-        text: "They are well suited for sequence-to-sequence tasks.",
-        isCorrect: true,
-      },
-      {
-        text: "They rely primarily on decoder-style masked self-attention rather than encoder-decoder separation.",
-        isCorrect: false,
-      },
-      { text: "They cannot be trained on text data.", isCorrect: false },
-    ],
-    explanation:
-      "Encoder–decoder models combine bidirectional encoding with autoregressive decoding. Masked self-attention is only used in the decoder, not the encoder. Core ideas: they use both an encoder and a decoder; they are well suited for sequence-to-sequence tasks. Common misconceptions: they rely primarily on decoder-style masked self-attention rather than encoder-decoder separation; they cannot be trained on text data.",
-  },
-
-  {
-    id: "cme295-lect3-q20",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about top-p (nucleus) sampling are correct?",
-    options: [
-      {
-        text: "It samples from the smallest set of tokens whose cumulative probability exceeds p.",
-        isCorrect: true,
-      },
-      {
-        text: "It adapts the candidate set size dynamically.",
-        isCorrect: true,
-      },
-      {
-        text: "It samples exactly p tokens from the vocabulary on every step rather than using p as a cumulative probability-mass threshold.",
-        isCorrect: false,
-      },
-      { text: "It removes randomness from generation.", isCorrect: false },
-    ],
-    explanation:
-      "Top-p sampling selects a variable number of tokens based on cumulative probability. This allows flexibility while maintaining stochasticity. Core ideas: it samples from the smallest set of tokens whose cumulative probability exceeds p; it adapts the candidate set size dynamically. Common misconceptions: it samples exactly p tokens from the vocabulary on every step rather than using p as a cumulative probability-mass threshold; it removes randomness from generation.",
-  },
-
-  {
-    id: "cme295-lect3-q21",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about softmax are correct?",
-    options: [
-      {
-        text: "It converts logits into a probability distribution.",
-        isCorrect: true,
-      },
-      { text: "Its outputs sum to one.", isCorrect: true },
-      {
-        text: "It is independent of temperature scaling because logits are normalized after sampling decisions are made.",
-        isCorrect: false,
-      },
-      { text: "It is only used during training.", isCorrect: false },
-    ],
-    explanation:
-      "Softmax normalizes logits into probabilities and is affected by temperature. It is used during both training and inference. Core ideas: it converts logits into a probability distribution; Its outputs sum to one. Common misconceptions: it is independent of temperature scaling because logits are normalized after sampling decisions are made; it is only used during training.",
-  },
-
-  {
-    id: "cme295-lect3-q22",
-    chapter: 3,
-    difficulty: "hard",
-    prompt: "Which statements about self-consistency in prompting are correct?",
-    options: [
-      {
-        text: "It aggregates answers from multiple sampled reasoning paths.",
-        isCorrect: true,
-      },
-      { text: "It can improve robustness of final answers.", isCorrect: true },
-      {
-        text: "It requires modifying model weights so the model learns a permanent reasoning ensemble.",
-        isCorrect: false,
-      },
-      { text: "It reduces inference cost.", isCorrect: false },
-    ],
-    explanation:
-      "Self-consistency relies on multiple generations and majority voting. While it improves accuracy, it increases inference cost rather than reducing it. Core ideas: it aggregates answers from multiple sampled reasoning paths; it can improve robustness of final answers. Common misconceptions: it requires modifying model weights so the model learns a permanent reasoning ensemble; it reduces inference cost.",
-  },
-
-  {
-    id: "cme295-lect3-q23",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements about routing probability in MoE models are correct?",
-    options: [
-      {
-        text: "It can be produced using a softmax over experts.",
-        isCorrect: true,
-      },
-      {
-        text: "It indicates how likely an expert is to be selected.",
-        isCorrect: true,
-      },
-      {
-        text: "It is uniform across experts because the router assigns equal probability to each expert.",
-        isCorrect: false,
-      },
-      { text: "It is unrelated to training objectives.", isCorrect: false },
-    ],
-    explanation:
-      "Routing probabilities come from a learned router and can be uneven. Training objectives often include terms to encourage balanced expert usage. Core ideas: it can be produced using a softmax over experts; it indicates how likely an expert is to be selected. Common misconceptions: it is uniform across experts because the router assigns equal probability to each expert; it is unrelated to training objectives.",
-  },
-
-  {
-    id: "cme295-lect3-q24",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statements about sample efficiency of MoE models are correct?",
-    options: [
-      {
-        text: "They can reach strong performance with fewer training steps.",
-        isCorrect: true,
-      },
-      {
-        text: "They increase total parameter count without proportional compute increase.",
-        isCorrect: true,
-      },
-      {
-        text: "They outperform dense models under any dataset, routing, and optimization setup.",
-        isCorrect: false,
-      },
-      { text: "They eliminate the need for large datasets.", isCorrect: false },
-    ],
-    explanation:
-      "MoE models can be more sample efficient due to higher capacity, but they still require large datasets and careful training to outperform dense models. Core ideas: they can reach strong performance with fewer training steps; they increase total parameter count without proportional compute increase. Common misconceptions: they outperform dense models under any dataset, routing, and optimization setup; they eliminate the need for large datasets.",
-  },
-
-  {
-    id: "cme295-lect3-q25",
-    chapter: 3,
-    difficulty: "easy",
-    prompt: "Which statements about logits are correct?",
-    options: [
-      {
-        text: "They are raw scores output by a model before softmax.",
-        isCorrect: true,
-      },
-      { text: "They can take any real value.", isCorrect: true },
-      {
-        text: "They are probabilities after normalization and therefore already sum to one before softmax.",
-        isCorrect: false,
-      },
-      { text: "They must sum to one.", isCorrect: false },
-    ],
-    explanation:
-      "Logits are unnormalized scores. Softmax transforms them into probabilities that sum to one. Core ideas: they are raw scores output by a model before softmax; they can take any real value. Common misconceptions: they are probabilities after normalization and therefore already sum to one before softmax; they must sum to one.",
-  },
-
-  {
-    id: "cme295-lect3-q26",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about determinism in LLM inference are correct?",
-    options: [
-      {
-        text: "The Transformer computations are deterministic given fixed inputs.",
-        isCorrect: true,
-      },
-      { text: "Sampling introduces nondeterminism.", isCorrect: true },
-      {
-        text: "Temperature zero guarantees identical outputs in practice.",
-        isCorrect: false,
-      },
-      {
-        text: "Hardware kernels behave identically across devices once sampling is disabled.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "While model computations are deterministic, sampling and hardware-level effects can introduce variability. Even temperature zero may not be perfectly deterministic in practice. Core ideas: The Transformer computations are deterministic given fixed inputs; Sampling introduces nondeterminism. Common misconceptions: Temperature zero guarantees identical outputs in practice; Hardware kernels behave identically across devices once sampling is disabled.",
-  },
-
-  {
-    id: "cme295-lect3-q27",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements about expert placement in Transformers are correct?",
-    options: [
-      {
-        text: "Experts are commonly placed in the feed-forward network block.",
-        isCorrect: true,
-      },
-      {
-        text: "This is because the feed-forward block has many parameters.",
-        isCorrect: true,
-      },
-      {
-        text: "Experts replace the attention mechanism itself rather than the feed-forward sublayer.",
-        isCorrect: false,
-      },
-      {
-        text: "Experts remove the need for normalization layers.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "The feed-forward network dominates parameter count, making it a natural location for MoE layers. Attention and normalization layers remain unchanged. Core ideas: Experts are commonly placed in the feed-forward network block; this is because the feed-forward block has many parameters. Common misconceptions: Experts replace the attention mechanism itself rather than the feed-forward sublayer; Experts remove the need for normalization layers.",
-  },
-
-  // ============================================================
-  // Q28–Q35: ONE TRUE
-  // ============================================================
-
-  {
-    id: "cme295-lect3-q28",
-    chapter: 3,
-    difficulty: "easy",
-    prompt: "Which statement best defines a large language model (LLM)?",
-    options: [
-      {
-        text: "A small supervised text classifier trained on labeled examples with limited scale and compute.",
-        isCorrect: false,
-      },
-      {
-        text: "A language model with large parameter count, data, and compute.",
-        isCorrect: true,
-      },
-      { text: "Any model that produces embeddings.", isCorrect: false },
-      { text: "A rule-based text generation system.", isCorrect: false },
-    ],
-    explanation:
-      "LLMs are defined by scale in parameters, data, and compute, not merely by producing embeddings or using rules. Core idea: A language model with large parameter count, data, and compute. Common misconceptions: A small supervised text classifier trained on labeled examples with limited scale and compute; Any model that produces embeddings; A rule-based text generation system.",
-  },
-
-  {
-    id: "cme295-lect3-q29",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statement correctly describes greedy decoding?",
-    options: [
-      {
-        text: "It samples stochastically from a truncated probability distribution after applying top-k or top-p filtering.",
-        isCorrect: false,
-      },
-      {
-        text: "It selects the highest-probability token at each step.",
-        isCorrect: true,
-      },
-      { text: "It maintains multiple candidate sequences.", isCorrect: false },
-      {
-        text: "It requires auxiliary losses during training.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Greedy decoding always chooses the most probable token, making it simple but often suboptimal. Core idea: it selects the highest-probability token at each step. Common misconceptions: it samples stochastically from a truncated probability distribution after applying top-k or top-p filtering; it maintains multiple candidate sequences; it requires auxiliary losses during training.",
-  },
-
-  {
-    id: "cme295-lect3-q30",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statement correctly explains why beam search can prefer shorter sequences?",
-    options: [
-      {
-        text: "Probabilities greater than one accumulate with length.",
-        isCorrect: false,
-      },
-      {
-        text: "Multiplying probabilities less than one reduces total sequence probability.",
-        isCorrect: true,
-      },
-      { text: "Beam search ignores end-of-sequence tokens.", isCorrect: false },
-      {
-        text: "Beam search uses temperature scaling by default.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Sequence probabilities are products of token probabilities, which shrink with length. Length normalization is often added to counteract this bias. Core idea: Multiplying probabilities less than one reduces total sequence probability. Common misconceptions: Probabilities greater than one accumulate with length; Beam search ignores end-of-sequence tokens; Beam search uses temperature scaling by default.",
-  },
-
-  {
-    id: "cme295-lect3-q31",
-    chapter: 3,
-    difficulty: "hard",
-    prompt: "Which statement correctly describes routing collapse?",
-    options: [
-      { text: "All experts are used equally at all times.", isCorrect: false },
-      {
-        text: "Only a small subset of experts dominates routing decisions.",
-        isCorrect: true,
-      },
-      { text: "Routing becomes random and untrainable.", isCorrect: false },
-      { text: "The model switches to dense computation.", isCorrect: false },
-    ],
-    explanation:
-      "Routing collapse occurs when the router repeatedly selects the same experts, reducing the benefit of having multiple experts. Core idea: Only a small subset of experts dominates routing decisions. Common misconceptions: All experts are used equally at all times; Routing becomes random and untrainable; The model switches to dense computation.",
-  },
-
-  {
-    id: "cme295-lect3-q32",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statement best describes top-p sampling?",
-    options: [
-      {
-        text: "It samples only the single most likely token.",
-        isCorrect: false,
-      },
-      {
-        text: "It samples from a dynamically sized set based on cumulative probability.",
-        isCorrect: true,
-      },
-      { text: "It removes all randomness from decoding.", isCorrect: false },
-      { text: "It requires beam search to function.", isCorrect: false },
-    ],
-    explanation:
-      "Top-p sampling chooses from the smallest set of tokens whose cumulative probability exceeds p, allowing adaptive control of diversity. Core idea: it samples from a dynamically sized set based on cumulative probability. Common misconceptions: it samples only the single most likely token; it removes all randomness from decoding; it requires beam search to function.",
-  },
-
-  {
-    id: "cme295-lect3-q33",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statement correctly captures the purpose of auxiliary MoE losses?",
-    options: [
-      { text: "They increase vocabulary size.", isCorrect: false },
-      { text: "They encourage balanced expert utilization.", isCorrect: true },
-      {
-        text: "They replace the main language modeling loss.",
-        isCorrect: false,
-      },
-      {
-        text: "They eliminate the need for routing networks.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Auxiliary losses are added to guide routing behavior, helping prevent collapse and improving overall expert usage. Core idea: they encourage balanced expert utilization. Common misconceptions: they increase vocabulary size; they replace the main language modeling loss; they eliminate the need for routing networks.",
-  },
-
-  {
-    id: "cme295-lect3-q34",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statement best describes context rot?",
-    options: [
-      {
-        text: "Models improve retrieval accuracy with longer context.",
-        isCorrect: false,
-      },
-      {
-        text: "Models may struggle to retrieve relevant information as context grows.",
-        isCorrect: true,
-      },
-      {
-        text: "Context rot is caused by overfitting during training.",
-        isCorrect: false,
-      },
-      { text: "It only occurs in encoder-only models.", isCorrect: false },
-    ],
-    explanation:
-      "Context rot refers to degradation in effective information use as context length increases, especially in the presence of distractors. Core idea: Models may struggle to retrieve relevant information as context grows. Common misconceptions: Models improve retrieval accuracy with longer context; Context rot is caused by overfitting during training; it only occurs in encoder-only models.",
-  },
-
-  {
-    id: "cme295-lect3-q35",
-    chapter: 3,
-    difficulty: "easy",
-    prompt: "Which statement best describes zero-shot prompting?",
-    options: [
-      { text: "The model is fine-tuned on new examples.", isCorrect: false },
-      {
-        text: "The model is given instructions without examples.",
-        isCorrect: true,
-      },
-      {
-        text: "The model updates its weights at inference time.",
-        isCorrect: false,
-      },
-      { text: "The model requires labeled demonstrations.", isCorrect: false },
-    ],
-    explanation:
-      "Zero-shot prompting relies solely on instructions and the model’s pre-trained knowledge, without providing example input–output pairs. Core idea: The model is given instructions without examples. Common misconceptions: The model is fine-tuned on new examples; The model updates its weights at inference time; The model requires labeled demonstrations.",
-  },
-
-  // ============================================================
-  // Q36–Q70 (second batch)
-  // ============================================================
-
-  // ============================================================
-  // Q36–Q44: ALL TRUE
-  // ============================================================
-
-  {
-    id: "cme295-lect3-q36",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe Key–Value (KV) caching in Transformer inference?",
-    options: [
-      {
-        text: "It stores key and value tensors from previous tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "It avoids recomputing attention components for past tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "It reduces redundant computation during autoregressive decoding.",
-        isCorrect: true,
-      },
-      {
-        text: "It is primarily used during inference rather than training.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "KV caching reuses previously computed keys and values so that each new token only computes its own query, key, and value. This significantly reduces inference cost for long sequences. Core ideas: it stores key and value tensors from previous tokens; it avoids recomputing attention components for past tokens; it reduces redundant computation during autoregressive decoding; it is primarily used during inference rather than training.",
-  },
-
-  {
-    id: "cme295-lect3-q37",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe why self-attention becomes expensive with long context lengths?",
-    options: [
-      {
-        text: "Each new token must attend to all previous tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "Attention computation scales quadratically with sequence length.",
-        isCorrect: true,
-      },
-      {
-        text: "Memory requirements grow with stored key–value tensors.",
-        isCorrect: true,
-      },
-      {
-        text: "Longer contexts increase both compute and memory pressure.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Self-attention requires interactions between tokens, which leads to quadratic scaling. KV caching mitigates recomputation but memory usage still grows with context length. Core ideas: Each new token must attend to all previous tokens; Attention computation scales quadratically with sequence length; Memory requirements grow with stored key–value tensors; Longer contexts increase both compute and memory pressure.",
-  },
-
-  {
-    id: "cme295-lect3-q38",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe Grouped Query Attention (GQA)?",
-    options: [
-      {
-        text: "Multiple query heads can share the same key and value heads.",
-        isCorrect: true,
-      },
-      { text: "It reduces memory usage of the KV cache.", isCorrect: true },
-      {
-        text: "It lies between multi-head attention and multi-query attention.",
-        isCorrect: true,
-      },
-      {
-        text: "It is commonly used in modern large language models.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "GQA groups queries to share keys and values, reducing memory and compute cost. It offers a compromise between full multi-head attention and the more extreme multi-query attention. Core ideas: Multiple query heads can share the same key and value heads; it reduces memory usage of the KV cache; it lies between multi-head attention and multi-query attention; it is commonly used in modern large language models.",
-  },
-
-  {
-    id: "cme295-lect3-q39",
-    chapter: 3,
-    difficulty: "hard",
-    prompt: "Which statements correctly describe Multi-Query Attention (MQA)?",
-    options: [
-      {
-        text: "All query heads share a single set of key and value heads.",
-        isCorrect: true,
-      },
-      {
-        text: "It significantly reduces KV cache memory usage.",
-        isCorrect: true,
-      },
-      {
-        text: "It trades some expressiveness for efficiency.",
-        isCorrect: true,
-      },
-      {
-        text: "It can improve inference speed for long contexts.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "MQA uses one shared key and value representation across all query heads. This dramatically reduces memory footprint, especially during inference, at the cost of reduced modeling flexibility. Core ideas: All query heads share a single set of key and value heads; it significantly reduces KV cache memory usage; it trades some expressiveness for efficiency; it can improve inference speed for long contexts.",
-  },
-
-  {
-    id: "cme295-lect3-q40",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "An LLM serving system must keep key/value cache memory for many concurrent long-context requests without reserving every token slot upfront. Which statements describe PagedAttention-style memory management?",
-    options: [
-      {
-        text: "It allocates KV cache memory in fixed-size blocks.",
-        isCorrect: true,
-      },
-      {
-        text: "It reduces internal and external memory fragmentation.",
-        isCorrect: true,
-      },
-      {
-        text: "It avoids reserving the full maximum context length upfront.",
-        isCorrect: true,
-      },
-      {
-        text: "It stores each request's entire KV cache as one contiguous allocation sized to the maximum context length.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "PagedAttention manages key/value cache memory dynamically using fixed-size blocks rather than one large contiguous maximum-length allocation per request. That design reduces wasted reserved memory and fragmentation, which helps serving systems scale to many concurrent requests. Core ideas: it allocates KV cache memory in fixed-size blocks; it reduces internal and external memory fragmentation; it avoids reserving the full maximum context length upfront. Common misconceptions: it stores each request's entire KV cache as one contiguous allocation sized to the maximum context length.",
-  },
-
-  {
-    id: "cme295-lect3-q41",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe latent (compressed) attention for KV caching?",
-    options: [
-      {
-        text: "Keys and values are stored in a lower-dimensional latent space.",
-        isCorrect: true,
-      },
-      {
-        text: "Compression reduces memory usage of the KV cache.",
-        isCorrect: true,
-      },
-      {
-        text: "Decompression matrices reconstruct keys and values when needed.",
-        isCorrect: true,
-      },
-      {
-        text: "Compression can be shared across attention heads.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Latent attention stores compressed representations instead of full keys and values. This reduces memory footprint while still allowing reconstruction for attention computation. Core ideas: Keys and values are stored in a lower-dimensional latent space; Compression reduces memory usage of the KV cache; Decompression matrices reconstruct keys and values when needed; Compression can be shared across attention heads.",
-  },
-
-  {
-    id: "cme295-lect3-q42",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe speculative decoding?",
-    options: [
-      {
-        text: "A smaller draft model proposes multiple tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "A larger target model validates the proposed tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "Acceptance–rejection ensures correct target-model distribution.",
-        isCorrect: true,
-      },
-      {
-        text: "It aims to generate multiple tokens per target-model forward pass.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Speculative decoding accelerates generation by batching validation of draft tokens. The acceptance–rejection mechanism guarantees correctness with respect to the target model. Core ideas: A smaller draft model proposes multiple tokens; A larger target model validates the proposed tokens; Acceptance–rejection ensures correct target-model distribution; it aims to generate multiple tokens per target-model forward pass.",
-  },
-
-  {
-    id: "cme295-lect3-q43",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe Multi-Token Prediction (MTP)?",
-    options: [
-      {
-        text: "The model predicts several future tokens at once.",
-        isCorrect: true,
-      },
-      {
-        text: "Multiple prediction heads are trained jointly.",
-        isCorrect: true,
-      },
-      {
-        text: "Draft and target predictions come from the same model.",
-        isCorrect: true,
-      },
-      {
-        text: "It modifies the training objective compared to next-token prediction.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "MTP extends training to predict multiple tokens per step. At inference, this allows faster generation by validating several tokens at once within the same model. Core ideas: The model predicts several future tokens at once; Multiple prediction heads are trained jointly; Draft and target predictions come from the same model; it modifies the training objective compared to next-token prediction.",
-  },
-
-  {
-    id: "cme295-lect3-q44",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly describe the purpose of inference optimizations in LLMs?",
-    options: [
-      { text: "They reduce latency of text generation.", isCorrect: true },
-      { text: "They lower memory usage during inference.", isCorrect: true },
-      {
-        text: "They improve throughput when serving many users.",
-        isCorrect: true,
-      },
-      {
-        text: "They aim to preserve output quality while improving efficiency.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Inference optimizations focus on efficiency rather than changing model behavior. The goal is faster, cheaper generation with minimal or no quality loss. Core ideas: they reduce latency of text generation; they lower memory usage during inference; they improve throughput when serving many users; they aim to preserve output quality while improving efficiency.",
-  },
-
-  // ============================================================
-  // Q45–Q53: THREE TRUE
-  // ============================================================
-
-  {
-    id: "cme295-lect3-q45",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about KV caching during training are correct?",
-    options: [
-      {
-        text: "KV caching is generally unnecessary during teacher-forced training.",
-        isCorrect: true,
-      },
-      {
-        text: "Training typically processes full sequences in parallel.",
-        isCorrect: true,
-      },
-      {
-        text: "KV caching is mainly beneficial for autoregressive inference.",
-        isCorrect: true,
-      },
-      {
-        text: "KV caching is required for gradient computation.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "During training, full sequences are processed simultaneously, so past keys and values are recomputed anyway. KV caching mainly targets inference-time efficiency. Core ideas: KV caching is generally unnecessary during teacher-forced training; Training typically processes full sequences in parallel; KV caching is mainly beneficial for autoregressive inference. Common misconceptions: KV caching is required for gradient computation.",
-  },
-
-  {
-    id: "cme295-lect3-q46",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statements about routing decisions in MoE layers are correct?",
-    options: [
-      {
-        text: "Routing is typically computed after the self-attention sublayer.",
-        isCorrect: true,
-      },
-      {
-        text: "Routing decisions are based on token representations.",
-        isCorrect: true,
-      },
-      {
-        text: "Each Transformer layer usually has its own router.",
-        isCorrect: true,
-      },
-      {
-        text: "Routing is shared across all layers by default.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Routing uses contextual token embeddings produced by attention. Each layer learns its own routing behavior, enabling different experts to specialize per layer. Core ideas: Routing is typically computed after the self-attention sublayer; Routing decisions are based on token representations; Each Transformer layer usually has its own router. Common misconceptions: Routing is shared across all layers by default.",
-  },
-
-  {
-    id: "cme295-lect3-q47",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements about speculative decoding efficiency are correct?",
-    options: [
-      {
-        text: "It reduces the number of target-model forward passes.",
-        isCorrect: true,
-      },
-      {
-        text: "It benefits from the fact that inference is often memory-bound.",
-        isCorrect: true,
-      },
-      {
-        text: "It can generate several tokens per validation step.",
-        isCorrect: true,
-      },
-      { text: "It always eliminates rejection cases.", isCorrect: false },
-    ],
-    explanation:
-      "Speculative decoding batches validation to reduce expensive target-model calls. Rejections can still occur, but overall speedups are often substantial. Core ideas: it reduces the number of target-model forward passes; it benefits from the fact that inference is often memory-bound; it can generate several tokens per validation step. Common misconceptions: it always eliminates rejection cases.",
-  },
-
-  {
-    id: "cme295-lect3-q48",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about context rot are correct?",
-    options: [
-      {
-        text: "It refers to degradation in effective information use with long contexts.",
-        isCorrect: true,
-      },
-      {
-        text: "Distractor tokens can worsen retrieval performance.",
-        isCorrect: true,
-      },
-      {
-        text: "It can occur even if the answer is present in the context.",
-        isCorrect: true,
-      },
-      { text: "It guarantees incorrect answers.", isCorrect: false },
-    ],
-    explanation:
-      "Context rot describes reduced ability to leverage relevant information in long inputs. It increases difficulty but does not guarantee failure. Core ideas: it refers to degradation in effective information use with long contexts; Distractor tokens can worsen retrieval performance; it can occur even if the answer is present in the context. Common misconceptions: it guarantees incorrect answers.",
-  },
-
-  {
-    id: "cme295-lect3-q49",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about prompting structure are correct?",
-    options: [
-      {
-        text: "Prompts can include context, instructions, input, and constraints.",
-        isCorrect: true,
-      },
-      {
-        text: "Different prompt components serve different functional roles.",
-        isCorrect: true,
-      },
-      {
-        text: "Constraints can restrict output format or content.",
-        isCorrect: true,
-      },
-      {
-        text: "Prompt structure has no impact on model behavior.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Well-structured prompts guide the model more effectively. Each component helps clarify what the model should do and how it should respond. Core ideas: Prompts can include context, instructions, input, and constraints; Different prompt components serve different functional roles; Constraints can restrict output format or content. Common misconceptions: Prompt structure has no impact on model behavior.",
-  },
-
-  {
-    id: "cme295-lect3-q50",
-    chapter: 3,
-    difficulty: "hard",
-    prompt: "Which statements about few-shot prompting are correct?",
-    options: [
-      {
-        text: "It includes example input–output pairs in the prompt.",
-        isCorrect: true,
-      },
-      { text: "It often improves task performance.", isCorrect: true },
-      {
-        text: "It increases context length and inference cost.",
-        isCorrect: true,
-      },
-      { text: "It updates the model’s parameters.", isCorrect: false },
-    ],
-    explanation:
-      "Few-shot prompting conditions behavior through examples rather than weight updates. The trade-off is increased token usage and latency. Core ideas: it includes example input–output pairs in the prompt; it often improves task performance; it increases context length and inference cost. Common misconceptions: it updates the model’s parameters.",
-  },
-
-  {
-    id: "cme295-lect3-q51",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statements about chain-of-thought interpretability are correct?",
-    options: [
-      {
-        text: "It exposes intermediate reasoning steps as tokens.",
-        isCorrect: true,
-      },
-      { text: "It can help identify reasoning errors.", isCorrect: true },
-      {
-        text: "It makes debugging easier compared to opaque outputs.",
-        isCorrect: true,
-      },
-      { text: "It guarantees logically correct reasoning.", isCorrect: false },
-    ],
-    explanation:
-      "Chain-of-thought improves transparency and debugging. However, exposed reasoning can still be flawed or misleading. Core ideas: it exposes intermediate reasoning steps as tokens; it can help identify reasoning errors; it makes debugging easier compared to opaque outputs. Common misconceptions: it guarantees logically correct reasoning.",
-  },
-
-  {
-    id: "cme295-lect3-q52",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about inference determinism are correct?",
-    options: [
-      {
-        text: "Sampling introduces randomness into token selection.",
-        isCorrect: true,
-      },
-      {
-        text: "Floating-point operations can introduce nondeterminism.",
-        isCorrect: true,
-      },
-      {
-        text: "Parallel hardware execution can affect numerical results.",
-        isCorrect: true,
-      },
-      {
-        text: "Determinism is guaranteed at temperature zero in practice.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Even with deterministic decoding strategies, hardware and numerical effects can introduce variability. Absolute determinism is difficult to guarantee. Core ideas: Sampling introduces randomness into token selection; Floating-point operations can introduce nondeterminism; Parallel hardware execution can affect numerical results. Common misconceptions: Determinism is guaranteed at temperature zero in practice.",
-  },
-
-  {
-    id: "cme295-lect3-q53",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about inference-time optimizations are correct?",
-    options: [
-      { text: "They do not require retraining the model.", isCorrect: true },
-      { text: "They can be combined with each other.", isCorrect: true },
-      { text: "They are crucial for large-scale deployment.", isCorrect: true },
-      {
-        text: "They fundamentally change the model architecture.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Most inference optimizations operate on execution rather than learning. They are essential for practical deployment of large models. Core ideas: they do not require retraining the model; they can be combined with each other; they are crucial for large-scale deployment. Common misconceptions: they fundamentally change the model architecture.",
-  },
-
-  // ============================================================
-  // Q54–Q62: TWO TRUE
-  // ============================================================
-
-  {
-    id: "cme295-lect3-q54",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about memory fragmentation are correct?",
-    options: [
-      {
-        text: "Internal fragmentation refers to unused reserved memory.",
-        isCorrect: true,
-      },
-      {
-        text: "External fragmentation refers to scattered free memory blocks.",
-        isCorrect: true,
-      },
-      { text: "Fragmentation improves cache locality.", isCorrect: false },
-      { text: "Fragmentation is irrelevant for KV caching.", isCorrect: false },
-    ],
-    explanation:
-      "Memory fragmentation wastes space and reduces efficiency. Managing fragmentation is critical for scalable inference systems. Core ideas: Internal fragmentation refers to unused reserved memory; External fragmentation refers to scattered free memory blocks. Common misconceptions: Fragmentation improves cache locality; Fragmentation is irrelevant for KV caching.",
-  },
-
-  {
-    id: "cme295-lect3-q55",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statements about acceptance–rejection in speculative decoding are correct?",
-    options: [
-      {
-        text: "Accepted tokens match the target model distribution.",
-        isCorrect: true,
-      },
-      { text: "Rejected tokens require resampling.", isCorrect: true },
-      { text: "All draft tokens are always accepted.", isCorrect: false },
-      {
-        text: "Acceptance eliminates the need for validation.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Acceptance–rejection ensures correctness while allowing speedups. Rejections trigger corrective sampling to preserve the target distribution. Core ideas: Accepted tokens match the target model distribution; Rejected tokens require resampling. Common misconceptions: All draft tokens are always accepted; Acceptance eliminates the need for validation.",
-  },
-
-  {
-    id: "cme295-lect3-q56",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements about multi-token prediction objectives are correct?",
-    options: [
-      {
-        text: "They differ from standard next-token prediction objectives.",
-        isCorrect: true,
-      },
-      {
-        text: "They require predicting future tokens jointly.",
-        isCorrect: true,
-      },
-      {
-        text: "They eliminate the need for autoregressive decoding.",
-        isCorrect: false,
-      },
-      {
-        text: "They remove the need for attention mechanisms.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Multi-token prediction changes the training objective but does not remove autoregressive structure or attention mechanisms. Core ideas: they differ from standard next-token prediction objectives; they require predicting future tokens jointly. Common misconceptions: they eliminate the need for autoregressive decoding; they remove the need for attention mechanisms.",
-  },
-
-  {
-    id: "cme295-lect3-q57",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about top-k and top-p sampling are correct?",
-    options: [
-      { text: "Both restrict the set of candidate tokens.", isCorrect: true },
-      { text: "Both aim to balance diversity and coherence.", isCorrect: true },
-      {
-        text: "Both guarantee identical outputs across runs.",
-        isCorrect: false,
-      },
-      { text: "Both remove randomness from generation.", isCorrect: false },
-    ],
-    explanation:
-      "Top-k and top-p sampling introduce controlled randomness. They reduce unlikely tokens but remain stochastic. Core ideas: Both restrict the set of candidate tokens; Both aim to balance diversity and coherence. Common misconceptions: Both guarantee identical outputs across runs; Both remove randomness from generation.",
-  },
-
-  {
-    id: "cme295-lect3-q58",
-    chapter: 3,
-    difficulty: "easy",
-    prompt: "Which statements about logits and probabilities are correct?",
-    options: [
-      { text: "Logits are unnormalized scores.", isCorrect: true },
-      {
-        text: "Probabilities are obtained after applying softmax.",
-        isCorrect: true,
-      },
-      { text: "Logits must be positive.", isCorrect: false },
-      { text: "Probabilities can exceed one.", isCorrect: false },
-    ],
-    explanation:
-      "Logits can take any real value and are converted into probabilities via softmax. Probabilities are bounded between zero and one. Core ideas: Logits are unnormalized scores; Probabilities are obtained after applying softmax. Common misconceptions: Logits must be positive; Probabilities can exceed one.",
-  },
-
-  {
-    id: "cme295-lect3-q59",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about temperature scaling are correct?",
-    options: [
-      {
-        text: "Lower temperature sharpens the probability distribution.",
-        isCorrect: true,
-      },
-      {
-        text: "Higher temperature flattens the distribution.",
-        isCorrect: true,
-      },
-      { text: "Temperature changes model weights.", isCorrect: false },
-      { text: "Temperature is only used during training.", isCorrect: false },
-    ],
-    explanation:
-      "Temperature rescales logits at inference time. It affects sampling behavior without altering learned parameters. Core ideas: Lower temperature sharpens the probability distribution; Higher temperature flattens the distribution. Common misconceptions: Temperature changes model weights; Temperature is only used during training.",
-  },
-
-  {
-    id: "cme295-lect3-q60",
-    chapter: 3,
-    difficulty: "hard",
-    prompt: "Which statements about expert capacity scaling are correct?",
-    options: [
-      { text: "MoE increases total parameter count.", isCorrect: true },
-      {
-        text: "Active parameters per token can remain constant.",
-        isCorrect: true,
-      },
-      {
-        text: "All parameters are used in every forward pass.",
-        isCorrect: false,
-      },
-      {
-        text: "Capacity scaling removes the need for routing.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "MoE models scale capacity by adding experts while keeping active computation limited. Routing determines which parameters are used. Core ideas: MoE increases total parameter count; Active parameters per token can remain constant. Common misconceptions: All parameters are used in every forward pass; Capacity scaling removes the need for routing.",
-  },
-
-  {
-    id: "cme295-lect3-q61",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about inference bottlenecks are correct?",
-    options: [
-      {
-        text: "Inference is often memory-bound rather than compute-bound.",
-        isCorrect: true,
-      },
-      { text: "KV cache access can dominate latency.", isCorrect: true },
-      {
-        text: "More parameters always mean faster inference.",
-        isCorrect: false,
-      },
-      { text: "Batching eliminates all bottlenecks.", isCorrect: false },
-    ],
-    explanation:
-      "Memory bandwidth and cache access are major bottlenecks in inference. Many optimizations target reducing memory movement. Core ideas: Inference is often memory-bound rather than compute-bound; KV cache access can dominate latency. Common misconceptions: More parameters always mean faster inference; Batching eliminates all bottlenecks.",
-  },
-
-  {
-    id: "cme295-lect3-q62",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about prompt-based control are correct?",
-    options: [
-      {
-        text: "Behavior can be modified without fine-tuning.",
-        isCorrect: true,
-      },
-      { text: "Instructions influence generation style.", isCorrect: true },
-      {
-        text: "Prompting guarantees perfect adherence to constraints.",
-        isCorrect: false,
-      },
-      { text: "Prompting replaces model training entirely.", isCorrect: false },
-    ],
-    explanation:
-      "Prompting is powerful but imperfect. It guides behavior probabilistically rather than enforcing hard guarantees. Core ideas: Behavior can be modified without fine-tuning; Instructions influence generation style. Common misconceptions: Prompting guarantees perfect adherence to constraints; Prompting replaces model training entirely.",
-  },
-
-  // ============================================================
-  // Q63–Q70: ONE TRUE
-  // ============================================================
-
-  {
-    id: "cme295-lect3-q63",
-    chapter: 3,
-    difficulty: "easy",
-    prompt: "Which statement best explains why KV caching speeds up decoding?",
-    options: [
-      { text: "It removes the need for attention entirely.", isCorrect: false },
-      {
-        text: "It avoids recomputing keys and values for past tokens.",
-        isCorrect: true,
-      },
-      { text: "It reduces vocabulary size.", isCorrect: false },
-      { text: "It changes the Transformer architecture.", isCorrect: false },
-    ],
-    explanation:
-      "KV caching prevents redundant computation by reusing previously computed attention components for earlier tokens. Core idea: it avoids recomputing keys and values for past tokens. Common misconceptions: it removes the need for attention entirely; it reduces vocabulary size; it changes the Transformer architecture.",
-  },
-
-  {
-    id: "cme295-lect3-q64",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statement best describes Grouped Query Attention?",
-    options: [
-      { text: "Each query has its own key and value heads.", isCorrect: false },
-      {
-        text: "Queries are grouped to share key and value heads.",
-        isCorrect: true,
-      },
-      { text: "Attention is computed without softmax.", isCorrect: false },
-      { text: "Attention is replaced by routing.", isCorrect: false },
-    ],
-    explanation:
-      "GQA reduces memory by allowing multiple queries to share keys and values while preserving more flexibility than MQA. Core idea: Queries are grouped to share key and value heads. Common misconceptions: Each query has its own key and value heads; Attention is computed without softmax; Attention is replaced by routing.",
-  },
-
-  {
-    id: "cme295-lect3-q65",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statement best captures the risk of routing collapse?",
-    options: [
-      { text: "Experts become too diverse.", isCorrect: false },
-      { text: "Only a few experts dominate usage.", isCorrect: true },
-      { text: "Routing becomes deterministic.", isCorrect: false },
-      { text: "Model parameters decrease.", isCorrect: false },
-    ],
-    explanation:
-      "Routing collapse undermines MoE benefits by underutilizing experts. Auxiliary losses help mitigate this issue. Core idea: Only a few experts dominate usage. Common misconceptions: Experts become too diverse; Routing becomes deterministic; Model parameters decrease.",
-  },
-
-  {
-    id: "cme295-lect3-q66",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statement best describes acceptance in speculative decoding?",
-    options: [
-      { text: "Draft tokens are always accepted.", isCorrect: false },
-      {
-        text: "Tokens are accepted when draft probability is consistent with target probability.",
-        isCorrect: true,
-      },
-      { text: "Acceptance ignores the target model.", isCorrect: false },
-      { text: "Acceptance removes randomness.", isCorrect: false },
-    ],
-    explanation:
-      "Acceptance ensures that generated tokens match the target model’s distribution, preserving correctness while accelerating decoding. Core idea: Tokens are accepted when draft probability is consistent with target probability. Common misconceptions: Draft tokens are always accepted; Acceptance ignores the target model; Acceptance removes randomness.",
-  },
-
-  {
-    id: "cme295-lect3-q67",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statement best describes context length?",
-    options: [
-      { text: "The number of parameters in the model.", isCorrect: false },
-      {
-        text: "The maximum number of tokens processed in a single pass.",
-        isCorrect: true,
-      },
-      { text: "The number of experts in an MoE model.", isCorrect: false },
-      { text: "The batch size during training.", isCorrect: false },
-    ],
-    explanation:
-      "Context length defines how many tokens a model can attend to at once. It directly affects attention cost and memory usage. Core idea: The maximum number of tokens processed in a single pass. Common misconceptions: The number of parameters in the model; The number of experts in an MoE model; The batch size during training.",
-  },
-
-  {
-    id: "cme295-lect3-q68",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statement best explains why longer sequences have lower joint probability?",
-    options: [
-      { text: "Probabilities increase with each token.", isCorrect: false },
-      {
-        text: "Joint probability multiplies many values less than one.",
-        isCorrect: true,
-      },
-      { text: "Softmax enforces decay.", isCorrect: false },
-      { text: "Temperature scaling causes collapse.", isCorrect: false },
-    ],
-    explanation:
-      "Sequence probability is the product of conditional probabilities. Multiplying values below one causes the total probability to shrink with length. Core idea: Joint probability multiplies many values less than one. Common misconceptions: Probabilities increase with each token; Softmax enforces decay; Temperature scaling causes collapse.",
-  },
-
-  {
-    id: "cme295-lect3-q69",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statement best describes the main trade-off of chain-of-thought prompting?",
-    options: [
-      { text: "Lower accuracy for reasoning tasks.", isCorrect: false },
-      {
-        text: "Improved reasoning at the cost of more tokens.",
-        isCorrect: true,
-      },
-      { text: "Reduced interpretability.", isCorrect: false },
-      { text: "Incompatibility with sampling.", isCorrect: false },
-    ],
-    explanation:
-      "Chain-of-thought improves reasoning and interpretability but increases token count, latency, and cost. Core idea: Improved reasoning at the cost of more tokens. Common misconceptions: Lower accuracy for reasoning tasks; Reduced interpretability; Incompatibility with sampling.",
-  },
-
-  {
-    id: "cme295-lect3-q70",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "Which statement best summarizes the goal of inference-time approximations?",
-    options: [
-      { text: "To retrain the model faster.", isCorrect: false },
-      {
-        text: "To reduce cost and latency with minimal quality loss.",
-        isCorrect: true,
-      },
-      { text: "To change the training objective.", isCorrect: false },
-      { text: "To remove attention mechanisms.", isCorrect: false },
-    ],
-    explanation:
-      "Inference-time approximations aim to make generation faster and cheaper while preserving output quality as much as possible. Core idea: To reduce cost and latency with minimal quality loss. Common misconceptions: To retrain the model faster; To change the training objective; To remove attention mechanisms.",
-  },
-
-  // ============================================================
-  // Q71–Q100 (third batch)
-  // ============================================================
-
-  // ============================================================
-  // Q71–Q78: ALL TRUE
-  // ============================================================
-
-  {
-    id: "cme295-lect3-q71",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly describe autoregressive text generation?",
-    options: [
-      { text: "Tokens are generated one at a time.", isCorrect: true },
-      {
-        text: "Each token is conditioned on previously generated tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "Generation stops based on a stopping criterion such as an end-of-sequence token.",
-        isCorrect: true,
-      },
-      {
-        text: "The same model is reused at every decoding step.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Autoregressive generation predicts tokens sequentially. At each step, the model conditions on all previously generated tokens until a stopping condition is reached. Core ideas: Tokens are generated one at a time; Each token is conditioned on previously generated tokens; Generation stops based on a stopping criterion such as an end-of-sequence token; The same model is reused at every decoding step.",
-  },
-
-  {
-    id: "cme295-lect3-q72",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe why greedy decoding can be suboptimal?",
-    options: [
-      {
-        text: "It optimizes local token probability rather than global sequence probability.",
-        isCorrect: true,
-      },
-      {
-        text: "Early token choices can restrict later high-probability continuations.",
-        isCorrect: true,
-      },
-      { text: "It cannot revise earlier decisions.", isCorrect: true },
-      {
-        text: "It often leads to repetitive or generic outputs.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Greedy decoding commits to locally optimal choices that may block better long-term sequences. This often results in repetitive or less coherent outputs. Core ideas: it optimizes local token probability rather than global sequence probability; Early token choices can restrict later high-probability continuations; it cannot revise earlier decisions; it often leads to repetitive or generic outputs.",
-  },
-
-  {
-    id: "cme295-lect3-q73",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe why beam search is rarely used for open-ended generation?",
-    options: [
-      {
-        text: "It favors high-likelihood but low-diversity outputs.",
-        isCorrect: true,
-      },
-      {
-        text: "It tends to converge to similar or generic sequences.",
-        isCorrect: true,
-      },
-      {
-        text: "It optimizes likelihood rather than creativity.",
-        isCorrect: true,
-      },
-      {
-        text: "It increases computational cost relative to sampling.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Beam search prioritizes likelihood and consistency, which reduces diversity. This makes it less suitable for creative or conversational tasks. Core ideas: it favors high-likelihood but low-diversity outputs; it tends to converge to similar or generic sequences; it optimizes likelihood rather than creativity; it increases computational cost relative to sampling.",
-  },
-
-  {
-    id: "cme295-lect3-q74",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe sampling-based decoding?",
-    options: [
-      {
-        text: "Tokens are sampled according to a probability distribution.",
-        isCorrect: true,
-      },
-      {
-        text: "Higher-probability tokens are more likely to be selected.",
-        isCorrect: true,
-      },
-      { text: "Low-probability tokens can still be sampled.", isCorrect: true },
-      {
-        text: "Sampling introduces nondeterminism into generation.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Sampling draws tokens from the model’s predicted distribution. This allows diversity and creativity while remaining probabilistically grounded. Core ideas: Tokens are sampled according to a probability distribution; Higher-probability tokens are more likely to be selected; Low-probability tokens can still be sampled; Sampling introduces nondeterminism into generation.",
-  },
-
-  {
-    id: "cme295-lect3-q75",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe the effect of temperature on softmax?",
-    options: [
-      {
-        text: "Temperature rescales logits before normalization.",
-        isCorrect: true,
-      },
-      {
-        text: "Lower temperature increases confidence in top tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "Higher temperature increases entropy of the distribution.",
-        isCorrect: true,
-      },
-      {
-        text: "Temperature influences sampling behavior without changing model weights.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Temperature modifies the sharpness of the probability distribution. It affects randomness at inference time without altering learned parameters. Core ideas: Temperature rescales logits before normalization; Lower temperature increases confidence in top tokens; Higher temperature increases entropy of the distribution; Temperature influences sampling behavior without changing model weights.",
-  },
-
-  {
-    id: "cme295-lect3-q76",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe the motivation for Mixture-of-Experts models?",
-    options: [
-      {
-        text: "To increase model capacity without linearly increasing compute.",
-        isCorrect: true,
-      },
-      {
-        text: "To activate only a subset of parameters per token.",
-        isCorrect: true,
-      },
-      { text: "To scale to very large parameter counts.", isCorrect: true },
-      {
-        text: "To reduce inference cost compared to dense models of equal size.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "MoE models increase capacity by adding experts while activating only a subset. This allows very large models with controlled inference cost. Core ideas: To increase model capacity without linearly increasing compute; To activate only a subset of parameters per token; To scale to very large parameter counts; To reduce inference cost compared to dense models of equal size.",
-  },
-
-  {
-    id: "cme295-lect3-q77",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly describe why the feed-forward network is the usual location for MoE layers?",
-    options: [
-      {
-        text: "It contains a large fraction of the model’s parameters.",
-        isCorrect: true,
-      },
-      {
-        text: "It dominates FLOPs compared to attention layers.",
-        isCorrect: true,
-      },
-      {
-        text: "Replacing it yields significant capacity gains.",
-        isCorrect: true,
-      },
-      {
-        text: "It preserves the structure of attention mechanisms.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "The feed-forward network is parameter-heavy and computationally expensive. Replacing it with MoE layers yields large capacity gains with minimal architectural disruption. Core ideas: it contains a large fraction of the model’s parameters; it dominates FLOPs compared to attention layers; Replacing it yields significant capacity gains; it preserves the structure of attention mechanisms.",
-  },
-
-  {
-    id: "cme295-lect3-q78",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe why routing is performed at the token level?",
-    options: [
-      {
-        text: "Different tokens may require different expert specializations.",
-        isCorrect: true,
-      },
-      {
-        text: "Token-level routing increases expressiveness.",
-        isCorrect: true,
-      },
-      { text: "Routing can adapt dynamically to context.", isCorrect: true },
-      {
-        text: "It allows fine-grained allocation of compute.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Routing per token allows the model to dynamically select experts based on contextual needs, improving efficiency and specialization. Core ideas: Different tokens may require different expert specializations; Token-level routing increases expressiveness; Routing can adapt dynamically to context; it allows fine-grained allocation of compute.",
-  },
-
-  // ============================================================
-  // Q79–Q86: THREE TRUE
-  // ============================================================
-
-  {
-    id: "cme295-lect3-q79",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about top-k sampling are correct?",
-    options: [
-      {
-        text: "It limits sampling to the k most likely tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "It prevents extremely unlikely tokens from being selected.",
-        isCorrect: true,
-      },
-      {
-        text: "It preserves stochasticity within the selected set.",
-        isCorrect: true,
-      },
-      { text: "It always produces deterministic output.", isCorrect: false },
-    ],
-    explanation:
-      "Top-k sampling restricts candidate tokens but still samples randomly within that subset, maintaining diversity. Core ideas: it limits sampling to the k most likely tokens; it prevents extremely unlikely tokens from being selected; it preserves stochasticity within the selected set. Common misconceptions: it always produces deterministic output.",
-  },
-
-  {
-    id: "cme295-lect3-q80",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statements about auxiliary MoE load-balancing losses are correct?",
-    options: [
-      { text: "They penalize uneven expert utilization.", isCorrect: true },
-      {
-        text: "They encourage more uniform routing distributions.",
-        isCorrect: true,
-      },
-      { text: "They mitigate routing collapse.", isCorrect: true },
-      {
-        text: "They replace the main language modeling loss.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Auxiliary losses supplement the main objective to promote balanced expert usage. They help prevent collapse without replacing the core task loss. Core ideas: they penalize uneven expert utilization; they encourage more uniform routing distributions; they mitigate routing collapse. Common misconceptions: they replace the main language modeling loss.",
-  },
-
-  {
-    id: "cme295-lect3-q81",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about guided decoding are correct?",
-    options: [
-      { text: "It restricts the set of valid next tokens.", isCorrect: true },
-      {
-        text: "It can enforce structured output constraints.",
-        isCorrect: true,
-      },
-      { text: "It operates during inference.", isCorrect: true },
-      { text: "It requires retraining the model.", isCorrect: false },
-    ],
-    explanation:
-      "Guided decoding constrains token selection at inference time. It does not modify model weights. Core ideas: it restricts the set of valid next tokens; it can enforce structured output constraints; it operates during inference. Common misconceptions: it requires retraining the model.",
-  },
-
-  {
-    id: "cme295-lect3-q82",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about context length limitations are correct?",
-    options: [
-      {
-        text: "Longer context increases attention computation cost.",
-        isCorrect: true,
-      },
-      {
-        text: "Very long contexts can degrade retrieval accuracy.",
-        isCorrect: true,
-      },
-      {
-        text: "Context rot can occur even when answers are present.",
-        isCorrect: true,
-      },
-      { text: "Longer context always improves performance.", isCorrect: false },
-    ],
-    explanation:
-      "While longer contexts allow more information, they also increase cost and can harm effective retrieval due to context rot. Core ideas: Longer context increases attention computation cost; Very long contexts can degrade retrieval accuracy; Context rot can occur even when answers are present. Common misconceptions: Longer context always improves performance.",
-  },
-
-  {
-    id: "cme295-lect3-q83",
-    chapter: 3,
-    difficulty: "hard",
-    prompt: "Which statements about speculative decoding are correct?",
-    options: [
-      {
-        text: "It uses a smaller draft model to propose tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "It validates draft tokens using a larger target model.",
-        isCorrect: true,
-      },
-      {
-        text: "It preserves the target model’s output distribution.",
-        isCorrect: true,
-      },
-      { text: "It removes the need for sampling.", isCorrect: false },
-    ],
-    explanation:
-      "Speculative decoding accelerates generation while preserving correctness. Sampling and validation are still required. Core ideas: it uses a smaller draft model to propose tokens; it validates draft tokens using a larger target model; it preserves the target model’s output distribution. Common misconceptions: it removes the need for sampling.",
-  },
-
-  {
-    id: "cme295-lect3-q84",
-    chapter: 3,
-    difficulty: "hard",
-    prompt: "Which statements about multi-token prediction are correct?",
-    options: [
-      {
-        text: "The model predicts multiple future tokens per step.",
-        isCorrect: true,
-      },
-      { text: "It changes the training objective.", isCorrect: true },
-      { text: "It can reduce inference latency.", isCorrect: true },
-      { text: "It eliminates autoregressive decoding.", isCorrect: false },
-    ],
-    explanation:
-      "Multi-token prediction accelerates inference by predicting several tokens at once, but decoding remains fundamentally autoregressive. Core ideas: The model predicts multiple future tokens per step; it changes the training objective; it can reduce inference latency. Common misconceptions: it eliminates autoregressive decoding.",
-  },
-
-  {
-    id: "cme295-lect3-q85",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about chain-of-thought prompting are correct?",
-    options: [
-      {
-        text: "It encourages explicit intermediate reasoning.",
-        isCorrect: true,
-      },
-      { text: "It often improves reasoning task accuracy.", isCorrect: true },
-      { text: "It increases inference token count.", isCorrect: true },
-      { text: "It enforces logical correctness.", isCorrect: false },
-    ],
-    explanation:
-      "Chain-of-thought improves reasoning but does not guarantee correctness. It also increases cost due to longer outputs. Core ideas: it encourages explicit intermediate reasoning; it often improves reasoning task accuracy; it increases inference token count. Common misconceptions: it enforces logical correctness.",
-  },
-
-  {
-    id: "cme295-lect3-q86",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about self-consistency prompting are correct?",
-    options: [
-      { text: "It samples multiple reasoning paths.", isCorrect: true },
-      { text: "It aggregates answers via majority voting.", isCorrect: true },
-      { text: "It can improve robustness of final answers.", isCorrect: true },
-      { text: "It reduces computational cost.", isCorrect: false },
-    ],
-    explanation:
-      "Self-consistency trades additional computation for improved robustness by aggregating multiple sampled solutions. Core ideas: it samples multiple reasoning paths; it aggregates answers via majority voting; it can improve robustness of final answers. Common misconceptions: it reduces computational cost.",
-  },
-
-  // ============================================================
-  // Q87–Q94: TWO TRUE
-  // ============================================================
-
-  {
-    id: "cme295-lect3-q87",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about in-context learning are correct?",
-    options: [
-      {
-        text: "It adapts behavior without updating model weights.",
-        isCorrect: true,
-      },
-      {
-        text: "It relies on information provided in the prompt.",
-        isCorrect: true,
-      },
-      { text: "It permanently changes the model.", isCorrect: false },
-      { text: "It requires gradient updates.", isCorrect: false },
-    ],
-    explanation:
-      "In-context learning steers behavior through the prompt alone. Model parameters remain unchanged. Core ideas: it adapts behavior without updating model weights; it relies on information provided in the prompt. Common misconceptions: it permanently changes the model; it requires gradient updates.",
-  },
-
-  {
-    id: "cme295-lect3-q88",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about zero-shot prompting are correct?",
-    options: [
-      { text: "It uses instructions without examples.", isCorrect: true },
-      {
-        text: "It relies on the model’s pretrained knowledge.",
-        isCorrect: true,
-      },
-      { text: "It requires labeled demonstrations.", isCorrect: false },
-      { text: "It fine-tunes the model.", isCorrect: false },
-    ],
-    explanation:
-      "Zero-shot prompting depends on clear instructions and pretrained knowledge, without examples or weight updates. Core ideas: it uses instructions without examples; it relies on the model’s pretrained knowledge. Common misconceptions: it requires labeled demonstrations; it fine-tunes the model.",
-  },
-
-  {
-    id: "cme295-lect3-q89",
-    chapter: 3,
-    difficulty: "hard",
-    prompt: "Which statements about few-shot prompting trade-offs are correct?",
-    options: [
-      { text: "It can improve task alignment.", isCorrect: true },
-      { text: "It increases context length and cost.", isCorrect: true },
-      { text: "It guarantees generalization.", isCorrect: false },
-      { text: "It removes the need for instructions.", isCorrect: false },
-    ],
-    explanation:
-      "Few-shot examples help alignment but consume context and do not guarantee generalization beyond the examples. Core ideas: it can improve task alignment; it increases context length and cost. Common misconceptions: it guarantees generalization; it removes the need for instructions.",
-  },
-
-  {
-    id: "cme295-lect3-q90",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about context windows are correct?",
-    options: [
-      {
-        text: "They limit how many tokens can be attended to.",
-        isCorrect: true,
-      },
-      { text: "They affect memory and compute usage.", isCorrect: true },
-      { text: "They are unrelated to attention.", isCorrect: false },
-      { text: "They only matter during training.", isCorrect: false },
-    ],
-    explanation:
-      "Context windows constrain attention scope and heavily influence inference cost and feasibility. Core ideas: they limit how many tokens can be attended to; they affect memory and compute usage. Common misconceptions: they are unrelated to attention; they only matter during training.",
-  },
-
-  {
-    id: "cme295-lect3-q91",
-    chapter: 3,
-    difficulty: "hard",
-    prompt: "Which statements about KV cache memory usage are correct?",
-    options: [
-      { text: "It grows with sequence length.", isCorrect: true },
-      { text: "It can become a bottleneck during inference.", isCorrect: true },
-      { text: "It is constant regardless of context.", isCorrect: false },
-      { text: "It is only used in encoder-only models.", isCorrect: false },
-    ],
-    explanation:
-      "KV cache memory scales with sequence length and can dominate inference costs, especially for long contexts. Core ideas: it grows with sequence length; it can become a bottleneck during inference. Common misconceptions: it is constant regardless of context; it is only used in encoder-only models.",
-  },
-
-  {
-    id: "cme295-lect3-q92",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about inference-time nondeterminism are correct?",
-    options: [
-      { text: "Sampling introduces randomness.", isCorrect: true },
-      {
-        text: "Floating-point arithmetic can cause variation.",
-        isCorrect: true,
-      },
-      { text: "Transformers are probabilistic by design.", isCorrect: false },
-      { text: "Determinism is guaranteed on GPUs.", isCorrect: false },
-    ],
-    explanation:
-      "The model itself is deterministic, but sampling and numerical effects introduce nondeterminism during inference. Core ideas: Sampling introduces randomness; Floating-point arithmetic can cause variation. Common misconceptions: Transformers are probabilistic by design; Determinism is guaranteed on GPUs.",
-  },
-
-  {
-    id: "cme295-lect3-q93",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statements about inference optimization goals are correct?",
-    options: [
-      { text: "Reducing latency.", isCorrect: true },
-      { text: "Improving throughput.", isCorrect: true },
-      { text: "Increasing training data.", isCorrect: false },
-      { text: "Changing model semantics.", isCorrect: false },
-    ],
-    explanation:
-      "Inference optimizations aim to improve speed and scalability without changing what the model computes. Core ideas: Reducing latency; Improving throughput. Common misconceptions: Increasing training data; Changing model semantics.",
-  },
-
-  {
-    id: "cme295-lect3-q94",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statements about approximate inference techniques are correct?",
-    options: [
-      { text: "They trade exactness for speed.", isCorrect: true },
-      { text: "They aim to preserve output quality.", isCorrect: true },
-      { text: "They always change model predictions.", isCorrect: false },
-      { text: "They eliminate attention computation.", isCorrect: false },
-    ],
-    explanation:
-      "Approximate techniques reduce cost while aiming to maintain similar output distributions. They do not remove core mechanisms like attention. Core ideas: they trade exactness for speed; they aim to preserve output quality. Common misconceptions: they always change model predictions; they eliminate attention computation.",
-  },
-
-  // ============================================================
-  // Q95–Q100: ONE TRUE
-  // ============================================================
-
-  {
-    id: "cme295-lect3-q95",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "Which statement best describes why sampling produces different outputs?",
-    options: [
-      { text: "The model weights change at inference time.", isCorrect: false },
-      {
-        text: "Randomness is introduced during token selection.",
-        isCorrect: true,
-      },
-      {
-        text: "The Transformer is nondeterministic internally.",
-        isCorrect: false,
-      },
-      { text: "Softmax outputs are fixed.", isCorrect: false },
-    ],
-    explanation:
-      "Sampling introduces randomness when selecting tokens from a probability distribution, leading to different outputs. Core idea: Randomness is introduced during token selection. Common misconceptions: The model weights change at inference time; The Transformer is nondeterministic internally; Softmax outputs are fixed.",
-  },
-
-  {
-    id: "cme295-lect3-q96",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statement best explains context rot?",
-    options: [
-      { text: "Models forget earlier training data.", isCorrect: false },
-      {
-        text: "Relevant information becomes harder to retrieve in long contexts.",
-        isCorrect: true,
-      },
-      { text: "The model overfits to recent tokens only.", isCorrect: false },
-      { text: "Attention stops functioning.", isCorrect: false },
-    ],
-    explanation:
-      "Context rot refers to degradation in effective information use as context length grows, especially with distractors. Core idea: Relevant information becomes harder to retrieve in long contexts. Common misconceptions: Models forget earlier training data; The model overfits to recent tokens only; Attention stops functioning.",
-  },
-
-  {
-    id: "cme295-lect3-q97",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statement best explains why MoE models can reach trillions of parameters?",
-    options: [
-      {
-        text: "All parameters are used in every forward pass.",
-        isCorrect: false,
-      },
-      {
-        text: "Only a subset of experts is activated per token.",
-        isCorrect: true,
-      },
-      {
-        text: "Attention layers scale linearly with parameters.",
-        isCorrect: false,
-      },
-      {
-        text: "Routing removes the need for large datasets.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "MoE models scale total parameters by adding experts while keeping active computation limited through routing. Core idea: Only a subset of experts is activated per token. Common misconceptions: All parameters are used in every forward pass; Attention layers scale linearly with parameters; Routing removes the need for large datasets.",
-  },
-
-  {
-    id: "cme295-lect3-q98",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statement best describes the main benefit of speculative decoding?",
-    options: [
-      { text: "Improved training convergence.", isCorrect: false },
-      {
-        text: "Faster inference with preserved output distribution.",
-        isCorrect: true,
-      },
-      { text: "Higher model accuracy.", isCorrect: false },
-      { text: "Reduced parameter count.", isCorrect: false },
-    ],
-    explanation:
-      "Speculative decoding accelerates inference by batching validation while preserving the target model’s output distribution. Core idea: Faster inference with preserved output distribution. Common misconceptions: Improved training convergence; Higher model accuracy; Reduced parameter count.",
-  },
-
-  {
-    id: "cme295-lect3-q99",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Which statement best summarizes the role of prompting in LLMs?",
-    options: [
-      { text: "It permanently alters model parameters.", isCorrect: false },
-      {
-        text: "It conditions model behavior through context.",
-        isCorrect: true,
-      },
-      { text: "It replaces the need for training.", isCorrect: false },
-      { text: "It guarantees perfect control.", isCorrect: false },
-    ],
-    explanation:
-      "Prompting steers behavior probabilistically via context, without modifying the model’s weights. Core idea: it conditions model behavior through context. Common misconceptions: it permanently alters model parameters; it replaces the need for training; it guarantees perfect control.",
-  },
-
-  {
-    id: "cme295-lect3-q100",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "Which statement best captures the overarching theme of modern LLM design?",
-    options: [
-      {
-        text: "Maximize parameter count regardless of cost.",
-        isCorrect: false,
-      },
-      {
-        text: "Balance scale, efficiency, and controllability.",
-        isCorrect: true,
-      },
-      { text: "Eliminate autoregressive generation.", isCorrect: false },
-      { text: "Avoid probabilistic decoding.", isCorrect: false },
-    ],
-    explanation:
-      "Modern LLM design balances scale with efficiency and controllability, using techniques like MoE, sampling, and inference optimizations. Core idea: Balance scale, efficiency, and controllability. Common misconceptions: Maximize parameter count regardless of cost; Eliminate autoregressive generation; Avoid probabilistic decoding.",
-  },
+  makeQuestion(
+    1,
+    "easy",
+    "A model receives the token sequence `[BOS] A teddy bear` and predicts a distribution for the next token. Which statement best identifies the language-modeling task?",
+    [
+      [
+        "Estimate the probability of the next token conditioned on the preceding tokens.",
+        true,
+      ],
+      [
+        "Encode the sequence into a single fixed document vector for classification.",
+        false,
+      ],
+      [
+        "Translate the sequence by attending to a separate encoder output.",
+        false,
+      ],
+      [
+        "Assign each previous token to a hand-written syntactic category.",
+        false,
+      ],
+    ],
+    "A language model assigns probabilities to token sequences by modeling the next-token distribution given the tokens already present. The other choices describe representation learning, encoder-decoder translation, or manual linguistic annotation rather than autoregressive language modeling.",
+  ),
+  makeQuestion(
+    2,
+    "easy",
+    "Which statements correctly distinguish current large language models from BERT-style encoder-only models?",
+    [
+      [
+        "Current large language models are generally decoder-only text-to-text generators.",
+        true,
+      ],
+      [
+        "BERT-style models are useful for contextual embeddings and classification-style tasks.",
+        true,
+      ],
+      [
+        "BERT-style models use the decoder stack and cross-attention as their core architecture.",
+        false,
+      ],
+      [
+        "Encoder-only models match the current text-generating definition of a large language model.",
+        false,
+      ],
+    ],
+    "The lecture uses the current convention that large language models are large text-to-text language models, usually decoder-only. BERT is important, but it is encoder-only and is mainly used to produce contextual representations for tasks such as classification rather than to generate text autoregressively.",
+  ),
+  makeQuestion(
+    3,
+    "easy",
+    "Which statements describe the scale dimensions that make a language model 'large'?",
+    [
+      ["Parameter count reaches the billion-parameter range or beyond.", true],
+      [
+        "Pretraining data is measured in hundreds of billions or trillions of tokens.",
+        true,
+      ],
+      ["Training and serving require substantial accelerator compute.", true],
+      [
+        "The model becomes large because it stores one human-written rule for each vocabulary item.",
+        false,
+      ],
+    ],
+    "Large language models are large along model-size, data-size, and compute dimensions. A rule table is not the mechanism described here; the model learns neural parameters from a very large corpus and then uses those parameters for next-token prediction.",
+  ),
+  makeQuestion(
+    4,
+    "easy",
+    "Which statements correctly characterize the decoder-only Transformer backbone used by modern text-generating LLMs?",
+    [
+      [
+        "Masked self-attention prevents a position from using future tokens during next-token prediction.",
+        true,
+      ],
+      ["The feed-forward network remains part of each decoder block.", true],
+      ["Residual and normalization layers remain part of the stack.", true],
+      [
+        "Cross-attention to an encoder is removed because there is no encoder stream.",
+        true,
+      ],
+    ],
+    "Decoder-only models keep the causal self-attention and feed-forward machinery needed for autoregressive generation. Cross-attention belongs to encoder-decoder models, so it is removed when the architecture keeps only the decoder side.",
+  ),
+  makeQuestion(
+    5,
+    "medium",
+    "A dense feed-forward decoder block and a sparse Mixture-of-Experts (MoE) block have the same input token representation. Which statement best describes the MoE substitution?",
+    [
+      [
+        "The feed-forward sublayer is replaced by several feed-forward experts plus a learned router that chooses expert contributions.",
+        true,
+      ],
+      [
+        "The masked self-attention sublayer is replaced by a tokenizer that chooses longer subwords.",
+        false,
+      ],
+      [
+        "The residual connections are replaced by a beam-search decoder during training.",
+        false,
+      ],
+      [
+        "The output softmax is replaced by a fixed table of expert names.",
+        false,
+      ],
+    ],
+    "MoE layers usually replace the expensive feed-forward sublayer with multiple expert feed-forward networks and a router. Attention, tokenization, residual connections, and the vocabulary softmax are different parts of the system and are not the MoE substitution described in the lecture.",
+  ),
+  makeQuestion(
+    6,
+    "medium",
+    "Which statements correctly compare dense and sparse MoE computation?",
+    [
+      [
+        "Dense MoE forms a weighted combination using contributions from the expert set.",
+        true,
+      ],
+      [
+        "Sparse MoE restricts computation to selected top-k experts for a token.",
+        true,
+      ],
+      [
+        "Sparse MoE routes tokens by selecting a separate encoder-decoder architecture for each prompt.",
+        false,
+      ],
+      [
+        "Dense MoE reduces compute by skipping the router and running a single expert chosen before training.",
+        false,
+      ],
+    ],
+    "Dense MoE can weight many expert outputs, while sparse MoE limits active computation to top-k selected experts. The router chooses experts inside a layer, not whole model architectures, and dense MoE does not get its cost savings by using a preselected single expert.",
+  ),
+  makeQuestion(
+    7,
+    "medium",
+    "For an MoE layer with gate values \\(G(x)_i\\) and expert outputs \\(E_i(x)\\), which statements about \\(\\hat{y}=\\sum_i G(x)_iE_i(x)\\) are correct?",
+    [
+      [
+        "The gate values determine how much each expert contributes to the layer output.",
+        true,
+      ],
+      [
+        "The experts and gate can be trained jointly through the model objective.",
+        true,
+      ],
+      [
+        "A sparse top-k version sets nonselected experts' contribution to zero for that token.",
+        true,
+      ],
+      [
+        "The formula describes a post-hoc majority vote over completed text responses.",
+        false,
+      ],
+    ],
+    "The MoE formula is a layer computation: a learned gate weights expert subnetworks and the weighted outputs are combined. It is not a voting procedure over final completions; voting appears later in self-consistency prompting and operates at the response level.",
+  ),
+  makeQuestion(
+    8,
+    "hard",
+    "Which statements correctly explain why the feed-forward network is the natural target for MoE layers inside a decoder block?",
+    [
+      [
+        "The feed-forward network often projects through a larger hidden dimension \\(d_{ff}\\), making it parameter-heavy.",
+        true,
+      ],
+      [
+        "Replacing the feed-forward network with experts lets the model increase total capacity while controlling active parameters.",
+        true,
+      ],
+      [
+        "Attention heads and MoE experts are separate design axes, so expert routing is not tied to one expert per attention head.",
+        true,
+      ],
+      [
+        "The feed-forward network is the location where the model stores the KV cache for previous tokens.",
+        false,
+      ],
+    ],
+    "The feed-forward sublayer is a large part of the decoder block's parameter and compute budget, so it is the usual location for expert substitution. KV cache storage is associated with attention keys and values during inference, not with making the feed-forward network into a set of experts.",
+  ),
+  makeQuestion(
+    9,
+    "medium",
+    "Which statement best describes routing collapse in an MoE model?",
+    [
+      [
+        "A small subset of experts receives most tokens, leaving other experts underused.",
+        true,
+      ],
+      [
+        "The model switches from sparse routing to beam search during generation.",
+        false,
+      ],
+      ["The tokenizer merges rare words into expert identifiers.", false],
+      [
+        "The KV cache stores key vectors in non-contiguous memory blocks.",
+        false,
+      ],
+    ],
+    "Routing collapse is a training failure mode where the router repeatedly sends tokens to the same experts, reducing the value of having many experts. Beam search, tokenization, and KV-cache memory layout are separate topics and do not describe the expert-utilization failure.",
+  ),
+  makeQuestion(
+    10,
+    "hard",
+    "Which statements correctly describe the auxiliary load-balancing quantities used to reduce MoE routing collapse?",
+    [
+      [
+        "\\(f_i\\) measures the fraction of tokens routed to expert \\(i\\).",
+        true,
+      ],
+      [
+        "\\(P_i\\) measures the average routing probability assigned to expert \\(i\\).",
+        true,
+      ],
+      [
+        "The added loss term is unrelated to whether expert usage becomes more uniform.",
+        false,
+      ],
+      [
+        "The auxiliary term replaces next-token prediction as the main training objective.",
+        false,
+      ],
+    ],
+    "The auxiliary objective supplements the language-modeling loss by discouraging severe expert imbalance, so it is directly related to expert-usage uniformity. It uses routing statistics such as the fraction of tokens and average routing probability for each expert, but it does not replace the main task of predicting language-model targets.",
+  ),
+  makeQuestion(
+    11,
+    "medium",
+    "Which statements about token-level MoE routing are correct?",
+    [
+      [
+        "Different tokens in the same sequence can be routed to different experts.",
+        true,
+      ],
+      [
+        "The router uses a token representation as input when making a routing decision.",
+        true,
+      ],
+      [
+        "Routing decisions are fixed once for the whole prompt before the first decoder layer runs.",
+        false,
+      ],
+      [
+        "A single prompt-level expert is chosen before tokenization and reused for the whole network.",
+        false,
+      ],
+    ],
+    "The lecture emphasizes routing at the token level: each token representation can be sent to an expert selected by the router. This is finer-grained than choosing one expert for an entire prompt before the model computes token representations, and routing can vary across positions and layers.",
+  ),
+  makeQuestion(
+    12,
+    "medium",
+    "Which statements correctly describe why sparse MoE can support very large total parameter counts?",
+    [
+      ["More experts increase total stored parameters.", true],
+      [
+        "Top-k routing keeps active parameters for a token much smaller than total parameters.",
+        true,
+      ],
+      [
+        "Increasing expert count can increase model capacity without proportional forward-pass compute.",
+        true,
+      ],
+      [
+        "The active-parameter budget can stay controlled even as the stored expert pool grows.",
+        true,
+      ],
+    ],
+    "Sparse MoE separates total parameters from active parameters: many experts can exist, but a token uses a selected subset. This is why MoE can raise stored capacity while keeping the per-token compute tied to top-k routing rather than to the full expert pool.",
+  ),
+  makeQuestion(
+    13,
+    "hard",
+    "A sparse MoE layer has 8 experts and uses top-2 routing for each token. Which statement best describes one forward pass for a single token at that layer?",
+    [
+      [
+        "The router scores the experts and the token is processed by the two selected experts for that layer.",
+        true,
+      ],
+      [
+        "The token is processed by eight experts and the top two are chosen after the output text is complete.",
+        false,
+      ],
+      [
+        "Two attention heads are disabled and the remaining heads act as feed-forward experts.",
+        false,
+      ],
+      [
+        "Two vocabulary tokens are sampled before the expert outputs are computed.",
+        false,
+      ],
+    ],
+    "Top-k routing is a layer-internal compute decision: the router chooses expert subnetworks for a token representation before that layer's output is produced. It is not a post-generation selection, an attention-head pruning rule, or a decoding step over vocabulary tokens.",
+  ),
+  makeQuestion(
+    14,
+    "hard",
+    "Which statements correctly connect FLOPs to dense and sparse LLM design?",
+    [
+      [
+        "FLOPs count floating point additions, multiplications, and related arithmetic work.",
+        true,
+      ],
+      [
+        "Sparse MoE can lower active forward-pass FLOPs relative to running every expert.",
+        true,
+      ],
+      [
+        "FLOPs measure wall-clock latency directly, independent of hardware and memory movement.",
+        false,
+      ],
+      [
+        "A model with fewer FLOPs per token necessarily stores fewer total parameters.",
+        false,
+      ],
+    ],
+    "FLOPs are a useful hardware-agnostic count of arithmetic work, but they are not the same as wall-clock latency because memory movement and hardware throughput matter. Sparse MoE can reduce active compute for a token while storing many inactive expert parameters, so total capacity and per-token compute must be reasoned about separately.",
+  ),
+  makeQuestion(
+    15,
+    "hard",
+    "Which statements about noisy gating and auxiliary losses in MoE training are correct?",
+    [
+      [
+        "Noisy gating perturbs router scores so less-used experts have chances to receive tokens during training.",
+        true,
+      ],
+      [
+        "Auxiliary losses can penalize imbalanced expert usage at the batch level.",
+        true,
+      ],
+      [
+        "Both techniques eliminate the need to train the router jointly with the experts.",
+        false,
+      ],
+      [
+        "Both techniques make expert routing independent of the learned token representations.",
+        false,
+      ],
+    ],
+    "Noisy gating and load-balancing losses are tools for keeping expert usage healthy while the router is being learned. They do not remove joint training or make routing independent of representations; the router still uses learned signals, but the training setup discourages collapse.",
+  ),
+  makeQuestion(
+    16,
+    "medium",
+    "Which statements correctly distinguish expert capacity from active computation in MoE LLMs?",
+    [
+      [
+        "Capacity refers to the larger pool of stored expert parameters available to the model.",
+        true,
+      ],
+      [
+        "Active computation refers to the parameters used for a particular token's forward pass.",
+        true,
+      ],
+      [
+        "A trillion-parameter sparse MoE can use far fewer than a trillion parameters for one token.",
+        true,
+      ],
+      [
+        "The stored expert pool and the active expert subset answer different scaling questions.",
+        true,
+      ],
+    ],
+    "MoE makes it possible to store a large pool of expert parameters while activating a subset for each token. The important distinction is total capacity versus active parameters, because a model can be large in storage while keeping each routed token's computation much smaller.",
+  ),
+  makeQuestion(
+    17,
+    "easy",
+    "During autoregressive generation, what happens after the model samples or selects one next token?",
+    [
+      [
+        "The new token is appended to the sequence and the model predicts the following token from the extended prefix.",
+        true,
+      ],
+      [
+        "The entire training set is updated before the next token is considered.",
+        false,
+      ],
+      [
+        "The decoder removes causal masking because the next token is already known.",
+        false,
+      ],
+      [
+        "The model switches from probabilities to hand-written grammar rules for the rest of the response.",
+        false,
+      ],
+    ],
+    "Autoregressive generation repeats next-token prediction: each chosen token becomes part of the prefix for the following step. The model weights are not updated during ordinary inference, and causal masking remains part of the decoder-only computation.",
+  ),
+  makeQuestion(
+    18,
+    "hard",
+    "A decoder outputs logits `[4.0, 2.0, 1.0, -1.0]` for four candidate tokens. Which statements about greedy decoding are correct?",
+    [
+      [
+        "Greedy decoding chooses the token with logit `4.0` at this step.",
+        true,
+      ],
+      ["The choice is deterministic for fixed logits.", true],
+      [
+        "Greedy decoding keeps several candidate continuations before choosing a final sequence.",
+        false,
+      ],
+      [
+        "Greedy decoding samples among the four tokens according to the softmax probabilities.",
+        false,
+      ],
+    ],
+    "Greedy decoding takes the highest-scoring token at each step, so fixed logits produce a fixed next token. It keeps one path rather than a beam of candidates, and it is not the same as sampling from the softmax distribution.",
+  ),
+  makeQuestion(
+    19,
+    "medium",
+    "Which statements correctly describe beam search in sequence generation?",
+    [
+      [
+        "It keeps several high-scoring partial sequences instead of committing to one token path.",
+        true,
+      ],
+      [
+        "It is useful when high-likelihood structured outputs are preferred.",
+        true,
+      ],
+      [
+        "It is designed to maximize diversity by sampling tail tokens from the full vocabulary.",
+        false,
+      ],
+      [
+        "It draws the next token from the full vocabulary distribution without ranking candidate paths.",
+        false,
+      ],
+    ],
+    "Beam search tracks multiple candidate sequences to approximate high-probability completions. It is not broad stochastic sampling from the full vocabulary, and that is why it can be less suitable for creative open-ended generation than sampling methods.",
+  ),
+  makeQuestion(
+    20,
+    "medium",
+    "Which statements correctly compare greedy decoding and beam search?",
+    [
+      [
+        "Greedy decoding keeps one path, while beam search keeps multiple candidate paths.",
+        true,
+      ],
+      [
+        "Beam search requires more computation than greedy decoding because it expands and scores more candidates.",
+        true,
+      ],
+      [
+        "Both methods can be deterministic when model outputs and tie-breaking are fixed.",
+        true,
+      ],
+      [
+        "Beam search broadens high-probability search without introducing token-sampling randomness.",
+        true,
+      ],
+    ],
+    "Greedy and beam search are likelihood-oriented decoding strategies rather than randomness-oriented creativity controls. Beam search broadens search over high-probability paths, but sampling methods are the tools used when controlled randomness and diversity are desired.",
+  ),
+  makeQuestion(
+    21,
+    "easy",
+    "A model produces token probabilities where `bear` has the highest probability at the current step. Which statement best describes top-k sampling with `k = 4`?",
+    [
+      [
+        "It restricts the candidate set to the four most probable tokens and samples within that set.",
+        true,
+      ],
+      [
+        "It deterministically emits `bear` because `bear` has the highest probability.",
+        false,
+      ],
+      [
+        "It samples from the smallest probability-mass set whose total exceeds a threshold `p`.",
+        false,
+      ],
+      [
+        "It changes the model weights so the four tokens become more likely in future prompts.",
+        false,
+      ],
+    ],
+    "Top-k sampling truncates the vocabulary to the k highest-probability candidates and then samples from the truncated distribution. Deterministically taking the top token is greedy decoding, while cumulative probability thresholding is top-p sampling.",
+  ),
+  makeQuestion(
+    22,
+    "medium",
+    "Which statements correctly describe top-p, or nucleus, sampling?",
+    [
+      [
+        "It forms the smallest high-probability token set whose cumulative probability reaches the chosen threshold.",
+        true,
+      ],
+      [
+        "The number of tokens in the candidate set can change from one decoding step to another.",
+        true,
+      ],
+      [
+        "It is the same procedure as choosing a fixed number `k` of tokens at each step.",
+        false,
+      ],
+      [
+        "It scores whole completed sequences rather than next-token candidates.",
+        false,
+      ],
+    ],
+    "Top-p sampling is adaptive: the candidate set size depends on how probability mass is distributed at the current step. A fixed candidate count is top-k sampling, and sequence-level scoring belongs to search methods such as beam search rather than nucleus sampling.",
+  ),
+  makeQuestion(
+    23,
+    "medium",
+    "A next-token distribution is `A: 0.50`, `B: 0.25`, `C: 0.15`, `D: 0.06`, `E: 0.04`. With top-p sampling at `p = 0.90`, which statements are correct?",
+    [
+      [
+        "The nucleus contains `A`, `B`, and `C` because their cumulative probability is `0.90`.",
+        true,
+      ],
+      [
+        "`D` and `E` are excluded before renormalizing the remaining probabilities.",
+        true,
+      ],
+      [
+        "The candidate count is three for this step, even though `p` is not a count.",
+        true,
+      ],
+      [
+        "The method must include `D` because `D` is needed to make the cumulative probability greater than `0.90`.",
+        false,
+      ],
+    ],
+    "Top-p uses the smallest set reaching the threshold, and here `0.50 + 0.25 + 0.15 = 0.90`. The remaining candidates are removed for this sampling step, and the included probabilities are renormalized before drawing a token.",
+  ),
+  makeQuestion(
+    24,
+    "medium",
+    "Which statements correctly describe temperature scaling before softmax?",
+    [
+      [
+        "Lower temperature makes high-logit tokens take a larger share of probability mass.",
+        true,
+      ],
+      [
+        "Higher temperature flattens the distribution and increases diversity pressure.",
+        true,
+      ],
+      ["Temperature rescales logits before probabilities are computed.", true],
+      ["Temperature leaves the tokenizer and vocabulary unchanged.", true],
+    ],
+    "Temperature is a decoding-time transformation of logits before softmax. It affects sharpness and diversity of token probabilities, while the tokenizer and vocabulary remain the same objects used by the trained model.",
+  ),
+  makeQuestion(
+    25,
+    "easy",
+    "Which statement best explains why sampling can produce different completions for the same prompt?",
+    [
+      [
+        "Randomness enters when the decoder draws a token from the probability distribution.",
+        true,
+      ],
+      [
+        "The Transformer weights are retrained after each sampled token.",
+        false,
+      ],
+      [
+        "The context window randomly changes size during the forward pass.",
+        false,
+      ],
+      [
+        "The softmax layer stops producing probabilities after the first token.",
+        false,
+      ],
+    ],
+    "Sampling introduces randomness at token selection, so repeated generations can diverge even with the same prompt and model. Ordinary inference does not retrain weights, randomly resize the context window, or abandon next-token probability computation.",
+  ),
+  makeQuestion(
+    26,
+    "medium",
+    "Which statements correctly describe logits and softmax in next-token prediction?",
+    [
+      ["Logits are unnormalized scores for vocabulary tokens.", true],
+      [
+        "Softmax converts logits into nonnegative probabilities that sum to one.",
+        true,
+      ],
+      [
+        "Temperature changes token strings before the tokenizer creates model inputs.",
+        false,
+      ],
+      [
+        "Softmax chooses the final token by itself without any decoding policy.",
+        false,
+      ],
+    ],
+    "The model produces logits, and softmax turns those scores into a probability distribution. Temperature rescales logits rather than token strings, and a separate decoding policy such as greedy selection, top-k sampling, top-p sampling, or beam search determines how the distribution is used.",
+  ),
+  makeQuestion(
+    27,
+    "easy",
+    "A developer wants structured JSON output from an LLM. Which statement best describes guided decoding?",
+    [
+      [
+        "Constrain the next-token choices during generation so invalid JSON continuations are filtered out.",
+        true,
+      ],
+      [
+        "Ask for JSON, parse the final response, and retry from scratch after each invalid output.",
+        false,
+      ],
+      [
+        "Fine-tune the model until the vocabulary contains no tokens outside JSON syntax.",
+        false,
+      ],
+      [
+        "Run beam search and accept the highest-probability sequence even if it violates the schema.",
+        false,
+      ],
+    ],
+    "Guided decoding constrains token choices at inference time so the generator follows a formal output structure such as JSON. Retrying after failure is a weaker prompt-and-validate loop, while fine-tuning or beam search alone does not enforce valid next-token choices.",
+  ),
+  makeQuestion(
+    28,
+    "easy",
+    "Which statements correctly identify valid-token filtering in guided decoding?",
+    [
+      [
+        "At the start of a JSON object, an opening brace can be allowed while unrelated word tokens are blocked.",
+        true,
+      ],
+      [
+        "After a property name in JSON, a colon can be allowed while a random noun can be blocked.",
+        true,
+      ],
+      [
+        "When several valid next tokens remain, a normal token-selection strategy can choose among them.",
+        true,
+      ],
+      [
+        "No model retraining is required merely because invalid next-token paths are filtered.",
+        true,
+      ],
+    ],
+    "Guided decoding works by filtering invalid next tokens according to a grammar, schema, or state machine, while still using the model distribution over valid choices. Invalid paths are constrained during inference rather than removed from the model weights through repeated retraining.",
+  ),
+  makeQuestion(
+    29,
+    "medium",
+    "Which statement best separates top-k sampling from guided decoding?",
+    [
+      [
+        "Top-k limits candidates by probability rank, while guided decoding limits candidates by structural validity.",
+        true,
+      ],
+      [
+        "Top-k uses a grammar and guided decoding uses a fixed number of most probable tokens.",
+        false,
+      ],
+      [
+        "Top-k operates during training and guided decoding operates during tokenization.",
+        false,
+      ],
+      [
+        "Top-k produces JSON validity proofs and guided decoding optimizes sequence likelihood.",
+        false,
+      ],
+    ],
+    "Both methods restrict candidate next tokens, but they use different criteria. Top-k uses probability rank from the model distribution, while guided decoding uses an external validity constraint such as a schema or grammar.",
+  ),
+  makeQuestion(
+    30,
+    "medium",
+    "Which statements about inference-time nondeterminism are correct?",
+    [
+      ["Sampling creates nondeterminism through random token draws.", true],
+      [
+        "Numerical and hardware effects can create small differences even for otherwise fixed inference settings.",
+        true,
+      ],
+      [
+        "Greedy decoding samples from the probability distribution after ranking the tokens.",
+        false,
+      ],
+      [
+        "Decoder-only Transformers require stochastic internal layers at inference to produce text.",
+        false,
+      ],
+    ],
+    "Nondeterminism can come from sampling and from numerical implementation details, but the Transformer computation itself need not contain stochastic layers during inference. Greedy decoding can be deterministic under fixed conditions because it chooses the top token rather than drawing a random one.",
+  ),
+  makeQuestion(
+    31,
+    "hard",
+    "A generation system uses beam search for a creative writing prompt and gets repetitive, safe-sounding outputs. Which explanation best matches the decoding choice?",
+    [
+      [
+        "Beam search favors high-likelihood paths and can reduce diversity, so sampling methods are often a better fit for open-ended generation.",
+        true,
+      ],
+      [
+        "Beam search samples many low-probability tokens, so the model becomes too random for creative writing.",
+        false,
+      ],
+      [
+        "Beam search disables the language model's probability distribution and uses hand-written templates.",
+        false,
+      ],
+      [
+        "Beam search routes each token to a different MoE expert, which prevents narrative variation.",
+        false,
+      ],
+    ],
+    "Beam search is designed to keep high-scoring candidate sequences, so it can converge on bland or repetitive high-probability text. Creative generation usually benefits from controlled sampling rather than a search procedure that primarily rewards likelihood.",
+  ),
+  makeQuestion(
+    32,
+    "medium",
+    "Which statements correctly compare decoding controls?",
+    [
+      [
+        "Greedy decoding chooses the highest-probability token at the current step.",
+        true,
+      ],
+      [
+        "Top-k sampling samples after removing tokens outside the top-k set.",
+        true,
+      ],
+      [
+        "Top-p sampling samples after removing tokens outside a cumulative-probability nucleus.",
+        true,
+      ],
+      [
+        "Guided decoding filters invalid continuations before the next token is chosen.",
+        true,
+      ],
+    ],
+    "Greedy, top-k, top-p, and guided decoding are different ways to use or constrain next-token probabilities. Guided decoding filters invalid continuations before token selection rather than waiting to repair invalid text after it has been generated.",
+  ),
+  makeQuestion(
+    33,
+    "easy",
+    "Which statement best describes context length, also called context window or window size?",
+    [
+      [
+        "It is the number of tokens the model can process as the conditioning context for a generation step.",
+        true,
+      ],
+      [
+        "It is the number of parameters activated by a sparse MoE router.",
+        false,
+      ],
+      [
+        "It is the number of examples needed before zero-shot learning becomes few-shot learning.",
+        false,
+      ],
+      ["It is the number of candidate paths kept by beam search.", false],
+    ],
+    "Context length is a token-capacity concept: it bounds how much prompt and generated text can be available to the model at a step. Expert activation count, number of examples, and beam width are different quantities with different effects.",
+  ),
+  makeQuestion(
+    34,
+    "hard",
+    "Which statements about long context and context rot are correct?",
+    [
+      ["Longer context can increase compute and memory pressure.", true],
+      [
+        "Relevant information can become harder for the model to use as distracting tokens accumulate.",
+        true,
+      ],
+      [
+        "The answer being present in the context does not ensure the model retrieves and uses it well.",
+        true,
+      ],
+      [
+        "Adding tokens to the context improves retrieval quality by construction.",
+        false,
+      ],
+    ],
+    "Long context increases the amount of information available, but it also raises attention and memory costs and can make retrieval less reliable. Context rot refers to degradation in effective use of relevant information, not to a guarantee that more tokens improve performance.",
+  ),
+  makeQuestion(
+    35,
+    "easy",
+    "Which statements correctly describe a prompt's main parts in the lecture's prompt-structure example?",
+    [
+      ["Context gives background information the model should use.", true],
+      ["Instructions state the task to perform.", true],
+      ["Input supplies the concrete user case or content to transform.", true],
+      [
+        "Constraints are unrelated to format, audience, or response requirements.",
+        false,
+      ],
+    ],
+    "Prompts can include context, instructions, input, and constraints. Constraints are precisely where format, audience, style, or other response requirements can be stated, so saying they are unrelated to those requirements reverses the prompt-structure idea.",
+  ),
+  makeQuestion(
+    36,
+    "medium",
+    "Which statements correctly distinguish zero-shot and few-shot prompting?",
+    [
+      [
+        "Zero-shot prompting gives the task instruction without example input-output pairs.",
+        true,
+      ],
+      [
+        "Few-shot prompting includes examples in the prompt to shape the model's behavior.",
+        true,
+      ],
+      [
+        "Few-shot prompting consumes context tokens and can increase cost or latency.",
+        true,
+      ],
+      [
+        "Both zero-shot and few-shot prompting condition a fixed model through context.",
+        true,
+      ],
+    ],
+    "Zero-shot and few-shot prompting both steer a fixed model through context rather than weight updates. Few-shot examples can improve task alignment but use context budget and inference compute, while zero-shot prompting relies on the instruction and the model's existing capabilities.",
+  ),
+  makeQuestion(
+    37,
+    "easy",
+    "Which statement best describes in-context learning?",
+    [
+      [
+        "The model changes its behavior based on information in the prompt while its weights remain fixed.",
+        true,
+      ],
+      [
+        "The optimizer performs gradient descent on the examples inside the prompt.",
+        false,
+      ],
+      [
+        "The router permanently assigns a prompt to a single MoE expert.",
+        false,
+      ],
+      [
+        "The KV cache stores examples from previous users and reuses them as training data.",
+        false,
+      ],
+    ],
+    "In-context learning is behavioral adaptation through the prompt context, not gradient-based training on the fly. It should not be confused with MoE routing or KV-cache reuse, which operate at different layers of the inference system.",
+  ),
+  makeQuestion(
+    38,
+    "medium",
+    "Which statements about few-shot prompting tradeoffs are correct?",
+    [
+      ["Examples can clarify the desired input-output pattern.", true],
+      ["Examples consume part of the available context window.", true],
+      [
+        "Few-shot examples reduce input-token count because demonstrations are stored outside the prompt.",
+        false,
+      ],
+      [
+        "Examples remove the need to evaluate performance on benchmark or task data.",
+        false,
+      ],
+    ],
+    "Few-shot examples are useful because they demonstrate the target behavior, but they are not free. They use context budget and add tokens to process, and they still require evaluation because prompt examples do not prove generalization.",
+  ),
+  makeQuestion(
+    39,
+    "medium",
+    "Which statements correctly describe chain-of-thought prompting?",
+    [
+      [
+        "It asks the model to produce intermediate reasoning before the final answer.",
+        true,
+      ],
+      ["It can improve performance on reasoning-heavy tasks.", true],
+      [
+        "It increases generated token count compared with a terse answer.",
+        true,
+      ],
+      [
+        "It enforces logical correctness by verifying each reasoning step against ground truth.",
+        false,
+      ],
+    ],
+    "Chain-of-thought prompting encourages explicit intermediate reasoning and can improve reasoning task performance. It also costs more tokens and does not by itself verify that the reasoning is correct or grounded in truth.",
+  ),
+  makeQuestion(
+    40,
+    "hard",
+    "Which statements correctly describe chain-of-thought interpretability limits?",
+    [
+      [
+        "The visible reasoning can help debug where a response went wrong.",
+        true,
+      ],
+      [
+        "The reasoning trace can reveal that the model used a wrong date or premise from the prompt.",
+        true,
+      ],
+      ["The extra tokens create a latency and cost tradeoff.", true],
+      ["A fluent reasoning trace still needs answer-level evaluation.", true],
+    ],
+    "Reasoning traces can be useful for inspection and root-cause analysis, but they are not a proof of correctness. A model can produce plausible-looking reasoning with an incorrect premise or invalid step, so chain-of-thought should be evaluated by outcomes as well as by trace readability.",
+  ),
+  makeQuestion(
+    41,
+    "easy",
+    "Which statement best describes self-consistency prompting?",
+    [
+      [
+        "Generate several reasoning paths, parse their final answers, and aggregate the answers, often by majority vote.",
+        true,
+      ],
+      [
+        "Force the model to use the same hidden attention pattern for every sample.",
+        false,
+      ],
+      [
+        "Keep one greedy completion and ask a second model to rewrite it as JSON.",
+        false,
+      ],
+      [
+        "Average the MoE router probabilities across experts to pick a final token.",
+        false,
+      ],
+    ],
+    "Self-consistency operates at the level of multiple sampled responses: it compares final answers after several reasoning paths. It is distinct from attention, guided decoding, and MoE routing, which operate inside a single generation process.",
+  ),
+  makeQuestion(
+    42,
+    "medium",
+    "Which statements about self-consistency tradeoffs are correct?",
+    [
+      [
+        "Sampling multiple reasoning paths can make the final answer more robust.",
+        true,
+      ],
+      ["Parsing or extracting the final answer is needed before voting.", true],
+      [
+        "The sampled paths must be generated serially because each path depends on the previous path's hidden state.",
+        false,
+      ],
+      [
+        "Self-consistency reduces total compute because it samples fewer tokens than a single direct answer.",
+        false,
+      ],
+    ],
+    "Self-consistency trades more generation work for robustness. The branches can be independent and parallelizable, but total compute and token usage generally increase because several completions are produced.",
+  ),
+  makeQuestion(
+    43,
+    "easy",
+    "Which statement best explains the goal of KV caching during autoregressive inference?",
+    [
+      [
+        "Store previous keys and values so later tokens can reuse them instead of recomputing them.",
+        true,
+      ],
+      [
+        "Store previous query vectors because future tokens attend through old queries.",
+        false,
+      ],
+      [
+        "Store final text responses so the model can skip tokenization next time.",
+        false,
+      ],
+      [
+        "Store MoE expert weights on the CPU so routing collapse disappears.",
+        false,
+      ],
+    ],
+    "During generation, the current token needs keys and values from previous tokens for attention. KV caching saves those key and value tensors, while previous queries are not the useful cached objects for computing the current token's attention over the prefix.",
+  ),
+  makeQuestion(
+    44,
+    "medium",
+    "Which statements correctly describe KV caching?",
+    [
+      [
+        "It avoids recomputing key and value projections for earlier tokens at each new decoding step.",
+        true,
+      ],
+      [
+        "It is most relevant during autoregressive inference rather than teacher-forced training over a whole sequence.",
+        true,
+      ],
+      [
+        "Its memory footprint is constant with respect to sequence length once the first token is cached.",
+        false,
+      ],
+      [
+        "It changes the target model's next-token distribution by approximating attention scores.",
+        false,
+      ],
+    ],
+    "KV caching is an exact reuse strategy for autoregressive inference: it stores tensors that would otherwise be recomputed. The tradeoff is memory, and that memory grows with generated or prompt sequence length rather than staying constant.",
+  ),
+  makeQuestion(
+    45,
+    "easy",
+    "Which statements correctly explain why previous query vectors are not the main cached object in KV caching?",
+    [
+      [
+        "The current token forms a new query that attends to previous keys and values.",
+        true,
+      ],
+      ["Previous keys are needed because the current query scores them.", true],
+      [
+        "Previous values are needed because attention weights combine them into the current representation.",
+        true,
+      ],
+      [
+        "Previous queries are not the main cached object for computing the current token's attention over the prefix.",
+        true,
+      ],
+    ],
+    "In causal self-attention for a new token, the new representation supplies the query, while earlier tokens supply keys and values. This is why the cache focuses on K and V tensors rather than Q tensors from earlier positions.",
+  ),
+  makeQuestion(
+    46,
+    "medium",
+    "Which statements correctly compare Multi-Head Attention (MHA), Grouped Query Attention (GQA), and Multi-Query Attention (MQA) for KV-cache size?",
+    [
+      [
+        "MHA keeps separate key/value projections for each attention head.",
+        true,
+      ],
+      ["GQA shares key/value projections across groups of query heads.", true],
+      [
+        "MQA is the extreme case where many query heads share one key/value set.",
+        true,
+      ],
+      [
+        "GQA can reduce KV-cache memory compared with full MHA by storing fewer distinct key/value heads.",
+        true,
+      ],
+    ],
+    "GQA and MQA reduce the number of key/value heads relative to full MHA, which reduces KV-cache storage and bandwidth. They do this by sharing K/V representations across query heads rather than duplicating separate K/V tensors for each head.",
+  ),
+  makeQuestion(
+    47,
+    "medium",
+    "Which statements correctly describe why KV cache memory can limit serving throughput?",
+    [
+      [
+        "Each active request may need cached keys and values for each generated or prompt token.",
+        true,
+      ],
+      [
+        "Longer contexts increase the amount of cache memory held per request.",
+        true,
+      ],
+      [
+        "KV cache memory disappears after the prompt is tokenized, before generation starts.",
+        false,
+      ],
+      [
+        "KV caching removes the need to store model weights during inference.",
+        false,
+      ],
+    ],
+    "KV cache memory grows with request length and concurrency, so it can become a bottleneck even when the model weights are already loaded. Caching saves computation, but the cache persists during generation and does not eliminate the memory required for model parameters.",
+  ),
+  makeQuestion(
+    48,
+    "hard",
+    "Which statements correctly describe PagedAttention-style memory management?",
+    [
+      [
+        "It stores KV cache blocks in smaller chunks rather than reserving one maximum-length contiguous region per request.",
+        true,
+      ],
+      [
+        "It uses a mapping from token positions to physical cache blocks.",
+        true,
+      ],
+      [
+        "It reduces wasted reserved memory when requests stop before the maximum context length.",
+        true,
+      ],
+      [
+        "It can reduce fragmentation by letting logical cache positions map to non-contiguous physical blocks.",
+        true,
+      ],
+    ],
+    "PagedAttention is a memory-management technique for KV cache storage, inspired by paging. It reduces fragmentation and waste by allocating fixed-size blocks and mapping logical positions to physical memory rather than reserving a single maximum-length block per request.",
+  ),
+  makeQuestion(
+    49,
+    "medium",
+    "Which statement best distinguishes internal fragmentation from external fragmentation in the KV-cache serving example?",
+    [
+      [
+        "Internal fragmentation is reserved-but-unused space inside an allocation, while external fragmentation is unusable gaps between allocations.",
+        true,
+      ],
+      [
+        "Internal fragmentation is the router choosing one expert, while external fragmentation is top-p choosing several tokens.",
+        false,
+      ],
+      [
+        "Internal fragmentation is caused by tokenization, while external fragmentation is caused by temperature scaling.",
+        false,
+      ],
+      [
+        "Internal fragmentation stores queries, while external fragmentation stores values.",
+        false,
+      ],
+    ],
+    "The memory-management issue is about how cache space is allocated. Internal fragmentation wastes space inside reserved regions, while external fragmentation leaves scattered gaps between regions that are hard to use efficiently.",
+  ),
+  makeQuestion(
+    50,
+    "hard",
+    "Which statements correctly describe multi-latent attention as a KV-cache reduction idea?",
+    [
+      [
+        "It stores a compressed latent representation instead of separate full key and value vectors for each head.",
+        true,
+      ],
+      [
+        "It factorizes projection work through a lower-dimensional intermediate representation.",
+        true,
+      ],
+      [
+        "It can share the compression representation across keys, values, or heads before decompression.",
+        true,
+      ],
+      [
+        "It keeps causal decoder behavior while changing the representation stored in the cache.",
+        true,
+      ],
+    ],
+    "Multi-latent attention reduces what must be stored by caching compact latent representations and later expanding them for attention use. It saves memory through representation design while causal decoder behavior remains part of generation.",
+  ),
+  makeQuestion(
+    51,
+    "medium",
+    "Which statements correctly describe the difference between GQA and latent attention for cache efficiency?",
+    [
+      [
+        "GQA reduces the number of key/value heads by sharing K/V projections across query-head groups.",
+        true,
+      ],
+      [
+        "Latent attention reduces the dimensional payload stored for keys and values through compression.",
+        true,
+      ],
+      [
+        "Both are decoding policies that rank candidate vocabulary tokens by probability.",
+        false,
+      ],
+      [
+        "GQA and latent attention are two names for the same top-k expert routing rule.",
+        false,
+      ],
+    ],
+    "GQA and latent attention both attack KV-cache cost, but one reduces the number of K/V heads while the other compresses the representation stored for K/V. Neither is a vocabulary decoding policy or an MoE routing rule.",
+  ),
+  makeQuestion(
+    52,
+    "medium",
+    "Which statements about exact inference optimizations are correct?",
+    [
+      ["KV caching avoids redundant key/value computations.", true],
+      [
+        "PagedAttention improves memory allocation for cached keys and values.",
+        true,
+      ],
+      [
+        "GQA and MQA reduce duplicated K/V storage across attention heads.",
+        true,
+      ],
+      [
+        "Exact optimizations aim to improve latency or memory use without changing the target model semantics.",
+        true,
+      ],
+    ],
+    "Exact optimizations preserve the model computation or intended distribution while making it faster or more memory-efficient. KV reuse, cache paging, and key/value sharing attack redundant work or memory pressure rather than deliberately changing the target model semantics.",
+  ),
+  makeQuestion(
+    53,
+    "medium",
+    "Which statement best explains why inference can be memory-bound in large decoder models?",
+    [
+      [
+        "Moving model weights and KV-cache tensors through memory can dominate time compared with the arithmetic available on accelerators.",
+        true,
+      ],
+      [
+        "The tokenizer must read the whole internet before each generated token.",
+        false,
+      ],
+      [
+        "The loss function must backpropagate through the full training corpus at inference time.",
+        false,
+      ],
+      [
+        "Beam search disables accelerator arithmetic and runs every operation on the CPU.",
+        false,
+      ],
+    ],
+    "Large-model inference often spends much of its time moving weights and cache tensors rather than saturating arithmetic units. The other choices confuse inference with data collection, training backpropagation, or an inaccurate hardware story.",
+  ),
+  makeQuestion(
+    54,
+    "hard",
+    "Which statements correctly classify the lecture's inference optimization families?",
+    [
+      ["Avoiding redundant work includes KV caching.", true],
+      ["Memory management includes PagedAttention.", true],
+      [
+        "Reformulating attention storage includes GQA, MQA, and latent attention.",
+        true,
+      ],
+      [
+        "Approximate token-prediction methods include speculative decoding and multi-token prediction.",
+        false,
+      ],
+    ],
+    "The first three items are exact or near-exact efficiency themes around attention computation and memory. Speculative decoding can preserve the target distribution under its accept/reject rule, while multi-token prediction changes the training/inference setup; the important point is to separate cache reuse, memory layout, attention representation, and token-level acceleration.",
+  ),
+  makeQuestion(
+    55,
+    "easy",
+    "Which statement best describes speculative decoding?",
+    [
+      [
+        "A smaller draft model proposes tokens, and a larger target model validates them so generation can advance faster.",
+        true,
+      ],
+      [
+        "A larger model writes a prompt, and a smaller model grades it after deployment.",
+        false,
+      ],
+      [
+        "The target model skips probability computation and accepts every draft token by default.",
+        false,
+      ],
+      [
+        "Several MoE experts vote on the final answer after the response is finished.",
+        false,
+      ],
+    ],
+    "Speculative decoding uses a fast draft model to propose candidate tokens and the target model to check them. The target model still computes probabilities; the method is not prompt grading or a post-response expert vote.",
+  ),
+  makeQuestion(
+    56,
+    "hard",
+    "Which statements about speculative decoding's accept/reject step are correct?",
+    [
+      [
+        "If the target model assigns at least as much probability to the drafted token as the draft model did, the token can be accepted.",
+        true,
+      ],
+      [
+        "If the target probability is lower, acceptance can occur with probability based on the ratio of target to draft probability.",
+        true,
+      ],
+      [
+        "After a rejection, generation resumes from the rejected position with an adjusted distribution.",
+        true,
+      ],
+      [
+        "The accept/reject rule is designed to preserve the target model's output distribution.",
+        true,
+      ],
+    ],
+    "The accept/reject rule is designed so the accepted tokens match the target model distribution rather than merely imitating the draft model. Rejections trigger resampling from an adjusted distribution, which is why the method can be fast while preserving the target distribution in the formal algorithm.",
+  ),
+  makeQuestion(
+    57,
+    "medium",
+    "Which statements correctly explain why speculative decoding can be faster?",
+    [
+      ["The draft model proposes several tokens cheaply.", true],
+      [
+        "The target model can evaluate the drafted tokens in a single forward pass.",
+        true,
+      ],
+      [
+        "When several draft tokens are accepted, the system advances multiple positions after one target-model pass.",
+        true,
+      ],
+      ["The method is faster because the target model is never called.", false],
+    ],
+    "Speculative decoding still uses the target model; its speedup comes from batching validation of draft tokens and accepting several positions at once when the draft is good. The draft model is useful because it is smaller or cheaper, not because it replaces the target model completely.",
+  ),
+  makeQuestion(
+    58,
+    "medium",
+    "Which statements correctly describe the roles of draft and target models in speculative decoding?",
+    [
+      ["The draft model proposes candidate continuations.", true],
+      [
+        "The target model supplies the probability distributions used for validation.",
+        true,
+      ],
+      [
+        "The draft model should be cheaper to run than the target model for the method to help.",
+        true,
+      ],
+      [
+        "The target model is trained from scratch during each speculative decoding request.",
+        false,
+      ],
+    ],
+    "The draft model is a cheap proposer and the target model is the distribution authority. No per-request training occurs; speculative decoding is an inference-time method.",
+  ),
+  makeQuestion(
+    59,
+    "medium",
+    "Which statements correctly describe multi-token prediction (MTP)?",
+    [
+      [
+        "The model is trained to predict multiple future tokens from a representation.",
+        true,
+      ],
+      [
+        "Extra prediction heads can act like an embedded draft mechanism at inference time.",
+        true,
+      ],
+      [
+        "MTP changes the training objective compared with ordinary next-token-only prediction.",
+        true,
+      ],
+      ["MTP is identical to increasing top-k during sampling.", false],
+    ],
+    "MTP changes the model and objective so multiple future-token predictions are available. Increasing top-k is only a decoding distribution truncation choice and does not add multi-token heads or change the training objective.",
+  ),
+  makeQuestion(
+    60,
+    "hard",
+    "Which statements correctly compare speculative decoding and multi-token prediction?",
+    [
+      [
+        "Speculative decoding commonly uses a separate smaller draft model.",
+        true,
+      ],
+      ["MTP can embed draft-like heads inside the same model.", true],
+      [
+        "Speculative decoding's formal accept/reject scheme can preserve the target distribution.",
+        true,
+      ],
+      [
+        "MTP changes the objective by asking the model to predict multiple future tokens.",
+        true,
+      ],
+    ],
+    "Speculative decoding and MTP both try to move through output tokens faster, but they do it differently. MTP changes the model objective by predicting multiple future tokens, whereas sampler thresholds such as top-k and top-p are separate decoding controls.",
+  ),
+  makeQuestion(
+    61,
+    "medium",
+    "Which statement best explains why speculative decoding includes the token after the draft block in the target-model pass?",
+    [
+      [
+        "Evaluating the drafted block also yields a distribution for the next position, which can be used if the draft tokens are accepted.",
+        true,
+      ],
+      [
+        "The extra token is needed to update the target model's weights before accepting the block.",
+        false,
+      ],
+      [
+        "The extra token lets the router rebalance MoE experts across the training batch.",
+        false,
+      ],
+      ["The extra token stores the JSON grammar for guided decoding.", false],
+    ],
+    "A target-model pass over the drafted sequence can produce probability distributions for each drafted token and the following position. That extra distribution is useful when the system accepts the draft tokens and needs to continue generation.",
+  ),
+  makeQuestion(
+    62,
+    "medium",
+    "Which statements correctly connect inference acceleration to output quality?",
+    [
+      [
+        "Exact reuse methods such as KV caching aim to preserve the same model computation.",
+        true,
+      ],
+      [
+        "Speculative decoding's validation step aims to preserve the target model distribution.",
+        true,
+      ],
+      [
+        "Approximate methods must be evaluated for quality as well as speed.",
+        true,
+      ],
+      [
+        "Any speedup that lowers latency automatically improves answer correctness.",
+        false,
+      ],
+    ],
+    "Inference optimization is not just about lower latency; the quality and distribution of outputs still matter. Some methods are exact, some include validation to preserve a target distribution, and more approximate methods require empirical evaluation.",
+  ),
+  makeQuestion(
+    63,
+    "hard",
+    "A serving system has short prompts, long generations, and repeated recomputation of old attention keys and values. Which optimization most directly addresses the repeated computation?",
+    [
+      ["KV caching.", true],
+      ["Auxiliary MoE load balancing.", false],
+      ["Few-shot prompting.", false],
+      ["Temperature scaling.", false],
+    ],
+    "The repeated computation is specifically the old key and value projections needed by later decoding steps, so KV caching is the direct fix. MoE balancing, prompting examples, and temperature affect different parts of modeling or generation behavior.",
+  ),
+  makeQuestion(
+    64,
+    "hard",
+    "A serving system reserves memory for the maximum context length for each request, but most requests finish early. Which statements identify the most relevant problem and remedy?",
+    [
+      [
+        "The problem includes internal fragmentation from reserved but unused KV-cache slots.",
+        true,
+      ],
+      ["PagedAttention-style block allocation is a relevant remedy.", true],
+      [
+        "A logical-to-physical block mapping can let the cache use non-contiguous memory.",
+        true,
+      ],
+      [
+        "Temperature scaling is the relevant remedy because it makes responses shorter by definition.",
+        false,
+      ],
+    ],
+    "The described waste is a KV-cache memory-allocation problem, not a probability-sharpness problem. PagedAttention attacks the waste by allocating and mapping smaller blocks instead of reserving one large contiguous maximum-length region.",
+  ),
+  makeQuestion(
+    65,
+    "medium",
+    "Which statement best describes multi-query attention (MQA) as the endpoint of grouped key/value sharing?",
+    [
+      ["Many query heads share a single set of key and value heads.", true],
+      [
+        "Each query head has its own independent key and value projection, as in full MHA.",
+        false,
+      ],
+      [
+        "Each MoE expert receives a separate copy of the vocabulary softmax.",
+        false,
+      ],
+      [
+        "The model predicts multiple future tokens with separate output heads.",
+        false,
+      ],
+    ],
+    "MQA is the high-sharing endpoint of the MHA-GQA-MQA family: query heads remain multiple, but key/value heads are shared heavily. It should not be confused with MoE expert routing or multi-token prediction heads.",
+  ),
+  makeQuestion(
+    66,
+    "hard",
+    "Which statements correctly reason about cache compression in latent attention?",
+    [
+      [
+        "A lower-dimensional latent can be stored instead of full per-head key/value vectors.",
+        true,
+      ],
+      [
+        "Separate decompression matrices can recover key-like and value-like representations when needed.",
+        true,
+      ],
+      [
+        "Sharing the compressed representation across keys and values reduces duplicate cache payload.",
+        true,
+      ],
+      [
+        "Compression means attention no longer needs token representations from the prefix.",
+        false,
+      ],
+    ],
+    "Latent attention compresses what is stored, then reconstructs representations needed for attention. It does not remove the need for prefix information; it changes how that information is represented and cached.",
+  ),
+  makeQuestion(
+    67,
+    "medium",
+    "Which statements correctly describe why very low-probability tokens are often filtered during sampling?",
+    [
+      [
+        "They can create incoherent continuations if sampled despite tiny probability.",
+        true,
+      ],
+      ["Top-k filtering removes candidates outside a fixed rank cutoff.", true],
+      [
+        "Top-p filtering removes candidates outside a probability-mass nucleus.",
+        true,
+      ],
+      [
+        "Filtering low-probability tokens turns sampling into beam search.",
+        false,
+      ],
+    ],
+    "Top-k and top-p sampling keep randomness while removing tail candidates that are unlikely to be useful. Beam search is a different search procedure over high-scoring paths, not just tail filtering followed by sampling.",
+  ),
+  makeQuestion(
+    68,
+    "medium",
+    "Which statements correctly describe when guided decoding is useful?",
+    [
+      ["Generating machine-readable formats such as JSON.", true],
+      [
+        "Conforming to a grammar or schema while still using the model's probabilities.",
+        true,
+      ],
+      [
+        "Preventing invalid next-token choices during the generation process.",
+        true,
+      ],
+      [
+        "Pairing structural validity with semantic evaluation when factual correctness matters.",
+        true,
+      ],
+    ],
+    "Guided decoding is valuable for structural constraints, especially machine-readable output. It does not prove the semantic content is correct, so structurally valid responses still need semantic evaluation when the values or reasoning matter.",
+  ),
+  makeQuestion(
+    69,
+    "easy",
+    "Which statement best identifies the main tradeoff of chain-of-thought prompting?",
+    [
+      [
+        "It can improve reasoning behavior but uses more output tokens and increases cost or latency.",
+        true,
+      ],
+      [
+        "It reduces token usage by hiding intermediate reasoning inside the KV cache.",
+        false,
+      ],
+      [
+        "It replaces next-token prediction with supervised fine-tuning during inference.",
+        false,
+      ],
+      [
+        "It prevents arithmetic errors because every step is externally verified.",
+        false,
+      ],
+    ],
+    "Chain-of-thought prompting asks the model to produce intermediate reasoning, which can help on reasoning tasks. The cost is more generated text, and the reasoning is not automatically externally verified.",
+  ),
+  makeQuestion(
+    70,
+    "hard",
+    "Which statements correctly describe how self-consistency uses parallel sampled paths?",
+    [
+      [
+        "Several completions can be sampled independently from the same prompt.",
+        true,
+      ],
+      [
+        "The final answers can be extracted from those completions and compared.",
+        true,
+      ],
+      [
+        "Parallel sampling can keep latency closer to the slowest branch than to the sum of branch latencies.",
+        true,
+      ],
+      [
+        "Each branch must be appended to the context of the next branch before voting.",
+        false,
+      ],
+    ],
+    "Self-consistency samples multiple paths that do not depend on one another, then aggregates their final answers. Because the branches are independent, they can be run in parallel rather than chained into one another's contexts.",
+  ),
+  makeQuestion(
+    71,
+    "hard",
+    "A team adds few-shot examples, chain-of-thought instructions, and self-consistency voting to a math prompt. Which statements correctly predict system-level effects?",
+    [
+      ["Few-shot examples increase input context length.", true],
+      ["Chain-of-thought increases expected output length.", true],
+      ["Self-consistency increases the number of sampled completions.", true],
+      [
+        "These changes increase total token work even though the model weights remain fixed.",
+        true,
+      ],
+    ],
+    "Prompting techniques can improve task behavior, but they often increase token processing and generation work. Prompt text is not free: examples add input tokens, reasoning adds output tokens, and self-consistency multiplies the number of completions.",
+  ),
+  makeQuestion(
+    72,
+    "medium",
+    "Which statements correctly connect context length to prompting strategies?",
+    [
+      [
+        "Few-shot prompting uses part of the context window for demonstrations.",
+        true,
+      ],
+      [
+        "Long instructions and constraints compete with source material for context budget.",
+        true,
+      ],
+      [
+        "Self-consistency usually creates separate sampled contexts rather than one ever-growing shared context.",
+        true,
+      ],
+      [
+        "A larger context window removes the need to design concise prompts.",
+        false,
+      ],
+    ],
+    "Context budget must be managed even when the model supports long windows, because cost, latency, and context-rot effects still matter. Few-shot examples and long instructions consume tokens, while self-consistency usually samples separate branches from the same prompt.",
+  ),
+  makeQuestion(
+    73,
+    "easy",
+    "Which statement best describes the relationship between prompt constraints and guided decoding constraints?",
+    [
+      [
+        "Prompt constraints are text instructions to the model, while guided decoding enforces allowed next-token choices during generation.",
+        true,
+      ],
+      [
+        "Prompt constraints and guided decoding both require retraining the model before each response.",
+        false,
+      ],
+      [
+        "Prompt constraints operate on model weights, while guided decoding operates on the training dataset.",
+        false,
+      ],
+      [
+        "Prompt constraints are used for JSON, while guided decoding is used for MoE load balancing.",
+        false,
+      ],
+    ],
+    "Prompt constraints ask the model to follow instructions, but they do not mechanically prevent invalid continuations. Guided decoding adds an inference-time token filter, which is why it is stronger for structural validity such as JSON.",
+  ),
+  makeQuestion(
+    74,
+    "medium",
+    "Which statements correctly describe the output layer's role in generation and acceleration?",
+    [
+      [
+        "The output layer produces token scores that decoding strategies convert into chosen tokens.",
+        true,
+      ],
+      [
+        "Speculative decoding tries to advance through output tokens faster by validating draft proposals.",
+        true,
+      ],
+      [
+        "Multi-token prediction modifies the model so multiple future tokens can be proposed from one representation.",
+        true,
+      ],
+      [
+        "KV-cache paging changes the vocabulary logits so fewer tokens need probabilities.",
+        false,
+      ],
+    ],
+    "Decoding strategies and token-prediction accelerators operate near the output-token process. PagedAttention is a memory-layout method for attention caches, not a way to reduce the vocabulary distribution directly.",
+  ),
+  makeQuestion(
+    75,
+    "medium",
+    "Which statements correctly connect MoE and inference efficiency?",
+    [
+      [
+        "Sparse MoE can reduce active feed-forward computation per token.",
+        true,
+      ],
+      [
+        "The model must still store or access the expert parameters needed for routing and execution.",
+        true,
+      ],
+      ["Load balancing matters because unused experts waste capacity.", true],
+      [
+        "Sparse MoE is the same mechanism as KV caching because both skip previous tokens.",
+        false,
+      ],
+    ],
+    "Sparse MoE is a model-architecture efficiency idea for feed-forward computation, while KV caching is an inference reuse idea for attention tensors. Both can affect serving cost, but they operate on different parts of the model.",
+  ),
+  makeQuestion(
+    76,
+    "hard",
+    "Which statements correctly compare active parameters, total parameters, and FLOPs in an MoE model?",
+    [
+      [
+        "Total parameters include experts that are inactive for a particular token.",
+        true,
+      ],
+      [
+        "Active parameters are the subset used in that token's forward pass.",
+        true,
+      ],
+      [
+        "Per-token FLOPs depend more directly on active computation than on inactive stored experts.",
+        true,
+      ],
+      [
+        "A higher total parameter count can coexist with controlled per-token FLOPs when routing is sparse.",
+        true,
+      ],
+    ],
+    "MoE design decouples total parameter count from per-token active computation. A model can store many experts while routing a token through a subset, so total parameters alone do not determine the forward-pass FLOPs for that token.",
+  ),
+  makeQuestion(
+    77,
+    "medium",
+    "Which statement best diagnoses a model that has many experts but sends nearly every token to expert 3?",
+    [
+      [
+        "Routing collapse is occurring, so auxiliary balancing or noisy gating should be considered.",
+        true,
+      ],
+      ["Top-p sampling is using a threshold that is too low.", false],
+      ["KV caching is storing queries instead of values.", false],
+      [
+        "Self-consistency is sampling too many independent reasoning paths.",
+        false,
+      ],
+    ],
+    "The symptom is expert-utilization imbalance inside an MoE layer, which is routing collapse. Sampling thresholds, cache contents, and self-consistency branch counts are different mechanisms with different failure modes.",
+  ),
+  makeQuestion(
+    78,
+    "medium",
+    "Which statements correctly identify lecture concepts that preserve model weights during inference?",
+    [
+      [
+        "Prompting changes behavior through input context rather than weight updates.",
+        true,
+      ],
+      [
+        "Guided decoding constrains token choices without retraining the model.",
+        true,
+      ],
+      ["KV caching reuses stored tensors without modifying parameters.", true],
+      [
+        "Speculative decoding validates draft tokens by fine-tuning the target model online.",
+        false,
+      ],
+    ],
+    "Most inference-time controls discussed here operate without changing model weights. Speculative decoding uses draft and target model probabilities during generation; it does not fine-tune the target model for each request.",
+  ),
+  makeQuestion(
+    79,
+    "easy",
+    "Which statement best summarizes the lecture's view of LLM system design?",
+    [
+      [
+        "Modern LLM systems combine scale, sparse capacity, decoding controls, prompting, and inference optimizations to manage quality and cost.",
+        true,
+      ],
+      [
+        "The main design rule is to maximize parameter count without considering active compute or memory.",
+        false,
+      ],
+      [
+        "The main design rule is to use greedy decoding for every open-ended generation task.",
+        false,
+      ],
+      [
+        "The main design rule is to replace prompting with retraining for every user request.",
+        false,
+      ],
+    ],
+    "The lecture connects several layers of design: model scale, MoE capacity, decoding behavior, prompt conditioning, and serving optimizations. Treating any one knob as the whole design misses the tradeoffs among quality, latency, memory, and compute.",
+  ),
+  makeQuestion(
+    80,
+    "easy",
+    "Which statements belong together as examples of inference-time techniques rather than pretraining-data changes?",
+    [
+      [
+        "Temperature, top-k, and top-p adjust token selection during generation.",
+        true,
+      ],
+      ["Guided decoding filters valid next tokens during generation.", true],
+      [
+        "KV caching and PagedAttention improve reuse and memory handling during serving.",
+        true,
+      ],
+      [
+        "Few-shot prompting and self-consistency condition or aggregate inference-time responses.",
+        true,
+      ],
+    ],
+    "These techniques operate while using a trained model: they control decoding, constrain output structure, reuse inference tensors, manage cache memory, or change how prompts and samples are used. They are distinct from changing the pretraining corpus or retraining the model from scratch.",
+  ),
 ];

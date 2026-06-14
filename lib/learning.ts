@@ -62,10 +62,10 @@ export const LEARNING_EXPERIENCES = [
   },
   {
     sourceId: "cme295-lect3",
-    shortTitle: "LLM Inference Workbench",
+    shortTitle: "LLM Runtime Trace",
     title: "Stanford CME295 Lecture 3: Large Language Models, MoE & Inference",
     summary:
-      "Run a generation workbench that connects decoder-only LLMs, MoE routing, decoding controls, prompting strategies, and inference optimizations.",
+      "Trace one generation request through decoder-only LLM architecture, sparse MoE routing, decoding controls, prompting, KV-cache memory, and token acceleration.",
     durationMinutes: 18,
     level: "After CME295 Lectures 1-2",
     sourceMaterialPath:
@@ -74,7 +74,24 @@ export const LEARNING_EXPERIENCES = [
       "Define modern LLMs as scaled decoder-only next-token models.",
       "Trace sparse MoE routing, top-k expert selection, and routing collapse.",
       "Compare greedy, beam, top-k, top-p, temperature, and guided decoding.",
-      "Choose inference optimizations such as KV caching, GQA, PagedAttention, latent attention, speculative decoding, and multi-token prediction.",
+      "Place KV caching, GQA, PagedAttention, latent attention, speculative decoding, and multi-token prediction in the serving trace.",
+    ],
+  },
+  {
+    sourceId: "cme295-lect4",
+    shortTitle: "LLM Training Pipeline",
+    title: "Stanford CME295 Lecture 4: LLM Training, Scaling & Alignment",
+    summary:
+      "Diagnose the full training lifecycle: pretraining scale, memory bottlenecks, FlashAttention, SFT, evaluation, LoRA, and QLoRA.",
+    durationMinutes: 19,
+    level: "After CME295 Lectures 1-3",
+    sourceMaterialPath:
+      "lib/lectures/Stanford CME295 Transformers & LLMs/transcripts-and-files/lecture 4 - transcript.md",
+    outcomes: [
+      "Explain pretraining as next-token prediction over massive language and code mixtures.",
+      "Balance model size, token count, FLOPs, and knowledge-cutoff tradeoffs.",
+      "Match training bottlenecks to data/model parallelism, ZeRO, FlashAttention, and mixed precision.",
+      "Compare SFT, instruction tuning, evaluation, LoRA, QLoRA, and adapter swapping.",
     ],
   },
   {
