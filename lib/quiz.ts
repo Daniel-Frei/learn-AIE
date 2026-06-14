@@ -10,6 +10,7 @@ import { stanfordCME295Lecture1Questions } from "./lectures/Stanford CME295 Tran
 import { stanfordCME295Lecture2Questions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture2_models";
 import { stanfordCME295Lecture3LLMsQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture3_LLMs";
 import { stanfordCME295Lecture4TrainingQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture4_training";
+import { stanfordCME295Lecture5PreferenceTuningQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture5_preference_tuning";
 import { cs224rLecture1IntroQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture1_intro";
 import { cs224rLecture2ImitationLearningQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture2_Imitation Learning";
 import { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture3_Policy Gradients";
@@ -226,6 +227,15 @@ export const QUESTION_SOURCES = [
     seriesLabel: "Stanford CME295 Transformers & LLMs",
     topic: "NLP" as const,
     questions: stanfordCME295Lecture4TrainingQuestions,
+  },
+  {
+    id: "cme295-lect5" as const,
+    label: "Stanford CME295 Lecture 5",
+    title: "Stanford CME295 Lecture 5: LLM Preference Tuning, RLHF & DPO",
+    seriesId: "stanford-cme295" as const,
+    seriesLabel: "Stanford CME295 Transformers & LLMs",
+    topic: "NLP" as const,
+    questions: stanfordCME295Lecture5PreferenceTuningQuestions,
   },
   {
     id: "cs224r-lect1" as const,
@@ -706,6 +716,8 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
     "LLM lecture about scaling, mixture-of-experts, inference, decoding, and deployment tradeoffs.",
   "cme295-lect4":
     "LLM training lecture about pretraining, post-training, alignment, data mixtures, and scaling laws.",
+  "cme295-lect5":
+    "Preference-tuning lecture about preference data, reward modeling, RLHF/PPO, Best-of-N, DPO, and alignment tradeoffs.",
   "cs224r-lect1":
     "Deep reinforcement learning introduction about MDPs, value functions, policies, and the RL problem setup.",
   "cs224r-lect2":
@@ -966,6 +978,7 @@ export { stanfordCME295Lecture1Questions } from "./lectures/Stanford CME295 Tran
 export { stanfordCME295Lecture2Questions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture2_models";
 export { stanfordCME295Lecture3LLMsQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture3_LLMs";
 export { stanfordCME295Lecture4TrainingQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture4_training";
+export { stanfordCME295Lecture5PreferenceTuningQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture5_preference_tuning";
 export { cs224rLecture1IntroQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture1_intro";
 export { cs224rLecture2ImitationLearningQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture2_Imitation Learning";
 export { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture3_Policy Gradients";

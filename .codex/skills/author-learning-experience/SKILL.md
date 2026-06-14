@@ -30,11 +30,22 @@ different teaching form.
   default to shared learning primitives. `LearningHero`, generic cards, checks,
   and formula blocks are optional support pieces, not the page architecture.
   Prefer page-local components when they let the topic teach itself better.
+- Watch for template drift: agents often repeat panels, heroes, cards, and
+  steppers because they are familiar integration-safe shapes, not because the
+  source material calls for them. Counter this by choosing the source-native
+  learning object before choosing components.
+- Give the agent design freedom, but require a defensible concept. A page should
+  start from something this material uniquely lets the learner inspect, predict,
+  manipulate, compare, calculate, diagnose, or decide.
 - Use the source material's concepts, examples, formulas, diagrams, cases, and
   misconceptions, but do not copy a transcript or slide order into a long article.
 - Prefer one strong topic-specific interactive object over many generic cards
   when the material has a mechanism, system, workflow, calculation, tradeoff,
   spatial structure, timeline, evidence interpretation, or model behavior.
+- Use visual and interactive representation when it clarifies the mental model,
+  not to satisfy a quota. Text-only sections are fine when text is genuinely the
+  strongest medium; invisible mechanisms, tradeoffs, and structures usually need
+  something inspectable.
 - For new isolated learning pages, do not let "small/reviewable" shrink the
   learning ambition. Keep the work coherent and scoped to the page, but allow a
   larger custom interaction, canvas, asset set, or control surface when that is
@@ -115,6 +126,9 @@ different teaching form.
      concrete preview of the central object. Do not use abstract bullets,
      arrows, meters, or charts unless the surrounding copy makes their role and
      relationship clear without prior context.
+   - Before drafting the first screen, ask what would make it recognizably about
+     this source even if the title were hidden. If the answer is mostly labels,
+     choose a more specific opening object or task.
    - If all candidate shapes resemble previous learning pages, pause and look for
      a more topic-native form.
    - If the best design would be substantially better as a standalone or more
@@ -140,8 +154,17 @@ different teaching form.
      concise contextual explanation at first use.
    - Include active moments where the learner predicts, manipulates, compares,
      sorts, annotates, debugs, estimates, reads evidence, or checks a misconception.
+   - Put feedback close to the relevant idea when that helps learning. Checks,
+     prompts, and questions can be embedded beside the concept they assess
+     instead of always being batched into a separate page rhythm.
    - Include worked examples for mathematical, technical, procedural, or
      evidence-heavy topics.
+   - Quantitative tradeoffs often deserve an inspectable model, such as a
+     calculator, allocation surface, counterfactual, or small lab. Use the
+     representation that makes the tradeoff easiest to reason about.
+   - When a section is about a mechanism, make the mechanism visible through
+     state, flow, structure, trace, comparison, or another concrete
+     representation rather than relying only on labels and prose.
    - Use visual structure that belongs to the domain. Architecture can be
      spatial, math can be manipulable, clinical/statistical material can be an
      evidence reader, history can be a timeline, code can be a trace/debugger,
@@ -160,6 +183,9 @@ different teaching form.
      not first become meaningful at the end of the page.
    - Avoid visible instructional filler that explains the UI instead of teaching
      the concept. Controls and state should make the task understandable.
+   - Keep process steppers lean. If a staged flow is useful, make each step
+     change a meaningful visible state, constraint, output, or learner decision;
+     otherwise simplify it into prose or integrate it into the central model.
    - End with a concise recap and a transition into the matching MCQs. The recap
      should summarize ideas the page already taught, not introduce core concepts
      for the first time.
@@ -244,11 +270,17 @@ Use these as prompts, not templates:
 </experience-shape-heuristics>
 
 <anti-patterns>
-- Reusing the same hero, three-card intro, comparison, formula, check, recap
-  rhythm because it worked before.
+- Template drift: reusing the same hero, card grid, overview panel, comparison,
+  formula block, check, and recap rhythm because it worked before.
+- Designing from available components before identifying the source-native
+  learner task.
 - Using a hero visual with arrows, bullets, bars, or status marks that is hard
   to interpret before the learner knows the topic.
 - Treating interaction as decorative toggles over static prose.
+- Visual tokenism: using formulas, charts, meters, or diagrams as proof of
+  richness when they do not make the core idea easier to reason about.
+- Checklist-driven design: adding one of every familiar learning primitive
+  instead of choosing a coherent experience shape.
 - Dropping learners into a dense lab before the page has introduced the terms,
   controls, units, and labels that the lab uses.
 - Designing around MCQ topic labels instead of the source material's central
@@ -283,12 +315,21 @@ Before finishing, confirm:
 - The experience shape is topic-native and not just copied from previous pages.
 - The page would still make sense if no previous Learning AI page existed; any
   similarity to earlier pages is justified by the topic, not convenience.
+- The first viewport introduces a source-native object, problem, contrast, or
+  task, not only a reusable wrapper with different labels.
 - Shared primitives are used only where they improve this page; page-local
   components carry the topic-specific teaching model.
+- Any repeated scaffold from another page earns its place by serving this
+  material's learner task.
 - Any hero visual is understandable as a concrete preview, model, or prompt for
   the lesson rather than unexplained decoration.
 - The learner actively predicts, manipulates, compares, calculates, annotates, or
   interprets something important.
+- The chosen level of visualization/interactivity matches the source's actual
+  learning difficulty; absence of visuals for a hard invisible mechanism is a
+  deliberate design choice, not a default.
+- Feedback, checks, or practice prompts appear where they best support the
+  learner's current mental model.
 - The scroll order forms a learning progression: concepts and notation appear
   before controls or formulas that depend on them.
 - Lab labels, metrics, and controls are explained at first use; there are no

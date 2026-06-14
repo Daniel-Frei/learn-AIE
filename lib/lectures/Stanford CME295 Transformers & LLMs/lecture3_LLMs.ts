@@ -4,18 +4,18 @@ type Lecture3Difficulty = "easy" | "medium" | "hard";
 type OptionSeed = readonly [text: string, isCorrect: boolean];
 
 function makeQuestion(
-  number: number,
+  id: string,
   difficulty: Lecture3Difficulty,
   prompt: string,
   optionSeeds: readonly OptionSeed[],
   explanation: string,
 ): Question {
   if (optionSeeds.length !== 4) {
-    throw new Error(`CME295 Lecture 3 question ${number} needs 4 options.`);
+    throw new Error(`CME295 Lecture 3 question ${id} needs 4 options.`);
   }
 
   return {
-    id: `cme295-lect3-q${String(number).padStart(2, "0")}`,
+    id,
     chapter: 3,
     difficulty,
     prompt,
@@ -26,7 +26,7 @@ function makeQuestion(
 
 export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
   makeQuestion(
-    1,
+    "cme295-lect3-q101",
     "easy",
     "A model receives the token sequence `[BOS] A teddy bear` and predicts a distribution for the next token. Which statement best identifies the language-modeling task?",
     [
@@ -50,7 +50,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "A language model assigns probabilities to token sequences by modeling the next-token distribution given the tokens already present. The other choices describe representation learning, encoder-decoder translation, or manual linguistic annotation rather than autoregressive language modeling.",
   ),
   makeQuestion(
-    2,
+    "cme295-lect3-q102",
     "easy",
     "Which statements correctly distinguish current large language models from BERT-style encoder-only models?",
     [
@@ -74,7 +74,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "The lecture uses the current convention that large language models are large text-to-text language models, usually decoder-only. BERT is important, but it is encoder-only and is mainly used to produce contextual representations for tasks such as classification rather than to generate text autoregressively.",
   ),
   makeQuestion(
-    3,
+    "cme295-lect3-q103",
     "easy",
     "Which statements describe the scale dimensions that make a language model 'large'?",
     [
@@ -92,7 +92,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Large language models are large along model-size, data-size, and compute dimensions. A rule table is not the mechanism described here; the model learns neural parameters from a very large corpus and then uses those parameters for next-token prediction.",
   ),
   makeQuestion(
-    4,
+    "cme295-lect3-q104",
     "easy",
     "Which statements correctly characterize the decoder-only Transformer backbone used by modern text-generating LLMs?",
     [
@@ -110,7 +110,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Decoder-only models keep the causal self-attention and feed-forward machinery needed for autoregressive generation. Cross-attention belongs to encoder-decoder models, so it is removed when the architecture keeps only the decoder side.",
   ),
   makeQuestion(
-    5,
+    "cme295-lect3-q105",
     "medium",
     "A dense feed-forward decoder block and a sparse Mixture-of-Experts (MoE) block have the same input token representation. Which statement best describes the MoE substitution?",
     [
@@ -134,7 +134,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "MoE layers usually replace the expensive feed-forward sublayer with multiple expert feed-forward networks and a router. Attention, tokenization, residual connections, and the vocabulary softmax are different parts of the system and are not the MoE substitution described in the lecture.",
   ),
   makeQuestion(
-    6,
+    "cme295-lect3-q106",
     "medium",
     "Which statements correctly compare dense and sparse MoE computation?",
     [
@@ -158,7 +158,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Dense MoE can weight many expert outputs, while sparse MoE limits active computation to top-k selected experts. The router chooses experts inside a layer, not whole model architectures, and dense MoE does not get its cost savings by using a preselected single expert.",
   ),
   makeQuestion(
-    7,
+    "cme295-lect3-q107",
     "medium",
     "For an MoE layer with gate values \\(G(x)_i\\) and expert outputs \\(E_i(x)\\), which statements about \\(\\hat{y}=\\sum_i G(x)_iE_i(x)\\) are correct?",
     [
@@ -182,7 +182,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "The MoE formula is a layer computation: a learned gate weights expert subnetworks and the weighted outputs are combined. It is not a voting procedure over final completions; voting appears later in self-consistency prompting and operates at the response level.",
   ),
   makeQuestion(
-    8,
+    "cme295-lect3-q108",
     "hard",
     "Which statements correctly explain why the feed-forward network is the natural target for MoE layers inside a decoder block?",
     [
@@ -206,7 +206,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "The feed-forward sublayer is a large part of the decoder block's parameter and compute budget, so it is the usual location for expert substitution. KV cache storage is associated with attention keys and values during inference, not with making the feed-forward network into a set of experts.",
   ),
   makeQuestion(
-    9,
+    "cme295-lect3-q109",
     "medium",
     "Which statement best describes routing collapse in an MoE model?",
     [
@@ -227,7 +227,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Routing collapse is a training failure mode where the router repeatedly sends tokens to the same experts, reducing the value of having many experts. Beam search, tokenization, and KV-cache memory layout are separate topics and do not describe the expert-utilization failure.",
   ),
   makeQuestion(
-    10,
+    "cme295-lect3-q110",
     "hard",
     "Which statements correctly describe the auxiliary load-balancing quantities used to reduce MoE routing collapse?",
     [
@@ -251,7 +251,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "The auxiliary objective supplements the language-modeling loss by discouraging severe expert imbalance, so it is directly related to expert-usage uniformity. It uses routing statistics such as the fraction of tokens and average routing probability for each expert, but it does not replace the main task of predicting language-model targets.",
   ),
   makeQuestion(
-    11,
+    "cme295-lect3-q111",
     "medium",
     "Which statements about token-level MoE routing are correct?",
     [
@@ -275,7 +275,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "The lecture emphasizes routing at the token level: each token representation can be sent to an expert selected by the router. This is finer-grained than choosing one expert for an entire prompt before the model computes token representations, and routing can vary across positions and layers.",
   ),
   makeQuestion(
-    12,
+    "cme295-lect3-q112",
     "medium",
     "Which statements correctly describe why sparse MoE can support very large total parameter counts?",
     [
@@ -296,7 +296,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Sparse MoE separates total parameters from active parameters: many experts can exist, but a token uses a selected subset. This is why MoE can raise stored capacity while keeping the per-token compute tied to top-k routing rather than to the full expert pool.",
   ),
   makeQuestion(
-    13,
+    "cme295-lect3-q113",
     "hard",
     "A sparse MoE layer has 8 experts and uses top-2 routing for each token. Which statement best describes one forward pass for a single token at that layer?",
     [
@@ -320,7 +320,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Top-k routing is a layer-internal compute decision: the router chooses expert subnetworks for a token representation before that layer's output is produced. It is not a post-generation selection, an attention-head pruning rule, or a decoding step over vocabulary tokens.",
   ),
   makeQuestion(
-    14,
+    "cme295-lect3-q114",
     "hard",
     "Which statements correctly connect FLOPs to dense and sparse LLM design?",
     [
@@ -344,7 +344,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "FLOPs are a useful hardware-agnostic count of arithmetic work, but they are not the same as wall-clock latency because memory movement and hardware throughput matter. Sparse MoE can reduce active compute for a token while storing many inactive expert parameters, so total capacity and per-token compute must be reasoned about separately.",
   ),
   makeQuestion(
-    15,
+    "cme295-lect3-q115",
     "hard",
     "Which statements about noisy gating and auxiliary losses in MoE training are correct?",
     [
@@ -368,7 +368,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Noisy gating and load-balancing losses are tools for keeping expert usage healthy while the router is being learned. They do not remove joint training or make routing independent of representations; the router still uses learned signals, but the training setup discourages collapse.",
   ),
   makeQuestion(
-    16,
+    "cme295-lect3-q116",
     "medium",
     "Which statements correctly distinguish expert capacity from active computation in MoE LLMs?",
     [
@@ -392,7 +392,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "MoE makes it possible to store a large pool of expert parameters while activating a subset for each token. The important distinction is total capacity versus active parameters, because a model can be large in storage while keeping each routed token's computation much smaller.",
   ),
   makeQuestion(
-    17,
+    "cme295-lect3-q117",
     "easy",
     "During autoregressive generation, what happens after the model samples or selects one next token?",
     [
@@ -416,7 +416,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Autoregressive generation repeats next-token prediction: each chosen token becomes part of the prefix for the following step. The model weights are not updated during ordinary inference, and causal masking remains part of the decoder-only computation.",
   ),
   makeQuestion(
-    18,
+    "cme295-lect3-q118",
     "hard",
     "A decoder outputs logits `[4.0, 2.0, 1.0, -1.0]` for four candidate tokens. Which statements about greedy decoding are correct?",
     [
@@ -437,7 +437,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Greedy decoding takes the highest-scoring token at each step, so fixed logits produce a fixed next token. It keeps one path rather than a beam of candidates, and it is not the same as sampling from the softmax distribution.",
   ),
   makeQuestion(
-    19,
+    "cme295-lect3-q119",
     "medium",
     "Which statements correctly describe beam search in sequence generation?",
     [
@@ -461,7 +461,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Beam search tracks multiple candidate sequences to approximate high-probability completions. It is not broad stochastic sampling from the full vocabulary, and that is why it can be less suitable for creative open-ended generation than sampling methods.",
   ),
   makeQuestion(
-    20,
+    "cme295-lect3-q120",
     "medium",
     "Which statements correctly compare greedy decoding and beam search?",
     [
@@ -485,7 +485,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Greedy and beam search are likelihood-oriented decoding strategies rather than randomness-oriented creativity controls. Beam search broadens search over high-probability paths, but sampling methods are the tools used when controlled randomness and diversity are desired.",
   ),
   makeQuestion(
-    21,
+    "cme295-lect3-q121",
     "easy",
     "A model produces token probabilities where `bear` has the highest probability at the current step. Which statement best describes top-k sampling with `k = 4`?",
     [
@@ -509,7 +509,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Top-k sampling truncates the vocabulary to the k highest-probability candidates and then samples from the truncated distribution. Deterministically taking the top token is greedy decoding, while cumulative probability thresholding is top-p sampling.",
   ),
   makeQuestion(
-    22,
+    "cme295-lect3-q122",
     "medium",
     "Which statements correctly describe top-p, or nucleus, sampling?",
     [
@@ -533,7 +533,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Top-p sampling is adaptive: the candidate set size depends on how probability mass is distributed at the current step. A fixed candidate count is top-k sampling, and sequence-level scoring belongs to search methods such as beam search rather than nucleus sampling.",
   ),
   makeQuestion(
-    23,
+    "cme295-lect3-q123",
     "medium",
     "A next-token distribution is `A: 0.50`, `B: 0.25`, `C: 0.15`, `D: 0.06`, `E: 0.04`. With top-p sampling at `p = 0.90`, which statements are correct?",
     [
@@ -557,7 +557,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Top-p uses the smallest set reaching the threshold, and here `0.50 + 0.25 + 0.15 = 0.90`. The remaining candidates are removed for this sampling step, and the included probabilities are renormalized before drawing a token.",
   ),
   makeQuestion(
-    24,
+    "cme295-lect3-q124",
     "medium",
     "Which statements correctly describe temperature scaling before softmax?",
     [
@@ -575,7 +575,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Temperature is a decoding-time transformation of logits before softmax. It affects sharpness and diversity of token probabilities, while the tokenizer and vocabulary remain the same objects used by the trained model.",
   ),
   makeQuestion(
-    25,
+    "cme295-lect3-q125",
     "easy",
     "Which statement best explains why sampling can produce different completions for the same prompt?",
     [
@@ -599,7 +599,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Sampling introduces randomness at token selection, so repeated generations can diverge even with the same prompt and model. Ordinary inference does not retrain weights, randomly resize the context window, or abandon next-token probability computation.",
   ),
   makeQuestion(
-    26,
+    "cme295-lect3-q126",
     "medium",
     "Which statements correctly describe logits and softmax in next-token prediction?",
     [
@@ -620,7 +620,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "The model produces logits, and softmax turns those scores into a probability distribution. Temperature rescales logits rather than token strings, and a separate decoding policy such as greedy selection, top-k sampling, top-p sampling, or beam search determines how the distribution is used.",
   ),
   makeQuestion(
-    27,
+    "cme295-lect3-q127",
     "easy",
     "A developer wants structured JSON output from an LLM. Which statement best describes guided decoding?",
     [
@@ -644,7 +644,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Guided decoding constrains token choices at inference time so the generator follows a formal output structure such as JSON. Retrying after failure is a weaker prompt-and-validate loop, while fine-tuning or beam search alone does not enforce valid next-token choices.",
   ),
   makeQuestion(
-    28,
+    "cme295-lect3-q128",
     "easy",
     "Which statements correctly identify valid-token filtering in guided decoding?",
     [
@@ -668,7 +668,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Guided decoding works by filtering invalid next tokens according to a grammar, schema, or state machine, while still using the model distribution over valid choices. Invalid paths are constrained during inference rather than removed from the model weights through repeated retraining.",
   ),
   makeQuestion(
-    29,
+    "cme295-lect3-q129",
     "medium",
     "Which statement best separates top-k sampling from guided decoding?",
     [
@@ -692,7 +692,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Both methods restrict candidate next tokens, but they use different criteria. Top-k uses probability rank from the model distribution, while guided decoding uses an external validity constraint such as a schema or grammar.",
   ),
   makeQuestion(
-    30,
+    "cme295-lect3-q130",
     "medium",
     "Which statements about inference-time nondeterminism are correct?",
     [
@@ -713,7 +713,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Nondeterminism can come from sampling and from numerical implementation details, but the Transformer computation itself need not contain stochastic layers during inference. Greedy decoding can be deterministic under fixed conditions because it chooses the top token rather than drawing a random one.",
   ),
   makeQuestion(
-    31,
+    "cme295-lect3-q131",
     "hard",
     "A generation system uses beam search for a creative writing prompt and gets repetitive, safe-sounding outputs. Which explanation best matches the decoding choice?",
     [
@@ -737,7 +737,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Beam search is designed to keep high-scoring candidate sequences, so it can converge on bland or repetitive high-probability text. Creative generation usually benefits from controlled sampling rather than a search procedure that primarily rewards likelihood.",
   ),
   makeQuestion(
-    32,
+    "cme295-lect3-q132",
     "medium",
     "Which statements correctly compare decoding controls?",
     [
@@ -761,7 +761,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Greedy, top-k, top-p, and guided decoding are different ways to use or constrain next-token probabilities. Guided decoding filters invalid continuations before token selection rather than waiting to repair invalid text after it has been generated.",
   ),
   makeQuestion(
-    33,
+    "cme295-lect3-q133",
     "easy",
     "Which statement best describes context length, also called context window or window size?",
     [
@@ -782,7 +782,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Context length is a token-capacity concept: it bounds how much prompt and generated text can be available to the model at a step. Expert activation count, number of examples, and beam width are different quantities with different effects.",
   ),
   makeQuestion(
-    34,
+    "cme295-lect3-q134",
     "hard",
     "Which statements about long context and context rot are correct?",
     [
@@ -803,7 +803,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Long context increases the amount of information available, but it also raises attention and memory costs and can make retrieval less reliable. Context rot refers to degradation in effective use of relevant information, not to a guarantee that more tokens improve performance.",
   ),
   makeQuestion(
-    35,
+    "cme295-lect3-q135",
     "easy",
     "Which statements correctly describe a prompt's main parts in the lecture's prompt-structure example?",
     [
@@ -818,7 +818,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Prompts can include context, instructions, input, and constraints. Constraints are precisely where format, audience, style, or other response requirements can be stated, so saying they are unrelated to those requirements reverses the prompt-structure idea.",
   ),
   makeQuestion(
-    36,
+    "cme295-lect3-q136",
     "medium",
     "Which statements correctly distinguish zero-shot and few-shot prompting?",
     [
@@ -842,7 +842,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Zero-shot and few-shot prompting both steer a fixed model through context rather than weight updates. Few-shot examples can improve task alignment but use context budget and inference compute, while zero-shot prompting relies on the instruction and the model's existing capabilities.",
   ),
   makeQuestion(
-    37,
+    "cme295-lect3-q137",
     "easy",
     "Which statement best describes in-context learning?",
     [
@@ -866,7 +866,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "In-context learning is behavioral adaptation through the prompt context, not gradient-based training on the fly. It should not be confused with MoE routing or KV-cache reuse, which operate at different layers of the inference system.",
   ),
   makeQuestion(
-    38,
+    "cme295-lect3-q138",
     "medium",
     "Which statements about few-shot prompting tradeoffs are correct?",
     [
@@ -884,7 +884,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Few-shot examples are useful because they demonstrate the target behavior, but they are not free. They use context budget and add tokens to process, and they still require evaluation because prompt examples do not prove generalization.",
   ),
   makeQuestion(
-    39,
+    "cme295-lect3-q139",
     "medium",
     "Which statements correctly describe chain-of-thought prompting?",
     [
@@ -905,7 +905,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Chain-of-thought prompting encourages explicit intermediate reasoning and can improve reasoning task performance. It also costs more tokens and does not by itself verify that the reasoning is correct or grounded in truth.",
   ),
   makeQuestion(
-    40,
+    "cme295-lect3-q140",
     "hard",
     "Which statements correctly describe chain-of-thought interpretability limits?",
     [
@@ -923,7 +923,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Reasoning traces can be useful for inspection and root-cause analysis, but they are not a proof of correctness. A model can produce plausible-looking reasoning with an incorrect premise or invalid step, so chain-of-thought should be evaluated by outcomes as well as by trace readability.",
   ),
   makeQuestion(
-    41,
+    "cme295-lect3-q141",
     "easy",
     "Which statement best describes self-consistency prompting?",
     [
@@ -947,7 +947,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Self-consistency operates at the level of multiple sampled responses: it compares final answers after several reasoning paths. It is distinct from attention, guided decoding, and MoE routing, which operate inside a single generation process.",
   ),
   makeQuestion(
-    42,
+    "cme295-lect3-q142",
     "medium",
     "Which statements about self-consistency tradeoffs are correct?",
     [
@@ -968,7 +968,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Self-consistency trades more generation work for robustness. The branches can be independent and parallelizable, but total compute and token usage generally increase because several completions are produced.",
   ),
   makeQuestion(
-    43,
+    "cme295-lect3-q143",
     "easy",
     "Which statement best explains the goal of KV caching during autoregressive inference?",
     [
@@ -992,7 +992,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "During generation, the current token needs keys and values from previous tokens for attention. KV caching saves those key and value tensors, while previous queries are not the useful cached objects for computing the current token's attention over the prefix.",
   ),
   makeQuestion(
-    44,
+    "cme295-lect3-q144",
     "medium",
     "Which statements correctly describe KV caching?",
     [
@@ -1016,7 +1016,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "KV caching is an exact reuse strategy for autoregressive inference: it stores tensors that would otherwise be recomputed. The tradeoff is memory, and that memory grows with generated or prompt sequence length rather than staying constant.",
   ),
   makeQuestion(
-    45,
+    "cme295-lect3-q145",
     "easy",
     "Which statements correctly explain why previous query vectors are not the main cached object in KV caching?",
     [
@@ -1037,7 +1037,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "In causal self-attention for a new token, the new representation supplies the query, while earlier tokens supply keys and values. This is why the cache focuses on K and V tensors rather than Q tensors from earlier positions.",
   ),
   makeQuestion(
-    46,
+    "cme295-lect3-q146",
     "medium",
     "Which statements correctly compare Multi-Head Attention (MHA), Grouped Query Attention (GQA), and Multi-Query Attention (MQA) for KV-cache size?",
     [
@@ -1058,7 +1058,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "GQA and MQA reduce the number of key/value heads relative to full MHA, which reduces KV-cache storage and bandwidth. They do this by sharing K/V representations across query heads rather than duplicating separate K/V tensors for each head.",
   ),
   makeQuestion(
-    47,
+    "cme295-lect3-q147",
     "medium",
     "Which statements correctly describe why KV cache memory can limit serving throughput?",
     [
@@ -1082,7 +1082,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "KV cache memory grows with request length and concurrency, so it can become a bottleneck even when the model weights are already loaded. Caching saves computation, but the cache persists during generation and does not eliminate the memory required for model parameters.",
   ),
   makeQuestion(
-    48,
+    "cme295-lect3-q148",
     "hard",
     "Which statements correctly describe PagedAttention-style memory management?",
     [
@@ -1106,7 +1106,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "PagedAttention is a memory-management technique for KV cache storage, inspired by paging. It reduces fragmentation and waste by allocating fixed-size blocks and mapping logical positions to physical memory rather than reserving a single maximum-length block per request.",
   ),
   makeQuestion(
-    49,
+    "cme295-lect3-q149",
     "medium",
     "Which statement best distinguishes internal fragmentation from external fragmentation in the KV-cache serving example?",
     [
@@ -1130,7 +1130,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "The memory-management issue is about how cache space is allocated. Internal fragmentation wastes space inside reserved regions, while external fragmentation leaves scattered gaps between regions that are hard to use efficiently.",
   ),
   makeQuestion(
-    50,
+    "cme295-lect3-q150",
     "hard",
     "Which statements correctly describe multi-latent attention as a KV-cache reduction idea?",
     [
@@ -1154,7 +1154,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Multi-latent attention reduces what must be stored by caching compact latent representations and later expanding them for attention use. It saves memory through representation design while causal decoder behavior remains part of generation.",
   ),
   makeQuestion(
-    51,
+    "cme295-lect3-q151",
     "medium",
     "Which statements correctly describe the difference between GQA and latent attention for cache efficiency?",
     [
@@ -1178,7 +1178,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "GQA and latent attention both attack KV-cache cost, but one reduces the number of K/V heads while the other compresses the representation stored for K/V. Neither is a vocabulary decoding policy or an MoE routing rule.",
   ),
   makeQuestion(
-    52,
+    "cme295-lect3-q152",
     "medium",
     "Which statements about exact inference optimizations are correct?",
     [
@@ -1199,7 +1199,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Exact optimizations preserve the model computation or intended distribution while making it faster or more memory-efficient. KV reuse, cache paging, and key/value sharing attack redundant work or memory pressure rather than deliberately changing the target model semantics.",
   ),
   makeQuestion(
-    53,
+    "cme295-lect3-q153",
     "medium",
     "Which statement best explains why inference can be memory-bound in large decoder models?",
     [
@@ -1223,7 +1223,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Large-model inference often spends much of its time moving weights and cache tensors rather than saturating arithmetic units. The other choices confuse inference with data collection, training backpropagation, or an inaccurate hardware story.",
   ),
   makeQuestion(
-    54,
+    "cme295-lect3-q154",
     "hard",
     "Which statements correctly classify the lecture's inference optimization families?",
     [
@@ -1241,7 +1241,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "The first three items are exact or near-exact efficiency themes around attention computation and memory. Speculative decoding can preserve the target distribution under its accept/reject rule, while multi-token prediction changes the training/inference setup; the important point is to separate cache reuse, memory layout, attention representation, and token-level acceleration.",
   ),
   makeQuestion(
-    55,
+    "cme295-lect3-q155",
     "easy",
     "Which statement best describes speculative decoding?",
     [
@@ -1265,7 +1265,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Speculative decoding uses a fast draft model to propose candidate tokens and the target model to check them. The target model still computes probabilities; the method is not prompt grading or a post-response expert vote.",
   ),
   makeQuestion(
-    56,
+    "cme295-lect3-q156",
     "hard",
     "Which statements about speculative decoding's accept/reject step are correct?",
     [
@@ -1289,7 +1289,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "The accept/reject rule is designed so the accepted tokens match the target model distribution rather than merely imitating the draft model. Rejections trigger resampling from an adjusted distribution, which is why the method can be fast while preserving the target distribution in the formal algorithm.",
   ),
   makeQuestion(
-    57,
+    "cme295-lect3-q157",
     "medium",
     "Which statements correctly explain why speculative decoding can be faster?",
     [
@@ -1307,7 +1307,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Speculative decoding still uses the target model; its speedup comes from batching validation of draft tokens and accepting several positions at once when the draft is good. The draft model is useful because it is smaller or cheaper, not because it replaces the target model completely.",
   ),
   makeQuestion(
-    58,
+    "cme295-lect3-q158",
     "medium",
     "Which statements correctly describe the roles of draft and target models in speculative decoding?",
     [
@@ -1328,7 +1328,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "The draft model is a cheap proposer and the target model is the distribution authority. No per-request training occurs; speculative decoding is an inference-time method.",
   ),
   makeQuestion(
-    59,
+    "cme295-lect3-q159",
     "medium",
     "Which statements correctly describe multi-token prediction (MTP)?",
     [
@@ -1349,7 +1349,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "MTP changes the model and objective so multiple future-token predictions are available. Increasing top-k is only a decoding distribution truncation choice and does not add multi-token heads or change the training objective.",
   ),
   makeQuestion(
-    60,
+    "cme295-lect3-q160",
     "hard",
     "Which statements correctly compare speculative decoding and multi-token prediction?",
     [
@@ -1370,7 +1370,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Speculative decoding and MTP both try to move through output tokens faster, but they do it differently. MTP changes the model objective by predicting multiple future tokens, whereas sampler thresholds such as top-k and top-p are separate decoding controls.",
   ),
   makeQuestion(
-    61,
+    "cme295-lect3-q161",
     "medium",
     "Which statement best explains why speculative decoding includes the token after the draft block in the target-model pass?",
     [
@@ -1391,7 +1391,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "A target-model pass over the drafted sequence can produce probability distributions for each drafted token and the following position. That extra distribution is useful when the system accepts the draft tokens and needs to continue generation.",
   ),
   makeQuestion(
-    62,
+    "cme295-lect3-q162",
     "medium",
     "Which statements correctly connect inference acceleration to output quality?",
     [
@@ -1415,7 +1415,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Inference optimization is not just about lower latency; the quality and distribution of outputs still matter. Some methods are exact, some include validation to preserve a target distribution, and more approximate methods require empirical evaluation.",
   ),
   makeQuestion(
-    63,
+    "cme295-lect3-q163",
     "hard",
     "A serving system has short prompts, long generations, and repeated recomputation of old attention keys and values. Which optimization most directly addresses the repeated computation?",
     [
@@ -1427,7 +1427,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "The repeated computation is specifically the old key and value projections needed by later decoding steps, so KV caching is the direct fix. MoE balancing, prompting examples, and temperature affect different parts of modeling or generation behavior.",
   ),
   makeQuestion(
-    64,
+    "cme295-lect3-q164",
     "hard",
     "A serving system reserves memory for the maximum context length for each request, but most requests finish early. Which statements identify the most relevant problem and remedy?",
     [
@@ -1448,7 +1448,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "The described waste is a KV-cache memory-allocation problem, not a probability-sharpness problem. PagedAttention attacks the waste by allocating and mapping smaller blocks instead of reserving one large contiguous maximum-length region.",
   ),
   makeQuestion(
-    65,
+    "cme295-lect3-q165",
     "medium",
     "Which statement best describes multi-query attention (MQA) as the endpoint of grouped key/value sharing?",
     [
@@ -1469,7 +1469,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "MQA is the high-sharing endpoint of the MHA-GQA-MQA family: query heads remain multiple, but key/value heads are shared heavily. It should not be confused with MoE expert routing or multi-token prediction heads.",
   ),
   makeQuestion(
-    66,
+    "cme295-lect3-q166",
     "hard",
     "Which statements correctly reason about cache compression in latent attention?",
     [
@@ -1493,7 +1493,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Latent attention compresses what is stored, then reconstructs representations needed for attention. It does not remove the need for prefix information; it changes how that information is represented and cached.",
   ),
   makeQuestion(
-    67,
+    "cme295-lect3-q167",
     "medium",
     "Which statements correctly describe why very low-probability tokens are often filtered during sampling?",
     [
@@ -1514,7 +1514,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Top-k and top-p sampling keep randomness while removing tail candidates that are unlikely to be useful. Beam search is a different search procedure over high-scoring paths, not just tail filtering followed by sampling.",
   ),
   makeQuestion(
-    68,
+    "cme295-lect3-q168",
     "medium",
     "Which statements correctly describe when guided decoding is useful?",
     [
@@ -1535,7 +1535,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Guided decoding is valuable for structural constraints, especially machine-readable output. It does not prove the semantic content is correct, so structurally valid responses still need semantic evaluation when the values or reasoning matter.",
   ),
   makeQuestion(
-    69,
+    "cme295-lect3-q169",
     "easy",
     "Which statement best identifies the main tradeoff of chain-of-thought prompting?",
     [
@@ -1559,7 +1559,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Chain-of-thought prompting asks the model to produce intermediate reasoning, which can help on reasoning tasks. The cost is more generated text, and the reasoning is not automatically externally verified.",
   ),
   makeQuestion(
-    70,
+    "cme295-lect3-q170",
     "hard",
     "Which statements correctly describe how self-consistency uses parallel sampled paths?",
     [
@@ -1583,7 +1583,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Self-consistency samples multiple paths that do not depend on one another, then aggregates their final answers. Because the branches are independent, they can be run in parallel rather than chained into one another's contexts.",
   ),
   makeQuestion(
-    71,
+    "cme295-lect3-q171",
     "hard",
     "A team adds few-shot examples, chain-of-thought instructions, and self-consistency voting to a math prompt. Which statements correctly predict system-level effects?",
     [
@@ -1598,7 +1598,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Prompting techniques can improve task behavior, but they often increase token processing and generation work. Prompt text is not free: examples add input tokens, reasoning adds output tokens, and self-consistency multiplies the number of completions.",
   ),
   makeQuestion(
-    72,
+    "cme295-lect3-q172",
     "medium",
     "Which statements correctly connect context length to prompting strategies?",
     [
@@ -1622,7 +1622,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Context budget must be managed even when the model supports long windows, because cost, latency, and context-rot effects still matter. Few-shot examples and long instructions consume tokens, while self-consistency usually samples separate branches from the same prompt.",
   ),
   makeQuestion(
-    73,
+    "cme295-lect3-q173",
     "easy",
     "Which statement best describes the relationship between prompt constraints and guided decoding constraints?",
     [
@@ -1646,7 +1646,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Prompt constraints ask the model to follow instructions, but they do not mechanically prevent invalid continuations. Guided decoding adds an inference-time token filter, which is why it is stronger for structural validity such as JSON.",
   ),
   makeQuestion(
-    74,
+    "cme295-lect3-q174",
     "medium",
     "Which statements correctly describe the output layer's role in generation and acceleration?",
     [
@@ -1670,7 +1670,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Decoding strategies and token-prediction accelerators operate near the output-token process. PagedAttention is a memory-layout method for attention caches, not a way to reduce the vocabulary distribution directly.",
   ),
   makeQuestion(
-    75,
+    "cme295-lect3-q175",
     "medium",
     "Which statements correctly connect MoE and inference efficiency?",
     [
@@ -1691,7 +1691,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Sparse MoE is a model-architecture efficiency idea for feed-forward computation, while KV caching is an inference reuse idea for attention tensors. Both can affect serving cost, but they operate on different parts of the model.",
   ),
   makeQuestion(
-    76,
+    "cme295-lect3-q176",
     "hard",
     "Which statements correctly compare active parameters, total parameters, and FLOPs in an MoE model?",
     [
@@ -1715,7 +1715,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "MoE design decouples total parameter count from per-token active computation. A model can store many experts while routing a token through a subset, so total parameters alone do not determine the forward-pass FLOPs for that token.",
   ),
   makeQuestion(
-    77,
+    "cme295-lect3-q177",
     "medium",
     "Which statement best diagnoses a model that has many experts but sends nearly every token to expert 3?",
     [
@@ -1733,7 +1733,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "The symptom is expert-utilization imbalance inside an MoE layer, which is routing collapse. Sampling thresholds, cache contents, and self-consistency branch counts are different mechanisms with different failure modes.",
   ),
   makeQuestion(
-    78,
+    "cme295-lect3-q178",
     "medium",
     "Which statements correctly identify lecture concepts that preserve model weights during inference?",
     [
@@ -1754,7 +1754,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "Most inference-time controls discussed here operate without changing model weights. Speculative decoding uses draft and target model probabilities during generation; it does not fine-tune the target model for each request.",
   ),
   makeQuestion(
-    79,
+    "cme295-lect3-q179",
     "easy",
     "Which statement best summarizes the lecture's view of LLM system design?",
     [
@@ -1778,7 +1778,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
     "The lecture connects several layers of design: model scale, MoE capacity, decoding behavior, prompt conditioning, and serving optimizations. Treating any one knob as the whole design misses the tradeoffs among quality, latency, memory, and compute.",
   ),
   makeQuestion(
-    80,
+    "cme295-lect3-q180",
     "easy",
     "Which statements belong together as examples of inference-time techniques rather than pretraining-data changes?",
     [

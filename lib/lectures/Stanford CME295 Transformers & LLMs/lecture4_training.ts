@@ -4,18 +4,18 @@ type Lecture4Difficulty = "easy" | "medium" | "hard";
 type OptionSeed = readonly [text: string, isCorrect: boolean];
 
 function makeQuestion(
-  number: number,
+  id: string,
   difficulty: Lecture4Difficulty,
   prompt: string,
   optionSeeds: readonly OptionSeed[],
   explanation: string,
 ): Question {
   if (optionSeeds.length !== 4) {
-    throw new Error(`CME295 Lecture 4 question ${number} needs 4 options.`);
+    throw new Error(`CME295 Lecture 4 question ${id} needs 4 options.`);
   }
 
   return {
-    id: `cme295-lect4-q${String(number).padStart(2, "0")}`,
+    id,
     chapter: 4,
     difficulty,
     prompt,
@@ -26,7 +26,7 @@ function makeQuestion(
 
 export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
   makeQuestion(
-    1,
+    "cme295-lect4-q101",
     "easy",
     "A decoder-only language model is trained on the sequence `[BOS] A teddy bear is reading`. Which statements describe the pretraining objective?",
     [
@@ -50,7 +50,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Pretraining for the models described here is autoregressive next-token prediction over very large token corpora. Human preference scores and user-assistant dialogs belong to later post-training stages, not to the base pretraining objective.",
   ),
   makeQuestion(
-    2,
+    "cme295-lect4-q102",
     "easy",
     "Which data sources fit the broad mixture used for large-scale language-model pretraining?",
     [
@@ -68,7 +68,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Large language-model pretraining uses broad text and code mixtures so the model learns many token patterns before task-specific tuning. Small labeled classification tables may be useful for supervised tasks, but they do not match the scale or form of the pretraining corpus.",
   ),
   makeQuestion(
-    3,
+    "cme295-lect4-q103",
     "easy",
     "A paper reports that a training run used \\(10^{25}\\) FLOPs, while a GPU vendor reports 1,000 TFLOP/s throughput. Which statements distinguish the two quantities?",
     [
@@ -86,7 +86,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "FLOPs measure total arithmetic work, while FLOP/s measures hardware speed. Confusing the two hides the difference between how much work a training run requires and how quickly a device can perform that work.",
   ),
   makeQuestion(
-    4,
+    "cme295-lect4-q104",
     "medium",
     "Use the rough scaling heuristic \\(C \\propto N \\times D\\), where \\(N\\) is parameters and \\(D\\) is training tokens. If both \\(N\\) and \\(D\\) double, what happens to the rough compute estimate?",
     [
@@ -104,7 +104,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The simplified compute model multiplies the parameter count by the number of training tokens, so doubling both factors gives \\(2N \\times 2D = 4ND\\). Sample efficiency matters for loss, but it does not make the arithmetic work vanish.",
   ),
   makeQuestion(
-    5,
+    "cme295-lect4-q105",
     "medium",
     "A compute-optimal rule of thumb says a model should see about 20 training tokens per parameter. Roughly how many tokens would that suggest for a 70B-parameter model?",
     [
@@ -119,7 +119,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The calculation is \\(70\\text{B} \\times 20 = 1{,}400\\text{B}\\), which is 1.4 trillion tokens. This is a rule of thumb for balancing parameters and data under a compute budget, not a universal law for every architecture or data mixture.",
   ),
   makeQuestion(
-    6,
+    "cme295-lect4-q106",
     "hard",
     "GPT-3-style pretraining used about 175B parameters and 300B tokens. Which statements follow from comparing this to a 20-token-per-parameter compute-optimal target?",
     [
@@ -140,7 +140,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The token-per-parameter ratio is approximately \\(300/175 \\approx 1.7\\), far below 20. That comparison motivates the undertrained-model interpretation, but it is still an empirical scaling argument rather than a proof that only one design would work.",
   ),
   makeQuestion(
-    7,
+    "cme295-lect4-q107",
     "medium",
     "Two teams process the same number of tokens. Team A trains a larger model than Team B. Which statements correctly describe the sample-efficiency claim from scaling-law studies?",
     [
@@ -164,7 +164,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Sample efficiency means larger models can make better use of a given amount of data, not that they are cheaper per token. Compute-optimal training still asks whether the chosen parameter count and token count are balanced for the available budget.",
   ),
   makeQuestion(
-    8,
+    "cme295-lect4-q108",
     "easy",
     "Which issues follow from storing model knowledge in weights learned from a fixed pretraining corpus?",
     [
@@ -185,7 +185,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "A base model only learns from data that was available during training, so fresh facts need retrieval, retraining, or another update mechanism. Because knowledge is distributed across parameters, targeted edits and memorization control are difficult engineering problems.",
   ),
   makeQuestion(
-    9,
+    "cme295-lect4-q109",
     "easy",
     "Which statements correctly describe transfer learning in the LLM training pipeline?",
     [
@@ -209,7 +209,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Transfer learning is the staged reuse of a broadly trained model for later tasks. The point is to avoid learning general language structure from scratch for every use case, while still allowing task-specific tuning.",
   ),
   makeQuestion(
-    10,
+    "cme295-lect4-q110",
     "medium",
     "A team has a fixed accelerator budget. Which design choices are part of the compute-optimal scaling tradeoff?",
     [
@@ -224,7 +224,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Compute-optimal scaling is a tradeoff among model size, data size, and implementation details under a fixed budget. Data quality still matters because more tokens are not equally useful if they are duplicated, noisy, or poorly matched to the target domain.",
   ),
   makeQuestion(
-    11,
+    "cme295-lect4-q111",
     "medium",
     "A corpus contains 2 million documents, each averaging 750 tokens after tokenization. What is the approximate corpus size in tokens?",
     [
@@ -236,7 +236,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The token count is \\(2{,}000{,}000 \\times 750 = 1{,}500{,}000{,}000\\), or 1.5 billion tokens. LLM dataset scale is usually discussed in tokens because token count directly affects training compute and optimization steps.",
   ),
   makeQuestion(
-    12,
+    "cme295-lect4-q112",
     "easy",
     "A pretrained base model responds to a user question by continuing with encyclopedia-style facts rather than giving practical advice. Which statements best explain the behavior?",
     [
@@ -260,7 +260,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "A base model can understand many token patterns but still behave like a continuation engine. Supervised fine-tuning and instruction tuning teach the model the response style and task framing expected from an assistant.",
   ),
   makeQuestion(
-    13,
+    "cme295-lect4-q113",
     "easy",
     "During a large-model training step, which objects may need GPU memory?",
     [
@@ -272,7 +272,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Training requires much more memory than just the final model weights. Activations, gradients, and optimizer state can dominate the memory budget, especially with long context lengths, large batches, and adaptive optimizers.",
   ),
   makeQuestion(
-    14,
+    "cme295-lect4-q114",
     "medium",
     "A team doubles the microbatch size while keeping sequence length and model architecture fixed. Which training-memory effects are most directly expected?",
     [
@@ -290,7 +290,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "More examples in a microbatch require more intermediate activations to be stored for backpropagation. The model parameters and optimizer state are properties of the model and optimizer, not of the number of examples in one microbatch.",
   ),
   makeQuestion(
-    15,
+    "cme295-lect4-q115",
     "medium",
     "For one attention head with sequence length \\(L=2{,}048\\), how many entries are in the dense score matrix \\(QK^\\top\\) before masking or softmax?",
     [
@@ -302,7 +302,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Dense self-attention compares each query position with each key position, producing an \\(L\\times L\\) score matrix for each head. This quadratic shape is why long context length pressures activation memory and motivates IO-aware attention kernels.",
   ),
   makeQuestion(
-    16,
+    "cme295-lect4-q116",
     "hard",
     "A model has 10B parameters and an optimizer stores two FP32 Adam moment values per parameter. Ignoring gradients and the parameters themselves, how much memory do the two moment buffers require?",
     [
@@ -326,7 +326,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Each FP32 value is 4 bytes, and two moment buffers store two such values per parameter. This simple calculation shows why optimizer state is a major memory object during training, even before counting parameters, gradients, and activations.",
   ),
   makeQuestion(
-    17,
+    "cme295-lect4-q117",
     "medium",
     "Which statements correctly describe ordinary data parallelism?",
     [
@@ -347,7 +347,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Data parallelism splits data while replicating the model, so the devices must communicate gradient information to make a consistent update. Layer ownership is a model-parallel or pipeline-parallel idea, not ordinary data parallelism.",
   ),
   makeQuestion(
-    18,
+    "cme295-lect4-q118",
     "medium",
     "A 90B-parameter dense model cannot fit a full copy of its weights on one GPU. Why is plain data parallelism alone insufficient?",
     [
@@ -371,7 +371,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The memory blocker is the full model replica on each device. Splitting the batch helps activation memory per device, but it does not solve the problem of a model whose parameters and optimizer state cannot fit on one GPU.",
   ),
   makeQuestion(
-    19,
+    "cme295-lect4-q119",
     "medium",
     "Which statements correctly match ZeRO stages to what gets sharded?",
     [
@@ -386,7 +386,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Zero Redundancy Optimization reduces duplicated training state across devices. The stages progressively shard optimizer state, gradients, and then parameters, but they do not change tokenization or the mathematical role of transformer layers.",
   ),
   makeQuestion(
-    20,
+    "cme295-lect4-q120",
     "hard",
     "A replicated optimizer state takes 96 GB per GPU. If ZeRO-style sharding splits only that optimizer state evenly across 8 GPUs, what is the per-GPU optimizer-state footprint?",
     [
@@ -398,7 +398,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Even sharding divides the replicated object by the number of devices, so \\(96/8=12\\) GB per GPU. Real systems also pay communication and scheduling costs to gather needed shards at the right time.",
   ),
   makeQuestion(
-    21,
+    "cme295-lect4-q121",
     "medium",
     "Which methods are forms of model parallelism rather than ordinary data parallelism?",
     [
@@ -416,7 +416,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Model parallelism partitions model computation, while data parallelism partitions examples. Tensor, pipeline, and expert parallelism split different parts of the model computation across accelerators.",
   ),
   makeQuestion(
-    22,
+    "cme295-lect4-q122",
     "medium",
     "A transformer block contains a very large matrix multiplication and an MoE feed-forward layer. Which statements match parallelism choices to the bottleneck?",
     [
@@ -440,7 +440,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Tensor parallelism is about splitting tensor operations, while expert parallelism is about distributing expert modules. Top-p sampling is a decoding method, and ordinary data parallelism does not slice one matrix multiplication.",
   ),
   makeQuestion(
-    23,
+    "cme295-lect4-q123",
     "hard",
     "A 24-layer decoder is placed on 4 pipeline stages with equal layer counts. How many layers does each stage own in the simplest balanced split?",
     [
@@ -452,7 +452,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The simplest equal split assigns \\(24/4=6\\) layers to each stage. Pipeline parallelism can reduce per-device memory for layers, but it introduces scheduling issues such as pipeline bubbles.",
   ),
   makeQuestion(
-    24,
+    "cme295-lect4-q124",
     "medium",
     "Which statements correctly describe expert parallelism for a sparse MoE layer?",
     [
@@ -473,7 +473,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Expert parallelism uses the sparsity of MoE layers to distribute expert modules, but routed tokens may need to travel to the device that owns a selected expert. The language-model objective remains next-token prediction unless another training objective is explicitly added.",
   ),
   makeQuestion(
-    25,
+    "cme295-lect4-q125",
     "hard",
     "A training system uses data parallelism plus ZeRO plus tensor parallelism. Which tradeoffs should the team expect?",
     [
@@ -485,7 +485,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Parallelism methods help a large run fit and scale, but they introduce coordination costs. None of these methods removes the need for backpropagation; they reorganize where the training work and state live.",
   ),
   makeQuestion(
-    26,
+    "cme295-lect4-q126",
     "easy",
     "Which statements correctly describe the forward, backward, and update phases of training?",
     [
@@ -503,7 +503,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The training loop computes predictions and loss, propagates gradient information backward, and then updates parameters with an optimizer. Tokenizer design is a preprocessing/model-design issue, not the optimizer update step.",
   ),
   makeQuestion(
-    27,
+    "cme295-lect4-q127",
     "medium",
     "Why are forward-pass activations usually stored during training?",
     [
@@ -527,7 +527,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Backpropagation needs information from the forward computation to calculate gradients with respect to parameters. KV caching is an inference optimization for autoregressive decoding, not the reason training stores activations.",
   ),
   makeQuestion(
-    28,
+    "cme295-lect4-q128",
     "medium",
     "A team increases both context length and batch size. Which statements explain why memory pressure rises?",
     [
@@ -551,7 +551,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Training memory grows with both how many examples are processed and how many token positions each example contains. Self-attention is especially sensitive to sequence length because the dense attention score shape is tied to pairs of positions.",
   ),
   makeQuestion(
-    29,
+    "cme295-lect4-q129",
     "medium",
     "An H100-class GPU has memory on the order of tens of GB, but a training run needs hundreds of GB of parameters, optimizer state, gradients, and activations. Which conclusion is most appropriate?",
     [
@@ -575,7 +575,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The memory mismatch motivates distributed training and memory-saving optimizations. Changing the architecture family is not the direct conclusion, and optimizer state plus long-context activations are real parts of the memory budget.",
   ),
   makeQuestion(
-    30,
+    "cme295-lect4-q130",
     "hard",
     "A model stores BF16 parameters using 2 bytes per parameter and two FP32 Adam moments using 8 bytes total per parameter. Which statements are correct for optimizer state versus parameter memory?",
     [
@@ -596,7 +596,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Two FP32 moments use \\(2\\times 4=8\\) bytes per parameter, which is four times the 2 bytes used by BF16 parameter storage. Optimizer implementation choices vary, but adaptive optimizer state is a central memory cost during large-model training.",
   ),
   makeQuestion(
-    31,
+    "cme295-lect4-q131",
     "hard",
     "Let \\(Q\\in\\mathbb{R}^{L\\times d}\\), \\(K\\in\\mathbb{R}^{L\\times d}\\), and \\(V\\in\\mathbb{R}^{L\\times d_v}\\). What is the shape of the standard attention output \\(\\mathrm{softmax}(QK^\\top/\\sqrt d)V\\)?",
     [
@@ -608,7 +608,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "\\(QK^\\top\\) has shape \\(L\\times L\\), and multiplying the normalized scores by \\(V\\) returns one output vector per query position. The output therefore has the sequence dimension \\(L\\) and the value dimension \\(d_v\\).",
   ),
   makeQuestion(
-    32,
+    "cme295-lect4-q132",
     "medium",
     "In a straightforward attention implementation, which intermediate objects are commonly written to and read from high-bandwidth memory (HBM)?",
     [
@@ -620,7 +620,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "A standard implementation can materialize large score and probability matrices, creating expensive HBM traffic. Reward models and textual explanations are unrelated to the low-level attention kernel.",
   ),
   makeQuestion(
-    33,
+    "cme295-lect4-q133",
     "medium",
     "Which statements correctly distinguish FlashAttention from approximate sparse attention?",
     [
@@ -641,7 +641,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "FlashAttention is exact attention reorganized around GPU memory hierarchy. It is not the same idea as sparsifying attention patterns or changing the probability distribution by pruning keys.",
   ),
   makeQuestion(
-    34,
+    "cme295-lect4-q134",
     "hard",
     "Which statements describe the tiling strategy behind FlashAttention?",
     [
@@ -662,7 +662,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The key systems idea is to keep small blocks near compute and avoid repeated slow memory movement for giant intermediate matrices. Storing full model layers on every expert is not part of the FlashAttention algorithm.",
   ),
   makeQuestion(
-    35,
+    "cme295-lect4-q135",
     "medium",
     "Which statements about recomputation in FlashAttention-style backward passes are correct?",
     [
@@ -680,7 +680,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The recomputation strategy uses the original inputs to regenerate needed quantities instead of storing every intermediate. It trades arithmetic for lower memory movement and storage while preserving the mathematical computation needed for gradients.",
   ),
   makeQuestion(
-    36,
+    "cme295-lect4-q136",
     "hard",
     "A kernel does 15% more arithmetic but cuts slow HBM traffic enough that wall-clock time falls. Which explanation matches the FlashAttention lesson?",
     [
@@ -701,7 +701,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "GPU runtime is not determined only by total arithmetic; memory movement can dominate. FlashAttention exploits this by reducing HBM reads and writes while preserving the exact attention computation.",
   ),
   makeQuestion(
-    37,
+    "cme295-lect4-q137",
     "hard",
     "For sequence length \\(L=4{,}096\\), how many entries would a full attention probability matrix \\(P\\) contain for one head?",
     [
@@ -713,7 +713,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "A dense attention probability matrix compares every query position with every key position, so it has \\(L^2\\) entries. FlashAttention avoids storing that full matrix in HBM, which becomes increasingly valuable as context length grows.",
   ),
   makeQuestion(
-    38,
+    "cme295-lect4-q138",
     "medium",
     "Which statements correctly compare HBM and SRAM on a GPU?",
     [
@@ -737,7 +737,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The memory hierarchy is central to IO-aware attention. HBM provides capacity, while SRAM provides fast on-chip storage for small tiles that can be processed near the compute units.",
   ),
   makeQuestion(
-    39,
+    "cme295-lect4-q139",
     "medium",
     "Which statements correctly compare FP16, FP32, FP64, and BF16-style floating-point formats?",
     [
@@ -761,7 +761,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Floating-point formats allocate bits among sign, exponent, and mantissa fields. Lower-precision formats save memory and can increase throughput, but the exact exponent and mantissa allocation affects numerical behavior.",
   ),
   makeQuestion(
-    40,
+    "cme295-lect4-q140",
     "medium",
     "A tensor has 1 billion scalar values. Ignoring overhead, how much memory is saved by storing it in FP16 instead of FP32?",
     [
@@ -776,7 +776,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "FP32 uses 4 bytes per scalar and FP16 uses 2 bytes per scalar, so 1 billion values drop from about 4 GB to about 2 GB. The exact storage can include overhead, but the basic precision-memory tradeoff is the point.",
   ),
   makeQuestion(
-    41,
+    "cme295-lect4-q141",
     "medium",
     "Which statements correctly describe mixed precision training?",
     [
@@ -797,7 +797,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Mixed precision is selective: it uses lower precision where it buys speed or memory without unacceptable loss, while preserving higher precision where accumulation error would be harmful. It is not a blanket conversion of all training values to the lowest possible precision.",
   ),
   makeQuestion(
-    42,
+    "cme295-lect4-q142",
     "medium",
     "Which statements explain why lower precision can speed up training on modern accelerators?",
     [
@@ -818,7 +818,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The practical benefits are memory and throughput, not magic quality improvements or removal of optimization. Numerical choices still need care because too little precision can destabilize or degrade training.",
   ),
   makeQuestion(
-    43,
+    "cme295-lect4-q143",
     "medium",
     "Which statements correctly describe quantization in the training or fine-tuning context?",
     [
@@ -836,7 +836,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Quantization changes numeric representation, not the high-level transformer architecture. It can be very useful for memory and speed, but quality depends on the format, the layer, and whether computations need dequantized or higher-precision paths.",
   ),
   makeQuestion(
-    44,
+    "cme295-lect4-q144",
     "hard",
     "Which statements explain why mixed precision often keeps important weights or updates in higher precision?",
     [
@@ -857,7 +857,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The concern is numerical stability in the training dynamics: small updates and accumulated state can be damaged by overly coarse formats. Master weights or sensitive update state are often preserved at higher precision even when activations or gradients use lower precision.",
   ),
   makeQuestion(
-    45,
+    "cme295-lect4-q145",
     "hard",
     "If context length doubles from \\(L\\) to \\(2L\\), how does the number of entries in a dense attention score matrix change?",
     [
@@ -875,7 +875,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "A dense attention matrix contains one score for each query-key position pair, so its size is quadratic in sequence length. Causal masking changes which scores are usable, but a straightforward dense representation still scales with the number of token pairs.",
   ),
   makeQuestion(
-    46,
+    "cme295-lect4-q146",
     "hard",
     "A training run doubles both sequence length and batch size. Which statements follow for activation pressure in a decoder-only transformer?",
     [
@@ -899,7 +899,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Batch size affects how many examples produce activations, and sequence length affects how many token positions and attention pairs exist inside each example. Both changes can increase memory pressure even if parameter count is unchanged.",
   ),
   makeQuestion(
-    47,
+    "cme295-lect4-q147",
     "medium",
     "A colleague claims FlashAttention speeds up training by approximating softmax with a cheaper heuristic. Which response is most accurate?",
     [
@@ -923,7 +923,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The central distinction is exactness: FlashAttention changes how the computation is scheduled on GPU memory, not the mathematical attention formula. Approximating attention, changing architectures, or changing labels would be different interventions.",
   ),
   makeQuestion(
-    48,
+    "cme295-lect4-q148",
     "easy",
     "Which statements correctly distinguish training-time and inference-time GPU requirements?",
     [
@@ -944,7 +944,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Training and inference stress hardware differently. Training must support forward, backward, and optimizer updates, while inference focuses on fast generation and often trades memory for speed through KV caching.",
   ),
   makeQuestion(
-    49,
+    "cme295-lect4-q149",
     "easy",
     "Which statements correctly describe supervised fine-tuning (SFT)?",
     [
@@ -968,7 +968,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "SFT adapts a pretrained model using supervised examples, often to make it follow tasks or instructions. It is still neural training, not a switch to rules or a repeat of broad pretraining without target outputs.",
   ),
   makeQuestion(
-    50,
+    "cme295-lect4-q150",
     "medium",
     "An instruction-tuning example is `[BOS] Write a short story. Sure, here is a story...`. Where is the supervised loss typically applied?",
     [
@@ -986,7 +986,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "In SFT, the instruction is context and the desired response is the supervised continuation to predict. User votes and memory addresses belong to other topics: preference evaluation and low-level kernel implementation.",
   ),
   makeQuestion(
-    51,
+    "cme295-lect4-q151",
     "easy",
     "Which examples fit instruction-tuning data for making a model more assistant-like?",
     [
@@ -1001,7 +1001,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Instruction tuning teaches a model how to answer requests, solve prompted tasks, and handle safety-sensitive situations. Raw shuffled text does not demonstrate the input-output behavior expected from an assistant.",
   ),
   makeQuestion(
-    52,
+    "cme295-lect4-q152",
     "easy",
     "Which statements correctly compare pretraining scale with SFT scale?",
     [
@@ -1019,7 +1019,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Pretraining is broad and enormous, while SFT is narrower and more curated. The smaller SFT scale works because it starts from a base model that already learned general language and code patterns.",
   ),
   makeQuestion(
-    53,
+    "cme295-lect4-q153",
     "medium",
     "A team instruction-tunes mostly on textbook-style answers, then deploys the model for terse customer-support chats full of abbreviations. Which risk is most directly illustrated?",
     [
@@ -1034,7 +1034,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The problem is that SFT behavior generalizes best when the training prompt distribution resembles the prompts the model will face. Scaling ratios, attention kernels, and optimizer-state sharding do not explain this particular deployment mismatch.",
   ),
   makeQuestion(
-    54,
+    "cme295-lect4-q154",
     "medium",
     "A model is SFT-trained on one prompt-response pair and later receives the exact same prompt with nonzero sampling temperature. Which statements are reasonable?",
     [
@@ -1055,7 +1055,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "SFT changes the model distribution, but inference sampling still draws from a probability distribution. Nonzero temperature can create variation, while exact memorized reproduction is a risk to analyze rather than a guarantee.",
   ),
   makeQuestion(
-    55,
+    "cme295-lect4-q155",
     "easy",
     "Which benchmark-to-capability matches are appropriate?",
     [
@@ -1067,7 +1067,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "MMLU, GSM8K, and HumanEval are evaluation benchmarks for different model capabilities. HBM bandwidth is a hardware characteristic; it can affect speed, but it is not a direct factuality or reasoning benchmark.",
   ),
   makeQuestion(
-    56,
+    "cme295-lect4-q156",
     "hard",
     "Why can training on the benchmark task confound model comparison even if the exact test examples are not included?",
     [
@@ -1091,7 +1091,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Benchmark validity depends on more than avoiding exact test-set leakage. Training on the same task distribution can change what a score means, especially when comparing models with different data mixtures.",
   ),
   makeQuestion(
-    57,
+    "cme295-lect4-q157",
     "medium",
     "Which statements correctly describe arena-style pairwise preference evaluation?",
     [
@@ -1106,7 +1106,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Arena-style evaluation puts a number on user preference, which is useful but not the same as ground-truth factuality. A preferred answer can be more confident, stylish, or agreeable while still being wrong or unsafe.",
   ),
   makeQuestion(
-    58,
+    "cme295-lect4-q158",
     "medium",
     "Which limitations can affect user-preference leaderboards?",
     [
@@ -1124,7 +1124,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Preference leaderboards are useful but brittle: exposure, manipulation, factuality blind spots, population mismatch, and safety preferences can all affect results. They should be interpreted alongside task benchmarks and expert evaluation, not as a complete measure of model quality.",
   ),
   makeQuestion(
-    59,
+    "cme295-lect4-q159",
     "easy",
     "Which statements correctly describe alignment stages in the LLM lifecycle?",
     [
@@ -1145,7 +1145,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Alignment refers to post-pretraining work that makes the model behave more like the intended system, including fine-tuning and preference-based methods. It improves behavior but does not provide a proof that all failures are gone.",
   ),
   makeQuestion(
-    60,
+    "cme295-lect4-q160",
     "medium",
     "What is mid-training in the model lifecycle described here?",
     [
@@ -1166,7 +1166,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Mid-training keeps the language-modeling style objective but shifts the data toward domains or tasks the builders care about. It is not a benchmark leaderboard, tokenizer mechanism, or attention kernel.",
   ),
   makeQuestion(
-    61,
+    "cme295-lect4-q161",
     "medium",
     "Which statements describe high-quality SFT data curation?",
     [
@@ -1187,7 +1187,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "SFT data quality is about useful demonstrations, coverage, and fit to the target prompt distribution. Curated datasets are expensive to build, so reuse can be valuable as long as the examples still cover the target behaviors and prompt distribution.",
   ),
   makeQuestion(
-    62,
+    "cme295-lect4-q162",
     "hard",
     "A product team must choose a model for coding help, factual tutoring, and safe customer support. Which evaluation signals are relevant?",
     [
@@ -1205,7 +1205,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "No single score captures all the product needs in this scenario. A sensible evaluation combines task benchmarks, expert factuality and safety checks, and user preference measurements while accounting for how the models were trained.",
   ),
   makeQuestion(
-    63,
+    "cme295-lect4-q163",
     "medium",
     "A model refuses to answer a harmful request, and many casual users downvote it because it did not comply. Which statements are correct?",
     [
@@ -1223,7 +1223,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "User preference is not the same as the product's complete objective. Safety, factuality, and policy adherence may intentionally trade off against immediate user satisfaction in some prompts.",
   ),
   makeQuestion(
-    64,
+    "cme295-lect4-q164",
     "easy",
     "A raw pretrained model answers `Can I put my teddy bear in the washer?` with material facts about teddy bears. An instruction-tuned model says to check the label and prefer hand washing. What changed most directly?",
     [
@@ -1247,7 +1247,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Instruction tuning teaches the model how to respond to user requests, not only how to continue plausible text. The teddy-bear example illustrates behavior tuning, not a change to attention math or GPU memory management.",
   ),
   makeQuestion(
-    65,
+    "cme295-lect4-q165",
     "medium",
     "Which statements correctly interpret the LoRA update \\(W = W_0 + BA\\)?",
     [
@@ -1265,7 +1265,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "LoRA freezes the base weights and learns a low-rank update through smaller matrices. The formula describes a parameter update inside the model, not a decoding-time list of completed tokens.",
   ),
   makeQuestion(
-    66,
+    "cme295-lect4-q166",
     "hard",
     "A full matrix has shape \\(4096\\times4096\\). A LoRA update uses rank \\(r=8\\), with \\(B\\in\\mathbb{R}^{4096\\times8}\\) and \\(A\\in\\mathbb{R}^{8\\times4096}\\). How many trainable adapter parameters are in \\(B\\) and \\(A\\) together?",
     [
@@ -1277,7 +1277,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The adapter count is \\(4096\\times8 + 8\\times4096 = 65{,}536\\). The full matrix has \\(4096^2=16{,}777{,}216\\) entries, which shows why low-rank adaptation can be much cheaper.",
   ),
   makeQuestion(
-    67,
+    "cme295-lect4-q167",
     "hard",
     "Using the same \\(4096\\times4096\\) matrix and rank \\(r=8\\) LoRA update, approximately what fraction of full-matrix parameters are trainable in the adapter?",
     [
@@ -1298,7 +1298,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The adapter has 65,536 trainable parameters compared with 16,777,216 entries in the full matrix, so the trainable fraction is under one percent. LoRA changes the effective matrix through a low-rank update while leaving \\(W_0\\) frozen during adapter training.",
   ),
   makeQuestion(
-    68,
+    "cme295-lect4-q168",
     "medium",
     "Why is swapping LoRA adapters useful for task specialization?",
     [
@@ -1322,7 +1322,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "LoRA separates the large reusable base model from small task-specific updates. This makes it practical to train or store specialized behavior without duplicating every pretrained parameter for every task.",
   ),
   makeQuestion(
-    69,
+    "cme295-lect4-q169",
     "medium",
     "Which statements describe where LoRA adapters may be applied in transformer models?",
     [
@@ -1346,7 +1346,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "LoRA is applied to model weight matrices, not to raw strings or benchmark code. Later empirical guidance expanded beyond the original attention-only emphasis and highlights feed-forward blocks as important adaptation locations.",
   ),
   makeQuestion(
-    70,
+    "cme295-lect4-q170",
     "hard",
     "Which empirical training-dynamics differences are associated with LoRA fine-tuning?",
     [
@@ -1364,7 +1364,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "LoRA is not just full fine-tuning with fewer parameters; the low-rank factors change how optimization behaves. Learning rate, batch size, rank, and adapter placement remain real design choices.",
   ),
   makeQuestion(
-    71,
+    "cme295-lect4-q171",
     "medium",
     "Which statements correctly describe QLoRA?",
     [
@@ -1388,7 +1388,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "QLoRA combines quantized frozen base weights with trainable low-rank adapters. The goal is to make fine-tuning feasible under tighter VRAM budgets while preserving the base model as the foundation for the adapter update.",
   ),
   makeQuestion(
-    72,
+    "cme295-lect4-q172",
     "hard",
     "Which statements correctly describe NormalFloat 4 (NF4) quantization?",
     [
@@ -1412,7 +1412,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "NF4 allocates its limited codes according to a normal-distribution assumption, which uses 4-bit capacity more effectively for typical weight distributions. It is a weight quantization method, not FP64 storage or tokenizer compression.",
   ),
   makeQuestion(
-    73,
+    "cme295-lect4-q173",
     "hard",
     "Which statements describe the double-quantization idea in QLoRA-style methods?",
     [
@@ -1433,7 +1433,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Double quantization compresses both the weights and the metadata or constants needed for quantization. It is not a second full pretraining run; it is an additional memory-saving representation trick.",
   ),
   makeQuestion(
-    74,
+    "cme295-lect4-q174",
     "medium",
     "A QLoRA implementation reports about 16x VRAM savings for fine-tuning and an additional 6% savings from double quantization. Which statements correctly interpret those numbers?",
     [
@@ -1451,7 +1451,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The 16x figure is a memory-footprint comparison, not an answer-quality multiplier. Quantization savings can make fine-tuning feasible on smaller GPUs, while quality still depends on model, data, training, and evaluation.",
   ),
   makeQuestion(
-    75,
+    "cme295-lect4-q175",
     "hard",
     "Which statements correctly describe the LoRA rank \\(r\\) tradeoff?",
     [
@@ -1475,7 +1475,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Rank controls the capacity and cost of the low-rank update. A zero-rank update would add no useful trainable matrix product, while higher ranks trade more parameters for more adaptation capacity.",
   ),
   makeQuestion(
-    76,
+    "cme295-lect4-q176",
     "hard",
     "A full fine-tune would train a \\(2048\\times2048\\) matrix. A LoRA adapter with \\(r=4\\) trains \\(2048\\times4 + 4\\times2048\\) parameters. Which statements are correct?",
     [
@@ -1493,7 +1493,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "The full matrix has \\(2048^2=4{,}194{,}304\\) entries, while the adapter has \\(2\\times2048\\times4=16{,}384\\). Two small factors are still far cheaper than one huge dense matrix in this example.",
   ),
   makeQuestion(
-    77,
+    "cme295-lect4-q177",
     "medium",
     "Which statements distinguish LoRA from mixture-of-experts routing?",
     [
@@ -1514,7 +1514,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "LoRA is a parameter-efficient fine-tuning method, while MoE routing is a conditional-computation architecture. They can both touch feed-forward parts of a transformer, but LoRA does not perform token-level expert routing.",
   ),
   makeQuestion(
-    78,
+    "cme295-lect4-q178",
     "easy",
     "Which statements correctly compare LoRA with other parameter-efficient tuning methods mentioned alongside it?",
     [
@@ -1538,7 +1538,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "Parameter-efficient tuning methods are alternatives to updating every base-model weight. They are motivated by memory and compute constraints during adaptation, not by a requirement to repeat broad pretraining.",
   ),
   makeQuestion(
-    79,
+    "cme295-lect4-q179",
     "hard",
     "Which statements correctly describe computation and storage in QLoRA-style fine-tuning?",
     [
@@ -1562,7 +1562,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
     "QLoRA keeps the base model, but stores it compactly and trains small adapters. The adapter alone is not the full model; it modifies the behavior of the frozen base through a low-rank update path.",
   ),
   makeQuestion(
-    80,
+    "cme295-lect4-q180",
     "hard",
     "A team wants to build a useful assistant from scratch-like resources and then adapt it cheaply to several tasks. Which lifecycle statements are correct?",
     [

@@ -14,6 +14,24 @@ const repoRoot = path.resolve(testDir, "../..");
 const libRoot = path.join(repoRoot, "lib");
 const supabaseMigrationsRoot = path.join(repoRoot, "supabase", "migrations");
 const quizFilePath = path.join(libRoot, "quiz.ts");
+const cme295Lecture3FilePath = path.join(
+  libRoot,
+  "lectures",
+  "Stanford CME295 Transformers & LLMs",
+  "lecture3_LLMs.ts",
+);
+const cme295Lecture4FilePath = path.join(
+  libRoot,
+  "lectures",
+  "Stanford CME295 Transformers & LLMs",
+  "lecture4_training.ts",
+);
+const cme295Lecture5FilePath = path.join(
+  libRoot,
+  "lectures",
+  "Stanford CME295 Transformers & LLMs",
+  "lecture5_preference_tuning.ts",
+);
 const MIN_EXPLANATION_CHARS = 150;
 
 const NON_QUESTION_FILES = new Set([
@@ -60,6 +78,32 @@ function findLastMatchIndex(source: string, pattern: RegExp): number {
     lastIndex = match.index ?? lastIndex;
   }
   return lastIndex;
+}
+
+function getQuestionArraySource(filePath: string, exportName: string) {
+  const content = fs.readFileSync(filePath, "utf8");
+  const exportIndex = content.indexOf(`export const ${exportName}`);
+  expect(
+    exportIndex,
+    `${exportName} should be exported`,
+  ).toBeGreaterThanOrEqual(0);
+
+  return content.slice(exportIndex);
+}
+
+function getHardcodedHelperQuestionIds(filePath: string, exportName: string) {
+  const questionArraySource = getQuestionArraySource(filePath, exportName);
+  const helperCalls = [
+    ...questionArraySource.matchAll(/make(?:AssertionReason)?Question\(/g),
+  ];
+  const hardcodedIdCalls = [
+    ...questionArraySource.matchAll(
+      /make(?:AssertionReason)?Question\(\s*\n\s*"([^"]+)"/g,
+    ),
+  ];
+
+  expect(hardcodedIdCalls).toHaveLength(helperCalls.length);
+  return hardcodedIdCalls.map((match) => match[1]);
 }
 
 describe("question file registration", () => {
@@ -171,6 +215,61 @@ describe("question file registration", () => {
     );
 
     expect(violations).toEqual([]);
+  });
+
+  it("keeps rewritten CME295 Lecture 3 question IDs explicit and off the legacy ID range", () => {
+    const ids = getHardcodedHelperQuestionIds(
+      cme295Lecture3FilePath,
+      "stanfordCME295Lecture3LLMsQuestions",
+    );
+    const registeredSource = QUESTION_SOURCES.find(
+      (source) => source.id === "cme295-lect3",
+    );
+    const registeredIds =
+      registeredSource?.questions.map((question) => question.id) ?? [];
+    const reusedLegacyIds = registeredIds.filter((id) =>
+      /^cme295-lect3-q(?:0[1-9]|[1-9][0-9]|100)$/.test(id),
+    );
+
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(registeredSource).toBeDefined();
+    expect(registeredIds).toEqual(ids);
+    expect(registeredIds).toHaveLength(80);
+    expect(registeredIds[0]).toBe("cme295-lect3-q101");
+    expect(registeredIds[registeredIds.length - 1]).toBe("cme295-lect3-q180");
+    expect(reusedLegacyIds).toEqual([]);
+  });
+
+  it("keeps rewritten CME295 Lecture 4 question IDs explicit and off the legacy ID range", () => {
+    const ids = getHardcodedHelperQuestionIds(
+      cme295Lecture4FilePath,
+      "stanfordCME295Lecture4TrainingQuestions",
+    );
+    const reusedLegacyIds = ids.filter((id) =>
+      /^cme295-lect4-q(?:0[1-9]|[1-9][0-9]|100)$/.test(id),
+    );
+
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(reusedLegacyIds).toEqual([]);
+  });
+
+  it("keeps CME295 Lecture 5 question IDs explicit in helper calls", () => {
+    const ids = getHardcodedHelperQuestionIds(
+      cme295Lecture5FilePath,
+      "stanfordCME295Lecture5PreferenceTuningQuestions",
+    );
+    const registeredSource = QUESTION_SOURCES.find(
+      (source) => source.id === "cme295-lect5",
+    );
+    const registeredIds =
+      registeredSource?.questions.map((question) => question.id) ?? [];
+
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(registeredSource).toBeDefined();
+    expect(registeredIds).toEqual(ids);
+    expect(registeredIds).toHaveLength(40);
+    expect(registeredIds[0]).toBe("cme295-lect5-q01");
+    expect(registeredIds[registeredIds.length - 1]).toBe("cme295-lect5-q40");
   });
 
   it("keeps question report topic storage open to future topics", () => {

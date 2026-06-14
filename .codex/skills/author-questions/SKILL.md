@@ -1,13 +1,13 @@
 ---
 name: author-questions
-description: Create, extend, edit, rebalance, and register Learning AI quiz question sets. Use when the user asks Codex to generate new TypeScript question-bank files from transcripts, chapters, papers, slides, PDFs, or other learning material under this repo, or to add, revise, rebalance, or fix questions in existing Learning AI question files.
+description: Create, extend, edit, rebalance, and register Learning AI quiz question sets with stable question IDs. Use when the user asks Codex to generate new TypeScript question-bank files from transcripts, chapters, papers, slides, PDFs, or other learning material under this repo, or to add, revise, rebalance, fix, or preserve database-linked IDs in existing Learning AI question files.
 ---
 
 # Author Learning AI Questions
 
 ## Overview
 
-Create, review, and maintain high-quality mixed-format quiz question sets for the Learning AI repo. Supported question types are multi-select multiple-choice and assertion-reason MCQs. For new source material, generate one or more question files and register each set so it appears in the app's source selector. For existing question sets, preserve the local style while reviewing quality, adding questions, revising weak items, rebalancing answer patterns, rewriting topic slices, or fixing reported issues. Every question must stand alone because practice can randomize question order and mix questions from different source sets.
+Create, review, and maintain high-quality mixed-format quiz question sets for the Learning AI repo. Supported question types are multi-select multiple-choice and assertion-reason MCQs. For new source material, generate one or more question files and register each set so it appears in the app's source selector. For existing question sets, preserve the local style while reviewing quality, adding questions, revising weak items, rebalancing answer patterns, rewriting topic slices, or fixing reported issues. Every question must stand alone because practice can randomize question order and mix questions from different source sets. Every question ID is also a persistent database identity, so do not treat IDs as display numbers or derive them from question order.
 
 Use the repo docs as product context. Keep edits scoped to the new question files, `lib/quiz.ts` registration, tests/docs updates when required, and small supporting changes needed for verification.
 
@@ -18,16 +18,21 @@ Use the same quality gate for creation, review, and improvement work. The skill 
 - Create a new question set from source material, such as "create 30 questions about X."
 - Add questions to an existing set, such as "add 10 questions about C to set X."
 - Review an existing set for quality issues. If the user asks only for a review, report findings without editing; if the user asks to improve issues, make the scoped fixes.
-- Improve an existing set by rewriting low-quality prompts, options, explanations, answer flags, or difficulty labels while preserving IDs unless there is a clear reason to change them.
+- Improve an existing set by rewriting low-quality prompts, options, explanations, answer flags, or difficulty labels while preserving IDs only for unchanged or minor-edited questions.
 - Rewrite a targeted topic slice inside a larger set, such as "rewrite all questions about topic A in set X," while leaving unrelated questions alone.
 - Combine operations in one pass, such as adding new questions and rewriting a targeted subset of existing questions.
+
+## Stable Question IDs
+
+Question IDs are database identities. They must be explicit, hardcoded strings attached to the question item, not generated from array position, helper call order, or a mutable counter. Preserve an existing question's `id` when making minor wording, option, explanation, or difficulty fixes that keep the same underlying item. Assign a new never-before-used `id` when adding a question, changing the tested construct, changing the answer key in a way that changes scoring semantics, or rewriting the prompt/options/explanation substantially enough that the item should be treated as a new question. Removing a question removes that ID from the bundled bank; do not reuse removed IDs for future questions.
 
 ## Folder Workflow
 
 1. Identify the requested operation.
    - For new source material, follow the folder workflow below.
-   - For an existing question file, inspect the current set before editing and preserve its naming, IDs, topic scope, and registration unless the user asks for a broader change.
-   - For additions to an existing set, continue the existing ID sequence and rebalance answer-count distribution across the full file, not only the new questions.
+   - For an existing question file, inspect the current set before editing and preserve its naming, topic scope, and registration unless the user asks for a broader change.
+   - For existing questions, compare against the committed/pre-edit version and preserve each old ID only when the edited item is still the same question. If the item is completely replaced or significantly rewritten, give it a new ID that has not appeared in the set before.
+   - For additions to an existing set, choose new hardcoded IDs that continue the source's ID namespace without reusing removed or historical IDs, then rebalance answer-count distribution across the full file, not only the new questions.
    - For quality reviews, use the same question-quality criteria as generation. If the user asks to improve issues, edit the set; if the user asks only to review, report actionable findings and verification gaps.
    - For targeted rewrites inside an existing set, identify the matching topic slice first and keep unrelated questions out of scope.
    - For fixes, update the prompt, options, `isCorrect` flags, and explanation together so they remain consistent.
@@ -48,6 +53,7 @@ Use the same quality gate for creation, review, and improvement work. The skill 
    - Before generating a new set, determine the requested question count. If the user did not specify one, ask for the count before generating questions; do not assume a default count from this skill.
    - If context is tight, draft in multiple passes, but the final file should contain the complete requested set.
    - After drafting or editing, run the question quality gate below before considering questions complete.
+   - Hardcode each question ID at the question or helper-call site. If a local helper is used, pass the ID as a string argument; do not derive it from the helper call number or array index.
    - Use a filename based on the source item and topic, for example `lecture5_attention.ts`, `chapter4_agents.ts`, or the closest existing series convention.
    - Use a stable ASCII export name ending in `Questions`.
    - Use the correct relative import for `Question` from the new file to `lib/quiz.ts`.
@@ -230,7 +236,7 @@ Before finalizing a generated or revised set, review it from the perspective of 
 
 ## TypeScript Template
 
-Use this structure for new source-material question files under `lib/**`. Adjust the import path based on the file location.
+Use this structure for new source-material question files under `lib/**`. Adjust the import path based on the file location. If you use a helper to reduce repetition, the helper call should still receive the explicit ID string, for example `makeQuestion("source-id-q01", ...)`; do not generate IDs from sequence numbers.
 
 ```ts
 import { Question } from "../../quiz";
@@ -315,7 +321,7 @@ For assertion-reason questions, use this shape inside the same `Question[]` arra
 - Prompt tables, when used, are valid GitHub-Flavored Markdown, compact, labeled, introduced by the prompt, and self-contained.
 - Every explanation has at least two sentences and covers all options.
 - Math uses escaped LaTeX delimiters inside TypeScript strings.
-- Question IDs are unique across the repo.
+- Question IDs are hardcoded, stable database identities; preserve old IDs for minor edits, assign new never-before-used IDs for new or substantially rewritten questions, and keep IDs unique across the repo.
 - The new question file is imported, registered in `QUESTION_SOURCES`, described in `QUESTION_SOURCE_CONTEXT`, and re-exported from `lib/quiz.ts`.
 - Final response for creation or editing work reports created/changed, reviewed, substantially rewritten, minor-edited, and intentionally retained orientation counts.
 - Registration tests and type checks pass, or failures are reported with exact errors.
