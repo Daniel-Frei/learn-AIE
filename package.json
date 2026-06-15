@@ -33,6 +33,7 @@
   "dependencies": {
     "@supabase/supabase-js": "2.100.0",
     "katex": "^0.16.22",
+    "lucide-react": "0.468.0",
     "next": "16.2.6",
     "openai": "^6.9.1",
     "react": "19.2.0",

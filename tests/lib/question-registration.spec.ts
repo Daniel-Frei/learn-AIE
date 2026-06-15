@@ -267,9 +267,9 @@ describe("question file registration", () => {
     expect(new Set(ids).size).toBe(ids.length);
     expect(registeredSource).toBeDefined();
     expect(registeredIds).toEqual(ids);
-    expect(registeredIds).toHaveLength(40);
+    expect(registeredIds).toHaveLength(60);
     expect(registeredIds[0]).toBe("cme295-lect5-q01");
-    expect(registeredIds[registeredIds.length - 1]).toBe("cme295-lect5-q40");
+    expect(registeredIds[registeredIds.length - 1]).toBe("cme295-lect5-q60");
   });
 
   it("keeps question report topic storage open to future topics", () => {

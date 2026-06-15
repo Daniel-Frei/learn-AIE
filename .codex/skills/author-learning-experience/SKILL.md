@@ -1,6 +1,6 @@
 ---
 name: author-learning-experience
-description: Design, implement, and register high-quality Learning AI web learning experiences from lectures, chapters, transcripts, slides, PDFs, papers, notes, or topic overviews. Use when the user asks for an interactive learning page, subpage, teaching experience, explorable lesson, simulation, visual reasoning lab, or source-material preparation page tied to this repo's quiz/learning surface.
+description: Design, implement, and register high-quality Learning AI web learning experiences from lectures, chapters, transcripts, slides, PDFs, papers, notes, or topic overviews. Use when the user asks for an interactive learning page, subpage, teaching experience, explorable lesson, simulation, visual reasoning lab, source-material preparation page, or richer UX around this repo's quiz/learning surface.
 ---
 
 <overview>
@@ -13,6 +13,12 @@ ids, docs, and tests when the task is quiz preparation. Treat existing pages and
 shared components as integration examples, not visual or pedagogical templates.
 The experience should be allowed to feel different when the topic demands a
 different teaching form.
+
+Important project lesson: older Learning AI learning pages are generally not the
+quality bar. They may be useful for routing and tests, but they are often too
+card-like, too visually uniform, and too shallow as learning experiences. Future
+pages should aim closer to a bespoke learning studio, staged simulator, or
+source-native explorable when the material supports it.
 </overview>
 
 <core-rules>
@@ -21,11 +27,20 @@ different teaching form.
   quiz-prep shape when the user explicitly asks for an independent subpage.
 - Design the ideal learning experience first, then fit it into the chosen
   delivery mode.
-- Do not copy the structure, rhythm, or component mix of previous learning
-  pages unless that shape is genuinely the best fit for the new material.
+- Do not use this repo's existing learning pages as the main comparison point
+  for quality. Assume older pages may be stale or under-ambitious. Compare
+  against strong source-native web learning experiences and any user-provided
+  exemplar instead.
+- Do not copy the structure, rhythm, visual texture, dark-panel style, or
+  component mix of previous learning pages unless that shape is genuinely the
+  best fit for the new material.
 - Existing pages are useful for route, registry, app shell, Tailwind style,
   testing, and accessibility conventions; they are not evidence that future
   pages should share the same skeleton, rhythm, or primitive mix.
+- Route registration, docs, quiz transitions, and tests are support work. They
+  must not become the main design constraint or shrink the learning experience.
+  If no quiz source exists, prefer a strong standalone route over an under-built
+  integrated-looking page.
 - Keep enough of the app's general visual language for coherence, but do not
   default to shared learning primitives. `LearningHero`, generic cards, checks,
   and formula blocks are optional support pieces, not the page architecture.
@@ -50,6 +65,9 @@ different teaching form.
   learning ambition. Keep the work coherent and scoped to the page, but allow a
   larger custom interaction, canvas, asset set, or control surface when that is
   the clearest way to teach the material.
+- "Small and reviewable" means avoid unrelated refactors and broad app churn; it
+  does not mean a new learning experience should be visually plain, short,
+  card-based, or limited to one shallow interaction.
 - It is acceptable for a strong page to look unlike the rest of the learning
   pages, as long as navigation, accessibility, responsiveness, and maintainability
   are still handled deliberately.
@@ -60,6 +78,11 @@ different teaching form.
   needs a focused visualization, simulation, animation, or math/rendering
   library. Keep dependencies minimal, explain why they are needed, and document
   alternatives considered.
+- Icons, custom SVG/CSS illustrations, lightweight animation, visual encodings,
+  and domain-specific controls materially affect UX. Use the repo's icon library
+  when present; for this repo `lucide-react` is an approved focused runtime
+  dependency for learning experiences. Do not let the absence of an existing
+  icon import push the page toward text-only panels.
 - Default to in-app pages. If the user explicitly asks for a standalone or
   experimental subpage, optimize for the learning experience first, then preserve
   any repo-required docs, tests, and integration points that still apply.
@@ -87,6 +110,9 @@ different teaching form.
    - For standalone or experimental pages, inspect only the app conventions that
      affect routing, styling, accessibility, and verification. Avoid letting
      existing learning pages decide the teaching shape.
+   - If the user references or provides an exemplar, inspect it before choosing
+     the design. Treat high-quality external/local exemplars as UX benchmarks,
+     not as files to copy mechanically.
    - Use the existing `SourceId` as the learning-page key whenever the material
      maps to an existing quiz source and the delivery mode is integrated quiz
      prep.
@@ -94,9 +120,9 @@ different teaching form.
      a course index and `/learn/[seriesId]` can list that course's learning
      experiences.
    - Inspect existing learning pages only to understand conventions and avoid
-     accidental duplication. Do not use them as default layouts, and actively
-     look for visual or interaction repetition that would make the new page feel
-     like another instance of the same template.
+     accidental duplication. Do not use them as default layouts or quality
+     benchmarks, and actively look for visual or interaction repetition that
+     would make the new page feel like another instance of the same template.
    - If docs and implementation disagree, flag the conflict and choose the
      documented behavior unless the user explicitly updates the requirement.
 
@@ -118,10 +144,15 @@ different teaching form.
      the user unless the task is large or ambiguous.
    - Write a short internal experience brief before implementation:
      `learner job`, `central object`, `primary interaction`, `why this shape`,
-     and `what existing pattern it deliberately avoids`.
+     `visual/interaction identity`, and `what existing pattern it deliberately
+     avoids`.
    - Favor a continuous central object when possible: a simulator, annotated
      architecture, editable example, decision lab, evidence reader, process
      model, timeline, calculator, parser, debugger, map, or comparison workbench.
+   - Prefer a full staged experience over a shallow toggle panel when the topic
+     has a workflow. A strong page may reveal information over time, let the
+     learner construct an intermediate artifact, score or critique decisions,
+     and debrief the result.
    - If using a hero visual, make it a self-explanatory first micro-model or a
      concrete preview of the central object. Do not use abstract bullets,
      arrows, meters, or charts unless the surrounding copy makes their role and
@@ -131,6 +162,9 @@ different teaching form.
      choose a more specific opening object or task.
    - If all candidate shapes resemble previous learning pages, pause and look for
      a more topic-native form.
+   - If a source-native design would benefit from a richer data model, page-local
+     CSS, icons, SVG, or separated reasoning logic, use those tools. The data
+     model should serve the UX; do not keep it thin merely to fit one TSX file.
    - If the best design would be substantially better as a standalone or more
      immersive subpage than as a standard learning-card flow, say so and either
      implement that mode when allowed or explain the compromise.
@@ -154,6 +188,8 @@ different teaching form.
      concise contextual explanation at first use.
    - Include active moments where the learner predicts, manipulates, compares,
      sorts, annotates, debugs, estimates, reads evidence, or checks a misconception.
+     One click that swaps static prose is usually not enough for a central
+     interaction unless the material is genuinely simple.
    - Put feedback close to the relevant idea when that helps learning. Checks,
      prompts, and questions can be embedded beside the concept they assess
      instead of always being batched into a separate page rhythm.
@@ -170,9 +206,19 @@ different teaching form.
      evidence reader, history can be a timeline, code can be a trace/debugger,
      biology can be a pathway/case model, and NLP/LLM topics can be token,
      attention, or generation workbenches.
+   - Build a visual identity for the source. For medicine this may mean a
+     clinical studio, patient monitor, staged encounter timeline, evidence feed,
+     diagnosis ranking board, or care-pathway map; for other domains, choose an
+     equally specific visual language.
    - Keep sections causally connected. Each major interaction should prepare for
      the next one or reuse an established mental model; avoid detached labs that
      happen to share a topic label.
+   - Make the visual scan order match the learner journey. In a staged lab,
+     prerequisite inputs should appear before the representation, diagnosis,
+     answer, output, or plan that depends on them. Related material may sit
+     side-by-side inside one step, but do not place later conclusions beside
+     earlier evidence in a way that implies the learner should use them together
+     before the prerequisite work is done.
    - When teaching latent variables, distinguish sampled hidden factors,
      inferred hidden factors, and user-controlled scenario settings. Do not make
      a UI imply that real latent variables are directly observable or manually
@@ -211,9 +257,15 @@ different teaching form.
      the learning route.
    - Page-local custom components may have nontrivial typed state/config when
      that state powers the teaching model. Keep them deterministic and readable.
+   - Split page-local data, reasoning helpers, styles, and tests when that makes
+     the experience easier to build and maintain. A single monolithic TSX file is
+     not required.
    - For bespoke visuals, use stable dimensions, responsive constraints,
      keyboard-accessible controls, visible state changes, and text alternatives
      or labels.
+   - Use iconography and custom visual models deliberately. Prefer `lucide-react`
+     icons when available; otherwise use focused custom SVG/CSS or add a minimal
+     approved icon dependency when it materially improves comprehension and UX.
    - Use `MathText` for formulas and existing Tailwind conventions where they fit.
    - For display formulas, pass valid LaTeX through `MathText` or `FormulaBlock`;
      prefer TSX expression props with `String.raw`, for example
@@ -235,6 +287,12 @@ different teaching form.
      registry/source-id behavior.
    - Add or update Playwright coverage for the route, at least one meaningful
      interaction, and mobile-width layout.
+   - Add coverage for the central learning journey, not only route existence.
+     Useful checks include staged reveal behavior, learner-built artifacts,
+     score/feedback changes, navigation anchors, visible visual models, and a
+     no-horizontal-overflow mobile check.
+   - Add unit tests for page-local reasoning helpers when the experience includes
+     scoring, ranking, probability updates, parsing, simulation, or other logic.
    - For integrated pages, also cover transition into the matching quiz source.
 
 8. Verify before finishing.
@@ -246,6 +304,15 @@ different teaching form.
      - `make format-check`
      - `make lint`
      - `make types-check`
+   - Run a frontend UX review loop before finalizing a new learning page. Use
+     the repo's `frontend-ux-review` skill when available, or perform an
+     equivalent browser screenshot review across desktop and mobile. Passing
+     tests is not enough if the page still feels like a generic card/check flow.
+   - Include an intermediate laptop viewport in browser review, such as
+     `1280 x 800`, when the page has dense controls, dashboards, labs, hero
+     text, or multi-column layouts. Check for awkward text breaks, clipped
+     controls, and page-level horizontal overflow at that size, not only at a
+     wide desktop and a narrow mobile viewport.
    - If this skill itself changed, run the skill-quality validator on
      `.codex/skills/author-learning-experience`.
 </workflow>
@@ -272,11 +339,21 @@ Use these as prompts, not templates:
 <anti-patterns>
 - Template drift: reusing the same hero, card grid, overview panel, comparison,
   formula block, check, and recap rhythm because it worked before.
+- Legacy anchoring: treating this repo's older learning pages as the quality bar
+  instead of as possibly underwhelming integration references.
 - Designing from available components before identifying the source-native
   learner task.
+- Letting route registration, quiz-source absence, docs, or tests dominate the
+  design enough that the learning experience becomes conservative.
+- Treating "small/reviewable" as a reason to avoid a rich, page-local simulator,
+  custom visual system, or focused dependency.
 - Using a hero visual with arrows, bullets, bars, or status marks that is hard
   to interpret before the learner knows the topic.
 - Treating interaction as decorative toggles over static prose.
+- Building one shallow central object when the material calls for a staged
+  simulator, evidence reader, construction task, decision lab, or guided studio.
+- Avoiding icons, custom SVG/CSS, animation, or visual affordances so aggressively
+  that the page becomes text-heavy and visually generic.
 - Visual tokenism: using formulas, charts, meters, or diagrams as proof of
   richness when they do not make the core idea easier to reason about.
 - Checklist-driven design: adding one of every familiar learning primitive
@@ -291,6 +368,9 @@ Use these as prompts, not templates:
 - Hiding the main teaching model below many introductory cards.
 - Splitting a topic into disconnected sections whose order does not build a
   cumulative mental model.
+- Arranging a workflow lab as columns of component types, so later outputs,
+  diagnoses, answers, or plans appear beside earlier inputs and confuse the
+  learner's intended play-through order.
 - Letting a final recap or formula board carry explanations that should have
   appeared before the learner used the concept.
 - Making latent-variable controls look like direct manual control over real
@@ -312,6 +392,8 @@ Before finishing, confirm:
   contracts where applicable.
 - The page is mobile-friendly and text remains selectable.
 - The central interaction is meaningful, not decorative.
+- The page has a source-specific visual identity and does not simply inherit the
+  old dark-panel/card texture from earlier Learning AI pages.
 - The experience shape is topic-native and not just copied from previous pages.
 - The page would still make sense if no previous Learning AI page existed; any
   similarity to earlier pages is justified by the topic, not convenience.
@@ -325,6 +407,9 @@ Before finishing, confirm:
   the lesson rather than unexplained decoration.
 - The learner actively predicts, manipulates, compares, calculates, annotates, or
   interprets something important.
+- If the topic has a workflow, the page supports a staged journey where learner
+  actions change visible state, feedback, score, artifact quality, or downstream
+  interpretation.
 - The chosen level of visualization/interactivity matches the source's actual
   learning difficulty; absence of visuals for a hard invisible mechanism is a
   deliberate design choice, not a default.
@@ -332,6 +417,9 @@ Before finishing, confirm:
   learner's current mental model.
 - The scroll order forms a learning progression: concepts and notation appear
   before controls or formulas that depend on them.
+- For workflow-based labs, the DOM order and visible top-left-to-right scan order
+  reflect the intended play-through sequence; later conclusions are not visually
+  promoted before prerequisite evidence or construction steps.
 - Lab labels, metrics, and controls are explained at first use; there are no
   unexplained terms like "base", "used", "seed", or "I" in core interactions.
 - If latent variables appear, the page distinguishes hidden model variables from
@@ -341,5 +429,7 @@ Before finishing, confirm:
 - Formulas render as KaTeX, not visible raw `$$...$$` or escaped LaTeX.
 - The page does not feel like a generic landing page, copied transcript, or
   generic sequence of cards/checks.
+- Browser or screenshot review confirms the page feels like a compelling
+  learning product, not merely a correct implementation.
 - Future maintainers can understand the page-local state and tests.
 </review-checklist>

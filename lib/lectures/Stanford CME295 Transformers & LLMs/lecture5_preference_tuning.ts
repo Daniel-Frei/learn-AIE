@@ -868,4 +868,432 @@ export const stanfordCME295Lecture5PreferenceTuningQuestions: Question[] = [
     ],
     "The pipeline builds capability first and then shapes behavior. Preference tuning is a post-training stage that can use different optimization methods, and parameter-efficient adapters can be combined with those objectives when a team wants to update only a small set of trainable parameters.",
   ),
+  makeQuestion(
+    "cme295-lect5-q41",
+    "hard",
+    "A Bradley-Terry reward model assigns \\(r_w=1.2\\) to a chosen response and \\(r_l=-0.3\\) to a rejected response for the same prompt. Which calculations or interpretations are correct?",
+    [
+      ["\\(\\sigma(r_w-r_l)=\\sigma(1.5)\\), which is about \\(0.82\\).", true],
+      [
+        "\\(\\sigma(r_l-r_w)=\\sigma(-1.5)\\), which is about \\(0.18\\).",
+        false,
+      ],
+      [
+        "\\(\\sigma(r_w+r_l)=\\sigma(0.9)\\), because the two rewards should be added.",
+        false,
+      ],
+      [
+        "The chosen-over-rejected log-odds are \\(r_w-r_l=1.5\\), so the odds are \\(e^{1.5}:1\\).",
+        true,
+      ],
+    ],
+    "Bradley-Terry uses the reward difference for the two responses under the same prompt. The chosen-minus-rejected gap is \\(1.2-(-0.3)=1.5\\), so the chosen response has probability \\(\\sigma(1.5)\\) and odds \\(e^{1.5}:1\\); reversing the subtraction gives the rejected-over-chosen probability.",
+  ),
+  makeQuestion(
+    "cme295-lect5-q42",
+    "hard",
+    "Let the pairwise reward-model loss for one comparison be \\(L=-\\log \\sigma(d)\\), where \\(d=r_w-r_l\\). What happens at \\(d=0\\) under gradient descent on \\(r_w\\) and \\(r_l\\)?",
+    [
+      [
+        "The update raises \\(r_w\\) and lowers \\(r_l\\), widening the chosen-minus-rejected gap.",
+        true,
+      ],
+      [
+        "Both gradients are zero, because equal scores already fit a chosen-versus-rejected label perfectly.",
+        false,
+      ],
+      [
+        "The gradient magnitudes on \\(r_w\\) and \\(r_l\\) are equal at this point, but their signs are opposite.",
+        true,
+      ],
+      [
+        "The update increases \\(r_l\\) more than \\(r_w\\), because the rejected response needs a stronger training signal.",
+        false,
+      ],
+    ],
+    "At \\(d=0\\), \\(\\sigma(d)=0.5\\), so the model is uncertain even though the label says the chosen response should outrank the rejected response. The loss gradient pushes the difference upward with equal-and-opposite pressure on the two scores, while equal shifts of both scores do not help the pairwise likelihood.",
+  ),
+  makeQuestion(
+    "cme295-lect5-q43",
+    "hard",
+    "Which mathematical properties follow from using reward differences inside \\(\\sigma(r_w-r_l)\\) for pairwise preference modeling?",
+    [
+      [
+        "Adding the same constant to \\(r_w\\) and \\(r_l\\) leaves the pairwise probability unchanged.",
+        true,
+      ],
+      [
+        "Multiplying all reward gaps by a positive constant changes how sharp or confident the preference probabilities become.",
+        true,
+      ],
+      [
+        "For a fixed pair, only the difference \\(r_w-r_l\\) matters to the modeled preference probability.",
+        true,
+      ],
+      [
+        "A reward of exactly zero always means the response has a 50 percent chance of beating any other response, regardless of the comparison score.",
+        false,
+      ],
+    ],
+    "The pairwise probability is determined by a difference, so common additive shifts cancel. Scaling gaps changes the sigmoid input and therefore the confidence, while a raw score of zero has no standalone meaning without the comparison response's score.",
+  ),
+  makeQuestion(
+    "cme295-lect5-q44",
+    "hard",
+    "In a Direct Preference Optimization (DPO) loss, a chosen response \\(y_w\\) and rejected response \\(y_l\\) are compared through policy and reference log probabilities. Which statements are correct?",
+    [
+      [
+        "The relevant signal can be written as a chosen-minus-rejected log-probability gap under the trainable policy, adjusted by the same gap under the reference policy.",
+        true,
+      ],
+      [
+        "Increasing the trainable policy's relative log probability for \\(y_w\\) over \\(y_l\\), compared with the reference, makes the preference logit larger.",
+        true,
+      ],
+      [
+        "The coefficient \\(\\beta\\) scales the preference logit produced from those log-ratio differences.",
+        true,
+      ],
+      [
+        "The frozen reference policy anchors the objective so that preference tuning is expressed relative to the base model.",
+        true,
+      ],
+    ],
+    "DPO compares how the trainable policy changes the relative likelihood of chosen and rejected responses against the frozen reference. This creates a Bradley-Terry-like preference logit without training a separate reward model, while \\(\\beta\\) controls the scale of that logit.",
+  ),
+  makeQuestion(
+    "cme295-lect5-q45",
+    "hard",
+    "For one DPO pair, suppose \\(\\log \\pi_\\theta(y_w\\mid x)=-5\\), \\(\\log \\pi_\\theta(y_l\\mid x)=-7\\), \\(\\log \\pi_{ref}(y_w\\mid x)=-6\\), \\(\\log \\pi_{ref}(y_l\\mid x)=-6.5\\), and \\(\\beta=0.1\\). Which value is the DPO preference logit \\(\\beta[(\\log \\pi_\\theta(y_w)-\\log \\pi_{ref}(y_w))-(\\log \\pi_\\theta(y_l)-\\log \\pi_{ref}(y_l))]\\)?",
+    [
+      ["\\(0.1[((-5)-(-6))-((-7)-(-6.5))]=0.15\\).", true],
+      ["\\(0.1[(-5)-(-7)]=0.20\\).", false],
+      ["\\(0.1[(-6)-(-6.5)]=0.05\\).", false],
+      ["\\(0.1[((-7)-(-6.5))-((-5)-(-6))]=-0.15\\).", false],
+    ],
+    "The DPO logit compares policy-versus-reference log ratios for the chosen and rejected responses. The chosen log ratio is \\(1.0\\), the rejected log ratio is \\(-0.5\\), their difference is \\(1.5\\), and multiplying by \\(0.1\\) gives \\(0.15\\).",
+  ),
+  makeQuestion(
+    "cme295-lect5-q46",
+    "hard",
+    "Let \\(P=(0.75,0.25)\\) and \\(Q=(0.5,0.5)\\). Which statements correctly describe \\(D_{KL}(P\\|Q)=\\sum_i P_i\\log(P_i/Q_i)\\) and its role as a policy penalty?",
+    [
+      [
+        "The term for the second outcome is negative because \\(0.25/0.5<1\\), but the total KL divergence is still nonnegative.",
+        true,
+      ],
+      ["\\(D_{KL}(P\\|Q)\\) and \\(D_{KL}(Q\\|P)\\) need not be equal.", true],
+      [
+        "The divergence is zero only when the compared distributions match exactly on their support.",
+        true,
+      ],
+      [
+        "Increasing a KL penalty coefficient makes the objective punish policy movement away from the comparison distribution more strongly.",
+        true,
+      ],
+    ],
+    "Individual weighted log-ratio terms can be negative, but Gibbs' inequality makes the full KL divergence nonnegative. As a policy penalty, KL divergence does not replace the reward signal; it controls how costly it is for the trained policy distribution to move away from the reference or comparison distribution.",
+  ),
+  makeQuestion(
+    "cme295-lect5-q47",
+    "hard",
+    "In a PPO-Clip update, the previous policy assigned probability \\(0.20\\) to a sampled token, the current policy assigns \\(0.30\\), the advantage is \\(A=2\\), and \\(\\epsilon=0.2\\). Which statements are correct for this sampled action?",
+    [
+      [
+        "The ratio is \\(1.5\\), the unclipped term is \\(3.0\\), the clipped term is \\(2.4\\), and the clipped objective uses \\(2.4\\).",
+        true,
+      ],
+      [
+        "The ratio is \\(0.67\\), the unclipped term is \\(1.33\\), the clipped term is \\(1.6\\), and the clipped objective uses \\(1.33\\).",
+        false,
+      ],
+      [
+        "The unclipped term is larger than the clipped term, so clipping removes the extra incentive above the \\(1.2\\) ratio cap.",
+        true,
+      ],
+      [
+        "The ratio compares current-policy probability with previous-policy probability, not the raw reward-model score.",
+        true,
+      ],
+    ],
+    "The probability ratio is \\(0.30/0.20=1.5\\). With a positive advantage, the objective caps useful improvement at \\(1+\\epsilon=1.2\\), so the clipped term is \\(1.2\\times2=2.4\\) rather than \\(1.5\\times2=3.0\\); this ratio is a policy-probability ratio, not a reward score.",
+  ),
+  makeQuestion(
+    "cme295-lect5-q48",
+    "hard",
+    "In a PPO-Clip update, the previous policy assigned probability \\(0.20\\), the current policy assigns \\(0.10\\), the advantage is \\(A=-2\\), and \\(\\epsilon=0.2\\). Which statements correctly apply the clipped objective intuition?",
+    [
+      [
+        "The ratio is \\(0.5\\); with \\(A=-2\\), the clipped term penalizes an overly large probability decrease.",
+        true,
+      ],
+      [
+        "The ratio is \\(2.0\\); because the advantage is negative, PPO always rewards making the action twice as likely.",
+        false,
+      ],
+      [
+        "The unclipped term is \\(0.5\\times(-2)=-1.0\\), while the clipped term is \\(0.8\\times(-2)=-1.6\\).",
+        true,
+      ],
+      [
+        "The objective uses the lower surrogate value here, which discourages reducing the probability too far in one update.",
+        true,
+      ],
+    ],
+    "For a negative advantage, the policy should reduce the action probability, but not by an arbitrarily large amount in one update. With \\(r=0.5\\), the clipped ratio is \\(0.8\\); multiplying by \\(-2\\) gives \\(-1.6\\), a lower surrogate value than the unclipped \\(-1.0\\), so the objective discourages the excessive drop.",
+  ),
+  makeQuestion(
+    "cme295-lect5-q49",
+    "hard",
+    "A PPO-style RLHF run estimates advantage as reward minus a value baseline. Which statements are correct for the following examples?",
+    [
+      [
+        "If a completion has reward \\(1.8\\) and value estimate \\(1.1\\), its estimated advantage is \\(0.7\\).",
+        true,
+      ],
+      [
+        "If a completion has reward \\(0.5\\) and value estimate \\(0.9\\), its estimated advantage is \\(-0.4\\).",
+        true,
+      ],
+      [
+        "A positive advantage means the sampled behavior was better than the baseline expectation and can be reinforced.",
+        true,
+      ],
+      [
+        "Subtracting a baseline can reduce variance without changing the reward model into the value function.",
+        true,
+      ],
+    ],
+    "Advantage makes the reward relative to what the model expected from that partial state or trajectory. The value function supplies the baseline estimate, while the reward model still supplies the completion-level preference score that the baseline is compared against.",
+  ),
+  makeQuestion(
+    "cme295-lect5-q50",
+    "hard",
+    "Which statements correctly describe the value function used for advantage estimation in PPO-style language-model alignment?",
+    [
+      [
+        "It estimates final reward from a prompt plus partial generated prefix if the policy continues.",
+        true,
+      ],
+      [
+        "It can assign different value estimates to different prefixes of the same final completion.",
+        true,
+      ],
+      [
+        "It is trained jointly with the policy in many PPO implementations rather than being the already-frozen reward model.",
+        true,
+      ],
+      [
+        "It knows the exact final reward before the model samples the rest of the completion, so no estimation problem remains.",
+        false,
+      ],
+    ],
+    "The value function is a predictive baseline over partial states, not a source of exact future knowledge. It helps compute lower-variance advantages by estimating what reward is expected from a prefix if the policy continues generating.",
+  ),
+  makeQuestion(
+    "cme295-lect5-q51",
+    "hard",
+    "A Best-of-N system samples \\(N=5\\) independent completions, and each completion has probability \\(p=0.3\\) of being acceptable before reranking. Which statements are correct?",
+    [
+      [
+        "The probability that at least one acceptable completion appears is \\(1-(1-p)^N=1-0.7^5\\).",
+        true,
+      ],
+      [
+        "If average completion length is unchanged, generation work is roughly multiplied by \\(N\\) before reward-model scoring is considered.",
+        true,
+      ],
+      [
+        "Parallel generation can reduce wall-clock waiting, but the returned answer still waits for the slowest candidate needed by the reranker.",
+        true,
+      ],
+      [
+        "The reward model must rank candidates well enough for the presence of an acceptable completion to improve the returned answer.",
+        true,
+      ],
+    ],
+    "Best-of-N improves the chance that a good candidate exists in the sampled set, but it does so by spending more inference-time generation. The probability calculation is separate from the reranker quality: a good candidate only helps if the reward model ranks it above worse alternatives.",
+  ),
+  makeQuestion(
+    "cme295-lect5-q52",
+    "hard",
+    "A candidate completion has independent probability \\(p=0.2\\) of satisfying a preference criterion. Moving Best-of-N from \\(N=4\\) to \\(N=8\\) changes the probability of at least one satisfying candidate from \\(1-0.8^4\\) to \\(1-0.8^8\\). Which interpretations are correct?",
+    [
+      [
+        "Generation cost roughly doubles, while success probability rises by \\((1-0.8^8)-(1-0.8^4)\\).",
+        true,
+      ],
+      [
+        "The generation work roughly doubles because eight candidates are generated instead of four.",
+        true,
+      ],
+      [
+        "The success probability does not double exactly, because it is the complement of all candidates failing.",
+        true,
+      ],
+      [
+        "The probability that all eight candidates fail is \\(0.8^8\\), so the success probability is its complement.",
+        true,
+      ],
+    ],
+    "Best-of-N has diminishing returns under this independent-success simplification. More samples increase the chance that at least one candidate is good by reducing the all-fail probability, while generation and scoring cost still grow with the number of candidates.",
+  ),
+  makeQuestion(
+    "cme295-lect5-q53",
+    "hard",
+    "Which reward-scaling statements are mathematically sound across reward modeling, PPO-style RLHF, and Best-of-N?",
+    [
+      [
+        "Adding the same constant to both rewards in a Bradley-Terry pair leaves \\(\\sigma(r_w-r_l)\\) unchanged.",
+        true,
+      ],
+      [
+        "Scaling reward gaps changes Bradley-Terry sharpness unless a temperature-like scale compensates.",
+        true,
+      ],
+      [
+        "Best-of-N returns the same winner under any strictly increasing transformation of reward scores.",
+        true,
+      ],
+      [
+        "Any nonlinear monotonic transformation of reward scores leaves PPO gradients identical because PPO only uses candidate ranks.",
+        false,
+      ],
+    ],
+    "Pairwise reward modeling and Best-of-N depend on ordering or differences in ways that make some transformations harmless and others meaningful. PPO-style optimization uses numeric rewards or advantages inside an objective, so the scale and transformation of rewards can change update magnitudes.",
+  ),
+  makeQuestion(
+    "cme295-lect5-q54",
+    "hard",
+    "A KL-constrained policy optimum has the form \\(\\pi^*(y\\mid x)\\propto \\pi_{ref}(y\\mid x)\\exp(r(x,y)/\\beta)\\). If the reference odds for response A over response B are \\(2:1\\), \\(r_A-r_B=0.7\\), and \\(\\beta=0.7\\), which statements are correct?",
+    [
+      [
+        "\\(2e:1\\), because the reference odds are multiplied by \\(\\exp((r_A-r_B)/\\beta)=e\\).",
+        true,
+      ],
+      [
+        "A larger \\(\\beta\\) would make the reward gap affect the odds less strongly.",
+        true,
+      ],
+      [
+        "If \\(r_A-r_B\\) were \\(-0.7\\) instead, the odds would become \\(2e^{-1}:1\\).",
+        true,
+      ],
+      [
+        "The partition function normalizes the full distribution, but it cancels out of this two-response odds ratio.",
+        true,
+      ],
+    ],
+    "The partition function normalizes probabilities across all responses, but relative odds between two responses keep the reward-difference factor. Here the reward gap divided by \\(\\beta\\) is \\(1\\), so the reference odds are multiplied by \\(e\\); changing the sign of the reward gap would invert that exponential factor.",
+  ),
+  makeQuestion(
+    "cme295-lect5-q55",
+    "hard",
+    "Which statements correctly connect on-policy RLHF, DPO, and distribution support?",
+    [
+      [
+        "PPO-style RLHF samples completions from the current policy, so its update data moves as the policy changes.",
+        true,
+      ],
+      [
+        "DPO can train on static chosen/rejected pairs, which is simpler but can create mismatch if those pairs differ from the current model's likely completions.",
+        true,
+      ],
+      [
+        "If a policy never samples a region of completion space during on-policy training, the reward model provides little direct update signal about that region.",
+        true,
+      ],
+      [
+        "Preference data needs enough support near the behaviors the tuned model may actually produce for the loss to teach useful distinctions.",
+        true,
+      ],
+    ],
+    "On-policy methods and supervised preference methods differ in how their training distributions arise. Both still need informative comparisons over the kinds of completions the final model may produce; otherwise the optimization can miss important regions or learn from mismatched examples.",
+  ),
+  makeQuestion(
+    "cme295-lect5-q56",
+    "hard",
+    "Which statements identify mathematical or statistical assumptions behind pairwise preference modeling?",
+    [
+      [
+        "A scalar reward model assumes preferences can be represented well enough by assigning each prompt-response pair a score.",
+        true,
+      ],
+      [
+        "Cyclic or strongly context-dependent preferences can be hard for a simple scalar Bradley-Terry model to represent exactly.",
+        true,
+      ],
+      [
+        "More comparisons reduce sampling noise but cannot fix an ambiguous preference dimension.",
+        true,
+      ],
+      [
+        "Bradley-Terry training requires annotators to provide exact pointwise utility values before any pairwise loss can be computed.",
+        false,
+      ],
+    ],
+    "Bradley-Terry turns comparisons into a scalar-score model, which is powerful but still an approximation to human judgment. If the task mixes incompatible dimensions or has cyclic preferences, more data can stabilize estimates but cannot remove the need to define what the reward is supposed to measure.",
+  ),
+  makeQuestion(
+    "cme295-lect5-q57",
+    "hard",
+    "Suppose the true objective is \\(u=\\text{informativeness}\\), but the learned proxy reward behaves like \\(r=\\text{informativeness}+2\\cdot\\text{joke applause}\\). Which conclusions follow?",
+    [
+      [
+        "A policy can increase \\(r\\) by adding jokes even when \\(u\\) does not improve.",
+        true,
+      ],
+      [
+        "A KL penalty against a capable reference model can limit how far optimization chases the proxy in one preference-tuning stage.",
+        true,
+      ],
+      [
+        "Better rating guidelines or multi-dimensional evaluation can reduce the mismatch between the proxy and the true objective.",
+        true,
+      ],
+      [
+        "Held-out human evaluation remains useful because high proxy reward alone does not prove high true utility.",
+        true,
+      ],
+    ],
+    "This is a formal version of reward hacking: the proxy includes a term that can be optimized without improving the desired objective. Constraints, clearer labels, and evaluation outside the training reward help detect or limit the gap between proxy score and real usefulness.",
+  ),
+  makeAssertionReasonQuestion(
+    "cme295-lect5-q58",
+    "hard",
+    "Assertion: In Direct Preference Optimization (DPO), increasing \\(\\beta\\) increases the scale of the policy-versus-reference log-ratio difference inside the preference logit.\n\nReason: The reference model is frozen while the trainable policy changes.",
+    5,
+    "The assertion is true for the common DPO logit form because \\(\\beta\\) multiplies the policy/reference log-ratio contrast. The reason is also true, but it explains anchoring rather than the algebraic scale effect of \\(\\beta\\); the scale effect comes from multiplication by \\(\\beta\\) in the loss.",
+  ),
+  makeAssertionReasonQuestion(
+    "cme295-lect5-q59",
+    "medium",
+    "Assertion: A Bradley-Terry reward model requires annotators to provide absolute pointwise utility scores for every response.\n\nReason: The Bradley-Terry loss can be formed from chosen-versus-rejected response pairs.",
+    2,
+    "The assertion is false because Bradley-Terry reward modeling can be trained from pairwise preferences without absolute utility labels. The reason is true: the loss uses the chosen and rejected pair to push their learned scores apart in the preferred direction.",
+  ),
+  makeQuestion(
+    "cme295-lect5-q60",
+    "hard",
+    "Which statements correctly compare the mathematical objects carried by PPO-style RLHF, DPO, and Best-of-N?",
+    [
+      [
+        "A PPO-style RLHF implementation can carry policy, value, reward, and reference model components during optimization.",
+        true,
+      ],
+      [
+        "DPO can optimize a trainable policy against a frozen reference without separate reward or value models.",
+        true,
+      ],
+      [
+        "Best-of-N with \\(N=4\\) usually reduces inference generation work to one quarter of a single-sample system.",
+        false,
+      ],
+      [
+        "RLHF reward labels are ordinary token-level cross-entropy targets, so no completion-level preference signal is needed.",
+        false,
+      ],
+    ],
+    "PPO-style RLHF is component-heavy because it combines reward scoring, value estimation, policy updates, and reference constraints. DPO removes the reward and value models from the optimization loop, while Best-of-N avoids training but increases inference-time generation and scoring work.",
+  ),
 ];

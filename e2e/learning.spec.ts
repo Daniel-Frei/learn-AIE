@@ -38,6 +38,9 @@ test("lists available learning courses", async ({ page }) => {
     page.getByRole("link", { name: /clinical trials crash course/i }),
   ).toBeVisible();
   await expect(
+    page.getByRole("link", { name: /crash course medicine/i }),
+  ).toBeVisible();
+  await expect(
     page.getByRole("link", { name: /text into transformers/i }),
   ).toHaveCount(0);
 });
@@ -60,6 +63,24 @@ test("lists learning experiences for a selected course", async ({ page }) => {
   await expect(page).toHaveURL(
     /\/learn\/crash-course-probability\/crash-probability-l4$/,
   );
+});
+
+test("lists the standalone Medicine learning page for its course", async ({
+  page,
+}) => {
+  await page.goto("/learn/crash-course-medicine");
+
+  await expect(
+    page.getByRole("heading", { name: /crash course medicine/i }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", {
+      name: /what medicine is/i,
+    }),
+  ).toBeVisible();
+
+  await page.getByRole("link", { name: /what medicine is/i }).click();
+  await expect(page).toHaveURL(/\/learn\/crash-course-medicine\/lecture-1$/);
 });
 
 test("labels and sorts course learning experiences by source sequence", async ({
@@ -586,6 +607,45 @@ test("renders the Clinical Trials L3 learning page and supports checks", async (
   await expect(absoluteRiskCheck.getByRole("status")).toHaveText(/correct/i);
 });
 
+test("renders the standalone Medicine Lecture 1 page and supports clinical reasoning interactions", async ({
+  page,
+}) => {
+  await page.goto("/learn/crash-course-medicine/lecture-1");
+
+  await expect(
+    page.getByRole("heading", {
+      name: /what medicine is/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /work through a patient case in clinical order/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /start questions/i }),
+  ).toHaveCount(0);
+
+  const studio = page.getByTestId("medicine-clinical-studio");
+  await studio.getByRole("button", { name: /exam and vitals/i }).click();
+  await expect(
+    studio.getByRole("button", { name: /^Oxygen saturation 89%$/i }),
+  ).toBeVisible();
+
+  await studio.getByRole("button", { name: /^model$/i }).click();
+  await expect(studio.locator(".representation-output")).toContainText(
+    /hypoxemia/i,
+  );
+
+  await studio.getByRole("button", { name: /give oxygen/i }).click();
+  await expect(
+    studio.getByText(/low oxygen is a direct instability signal/i),
+  ).toBeVisible();
+
+  await studio.getByRole("button", { name: /wait for every test/i }).click();
+  await expect(studio.getByText(/premature closure is active/i)).toBeVisible();
+});
+
 test("keeps the Clinical Trials L3 learning page usable at mobile width", async ({
   page,
 }) => {
@@ -594,6 +654,22 @@ test("keeps the Clinical Trials L3 learning page usable at mobile width", async 
 
   await expect(
     page.getByRole("link", { name: /start questions/i }),
+  ).toBeVisible();
+  const scrollWidth = await page.evaluate(
+    () => document.documentElement.scrollWidth,
+  );
+  const viewportWidth = await page.evaluate(() => window.innerWidth);
+  expect(scrollWidth).toBeLessThanOrEqual(viewportWidth + 1);
+});
+
+test("keeps the standalone Medicine Lecture 1 page usable at mobile width", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/learn/crash-course-medicine/lecture-1");
+
+  await expect(
+    page.getByRole("link", { name: /back to medicine course/i }),
   ).toBeVisible();
   const scrollWidth = await page.evaluate(
     () => document.documentElement.scrollWidth,

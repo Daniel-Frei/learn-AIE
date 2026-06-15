@@ -1,0 +1,1487 @@
+/* Scoped from testLearningExperience/src/styles.css so the clinical studio can retain its UX without leaking generic selectors across the app. */
+
+.medicine-clinical-studio {
+  color-scheme: light;
+  --ink: #18212b;
+  --muted: #627181;
+  --line: #d7dee5;
+  --paper: #f4f7f8;
+  --panel: #ffffff;
+  --teal: #087568;
+  --teal-soft: #dff4f0;
+  --coral: #b9473e;
+  --coral-soft: #fce6e3;
+  --gold: #a86b04;
+  --gold-soft: #fff0cc;
+  --green: #397549;
+  --green-soft: #e4f2e8;
+  --blue: #335f97;
+  --blue-soft: #e5eef8;
+  --shadow: 0 16px 40px rgba(20, 31, 43, 0.12);
+}
+
+.medicine-clinical-studio * {
+  box-sizing: border-box;
+}
+
+.medicine-clinical-studio {
+  scroll-behavior: smooth;
+}
+
+.medicine-clinical-studio {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  line-height: 1.45;
+}
+
+.medicine-clinical-studio button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.medicine-clinical-studio a {
+  color: inherit;
+}
+
+.medicine-clinical-studio button:focus-visible,
+.medicine-clinical-studio a:focus-visible {
+  outline: 3px solid rgba(51, 95, 151, 0.35);
+  outline-offset: 2px;
+}
+
+.medicine-clinical-studio .lesson-shell {
+  min-height: 100vh;
+}
+
+.medicine-clinical-studio .lesson-header {
+  position: sticky;
+  top: 57px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 66px;
+  padding: 0.7rem clamp(1rem, 4vw, 2rem);
+  border-bottom: 1px solid var(--line);
+  background: rgba(244, 247, 248, 0.94);
+  backdrop-filter: blur(12px);
+}
+
+.medicine-clinical-studio .brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.medicine-clinical-studio .brand-mark {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 2.45rem;
+  height: 2.45rem;
+  border-radius: 8px;
+  background: var(--ink);
+  color: white;
+}
+
+.medicine-clinical-studio .brand-lockup strong,
+.medicine-clinical-studio .brand-lockup small {
+  display: block;
+}
+
+.medicine-clinical-studio .brand-lockup small {
+  color: var(--muted);
+}
+
+.medicine-clinical-studio .lesson-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.45rem, 1.4vw, 1rem);
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.medicine-clinical-studio .lesson-nav a {
+  text-decoration: none;
+}
+
+.medicine-clinical-studio .lesson-nav a:hover {
+  color: var(--ink);
+}
+
+.medicine-clinical-studio .hero-section,
+.medicine-clinical-studio .lesson-band,
+.medicine-clinical-studio .lab-section,
+.medicine-clinical-studio .recap-section {
+  padding: clamp(2.5rem, 6vw, 5.5rem) clamp(1rem, 5vw, 4rem);
+}
+
+.medicine-clinical-studio .hero-section {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.78fr) minmax(360px, 1.22fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: center;
+  min-height: calc(100svh - 66px);
+  background:
+    linear-gradient(130deg, rgba(8, 117, 104, 0.16), transparent 35%),
+    linear-gradient(35deg, rgba(185, 71, 62, 0.1), transparent 42%), #f8fafb;
+}
+
+.medicine-clinical-studio .lesson-band {
+  background: #ffffff;
+}
+
+.medicine-clinical-studio .lesson-band.warm,
+.medicine-clinical-studio .lab-section {
+  background: #eef3f4;
+}
+
+.medicine-clinical-studio .hero-copy,
+.medicine-clinical-studio .section-intro,
+.medicine-clinical-studio .lens-lab,
+.medicine-clinical-studio .vocabulary-layout,
+.medicine-clinical-studio .encounter-map,
+.medicine-clinical-studio .reasoning-primer,
+.medicine-clinical-studio .lab-workflow,
+.medicine-clinical-studio .uncertainty-board,
+.medicine-clinical-studio .recap-section,
+.medicine-clinical-studio .lab-heading {
+  max-width: 1380px;
+  margin: 0 auto;
+}
+
+.medicine-clinical-studio .eyebrow {
+  margin: 0 0 0.45rem;
+  color: var(--teal);
+  font-size: 0.75rem;
+  font-weight: 780;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.medicine-clinical-studio h1,
+.medicine-clinical-studio h2,
+.medicine-clinical-studio h3,
+.medicine-clinical-studio p,
+.medicine-clinical-studio button,
+.medicine-clinical-studio a,
+.medicine-clinical-studio strong,
+.medicine-clinical-studio small,
+.medicine-clinical-studio li,
+.medicine-clinical-studio dd {
+  overflow-wrap: anywhere;
+}
+
+.medicine-clinical-studio h1 {
+  max-width: 10ch;
+  margin: 0;
+  font-size: clamp(3rem, 9vw, 7rem);
+  line-height: 0.92;
+  letter-spacing: 0;
+  overflow-wrap: normal;
+  text-wrap: balance;
+  word-break: normal;
+}
+
+.medicine-clinical-studio h2 {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  line-height: 1.04;
+  letter-spacing: 0;
+}
+
+.medicine-clinical-studio h3 {
+  margin: 0;
+  font-size: clamp(1.1rem, 2vw, 1.45rem);
+  line-height: 1.2;
+}
+
+.medicine-clinical-studio .lede {
+  max-width: 58ch;
+  margin: 1.2rem 0 1.5rem;
+  color: #344452;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+}
+
+.medicine-clinical-studio .hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.medicine-clinical-studio .hero-actions a,
+.medicine-clinical-studio .text-button,
+.medicine-clinical-studio .icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: white;
+  color: var(--ink);
+  padding: 0.5rem 0.75rem;
+  font-weight: 740;
+  text-decoration: none;
+}
+
+.medicine-clinical-studio .hero-actions a:first-child,
+.medicine-clinical-studio .text-button {
+  border-color: var(--teal);
+  background: var(--teal);
+  color: white;
+}
+
+.medicine-clinical-studio .flow-visual {
+  display: grid;
+  gap: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: var(--shadow);
+}
+
+.medicine-clinical-studio .clinical-mural {
+  position: relative;
+  min-height: clamp(250px, 24vw, 320px);
+  overflow: hidden;
+  border: 1px solid rgba(24, 33, 43, 0.1);
+  border-radius: 8px;
+  background:
+    linear-gradient(rgba(24, 33, 43, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24, 33, 43, 0.055) 1px, transparent 1px),
+    linear-gradient(135deg, rgba(8, 117, 104, 0.16), transparent 40%),
+    linear-gradient(35deg, rgba(185, 71, 62, 0.13), transparent 45%), #f8fbfc;
+  background-size:
+    28px 28px,
+    28px 28px,
+    auto,
+    auto,
+    auto;
+}
+
+.medicine-clinical-studio .mural-patient {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: clamp(7.2rem, 13vw, 10rem);
+  height: clamp(7.2rem, 13vw, 10rem);
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(8, 117, 104, 0.18);
+  border-radius: 999px;
+  background:
+    radial-gradient(
+      circle at 50% 34%,
+      rgba(185, 71, 62, 0.28),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 50% 62%,
+      rgba(8, 117, 104, 0.28),
+      transparent 32%
+    ),
+    #eff8f6;
+  color: var(--teal);
+  box-shadow: 0 18px 45px rgba(8, 117, 104, 0.16);
+}
+
+.medicine-clinical-studio .mural-patient::before,
+.medicine-clinical-studio .mural-patient::after {
+  position: absolute;
+  content: "";
+  border-radius: 999px;
+  background: rgba(8, 117, 104, 0.12);
+}
+
+.medicine-clinical-studio .mural-patient::before {
+  top: 1.15rem;
+  width: 2.1rem;
+  height: 2.1rem;
+}
+
+.medicine-clinical-studio .mural-patient::after {
+  bottom: 1rem;
+  width: 4.6rem;
+  height: 3rem;
+  border-radius: 999px 999px 1.5rem 1.5rem;
+}
+
+.medicine-clinical-studio .mural-note {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  gap: 0.2rem;
+  width: min(14.5rem, 40%);
+  min-width: 0;
+  border: 1px solid rgba(24, 33, 43, 0.12);
+  border-left: 4px solid var(--teal);
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 12px 26px rgba(20, 31, 43, 0.1);
+}
+
+.medicine-clinical-studio .mural-note span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 780;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.medicine-clinical-studio .mural-note strong {
+  font-size: clamp(0.82rem, 1.45vw, 1rem);
+  line-height: 1.18;
+}
+
+.medicine-clinical-studio .mural-note-story {
+  top: 1rem;
+  left: 1rem;
+}
+
+.medicine-clinical-studio .mural-note-sign {
+  top: 1.35rem;
+  right: 1rem;
+  border-left-color: var(--gold);
+}
+
+.medicine-clinical-studio .mural-note-context {
+  bottom: 1.1rem;
+  left: 1rem;
+  border-left-color: var(--blue);
+}
+
+.medicine-clinical-studio .mural-note-decision {
+  right: 1rem;
+  bottom: 1.1rem;
+  border-left-color: var(--coral);
+}
+
+.medicine-clinical-studio .mural-trace {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 5.2rem;
+  left: 1.25rem;
+  width: calc(100% - 2.5rem);
+  height: 84px;
+  color: var(--teal);
+  opacity: 0.82;
+}
+
+.medicine-clinical-studio .mural-trace path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.medicine-clinical-studio .trace-baseline {
+  stroke: rgba(24, 33, 43, 0.12);
+  stroke-width: 2;
+}
+
+.medicine-clinical-studio .trace-line {
+  stroke: currentColor;
+  stroke-width: 4;
+  stroke-dasharray: 520;
+  animation: trace-draw 5.5s ease-in-out infinite alternate;
+}
+
+.medicine-clinical-studio .flow-steps {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.medicine-clinical-studio .flow-step {
+  position: relative;
+  min-height: 155px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.85rem;
+  background: #fbfcfd;
+}
+
+.medicine-clinical-studio .flow-step span,
+.medicine-clinical-studio .encounter-group-heading span {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: 0.7rem;
+  border-radius: 7px;
+  background: var(--ink);
+  color: white;
+  font-weight: 820;
+}
+
+.medicine-clinical-studio .flow-step strong {
+  display: block;
+  font-size: 0.92rem;
+  line-height: 1.18;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+.medicine-clinical-studio .flow-step p {
+  margin: 0.45rem 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.medicine-clinical-studio .flow-arrow {
+  position: absolute;
+  right: -0.55rem;
+  top: 1.15rem;
+  z-index: 2;
+  color: var(--teal);
+}
+
+.medicine-clinical-studio .section-intro {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.85fr) minmax(320px, 1.15fr);
+  gap: 1.25rem;
+  align-items: end;
+  margin-bottom: 1.25rem;
+}
+
+.medicine-clinical-studio .section-intro > p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.medicine-clinical-studio .lens-lab,
+.medicine-clinical-studio .vocabulary-layout,
+.medicine-clinical-studio .reasoning-primer,
+.medicine-clinical-studio .uncertainty-board {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.7fr) minmax(320px, 1.3fr);
+  gap: 1rem;
+}
+
+.medicine-clinical-studio .lens-selector,
+.medicine-clinical-studio .term-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-content: start;
+}
+
+.medicine-clinical-studio .lens-selector button,
+.medicine-clinical-studio .term-grid button,
+.medicine-clinical-studio .case-tab,
+.medicine-clinical-studio .stage-button,
+.medicine-clinical-studio .fact-chip,
+.medicine-clinical-studio .plan-option button,
+.medicine-clinical-studio .diagnosis-controls button,
+.medicine-clinical-studio .diagnosis-main {
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: white;
+  color: var(--ink);
+}
+
+.medicine-clinical-studio .lens-selector button,
+.medicine-clinical-studio .term-grid button {
+  min-height: 40px;
+  padding: 0.5rem 0.7rem;
+}
+
+.medicine-clinical-studio .lens-selector button[aria-pressed="true"],
+.medicine-clinical-studio .term-grid button[aria-pressed="true"],
+.medicine-clinical-studio .case-tab[aria-pressed="true"],
+.medicine-clinical-studio .fact-chip[aria-pressed="true"],
+.medicine-clinical-studio .plan-option button[aria-pressed="true"] {
+  border-color: var(--teal);
+  background: var(--teal-soft);
+  color: #084e46;
+}
+
+.medicine-clinical-studio .concept-panel,
+.medicine-clinical-studio .case-card,
+.medicine-clinical-studio .panel,
+.medicine-clinical-studio .monitor {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: var(--shadow);
+}
+
+.medicine-clinical-studio .concept-panel,
+.medicine-clinical-studio .case-card,
+.medicine-clinical-studio .panel,
+.medicine-clinical-studio .monitor {
+  padding: 1rem;
+}
+
+.medicine-clinical-studio .panel-icon {
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  margin-bottom: 0.75rem;
+  border-radius: 7px;
+  background: var(--teal-soft);
+  color: var(--teal);
+}
+
+.medicine-clinical-studio .concept-panel p,
+.medicine-clinical-studio .case-card p,
+.medicine-clinical-studio .panel p {
+  color: var(--muted);
+}
+
+.medicine-clinical-studio .concept-panel strong {
+  color: var(--teal);
+}
+
+.medicine-clinical-studio .vocabulary-layout {
+  grid-template-columns: minmax(220px, 0.55fr) minmax(320px, 1fr) minmax(
+      280px,
+      0.8fr
+    );
+}
+
+.medicine-clinical-studio .term-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.medicine-clinical-studio .term-grid button {
+  display: grid;
+  gap: 0.2rem;
+  text-align: left;
+}
+
+.medicine-clinical-studio .term-grid small {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.medicine-clinical-studio .vocabulary-readout dl {
+  display: grid;
+  gap: 0.65rem;
+  margin: 1rem 0 0;
+}
+
+.medicine-clinical-studio .vocabulary-readout div {
+  border-top: 1px solid var(--line);
+  padding-top: 0.65rem;
+}
+
+.medicine-clinical-studio .vocabulary-readout dt {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 780;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.medicine-clinical-studio .vocabulary-readout dd {
+  margin: 0.2rem 0 0;
+}
+
+.medicine-clinical-studio .evidence-mini-board {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.medicine-clinical-studio .evidence-mini {
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--blue);
+  border-radius: 8px;
+  padding: 0.8rem;
+  background: #fbfcfd;
+}
+
+.medicine-clinical-studio .evidence-mini.sign {
+  border-left-color: var(--coral);
+}
+
+.medicine-clinical-studio .evidence-mini.comorbidity {
+  border-left-color: var(--gold);
+}
+
+.medicine-clinical-studio .evidence-mini.diagnosis {
+  border-left-color: var(--teal);
+}
+
+.medicine-clinical-studio .evidence-mini span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 780;
+  text-transform: uppercase;
+}
+
+.medicine-clinical-studio .encounter-map {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.medicine-clinical-studio .encounter-map article {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1rem;
+  background: white;
+  box-shadow: var(--shadow);
+}
+
+.medicine-clinical-studio .encounter-group-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.medicine-clinical-studio .encounter-group-heading span {
+  margin: 0;
+}
+
+.medicine-clinical-studio .encounter-map ul,
+.medicine-clinical-studio .debrief-panel ul,
+.medicine-clinical-studio .recap-section ol {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--muted);
+}
+
+.medicine-clinical-studio .reasoning-primer {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.medicine-clinical-studio .thin-good {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+
+.medicine-clinical-studio .thin-good span,
+.medicine-clinical-studio .thin-good strong {
+  border-radius: 7px;
+  padding: 0.65rem;
+}
+
+.medicine-clinical-studio .thin-good span {
+  background: #f2f5f7;
+  color: var(--muted);
+}
+
+.medicine-clinical-studio .thin-good strong {
+  background: var(--teal-soft);
+}
+
+.medicine-clinical-studio .risk-matrix {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+
+.medicine-clinical-studio .risk-matrix span,
+.medicine-clinical-studio .risk-matrix strong {
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  padding: 0.65rem;
+  background: #fbfcfd;
+}
+
+.medicine-clinical-studio .risk-matrix strong {
+  border-color: var(--coral);
+  background: var(--coral-soft);
+  color: #7d2c26;
+}
+
+.medicine-clinical-studio .category-glossary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+}
+
+.medicine-clinical-studio .category-glossary span {
+  border-radius: 999px;
+  padding: 0.25rem 0.55rem;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-size: 0.8rem;
+  font-weight: 760;
+}
+
+.medicine-clinical-studio .lab-heading {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(360px, 1.2fr);
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 1rem;
+}
+
+.medicine-clinical-studio .lab-heading-copy {
+  max-width: 54ch;
+  margin: 0.65rem 0 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+}
+
+.medicine-clinical-studio .case-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.medicine-clinical-studio .case-tab {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+  min-height: 68px;
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.medicine-clinical-studio .case-tab span,
+.medicine-clinical-studio .case-kicker,
+.medicine-clinical-studio .score-pill,
+.medicine-clinical-studio .alert-pill {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 730;
+  letter-spacing: 0.02em;
+}
+
+.medicine-clinical-studio .lab-workflow {
+  display: grid;
+  gap: 1.3rem;
+}
+
+.medicine-clinical-studio .workflow-step {
+  display: grid;
+  gap: 0.8rem;
+  min-width: 0;
+  border-top: 1px solid rgba(24, 33, 43, 0.12);
+  padding-top: 1.2rem;
+}
+
+.medicine-clinical-studio .workflow-step:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.medicine-clinical-studio .workflow-step-header {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.8rem;
+  align-items: start;
+}
+
+.medicine-clinical-studio .workflow-step-number {
+  display: grid;
+  place-items: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 8px;
+  background: var(--ink);
+  color: white;
+  font-weight: 820;
+}
+
+.medicine-clinical-studio .workflow-step-header h3 {
+  max-width: 42rem;
+}
+
+.medicine-clinical-studio .workflow-step-body,
+.medicine-clinical-studio .arrival-grid,
+.medicine-clinical-studio .timeline-grid,
+.medicine-clinical-studio .decision-grid {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.medicine-clinical-studio .arrival-grid {
+  grid-template-columns: minmax(360px, 1.1fr) minmax(280px, 0.7fr);
+}
+
+.medicine-clinical-studio .timeline-grid {
+  grid-template-columns: minmax(320px, 0.72fr) minmax(420px, 1.28fr);
+}
+
+.medicine-clinical-studio .representation-panel,
+.medicine-clinical-studio .differential-panel {
+  max-width: 980px;
+}
+
+.medicine-clinical-studio .decision-grid {
+  grid-template-columns: minmax(360px, 0.9fr) minmax(360px, 1.1fr);
+  align-items: start;
+}
+
+.medicine-clinical-studio .column {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.medicine-clinical-studio .case-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+  text-transform: uppercase;
+}
+
+.medicine-clinical-studio .case-card blockquote {
+  margin: 1rem 0;
+  border-left: 4px solid var(--teal);
+  padding: 0.65rem 0.8rem;
+  background: var(--teal-soft);
+  color: #163d39;
+  font-weight: 640;
+}
+
+.medicine-clinical-studio .monitor {
+  color: var(--teal);
+}
+
+.medicine-clinical-studio .monitor.concerning {
+  color: var(--gold);
+}
+
+.medicine-clinical-studio .monitor.unstable {
+  color: var(--coral);
+}
+
+.medicine-clinical-studio .monitor-topline,
+.medicine-clinical-studio .panel-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.85rem;
+}
+
+.medicine-clinical-studio .monitor-topline strong {
+  display: block;
+  color: var(--ink);
+  font-size: 1.35rem;
+  text-transform: capitalize;
+}
+
+.medicine-clinical-studio .monitor-topline span {
+  color: var(--muted);
+  font-weight: 760;
+}
+
+.medicine-clinical-studio .monitor svg {
+  display: block;
+  width: 100%;
+  height: 86px;
+  margin: 0.5rem 0;
+  border-radius: 7px;
+  background:
+    linear-gradient(rgba(24, 33, 43, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24, 33, 43, 0.07) 1px, transparent 1px), #fbfcfd;
+  background-size: 24px 24px;
+}
+
+.medicine-clinical-studio .monitor-readouts,
+.medicine-clinical-studio .score-pill,
+.medicine-clinical-studio .alert-pill {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  color: var(--ink);
+}
+
+.medicine-clinical-studio .monitor-readouts span,
+.medicine-clinical-studio .score-pill,
+.medicine-clinical-studio .alert-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 30px;
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  background: #f2f5f7;
+}
+
+.medicine-clinical-studio .alert-pill {
+  background: var(--coral-soft);
+  color: var(--coral);
+}
+
+.medicine-clinical-studio .stage-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.medicine-clinical-studio .stage-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0.55rem 0.65rem;
+}
+
+.medicine-clinical-studio .stage-button strong {
+  color: var(--teal);
+}
+
+.medicine-clinical-studio .evidence-feed {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.medicine-clinical-studio .evidence-item {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 0.75rem;
+  border-top: 1px solid var(--line);
+  padding-top: 0.65rem;
+}
+
+.medicine-clinical-studio .evidence-item:first-of-type {
+  border-top: 0;
+}
+
+.medicine-clinical-studio .evidence-item span {
+  align-self: start;
+  width: fit-content;
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-size: 0.77rem;
+  font-weight: 780;
+}
+
+.medicine-clinical-studio .evidence-item.sign span {
+  background: var(--coral-soft);
+  color: var(--coral);
+}
+
+.medicine-clinical-studio .evidence-item.comorbidity span {
+  background: var(--gold-soft);
+  color: var(--gold);
+}
+
+.medicine-clinical-studio .evidence-item.context span,
+.medicine-clinical-studio .evidence-item.value span {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.medicine-clinical-studio .evidence-item.test span {
+  background: var(--teal-soft);
+  color: var(--teal);
+}
+
+.medicine-clinical-studio .evidence-item p {
+  margin: 0.2rem 0 0;
+  font-size: 0.92rem;
+}
+
+.medicine-clinical-studio .text-button,
+.medicine-clinical-studio .icon-button {
+  gap: 0.35rem;
+}
+
+.medicine-clinical-studio .icon-button {
+  min-width: 40px;
+  width: 40px;
+  padding: 0;
+}
+
+.medicine-clinical-studio .representation-output {
+  display: grid;
+  gap: 0.55rem;
+  margin: 1rem 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.85rem;
+  background: #fbfcfd;
+}
+
+.medicine-clinical-studio .representation-output span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.medicine-clinical-studio .representation-output p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.02rem;
+  font-weight: 650;
+}
+
+.medicine-clinical-studio .representation-output strong {
+  color: var(--teal);
+}
+
+.medicine-clinical-studio .progress-track {
+  height: 0.7rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e2e7ec;
+}
+
+.medicine-clinical-studio .progress-track i,
+.medicine-clinical-studio .metric i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--gold), var(--teal));
+}
+
+.medicine-clinical-studio .chip-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.medicine-clinical-studio .fact-chip {
+  min-height: 38px;
+  padding: 0.45rem 0.65rem;
+}
+
+.medicine-clinical-studio .diagnosis-list {
+  display: grid;
+  gap: 0.55rem;
+  margin: 1rem 0;
+  padding: 0;
+  list-style: none;
+}
+
+.medicine-clinical-studio .diagnosis-list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.5rem;
+  align-items: stretch;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfd;
+  padding: 0.4rem;
+}
+
+.medicine-clinical-studio .diagnosis-list li.active {
+  border-color: var(--teal);
+  box-shadow: inset 0 0 0 1px rgba(8, 117, 104, 0.25);
+}
+
+.medicine-clinical-studio .diagnosis-main {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.65rem;
+  align-items: center;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.medicine-clinical-studio .diagnosis-main > div {
+  min-width: 0;
+}
+
+.medicine-clinical-studio .diagnosis-main > span {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 7px;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-weight: 820;
+}
+
+.medicine-clinical-studio .diagnosis-main small {
+  display: block;
+  color: var(--muted);
+}
+
+.medicine-clinical-studio .diagnosis-main b {
+  font-size: 1.2rem;
+}
+
+.medicine-clinical-studio .diagnosis-controls {
+  display: grid;
+  grid-template-columns: repeat(2, 34px);
+  gap: 0.35rem;
+}
+
+.medicine-clinical-studio .diagnosis-controls button {
+  background: white;
+  min-height: 36px;
+}
+
+.medicine-clinical-studio .diagnosis-detail {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.85rem;
+  background: #fbfcfd;
+}
+
+.medicine-clinical-studio .diagnosis-detail p {
+  margin: 0.4rem 0 0.8rem;
+}
+
+.medicine-clinical-studio .metric-row {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.medicine-clinical-studio .metric {
+  display: grid;
+  grid-template-columns: 5.8rem minmax(70px, 1fr) 2.2rem;
+  gap: 0.5rem;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.medicine-clinical-studio .metric div {
+  height: 0.55rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #e2e7ec;
+}
+
+.medicine-clinical-studio .metric strong {
+  color: var(--ink);
+}
+
+.medicine-clinical-studio .discriminators {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+}
+
+.medicine-clinical-studio .discriminators span {
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  background: var(--blue-soft);
+  color: var(--blue);
+  font-size: 0.78rem;
+  font-weight: 740;
+}
+
+.medicine-clinical-studio .lab-note {
+  margin: 0.75rem 0 0;
+  border-left: 4px solid var(--teal);
+  padding: 0.55rem 0.7rem;
+  background: var(--teal-soft);
+  color: #0b5048;
+  font-weight: 640;
+}
+
+.medicine-clinical-studio .plan-options {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+.medicine-clinical-studio .plan-option {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfd;
+}
+
+.medicine-clinical-studio .plan-option.selected {
+  border-color: var(--teal);
+}
+
+.medicine-clinical-studio .plan-option button {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  padding: 0.65rem;
+  text-align: left;
+  font-weight: 700;
+}
+
+.medicine-clinical-studio .plan-option p {
+  margin: 0;
+  border-top: 1px solid var(--line);
+  padding: 0.65rem;
+  font-size: 0.92rem;
+}
+
+.medicine-clinical-studio .decision-feedback {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.65rem;
+  align-items: start;
+  margin-top: 1rem;
+  border-radius: 8px;
+  padding: 0.8rem;
+  background: var(--teal-soft);
+  color: #0b5048;
+}
+
+.medicine-clinical-studio .decision-feedback.warning {
+  background: var(--coral-soft);
+  color: #7d2c26;
+}
+
+.medicine-clinical-studio .decision-feedback p {
+  margin: 0;
+  color: inherit;
+  font-weight: 650;
+}
+
+.medicine-clinical-studio .uncertainty-board {
+  grid-template-columns: minmax(280px, 0.85fr) minmax(320px, 1.1fr) minmax(
+      280px,
+      0.85fr
+    );
+}
+
+.medicine-clinical-studio .threshold-visual {
+  position: relative;
+  min-height: 210px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1rem;
+  background: white;
+  box-shadow: var(--shadow);
+}
+
+.medicine-clinical-studio .threshold-visual div {
+  display: grid;
+  grid-template-columns: 25% 35% 40%;
+  height: 72px;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
+.medicine-clinical-studio .threshold-visual span {
+  display: grid;
+  place-items: center;
+  padding: 0.5rem;
+  text-align: center;
+  font-weight: 780;
+}
+
+.medicine-clinical-studio .threshold-visual span:nth-child(1) {
+  background: var(--green-soft);
+}
+
+.medicine-clinical-studio .threshold-visual span:nth-child(2) {
+  background: var(--gold-soft);
+}
+
+.medicine-clinical-studio .threshold-visual span:nth-child(3) {
+  background: var(--coral-soft);
+}
+
+.medicine-clinical-studio .threshold-visual i {
+  position: absolute;
+  bottom: 1.2rem;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  padding: 0.3rem 0.55rem;
+  background: var(--ink);
+  color: white;
+  font-style: normal;
+  font-size: 0.82rem;
+}
+
+.medicine-clinical-studio .recap-section {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.75fr) minmax(320px, 1.25fr);
+  gap: 1.25rem;
+  background: var(--ink);
+  color: white;
+}
+
+.medicine-clinical-studio .recap-section .eyebrow {
+  color: #8ce0d3;
+}
+
+.medicine-clinical-studio .recap-section ol {
+  margin-top: 0;
+  color: #d6dee7;
+}
+
+@keyframes trace-draw {
+  from {
+    stroke-dashoffset: 520;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .medicine-clinical-studio {
+    scroll-behavior: auto;
+  }
+
+  .medicine-clinical-studio .trace-line {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (max-width: 1320px) and (min-width: 1161px) {
+  .medicine-clinical-studio .hero-section,
+  .medicine-clinical-studio .lesson-band,
+  .medicine-clinical-studio .lab-section,
+  .medicine-clinical-studio .recap-section {
+    padding-right: clamp(1rem, 3vw, 2.5rem);
+    padding-left: clamp(1rem, 3vw, 2.5rem);
+  }
+
+  .medicine-clinical-studio .hero-section {
+    grid-template-columns: minmax(380px, 0.74fr) minmax(560px, 1.26fr);
+    gap: clamp(1.2rem, 2.5vw, 2.2rem);
+  }
+
+  .medicine-clinical-studio h1 {
+    max-width: 9ch;
+    font-size: clamp(4.8rem, 7.4vw, 6rem);
+  }
+
+  .medicine-clinical-studio .flow-steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1160px) {
+  .medicine-clinical-studio .hero-section,
+  .medicine-clinical-studio .lens-lab,
+  .medicine-clinical-studio .section-intro,
+  .medicine-clinical-studio .lab-heading,
+  .medicine-clinical-studio .arrival-grid,
+  .medicine-clinical-studio .timeline-grid,
+  .medicine-clinical-studio .decision-grid,
+  .medicine-clinical-studio .vocabulary-layout,
+  .medicine-clinical-studio .encounter-map,
+  .medicine-clinical-studio .reasoning-primer,
+  .medicine-clinical-studio .uncertainty-board,
+  .medicine-clinical-studio .recap-section {
+    grid-template-columns: 1fr;
+  }
+
+  .medicine-clinical-studio .flow-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .medicine-clinical-studio .flow-arrow {
+    display: none;
+  }
+
+  .medicine-clinical-studio .term-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .medicine-clinical-studio .lesson-header {
+    position: static;
+    display: grid;
+  }
+
+  .medicine-clinical-studio .lesson-nav {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: visible;
+    padding-bottom: 0.2rem;
+  }
+
+  .medicine-clinical-studio .lesson-nav a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 40px;
+    min-height: 36px;
+  }
+
+  .medicine-clinical-studio h1 {
+    max-width: 8ch;
+    font-size: clamp(3rem, 16vw, 4.8rem);
+  }
+
+  .medicine-clinical-studio .clinical-mural {
+    display: grid;
+    gap: 0.65rem;
+    min-height: 0;
+    padding: 0.75rem;
+  }
+
+  .medicine-clinical-studio .mural-note,
+  .medicine-clinical-studio .mural-trace {
+    position: static;
+  }
+
+  .medicine-clinical-studio .mural-patient {
+    position: relative;
+    inset: auto;
+    justify-self: center;
+    width: 6.6rem;
+    height: 6.6rem;
+    transform: none;
+  }
+
+  .medicine-clinical-studio .mural-note {
+    width: 100%;
+  }
+
+  .medicine-clinical-studio .mural-trace {
+    width: 100%;
+    height: 58px;
+  }
+
+  .medicine-clinical-studio .case-tabs,
+  .medicine-clinical-studio .stage-grid,
+  .medicine-clinical-studio .diagnosis-list li,
+  .medicine-clinical-studio .evidence-item,
+  .medicine-clinical-studio .term-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .medicine-clinical-studio .panel-title-row,
+  .medicine-clinical-studio .monitor-topline {
+    display: grid;
+  }
+
+  .medicine-clinical-studio .diagnosis-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .medicine-clinical-studio .metric {
+    grid-template-columns: 5.3rem minmax(60px, 1fr) 2rem;
+  }
+}

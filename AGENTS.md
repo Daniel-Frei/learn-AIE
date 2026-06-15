@@ -14,6 +14,10 @@
 ## Operating mode
 
 - Keep changes small and reviewable. Avoid refactors unless explicitly requested.
+- For new learning experiences, "small and reviewable" means keep the scope
+  page-local and avoid unrelated refactors; it does not mean limiting the
+  ambition, visual design, simulator depth, or interaction quality of the
+  learning surface.
 - When behavior changes, add/update tests. Prefer adding coverage over “trust me” fixes.
 - Never commit secrets (keys/tokens). If you suspect exposure, stop and report it.
 - If requirements are unclear, propose 1–2 options + tradeoffs, then proceed.

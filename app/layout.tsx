@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "katex/dist/katex.min.css";
+import "../components/learning/pages/crash-medicine-lecture-1/styles.css";
 import "./globals.css";
 import AppNav from "../components/AppNav";
 import { reactSelectionPermissionErrorFilterScript } from "../lib/selectionPermissionErrorFilter";
