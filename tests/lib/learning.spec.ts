@@ -73,6 +73,14 @@ describe("learning experience registry", () => {
       "Stanford CME295 Transformers & LLMs/transcripts-and-files/lecture 4 - transcript.md",
     );
 
+    const cmeLecture5Experience = getLearningExperience("cme295-lect5");
+    expect(cmeLecture5Experience?.title).toContain(
+      "LLM Preference Tuning, RLHF & DPO",
+    );
+    expect(cmeLecture5Experience?.sourceMaterialPath).toContain(
+      "Stanford CME295 Transformers & LLMs/transcripts-and-files/lecture 5 - transcript.md",
+    );
+
     const probabilityExperience = getLearningExperience("crash-probability-l3");
     expect(probabilityExperience?.title).toContain("Likelihood, Loss, Softmax");
 
@@ -137,6 +145,7 @@ describe("learning experience registry", () => {
         "cme295-lect2",
         "cme295-lect3",
         "cme295-lect4",
+        "cme295-lect5",
       ]),
     );
 
@@ -170,6 +179,14 @@ describe("learning experience registry", () => {
         "/learn/stanford-cme295/cme295-lect4",
       );
     }
+
+    const cmeLecture5Experience = getLearningExperience("cme295-lect5");
+    expect(cmeLecture5Experience).not.toBeNull();
+    if (cmeLecture5Experience) {
+      expect(getLearningExperiencePath(cmeLecture5Experience)).toBe(
+        "/learn/stanford-cme295/cme295-lect5",
+      );
+    }
   });
 
   it("derives lecture and chapter labels for course cards", () => {
@@ -186,6 +203,14 @@ describe("learning experience registry", () => {
     if (stanfordLecture4) {
       expect(getLearningExperienceSequenceLabel(stanfordLecture4)).toBe(
         "Lecture 4",
+      );
+    }
+
+    const stanfordLecture5 = getLearningExperience("cme295-lect5");
+    expect(stanfordLecture5).not.toBeNull();
+    if (stanfordLecture5) {
+      expect(getLearningExperienceSequenceLabel(stanfordLecture5)).toBe(
+        "Lecture 5",
       );
     }
 
@@ -217,7 +242,13 @@ describe("learning experience registry", () => {
     const stanfordCourse = getLearningCourse("stanford-cme295");
     expect(
       stanfordCourse?.experiences.map((experience) => experience.sourceId),
-    ).toEqual(["cme295-lect1", "cme295-lect2", "cme295-lect3", "cme295-lect4"]);
+    ).toEqual([
+      "cme295-lect1",
+      "cme295-lect2",
+      "cme295-lect3",
+      "cme295-lect4",
+      "cme295-lect5",
+    ]);
   });
 
   it("detects unknown learning source ids", () => {
@@ -237,6 +268,7 @@ describe("quiz source query parsing", () => {
     expect(parseQuizSourceParam("cme295-lect2")).toBe("cme295-lect2");
     expect(parseQuizSourceParam("cme295-lect3")).toBe("cme295-lect3");
     expect(parseQuizSourceParam("cme295-lect4")).toBe("cme295-lect4");
+    expect(parseQuizSourceParam("cme295-lect5")).toBe("cme295-lect5");
     expect(parseQuizSourceParam("crash-probability-l3")).toBe(
       "crash-probability-l3",
     );

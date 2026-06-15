@@ -91,13 +91,14 @@ test("labels and sorts course learning experiences by source sequence", async ({
   const courseCards = page.locator(
     'section[aria-label="Stanford CME295 Transformers & LLMs learning experiences"] a',
   );
-  await expect(courseCards).toHaveCount(4);
+  await expect(courseCards).toHaveCount(5);
 
   const cardTexts = await courseCards.allTextContents();
   expect(cardTexts[0]).toContain("Lecture 1");
   expect(cardTexts[1]).toContain("Lecture 2");
   expect(cardTexts[2]).toContain("Lecture 3");
   expect(cardTexts[3]).toContain("Lecture 4");
+  expect(cardTexts[4]).toContain("Lecture 5");
   expect(cardTexts.join("\n")).not.toMatch(/15 min|16 min|18 min|19 min/i);
   expect(cardTexts.join("\n")).not.toMatch(
     /Introductory NLP with ML basics|After CME295 Lecture/i,
@@ -306,6 +307,113 @@ test("renders the Stanford CME295 Lecture 4 learning page and supports interacti
     .getByRole("button", { name: /reduces slow hbm reads/i })
     .click();
   await expect(flashCheck.getByRole("status")).toHaveText(/correct/i);
+});
+
+test("renders the Stanford CME295 Lecture 5 learning page and supports preference-tuning labs", async ({
+  page,
+}) => {
+  await page.goto("/learn/stanford-cme295/cme295-lect5");
+
+  await expect(
+    page.getByRole("heading", {
+      name: /tune preferences without chasing the proxy/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /turn a vague complaint into a training example/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /reward modeling turns pairs into score differences/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /read the alignment pipeline before the algorithms/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /map language generation into rl before using rlhf/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /ppo means proximal policy optimization/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /dpo compares what changed relative to the reference/i,
+    }),
+  ).toBeVisible();
+  await expect(page.locator(".katex-display").first()).toBeVisible();
+  await expect(page.getByText(/\\\[.*P\(y_w/)).toHaveCount(0);
+  await expect(page.getByText(/State s_t/)).toHaveCount(0);
+  await expect(page.getByText(/Action a_t/)).toHaveCount(0);
+  await expect(page.getByText(/pi\(a_t \| s_t\)/)).toHaveCount(0);
+  await expect(page.getByText(/Advantage A_t/)).toHaveCount(0);
+
+  const preferenceStudio = page.getByTestId("preference-data-studio");
+  await preferenceStudio.getByRole("button", { name: /^Pointwise/i }).click();
+  await expect(preferenceStudio.getByRole("status")).toHaveText(
+    /absolute 0\.9/i,
+  );
+  await preferenceStudio.getByRole("button", { name: /^Pairwise/i }).click();
+  await expect(preferenceStudio.getByRole("status")).toHaveText(
+    /choosing the better of two outputs/i,
+  );
+
+  const rewardLab = page.getByTestId("bradley-terry-lab");
+  await rewardLab.getByRole("button", { name: /equal rewards/i }).click();
+  await expect(rewardLab.getByRole("status")).toHaveText(
+    /0\.50 preference probability/i,
+  );
+
+  const ppoLab = page.getByTestId("ppo-clip-lab");
+  await expect(ppoLab.getByText(/0\.30 \/ 0\.20 = 1\.50/)).toBeVisible();
+  await expect(ppoLab.getByText(/min\(3\.00, 2\.40\) = 2\.40/)).toBeVisible();
+  await ppoLab.getByRole("button", { name: /negative advantage/i }).click();
+  await expect(ppoLab.getByRole("status")).toHaveText(
+    /limits how far probability can drop/i,
+  );
+
+  const bestOfNLab = page.getByTestId("best-of-n-lab");
+  await expect(
+    bestOfNLab.getByText(/1 - 0\.70\^4 = 0\.76/).first(),
+  ).toBeVisible();
+  await bestOfNLab.getByRole("button", { name: /N=8/i }).click();
+  await expect(bestOfNLab.getByRole("status")).toHaveText(/roughly 8x/i);
+  await expect(
+    bestOfNLab.getByText(/1 - 0\.70\^8 = 0\.94/).first(),
+  ).toBeVisible();
+
+  const dpoLab = page.getByTestId("dpo-logit-lab");
+  await expect(dpoLab.getByText(/0\.10 \* 1\.50 = 0\.15/)).toBeVisible();
+  await dpoLab.getByRole("button", { name: /policy favors rejected/i }).click();
+  await expect(dpoLab.getByRole("status")).toHaveText(/goes below zero/i);
+
+  const rewardHackingCheck = page.getByTestId("reward-hacking-check");
+  await rewardHackingCheck
+    .getByRole("button", { name: /learned new facts/i })
+    .click();
+  await expect(rewardHackingCheck.getByRole("status")).toHaveText(/not yet/i);
+  await rewardHackingCheck
+    .getByRole("button", { name: /exploited a proxy reward/i })
+    .click();
+  await expect(rewardHackingCheck.getByRole("status")).toHaveText(/correct/i);
+
+  const dpoCheck = page.getByTestId("dpo-check");
+  await dpoCheck
+    .getByRole("button", { name: /no longer needs preference data/i })
+    .click();
+  await expect(dpoCheck.getByRole("status")).toHaveText(/not yet/i);
+  await dpoCheck
+    .getByRole("button", { name: /preference pairs and a frozen reference/i })
+    .click();
+  await expect(dpoCheck.getByRole("status")).toHaveText(/correct/i);
 });
 
 test("renders the Probability L3 learning page and supports checks", async ({
@@ -547,6 +655,22 @@ test("keeps the Stanford CME295 Lecture 4 learning page usable at mobile width",
   expect(scrollWidth).toBeLessThanOrEqual(viewportWidth + 1);
 });
 
+test("keeps the Stanford CME295 Lecture 5 learning page usable at mobile width", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/learn/stanford-cme295/cme295-lect5");
+
+  await expect(
+    page.getByRole("link", { name: /start questions/i }),
+  ).toBeVisible();
+  const scrollWidth = await page.evaluate(
+    () => document.documentElement.scrollWidth,
+  );
+  const viewportWidth = await page.evaluate(() => window.innerWidth);
+  expect(scrollWidth).toBeLessThanOrEqual(viewportWidth + 1);
+});
+
 test("keeps the Probability L4 learning page usable at mobile width", async ({
   page,
 }) => {
@@ -758,6 +882,27 @@ test("transitions from Stanford CME295 Lecture 4 learning into its quiz source",
     page.getByRole("button", { name: /choose filters/i }),
   ).toBeVisible();
   await expect(page.getByText(/question 1 of 80/i)).toBeVisible({
+    timeout: 10000,
+  });
+});
+
+test("transitions from Stanford CME295 Lecture 5 learning into its quiz source", async ({
+  page,
+}) => {
+  await page.goto("/learn/stanford-cme295/cme295-lect5");
+
+  await page.getByRole("link", { name: /start questions/i }).click();
+
+  await expect(page).toHaveURL(/\/\?source=cme295-lect5$/);
+  await expect(
+    page.getByRole("heading", {
+      name: /stanford cme295 lecture 5: llm preference tuning, rlhf & dpo/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /choose filters/i }),
+  ).toBeVisible();
+  await expect(page.getByText(/question 1 of 60/i)).toBeVisible({
     timeout: 10000,
   });
 });

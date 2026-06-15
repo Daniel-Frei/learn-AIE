@@ -182,6 +182,11 @@ source-native explorable when the material supports it.
      learner has enough context to understand its controls, labels, and state.
      If a lab must appear early, it should teach one concept at a time through a
      guided progression or inline legend.
+   - For hard technical material, introduce algorithm names, roles, equations,
+     and symbols before the learner uses them in an interaction. If a lab
+     depends on notation such as advantages, reference policies, logits,
+     likelihoods, rewards, or latent variables, define the simplified mental
+     model and the full core equation first.
    - Avoid unexplained control labels. Terms such as greedy, top-k, top-p,
      temperature, entropy, seed, guidance, latent variable, base probability,
      used probability, and denoising step need either prior introduction or
@@ -195,6 +200,9 @@ source-native explorable when the material supports it.
      instead of always being batched into a separate page rhythm.
    - Include worked examples for mathematical, technical, procedural, or
      evidence-heavy topics.
+   - For interactive numeric outputs, show the calculation path near the output:
+     the governing formula, the selected input values, and enough intermediate
+     arithmetic for the learner to reconstruct the result.
    - Quantitative tradeoffs often deserve an inspectable model, such as a
      calculator, allocation surface, counterfactual, or small lab. Use the
      representation that makes the tradeoff easiest to reason about.
@@ -267,9 +275,15 @@ source-native explorable when the material supports it.
      icons when available; otherwise use focused custom SVG/CSS or add a minimal
      approved icon dependency when it materially improves comprehension and UX.
    - Use `MathText` for formulas and existing Tailwind conventions where they fit.
+   - Render inline mathematical notation through `MathText inline` or another
+     KaTeX-backed component. Do not leave notation in headings, labels, prose,
+     or explanatory notes as raw ASCII such as `s_t`, `A_t`, `pi_theta`,
+     `r_phi(x,y)`, or `N(0,I)` unless the point is to teach plain-code syntax.
    - For display formulas, pass valid LaTeX through `MathText` or `FormulaBlock`;
      prefer TSX expression props with `String.raw`, for example
      ``formula={String.raw`\[...\]`}``, so LaTeX commands are not double-escaped.
+   - For inline formulas, use valid inline delimiters with `String.raw`, for
+     example `<MathText inline text={String.raw`\(\pi_\theta(a_t\mid s_t)\)`} />`.
    - Keep custom local data/config objects page-local unless they are clearly
      reusable.
    - Do not hard-code unrelated app state. If adding a runtime dependency, keep
@@ -360,6 +374,11 @@ Use these as prompts, not templates:
   instead of choosing a coherent experience shape.
 - Dropping learners into a dense lab before the page has introduced the terms,
   controls, units, and labels that the lab uses.
+- Showing raw math notation in learner-facing prose, headings, labels, or notes
+  when it should be rendered, especially underscores and Greek-letter names such
+  as `s_t`, `A_t`, `pi_theta`, or `r_phi`.
+- Changing numbers in an interaction without showing the formula and arithmetic
+  that produced the result.
 - Designing around MCQ topic labels instead of the source material's central
   learning difficulty.
 - Turning slides or transcript sections into a long scroll of summaries.
@@ -422,6 +441,11 @@ Before finishing, confirm:
   promoted before prerequisite evidence or construction steps.
 - Lab labels, metrics, and controls are explained at first use; there are no
   unexplained terms like "base", "used", "seed", or "I" in core interactions.
+- Mathematical notation in text, headings, labels, and notes renders as KaTeX
+  inline math rather than raw underscore-heavy ASCII; display formulas render as
+  KaTeX rather than visible raw `$$...$$`, `\[...\]`, or escaped LaTeX.
+- Numeric interactions show their formula and selected-value arithmetic close to
+  the changing output.
 - If latent variables appear, the page distinguishes hidden model variables from
   user-selected conditions, prompts, or scenario knobs.
 - The content follows the source material's conceptual structure without copying

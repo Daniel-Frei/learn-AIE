@@ -95,6 +95,23 @@ export const LEARNING_EXPERIENCES = [
     ],
   },
   {
+    sourceId: "cme295-lect5",
+    shortTitle: "Preference Tuning Workbench",
+    title: "Stanford CME295 Lecture 5: LLM Preference Tuning, RLHF & DPO",
+    summary:
+      "Build preference pairs, reward-model gaps, PPO guardrails, Best-of-N reranking, and DPO log-ratio contrasts into one alignment workbench.",
+    durationMinutes: 18,
+    level: "After CME295 Lectures 1-4",
+    sourceMaterialPath:
+      "lib/lectures/Stanford CME295 Transformers & LLMs/transcripts-and-files/lecture 5 - transcript.md",
+    outcomes: [
+      "Convert model behavior complaints into pointwise, pairwise, or listwise preference data.",
+      "Use Bradley-Terry reward gaps to reason about pairwise preference probability.",
+      "Explain how PPO-style RLHF uses reward, value, clipping, and KL/reference pressure.",
+      "Compare PPO, Best-of-N, and DPO by cost, model components, and failure modes.",
+    ],
+  },
+  {
     sourceId: "crash-probability-l3",
     shortTitle: "Likelihood, Loss, Softmax",
     title:
