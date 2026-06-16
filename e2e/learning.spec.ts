@@ -91,7 +91,7 @@ test("labels and sorts course learning experiences by source sequence", async ({
   const courseCards = page.locator(
     'section[aria-label="Stanford CME295 Transformers & LLMs learning experiences"] a',
   );
-  await expect(courseCards).toHaveCount(5);
+  await expect(courseCards).toHaveCount(6);
 
   const cardTexts = await courseCards.allTextContents();
   expect(cardTexts[0]).toContain("Lecture 1");
@@ -99,10 +99,26 @@ test("labels and sorts course learning experiences by source sequence", async ({
   expect(cardTexts[2]).toContain("Lecture 3");
   expect(cardTexts[3]).toContain("Lecture 4");
   expect(cardTexts[4]).toContain("Lecture 5");
+  expect(cardTexts[5]).toContain("Lecture 6");
+  expect(cardTexts[5]).toContain("Reasoning Control Bench");
   expect(cardTexts.join("\n")).not.toMatch(/15 min|16 min|18 min|19 min/i);
   expect(cardTexts.join("\n")).not.toMatch(
     /Introductory NLP with ML basics|After CME295 Lecture/i,
   );
+});
+
+test("opens the standalone Stanford CME295 Lecture 6 page from the course page", async ({
+  page,
+}) => {
+  await page.goto("/learn/stanford-cme295");
+
+  await page.getByRole("link", { name: /reasoning control bench/i }).click();
+  await expect(page).toHaveURL(/\/learn\/stanford-cme295\/lecture-6$/);
+  await expect(
+    page.getByRole("heading", {
+      name: /run a reasoning model like a controlled experiment/i,
+    }),
+  ).toBeVisible();
 });
 
 test("keeps legacy direct learning source URLs working", async ({ page }) => {
@@ -416,6 +432,133 @@ test("renders the Stanford CME295 Lecture 5 learning page and supports preferenc
   await expect(dpoCheck.getByRole("status")).toHaveText(/correct/i);
 });
 
+test("renders the standalone Stanford CME295 Lecture 6 page and supports reasoning labs", async ({
+  page,
+}) => {
+  await page.goto("/learn/stanford-cme295/lecture-6");
+
+  await expect(
+    page.getByRole("heading", {
+      name: /run a reasoning model like a controlled experiment/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /reasoning means solving through intermediate steps/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /pass@k answers a different question than pass@1/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /grpo grades a response against its sampled group/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /ppo and grpo share update control but differ in the baseline/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /start reasoning questions/i }),
+  ).toBeVisible();
+  await expect(page.locator(".katex-display").first()).toBeVisible();
+  await expect(page.getByText(/\\\[.*A_i/)).toHaveCount(0);
+
+  const primer = page.getByTestId("reasoning-primer");
+  await primer.getByRole("button", { name: /direct answer/i }).click();
+  await expect(primer.getByRole("status")).toHaveText(/little evidence/i);
+  await primer
+    .getByRole("button", { name: /hidden trace with summary/i })
+    .click();
+  await expect(primer.getByRole("status")).toHaveText(/summary/i);
+
+  const capabilityLab = page.getByTestId("capability-bottleneck-lab");
+  await page.getByRole("button", { name: /course-code lookup/i }).click();
+  await capabilityLab.getByRole("button", { name: /^Reasoning$/i }).click();
+  await expect(capabilityLab.getByRole("status")).toHaveText(/try again/i);
+  await capabilityLab
+    .getByRole("button", { name: /knowledge lookup/i })
+    .click();
+  await expect(capabilityLab.getByRole("status")).toHaveText(
+    /correct bottleneck/i,
+  );
+
+  const benchmarkLab = page.getByTestId("benchmark-lab");
+  await benchmarkLab.getByRole("button", { name: /k=8/i }).click();
+  await expect(benchmarkLab.getByRole("status")).toHaveText(
+    /1 - C\(6, 8\) \/ C\(10, 8\) = 1 - 0 \/ 45 = 1\.00/i,
+  );
+  await expect(
+    benchmarkLab.getByText(/cons@k samples several answers/i),
+  ).toBeVisible();
+  await benchmarkLab.getByRole("button", { name: /split vote/i }).click();
+  await expect(benchmarkLab.getByText(/weak plurality/i)).toBeVisible();
+
+  const budgetLab = page.getByTestId("reasoning-budget-lab");
+  await budgetLab.getByRole("button", { name: /simple lookup/i }).click();
+  await expect(budgetLab.getByRole("status")).toHaveText(
+    /extra thinking mostly adds latency/i,
+  );
+
+  const rewardLab = page.getByTestId("verifiable-reward-lab");
+  await rewardLab.getByRole("button", { name: /open-ended advice/i }).click();
+  await expect(rewardLab.getByRole("status")).toHaveText(
+    /not directly verifiable/i,
+  );
+
+  const grpoLab = page.getByTestId("grpo-group-lab");
+  await expect(grpoLab.getByText(/GRPO objective skeleton/i)).toBeVisible();
+  await grpoLab.getByRole("button", { name: /wrong but long/i }).click();
+  await expect(grpoLab.getByRole("status")).toHaveText(
+    /should not be rewarded for length/i,
+  );
+
+  const comparisonLab = page.getByTestId("ppo-grpo-comparison-lab");
+  await comparisonLab.getByRole("button", { name: /^PPO$/i }).click();
+  await expect(comparisonLab.getByRole("status")).toHaveText(
+    /value model can reduce variance/i,
+  );
+  await comparisonLab.getByRole("button", { name: /^GRPO$/i }).click();
+  await expect(comparisonLab.getByRole("status")).toHaveText(
+    /avoiding the value model simplifies/i,
+  );
+
+  const lengthLab = page.getByTestId("length-incentive-lab");
+  await expect(lengthLab.getByRole("status")).toHaveText(/5\.0x/i);
+  await lengthLab
+    .getByRole("button", { name: /equalized contribution/i })
+    .click();
+  await expect(lengthLab.getByRole("status")).toHaveText(/reasoning quality/i);
+
+  const r1Pipeline = page.getByTestId("r1-pipeline-lab");
+  await r1Pipeline.getByRole("button", { name: /^R1$/i }).click();
+  await expect(r1Pipeline.getByRole("status")).toHaveText(
+    /small reasoning sft cold start/i,
+  );
+
+  const distillationLab = page.getByTestId("distillation-lab");
+  await distillationLab
+    .getByRole("button", { name: /ordinary distillation/i })
+    .click();
+  await expect(distillationLab.getByRole("status")).toHaveText(
+    /distributional knowledge/i,
+  );
+
+  const misconceptionCheck = page.getByTestId("reasoning-misconception-check");
+  await misconceptionCheck
+    .getByRole("button", { name: /always force extended thinking/i })
+    .click();
+  await expect(misconceptionCheck.getByRole("status")).toHaveText(/not quite/i);
+  await misconceptionCheck
+    .getByRole("button", { name: /spend more thinking/i })
+    .click();
+  await expect(misconceptionCheck.getByRole("status")).toHaveText(/correct/i);
+});
+
 test("renders the Probability L3 learning page and supports checks", async ({
   page,
 }) => {
@@ -671,6 +814,22 @@ test("keeps the Stanford CME295 Lecture 5 learning page usable at mobile width",
   expect(scrollWidth).toBeLessThanOrEqual(viewportWidth + 1);
 });
 
+test("keeps the standalone Stanford CME295 Lecture 6 page usable at mobile width", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/learn/stanford-cme295/lecture-6");
+
+  await expect(
+    page.getByRole("link", { name: /back to stanford cme295 course/i }),
+  ).toBeVisible();
+  const scrollWidth = await page.evaluate(
+    () => document.documentElement.scrollWidth,
+  );
+  const viewportWidth = await page.evaluate(() => window.innerWidth);
+  expect(scrollWidth).toBeLessThanOrEqual(viewportWidth + 1);
+});
+
 test("keeps the Probability L4 learning page usable at mobile width", async ({
   page,
 }) => {
@@ -897,6 +1056,27 @@ test("transitions from Stanford CME295 Lecture 5 learning into its quiz source",
   await expect(
     page.getByRole("heading", {
       name: /stanford cme295 lecture 5: llm preference tuning, rlhf & dpo/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /choose filters/i }),
+  ).toBeVisible();
+  await expect(page.getByText(/question 1 of 60/i)).toBeVisible({
+    timeout: 10000,
+  });
+});
+
+test("transitions from Stanford CME295 reasoning learning into its quiz source", async ({
+  page,
+}) => {
+  await page.goto("/learn/stanford-cme295/lecture-6");
+
+  await page.getByRole("link", { name: /start reasoning questions/i }).click();
+
+  await expect(page).toHaveURL(/\/\?source=cme295-lect6$/);
+  await expect(
+    page.getByRole("heading", {
+      name: /stanford cme295 lecture 6: llm reasoning & test-time scaling/i,
     }),
   ).toBeVisible();
   await expect(

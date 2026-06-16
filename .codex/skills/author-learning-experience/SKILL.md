@@ -54,6 +54,10 @@ source-native explorable when the material supports it.
   manipulate, compare, calculate, diagnose, or decide.
 - Use the source material's concepts, examples, formulas, diagrams, cases, and
   misconceptions, but do not copy a transcript or slide order into a long article.
+- Use source titles, sequence labels, and document types for navigation,
+  metadata, breadcrumbs, or provenance; do not make instructional copy lean on
+  phrases such as "this lecture", "Lecture N", "the slides", or "the chapter"
+  when the page can teach the concept directly.
 - Prefer one strong topic-specific interactive object over many generic cards
   when the material has a mechanism, system, workflow, calculation, tradeoff,
   spatial structure, timeline, evidence interpretation, or model behavior.
@@ -175,6 +179,9 @@ source-native explorable when the material supports it.
 5. Design the teaching flow.
    - Start with the core problem, intuition, or concrete situation, not a
      definition dump.
+   - Write page-body explanations as self-contained concept instruction. Source
+     sequence labels are useful for orientation, but learners should not need to
+     keep seeing "the lecture says..." to understand what the page is teaching.
    - Make the beginning, middle, and end clear: orient, introduce the needed
      vocabulary and notation, manipulate/interpret, consolidate, then transition
      into practice.
@@ -203,6 +210,10 @@ source-native explorable when the material supports it.
    - For interactive numeric outputs, show the calculation path near the output:
      the governing formula, the selected input values, and enough intermediate
      arithmetic for the learner to reconstruct the result.
+   - When source material provides a canonical formula, benchmark metric,
+     estimator, or algorithm objective, present that source-aligned form before
+     or beside simplified intuition. If a toy formula is useful, label it as an
+     approximation and explain what it omits.
    - Quantitative tradeoffs often deserve an inspectable model, such as a
      calculator, allocation surface, counterfactual, or small lab. Use the
      representation that makes the tradeoff easiest to reason about.
@@ -382,6 +393,11 @@ Use these as prompts, not templates:
 - Designing around MCQ topic labels instead of the source material's central
   learning difficulty.
 - Turning slides or transcript sections into a long scroll of summaries.
+- Repeatedly naming the source artifact in instructional copy instead of
+  explaining the concept itself.
+- Replacing a source's canonical metric, estimator, or objective with a simpler
+  formula without labeling the simplification or showing the source-aligned
+  version.
 - Using shared primitives because they are available rather than because they
   teach this topic well.
 - Hiding the main teaching model below many introductory cards.
@@ -446,6 +462,11 @@ Before finishing, confirm:
   KaTeX rather than visible raw `$$...$$`, `\[...\]`, or escaped LaTeX.
 - Numeric interactions show their formula and selected-value arithmetic close to
   the changing output.
+- Canonical formulas, benchmark metrics, or algorithm objectives from the source
+  are represented accurately; any simplified formulas are explicitly labeled as
+  approximations or intuition aids.
+- Page-body copy teaches the concept directly rather than repeatedly referring
+  to source order or artifact labels such as lectures, slides, or chapters.
 - If latent variables appear, the page distinguishes hidden model variables from
   user-selected conditions, prompts, or scenario knobs.
 - The content follows the source material's conceptual structure without copying

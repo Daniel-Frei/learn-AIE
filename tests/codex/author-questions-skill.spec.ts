@@ -195,7 +195,7 @@ describe("author-questions skill guidance", () => {
       "Prompt tables, when used, are valid GitHub-Flavored Markdown",
     );
     expect(teamPreferences).toContain(
-      "Quiz prompts may use compact GitHub-Flavored Markdown tables",
+      "Quiz prompts should use compact GitHub-Flavored Markdown tables a little more readily",
     );
     expect(teamPreferences).toContain(
       "Tables should be introduced by the prompt",

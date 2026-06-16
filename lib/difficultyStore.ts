@@ -57,7 +57,7 @@ const MIN_PROBABILITY = 1e-12;
 export const QUESTION_TIME_LIMIT_MS = 3 * 60 * 1000;
 
 const QUESTION_FAST_RESPONSE_MS = 20 * 1000;
-const QUESTION_MIN_TIME_WEIGHT = 0.6;
+const QUESTION_MAX_TIME_ADJUSTMENT = 0.5;
 const QUESTION_ONE_MISTAKE_WEIGHT = 0.85;
 
 const LABEL_PRIOR_RATING: Record<Difficulty, number> = {
@@ -366,18 +366,25 @@ function g(phi: number): number {
   return 1 / Math.sqrt(1 + (3 * phi * phi) / (Math.PI * Math.PI));
 }
 
-function computeTimeWeight(elapsedMs: number): number {
+function computeTimeProgress(elapsedMs: number): number {
   if (elapsedMs <= QUESTION_FAST_RESPONSE_MS) {
-    return 1;
+    return 0;
   }
   if (elapsedMs >= QUESTION_TIME_LIMIT_MS) {
-    return QUESTION_MIN_TIME_WEIGHT;
+    return 1;
   }
 
   const spanMs = QUESTION_TIME_LIMIT_MS - QUESTION_FAST_RESPONSE_MS;
   const elapsedPastFastWindow = elapsedMs - QUESTION_FAST_RESPONSE_MS;
-  const progress = elapsedPastFastWindow / spanMs;
-  return 1 - progress * (1 - QUESTION_MIN_TIME_WEIGHT);
+  return elapsedPastFastWindow / spanMs;
+}
+
+function computeTimeWeight(elapsedMs: number, isCorrect: boolean): number {
+  const progress = computeTimeProgress(elapsedMs);
+  const adjustment = progress * QUESTION_MAX_TIME_ADJUSTMENT;
+  return isCorrect
+    ? 1 - adjustment
+    : 1 - QUESTION_MAX_TIME_ADJUSTMENT + adjustment;
 }
 
 function computeMistakeWeight(mistakeCount: number): number {
@@ -385,10 +392,14 @@ function computeMistakeWeight(mistakeCount: number): number {
 }
 
 function computeAnswerWeight(
+  isCorrect: boolean,
   elapsedMs?: number,
   mistakeCount?: number,
 ): number {
-  const timeWeight = computeTimeWeight(sanitizeElapsedMs(elapsedMs ?? 0));
+  const timeWeight =
+    elapsedMs === undefined
+      ? 1
+      : computeTimeWeight(sanitizeElapsedMs(elapsedMs), isCorrect);
   const mistakeWeight = computeMistakeWeight(sanitizeCount(mistakeCount ?? 0));
   return clamp(timeWeight * mistakeWeight, 0, 1);
 }
@@ -733,7 +744,11 @@ export function recordAnswer(
     normalizedState.config,
   );
 
-  const answerWeight = computeAnswerWeight(meta?.elapsedMs, meta?.mistakeCount);
+  const answerWeight = computeAnswerWeight(
+    isCorrect,
+    meta?.elapsedMs,
+    meta?.mistakeCount,
+  );
   const userScore = isCorrect ? 1 : 0;
   const questionScore = 1 - userScore;
 

@@ -158,7 +158,7 @@ For new question sets, run the gate over the full draft before finalizing. For a
 - Prefer prompts that ask the learner to apply, predict, compare, explain, calculate, or transfer a concept. Pure recognition of a familiar sentence should be reserved for intentional easy orientation questions.
 - Across `lib/` topics, vary the prompt form to match the material. Clinical, procedural, or experimental topics may support scenarios; foundational, mathematical, or abstract topics often work better as direct comparisons, boundary cases, mechanisms, calculations, or consequence questions.
 - Do not add a scenario sentence merely to make a direct concept question look applied. The setup should be referenced by, constrain, or change the interpretation of the answer options.
-- Use compact Markdown tables in prompts when the learner needs to compare several conditions, probability values, scenarios, cases, model states, trial arms, matrix-like quantities, or calculation inputs. Prefer a table over a dense sentence when the table makes the reasoning easier to inspect.
+- Use compact Markdown tables in prompts when the learner needs to compare several conditions, probability values, scenarios, cases, model states, trial arms, matrix-like quantities, or calculation inputs. Prefer a table over a dense sentence when the prompt contains several named variables, log probabilities, model/reference quantities, policy states, or arithmetic inputs that the learner must line up before solving.
 - Introduce what the table represents before the table, use meaningful row and column labels, and make answer options refer to labels or quantities rather than visual position alone.
 - Do not use a table as decoration or to hide missing explanation. If the table needs special context, include that context in the prompt so the question still stands alone.
 - Watch for stems whose everyday language gives away the answer, such as terms that already imply stability, evidence, usefulness, feedback, or decision relevance. In those cases, ask for a concrete mechanism, condition, exception, or consequence.
@@ -231,7 +231,7 @@ Before finalizing a generated or revised set, review it from the perspective of 
   - `\\( ... \\)`
   - `\\[ ... \\]`
 - Use standard LaTeX syntax, such as `\\frac{a}{b}`, `\\sum`, `\\theta`, and `\\pi`.
-- Prompts may include GitHub-Flavored Markdown tables. Prefer a template literal for multi-line prompts with tables, include a blank line before and after the table, and keep tables compact enough to read on mobile.
+- Prompts may include GitHub-Flavored Markdown tables. Prefer a template literal for multi-line prompts with tables, include a blank line before and after the table, and keep tables compact enough to read on mobile. For dense mathematical prompts, first consider whether a small table of given values would be clearer than embedding all givens in one sentence.
 - Table cells can include escaped inline LaTeX, but avoid making the correct option obvious by placing math only in one answer option or one unusually prominent table cell.
 
 ## TypeScript Template

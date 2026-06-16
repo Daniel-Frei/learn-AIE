@@ -53,7 +53,7 @@ describe("difficulty store core behavior", () => {
     expect(afterWrong.questions["q-counter"]?.legacyWrong).toBe(1);
   });
 
-  it("caps the slow-answer rating movement at 60% of a fast clean answer", () => {
+  it("caps slow correct-answer rating movement at 50% of a fast clean answer", () => {
     const base = createDefaultRatingState();
     const fast = recordAnswer(base, "q-fast", "medium", true, 1000, {
       elapsedMs: 1000,
@@ -83,11 +83,11 @@ describe("difficulty store core behavior", () => {
     expect(fast.questions["q-fast"]!.rating).toBeLessThan(
       slow.questions["q-slow"]!.rating,
     );
-    expect(slowUserGain / fastUserGain).toBeCloseTo(0.6, 2);
-    expect(slowQuestionLoss / fastQuestionLoss).toBeCloseTo(0.6, 2);
+    expect(slowUserGain / fastUserGain).toBeCloseTo(0.5, 2);
+    expect(slowQuestionLoss / fastQuestionLoss).toBeCloseTo(0.5, 2);
   });
 
-  it("caps extreme rating movement and scales the cap by answer weight", () => {
+  it("scales wrong-answer rating movement from 50% fast to full at the time cap", () => {
     const base = createDefaultRatingState();
     const mismatched = {
       ...base,
@@ -134,10 +134,14 @@ describe("difficulty store core behavior", () => {
       },
     );
 
-    expect(2600 - fastWrong.user.rating).toBeLessThanOrEqual(100);
-    expect(fastWrong.questions["q-extreme"]!.rating - 1300).toBeCloseTo(100, 5);
-    expect(2600 - slowWrong.user.rating).toBeLessThanOrEqual(60);
-    expect(slowWrong.questions["q-extreme"]!.rating - 1300).toBeCloseTo(60, 5);
+    expect(2600 - fastWrong.user.rating).toBeLessThanOrEqual(50);
+    expect(fastWrong.questions["q-extreme"]!.rating - 1300).toBeCloseTo(50, 5);
+    expect(2600 - slowWrong.user.rating).toBeLessThanOrEqual(100);
+    expect(slowWrong.questions["q-extreme"]!.rating - 1300).toBeCloseTo(100, 5);
+    expect(slowWrong.user.rating).toBeLessThan(fastWrong.user.rating);
+    expect(slowWrong.questions["q-extreme"]!.rating).toBeGreaterThan(
+      fastWrong.questions["q-extreme"]!.rating,
+    );
   });
 
   it("keeps a minimum rating exchange for expected outcomes", () => {
@@ -213,12 +217,42 @@ describe("difficulty store core behavior", () => {
         mistakeCount: 0,
       },
     );
+    const legacyWrong = recordAnswer(
+      base,
+      "q-legacy-wrong-weight",
+      "medium",
+      false,
+      1000,
+    );
+    const explicitFullWrong = recordAnswer(
+      base,
+      "q-explicit-full-wrong-weight",
+      "medium",
+      false,
+      1000,
+      {
+        elapsedMs: QUESTION_TIME_LIMIT_MS,
+        mistakeCount: 0,
+      },
+    );
 
     expect(legacy.questions["q-legacy-weight"]).toBeDefined();
     expect(explicit.questions["q-explicit-weight"]).toBeDefined();
     expect(legacy.user.rating).toBeCloseTo(explicit.user.rating, 10);
     expect(legacy.questions["q-legacy-weight"]!.rating).toBeCloseTo(
       explicit.questions["q-explicit-weight"]!.rating,
+      10,
+    );
+    expect(legacyWrong.questions["q-legacy-wrong-weight"]).toBeDefined();
+    expect(
+      explicitFullWrong.questions["q-explicit-full-wrong-weight"],
+    ).toBeDefined();
+    expect(legacyWrong.user.rating).toBeCloseTo(
+      explicitFullWrong.user.rating,
+      10,
+    );
+    expect(legacyWrong.questions["q-legacy-wrong-weight"]!.rating).toBeCloseTo(
+      explicitFullWrong.questions["q-explicit-full-wrong-weight"]!.rating,
       10,
     );
   });

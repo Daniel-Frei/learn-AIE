@@ -4,6 +4,7 @@ import {
   getLearningExperienceSequenceLabel,
   type LearningCourse,
 } from "../../lib/learning";
+import { getStandaloneLearningPagesForSeries } from "./standaloneLearningPages";
 
 type LearningCoursePageProps = {
   course: LearningCourse;
@@ -12,6 +13,9 @@ type LearningCoursePageProps = {
 export default function LearningCoursePage({
   course,
 }: LearningCoursePageProps) {
+  const standalonePages = getStandaloneLearningPagesForSeries(course.seriesId);
+  const totalLearningPages = course.experiences.length + standalonePages.length;
+
   return (
     <main className="min-h-[calc(100vh-4.25rem)] bg-slate-950 text-slate-50">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-10 md:py-12">
@@ -36,8 +40,8 @@ export default function LearningCoursePage({
             the matching question set when you are ready.
           </p>
           <p className="text-sm font-semibold text-emerald-300">
-            {course.experiences.length} learning pages /{" "}
-            {course.totalDurationMinutes} min
+            {totalLearningPages} learning pages / {course.totalDurationMinutes}{" "}
+            quiz-linked min
           </p>
         </section>
 
@@ -62,6 +66,27 @@ export default function LearningCoursePage({
               </p>
               <p className="mt-4 text-sm font-semibold text-sky-300">
                 Open learning page
+              </p>
+            </Link>
+          ))}
+
+          {standalonePages.map((page) => (
+            <Link
+              key={page.href}
+              href={page.href}
+              className="group rounded-lg border border-slate-800 bg-slate-900 p-5 transition-colors hover:border-sky-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+            >
+              <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                {page.sequenceLabel}
+              </p>
+              <h2 className="mt-3 text-xl font-semibold text-slate-50 group-hover:text-sky-200">
+                {page.shortTitle}
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-slate-300">
+                {page.summary}
+              </p>
+              <p className="mt-4 text-sm font-semibold text-sky-300">
+                Open standalone page
               </p>
             </Link>
           ))}
