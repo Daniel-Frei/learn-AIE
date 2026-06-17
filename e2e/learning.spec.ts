@@ -91,7 +91,7 @@ test("labels and sorts course learning experiences by source sequence", async ({
   const courseCards = page.locator(
     'section[aria-label="Stanford CME295 Transformers & LLMs learning experiences"] a',
   );
-  await expect(courseCards).toHaveCount(6);
+  await expect(courseCards).toHaveCount(8);
 
   const cardTexts = await courseCards.allTextContents();
   expect(cardTexts[0]).toContain("Lecture 1");
@@ -101,6 +101,10 @@ test("labels and sorts course learning experiences by source sequence", async ({
   expect(cardTexts[4]).toContain("Lecture 5");
   expect(cardTexts[5]).toContain("Lecture 6");
   expect(cardTexts[5]).toContain("Reasoning Control Bench");
+  expect(cardTexts[6]).toContain("Lecture 7");
+  expect(cardTexts[6]).toContain("RAG, Tools, Agents Studio");
+  expect(cardTexts[7]).toContain("Lecture 8");
+  expect(cardTexts[7]).toContain("LLM Evaluation Studio");
   expect(cardTexts.join("\n")).not.toMatch(/15 min|16 min|18 min|19 min/i);
   expect(cardTexts.join("\n")).not.toMatch(
     /Introductory NLP with ML basics|After CME295 Lecture/i,
@@ -117,6 +121,34 @@ test("opens the standalone Stanford CME295 Lecture 6 page from the course page",
   await expect(
     page.getByRole("heading", {
       name: /run a reasoning model like a controlled experiment/i,
+    }),
+  ).toBeVisible();
+});
+
+test("opens the standalone Stanford CME295 Lecture 7 page from the course page", async ({
+  page,
+}) => {
+  await page.goto("/learn/stanford-cme295");
+
+  await page.getByRole("link", { name: /rag, tools, agents studio/i }).click();
+  await expect(page).toHaveURL(/\/learn\/stanford-cme295\/lecture-7$/);
+  await expect(
+    page.getByRole("heading", {
+      name: /connect language models to systems they can inspect and act through/i,
+    }),
+  ).toBeVisible();
+});
+
+test("opens the standalone Stanford CME295 Lecture 8 page from the course page", async ({
+  page,
+}) => {
+  await page.goto("/learn/stanford-cme295");
+
+  await page.getByRole("link", { name: /llm evaluation studio/i }).click();
+  await expect(page).toHaveURL(/\/learn\/stanford-cme295\/lecture-8$/);
+  await expect(
+    page.getByRole("heading", {
+      name: /build the evaluation console before improving the model/i,
     }),
   ).toBeVisible();
 });
@@ -559,6 +591,141 @@ test("renders the standalone Stanford CME295 Lecture 6 page and supports reasoni
   await expect(misconceptionCheck.getByRole("status")).toHaveText(/correct/i);
 });
 
+test("renders the standalone Stanford CME295 Lecture 7 page and supports systems labs", async ({
+  page,
+}) => {
+  await page.goto("/learn/stanford-cme295/lecture-7");
+
+  await expect(
+    page.getByRole("heading", {
+      name: /connect language models to systems they can inspect and act through/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /route the request before choosing the system/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /retrieval is a recall stage before a precision stage/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /tool calls split prediction from execution/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /an agent is a loop, not a single tool call/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /start questions/i }),
+  ).toHaveCount(0);
+  await expect(page.locator(".katex-display").first()).toBeVisible();
+  await expect(page.getByText(/\\\[.*NDCG/)).toHaveCount(0);
+
+  const routerLab = page.getByTestId("request-router-lab");
+  await routerLab.getByRole("button", { name: /exact record/i }).click();
+  await routerLab.getByRole("button", { name: /tool call/i }).click();
+  await expect(routerLab.getByRole("status")).toHaveText(/correct route/i);
+
+  const retrievalWorkbench = page.getByTestId("retrieval-workbench");
+  await retrievalWorkbench.getByRole("button", { name: /^Hybrid$/i }).click();
+  await retrievalWorkbench
+    .getByRole("button", { name: /cross-encoder rerank/i })
+    .click();
+  await expect(retrievalWorkbench.getByRole("status")).toHaveText(/NDCG@5/i);
+
+  const toolConsole = page.getByTestId("tool-calling-console");
+  await toolConsole.getByRole("button", { name: /calculator/i }).click();
+  await expect(toolConsole.getByRole("status")).toHaveText(/calculate/i);
+
+  const agentLoop = page.getByTestId("agent-loop-lab");
+  await agentLoop.getByRole("button", { name: /advance loop/i }).click();
+  await expect(agentLoop.getByRole("status")).toHaveText(
+    /current temperature/i,
+  );
+
+  const safetyLab = page.getByTestId("safety-lab");
+  await safetyLab.getByRole("button", { name: /human approval/i }).click();
+  await safetyLab.getByRole("button", { name: /egress filter/i }).click();
+  await expect(safetyLab.getByRole("status")).toHaveText(/0 \/ 10/i);
+});
+
+test("renders the standalone Stanford CME295 Lecture 8 page and supports evaluation labs", async ({
+  page,
+}) => {
+  await page.goto("/learn/stanford-cme295/lecture-8");
+
+  await expect(
+    page.getByRole("heading", {
+      name: /build the evaluation console before improving the model/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /first separate answer quality from system behavior/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /raw agreement needs a chance baseline/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /reference overlap is useful and brittle/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /localize the failure before choosing a fix/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /start questions/i }),
+  ).toHaveCount(0);
+  await expect(page.locator(".katex-display").first()).toBeVisible();
+  await expect(page.getByText(/\\\[.*kappa/)).toHaveCount(0);
+
+  const scopeRouter = page.getByTestId("evaluation-scope-router");
+  await scopeRouter.getByRole("button", { name: /refund agent/i }).click();
+  await expect(scopeRouter.getByRole("status")).toHaveText(
+    /inspect the workflow/i,
+  );
+
+  const agreementLab = page.getByTestId("human-agreement-lab");
+  await agreementLab.getByRole("button", { name: /lenient raters/i }).click();
+  await expect(agreementLab.getByRole("status")).toHaveText(/0\.80 \* 0\.70/i);
+
+  const overlapLab = page.getByTestId("reference-overlap-lab");
+  await overlapLab
+    .getByRole("button", { name: /meaningful paraphrase/i })
+    .click();
+  await expect(overlapLab.getByRole("status")).toHaveText(/precision/i);
+
+  const judgeLab = page.getByTestId("judge-bias-lab");
+  await judgeLab.getByRole("button", { name: /swap and aggregate/i }).click();
+  await expect(judgeLab.getByRole("status")).toHaveText(/position bias/i);
+
+  const factualityLab = page.getByTestId("factuality-claim-lab");
+  await factualityLab.getByRole("button", { name: /half credit/i }).click();
+  await expect(factualityLab.getByRole("status")).toHaveText(/65%/i);
+
+  const agentLab = page.getByTestId("agent-failure-lab");
+  await agentLab.getByRole("button", { name: /wrong argument/i }).click();
+  await expect(agentLab.getByRole("status")).toHaveText(/helper tool/i);
+
+  const benchmarkLab = page.getByTestId("benchmark-reliability-lab");
+  await benchmarkLab.getByRole("button", { name: /k=3/i }).click();
+  await expect(benchmarkLab.getByRole("status")).toHaveText(
+    /Pass@3 = 99% but Pass\^3 = 51%/i,
+  );
+});
+
 test("renders the Probability L3 learning page and supports checks", async ({
   page,
 }) => {
@@ -830,6 +997,38 @@ test("keeps the standalone Stanford CME295 Lecture 6 page usable at mobile width
   expect(scrollWidth).toBeLessThanOrEqual(viewportWidth + 1);
 });
 
+test("keeps the standalone Stanford CME295 Lecture 7 page usable at mobile width", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/learn/stanford-cme295/lecture-7");
+
+  await expect(
+    page.getByRole("link", { name: /back to stanford cme295 course/i }),
+  ).toBeVisible();
+  const scrollWidth = await page.evaluate(
+    () => document.documentElement.scrollWidth,
+  );
+  const viewportWidth = await page.evaluate(() => window.innerWidth);
+  expect(scrollWidth).toBeLessThanOrEqual(viewportWidth + 1);
+});
+
+test("keeps the standalone Stanford CME295 Lecture 8 page usable at mobile width", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/learn/stanford-cme295/lecture-8");
+
+  await expect(
+    page.getByRole("link", { name: /back to stanford cme295 course/i }),
+  ).toBeVisible();
+  const scrollWidth = await page.evaluate(
+    () => document.documentElement.scrollWidth,
+  );
+  const viewportWidth = await page.evaluate(() => window.innerWidth);
+  expect(scrollWidth).toBeLessThanOrEqual(viewportWidth + 1);
+});
+
 test("keeps the Probability L4 learning page usable at mobile width", async ({
   page,
 }) => {
@@ -1077,6 +1276,27 @@ test("transitions from Stanford CME295 reasoning learning into its quiz source",
   await expect(
     page.getByRole("heading", {
       name: /stanford cme295 lecture 6: llm reasoning & test-time scaling/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /choose filters/i }),
+  ).toBeVisible();
+  await expect(page.getByText(/question 1 of 60/i)).toBeVisible({
+    timeout: 10000,
+  });
+});
+
+test("transitions from Stanford CME295 evaluation learning into its quiz source", async ({
+  page,
+}) => {
+  await page.goto("/learn/stanford-cme295/lecture-8");
+
+  await page.getByRole("link", { name: /start evaluation questions/i }).click();
+
+  await expect(page).toHaveURL(/\/\?source=cme295-lect8$/);
+  await expect(
+    page.getByRole("heading", {
+      name: /stanford cme295 lecture 8: llm evaluation/i,
     }),
   ).toBeVisible();
   await expect(

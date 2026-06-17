@@ -4,20 +4,18 @@ type PrereqDifficulty = "easy" | "medium" | "hard";
 type OptionSeed = readonly [text: string, isCorrect: boolean];
 
 function makeQuestion(
-  number: number,
+  id: string,
   difficulty: PrereqDifficulty,
   prompt: string,
   optionSeeds: readonly OptionSeed[],
   explanation: string,
 ): Question {
   if (optionSeeds.length !== 4) {
-    throw new Error(
-      `Probability Lecture 0 question ${number} needs 4 options.`,
-    );
+    throw new Error(`Probability Lecture 0 question ${id} needs 4 options.`);
   }
 
   return {
-    id: `crash-probability-l0-q${String(number).padStart(2, "0")}`,
+    id,
     chapter: 0,
     difficulty,
     prompt,
@@ -28,7 +26,7 @@ function makeQuestion(
 
 export const CrashCourseProbabilityL0Questions: Question[] = [
   makeQuestion(
-    1,
+    "crash-probability-l0-q01",
     "easy",
     "A recipe mixes syrup and water in the ratio \\(3:7\\). Which statements are correct?",
     [
@@ -40,7 +38,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "A ratio of \\(3:7\\) has \\(3+7=10\\) total parts, so syrup is three tenths and water is seven tenths of the mixture. The false statement reverses the order of the odds: syrup to water is \\(3:7\\), not \\(7:3\\).",
   ),
   makeQuestion(
-    2,
+    "crash-probability-l0-q02",
     "easy",
     "The odds in favor of a result are \\(4:1\\). Which conversions are correct?",
     [
@@ -52,7 +50,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "Odds compare favorable to unfavorable parts, while a share compares favorable parts to total parts. With odds \\(4:1\\), there are five total parts, so the favorable share is four fifths and the unfavorable share is one fifth, which is \\(20\\%\\), not \\(25\\%\\).",
   ),
   makeQuestion(
-    3,
+    "crash-probability-l0-q03",
     "easy",
     "A normalized share is computed by \\(s=\\frac{a}{a+b}\\), where \\(a=6\\) and \\(b=9\\). Which statements are correct?",
     [
@@ -70,7 +68,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "A normalized share divides one part by the total of all included parts. The denominator is \\(a+b=15\\), so the share for \\(a\\) is \\(0.4\\), the share for \\(b\\) is \\(0.6\\), and the two shares add to 1.",
   ),
   makeQuestion(
-    4,
+    "crash-probability-l0-q04",
     "easy",
     "Rearrange \\(y=3x-5\\) to solve for \\(x\\). Which statements are correct?",
     [
@@ -82,7 +80,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "To solve for \\(x\\), add 5 to both sides and then divide by 3. If \\(y=10\\), the correct value is \\((10+5)/3=5\\), and substituting \\(x=5\\) gives \\(3\\cdot5-5=10\\), not 15.",
   ),
   makeQuestion(
-    5,
+    "crash-probability-l0-q05",
     "easy",
     "A temperature conversion is \\(F=\\frac{9}{5}C+32\\). Which rearrangements or substitutions are correct?",
     [
@@ -94,7 +92,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "Solving for \\(C\\) requires subtracting 32 and then multiplying by the reciprocal \\(5/9\\). For \\(F=50\\), the correct calculation is \\(\\frac{5}{9}(50-32)=10\\), not 12, and the false rearrangement uses \\(9/5\\) again instead of undoing the original multiplication.",
   ),
   makeQuestion(
-    6,
+    "crash-probability-l0-q06",
     "easy",
     "A function family is \\(f_a(x)=a x+2\\). Which statements are correct?",
     [
@@ -112,7 +110,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "A subscript can label which member of a function family is being used; it is not automatically multiplication. With \\(a=3\\) and \\(x=4\\), the output is \\(3\\cdot4+2=14\\), and doubling both terms in the formula changes \\(ax+2\\) to \\(2ax+4=2(ax+2)\\).",
   ),
   makeQuestion(
-    7,
+    "crash-probability-l0-q07",
     "easy",
     "For the sequence \\(x_1=4\\), \\(x_2=7\\), \\(x_3=10\\), and \\(x_4=13\\), which statements are correct?",
     [
@@ -124,7 +122,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "Subscripts identify positions in a sequence. They do not mean multiplication, so \\(x_3\\) is the third listed value and \\(x_{t-1}\\) points one position before \\(x_t\\); the listed sequence increases by 3 each step, not 4.",
   ),
   makeQuestion(
-    8,
+    "crash-probability-l0-q08",
     "easy",
     "Numbers \\((2,5,1,5)\\) are assigned to labels \\((a,b,c,d)\\). Which max/min statements are correct?",
     [
@@ -139,7 +137,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The maximum is the largest value, and the argmax is the label or set of labels where that largest value occurs. Here there is a tie for the maximum, while \\(c\\) is where the minimum value occurs.",
   ),
   makeQuestion(
-    9,
+    "crash-probability-l0-q09",
     "easy",
     "Positive weights \\((4,1,5)\\) are normalized by their total. Which statements are correct?",
     [
@@ -151,7 +149,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "Normalization divides every weight by the same total, so each entry becomes a share of all the weight being considered. The total is 10, so the normalized weights are \\((4/10,1/10,5/10)\\), and those entries sum to 1.",
   ),
   makeQuestion(
-    10,
+    "crash-probability-l0-q10",
     "easy",
     "Which power and root calculations are correct?",
     [
@@ -163,7 +161,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "A square root asks for the nonnegative number whose square gives the original number, and an exponent of \\(1/2\\) represents a square root. Therefore \\(16^{1/2}=4\\), not 8, and squaring a negative number gives a positive result.",
   ),
   makeQuestion(
-    11,
+    "crash-probability-l0-q11",
     "medium",
     "A retained set has original weights \\(0.40\\), \\(0.15\\), and \\(0.05\\). The weights are renormalized after discarding everything else. Which statements are correct?",
     [
@@ -181,7 +179,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "Renormalizing after a restriction means dividing each retained weight by the retained total. The retained total is \\(0.60\\), so the three new weights are \\(2/3\\), \\(1/4\\), and \\(1/12\\), not \\(1/10\\) for the third retained weight.",
   ),
   makeQuestion(
-    12,
+    "crash-probability-l0-q12",
     "medium",
     "Find the normalizing constant \\(k\\) for weights \\((2k,3k,5k)\\) that must sum to 1. Which statements are correct?",
     [
@@ -193,7 +191,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The requirement that the entries sum to 1 gives \\(10k=1\\). Therefore \\(k=0.1\\), and multiplying the coefficients by \\(0.1\\) gives the normalized entries.",
   ),
   makeQuestion(
-    13,
+    "crash-probability-l0-q13",
     "medium",
     "Let \\(f_{m,b}(x)=mx+b\\). Which statements are correct for \\(m=-2\\), \\(b=5\\), and \\(x=3\\)?",
     [
@@ -211,7 +209,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The calculation is \\((-2)\\cdot3+5=-6+5=-1\\). The two parameters play different algebraic roles: \\(m\\) multiplies the input, while \\(b\\) is added afterward rather than multiplied by \\(x\\).",
   ),
   makeQuestion(
-    14,
+    "crash-probability-l0-q14",
     "medium",
     "Let \\(g_c(x)=c x^2\\). Which statements are correct?",
     [
@@ -226,7 +224,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The square is applied to \\(x\\) before multiplication by \\(c\\), so \\((-3)^2=9\\). A parameter such as \\(c\\) chooses a member of the function family, so changing it changes outputs for fixed nonzero inputs.",
   ),
   makeQuestion(
-    15,
+    "crash-probability-l0-q15",
     "medium",
     "A sequence is defined by \\(x_1=2\\) and \\(x_{t+1}=3x_t-1\\). Which statements are correct?",
     [
@@ -241,7 +239,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The recurrence must be applied step by step: \\(x_2=3\\cdot2-1=5\\), then \\(x_3=3\\cdot5-1=14\\). The rule uses the previous term to compute the next term, and the shortcut expression applies the rule to the wrong value.",
   ),
   makeQuestion(
-    16,
+    "crash-probability-l0-q16",
     "medium",
     "For \\(a=(3,-1,4,2)\\), which summation statements are correct?",
     [
@@ -253,7 +251,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "Summation notation represents repeated addition over the specified indices. The full sum is \\(3-1+4+2=8\\), the squared sum is \\(9+1+16+4=30\\), and the subset sum over indices 2 and 4 is \\(-1+2=1\\), not 3.",
   ),
   makeQuestion(
-    17,
+    "crash-probability-l0-q17",
     "medium",
     "For \\(b=(2,\\frac{1}{2},5)\\), which product-notation statements are correct?",
     [
@@ -268,7 +266,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "Product notation represents repeated multiplication, not repeated addition. Here \\(2\\cdot\\frac{1}{2}\\cdot5=5\\), and listing factors in index order does not turn the operation into addition.",
   ),
   makeQuestion(
-    18,
+    "crash-probability-l0-q18",
     "medium",
     "Values \\((10,20,50)\\) have weights \\((0.2,0.3,0.5)\\). Which weighted-average statements are correct?",
     [
@@ -280,7 +278,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "A weighted average multiplies each value by its weight and then adds the products. The calculation is \\(0.2\\cdot10+0.3\\cdot20+0.5\\cdot50=33\\), while the unweighted mean is \\(80/3\\), not 33.",
   ),
   makeQuestion(
-    19,
+    "crash-probability-l0-q19",
     "medium",
     "A class has 12 students scoring 70 and 8 students scoring 90. Which average statements are correct?",
     [
@@ -295,7 +293,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "Group sizes become weights in the average. The correct calculation is \\((12\\cdot70+8\\cdot90)/20=1560/20=78\\), while averaging the two displayed scores equally ignores that there are more students with score 70.",
   ),
   makeQuestion(
-    20,
+    "crash-probability-l0-q20",
     "medium",
     "Which exponent rules are correct for positive \\(a\\) and \\(b\\)?",
     [
@@ -307,7 +305,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "Exponent rules apply cleanly to products and powers, but each factor inside a product must be squared. Thus \\((ab)^2=a^2b^2\\), and \\((a+b)^2\\) also has a middle term \\(2ab\\), so the two false statements each drop a required part.",
   ),
   makeQuestion(
-    21,
+    "crash-probability-l0-q21",
     "medium",
     "Which statements about the natural exponential \\(e^x\\) are correct?",
     [
@@ -319,7 +317,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The exponential turns addition in the exponent into multiplication, so \\(e^{u+v}=e^ue^v\\), not \\(e^u+e^v\\). It also turns subtraction in the exponent into division, and a negative exponent gives a reciprocal.",
   ),
   makeQuestion(
-    22,
+    "crash-probability-l0-q22",
     "medium",
     "A quantity starts at 80 and is multiplied by \\(0.75\\) each step. Which statements are correct?",
     [
@@ -331,7 +329,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "Repeated multiplicative change is represented with powers. Multiplying by \\(0.75\\) twice gives \\(80(0.75)^2=45\\), and after \\(n\\) steps the factor is \\((0.75)^n\\), not \\(0.75n\\).",
   ),
   makeQuestion(
-    23,
+    "crash-probability-l0-q23",
     "medium",
     "Which logarithm statements are correct for positive inputs?",
     [
@@ -343,7 +341,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "Logarithms turn products into sums and powers into multipliers. Therefore \\(\\ln(a^3)=3\\ln a\\), and logarithms do not turn ordinary addition inside the logarithm into addition outside the logarithm.",
   ),
   makeQuestion(
-    24,
+    "crash-probability-l0-q24",
     "medium",
     "Solve logarithmic and exponential equations. Which statements are correct?",
     [
@@ -355,7 +353,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "A logarithm asks what exponent is needed to produce a number from a given base. Thus \\(e^x=7\\) gives \\(x=\\ln7\\), and \\(\\log_{10}x=3\\) means \\(x=10^3=1000\\), not \\(10\\cdot3\\).",
   ),
   makeQuestion(
-    25,
+    "crash-probability-l0-q25",
     "medium",
     "A rectangular data block has shape \\(12\\times8\\times5\\). Which dimension calculations are correct?",
     [
@@ -370,7 +368,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "A rectangular multidimensional block is counted by multiplying its dimensions. Fixing the first coordinate leaves an \\(8\\times5\\) slice, while slicing along the third dimension would give 5 slices of shape \\(12\\times8\\).",
   ),
   makeQuestion(
-    26,
+    "crash-probability-l0-q26",
     "medium",
     "A batch contains 40 tables, each with shape \\(6\\times10\\). Which statements are correct?",
     [
@@ -385,7 +383,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The total count multiplies the number of tables by the entries per table. Selecting one row from each table keeps the batch dimension and the column dimension, so it gives \\(40\\cdot10=400\\) entries, not 60 total.",
   ),
   makeQuestion(
-    27,
+    "crash-probability-l0-q27",
     "medium",
     "For Gaussian notation \\(X\\sim\\mathcal{N}(10,9)\\), which statements are correct?",
     [
@@ -397,7 +395,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "In the notation \\(\\mathcal{N}(\\mu,\\sigma^2)\\), the second parameter is the variance. The standard deviation is the square root of the variance, so \\(\\sqrt{9}=3\\).",
   ),
   makeQuestion(
-    28,
+    "crash-probability-l0-q28",
     "medium",
     "A normal quantity has mean 50 and standard deviation 4. Which standard-score statements are correct?",
     [
@@ -409,7 +407,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "A standard score is computed as \\((x-\\mu)/\\sigma\\). For example, \\((58-50)/4=2\\), \\((46-50)/4=-1\\), and a value equal to the mean has standard score 0, not 1.",
   ),
   makeQuestion(
-    29,
+    "crash-probability-l0-q29",
     "medium",
     "A measurement has mean \\(\\mu=20\\) and variance \\(\\sigma^2=16\\). Which statements are correct?",
     [
@@ -427,7 +425,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The standard deviation is the square root of the variance. One standard deviation from the mean means subtracting and adding 4 to 20, which gives \\([16,24]\\), not \\([18,22]\\).",
   ),
   makeQuestion(
-    30,
+    "crash-probability-l0-q30",
     "medium",
     "A device succeeds on one attempt with share \\(0.98\\). Attempts are independent. Which complement calculations for 10 attempts are correct?",
     [
@@ -445,7 +443,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The complement of at least one failure is no failures. Since attempts are independent, the no-failure share multiplies across attempts, giving \\(0.98^{10}\\), and the complement is \\(1-0.98^{10}\\); \\(0.02^{10}\\) would mean every attempt fails.",
   ),
   makeQuestion(
-    31,
+    "crash-probability-l0-q31",
     "hard",
     "A delayed-value calculation uses \\(G=5+0.8\\cdot10+0.8^2\\cdot20\\). Which statements are correct?",
     [
@@ -460,7 +458,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The weights are \\(1\\), \\(0.8\\), and \\(0.8^2\\), so the later terms do not get the same multiplier. The calculation is \\(5+8+12.8=25.8\\), and the final term uses \\(0.64\\), not another \\(0.8\\).",
   ),
   makeQuestion(
-    32,
+    "crash-probability-l0-q32",
     "hard",
     "For \\(0\\le r<1\\), the infinite geometric sum is \\(1+r+r^2+\\cdots\\). Which statements are correct?",
     [
@@ -475,7 +473,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The series starts with the term 1, so its total is \\(1/(1-r)\\). The expression \\(r/(1-r)\\) would be the sum \\(r+r^2+r^3+\\cdots\\), which starts one term later.",
   ),
   makeQuestion(
-    33,
+    "crash-probability-l0-q33",
     "hard",
     "A finite geometric sum is \\(S_n=3+3r+3r^2+\\cdots+3r^{n-1}\\), with \\(r\\ne1\\). Which formulas are correct?",
     [
@@ -487,7 +485,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "A finite geometric sum multiplies the first term by \\((1-r^n)/(1-r)\\). For \\(r=0.5\\) and \\(n=3\\), the direct sum is \\(3+1.5+0.75=5.25\\), and the final term is \\(3r^{n-1}\\), not \\(3r^n\\).",
   ),
   makeQuestion(
-    34,
+    "crash-probability-l0-q34",
     "hard",
     "The odds for three categories are \\(2:3:5\\), and the total count is 240. Which statements are correct?",
     [
@@ -499,7 +497,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The ratio has \\(2+3+5=10\\) total parts, so each part corresponds to 24 counts when the total is 240. The second category uses \\(3/10\\) of the total, not \\(3/5\\), because the denominator must include all three ratio parts.",
   ),
   makeQuestion(
-    35,
+    "crash-probability-l0-q35",
     "hard",
     "A quantity is defined by \\(q_i=\\frac{e^{z_i}}{e^{z_1}+e^{z_2}+e^{z_3}}\\). Let \\((z_1,z_2,z_3)=(0,\\ln 2,\\ln 3)\\). Which statements are correct?",
     [
@@ -511,7 +509,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The exponential and logarithm undo each other for positive values, so the unnormalized values are \\(1\\), \\(2\\), and \\(3\\). Normalization then divides each by their total 6; the denominator is the sum \\(1+2+3\\), not \\(e^6\\).",
   ),
   makeQuestion(
-    36,
+    "crash-probability-l0-q36",
     "hard",
     "For \\(0<x<1\\), which negative-log statements are correct?",
     [
@@ -523,7 +521,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The identity \\(-\\ln x=\\ln(x^{-1})=\\ln(1/x)\\) follows from the power rule for logarithms. Since \\(1/0.25=4\\), \\(-\\ln(0.25)=\\ln4\\), while \\(-\\ln4\\) would be a negative number rather than the positive value of \\(-\\ln(0.25)\\).",
   ),
   makeQuestion(
-    37,
+    "crash-probability-l0-q37",
     "hard",
     "A variable takes values 2 and 8 with weights 0.75 and 0.25. Which variance calculations are correct?",
     [
@@ -541,7 +539,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The weighted mean is \\(0.75\\cdot2+0.25\\cdot8=3.5\\). Variance then averages squared deviations using the same weights, and the standard deviation is the square root of that variance rather than the variance itself.",
   ),
   makeQuestion(
-    38,
+    "crash-probability-l0-q38",
     "hard",
     "Each of 12 independent components remains working with share \\(0.97\\). Which statements are correct?",
     [
@@ -559,7 +557,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "For independent components, all-working means multiplying the working share 12 times. At least one failure is the complement of all working, so it is \\(1-0.97^{12}\\), not the complement of all failing.",
   ),
   makeQuestion(
-    39,
+    "crash-probability-l0-q39",
     "hard",
     "For \\(h(x)=\\sqrt{1-x}\\), which statements are correct?",
     [
@@ -571,7 +569,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "For real square roots, the expression inside the root must be nonnegative, so \\(1-x\\ge0\\). Solving \\(\\sqrt{1-x}=0.2\\) gives \\(1-x=0.04\\), hence \\(x=0.96\\).",
   ),
   makeQuestion(
-    40,
+    "crash-probability-l0-q40",
     "hard",
     "A score is computed as \\(S=\\sum_{t=1}^4 \\gamma^{t-1}r_t\\), with \\(\\gamma=0.5\\) and \\((r_1,r_2,r_3,r_4)=(4,0,8,16)\\). Which statements are correct?",
     [
@@ -586,7 +584,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The exponent is \\(t-1\\), so the first term has exponent 0 and weight 1. The fourth term has exponent 3, giving weight \\(0.125\\), not \\(0.0625\\), and the total is \\(4+0+2+2=8\\).",
   ),
   makeQuestion(
-    41,
+    "crash-probability-l0-q41",
     "easy",
     "Which statements correctly use Euler's number \\(e\\) and the natural logarithm \\(\\ln\\)?",
     [
@@ -598,7 +596,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The natural logarithm is the inverse operation for exponentiation with base \\(e\\). These identities are core facts: \\(e^0=1\\), \\(\\ln(1)=0\\), \\(\\ln(e)=1\\), and applying \\(e^x\\) to \\(\\ln 5\\) returns 5.",
   ),
   makeQuestion(
-    42,
+    "crash-probability-l0-q42",
     "easy",
     "Which logarithm values are correct?",
     [
@@ -610,7 +608,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "A logarithm gives the exponent needed on the base to produce the input. Since \\(10^3=1000\\), \\(2^5=32\\), and \\(5^0=1\\), the first three statements are correct; \\(3^2=9\\), so \\(\\log_3(9)=2\\), not 6.",
   ),
   makeQuestion(
-    43,
+    "crash-probability-l0-q43",
     "easy",
     "Values \\((4,-2,4,7)\\) are assigned to labels \\((a,b,c,d)\\). Which extrema statements are correct?",
     [
@@ -622,7 +620,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The maximum and minimum are values, while argmax and argmin identify where those values occur. The largest value is 7 at label \\(d\\), and the smallest value is \\(-2\\) at label \\(b\\), not at the first label.",
   ),
   makeQuestion(
-    44,
+    "crash-probability-l0-q44",
     "easy",
     "Which power and root statements are correct over the real numbers?",
     [
@@ -634,7 +632,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "A fractional exponent of \\(1/3\\) represents a cube root, and a negative exponent represents a reciprocal. The principal square root of 49 is 7, but \\(\\sqrt{-4}\\) is not a real number.",
   ),
   makeQuestion(
-    45,
+    "crash-probability-l0-q45",
     "easy",
     "Which distribution and Gaussian-notation statements are correct?",
     [
@@ -652,7 +650,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "A finite distribution must have nonnegative entries that sum to 1. In the common notation \\(\\mathcal{N}(\\mu,\\sigma^2)\\), the second parameter is the variance, so \\(\\mathcal{N}(4,9)\\) has standard deviation \\(\\sqrt9=3\\).",
   ),
   makeQuestion(
-    46,
+    "crash-probability-l0-q46",
     "medium",
     "Which logarithm identities are correct for positive inputs?",
     [
@@ -664,7 +662,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "Logarithms turn quotients into differences and powers into multipliers. They do not split subtraction inside the logarithm, so \\(\\ln(7-2)\\) is \\(\\ln5\\), not \\(\\ln7-\\ln2\\).",
   ),
   makeQuestion(
-    47,
+    "crash-probability-l0-q47",
     "medium",
     "Which exponential equations are solved correctly?",
     [
@@ -676,7 +674,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "Solving exponential equations means matching exponents or applying logarithms. Since \\(e^{2x}=9=e^{\\ln9}\\), \\(2x=\\ln9=2\\ln3\\), and \\(x=\\ln3\\); for the last equation, \\(x+1=4\\), so \\(x=3\\), not 5.",
   ),
   makeQuestion(
-    48,
+    "crash-probability-l0-q48",
     "medium",
     "Which change-of-base and base-conversion statements are correct?",
     [
@@ -694,7 +692,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The change-of-base formula lets any logarithm be written as a ratio of natural logarithms or logarithms in another base. The reciprocal-looking expression is not symmetric: generally \\(\\log_a b=1/\\log_b a\\), not \\(\\log_b a\\).",
   ),
   makeQuestion(
-    49,
+    "crash-probability-l0-q49",
     "medium",
     "Scores are \\(z=(1,3,2)\\). Which statements about transformations and extrema are correct?",
     [
@@ -709,7 +707,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "Strictly increasing transformations such as exponentiation and adding the same constant preserve the order of scores. Multiplying by a negative number reverses the order, so it swaps maxima and minima rather than preserving both.",
   ),
   makeQuestion(
-    50,
+    "crash-probability-l0-q50",
     "medium",
     "A table gives \\(f(-1)=3\\), \\(f(0)=5\\), \\(f(1)=5\\), and \\(f(2)=1\\). Which statements are correct?",
     [
@@ -721,7 +719,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The maximum value is the output 5, but argmax asks for the input locations that attain it. Here both inputs 0 and 1 attain the maximum, while input 2 gives the minimum value.",
   ),
   makeQuestion(
-    51,
+    "crash-probability-l0-q51",
     "medium",
     "Which root-equation statements are correct over the real numbers?",
     [
@@ -733,7 +731,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "Solving \\(\\sqrt{x+5}=4\\) gives \\(x+5=16\\), so \\(x=11\\), and cubing both sides of \\(x^{1/3}=-2\\) gives \\(x=-8\\). The expression \\(\\sqrt{x^2}\\) equals \\(|x|\\), so it is not equal to \\(x\\) for negative \\(x\\).",
   ),
   makeQuestion(
-    52,
+    "crash-probability-l0-q52",
     "medium",
     "Weights are defined as \\((e^0,e^{\\ln2},e^{\\ln5})\\) and then normalized by their total. Which statements are correct?",
     [
@@ -745,7 +743,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The exponential and natural logarithm undo each other, so \\(e^{\\ln2}=2\\) and \\(e^{\\ln5}=5\\). Normalization divides by the total 8, so the second normalized weight is \\(2/8=1/4\\), not 2.",
   ),
   makeQuestion(
-    53,
+    "crash-probability-l0-q53",
     "medium",
     "Let \\(X\\sim\\mathcal{N}(100,25)\\), using the \\(\\mathcal{N}(\\mu,\\sigma^2)\\) convention. Which standardization statements are correct?",
     [
@@ -757,7 +755,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The variance is 25, so the standard deviation is \\(\\sqrt{25}=5\\). Standard scores use \\((x-\\mu)/\\sigma\\), giving \\((110-100)/5=2\\), \\((95-100)/5=-1\\), and \\((105-100)/5=1\\).",
   ),
   makeQuestion(
-    54,
+    "crash-probability-l0-q54",
     "medium",
     "A distribution over values \\((0,2,4)\\) has weights \\((0.25,0.5,0.25)\\). Which statements are correct?",
     [
@@ -769,7 +767,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The weights form a valid distribution because they are nonnegative and sum to 1. The mean is \\(0.25\\cdot0+0.5\\cdot2+0.25\\cdot4=2\\), the second moment is 6, and the variance is \\(6-2^2=2\\), so the standard deviation is \\(\\sqrt2\\).",
   ),
   makeQuestion(
-    55,
+    "crash-probability-l0-q55",
     "medium",
     "Which vectors can be valid finite distributions?",
     [
@@ -781,7 +779,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "A finite distribution must have entries that are all nonnegative and sum exactly to 1. The first two vectors satisfy both requirements; the third contains a negative entry, and the fourth contains positive weights that still need normalization.",
   ),
   makeQuestion(
-    56,
+    "crash-probability-l0-q56",
     "hard",
     "A positive quantity satisfies \\(\\ln y=2x+\\ln3\\). Which statements are correct?",
     [
@@ -793,7 +791,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "Exponentiating both sides gives \\(y=e^{2x+\ln3}=e^{2x}e^{\ln3}=3e^{2x}\\). This is an exponential relationship, not a linear one, and adding 1 to \\(x\\) multiplies the result by \\(e^2\\).",
   ),
   makeQuestion(
-    57,
+    "crash-probability-l0-q57",
     "hard",
     "A decreasing quantity is \\(A(t)=100e^{-kt}\\), and \\(A(5)=50\\). Which statements are correct?",
     [
@@ -805,7 +803,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The condition \\(A(5)=50\\) gives \\(100e^{-5k}=50\\), so \\(e^{-5k}=1/2\\). Taking logs gives \\(-5k=-\\ln2\\), hence \\(k=\\ln2/5\\), and after two five-unit half-steps the quantity is 25.",
   ),
   makeQuestion(
-    58,
+    "crash-probability-l0-q58",
     "hard",
     "For \\(C>0\\) and \\(s>0\\), define \\(g(x)=C e^{-\\frac{(x-m)^2}{2s^2}}\\). Which statements are correct?",
     [
@@ -817,7 +815,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "The squared term \\((x-m)^2\\) is smallest at \\(x=m\\), making the exponent 0 and the value \\(C\\). Moving equally far left or right from \\(m\\) gives the same squared distance, while moving farther away lowers the exponential value toward 0.",
   ),
   makeQuestion(
-    59,
+    "crash-probability-l0-q59",
     "hard",
     "Let \\(P=0.8\\cdot0.5\\cdot0.25\\). Which product-and-log statements are correct?",
     [
@@ -832,7 +830,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
     "Products become sums after taking logarithms, which is why the log of \\(P\\) splits into three log terms. Since \\(P=0.8\\cdot0.5\\cdot0.25=0.1\\), the average negative log is the total negative log divided by 3.",
   ),
   makeQuestion(
-    60,
+    "crash-probability-l0-q60",
     "hard",
     "A distribution over centers \\((-1,0,2)\\) has weights \\((0.2,0.3,0.5)\\). Which statements are correct?",
     [

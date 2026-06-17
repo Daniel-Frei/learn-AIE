@@ -12,6 +12,8 @@ import { stanfordCME295Lecture3LLMsQuestions } from "./lectures/Stanford CME295 
 import { stanfordCME295Lecture4TrainingQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture4_training";
 import { stanfordCME295Lecture5PreferenceTuningQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture5_preference_tuning";
 import { stanfordCME295Lecture6ReasoningQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture6_reasoning";
+import { stanfordCME295Lecture7RagToolsAgentsQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture7_rag_tools_agents";
+import { stanfordCME295Lecture8EvaluationQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture8_evaluation";
 import { cs224rLecture1IntroQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture1_intro";
 import { cs224rLecture2ImitationLearningQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture2_Imitation Learning";
 import { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture3_Policy Gradients";
@@ -246,6 +248,24 @@ export const QUESTION_SOURCES = [
     seriesLabel: "Stanford CME295 Transformers & LLMs",
     topic: "NLP" as const,
     questions: stanfordCME295Lecture6ReasoningQuestions,
+  },
+  {
+    id: "cme295-lect7" as const,
+    label: "Stanford CME295 Lecture 7",
+    title: "Stanford CME295 Lecture 7: RAG, Tool Calling & Agents",
+    seriesId: "stanford-cme295" as const,
+    seriesLabel: "Stanford CME295 Transformers & LLMs",
+    topic: "NLP" as const,
+    questions: stanfordCME295Lecture7RagToolsAgentsQuestions,
+  },
+  {
+    id: "cme295-lect8" as const,
+    label: "Stanford CME295 Lecture 8",
+    title: "Stanford CME295 Lecture 8: LLM Evaluation",
+    seriesId: "stanford-cme295" as const,
+    seriesLabel: "Stanford CME295 Transformers & LLMs",
+    topic: "NLP" as const,
+    questions: stanfordCME295Lecture8EvaluationQuestions,
   },
   {
     id: "cs224r-lect1" as const,
@@ -730,6 +750,10 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
     "Preference-tuning lecture about preference data, reward modeling, RLHF/PPO, Best-of-N, DPO, and alignment tradeoffs.",
   "cme295-lect6":
     "Reasoning-model lecture about chain-of-thought, Pass@k, test-time scaling, verifiable rewards, GRPO, DeepSeek R1, and distillation.",
+  "cme295-lect7":
+    "Systems lecture about RAG, retrieval quality, tool calling, MCP, ReAct-style agents, A2A, and agent safety controls.",
+  "cme295-lect8":
+    "Evaluation lecture about human ratings, rule-based metrics, LLM-as-a-Judge, factuality, agent failure modes, benchmarks, reliability, and benchmark limits.",
   "cs224r-lect1":
     "Deep reinforcement learning introduction about MDPs, value functions, policies, and the RL problem setup.",
   "cs224r-lect2":
@@ -992,6 +1016,8 @@ export { stanfordCME295Lecture3LLMsQuestions } from "./lectures/Stanford CME295 
 export { stanfordCME295Lecture4TrainingQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture4_training";
 export { stanfordCME295Lecture5PreferenceTuningQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture5_preference_tuning";
 export { stanfordCME295Lecture6ReasoningQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture6_reasoning";
+export { stanfordCME295Lecture7RagToolsAgentsQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture7_rag_tools_agents";
+export { stanfordCME295Lecture8EvaluationQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture8_evaluation";
 export { cs224rLecture1IntroQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture1_intro";
 export { cs224rLecture2ImitationLearningQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture2_Imitation Learning";
 export { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture3_Policy Gradients";

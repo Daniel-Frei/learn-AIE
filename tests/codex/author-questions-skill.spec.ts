@@ -96,6 +96,9 @@ describe("author-questions skill guidance", () => {
       'Do not include a trailing instruction sentence such as "Which option correctly evaluates the assertion and reason?"',
     );
     expect(skill).toContain(
+      "only when the Reason gives a causal, mechanistic, or logically sufficient explanation",
+    );
+    expect(skill).toContain(
       "vary which of the fixed five ordered options is correct as practical",
     );
     expect(teamPreferences).toContain(
@@ -103,6 +106,9 @@ describe("author-questions skill guidance", () => {
     );
     expect(teamPreferences).toContain(
       "use the standard fixed five-option assertion/reason order",
+    );
+    expect(teamPreferences).toContain(
+      "only when the reason gives a causal, mechanistic, or logically sufficient explanation",
     );
   });
 

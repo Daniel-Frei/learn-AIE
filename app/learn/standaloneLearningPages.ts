@@ -18,6 +18,20 @@ export const standaloneLearningPagesBySeries: Partial<
       summary:
         "Control thinking budgets, reasoning benchmarks, verifiable rewards, GRPO group advantages, length incentives, R1 recipes, and distillation.",
     },
+    {
+      href: "/learn/stanford-cme295/lecture-7",
+      sequenceLabel: "Lecture 7",
+      shortTitle: "RAG, Tools, Agents Studio",
+      summary:
+        "Route model requests through retrieval, tool calls, agent loops, tool-selection/MCP boundaries, and safety guardrails.",
+    },
+    {
+      href: "/learn/stanford-cme295/lecture-8",
+      sequenceLabel: "Lecture 8",
+      shortTitle: "LLM Evaluation Studio",
+      summary:
+        "Build evaluation scopes, agreement math, reference metrics, judge controls, factuality scoring, agent diagnostics, and benchmark tradeoffs.",
+    },
   ],
 };
 

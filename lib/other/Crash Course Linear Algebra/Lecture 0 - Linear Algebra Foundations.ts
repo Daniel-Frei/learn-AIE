@@ -13,15 +13,15 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It can be viewed as a displacement 3 units right and 4 units down.",
+        text: "It can be viewed as a displacement \\(3\\) units right and \\(4\\) units down.",
         isCorrect: true,
       },
       {
-        text: "Its components are 3 and -4.",
+        text: "Its components are \\(v_1=3\\) and \\(v_2=-4\\).",
         isCorrect: true,
       },
       {
-        text: "It has a geometric length that can be computed from its components.",
+        text: "It has a geometric length \\(\\|v\\|\\) that can be computed from its components.",
         isCorrect: true,
       },
     ],
@@ -64,9 +64,9 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
     prompt:
       "What is the Euclidean length of \\(v=\\begin{bmatrix}6 \\\\ 8\\end{bmatrix}\\)?",
     options: [
-      { text: "10", isCorrect: true },
-      { text: "14", isCorrect: false },
-      { text: "48", isCorrect: false },
+      { text: "\\(\\sqrt{6^2+8^2}=10\\)", isCorrect: true },
+      { text: "\\(6+8=14\\)", isCorrect: false },
+      { text: "\\(6\\cdot8=48\\)", isCorrect: false },
       { text: "\\(\\sqrt{14}\\)", isCorrect: false },
     ],
     explanation:
@@ -85,11 +85,11 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The length is multiplied by 3.",
+        text: "The length is multiplied by \\(|-3|=3\\).",
         isCorrect: true,
       },
       {
-        text: "The direction is reversed because the scalar is negative.",
+        text: "The direction is reversed because the scalar \\(-3\\) is negative.",
         isCorrect: true,
       },
       {
@@ -190,7 +190,7 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
       "Which statements about the dot product \\(a\\cdot b\\) are correct?",
     options: [
       {
-        text: "It is computed by multiplying corresponding components and adding the results.",
+        text: "It is computed as \\(\\sum_i a_i b_i\\), multiplying corresponding components and adding the results.",
         isCorrect: true,
       },
       {
@@ -202,7 +202,7 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is found by adding the vectors component by component.",
+        text: "It is found by adding the vectors component by component to get \\(a+b\\).",
         isCorrect: false,
       },
     ],
@@ -266,15 +266,15 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
     prompt: "Which statements correctly connect the dot product with angles?",
     options: [
       {
-        text: "If \\(a\\cdot b>0\\), the angle between nonzero vectors is acute.",
+        text: "If \\(a\\cdot b>0\\), then \\(\\cos\\theta>0\\) and the angle between nonzero vectors is acute.",
         isCorrect: true,
       },
       {
-        text: "If \\(a\\cdot b=0\\), nonzero vectors are perpendicular.",
+        text: "If \\(a\\cdot b=0\\), then \\(\\cos\\theta=0\\) and nonzero vectors are perpendicular.",
         isCorrect: true,
       },
       {
-        text: "If \\(a\\cdot b<0\\), the angle between nonzero vectors is obtuse.",
+        text: "If \\(a\\cdot b<0\\), then \\(\\cos\\theta<0\\) and the angle between nonzero vectors is obtuse.",
         isCorrect: true,
       },
       {
@@ -322,7 +322,7 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
       "For \\(a=\\begin{bmatrix}2 \\\\ 3\\end{bmatrix}\\) and \\(b=\\begin{bmatrix}4 \\\\ 0\\end{bmatrix}\\), which statements are correct?",
     options: [
       {
-        text: "The scalar projection of \\(a\\) onto \\(b\\) is 2.",
+        text: "The scalar projection of \\(a\\) onto \\(b\\) is \\(\\frac{a\\cdot b}{\\|b\\|}=2\\).",
         isCorrect: true,
       },
       {
@@ -330,11 +330,11 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The projection keeps the y-component 3.",
+        text: "The projection keeps the y-component \\(3\\), giving \\(\\begin{bmatrix}2 \\\\ 3\\end{bmatrix}\\).",
         isCorrect: false,
       },
       {
-        text: "The projection is undefined because \\(b\\) has a zero component.",
+        text: "The projection is undefined because \\(b\\) has a zero second component.",
         isCorrect: false,
       },
     ],
@@ -381,11 +381,11 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A linear combination uses scalar multiples and vector addition.",
+        text: "A linear combination has the form \\(\\alpha u+\\beta v\\) using scalar multiples and vector addition.",
         isCorrect: true,
       },
       {
-        text: "The span of vectors is the set of all their linear combinations.",
+        text: "The span of \\(u\\) and \\(v\\) is the set of all vectors \\(\\alpha u+\\beta v\\).",
         isCorrect: true,
       },
       {
@@ -564,15 +564,15 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Multiplying a compatible matrix by an identity matrix leaves it unchanged.",
+        text: "For any \\(2\\times2\\) matrix \\(A\\), multiplying by \\(I_2\\) leaves it unchanged: \\(AI_2=I_2A=A\\).",
         isCorrect: true,
       },
       {
-        text: "The identity matrix represents the transformation that does nothing.",
+        text: "The identity matrix represents the transformation \\(x\\mapsto x\\) that does nothing.",
         isCorrect: true,
       },
       {
-        text: "The identity matrix sends vectors to the zero vector.",
+        text: "The identity matrix sends every vector to the zero vector, so \\(I_2x=0\\).",
         isCorrect: false,
       },
     ],
@@ -712,11 +712,11 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
     prompt: "Which statements correctly describe the rank of a set of vectors?",
     options: [
       {
-        text: "It is the number of independent directions in the set.",
+        text: "It is the number of independent directions in \\(\\operatorname{span}\\{v_1,\\dots,v_k\\}\\).",
         isCorrect: true,
       },
       {
-        text: "Two nonzero scalar multiples have rank 1 as a set.",
+        text: "Two nonzero scalar multiples such as \\(u\\) and \\(2u\\) have rank 1 as a set.",
         isCorrect: true,
       },
       {
@@ -724,7 +724,7 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Adding a zero vector to a set increases its rank by 1.",
+        text: "Adding the zero vector \\(0\\) to a set increases its rank by 1.",
         isCorrect: false,
       },
     ],
@@ -828,11 +828,11 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The subscripts label positions within the vector.",
+        text: "The subscripts in \\(x_i\\) label positions within the vector.",
         isCorrect: true,
       },
       {
-        text: "The vector has three components.",
+        text: "The vector has dimension \\(3\\), so \\(x\\in\\mathbb{R}^3\\) if its entries are real.",
         isCorrect: true,
       },
       {
@@ -944,11 +944,11 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The identity matrix leaves compatible vectors unchanged when multiplied.",
+        text: "The identity matrix leaves compatible vectors unchanged, so \\(I_nx=x\\).",
         isCorrect: true,
       },
       {
-        text: "A zero matrix and an identity matrix are the same object.",
+        text: "A zero matrix and an identity matrix are the same object, so \\(0_{n\\times n}=I_n\\).",
         isCorrect: false,
       },
     ],
@@ -992,24 +992,24 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
       "What does the summation notation \\(\\sum_{i=1}^{n} x_i y_i\\) mean?",
     options: [
       {
-        text: "Add the products \\(x_i y_i\\) for \\(i=1\\) through \\(n\\).",
+        text: "Add the products \\(x_i y_i\\), giving \\(x_1y_1+x_2y_2+\\cdots+x_ny_n\\).",
         isCorrect: true,
       },
       {
-        text: "Multiply the components of \\(x\\) together and then multiply the components of \\(y\\) together.",
+        text: "Multiply the components separately, giving \\((\\prod_i x_i)(\\prod_i y_i)\\).",
         isCorrect: false,
       },
       {
-        text: "Choose the largest value of \\(x_i y_i\\).",
+        text: "Choose the largest value, giving \\(\\max_i x_i y_i\\).",
         isCorrect: false,
       },
       {
-        text: "Transpose both vectors without doing any arithmetic.",
+        text: "Add the components separately, giving \\(\\sum_i x_i+\\sum_i y_i\\).",
         isCorrect: false,
       },
     ],
     explanation:
-      "The symbol \\(\\sum\\) means to add a sequence of terms. The expression \\(\\sum_{i=1}^{n} x_i y_i\\) means compute \\(x_1y_1+x_2y_2+\\cdots+x_ny_n\\). It is not a maximum, a transpose operation, or a product of all components at once.",
+      "The symbol \\(\\sum\\) means to add a sequence of terms. The expression \\(\\sum_{i=1}^{n} x_i y_i\\) means compute \\(x_1y_1+x_2y_2+\\cdots+x_ny_n\\). It is not a maximum, a product of all components at once, or two separate sums of the components.",
   },
 
   {
@@ -1130,7 +1130,7 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
     prompt: "Which statements correctly describe the term span?",
     options: [
       {
-        text: "The span of vectors is the set of all their linear combinations.",
+        text: "The span of vectors \\(v_1,\\dots,v_k\\) is the set of all linear combinations \\(\\sum_i \\alpha_i v_i\\).",
         isCorrect: true,
       },
       {
@@ -1142,7 +1142,7 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The zero vector is always included in the span of any set of vectors.",
+        text: "The zero vector is included in any span because choosing all coefficients \\(\\alpha_i=0\\) gives \\(0\\).",
         isCorrect: true,
       },
     ],
@@ -1184,7 +1184,7 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
     prompt: "Which statements correctly interpret rank terminology?",
     options: [
       {
-        text: "Rank counts independent directions represented by rows or columns.",
+        text: "\\(\\operatorname{rank}(A)\\) counts independent directions represented by rows or columns.",
         isCorrect: true,
       },
       {
@@ -1192,11 +1192,11 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Rank is the same as the sum of matrix entries.",
+        text: "\\(\\operatorname{rank}(A)\\) is the same as the sum of matrix entries \\(\\sum_{ij}A_{ij}\\).",
         isCorrect: false,
       },
       {
-        text: "A matrix with rank 0 must have at least one nonzero row.",
+        text: "A matrix with \\(\\operatorname{rank}(A)=0\\) must have at least one nonzero row.",
         isCorrect: false,
       },
     ],

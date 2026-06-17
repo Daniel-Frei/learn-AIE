@@ -123,6 +123,7 @@ For new question sets, run the gate over the full draft before finalizing. For a
   - `Both are false.`
   - `Both are true, and the Reason is the correct explanation of the Assertion.`
   - `Both are true, but the Reason is NOT the correct explanation of the Assertion.`
+- Mark the correct-explanation option true only when the Reason gives a causal, mechanistic, or logically sufficient explanation of why or how the Assertion holds. A related true fact, recommendation, downstream benefit, or mitigation is not enough; use the "both true, but not the correct explanation" option for those cases.
 - Do not include a trailing instruction sentence such as "Which option correctly evaluates the assertion and reason?" in assertion-reason prompts. Use `Assertion: ...\n\nReason: ...` so the frontend displays the two statements as separate paragraphs.
 - For multi-select questions, option order should avoid predictable patterns. Do not rely on ordering, such as "first ... then ..." dependencies.
 - Questions can cover simple terminology, definitions, core concepts, complex concepts, applications, connections between ideas, and math.
