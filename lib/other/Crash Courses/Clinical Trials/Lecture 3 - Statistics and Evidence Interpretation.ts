@@ -996,7 +996,7 @@ export const ClinicalTrialsLecture3Questions: Question[] = [
       },
     ],
     explanation:
-      "The abstract suggests a statistically positive result, but clinical interpretation needs more detail. A composite endpoint can be driven by a less meaningful component, and a hazard ratio does not reveal the absolute benefit, safety profile, biomarker validity, or patient relevance.",
+      "The hazard ratio and confidence interval show a statistically favorable relative effect over time, so the result should not be dismissed as statistically unsupported. The hazard ratio alone still does not answer how many patients benefited in absolute terms, whether the composite was driven by hospitalization or a softer biomarker component, whether that biomarker was validated, or whether safety and quality of life make the effect clinically worthwhile.",
   },
   {
     id: "clinical-trials-l3-q38",

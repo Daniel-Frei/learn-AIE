@@ -1,4 +1,4 @@
-.PHONY: ci install check format-check lint types-check test install-windows-start-menu uninstall-windows-start-menu mobile-start mobile-android mobile-ios mobile-web mobile-lint mobile-types-check
+.PHONY: ci install check format-check lint types-check test e2e-smoke install-windows-start-menu uninstall-windows-start-menu mobile-start mobile-android mobile-ios mobile-web mobile-lint mobile-types-check
 
 ci:
 	npm ci
@@ -23,6 +23,9 @@ types-check:
 
 test:
 	npm run test
+
+e2e-smoke:
+	npm run e2e:smoke
 
 install-windows-start-menu:
 	powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/install-windows-start-menu.ps1

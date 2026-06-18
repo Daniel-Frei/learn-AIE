@@ -1328,7 +1328,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "hard",
     prompt:
-      "Which statements about Layer Normalization (LayerNorm) vs Batch Normalization (BatchNorm) are correct?",
+      "In transformer-style sequence models, which statements correctly compare Layer Normalization (LayerNorm) with Batch Normalization (BatchNorm)?",
     options: [
       {
         text: "LayerNorm normalizes across feature dimensions within a single token’s activation vector.",

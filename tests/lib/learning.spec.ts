@@ -81,6 +81,12 @@ describe("learning experience registry", () => {
       "Stanford CME295 Transformers & LLMs/transcripts-and-files/lecture 5 - transcript.md",
     );
 
+    const cmeLecture9Experience = getLearningExperience("cme295-lect9");
+    expect(cmeLecture9Experience?.title).toContain("Course Recap & Frontiers");
+    expect(cmeLecture9Experience?.sourceMaterialPath).toContain(
+      "Stanford CME295 Transformers & LLMs/transcripts-and-files/lecture 9 - transcript.md",
+    );
+
     const probabilityExperience = getLearningExperience("crash-probability-l3");
     expect(probabilityExperience?.title).toContain("Likelihood, Loss, Softmax");
 
@@ -146,6 +152,7 @@ describe("learning experience registry", () => {
         "cme295-lect3",
         "cme295-lect4",
         "cme295-lect5",
+        "cme295-lect9",
       ]),
     );
 
@@ -187,6 +194,14 @@ describe("learning experience registry", () => {
         "/learn/stanford-cme295/cme295-lect5",
       );
     }
+
+    const cmeLecture9Experience = getLearningExperience("cme295-lect9");
+    expect(cmeLecture9Experience).not.toBeNull();
+    if (cmeLecture9Experience) {
+      expect(getLearningExperiencePath(cmeLecture9Experience)).toBe(
+        "/learn/stanford-cme295/cme295-lect9",
+      );
+    }
   });
 
   it("derives lecture and chapter labels for course cards", () => {
@@ -211,6 +226,14 @@ describe("learning experience registry", () => {
     if (stanfordLecture5) {
       expect(getLearningExperienceSequenceLabel(stanfordLecture5)).toBe(
         "Lecture 5",
+      );
+    }
+
+    const stanfordLecture9 = getLearningExperience("cme295-lect9");
+    expect(stanfordLecture9).not.toBeNull();
+    if (stanfordLecture9) {
+      expect(getLearningExperienceSequenceLabel(stanfordLecture9)).toBe(
+        "Lecture 9",
       );
     }
 
@@ -248,6 +271,7 @@ describe("learning experience registry", () => {
       "cme295-lect3",
       "cme295-lect4",
       "cme295-lect5",
+      "cme295-lect9",
     ]);
   });
 
@@ -269,6 +293,7 @@ describe("quiz source query parsing", () => {
     expect(parseQuizSourceParam("cme295-lect3")).toBe("cme295-lect3");
     expect(parseQuizSourceParam("cme295-lect4")).toBe("cme295-lect4");
     expect(parseQuizSourceParam("cme295-lect5")).toBe("cme295-lect5");
+    expect(parseQuizSourceParam("cme295-lect9")).toBe("cme295-lect9");
     expect(parseQuizSourceParam("crash-probability-l3")).toBe(
       "crash-probability-l3",
     );

@@ -15,6 +15,7 @@ import StanfordCME295Lecture2LearningPage from "../../components/learning/pages/
 import StanfordCME295Lecture3LearningPage from "../../components/learning/pages/StanfordCME295Lecture3LearningPage";
 import StanfordCME295Lecture4LearningPage from "../../components/learning/pages/StanfordCME295Lecture4LearningPage";
 import StanfordCME295Lecture5LearningPage from "../../components/learning/pages/StanfordCME295Lecture5LearningPage";
+import StanfordCME295Lecture9SynthesisPage from "../../components/learning/pages/StanfordCME295Lecture9SynthesisPage";
 
 const LEARNING_PAGE_COMPONENTS: Partial<
   Record<SourceId, ComponentType<{ experience: LearningExperience }>>
@@ -24,6 +25,7 @@ const LEARNING_PAGE_COMPONENTS: Partial<
   "cme295-lect3": StanfordCME295Lecture3LearningPage,
   "cme295-lect4": StanfordCME295Lecture4LearningPage,
   "cme295-lect5": StanfordCME295Lecture5LearningPage,
+  "cme295-lect9": StanfordCME295Lecture9SynthesisPage,
   "crash-probability-l3": CrashProbabilityL3LearningPage,
   "crash-probability-l4": CrashProbabilityL4LearningPage,
   "crash-probability-l5": CrashProbabilityL5LearningPage,

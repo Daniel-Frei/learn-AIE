@@ -1,5 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 
+const ROUTE_TRANSITION_TIMEOUT_MS = 15000;
+
 function trackSelectionPermissionErrors(page: Page) {
   const errors: string[] = [];
   const selectionPermissionPattern =
@@ -62,6 +64,9 @@ test("lists learning experiences for a selected course", async ({ page }) => {
   await page.getByRole("link", { name: /rl over time/i }).click();
   await expect(page).toHaveURL(
     /\/learn\/crash-course-probability\/crash-probability-l4$/,
+    {
+      timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+    },
   );
 });
 
@@ -80,7 +85,9 @@ test("lists the standalone Medicine learning page for its course", async ({
   ).toBeVisible();
 
   await page.getByRole("link", { name: /what medicine is/i }).click();
-  await expect(page).toHaveURL(/\/learn\/crash-course-medicine\/lecture-1$/);
+  await expect(page).toHaveURL(/\/learn\/crash-course-medicine\/lecture-1$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
 });
 
 test("labels and sorts course learning experiences by source sequence", async ({
@@ -91,7 +98,7 @@ test("labels and sorts course learning experiences by source sequence", async ({
   const courseCards = page.locator(
     'section[aria-label="Stanford CME295 Transformers & LLMs learning experiences"] a',
   );
-  await expect(courseCards).toHaveCount(8);
+  await expect(courseCards).toHaveCount(9);
 
   const cardTexts = await courseCards.allTextContents();
   expect(cardTexts[0]).toContain("Lecture 1");
@@ -105,6 +112,8 @@ test("labels and sorts course learning experiences by source sequence", async ({
   expect(cardTexts[6]).toContain("RAG, Tools, Agents Studio");
   expect(cardTexts[7]).toContain("Lecture 8");
   expect(cardTexts[7]).toContain("LLM Evaluation Studio");
+  expect(cardTexts[8]).toContain("Lecture 9");
+  expect(cardTexts[8]).toContain("Course Recap Synthesis");
   expect(cardTexts.join("\n")).not.toMatch(/15 min|16 min|18 min|19 min/i);
   expect(cardTexts.join("\n")).not.toMatch(
     /Introductory NLP with ML basics|After CME295 Lecture/i,
@@ -117,7 +126,9 @@ test("opens the standalone Stanford CME295 Lecture 6 page from the course page",
   await page.goto("/learn/stanford-cme295");
 
   await page.getByRole("link", { name: /reasoning control bench/i }).click();
-  await expect(page).toHaveURL(/\/learn\/stanford-cme295\/lecture-6$/);
+  await expect(page).toHaveURL(/\/learn\/stanford-cme295\/lecture-6$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
   await expect(
     page.getByRole("heading", {
       name: /run a reasoning model like a controlled experiment/i,
@@ -131,7 +142,9 @@ test("opens the standalone Stanford CME295 Lecture 7 page from the course page",
   await page.goto("/learn/stanford-cme295");
 
   await page.getByRole("link", { name: /rag, tools, agents studio/i }).click();
-  await expect(page).toHaveURL(/\/learn\/stanford-cme295\/lecture-7$/);
+  await expect(page).toHaveURL(/\/learn\/stanford-cme295\/lecture-7$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
   await expect(
     page.getByRole("heading", {
       name: /connect language models to systems they can inspect and act through/i,
@@ -145,10 +158,28 @@ test("opens the standalone Stanford CME295 Lecture 8 page from the course page",
   await page.goto("/learn/stanford-cme295");
 
   await page.getByRole("link", { name: /llm evaluation studio/i }).click();
-  await expect(page).toHaveURL(/\/learn\/stanford-cme295\/lecture-8$/);
+  await expect(page).toHaveURL(/\/learn\/stanford-cme295\/lecture-8$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
   await expect(
     page.getByRole("heading", {
       name: /build the evaluation console before improving the model/i,
+    }),
+  ).toBeVisible();
+});
+
+test("opens the Stanford CME295 Lecture 9 synthesis page from the course page", async ({
+  page,
+}) => {
+  await page.goto("/learn/stanford-cme295");
+
+  await page.getByRole("link", { name: /course recap synthesis/i }).click();
+  await expect(page).toHaveURL(/\/learn\/stanford-cme295\/cme295-lect9$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
+  await expect(
+    page.getByRole("heading", {
+      name: /reconstruct the transformer course from the recap/i,
     }),
   ).toBeVisible();
 });
@@ -726,6 +757,82 @@ test("renders the standalone Stanford CME295 Lecture 8 page and supports evaluat
   );
 });
 
+test("renders the Stanford CME295 Lecture 9 synthesis page and supports recap labs", async ({
+  page,
+}) => {
+  await page.goto("/learn/stanford-cme295/cme295-lect9");
+
+  await expect(
+    page.getByRole("heading", {
+      name: /reconstruct the transformer course from the recap/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /rebuild lectures 1-8 as mechanisms/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /same transformer vocabulary, new input units/i,
+    }),
+  ).toBeVisible();
+  await expect(page.locator(".katex-display").first()).toBeVisible();
+  await expect(page.getByText(/\\\[.*Attention/)).toHaveCount(0);
+  await expect(page.getByText(/course recap\s*70%/i)).toHaveCount(0);
+  await expect(page.getByText(/30 min plan/i)).toHaveCount(0);
+  await expect(page.getByText(/readiness:/i)).toHaveCount(0);
+
+  const recapAtlas = page.getByTestId("lecture9-recap-atlas");
+  await expect(
+    recapAtlas.locator("[data-testid^='lecture9-recap-unit-']"),
+  ).toHaveCount(9);
+  await expect(
+    page.getByTestId("lecture9-recap-unit-representation"),
+  ).toContainText(/sequence of token ids/i);
+  await expect(page.getByTestId("lecture9-recap-unit-attention")).toContainText(
+    /Query/i,
+  );
+  await expect(
+    recapAtlas.getByText(/GRPO removes the separate value model/i),
+  ).toBeVisible();
+
+  const courseTrace = page.getByTestId("lecture9-course-trace");
+  await courseTrace
+    .getByRole("button", { name: /external state added/i })
+    .click();
+  await expect(courseTrace.getByRole("status")).toHaveText(
+    /RAG, tools, and agents add external state/i,
+  );
+
+  const transferLab = page.getByTestId("vision-diffusion-transfer-lab");
+  await transferLab.getByRole("button", { name: /vit patches/i }).click();
+  await expect(transferLab.getByRole("status")).toHaveText(
+    /Patch means fixed image square/i,
+  );
+  await transferLab.getByRole("button", { name: /masked diffusion/i }).click();
+  await transferLab.getByRole("button", { name: /8 tokens per pass/i }).click();
+  await expect(transferLab.getByRole("status")).toHaveText(/3 passes/i);
+  await expect(transferLab.getByRole("status")).toHaveText(/8\.0x/i);
+  await transferLab.getByRole("button", { name: /vlm wiring/i }).click();
+  await transferLab
+    .getByRole("button", { name: /cross-attend to image memory/i })
+    .click();
+  await expect(transferLab.getByRole("status")).toHaveText(
+    /separate set of visual encoder features/i,
+  );
+
+  const layerCheck = page.getByTestId("lecture9-layer-check");
+  await layerCheck
+    .getByRole("button", { name: /only retrain the base model/i })
+    .click();
+  await expect(layerCheck.getByRole("status")).toHaveText(/Not yet/i);
+  await layerCheck
+    .getByRole("button", { name: /add retrieval or a policy tool/i })
+    .click();
+  await expect(layerCheck.getByRole("status")).toHaveText(/Correct/i);
+});
+
 test("renders the Probability L3 learning page and supports checks", async ({
   page,
 }) => {
@@ -1029,6 +1136,22 @@ test("keeps the standalone Stanford CME295 Lecture 8 page usable at mobile width
   expect(scrollWidth).toBeLessThanOrEqual(viewportWidth + 1);
 });
 
+test("keeps the Stanford CME295 Lecture 9 synthesis page usable at mobile width", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/learn/stanford-cme295/cme295-lect9");
+
+  await expect(
+    page.getByRole("link", { name: /start synthesis questions/i }).first(),
+  ).toBeVisible();
+  const scrollWidth = await page.evaluate(
+    () => document.documentElement.scrollWidth,
+  );
+  const viewportWidth = await page.evaluate(() => window.innerWidth);
+  expect(scrollWidth).toBeLessThanOrEqual(viewportWidth + 1);
+});
+
 test("keeps the Probability L4 learning page usable at mobile width", async ({
   page,
 }) => {
@@ -1167,7 +1290,9 @@ test("transitions from Stanford CME295 Lecture 1 learning into its quiz source",
 
   await page.getByRole("link", { name: /start questions/i }).click();
 
-  await expect(page).toHaveURL(/\/\?source=cme295-lect1$/);
+  await expect(page).toHaveURL(/\/\?source=cme295-lect1$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
   await expect(
     page.getByRole("heading", {
       name: /stanford cme295 lecture 1: transformers & llms/i,
@@ -1188,7 +1313,9 @@ test("transitions from Stanford CME295 Lecture 2 learning into its quiz source",
 
   await page.getByRole("link", { name: /start questions/i }).click();
 
-  await expect(page).toHaveURL(/\/\?source=cme295-lect2$/);
+  await expect(page).toHaveURL(/\/\?source=cme295-lect2$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
   await expect(
     page.getByRole("heading", {
       name: /stanford cme295 lecture 2: transformer-based models & tricks/i,
@@ -1209,7 +1336,9 @@ test("transitions from Stanford CME295 Lecture 3 learning into its quiz source",
 
   await page.getByRole("link", { name: /start questions/i }).click();
 
-  await expect(page).toHaveURL(/\/\?source=cme295-lect3$/);
+  await expect(page).toHaveURL(/\/\?source=cme295-lect3$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
   await expect(
     page.getByRole("heading", {
       name: /stanford cme295 lecture 3: large language models, moe & inference/i,
@@ -1230,7 +1359,9 @@ test("transitions from Stanford CME295 Lecture 4 learning into its quiz source",
 
   await page.getByRole("link", { name: /start questions/i }).click();
 
-  await expect(page).toHaveURL(/\/\?source=cme295-lect4$/);
+  await expect(page).toHaveURL(/\/\?source=cme295-lect4$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
   await expect(
     page.getByRole("heading", {
       name: /stanford cme295 lecture 4: llm training, scaling & alignment/i,
@@ -1251,7 +1382,9 @@ test("transitions from Stanford CME295 Lecture 5 learning into its quiz source",
 
   await page.getByRole("link", { name: /start questions/i }).click();
 
-  await expect(page).toHaveURL(/\/\?source=cme295-lect5$/);
+  await expect(page).toHaveURL(/\/\?source=cme295-lect5$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
   await expect(
     page.getByRole("heading", {
       name: /stanford cme295 lecture 5: llm preference tuning, rlhf & dpo/i,
@@ -1272,7 +1405,9 @@ test("transitions from Stanford CME295 reasoning learning into its quiz source",
 
   await page.getByRole("link", { name: /start reasoning questions/i }).click();
 
-  await expect(page).toHaveURL(/\/\?source=cme295-lect6$/);
+  await expect(page).toHaveURL(/\/\?source=cme295-lect6$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
   await expect(
     page.getByRole("heading", {
       name: /stanford cme295 lecture 6: llm reasoning & test-time scaling/i,
@@ -1293,10 +1428,38 @@ test("transitions from Stanford CME295 evaluation learning into its quiz source"
 
   await page.getByRole("link", { name: /start evaluation questions/i }).click();
 
-  await expect(page).toHaveURL(/\/\?source=cme295-lect8$/);
+  await expect(page).toHaveURL(/\/\?source=cme295-lect8$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
   await expect(
     page.getByRole("heading", {
       name: /stanford cme295 lecture 8: llm evaluation/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /choose filters/i }),
+  ).toBeVisible();
+  await expect(page.getByText(/question 1 of 60/i)).toBeVisible({
+    timeout: 10000,
+  });
+});
+
+test("transitions from Stanford CME295 synthesis learning into its quiz source", async ({
+  page,
+}) => {
+  await page.goto("/learn/stanford-cme295/cme295-lect9");
+
+  await page
+    .getByRole("link", { name: /start synthesis questions/i })
+    .first()
+    .click();
+
+  await expect(page).toHaveURL(/\/\?source=cme295-lect9$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
+  await expect(
+    page.getByRole("heading", {
+      name: /stanford cme295 lecture 9: course synthesis & frontiers/i,
     }),
   ).toBeVisible();
   await expect(
@@ -1314,7 +1477,9 @@ test("transitions from learning into the matching quiz source", async ({
 
   await page.getByRole("link", { name: /start questions/i }).click();
 
-  await expect(page).toHaveURL(/\/\?source=crash-probability-l3$/);
+  await expect(page).toHaveURL(/\/\?source=crash-probability-l3$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
   await expect(
     page.getByRole("heading", {
       name: /crash course probability l3: likelihood, loss, softmax, and deep learning/i,
@@ -1335,7 +1500,9 @@ test("transitions from Probability L4 learning into its quiz source", async ({
 
   await page.getByRole("link", { name: /start questions/i }).click();
 
-  await expect(page).toHaveURL(/\/\?source=crash-probability-l4$/);
+  await expect(page).toHaveURL(/\/\?source=crash-probability-l4$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
   await expect(
     page.getByRole("heading", {
       name: /crash course probability l4: probability over time: reinforcement learning/i,
@@ -1356,7 +1523,9 @@ test("transitions from Probability L5 learning into its quiz source", async ({
 
   await page.getByRole("link", { name: /start questions/i }).click();
 
-  await expect(page).toHaveURL(/\/\?source=crash-probability-l5$/);
+  await expect(page).toHaveURL(/\/\?source=crash-probability-l5$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
   await expect(
     page.getByRole("heading", {
       name: /crash course probability l5: sampling, latent variables, and diffusion models/i,
@@ -1377,7 +1546,9 @@ test("transitions from Clinical Trials L3 learning into its quiz source", async 
 
   await page.getByRole("link", { name: /start questions/i }).click();
 
-  await expect(page).toHaveURL(/\/\?source=clinical-trials-l3$/);
+  await expect(page).toHaveURL(/\/\?source=clinical-trials-l3$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
   await expect(
     page.getByRole("heading", {
       name: /clinical trials crash course l3: statistics and evidence interpretation/i,

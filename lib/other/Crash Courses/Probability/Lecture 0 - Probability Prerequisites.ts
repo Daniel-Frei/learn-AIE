@@ -427,7 +427,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
   makeQuestion(
     "crash-probability-l0-q30",
     "medium",
-    "A device succeeds on one attempt with share \\(0.98\\). Attempts are independent. Which complement calculations for 10 attempts are correct?",
+    "A device succeeds on one attempt with share \\(0.98\\). Attempts are independent. Which statements correctly set up the one-attempt failure share and the 10-attempt complement calculation?",
     [
       ["The share for one failure is \\(0.02\\).", true],
       ["The share for no failures in 10 attempts is \\(0.02^{10}\\).", false],
@@ -440,7 +440,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
         false,
       ],
     ],
-    "The complement of at least one failure is no failures. Since attempts are independent, the no-failure share multiplies across attempts, giving \\(0.98^{10}\\), and the complement is \\(1-0.98^{10}\\); \\(0.02^{10}\\) would mean every attempt fails.",
+    "The one-attempt failure share is \\(1-0.98=0.02\\), which is useful setup but is not by itself the probability of at least one failure across 10 attempts. The complement of at least one failure is no failures, so independence gives \\(0.98^{10}\\) for no failures and \\(1-0.98^{10}\\) for at least one failure; \\(0.02^{10}\\) would mean every attempt fails.",
   ),
   makeQuestion(
     "crash-probability-l0-q31",
@@ -581,7 +581,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
         false,
       ],
     ],
-    "The exponent is \\(t-1\\), so the first term has exponent 0 and weight 1. The fourth term has exponent 3, giving weight \\(0.125\\), not \\(0.0625\\), and the total is \\(4+0+2+2=8\\).",
+    "The exponent is \\(t-1\\), so the four weights are \\(1\\), \\(0.5\\), \\(0.25\\), and \\(0.125\\), not \\(1\\), \\(0.5\\), \\(0.25\\), and \\(0.0625\\). Multiplying term by term gives \\(1\\cdot4 + 0.5\\cdot0 + 0.25\\cdot8 + 0.125\\cdot16 = 4+0+2+2=8\\), which is why \\(S=8\\).",
   ),
   makeQuestion(
     "crash-probability-l0-q41",

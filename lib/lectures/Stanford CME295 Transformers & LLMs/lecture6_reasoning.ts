@@ -661,16 +661,19 @@ Ignoring standard-deviation scaling, which completion has the largest positive g
     "Which properties distinguish the full R1-style training pipeline from the R1-Zero proof of concept?",
     [
       [
-        "It adds a small cold-start supervised fine-tuning stage using cleaned reasoning traces.",
-        true,
-      ],
-      ["It runs a reasoning-focused GRPO stage after that cold start.", true],
-      [
-        "It includes a larger supervised fine-tuning mixture with reasoning and non-reasoning data.",
+        "The full R1-style pipeline adds a small cold-start supervised fine-tuning stage using cleaned reasoning traces.",
         true,
       ],
       [
-        "It adds a final RL stage that also accounts for helpfulness and harmlessness on general data.",
+        "The full R1-style pipeline runs a reasoning-focused GRPO stage after that cold start.",
+        true,
+      ],
+      [
+        "The full R1-style pipeline includes a larger supervised fine-tuning mixture with reasoning and non-reasoning data.",
+        true,
+      ],
+      [
+        "The full R1-style pipeline adds a final RL stage that also accounts for helpfulness and harmlessness on general data.",
         true,
       ],
     ],
@@ -880,8 +883,8 @@ Ignoring standard-deviation scaling, which completion has the largest positive g
     "cme295-lect6-q37",
     "easy",
     "Assertion: A reasoning model's output can include both intermediate reasoning tokens and a final answer.\n\nReason: Generating intermediate reasoning tokens gives the model additional test-time forward passes before it commits to an answer.",
-    4,
-    "Both statements are true, and the reason explains the compute intuition behind the assertion. The model is not merely returning a direct answer; each generated reasoning token is another step of computation that can help decompose the problem.",
+    5,
+    "Both statements are true, but the reason does not explain why the output format can contain both reasoning tokens and a final answer. The reason explains why intermediate reasoning can be useful as extra test-time computation; the assertion is about the structure of the generated output, while the reason is about the compute intuition behind producing those intermediate tokens.",
   ),
   makeAssertionReasonQuestion(
     "cme295-lect6-q38",

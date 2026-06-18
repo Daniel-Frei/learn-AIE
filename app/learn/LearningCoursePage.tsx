@@ -10,11 +10,46 @@ type LearningCoursePageProps = {
   course: LearningCourse;
 };
 
+type LearningPageCard = {
+  href: string;
+  sequenceLabel: string;
+  shortTitle: string;
+  summary: string;
+  actionLabel: string;
+};
+
+function getLearningPageSortIndex(sequenceLabel: string): number {
+  const sequenceMatch = sequenceLabel.match(/\b(?:lecture|chapter)\s+(\d+)\b/i);
+  return sequenceMatch ? Number(sequenceMatch[1]) : Number.MAX_SAFE_INTEGER;
+}
+
 export default function LearningCoursePage({
   course,
 }: LearningCoursePageProps) {
   const standalonePages = getStandaloneLearningPagesForSeries(course.seriesId);
   const totalLearningPages = course.experiences.length + standalonePages.length;
+  const learningPageCards: LearningPageCard[] = [
+    ...course.experiences.map((experience) => ({
+      href: getLearningExperiencePath(experience),
+      sequenceLabel: getLearningExperienceSequenceLabel(experience),
+      shortTitle: experience.shortTitle,
+      summary: experience.summary,
+      actionLabel: "Open learning page",
+    })),
+    ...standalonePages.map((page) => ({
+      href: page.href,
+      sequenceLabel: page.sequenceLabel,
+      shortTitle: page.shortTitle,
+      summary: page.summary,
+      actionLabel: "Open standalone page",
+    })),
+  ].sort(
+    (first, second) =>
+      getLearningPageSortIndex(first.sequenceLabel) -
+        getLearningPageSortIndex(second.sequenceLabel) ||
+      first.sequenceLabel.localeCompare(second.sequenceLabel) ||
+      first.shortTitle.localeCompare(second.shortTitle),
+  );
 
   return (
     <main className="min-h-[calc(100vh-4.25rem)] bg-slate-950 text-slate-50">
@@ -49,28 +84,7 @@ export default function LearningCoursePage({
           aria-label={`${course.label} learning experiences`}
           className="grid gap-4 md:grid-cols-2"
         >
-          {course.experiences.map((experience) => (
-            <Link
-              key={experience.sourceId}
-              href={getLearningExperiencePath(experience)}
-              className="group rounded-lg border border-slate-800 bg-slate-900 p-5 transition-colors hover:border-sky-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
-            >
-              <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-                {getLearningExperienceSequenceLabel(experience)}
-              </p>
-              <h2 className="mt-3 text-xl font-semibold text-slate-50 group-hover:text-sky-200">
-                {experience.shortTitle}
-              </h2>
-              <p className="mt-2 text-sm leading-6 text-slate-300">
-                {experience.summary}
-              </p>
-              <p className="mt-4 text-sm font-semibold text-sky-300">
-                Open learning page
-              </p>
-            </Link>
-          ))}
-
-          {standalonePages.map((page) => (
+          {learningPageCards.map((page) => (
             <Link
               key={page.href}
               href={page.href}
@@ -86,7 +100,7 @@ export default function LearningCoursePage({
                 {page.summary}
               </p>
               <p className="mt-4 text-sm font-semibold text-sky-300">
-                Open standalone page
+                {page.actionLabel}
               </p>
             </Link>
           ))}

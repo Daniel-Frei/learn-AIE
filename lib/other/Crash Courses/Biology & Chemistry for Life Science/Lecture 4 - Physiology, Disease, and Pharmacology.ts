@@ -190,7 +190,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
   makeQuestion(
     9,
     "easy",
-    "Which statement best describes pharmacokinetics?",
+    "Which statement best describes pharmacokinetics (PK), as distinct from pharmacodynamics (PD)?",
     [
       [
         "What the body does to the drug, including absorption, distribution, metabolism, and excretion.",

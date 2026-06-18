@@ -17,19 +17,16 @@ async function openFilters(page: Page) {
   }).toPass({ timeout: 10000 });
 }
 
-function trackHydrationErrors(page: Page) {
+function trackRuntimeSmokeErrors(page: Page) {
   const errors: string[] = [];
-  const hydrationPattern = /hydration failed/i;
 
   page.on("console", (message) => {
-    if (message.type() === "error" && hydrationPattern.test(message.text())) {
+    if (message.type() === "error") {
       errors.push(message.text());
     }
   });
   page.on("pageerror", (error) => {
-    if (hydrationPattern.test(error.message)) {
-      errors.push(error.message);
-    }
+    errors.push(error.message);
   });
 
   return errors;
@@ -57,8 +54,57 @@ function trackSelectionPermissionErrors(page: Page) {
   return errors;
 }
 
+async function mockParticipantRatingReset(page: Page) {
+  await page.route("**/api/participant-rating-reset", async (route) => {
+    const requestBody = route.request().postDataJSON() as {
+      participantId?: string;
+    };
+    const now = Date.now();
+
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        participantId: requestBody.participantId ?? "participant-test",
+        ratingState: {
+          version: 2,
+          algorithm: "glicko-2",
+          config: {
+            defaultRating: 1500,
+            defaultRdUser: 350,
+            defaultRdQuestion: 300,
+            defaultSigma: 0.06,
+            tau: 0.5,
+            epsilon: 0.000001,
+            periodDays: 1,
+            minRd: 30,
+            maxRd: 350,
+            difficultyAnchorRating: 1500,
+            difficultyScale: 400,
+            minRatingExchange: 2,
+            maxRatingExchange: 100,
+          },
+          user: {
+            rating: 1500,
+            rd: 350,
+            sigma: 0.06,
+            lastUpdatedAt: now,
+            gamesPlayed: 0,
+          },
+          questions: {},
+        },
+        reportSummary: {
+          totalReportCount: 0,
+          countsByQuestion: {},
+        },
+        legacyMigrationCompleted: true,
+      }),
+    });
+  });
+}
+
 test("renders core quiz controls on the home page", async ({ page }) => {
-  const hydrationErrors = trackHydrationErrors(page);
+  const runtimeSmokeErrors = trackRuntimeSmokeErrors(page);
 
   await page.goto("/");
 
@@ -85,12 +131,18 @@ test("renders core quiz controls on the home page", async ({ page }) => {
     page.getByRole("button", { name: /reset glicko rating/i }),
   ).toBeVisible();
   await expect(
+    page
+      .locator("details")
+      .filter({ hasText: "Stanford CME295 Transformers & LLMs" })
+      .getByText("9 lectures/chapters"),
+  ).toBeVisible();
+  await expect(
     page.getByText(/no questions for this selection/i),
   ).toBeVisible();
   await expect(
     page.getByText(/adjust the filters above to see available questions/i),
   ).toBeVisible();
-  expect(hydrationErrors, "home page should hydrate cleanly").toEqual([]);
+  expect(runtimeSmokeErrors, "home page should hydrate cleanly").toEqual([]);
 });
 
 test("updates filter checkboxes immediately after clicking", async ({
@@ -117,6 +169,7 @@ test("updates filter checkboxes immediately after clicking", async ({
 test("resets the participant Glicko rating from the filter panel", async ({
   page,
 }) => {
+  await mockParticipantRatingReset(page);
   await page.goto("/");
 
   await openFilters(page);

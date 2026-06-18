@@ -628,7 +628,8 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
     id: "mit6s191-l3-q26",
     chapter: 3,
     difficulty: "easy",
-    prompt: "Which statements describe semantic segmentation?",
+    prompt:
+      "In computer vision, which statements describe semantic segmentation rather than whole-image classification?",
     options: [
       {
         text: "It predicts exactly one label for the whole image.",
@@ -642,10 +643,13 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
         text: "It can be implemented with upsampling layers.",
         isCorrect: true,
       },
-      { text: "It predicts exactly one label per image.", isCorrect: false },
+      {
+        text: "It discards spatial layout before producing labels for image regions.",
+        isCorrect: false,
+      },
     ],
     explanation:
-      "Semantic segmentation produces dense predictions, assigning each pixel a class label. It maintains spatial structure and often uses upsampling layers. It differs from single-label classification.",
+      "Semantic segmentation is a dense prediction task: the model assigns class labels across spatial locations instead of producing one label for the whole image. Upsampling layers can help recover a spatial output map, while scalar or single-label outputs describe ordinary image classification rather than segmentation.",
   },
 
   {
@@ -786,7 +790,7 @@ export const MIT6S191_L3_CNNsQuestions: Question[] = [
     chapter: 3,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe the classification head of a convolutional neural network for image classification?",
+      "After a convolutional neural network extracts spatial features, which statements correctly describe the classification head used for image classification?",
     options: [
       {
         text: "After feature extraction, the network can flatten learned features and feed them into fully connected layers.",

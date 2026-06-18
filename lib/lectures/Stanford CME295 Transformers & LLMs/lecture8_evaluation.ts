@@ -1163,7 +1163,7 @@ Which evaluation conclusions are justified?`,
         true,
       ],
       [
-        "A metric requiring both final-message correctness and database-state correctness can be at most 70% in this run.",
+        "A metric requiring both final-message correctness and database-state correctness is exactly 65% in this run.",
         true,
       ],
       [
@@ -1175,7 +1175,7 @@ Which evaluation conclusions are justified?`,
         false,
       ],
     ],
-    "Stateful agent tasks need outcome checks in addition to natural-language quality. The intersection count of 65 shows that final-message success and database-state success are related but not interchangeable.",
+    "Stateful agent tasks need outcome checks in addition to natural-language quality. Here the database is correct in 70 tasks, but only 65 tasks have both a successful-sounding final message and the correct database state, so the stricter combined metric is 65%, not merely the looser upper bound of 70%.",
   ),
   makeQuestion(
     "cme295-lect8-q52",

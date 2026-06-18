@@ -300,7 +300,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Which statements correctly describe programmatic policy generation?",
+      "When code is used as an agent action interface, which statements correctly describe programmatic policy generation?",
     options: [
       {
         text: "It materializes executable policies as programs rather than only selecting from a fixed skill list.",
@@ -353,7 +353,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Which statements correctly describe code-for-environment modeling?",
+      "When an agent interacts with a computational environment, which statements correctly describe code-for-environment modeling?",
     options: [
       {
         text: "It represents state, dynamics, and feedback through artifacts such as simulators, repositories, tests, traces, logs, and state-transition programs.",
@@ -886,7 +886,7 @@ export const CodeAsAgentHarnessQuestions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe sandboxed execution and permissioned state transitions?",
+      "In a code-agent harness, which statements correctly describe sandboxed execution and permissioned state transitions?",
     options: [
       {
         text: "Sandboxes provide isolated filesystems, runtimes, shells, browser or IDE state, and resource boundaries.",

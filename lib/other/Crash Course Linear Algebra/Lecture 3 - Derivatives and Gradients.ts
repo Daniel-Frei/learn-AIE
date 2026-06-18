@@ -686,7 +686,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
     chapter: 3,
     difficulty: "hard",
     prompt:
-      "Which statements correctly describe what happens when backpropagation is applied through many layers?",
+      "When backpropagation carries a final loss backward through many layers, which statements correctly describe the gradient computation?",
     options: [
       {
         text: "Gradients are computed for parameters in multiple layers.",
@@ -706,7 +706,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
       },
     ],
     explanation:
-      "Backpropagation tracks how the final loss depends on intermediate activations and parameters across the network. The chain rule carries that dependence backward, allowing early weights to receive update signals even though they are far from the loss output.",
+      "Backpropagation reuses intermediate activations and local derivatives to compute how the final loss changes with parameters across multiple layers. The chain rule carries this dependence backward, so early weights can receive update signals indirectly through later computations.",
   },
   {
     id: "la-crash-l3-q30",

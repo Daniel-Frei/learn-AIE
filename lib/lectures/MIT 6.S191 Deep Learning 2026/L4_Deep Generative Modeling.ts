@@ -233,7 +233,7 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
     chapter: 4,
     difficulty: "medium",
     prompt:
-      "Why is a normal prior \\(p(z) = \\mathcal{N}(0, I)\\) commonly used in VAEs?",
+      "In a variational autoencoder (VAE), why is a standard normal prior \\(p(z) = \\mathcal{N}(0, I)\\) commonly used for the latent variable?",
     options: [
       {
         text: "It encourages smooth coverage of the latent space.",
@@ -250,7 +250,7 @@ export const MIT6S191_L4_DeepGenerativeModelingQuestions: Question[] = [
       },
     ],
     explanation:
-      "A standard normal prior simplifies mathematical computation of KL divergence. It encourages smooth and centered latent representations. However, it does not automatically guarantee disentanglement.",
+      "A standard normal prior gives the encoder a simple target distribution for the latent space and often makes the KL-divergence term easier to compute or approximate. It encourages a smooth, centered latent space that can be sampled at generation time, but it does not by itself guarantee disentangled factors or force representations away from zero.",
   },
 
   {

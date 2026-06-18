@@ -14,6 +14,7 @@ import { stanfordCME295Lecture5PreferenceTuningQuestions } from "./lectures/Stan
 import { stanfordCME295Lecture6ReasoningQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture6_reasoning";
 import { stanfordCME295Lecture7RagToolsAgentsQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture7_rag_tools_agents";
 import { stanfordCME295Lecture8EvaluationQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture8_evaluation";
+import { stanfordCME295Lecture9SynthesisFrontiersQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture9_synthesis_frontiers";
 import { cs224rLecture1IntroQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture1_intro";
 import { cs224rLecture2ImitationLearningQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture2_Imitation Learning";
 import { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture3_Policy Gradients";
@@ -266,6 +267,15 @@ export const QUESTION_SOURCES = [
     seriesLabel: "Stanford CME295 Transformers & LLMs",
     topic: "NLP" as const,
     questions: stanfordCME295Lecture8EvaluationQuestions,
+  },
+  {
+    id: "cme295-lect9" as const,
+    label: "Stanford CME295 Lecture 9",
+    title: "Stanford CME295 Lecture 9: Course Synthesis & Frontiers",
+    seriesId: "stanford-cme295" as const,
+    seriesLabel: "Stanford CME295 Transformers & LLMs",
+    topic: "NLP" as const,
+    questions: stanfordCME295Lecture9SynthesisFrontiersQuestions,
   },
   {
     id: "cs224r-lect1" as const,
@@ -754,6 +764,8 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
     "Systems lecture about RAG, retrieval quality, tool calling, MCP, ReAct-style agents, A2A, and agent safety controls.",
   "cme295-lect8":
     "Evaluation lecture about human ratings, rule-based metrics, LLM-as-a-Judge, factuality, agent failure modes, benchmarks, reliability, and benchmark limits.",
+  "cme295-lect9":
+    "Course synthesis lecture about transformer and LLM fundamentals, multimodal transformers, diffusion LLMs, data, hardware, deployment tradeoffs, and open problems.",
   "cs224r-lect1":
     "Deep reinforcement learning introduction about MDPs, value functions, policies, and the RL problem setup.",
   "cs224r-lect2":
@@ -1018,6 +1030,7 @@ export { stanfordCME295Lecture5PreferenceTuningQuestions } from "./lectures/Stan
 export { stanfordCME295Lecture6ReasoningQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture6_reasoning";
 export { stanfordCME295Lecture7RagToolsAgentsQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture7_rag_tools_agents";
 export { stanfordCME295Lecture8EvaluationQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture8_evaluation";
+export { stanfordCME295Lecture9SynthesisFrontiersQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture9_synthesis_frontiers";
 export { cs224rLecture1IntroQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture1_intro";
 export { cs224rLecture2ImitationLearningQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture2_Imitation Learning";
 export { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture3_Policy Gradients";

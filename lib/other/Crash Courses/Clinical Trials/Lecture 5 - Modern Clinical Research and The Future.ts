@@ -1326,7 +1326,8 @@ export const ClinicalTrialsLecture5Questions: Question[] = [
     id: "clinical-trials-l5-q50",
     chapter: 5,
     difficulty: "hard",
-    prompt: "Which safeguards are essential for adaptive trial designs?",
+    prompt:
+      "For adaptive clinical trial designs that can change based on accumulating data, which safeguards are essential?",
     options: [
       {
         text: "Adaptation rules should be pre-specified before trial results are known.",

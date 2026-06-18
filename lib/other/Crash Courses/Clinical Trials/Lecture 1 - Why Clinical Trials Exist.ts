@@ -1565,7 +1565,7 @@ export const ClinicalTrialsLecture1Questions: Question[] = [
     chapter: 1,
     difficulty: "medium",
     prompt:
-      "Which uses of observational studies fit their strengths while respecting their causal limitations?",
+      "When interpreting real-world clinical evidence, which uses of observational studies fit their strengths while respecting their causal limitations?",
     options: [
       {
         text: "Studying rare harms or long-term outcomes that would be difficult to capture in a pre-approval randomized trial.",

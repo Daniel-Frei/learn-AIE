@@ -112,6 +112,23 @@ export const LEARNING_EXPERIENCES = [
     ],
   },
   {
+    sourceId: "cme295-lect9",
+    shortTitle: "Course Recap Synthesis",
+    title: "Stanford CME295 Lecture 9: Course Recap & Frontiers",
+    summary:
+      "Rebuild the whole transformer course from the Lecture 9 recap, then test transfer through ViT, VLM, diffusion-LLM, and frontier labs.",
+    durationMinutes: 20,
+    level: "After CME295 Lectures 1-8",
+    sourceMaterialPath:
+      "lib/lectures/Stanford CME295 Transformers & LLMs/transcripts-and-files/lecture 9 - transcript.md",
+    outcomes: [
+      "Trace one LLM answer through representation, attention, training, post-training, systems, and evaluation layers.",
+      "Explain the recap mechanisms from tokenization and embeddings through model families, LLM runtime, preference tuning, reasoning, agents, and evaluation.",
+      "Explain how image patches, visual tokens, and masked diffusion reuse transformer-era ideas outside standard text generation.",
+      "Diagnose frontier claims as architecture, data, serving, hardware, or open-problem issues.",
+    ],
+  },
+  {
     sourceId: "crash-probability-l3",
     shortTitle: "Likelihood, Loss, Softmax",
     title:

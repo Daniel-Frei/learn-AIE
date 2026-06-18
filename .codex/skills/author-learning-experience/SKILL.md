@@ -52,6 +52,12 @@ source-native explorable when the material supports it.
 - Give the agent design freedom, but require a defensible concept. A page should
   start from something this material uniquely lets the learner inspect, predict,
   manipulate, compare, calculate, diagnose, or decide.
+- Build from a concept-introduction floor. Every core term, control, unit,
+  symbol, architecture part, or algorithm name that the page relies on should
+  be introduced in simple learner-facing language before it is used in a dense
+  lab, formula, comparison, or check. Learners who already know the concept can
+  scroll past it; learners who do not know it should not be forced to infer it
+  from context.
 - Use the source material's concepts, examples, formulas, diagrams, cases, and
   misconceptions, but do not copy a transcript or slide order into a long article.
 - Use source titles, sequence labels, and document types for navigation,
@@ -135,6 +141,12 @@ source-native explorable when the material supports it.
      PDF, paper, notes, dataset, code example, or topic brief.
    - Identify the core learning job: what the student should be able to predict,
      explain, calculate, compare, diagnose, trace, or decide after the page.
+   - Create a concept inventory before designing the UI: the essential terms,
+     symbols, units, algorithms, architecture parts, metrics, examples, and
+     misconceptions a learner must understand to follow the experience.
+   - Mark which concepts are prerequisites, which are introduced by the page,
+     and which are only used later as optional extension material. Concepts
+     introduced by the page need a simple explanation at first use.
    - Extract prerequisite assumptions, conceptual sequence, formulas, diagrams,
      examples, likely misconceptions, and the MCQ concepts the page should
      prepare for.
@@ -182,6 +194,15 @@ source-native explorable when the material supports it.
    - Write page-body explanations as self-contained concept instruction. Source
      sequence labels are useful for orientation, but learners should not need to
      keep seeing "the lecture says..." to understand what the page is teaching.
+   - Introduce concepts before using them. For each core concept, include a
+     short plain-language explanation, an example, a visual cue, or a small
+     interaction that gives the learner enough footing to continue. Do not rely
+     on a term appearing in the source material as proof that it is already
+     understood.
+   - Prefer simple explanations over compressed expert summaries. A good
+     introduction can be one sentence, a labeled diagram, a tiny worked example,
+     or a low-friction interaction. If the learner already knows it, scrolling
+     past that introduction is cheaper than recovering from a missing concept.
    - Make the beginning, middle, and end clear: orient, introduce the needed
      vocabulary and notation, manipulate/interpret, consolidate, then transition
      into practice.
@@ -333,6 +354,13 @@ source-native explorable when the material supports it.
      the repo's `frontend-ux-review` skill when available, or perform an
      equivalent browser screenshot review across desktop and mobile. Passing
      tests is not enough if the page still feels like a generic card/check flow.
+   - Run a learner-scroll UX check before finalizing. Imagine a learner reading
+     from top to bottom without prior expert knowledge. At each section, ask:
+     what concept did they just learn, why does the next section follow, are the
+     next controls/labels already explained, and is there any sudden jump from
+     vocabulary to dense application? If the flow feels like a checklist,
+     disconnected gallery, or hidden to-do list, revise the order and
+     explanations before closing.
    - Include an intermediate laptop viewport in browser review, such as
      `1280 x 800`, when the page has dense controls, dashboards, labs, hero
      text, or multi-column layouts. Check for awkward text breaks, clipped
@@ -385,6 +413,10 @@ Use these as prompts, not templates:
   instead of choosing a coherent experience shape.
 - Dropping learners into a dense lab before the page has introduced the terms,
   controls, units, and labels that the lab uses.
+- Assuming that a learner knows a term because the source material used it, or
+  because an expert reader would find it obvious.
+- Compressing foundational concepts into labels or headings while spending the
+  real page space on later applications that depend on those missing concepts.
 - Showing raw math notation in learner-facing prose, headings, labels, or notes
   when it should be rendered, especially underscores and Greek-letter names such
   as `s_t`, `A_t`, `pi_theta`, or `r_phi`.
@@ -452,6 +484,12 @@ Before finishing, confirm:
   learner's current mental model.
 - The scroll order forms a learning progression: concepts and notation appear
   before controls or formulas that depend on them.
+- The learner-scroll UX check has been performed: each section naturally follows
+  the previous one, introduces what the next section needs, and avoids sudden
+  jumps into unexplained vocabulary, controls, or dense labs.
+- Core concepts have simple first-use explanations. Skipping those explanations
+  is easy for knowledgeable learners, but missing them would not block a learner
+  who is new to the topic.
 - For workflow-based labs, the DOM order and visible top-left-to-right scan order
   reflect the intended play-through sequence; later conclusions are not visually
   promoted before prerequisite evidence or construction steps.

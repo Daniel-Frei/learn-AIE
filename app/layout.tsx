@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "katex/dist/katex.min.css";
 import "../components/learning/pages/crash-medicine-lecture-1/styles.css";
 import "./globals.css";
@@ -31,8 +32,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} bg-slate-950 text-slate-50 antialiased`}
       >
-        <script
+        <Script
           id="react-selection-permission-error-filter"
+          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: reactSelectionPermissionErrorFilterScript,
           }}

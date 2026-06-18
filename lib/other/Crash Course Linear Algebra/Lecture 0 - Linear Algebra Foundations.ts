@@ -106,7 +106,7 @@ export const CrashCourseLinearAlgebraLecture0Questions: Question[] = [
     chapter: 0,
     difficulty: "easy",
     prompt:
-      "Which statements about the zero vector \\(0=\\begin{bmatrix}0 \\\\ 0\\end{bmatrix}\\) are correct?",
+      "For the zero vector \\(0=\\begin{bmatrix}0 \\\\ 0\\end{bmatrix}\\), which statements correctly describe its magnitude and direction?",
     options: [
       { text: "Its magnitude is 0.", isCorrect: true },
       {

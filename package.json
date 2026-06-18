@@ -21,6 +21,7 @@
     "windows:start-menu:install": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/install-windows-start-menu.ps1",
     "windows:start-menu:uninstall": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/install-windows-start-menu.ps1 -Uninstall",
     "e2e": "playwright test",
+    "e2e:smoke": "playwright test e2e/smoke.spec.ts",
     "e2e:ui": "playwright test --ui",
     "mobile:start": "npm --workspace apps/mobile run start",
     "mobile:android": "npm --workspace apps/mobile run android",
@@ -28,7 +29,7 @@
     "mobile:web": "npm --workspace apps/mobile run web",
     "mobile:lint": "npm --workspace apps/mobile run lint",
     "mobile:types-check": "npm --workspace apps/mobile run types-check",
-    "check": "npm run format-check && npm run lint && npm run types-check && npm run test && npm run mobile:lint && npm run mobile:types-check"
+    "check": "npm run format-check && npm run lint && npm run types-check && npm run test && npm run mobile:lint && npm run mobile:types-check && npm run e2e:smoke"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.100.0",

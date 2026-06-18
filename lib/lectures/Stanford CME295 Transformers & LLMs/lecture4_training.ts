@@ -1366,7 +1366,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
   makeQuestion(
     "cme295-lect4-q171",
     "medium",
-    "Which statements correctly describe QLoRA?",
+    "In QLoRA-style fine-tuning, which statements correctly describe how quantized base weights and LoRA adapters reduce VRAM pressure?",
     [
       [
         "The frozen base weights can be stored in a quantized format to save memory.",
@@ -1448,7 +1448,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
         true,
       ],
     ],
-    "The 16x figure is a memory-footprint comparison, not an answer-quality multiplier. Quantization savings can make fine-tuning feasible on smaller GPUs, while quality still depends on model, data, training, and evaluation.",
+    "The 16x figure is a memory-footprint comparison, not an answer-quality multiplier: for example, the compared part of a 160 GB footprint would become about 10 GB. The additional 6% from double quantization is a smaller incremental saving on top of the main quantization effect, and it can still matter for fitting fine-tuning into a smaller GPU budget while quality remains a separate model, data, training, and evaluation question.",
   ),
   makeQuestion(
     "cme295-lect4-q175",

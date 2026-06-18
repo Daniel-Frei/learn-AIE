@@ -68,7 +68,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The vector lies at the point (3,4) in a 2-dimensional coordinate system.",
+        text: "The vector lies at the point \\((3,4)\\) in a 2-dimensional coordinate system.",
         isCorrect: true,
       },
       {
@@ -76,7 +76,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The vector does not have to represent a probability distribution.",
+        text: "This particular vector is not a probability distribution because \\(3+4\\ne1\\).",
         isCorrect: true,
       },
     ],
@@ -139,15 +139,15 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Cosine similarity measures the angle between vectors rather than their magnitudes.",
+        text: "Cosine similarity equals \\(\\cos\\theta\\), so it measures angle rather than magnitude.",
         isCorrect: true,
       },
       {
-        text: "Two identical vectors have cosine similarity equal to 1.",
+        text: "Two identical nonzero vectors have cosine similarity \\(1\\).",
         isCorrect: true,
       },
       {
-        text: "Cosine similarity does not require the vectors to have exactly the same length.",
+        text: "Cosine similarity can compare nonzero vectors even when \\(\\|a\\|\\ne\\|b\\|\\).",
         isCorrect: true,
       },
     ],
@@ -177,22 +177,22 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     prompt:
       "Consider the expression \\(y = W x\\). Which statements are correct?",
     options: [
-      { text: "The result is a vector.", isCorrect: true },
+      { text: "The result is a vector \\(y\\).", isCorrect: true },
       {
         text: "Each element of \\(y\\) is the dot product between a row of \\(W\\) and \\(x\\).",
         isCorrect: true,
       },
       {
-        text: "The operation can represent a neural network layer.",
+        text: "The operation can represent the linear part \\(y=Wx+b\\) of a neural network layer.",
         isCorrect: true,
       },
       {
-        text: "The operation does not require \\(W\\) to be a square matrix.",
+        text: "The operation only requires compatible inner dimensions, not a square \\(W\\).",
         isCorrect: true,
       },
     ],
     explanation:
-      "In matrix–vector multiplication, each output component corresponds to a dot product between a row of the matrix and the input vector. This operation is exactly what a linear layer in a neural network computes. The matrix does not need to be square; its shape determines the output dimension.",
+      "In matrix-vector multiplication, each output component corresponds to a dot product between a row of the matrix and the input vector. This operation is exactly what a linear layer in a neural network computes. The matrix does not need to be square; its shape determines the output dimension.",
   },
 
   {
@@ -231,10 +231,13 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It measures the straight-line distance between two points in space.",
+        text: "It measures the straight-line distance \\(\\|x-y\\|_2\\) between two points in space.",
         isCorrect: true,
       },
-      { text: "It is derived from the Pythagorean theorem.", isCorrect: true },
+      {
+        text: "It is derived from the Pythagorean theorem, using squared coordinate differences.",
+        isCorrect: true,
+      },
       {
         text: "It is identical to the dot product of the vectors.",
         isCorrect: false,
@@ -274,7 +277,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
       "Which statements describe how dot products are used in neural networks?",
     options: [
       {
-        text: "Each neuron computes an unweighted sum of its inputs.",
+        text: "Each neuron computes an unweighted sum \\(\\sum_i x_i\\) of its inputs.",
         isCorrect: false,
       },
       {
@@ -282,11 +285,11 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Weights determine which input directions the neuron responds strongly to.",
+        text: "Weights determine which input directions make \\(w^Tx\\) large.",
         isCorrect: true,
       },
       {
-        text: "Neural networks rely exclusively on element-wise multiplication instead of dot products.",
+        text: "Neural networks rely exclusively on element-wise products \\(w\\odot x\\) instead of dot products.",
         isCorrect: false,
       },
     ],
@@ -330,7 +333,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     options: [
       { text: "It equals \\(\\sum_i x_i\\).", isCorrect: false },
       {
-        text: "It represents the length of the vector in Euclidean space.",
+        text: "It represents the length \\(\\sqrt{\\sum_i x_i^2}\\) of the vector in Euclidean space.",
         isCorrect: true,
       },
       {
@@ -338,7 +341,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is defined for two-dimensional vectors in this setting.",
+        text: "It is defined only for vectors \\(x\\in\\mathbb{R}^2\\).",
         isCorrect: false,
       },
     ],
@@ -379,7 +382,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     chapter: 1,
     difficulty: "hard",
     prompt:
-      "Which statements about matrix–vector multiplication \\(y = Wx\\) are correct?",
+      "Which statements about matrix-vector multiplication \\(y = Wx\\) are correct?",
     options: [
       {
         text: "Each column of \\(W\\) defines the output dimension regardless of input shape.",
@@ -399,7 +402,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "In matrix–vector multiplication, each row of the matrix produces one output component by computing a dot product with the input vector. Therefore the number of rows determines the output dimension. The input dimension must match the number of columns, not the number of rows.",
+      "In matrix-vector multiplication, each row of the matrix produces one output component by computing a dot product with the input vector. Therefore the number of rows determines the output dimension. The input dimension must match the number of columns, not the number of rows.",
   },
 
   {
@@ -414,11 +417,11 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "It measures how strongly one vector points in the direction of another.",
+        text: "It measures alignment through \\(a\\cdot b=\\|a\\|\\|b\\|\\cos\\theta\\).",
         isCorrect: true,
       },
       {
-        text: "It can be interpreted as the projection of one vector onto another.",
+        text: "It can be used to compute the scalar projection \\(\\frac{a\\cdot b}{\\|b\\|}\\) onto a nonzero vector \\(b\\).",
         isCorrect: true,
       },
       {
@@ -527,7 +530,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "The dot product is computed as \\(2*0 + 0*3 = 0\\). When the dot product is zero, vectors are orthogonal, meaning they form a right angle (90°). Cosine similarity would also equal 0 in this case, not 1.",
+      "The dot product is computed as \\(2\\cdot0 + 0\\cdot3 = 0\\). When the dot product is zero, vectors are orthogonal, meaning they form a right angle of 90 degrees. Cosine similarity would also equal 0 in this case, not 1.",
   },
 
   {
@@ -622,15 +625,18 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
       "Which statements about Euclidean distance \\(\\|x-y\\|\\) are correct?",
     options: [
       {
-        text: "It measures the straight-line distance between two vectors.",
+        text: "It measures the straight-line distance \\(\\|x-y\\|_2\\) between two vectors.",
         isCorrect: true,
       },
       { text: "It equals \\(\\sqrt{\\sum_i (x_i-y_i)^2}\\).", isCorrect: true },
       {
-        text: "It depends on both direction and magnitude differences.",
+        text: "It depends on both direction and magnitude differences in \\(x-y\\).",
         isCorrect: true,
       },
-      { text: "It is identical to cosine similarity.", isCorrect: false },
+      {
+        text: "It is identical to cosine similarity \\(\\frac{x\\cdot y}{\\|x\\|\\|y\\|}\\).",
+        isCorrect: false,
+      },
     ],
     explanation:
       "Euclidean distance is derived from the Pythagorean theorem and measures the straight-line separation between two points in space. Unlike cosine similarity, which measures orientation, Euclidean distance incorporates magnitude differences as well.",
@@ -643,22 +649,25 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     prompt:
       "Suppose \\(x \\in \\mathbb{R}^4\\) and \\(W \\in \\mathbb{R}^{3 \\times 4}\\). Which statements are correct about \\(y = Wx\\)?",
     options: [
-      { text: "The output vector \\(y\\) has dimension 3.", isCorrect: true },
+      {
+        text: "The output vector \\(y\\) has dimension \\(3\\).",
+        isCorrect: true,
+      },
       {
         text: "Each component of \\(y\\) is a dot product between a row of \\(W\\) and \\(x\\).",
         isCorrect: true,
       },
       {
-        text: "The matrix computes three linear detectors of the input vector.",
+        text: "The matrix computes three linear detectors, one for each row of \\(W\\).",
         isCorrect: true,
       },
       {
-        text: "The multiplication is invalid because the matrix is not square.",
+        text: "The multiplication is invalid because \\(W\\) is not square.",
         isCorrect: false,
       },
     ],
     explanation:
-      "The output dimension of a matrix–vector multiplication equals the number of rows in the matrix. Each row defines a linear detector that computes a dot product with the input vector. The matrix does not need to be square for the multiplication to be valid.",
+      "The output dimension of a matrix-vector multiplication equals the number of rows in the matrix. Each row defines a linear detector that computes a dot product with the input vector. The matrix does not need to be square for the multiplication to be valid.",
   },
 
   {
@@ -668,16 +677,16 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     prompt: "Which statements correctly describe the L1 norm \\(\\|x\\|_1\\)?",
     options: [
       {
-        text: "It equals the sum of absolute values of vector components.",
+        text: "It equals the sum \\(|x_1|+|x_2|+\\cdots+|x_n|\\) of absolute component values.",
         isCorrect: true,
       },
       { text: "It is defined as \\(\\sum_i |x_i|\\).", isCorrect: true },
       {
-        text: "It measures distance using a different geometry than L2.",
+        text: "It measures distance using a different geometry than \\(\\|x\\|_2\\).",
         isCorrect: true,
       },
       {
-        text: "It is identical to the L2 norm in this setting.",
+        text: "It is identical to the L2 norm \\(\\sqrt{\\sum_i x_i^2}\\) in this setting.",
         isCorrect: false,
       },
     ],
@@ -791,13 +800,19 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     prompt:
       "Suppose \\(a=[2,1]^T\\) and \\(b=[1,3]^T\\). Which statements are correct?",
     options: [
-      { text: "The dot product equals 5.", isCorrect: true },
-      { text: "The dot product equals \\(2*1 + 1*3\\).", isCorrect: true },
-      { text: "The vectors are not orthogonal.", isCorrect: true },
-      { text: "The cosine similarity must equal 1.", isCorrect: false },
+      { text: "The dot product equals \\(5\\).", isCorrect: true },
+      {
+        text: "The dot product equals \\(2\\cdot1 + 1\\cdot3\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The vectors are not orthogonal because \\(a\\cdot b\\ne0\\).",
+        isCorrect: true,
+      },
+      { text: "The cosine similarity must equal \\(1\\).", isCorrect: false },
     ],
     explanation:
-      "The dot product calculation gives \\(2*1 + 1*3 = 5\\). Since the dot product is nonzero, the vectors are not orthogonal. Cosine similarity would equal 1 only if the vectors pointed in exactly the same direction.",
+      "The dot product calculation gives \\(2\\cdot1 + 1\\cdot3 = 5\\). Since the dot product is nonzero, the vectors are not orthogonal. Cosine similarity would equal 1 only if the vectors pointed in exactly the same direction.",
   },
 
   {
@@ -829,7 +844,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     chapter: 1,
     difficulty: "easy",
     prompt:
-      "Which statements correctly describe matrix–vector multiplication in neural networks?",
+      "Which statements correctly describe matrix-vector multiplication in neural networks?",
     options: [
       { text: "It produces a new vector of outputs.", isCorrect: true },
       {
@@ -846,7 +861,7 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
       },
     ],
     explanation:
-      "Matrix–vector multiplication combines input features through weighted sums to produce outputs. This is exactly how linear layers operate in neural networks. The matrix only needs an input-compatible number of columns; it does not need to be square, and its row count determines the output dimension.",
+      "Matrix-vector multiplication combines input features through weighted sums to produce outputs. This is exactly how linear layers operate in neural networks. The matrix only needs an input-compatible number of columns; it does not need to be square, and its row count determines the output dimension.",
   },
 
   {
@@ -907,11 +922,17 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     difficulty: "hard",
     prompt: "Which statements about the expression \\(x^T x\\) are correct?",
     options: [
-      { text: "It equals the squared L2 norm of the vector.", isCorrect: true },
-      { text: "It is always nonnegative.", isCorrect: true },
+      {
+        text: "It equals the squared L2 norm \\(\\|x\\|_2^2\\) of the vector.",
+        isCorrect: true,
+      },
+      {
+        text: "It is always nonnegative because \\(\\sum_i x_i^2\\ge0\\).",
+        isCorrect: true,
+      },
       { text: "It equals \\(\\sum_i x_i^2\\).", isCorrect: true },
       {
-        text: "It represents Euclidean distance between two different vectors.",
+        text: "It represents Euclidean distance \\(\\|x-y\\|_2\\) between two different vectors.",
         isCorrect: false,
       },
     ],
@@ -1001,13 +1022,16 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     prompt:
       "Two points are represented by \\(x=[2,5]^T\\) and \\(y=[-1,1]^T\\). Which statement gives their Euclidean distance?",
     options: [
-      { text: "The distance is 4.", isCorrect: false },
-      { text: "The distance is 5.", isCorrect: true },
+      {
+        text: "The distance is \\(4\\), using only one coordinate difference.",
+        isCorrect: false,
+      },
+      { text: "The distance is \\(\\sqrt{3^2+4^2}=5\\).", isCorrect: true },
       { text: "The distance is \\(\\sqrt{41}\\).", isCorrect: false },
-      { text: "The distance is 9.", isCorrect: false },
+      { text: "The distance is \\(3+4=7\\).", isCorrect: false },
     ],
     explanation:
-      "The difference vector is \\(x-y=[3,4]^T\\), so the Euclidean distance is \\(\\sqrt{3^2+4^2}=5\\). The values 4 and 9 come from using only part of the displacement or adding components instead of using squared differences. The value \\(\\sqrt{41}\\) would come from a different pair of component differences.",
+      "The difference vector is \\(x-y=[3,4]^T\\), so the Euclidean distance is \\(\\sqrt{3^2+4^2}=5\\). The value 4 comes from using only part of the displacement, while 7 comes from adding components instead of using squared differences. The value \\(\\sqrt{41}\\) would come from a different pair of component differences.",
   },
 
   {
@@ -1057,15 +1081,15 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The normalized vector points in a perpendicular direction to \\(v\\).",
+        text: "The normalized vector points in a perpendicular direction to \\(v\\), such as \\([\\frac{-4}{5},\\frac{3}{5}]^T\\).",
         isCorrect: false,
       },
       {
-        text: "The normalized vector has L2 norm 1.",
+        text: "The normalized vector has L2 norm \\(1\\).",
         isCorrect: true,
       },
       {
-        text: "The normalized vector has the same length as \\(v\\).",
+        text: "The normalized vector has the same length \\(5\\) as \\(v\\).",
         isCorrect: false,
       },
     ],
@@ -1082,14 +1106,17 @@ export const CrashCourseLinearAlgebraLecture1Questions: Question[] = [
     options: [
       { text: "The dot product \\(a\\cdot b\\) equals -7.", isCorrect: true },
       {
-        text: "The angle between the vectors is obtuse.",
+        text: "Because \\(a\\cdot b<0\\), the angle between the vectors is obtuse.",
         isCorrect: true,
       },
       {
-        text: "The cosine similarity between the vectors is positive.",
+        text: "The cosine similarity \\(\\frac{a\\cdot b}{\\|a\\|\\|b\\|}\\) is positive.",
         isCorrect: false,
       },
-      { text: "The vectors are orthogonal.", isCorrect: false },
+      {
+        text: "The vectors are orthogonal, so \\(a\\cdot b=0\\).",
+        isCorrect: false,
+      },
     ],
     explanation:
       "The dot product is \\(2\\cdot(-3)+1\\cdot(-1)=-7\\). A negative dot product means the angle is greater than 90 degrees, so the cosine similarity is negative rather than positive. Orthogonal vectors would have dot product zero, not -7.",

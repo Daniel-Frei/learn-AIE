@@ -9,13 +9,14 @@ function makeQuestion(
   prompt: string,
   optionSeeds: readonly OptionSeed[],
   explanation: string,
+  id = `bio-chem-life-l0-q${String(number).padStart(2, "0")}`,
 ): Question {
   if (optionSeeds.length !== 4) {
     throw new Error(`Lecture 0 question ${number} must have four options.`);
   }
 
   return {
-    id: `bio-chem-life-l0-q${String(number).padStart(2, "0")}`,
+    id,
     chapter: 0,
     difficulty,
     prompt,
@@ -842,7 +843,7 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
     makeQuestion(
       46,
       "medium",
-      "Which statements are useful ways to connect chemistry to biology?",
+      "Which statements usefully connect chemistry to biology without overclaiming?",
       [
         ["Atoms can form molecules.", true],
         [
@@ -850,9 +851,13 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
         ["Molecular interactions can affect cells.", true],
-        ["Cell behavior can affect tissues, organs, and patients.", true],
+        [
+          "Molecular structure alone fully predicts patient outcomes without considering cells, tissues, or evidence.",
+          false,
+        ],
       ],
-      "The course moves across scales. A learner does not need advanced chemistry first, but they do need the idea that molecular structure and interactions can create larger biological effects.",
+      "The course moves across scales from atoms and molecules toward cells and patients. Chemistry helps explain biology, but molecular structure by itself is not enough to predict clinical outcomes without cellular context, tissue-level effects, and evidence.",
+      "bio-chem-life-l0-q61",
     ),
     makeQuestion(
       47,
@@ -866,11 +871,12 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
         [
-          "Weak interactions can still produce specific binding when many act together.",
-          true,
+          "Hydrophobic effects make membranes independent of water's chemistry.",
+          false,
         ],
       ],
-      "Water, lipids, and proteins are connected by chemistry. Polarity, hydrophobicity, and weak interactions help explain membranes, folded proteins, molecular recognition, enzymes, and drug binding.",
+      "Water, lipids, and proteins are connected by chemistry. Polarity, hydrophobicity, and weak interactions help explain membranes, folded proteins, molecular recognition, enzymes, and drug binding; hydrophobic organization depends on water rather than being separate from it.",
+      "bio-chem-life-l0-q62",
     ),
     makeQuestion(
       48,
@@ -881,11 +887,12 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
         ["Nucleotides build DNA and RNA.", true],
         ["Monosaccharides can build carbohydrate polymers.", true],
         [
-          "Fatty acids and related hydrophobic units help build many lipid structures.",
-          true,
+          "The same monomer type builds proteins, nucleic acids, and carbohydrates, so building-block identity is not important.",
+          false,
         ],
       ],
-      "Large biological molecules are often built from smaller recurring units. Knowing the building blocks helps students understand digestion, biosynthesis, membranes, genetic information, and protein function.",
+      "Large biological molecules are often built from smaller recurring units, but the identity of those units matters. Amino acids, nucleotides, sugars, and lipid components support different structures and functions, so confusing their building blocks creates downstream errors.",
+      "bio-chem-life-l0-q63",
     ),
     makeQuestion(
       49,
@@ -896,11 +903,12 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
         ["Cells control transport across boundaries.", true],
         ["Cells sense signals and change internal state.", true],
         [
-          "Cells allocate energy and materials for growth, repair, or response.",
-          true,
+          "A membrane boundary makes transport and internal chemistry chemically unregulated.",
+          false,
         ],
       ],
-      "A cell is more than a container of molecules. It is a bounded, energy-using, information-processing system that organizes reactions, senses conditions, controls transport, and manages resources.",
+      "A cell is more than a container of molecules. It is a bounded, energy-using, information-processing system that organizes reactions, senses conditions, controls transport, and manages resources; membranes create regulated boundaries rather than removing the need for regulation.",
+      "bio-chem-life-l0-q64",
     ),
     makeQuestion(
       50,
@@ -914,11 +922,12 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
         ],
         ["Transcription factors help regulate gene use.", true],
         [
-          "Epigenetic regulation can change access to DNA without changing the base sequence.",
-          true,
+          "Epigenetic regulation changes gene use only by rewriting the DNA base sequence.",
+          false,
         ],
       ],
-      "DNA is better viewed as an information library than as a simple deterministic blueprint. Cells regulate which instructions are used, how strongly they are used, and how gene products interact with context.",
+      "DNA is better viewed as an information library than as a simple deterministic blueprint. Cells regulate which instructions are used, how strongly they are used, and how gene products interact with context; epigenetic mechanisms can alter DNA access without changing the base sequence.",
+      "bio-chem-life-l0-q65",
     ),
     makeQuestion(
       51,
@@ -932,11 +941,12 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
         ],
         ["Tumor cell populations can evolve inside the body.", true],
         [
-          "Selection, drift, inheritance, and variation help explain changing populations.",
-          true,
+          "Medical evolution requires organisms or cells to deliberately change their DNA in response to treatment.",
+          false,
         ],
       ],
-      "Evolution is not just background theory. It helps explain resistance, pathogen adaptation, cancer progression, immune escape, inherited disease risk, and why treatment can change the population it acts on.",
+      "Evolution is not just background theory. It helps explain resistance, pathogen adaptation, cancer progression, immune escape, inherited disease risk, and why treatment can change the population it acts on, but the change is population-level rather than deliberate individual adaptation.",
+      "bio-chem-life-l0-q66",
     ),
     makeQuestion(
       52,
@@ -949,9 +959,13 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
         ],
         ["Dose can affect benefit and toxicity.", true],
         ["Pharmacokinetics affects exposure over time.", true],
-        ["Pharmacodynamics connects exposure to biological effect.", true],
+        [
+          "Pharmacodynamics describes what the body does to the drug before it reaches a target.",
+          false,
+        ],
       ],
-      "Drugs perturb biological systems rather than acting in isolation. Dose, exposure, target binding, downstream physiology, toxicity, and patient variation together shape treatment response.",
+      "Drugs perturb biological systems rather than acting in isolation. Dose, exposure, target binding, downstream physiology, toxicity, and patient variation together shape treatment response; pharmacokinetics tracks exposure over time, while pharmacodynamics connects exposure to biological effect.",
+      "bio-chem-life-l0-q67",
     ),
     makeQuestion(
       53,
@@ -965,11 +979,12 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
         [
-          "Treatment choice depends on pathogen biology and host context.",
-          true,
+          "Because viruses use host-cell machinery, antibiotics that target bacterial ribosomes are broadly effective against viral infections.",
+          false,
         ],
       ],
-      "Infection brings together molecules, cells, immunity, evolution, and treatment. The basic distinction between bacteria and viruses prepares students for antibiotics, antivirals, vaccines, and resistance.",
+      "Infection brings together molecules, cells, immunity, evolution, and treatment. The basic distinction between bacteria and viruses prepares students for antibiotics, antivirals, vaccines, and resistance; bacterial targets do not automatically apply to viruses that depend on host-cell machinery.",
+      "bio-chem-life-l0-q68",
     ),
     makeQuestion(
       54,
@@ -986,11 +1001,12 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
         ],
         ["A clinical endpoint is an outcome used to judge effect.", true],
         [
-          "Patient benefit needs evidence beyond a plausible biological story.",
-          true,
+          "A disease association is enough to use the test for treatment selection without outcome evidence.",
+          false,
         ],
       ],
-      "Modern biomedicine depends on measurement, but measurements need interpretation for a specific decision. A useful biomarker, diagnostic, endpoint, or prediction must connect accuracy, mechanism, clinical context, and patient-relevant outcomes rather than merely producing a number.",
+      "Modern biomedicine depends on measurement, but measurements need interpretation for a specific decision. A useful biomarker, diagnostic, endpoint, or prediction must connect accuracy, mechanism, clinical context, and patient-relevant outcomes rather than treating association alone as clinical usefulness.",
+      "bio-chem-life-l0-q69",
     ),
     makeQuestion(
       55,
@@ -998,17 +1014,18 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
       "An AI model predicts disease risk from images collected at one hospital. Which cautions should a learner keep in view before trusting it for patient care?",
       [
         [
-          "AI can help with images, genomics, proteins, drug discovery, and patient stratification.",
+          "The model could learn site-specific image artifacts instead of disease biology.",
           true,
         ],
         ["AI systems can fail when data are biased or labels are noisy.", true],
         ["Population shift can reduce model performance.", true],
         [
-          "Biology, measurement, workflow, safety, and evidence remain important.",
-          true,
+          "A high score on the original hospital's data proves the model is safe across patient populations.",
+          false,
         ],
       ],
-      "AI can accelerate parts of biology and medicine, but a strong-looking prediction is not enough for patient care. Data quality, population shift, label reliability, biological interpretation, workflow fit, safety, and evidence determine whether the model is trustworthy.",
+      "AI can accelerate parts of biology and medicine, but a strong-looking prediction is not enough for patient care. Data quality, site artifacts, population shift, label reliability, biological interpretation, workflow fit, safety, and evidence determine whether the model is trustworthy.",
+      "bio-chem-life-l0-q70",
     ),
     makeQuestion(
       56,
@@ -1025,11 +1042,12 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
         ],
         ["Potency is about how much drug is needed for an effect.", true],
         [
-          "Toxicity is about harmful effects that can increase with exposure.",
-          true,
+          "A dose-response plateau means additional exposure cannot add toxicity.",
+          false,
         ],
       ],
-      "Students do not need advanced math, but they should be comfortable with simple curves and comparisons. Dose-response reasoning appears in pharmacology, safety, therapeutic windows, biomarkers, and clinical evidence.",
+      "Students do not need advanced math, but they should be comfortable with simple curves and comparisons. Dose-response reasoning appears in pharmacology, safety, therapeutic windows, biomarkers, and clinical evidence; a plateau in desired effect does not prove extra exposure is harmless.",
+      "bio-chem-life-l0-q71",
     ),
     makeQuestion(
       57,
@@ -1039,9 +1057,13 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
         ["A molecule's shape can affect what it binds.", true],
         ["Charge and polarity can affect how molecules interact.", true],
         ["Protein sequence can affect folding.", true],
-        ["Cellular context can change the effect of a molecule.", true],
+        [
+          "Once a protein sequence is known, charge, shape, binding partners, and cellular context become irrelevant.",
+          false,
+        ],
       ],
-      "Structure-function reasoning means that what something is made of and how it is shaped affect what it can do. The course uses this for proteins, enzymes, receptors, antibodies, drugs, membranes, and nucleic acids.",
+      "Structure-function reasoning means that what something is made of and how it is shaped affect what it can do. The course uses this for proteins, enzymes, receptors, antibodies, drugs, membranes, and nucleic acids, while cellular context and interaction chemistry still matter.",
+      "bio-chem-life-l0-q72",
     ),
     makeQuestion(
       58,
@@ -1061,11 +1083,12 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
         [
-          "Disease can arise when regulation fails across molecules, cells, tissues, or organs.",
-          true,
+          "Positive and negative feedback mainly describe molecule shape, not control of activity over time.",
+          false,
         ],
       ],
-      "Regulation is one of the main ideas of the crash course. It lets learners connect molecular switches, feedback loops, cell decisions, physiology, disease, drug effects, and patient variation.",
+      "Regulation is one of the main ideas of the crash course. It lets learners connect molecular switches, feedback loops, cell decisions, physiology, disease, drug effects, and patient variation; feedback is about control of processes, not merely the physical shape of a molecule.",
+      "bio-chem-life-l0-q73",
     ),
     makeQuestion(
       59,
@@ -1085,11 +1108,12 @@ export const BiologyChemistryForLifeScienceLecture0PreparationQuestions: Questio
           true,
         ],
         [
-          "Cell therapy can involve modifying or selecting cells and giving them to a patient.",
-          true,
+          "Therapeutic modalities differ mainly in brand name rather than in what is delivered or where it acts.",
+          false,
         ],
       ],
-      "Modern medicine uses several kinds of interventions. The names are less important than the basic differences in what is delivered, where it acts, how long it lasts, and what evidence is needed.",
+      "Modern medicine uses several kinds of interventions. The names are less important than the basic differences in what is delivered, where it acts, how long it lasts, and what evidence is needed; modality choice is not just branding.",
+      "bio-chem-life-l0-q74",
     ),
     makeQuestion(
       60,

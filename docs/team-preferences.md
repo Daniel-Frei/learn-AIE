@@ -25,13 +25,14 @@ This file captures durable process preferences so future tasks can follow them b
 - Install (dev): `make install`
 - Local Next.js dev, production-preview, and Playwright web-server default port: `43191` instead of common framework ports to reduce localhost conflicts.
 - It is good to start a local dev server for implementation testing, browser verification, and debugging, but agents should shut down any dev server they started before finishing the task.
-- Full checks: `make check`
+- Full checks: `make check` (includes the focused Playwright smoke test)
 - Format check: `make format-check`
 - Lint: `make lint`
 - Type check: `make types-check`
 - Unit tests: `make test`
 - Focused Vitest runs: `npm run test:focused -- path/to/file.spec.ts` to avoid misleading global coverage failures when running only one test file.
-- E2E tests: `npm run e2e` or `npm run e2e:ui`
+- Focused browser smoke: `npm run e2e:smoke` or `make e2e-smoke`
+- Full E2E tests: `npm run e2e` or `npm run e2e:ui`
 - Windows Start Menu launcher install/uninstall: `make install-windows-start-menu` / `make uninstall-windows-start-menu`
 - Mobile dev server: `npm run mobile:start`
 - Mobile Android/iOS/web launchers: `npm run mobile:android`, `npm run mobile:ios`, `npm run mobile:web`
@@ -53,6 +54,9 @@ This file captures durable process preferences so future tasks can follow them b
 ## Testing Priorities
 
 - Keep expanding coverage for core functionality, not just smoke tests.
+- Browser smoke coverage should fail on unexpected console errors, page errors,
+  and hydration/runtime warnings on the home page so `make check` catches
+  client-rendering regressions.
 - The unit-test command enforces at least 95% statements, branches, functions, and lines for the configured core logic/API coverage scope.
 - Prioritize tests for quiz source selection/title logic, difficulty rating behavior, and API validation/error handling.
 - For question reporting, prefer append-only shared database entries and include source/prompt snapshot context for reviewer triage.
@@ -116,6 +120,8 @@ This file captures durable process preferences so future tasks can follow them b
 - New learning experiences should run a frontend UX review loop before finalizing, preferably with the `frontend-ux-review` skill or an equivalent screenshot/browser critique across desktop and mobile.
 - Checks and practice prompts should appear where they best support the learner's current mental model, including immediately after a topic when local feedback would help.
 - Learning pages should build concepts in dependency order. Introduce vocabulary, controls, units, and notation before asking learners to use a dense lab; if a lab appears early, it should teach one concept at a time through a guided progression or inline legend.
+- Learning pages should include simple first-use explanations for core terms, controls, units, symbols, architecture parts, and algorithm names before using them in dense labs or checks. Learners who already know the concept can scroll past the explanation; learners who do not should not have to infer the missing basics.
+- Before finalizing a learning page, run a learner-scroll UX check: imagine a learner reading from top to bottom and verify that each section naturally follows from the previous one, introduces what the next section needs, and avoids jumps into unexplained vocabulary or disconnected labs.
 - For hard technical lecture learning pages, introduce core algorithm names, roles, equations, and symbols before interactions that depend on them. A lab should not assume concepts such as PPO, advantage, reward models, RL, RLHF, or DPO before the page has taught the simplified mental model.
 - Interactive numeric outputs should expose the calculation path near the output: show the governing formula, selected input values, and intermediate arithmetic so learners can reconstruct results such as Best-of-N probabilities, PPO clipping terms, or DPO logits.
 - When source material includes a canonical formula, benchmark metric, or algorithm objective, learning pages should present that source-aligned version. Simplified or toy formulas are useful when clearly labeled as approximations or intuition builders, especially when paired with interactive calculations.
