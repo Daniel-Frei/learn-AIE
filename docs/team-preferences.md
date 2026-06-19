@@ -37,6 +37,7 @@ This file captures durable process preferences so future tasks can follow them b
 - Mobile dev server: `npm run mobile:start`
 - Mobile Android/iOS/web launchers: `npm run mobile:android`, `npm run mobile:ios`, `npm run mobile:web`
 - Mobile checks: `npm run mobile:lint`, `npm run mobile:types-check`
+- Before running the full verification gate, run `make format` first and then `make check` so format-sensitive generated or source-derived files are normalized before the final check.
 
 ## Dependency Policy
 

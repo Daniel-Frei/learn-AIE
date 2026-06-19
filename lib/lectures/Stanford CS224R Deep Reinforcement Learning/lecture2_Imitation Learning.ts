@@ -7,247 +7,259 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
   // ============================================================
 
   // ============================================================
-  // Q1–Q9: ALL TRUE
+  // Introductory imitation-learning questions
   // ============================================================
 
   {
-    id: "cs224r-lect2-q01",
+    id: "cs224r-lect2-q36",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Which statements correctly describe imitation learning?",
+    prompt:
+      "An autonomous-driving dataset contains trajectories from human drivers, but the human policy itself is unknown. Which statements correctly describe the imitation-learning setup?",
     options: [
       {
-        text: "It aims to learn a policy that mimics expert behavior.",
+        text: "The demonstrations can be treated as samples from an unknown expert policy.",
         isCorrect: true,
       },
       {
-        text: "Training data consists of expert-collected trajectories.",
+        text: "The goal is to learn a policy that performs similarly to the demonstrators by mimicking their actions.",
         isCorrect: true,
       },
       {
-        text: "The learned policy maps states or observations to actions.",
+        text: "Behavior cloning can be trained without hand-writing a reward function.",
         isCorrect: true,
       },
       {
-        text: "The goal is to achieve high task performance without explicitly defining a reward.",
+        text: "Demonstration quality can bound the performance of the learned imitator.",
         isCorrect: true,
       },
     ],
     explanation:
-      "Imitation learning focuses on copying expert behavior directly from demonstrations. Unlike reinforcement learning, it does not require an explicit reward function, relying instead on expert trajectories.",
+      "Imitation learning uses demonstrated state-action behavior as supervision when the expert's internal policy is unknown. The usual target is expert-level behavior through mimicry without needing a hand-written reward, so the quality and coverage of the demonstrations matter.",
   },
 
   {
-    id: "cs224r-lect2-q02",
+    id: "cs224r-lect2-q37",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Which statements correctly describe behavior cloning?",
+    prompt:
+      "A deterministic behavior-cloning policy is trained with squared error on expert state-action pairs. Which statements correctly describe this version-0 algorithm?",
     options: [
       {
-        text: "It reduces imitation learning to supervised learning.",
+        text: "It treats imitation as supervised prediction of expert actions from states.",
         isCorrect: true,
       },
       {
-        text: "The policy is trained to predict expert actions from states.",
+        text: "After training, the learned policy can be deployed without collecting new online data during training.",
         isCorrect: true,
       },
       {
-        text: "A common loss is squared error between predicted and expert actions.",
+        text: "The squared-error objective can struggle when the demonstrated action distribution is multimodal.",
         isCorrect: true,
       },
       {
-        text: "The learned policy can be deployed directly after training.",
+        text: "DAgger-style expert intervention is a separate online correction strategy, not part of basic offline behavior cloning.",
         isCorrect: true,
       },
     ],
     explanation:
-      "Behavior cloning treats imitation as supervised regression or classification. The policy is trained on fixed data and then deployed without further interaction.",
+      "Basic behavior cloning trains on the fixed demonstration dataset, much like supervised regression or classification. Its simplicity is also a limitation: squared error predicts point actions and does not by itself solve multimodality; online interventions belong to later correction methods such as DAgger.",
   },
 
   {
-    id: "cs224r-lect2-q03",
+    id: "cs224r-lect2-q38",
     chapter: 2,
     difficulty: "easy",
-    prompt: "Which statements correctly describe expert demonstrations?",
+    prompt:
+      "A demonstration dataset contains several trajectories from different human drivers. Which statements are appropriate assumptions for imitation learning?",
     options: [
       {
-        text: "They consist of sequences of states and actions.",
+        text: "The data consists of state-action behavior sampled from one or more demonstrators.",
         isCorrect: true,
       },
       {
-        text: "They are assumed to come from an unknown expert policy.",
+        text: "Different demonstrators may choose different valid actions in similar states.",
         isCorrect: true,
       },
       {
-        text: "They define the data distribution used for training.",
+        text: "Demonstrations may be good enough to imitate even when they are not globally optimal.",
         isCorrect: true,
       },
       {
-        text: "They may contain variability due to different human strategies.",
+        text: "The learned policy may visit different states from the expert if its own mistakes compound.",
         isCorrect: true,
       },
     ],
     explanation:
-      'Demonstrations are trajectories sampled from an expert policy. When multiple experts contribute data, demonstrations often reflect diverse strategies. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They consist of sequences of states and actions."; "They are assumed to come from an unknown expert policy."; "They define the data distribution used for training."; "They may contain variability due to different human strategies.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Demonstrations provide the state-action examples that define the training distribution, and multiple humans can create real diversity in that data. The lecture does not require global optimality, and it later emphasizes that deployment can shift the state distribution when the learned policy makes mistakes.",
   },
 
   {
-    id: "cs224r-lect2-q04",
+    id: "cs224r-lect2-q39",
     chapter: 2,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe multimodality in imitation learning data?",
+      "In a driving dataset, some people go straight while others merge left from a similar state. Which statements correctly explain the multimodality problem?",
     options: [
       {
-        text: "Different experts may choose different valid actions in the same state.",
+        text: "The action distribution can have separate high-probability modes for different valid strategies.",
         isCorrect: true,
       },
       {
-        text: "Multimodality leads to multiple peaks in the action distribution.",
+        text: "Averaging the modes can produce a low-probability action such as drifting between lanes.",
         isCorrect: true,
       },
       {
-        text: "Averaging expert actions can produce low-probability behaviors.",
+        text: "Adding more drivers can make multiple strategies more visible rather than collapsing them into one mode.",
         isCorrect: true,
       },
       {
-        text: "Multimodality is common in human-collected datasets.",
+        text: "The mean action need not correspond to any demonstrated strategy when modes are separated.",
         isCorrect: true,
       },
     ],
     explanation:
-      "Human demonstrations are rarely perfectly consistent. Multimodal action distributions arise naturally and must be handled carefully to avoid unsafe averaging.",
+      "The lecture's driving example shows why a mean action can be a bad action when several valid strategies create separated modes. More human data can make diversity more visible rather than removing it, so the policy distribution must be able to represent that structure.",
   },
 
   {
-    id: "cs224r-lect2-q05",
+    id: "cs224r-lect2-q40",
     chapter: 2,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe why deterministic L2 regression can fail?",
+      "A large neural network is still trained with an L2 action loss on a multimodal continuous-action dataset. Which statements correctly describe the limitation?",
     options: [
       {
-        text: "It predicts the mean of the action distribution.",
+        text: "The loss still encourages predicting the conditional mean action.",
         isCorrect: true,
       },
       {
-        text: "The mean action may have low probability under the data.",
+        text: "Increasing network size does not by itself make a point-output policy represent several action modes.",
         isCorrect: true,
       },
       {
-        text: "It cannot represent multiple distinct expert strategies.",
+        text: "A wider single Gaussian may still put probability mass on bad in-between actions.",
         isCorrect: true,
       },
       {
-        text: "Increasing network size does not fix distributional collapse.",
+        text: "Changing the output distribution can matter separately from changing network size.",
         isCorrect: true,
       },
     ],
     explanation:
-      "L2 regression encourages mean prediction, which is problematic for multimodal data. Even large neural networks cannot overcome the limitation of a unimodal output distribution.",
+      "The lecture separates neural-network expressivity from distribution expressivity. A bigger function approximator can predict the mean more accurately, but a point-output or single simple distribution still cannot faithfully represent separated modes in the action distribution.",
   },
 
   {
-    id: "cs224r-lect2-q06",
+    id: "cs224r-lect2-q41",
     chapter: 2,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe expressive policy distributions?",
+      "A policy network outputs parameters of an action distribution instead of one deterministic action. Which statements correctly describe what distribution expressivity adds?",
     options: [
       {
-        text: "They represent full action distributions rather than single actions.",
-        isCorrect: true,
-      },
-      { text: "They can capture multimodal expert behavior.", isCorrect: true },
-      {
-        text: "They are typically trained by maximizing log-likelihood of demonstrations.",
+        text: "The distribution class limits which action distributions the policy can represent.",
         isCorrect: true,
       },
       {
-        text: "They reduce the risk of implausible averaged actions.",
+        text: "Expressive distributions can put probability mass on several plausible expert strategies.",
+        isCorrect: true,
+      },
+      {
+        text: "A single Gaussian remains limited when continuous actions have separated modes.",
+        isCorrect: true,
+      },
+      {
+        text: "Distribution choice remains important even when the neural network mapping into parameters is deep.",
         isCorrect: true,
       },
     ],
     explanation:
-      "Expressive distributions allow policies to sample high-probability actions rather than collapsing to means. This is critical for realistic and safe behavior.",
+      "The network can be very expressive as a function from state to parameters while the chosen output distribution remains restrictive. Expressive policy distributions reduce mean-collapse failures by allowing the policy to represent multiple high-probability actions.",
   },
 
   {
-    id: "cs224r-lect2-q07",
+    id: "cs224r-lect2-q42",
     chapter: 2,
     difficulty: "hard",
     prompt:
-      "Which statements correctly describe learning a policy via maximum likelihood?",
+      "Version-1 imitation learning minimizes \\(-\\mathbb{E}_{(s,a)\\sim\\mathcal{D}}[\\log \\pi_\\theta(a \\mid s)]\\). Which statements correctly interpret this objective?",
     options: [
       {
-        text: "The objective minimizes negative log probability of expert actions.",
+        text: "It increases the probability that the policy assigns to demonstrated actions in their states.",
         isCorrect: true,
       },
       {
-        text: "The policy defines a probability distribution π(a|s).",
+        text: "It trains a conditional action distribution rather than only a deterministic point prediction.",
         isCorrect: true,
       },
       {
-        text: "Training maximizes agreement with demonstrated behavior.",
-        isCorrect: true,
+        text: "It directly optimizes the expected reward collected by rolling out the current policy.",
+        isCorrect: false,
       },
       {
-        text: "The learned policy induces a distribution over trajectories.",
-        isCorrect: true,
+        text: "It avoids the need to condition action probabilities on the current state or observation.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "Maximum likelihood training fits the policy distribution to the data distribution. The policy affects the induced trajectory distribution through sequential action sampling.",
+      "Negative log-likelihood fits the policy distribution to expert actions observed in the dataset. It is still imitation learning on demonstrations, not direct reward optimization through online rollouts, and the action probabilities remain conditioned on the state or observation.",
   },
 
   {
-    id: "cs224r-lect2-q08",
+    id: "cs224r-lect2-q43",
     chapter: 2,
     difficulty: "hard",
     prompt:
-      "Which statements correctly describe autoregressive action modeling?",
+      "A high-dimensional action is modeled autoregressively as conditional factors over action dimensions. Which statements correctly describe this policy distribution?",
     options: [
-      { text: "Actions are modeled one dimension at a time.", isCorrect: true },
       {
-        text: "Each dimension is conditioned on previously generated dimensions.",
+        text: "The joint action distribution is decomposed into ordered conditional predictions.",
         isCorrect: true,
       },
       {
-        text: "The full joint distribution factorizes autoregressively.",
+        text: "At inference time, sampled earlier dimensions can condition later dimensions.",
         isCorrect: true,
       },
       {
-        text: "This approach scales to high-dimensional actions.",
-        isCorrect: true,
+        text: "Each action dimension is predicted independently of the dimensions generated before it.",
+        isCorrect: false,
+      },
+      {
+        text: "The method only applies when actions are one-dimensional and continuous.",
+        isCorrect: false,
       },
     ],
     explanation:
-      "Autoregressive models decompose a joint distribution into conditional factors. This allows efficient modeling of complex, high-dimensional action spaces.",
+      "Autoregressive modeling handles a joint action by predicting dimensions sequentially, with later predictions conditioned on earlier generated values. That conditioning is the point of the factorization, so treating dimensions as independent or limiting the method to one-dimensional actions misses the mechanism.",
   },
 
   {
-    id: "cs224r-lect2-q09",
+    id: "cs224r-lect2-q44",
     chapter: 2,
     difficulty: "hard",
     prompt:
-      "Which statements correctly describe diffusion policies for imitation learning?",
+      "A diffusion policy is used as the action distribution for continuous robot actions. Which statements correctly describe why this model class is useful and what it costs?",
     options: [
       {
-        text: "They generate actions via iterative denoising.",
+        text: "It can represent complex continuous distributions through an iterative denoising process.",
         isCorrect: true,
       },
       {
-        text: "They can model complex continuous action distributions.",
+        text: "Its sampling procedure usually requires multiple refinement steps rather than one direct output.",
         isCorrect: true,
       },
-      { text: "Sampling requires multiple refinement steps.", isCorrect: true },
       {
-        text: "They are more expressive than single Gaussian policies.",
-        isCorrect: true,
+        text: "It gets its expressivity by forcing continuous actions into a single categorical bin.",
+        isCorrect: false,
+      },
+      {
+        text: "It is equivalent to a single Gaussian policy with a wider variance parameter.",
+        isCorrect: false,
       },
     ],
     explanation:
-      'Diffusion policies gradually transform noise into actions. Their iterative structure allows them to represent highly complex distributions. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They generate actions via iterative denoising."; "They can model complex continuous action distributions."; "Sampling requires multiple refinement steps."; "They are more expressive than single Gaussian policies.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Diffusion policies trade inference speed for a much richer continuous action distribution than a single Gaussian. The iterative denoising process is different from discretizing into one bin or merely increasing Gaussian variance, both of which miss the source's expressivity point.",
   },
 
   // ============================================================
