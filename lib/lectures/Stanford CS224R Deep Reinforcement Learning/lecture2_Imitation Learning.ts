@@ -284,7 +284,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      'Demonstrations are often imperfect and diverse. Imitation learning aims to match expert behavior, not necessarily optimal behavior. To reason through the choices, select the statements that match the criterion in the prompt: "They may come from multiple experts."; "They define the training distribution for imitation learning."; "They may include inconsistent action choices.". Do not select statements that miss that criterion: "They always correspond to optimal behavior.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Demonstrations are the behavior data that imitation learning tries to match, so they define the state-action distribution the learner sees during training. They can come from several experts and may contain inconsistent action choices because different humans or systems can solve the same task differently. They should not be treated as automatically optimal; imitation learning can copy the quality, diversity, and flaws present in the demonstration set.",
   },
 
   {
@@ -309,7 +309,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      'GMMs extend unimodal Gaussians but remain limited compared to fully flexible generative models like diffusion. To reason through the choices, select the statements that match the criterion in the prompt: "They combine multiple Gaussian components."; "They are more expressive than a single Gaussian."; "They require choosing the number of components.". Do not select statements that miss that criterion: "They are maximally expressive for continuous actions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "A Gaussian mixture model represents an action distribution as several Gaussian components, which lets it capture multiple modes better than a single Gaussian. The modeler still has to choose or learn how many components are available, and that finite mixture limits what shapes can be represented. It is therefore more expressive than one Gaussian but not maximally expressive for arbitrary continuous-action behavior.",
   },
 
   {
@@ -334,7 +334,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      'Discretization trades metric precision for expressive categorical modeling. Distance relationships are only approximated through binning. To reason through the choices, select the statements that match the criterion in the prompt: "Continuous actions can be binned into discrete categories."; "Discretization enables categorical cross-entropy loss."; "Finer discretization increases expressivity.". Do not select statements that miss that criterion: "Discretization preserves exact distance information between actions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Discretization turns continuous actions into bins so the learner can use categorical modeling and cross-entropy-style objectives. Finer bins can represent more detailed actions, but binning also discards exact metric relationships inside and between bins. That is why discretization can increase categorical expressivity while still failing to preserve exact continuous distance information.",
   },
 
   {
@@ -361,7 +361,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      'Offline methods are safer and simpler but do not inherently solve distribution shift issues that arise during deployment. To reason through the choices, select the statements that match the criterion in the prompt: "It trains using a fixed dataset of demonstrations."; "It does not require running the learned policy during training."; "It avoids safety risks from untrained policies.". Do not select statements that miss that criterion: "It guarantees robustness to compounding errors.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Offline imitation learning trains from a fixed demonstration dataset, so it can avoid running an unsafe or untrained policy during training. That makes data collection and safety constraints easier than online correction methods. It does not guarantee robustness at deployment, because the learned policy can still drift into states that were rare or absent in the demonstrations and then suffer compounding errors.",
   },
 
   {
@@ -385,7 +385,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "They only occur in stochastic environments.", isCorrect: false },
     ],
     explanation:
-      'Compounding errors stem from sequential decision making, not randomness alone. Even deterministic systems can exhibit them. To reason through the choices, select the statements that match the criterion in the prompt: "They arise when policy mistakes alter future states."; "They cause the policy to visit unseen states."; "They create a mismatch between training and deployment distributions.". Do not select statements that miss that criterion: "They only occur in stochastic environments.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Compounding errors occur because a wrong action can move the system into a different future state, where the policy may be even less prepared to act. This creates a mismatch between the expert-state distribution used for training and the states visited by the learned policy at deployment. Randomness can make the problem harder, but the core failure can happen even in deterministic systems because actions affect later states.",
   },
 
   {
@@ -406,7 +406,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "It is a purely offline algorithm.", isCorrect: false },
     ],
     explanation:
-      'DAgger is inherently online because it relies on policy rollouts and expert feedback during training. To reason through the choices, select the statements that match the criterion in the prompt: "It collects data by running the learned policy."; "It queries the expert at visited states."; "It aggregates corrective data with original demonstrations.". Do not select statements that miss that criterion: "It is a purely offline algorithm.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Dataset Aggregation (DAgger) addresses compounding errors by running the current learned policy and asking the expert what should have been done in the states the policy actually visits. Those corrective labels are aggregated with earlier demonstrations so the training set better matches deployment states. Because it depends on rollouts and expert queries during learning, it is not a purely offline algorithm.",
   },
 
   {
@@ -434,7 +434,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      'Categorical policies fully represent discrete distributions and naturally align with classification objectives. To reason through the choices, select the statements that match the criterion in the prompt: "They output probabilities over discrete actions."; "They are maximally expressive for discrete action spaces."; "They are trained using classification losses.". Do not select statements that miss that criterion: "They require continuous action representations.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "For a discrete action space, a categorical policy can assign a probability to each action, so it can represent any distribution over that finite set. That output form naturally fits classification losses such as cross-entropy when learning from expert action labels. It does not require continuous action representations; continuous actions are the case where extra modeling choices such as Gaussians, mixtures, discretization, or diffusion become important.",
   },
 
   {
@@ -461,7 +461,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      'The output distribution fundamentally limits what behaviors can be represented, independent of network depth. To reason through the choices, select the statements that match the criterion in the prompt: "Distribution expressivity differs from network expressivity."; "A large network with L2 loss still predicts a mean."; "Expressive distributions enable safer action sampling.". Do not select statements that miss that criterion: "Distribution choice is irrelevant if the network is deep enough.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Network expressivity and output-distribution expressivity solve different problems. A large neural network trained with an L2 objective can still collapse multimodal expert behavior toward an average action, which may be unsafe or unrealistic. Choosing a richer policy distribution lets the model sample plausible high-probability actions, so the distribution choice remains important even when the neural network is deep.",
   },
 
   {
@@ -489,7 +489,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      'Training conditions on expert actions (teacher forcing). Gradients flow through probabilities, not discrete samples. To reason through the choices, select the statements that match the criterion in the prompt: "Training uses expert actions as conditioning inputs."; "Cross-entropy loss is applied per action dimension."; "Inference feeds sampled actions back into the model.". Do not select statements that miss that criterion: "Backpropagation requires differentiating through sampled actions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Autoregressive policy training can use teacher forcing, where each action dimension is conditioned on the expert's previous action dimensions and trained with cross-entropy. At inference time, the model samples earlier dimensions and feeds those sampled choices forward to generate later dimensions. Backpropagation does not require differentiating through the sampled discrete actions; the training loss differentiates through the predicted probabilities for the expert actions.",
   },
 
   // ============================================================
@@ -508,7 +508,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "They depend on demonstration quality.", isCorrect: true },
     ],
     explanation:
-      'Imitation learning optimizes likelihood of demonstrations rather than reward. The quality of the expert data strongly affects performance. To reason through the choices, select the statements that match the criterion in the prompt: "They maximize likelihood of expert actions."; "They depend on demonstration quality.". Do not select statements that miss that criterion: "They maximize expected reward directly."; "They require a known reward function.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Behavior cloning-style imitation learning fits the expert action data, often by maximizing the likelihood of expert actions under the policy. It does not directly maximize expected reward and does not need a known reward function, which is why it can be attractive when reward design is hard. The tradeoff is that performance depends strongly on the quality, coverage, and consistency of the demonstrations.",
   },
 
   {
@@ -527,7 +527,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "They eliminate the need for sampling.", isCorrect: false },
     ],
     explanation:
-      'Discretization simplifies modeling at the cost of precision. Autoregression avoids exponential blowup of joint distributions. To reason through the choices, select the statements that match the criterion in the prompt: "They convert continuous actions into bins."; "They reduce modeling complexity of joint distributions.". Do not select statements that miss that criterion: "They preserve exact geometric distances."; "They eliminate the need for sampling.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "A discretized autoregressive policy bins continuous action dimensions and then models the joint action one conditional distribution at a time. That factorization avoids representing every joint action combination independently, which reduces modeling complexity. Binning does not preserve exact geometric distances, and autoregressive generation still requires choosing or sampling action bins at inference time.",
   },
 
   {
@@ -554,7 +554,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      'Covariate shift is intrinsic to sequential prediction. Even large datasets cannot fully eliminate it. To reason through the choices, select the statements that match the criterion in the prompt: "It arises when policy actions affect future states."; "It causes mismatch between expert and policy state distributions.". Do not select statements that miss that criterion: "It is irrelevant when demonstrations are large."; "It can be ignored in sequential decision problems.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Covariate shift appears in imitation learning when the learned policy's actions push the system into states that differ from the expert demonstrations. A larger dataset can reduce gaps in coverage, but it does not remove the sequential feedback loop that creates new state distributions at deployment. Because actions affect future states, this mismatch is central rather than something sequential decision problems can ignore.",
   },
 
   {
@@ -578,7 +578,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      'Human-gated DAgger reduces annotation burden but still requires expert oversight during rollouts. To reason through the choices, select the statements that match the criterion in the prompt: "The expert intervenes when the policy fails."; "It is more practical than querying every visited state.". Do not select statements that miss that criterion: "Corrections are collected without policy rollouts."; "It eliminates the need for expert involvement.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Human-gated DAgger reduces annotation cost by having the expert intervene or correct the policy when failures matter, rather than labeling every visited state. It is still built around policy rollouts, because the goal is to collect corrections on states the learned policy actually reaches. The method therefore remains an expert-in-the-loop approach and does not eliminate expert involvement.",
   },
 
   {
@@ -599,7 +599,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      'Diffusion trades off inference speed for expressivity. Its iterative nature enables rich continuous distributions. To reason through the choices, select the statements that match the criterion in the prompt: "They operate by iterative refinement."; "They handle multimodal continuous actions well.". Do not select statements that miss that criterion: "They generate actions in a single forward pass."; "They require discretization of actions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Diffusion policies generate actions through iterative denoising or refinement, which is slower than a single forward pass but much more expressive. That expressivity is useful for multimodal continuous-action data, where several distinct expert actions may be plausible. They do not require discretizing the action space; the point is to model rich continuous distributions directly.",
   },
 
   {
@@ -617,7 +617,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      'Expressive policies improve realism and safety but do not guarantee optimality. To reason through the choices, select the statements that match the criterion in the prompt: "They reduce risk of unsafe averaged actions."; "They enable sampling from high-probability regions.". Do not select statements that miss that criterion: "They guarantee optimal performance."; "They are unnecessary for multimodal data.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Expressive policies help when demonstration data has multiple valid strategies because the policy can sample from realistic high-probability regions instead of averaging incompatible actions. That can reduce unsafe mean-action behavior in tasks where the average of two good actions is not itself good. Expressivity is not a guarantee of optimal performance, and it is especially relevant rather than unnecessary for multimodal data.",
   },
 
   {
@@ -638,7 +638,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "They eliminate compounding errors.", isCorrect: false },
     ],
     explanation:
-      'Gaussian policies are simple but restrictive. Multimodal tasks require richer distributions. To reason through the choices, select the statements that match the criterion in the prompt: "They are unimodal distributions."; "They are limited for multimodal imitation data.". Do not select statements that miss that criterion: "They can represent arbitrary action distributions."; "They eliminate compounding errors.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "A single Gaussian policy is simple and often convenient, but it is unimodal, so it tends to represent one central region of action space. Multimodal imitation data may require choosing between several distinct strategies, which a single Gaussian can collapse into an unrealistic average. Gaussian output assumptions also do not solve compounding errors, because those come from sequential distribution shift during deployment.",
   },
 
   {
@@ -662,7 +662,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      'Imitation learning focuses on matching observed behavior, not exceeding it. To reason through the choices, select the statements that match the criterion in the prompt: "Experts may follow different strategies."; "Imitation learning aims to match expert performance.". Do not select statements that miss that criterion: "Imitation learning assumes expert behavior is optimal."; "Imitation learning can outperform experts by default.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Imitation learning treats expert behavior as the target data distribution, but that does not mean every expert action is optimal. Different experts may use different strategies, and the learner is usually trying to match the demonstrated performance rather than discover a better policy by default. Exceeding the expert generally requires additional optimization signal or exploration beyond simply cloning the demonstrations.",
   },
 
   {
@@ -680,7 +680,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "Deployment does not affect policy behavior.", isCorrect: false },
     ],
     explanation:
-      'Sequential execution amplifies small mistakes. This makes deployment significantly harder than supervised prediction. To reason through the choices, select the statements that match the criterion in the prompt: "Deployment may expose unseen states."; "Errors can accumulate over time.". Do not select statements that miss that criterion: "Training and deployment distributions are identical."; "Deployment does not affect policy behavior.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Deployment is harder than static prediction because the policy's own actions determine future states. A small mistake can expose the policy to states that were uncommon or absent in the training demonstrations, and later mistakes can build on that drift. Training and deployment distributions are therefore not guaranteed to be identical, and deployment behavior matters precisely because the policy is part of the feedback loop.",
   },
 
   // ============================================================
@@ -705,7 +705,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      'Covariate shift is a central challenge in imitation learning due to sequential decisions. To reason through the choices, select the statements that match the criterion in the prompt: "It can suffer from covariate shift.". Do not select statements that miss that criterion: "It always requires online interaction with the environment."; "It inherently solves long-horizon planning."; "It guarantees stable performance without interventions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Imitation learning can suffer from covariate shift because the learned policy may visit states that differ from the expert data once it controls the system. It does not always require online environment interaction, because offline behavior cloning is a valid form of imitation learning. It also does not inherently solve long-horizon planning or guarantee stable performance without interventions such as DAgger-style corrective data.",
   },
 
   {
@@ -727,7 +727,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      'Negative log-likelihood fits the full action distribution rather than point estimates. To reason through the choices, select the statements that match the criterion in the prompt: "It fits a probabilistic model to expert actions.". Do not select statements that miss that criterion: "It minimizes squared error between actions."; "It maximizes reward directly."; "It removes the need for expressive distributions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Negative log-likelihood training fits a probabilistic policy by making expert actions high probability under the model. That differs from squared-error regression, which targets a point estimate and can average over distinct expert modes. It also does not maximize reward directly or remove the need for expressive distributions; the likelihood objective can only use the distribution family the policy provides.",
   },
 
   {
@@ -745,7 +745,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "They invalidate imitation learning.", isCorrect: false },
     ],
     explanation:
-      'Multimodal data motivates probabilistic policies rather than deterministic ones. To reason through the choices, select the statements that match the criterion in the prompt: "They require expressive policy distributions.". Do not select statements that miss that criterion: "They should be averaged for safety."; "They are rare in human data."; "They invalidate imitation learning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Multimodal demonstrations contain several distinct plausible actions for similar states, such as different expert strategies. Averaging those actions can create a behavior that no expert would choose and that may be unsafe in continuous control. The right response is not to discard imitation learning, but to use a policy distribution expressive enough to represent multiple modes.",
   },
 
   {
@@ -763,7 +763,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "It removes the need for demonstrations.", isCorrect: false },
     ],
     explanation:
-      'DAgger explicitly addresses distribution shift by collecting corrective data. To reason through the choices, select the statements that match the criterion in the prompt: "It reduces compounding errors.". Do not select statements that miss that criterion: "It eliminates expert queries entirely."; "It is less data-efficient than offline cloning."; "It removes the need for demonstrations.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "DAgger reduces compounding errors by collecting expert corrections on states reached by the learned policy, then adding those corrections to the training set. It still needs expert queries and usually starts from demonstrations or earlier supervised data, so it does not remove the expert from the loop. Its benefit is better deployment-state coverage, not a guarantee that it is less data-efficient than offline cloning in every setting.",
   },
 
   {
@@ -787,7 +787,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       },
     ],
     explanation:
-      'Expressive distributions are especially valuable when experts behave differently. To reason through the choices, select the statements that match the criterion in the prompt: "They improve robustness under expert diversity.". Do not select statements that miss that criterion: "They are unnecessary for single-expert datasets."; "They only matter for large neural networks."; "They replace the need for state representation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Expressive output distributions are useful when expert behavior is diverse because they can represent several plausible action regions instead of forcing one averaged action. Even a single expert can produce multimodal behavior across contexts, so expressivity is not only a multi-expert issue. It also does not replace state representation; the policy still needs the right input information to decide which mode is appropriate.",
   },
 
   {
@@ -808,7 +808,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "It requires a reward function.", isCorrect: false },
     ],
     explanation:
-      'Autoregressive models capture dependencies by conditioning each dimension on previous ones. To reason through the choices, select the statements that match the criterion in the prompt: "It factorizes the joint action distribution.". Do not select statements that miss that criterion: "It predicts all action dimensions simultaneously."; "It ignores correlations between action dimensions."; "It requires a reward function.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Autoregressive action modeling factorizes a joint action distribution into a sequence of conditional distributions. That lets later action dimensions depend on earlier ones, so the model can capture correlations without enumerating the full joint table at once. It is still an imitation-learning model of expert actions and does not require a reward function.",
   },
 
   {
@@ -832,7 +832,7 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "It eliminates the need for data collection.", isCorrect: false },
     ],
     explanation:
-      'Imitation learning reproduces what it sees. Poor or limited demonstrations constrain performance. To reason through the choices, select the statements that match the criterion in the prompt: "Its performance is bounded by demonstration quality.". Do not select statements that miss that criterion: "It can improve beyond expert performance by default."; "It provides a mechanism for self-improvement through exploration."; "It eliminates the need for data collection.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Imitation learning is limited by the demonstrations because the learner is trained to reproduce observed behavior rather than to discover better behavior through reward-guided exploration. If the demonstrations are poor, narrow, or inconsistent, the policy inherits those limitations. It still requires data collection, and improving beyond the expert by default is not part of the basic imitation-learning objective.",
   },
 
   {
@@ -850,6 +850,6 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
       { text: "They only occur in robotics.", isCorrect: false },
     ],
     explanation:
-      'Sequential decision making causes errors to propagate forward, regardless of domain. To reason through the choices, select the statements that match the criterion in the prompt: "They arise because actions affect future states.". Do not select statements that miss that criterion: "They are unique to stochastic policies."; "They disappear with enough training epochs."; "They only occur in robotics.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Compounding errors arise because each action changes the future states the policy must handle. The issue is not unique to stochastic policies or robotics; any sequential decision system can drift away from its training distribution after early mistakes. More supervised training epochs on the same demonstrations do not automatically fix missing coverage of the states produced by the learned policy.",
   },
 ];

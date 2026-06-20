@@ -282,7 +282,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Initialization influences early learning dynamics and exploration but does not uniquely determine the final optimum if learning proceeds correctly. To reason through the choices, select the statements that match the criterion in the prompt: "Policies can be initialized randomly."; "Policies can be initialized via imitation learning."; "Initialization affects early exploration.". Do not select statements that miss that criterion: "Initialization determines the optimal final policy.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "A policy can start from random parameters or from a behavior learned by imitation, and that starting point changes the trajectories collected early in training. Good initialization can improve exploration and sample efficiency because the policy begins in more useful parts of state-action space. It does not by itself determine the optimal final policy; later optimization, data, rewards, and algorithmic stability still matter.",
   },
 
   {
@@ -310,7 +310,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Monte Carlo estimates rely on sampling and averaging. They are unbiased but can suffer from high variance with small sample sizes. To reason through the choices, select the statements that match the criterion in the prompt: "It approximates expectations using sampled trajectories."; "Variance decreases as the number of samples increases."; "It provides an unbiased estimate of expected return.". Do not select statements that miss that criterion: "It requires differentiating through the environment.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Monte Carlo estimation approximates the expected objective by sampling trajectories and averaging their returns. With enough independent samples it gives an unbiased estimate of expected return, but finite-sample variance can be large and decreases as the number of sampled trajectories grows. Policy-gradient methods use the likelihood-ratio trick so they do not require differentiating through the environment dynamics.",
   },
 
   {
@@ -332,7 +332,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Rewards directly weight gradient contributions, affecting both direction and variance. Poorly scaled rewards can destabilize learning. To reason through the choices, select the statements that match the criterion in the prompt: "Higher rewards scale gradients upward."; "Negative rewards can reverse gradient direction."; "Reward scaling affects variance.". Do not select statements that miss that criterion: "Reward scaling does not affect learning dynamics.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "In the policy-gradient estimator, reward or return weights the score-function term, so larger positive rewards reinforce the sampled actions more strongly. Negative rewards can push probability mass away from the sampled actions, and rescaling rewards changes both gradient magnitude and variance. Reward scaling therefore affects learning dynamics and can make updates unstable or too small if handled poorly.",
   },
 
   {
@@ -356,7 +356,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Restricting credit assignment to future rewards respects causality and reduces variance without introducing bias. To reason through the choices, select the statements that match the criterion in the prompt: "Actions cannot influence past rewards."; "Using future rewards reduces gradient variance."; "Returns are often defined as \\(G_t = \\sum_{t\'=t}^T r_{t\'}\\).". Do not select statements that miss that criterion: "Causality introduces bias into the gradient.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "The causality idea is that an action at time \\(t\\) can affect rewards from time \\(t\\) onward, but it cannot affect rewards that already happened. Using \\(G_t = \\sum_{t'=t}^T r_{t'}\\) focuses credit assignment on future rewards and removes irrelevant past-reward noise. This reduces variance without biasing the policy gradient because the omitted past rewards are independent of the current action choice.",
   },
 
   {
@@ -377,7 +377,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "Average reward is a common baseline choice.", isCorrect: true },
     ],
     explanation:
-      'A baseline independent of actions preserves unbiasedness while reducing variance. Average reward is a simple and effective choice. To reason through the choices, select the statements that match the criterion in the prompt: "Baselines reduce variance of gradient estimates."; "Baselines must not depend on the action."; "Average reward is a common baseline choice.". Do not select statements that miss that criterion: "Subtracting a constant baseline biases the gradient.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "A baseline subtracts a reference value from returns so the gradient depends on whether an action did better or worse than expected. If the baseline does not depend on the sampled action, it changes variance but not the expected gradient, which is why an average reward or value estimate can be useful. Subtracting a valid constant baseline is not a source of bias; the danger would be using an action-dependent term incorrectly.",
   },
 
   {
@@ -398,7 +398,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "Baselines eliminate all gradient variance.", isCorrect: false },
     ],
     explanation:
-      'Subtracting a constant baseline leaves the expected gradient unchanged. While variance is reduced, it is not eliminated entirely. To reason through the choices, select the statements that match the criterion in the prompt: "\\(\\mathbb{E}[\\nabla_\\theta \\log p_\\theta(\\tau) b] = 0\\)."; "This follows from \\(\\int p_\\theta(\\tau) d\\tau = 1\\)."; "The gradient of a constant is zero.". Do not select statements that miss that criterion: "Baselines eliminate all gradient variance.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "For a constant or otherwise action-independent baseline \\(b\\), the expected extra term is zero: \\(\\mathbb{E}[\\nabla_\\theta \\log p_\\theta(\\tau)b] = 0\\). This follows because the score-function expectation differentiates the total probability mass \\(\\int p_\\theta(\\tau)d\\tau = 1\\), whose gradient is zero. The baseline can reduce variance, but it does not eliminate all variance because sampled trajectories, rewards, and policy choices can still vary.",
   },
 
   {
@@ -419,7 +419,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Sparse rewards provide little feedback, making gradient estimates noisy. Dense rewards improve learning stability. To reason through the choices, select the statements that match the criterion in the prompt: "Sparse rewards increase gradient variance."; "Dense rewards provide more learning signal."; "Policy gradients work best with dense rewards.". Do not select statements that miss that criterion: "Sparse rewards guarantee faster convergence.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Sparse rewards give the policy-gradient estimator little information on most rollouts, so many samples may look equally bad until the agent occasionally succeeds. Dense rewards provide more frequent learning signal and can make gradient estimates less noisy and more stable. Sparse rewards therefore tend to increase variance and slow learning rather than guarantee faster convergence.",
   },
 
   {
@@ -443,7 +443,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "It exactly equals the expected return.", isCorrect: false },
     ],
     explanation:
-      "The surrogate objective is designed so its gradient matches the policy gradient. It is not equal to the true objective but is computationally convenient.",
+      "The surrogate objective is built so automatic differentiation produces the same gradient direction as the policy-gradient estimator. It is computationally convenient because it avoids manually running many separate backward passes for each sampled action contribution. The surrogate is not itself the expected return; it is an optimization device whose gradient matches the desired update.",
   },
 
   {
@@ -461,7 +461,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "Variance affects learning speed.", isCorrect: true },
     ],
     explanation:
-      'High variance slows convergence and destabilizes learning. Larger batches and better baselines reduce variance. To reason through the choices, select the statements that match the criterion in the prompt: "Variance decreases with larger batch sizes."; "Variance depends on reward scale."; "Variance affects learning speed.". Do not select statements that miss that criterion: "Variance is zero for deterministic policies.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Policy-gradient estimates can vary because trajectories, rewards, and sampled actions vary, so high variance makes updates noisy and slows learning. Larger batches average over more samples, and reward scaling or baselines can change the estimator variance. Deterministic policies do not make the practical variance problem disappear, especially when environments, finite data, and gradient estimators are still sources of noise.",
   },
 
   // ============================================================
@@ -487,7 +487,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       },
     ],
     explanation:
-      'Policy gradients improve by interacting with the environment, while imitation learning simply copies demonstrations. To reason through the choices, select the statements that match the criterion in the prompt: "Policy gradients can outperform demonstrators."; "Policy gradients require online interaction.". Do not select statements that miss that criterion: "Imitation learning uses reward signals."; "Imitation learning improves through trial and error.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Policy gradients optimize rewards from the agent's own sampled rollouts, so they can in principle improve beyond the demonstrator when exploration and reward feedback support better behavior. Imitation learning instead fits demonstrations and does not require a reward signal in the basic behavior-cloning setup. Because policy gradients learn from trial-and-error interaction, they typically require online or freshly collected on-policy data.",
   },
 
   {
@@ -502,7 +502,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "They eliminate distribution shift entirely.", isCorrect: false },
     ],
     explanation:
-      'On-policy methods rely on samples from the current policy. Old data becomes invalid once the policy changes. To reason through the choices, select the statements that match the criterion in the prompt: "They require fresh data after each update."; "REINFORCE is an on-policy algorithm.". Do not select statements that miss that criterion: "They can reuse old data indefinitely."; "They eliminate distribution shift entirely.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "On-policy algorithms estimate updates using data sampled from the current policy distribution. After the policy changes, old rollouts no longer exactly match the distribution assumed by the estimator, so methods such as REINFORCE usually collect fresh data. They reduce one kind of policy mismatch by staying on-policy, but they do not eliminate every distribution-shift issue in learning or deployment.",
   },
 
   {
@@ -523,7 +523,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "It guarantees stable learning.", isCorrect: false },
     ],
     explanation:
-      'Importance sampling corrects for distribution mismatch but can increase variance if weights explode or vanish. To reason through the choices, select the statements that match the criterion in the prompt: "It reweights samples from a proposal distribution."; "It requires \\(q(x) > 0\\) whenever \\(p(x) > 0\\).". Do not select statements that miss that criterion: "It always reduces variance."; "It guarantees stable learning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Importance sampling reweights samples drawn from a proposal distribution so they can estimate an expectation under a target distribution. The support condition \\(q(x) > 0\\) whenever \\(p(x) > 0\\) is necessary because a sample distribution cannot correct for events it never samples. The weights can have high variance, so importance sampling does not automatically reduce variance or guarantee stable learning.",
   },
 
   {
@@ -541,7 +541,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "They remove the need for baselines.", isCorrect: false },
     ],
     explanation:
-      'Off-policy gradients trade bias and variance to improve sample efficiency. Importance sampling is required to correct for policy mismatch. To reason through the choices, select the statements that match the criterion in the prompt: "They allow multiple gradient steps per batch."; "They require importance sampling ratios.". Do not select statements that miss that criterion: "They are always unbiased in practice."; "They remove the need for baselines.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Off-policy policy gradients try to learn from data collected by a different policy, which can improve sample efficiency by allowing more updates per batch. Importance sampling ratios correct for the mismatch between the behavior policy and the updated policy. In practice these corrections can introduce variance, approximation, or bias issues, and baselines are still useful for variance reduction.",
   },
 
   {
@@ -560,7 +560,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "It avoids distribution mismatch entirely.", isCorrect: false },
     ],
     explanation:
-      'Multiplying many probability ratios leads to numerical instability. This motivates per-timestep approximations. To reason through the choices, select the statements that match the criterion in the prompt: "It involves a product of per-step probability ratios."; "It can explode or vanish for long horizons.". Do not select statements that miss that criterion: "It is numerically stable for large \\(T\\)."; "It avoids distribution mismatch entirely.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Trajectory-level importance sampling multiplies per-step policy probability ratios across the whole rollout. Over long horizons that product can become extremely large or extremely small, which makes estimates numerically unstable and high variance. The product corrects for distribution mismatch; it does not make the mismatch disappear or become automatically stable for large \\(T\\).",
   },
 
   {
@@ -597,7 +597,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "Reward scaling has no practical impact.", isCorrect: false },
     ],
     explanation:
-      'The scale of rewards directly impacts gradient updates and stability. To reason through the choices, select the statements that match the criterion in the prompt: "Reward scaling affects gradient magnitude."; "Reward scaling affects variance.". Do not select statements that miss that criterion: "Reward scaling leaves learning unchanged."; "Reward scaling has no practical impact.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Reward scale directly affects policy-gradient updates because returns multiply the log-probability gradient terms. Larger or poorly normalized rewards can increase gradient magnitude and estimator variance, while very small rewards can produce weak updates. Reward scaling therefore changes practical learning behavior rather than leaving the algorithm unchanged.",
   },
 
   {
@@ -630,7 +630,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "\\(G_t\\) guarantees low variance.", isCorrect: false },
     ],
     explanation:
-      'Returns focus credit assignment on future rewards, aligning with causal influence. To reason through the choices, select the statements that match the criterion in the prompt: "\\(G_t\\) sums rewards from time \\(t\\) onward."; "\\(G_t\\) respects causality.". Do not select statements that miss that criterion: "\\(G_t\\) includes past rewards."; "\\(G_t\\) guarantees low variance.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "The return \\(G_t\\) usually sums rewards from time \\(t\\) onward, matching the fact that an action can only affect current and future rewards. This causal return avoids assigning credit for rewards that happened before the action was taken. It can reduce irrelevant noise, but it does not guarantee low variance because future trajectories and rewards can still vary substantially.",
   },
 
   // ============================================================
@@ -652,7 +652,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "It requires a value function.", isCorrect: false },
     ],
     explanation:
-      'REINFORCE relies exclusively on samples from the current policy. To reason through the choices, select the statements that match the criterion in the prompt: "It estimates gradients from on-policy rollouts.". Do not select statements that miss that criterion: "It is an off-policy algorithm."; "It reuses data from old policies."; "It requires a value function.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "REINFORCE estimates the policy gradient from rollouts sampled by the current policy, which makes it an on-policy method. Because its estimator assumes current-policy data, it does not simply reuse old-policy data without correction. It also does not require a value function; adding a critic or baseline is a later variance-reduction extension rather than the core algorithm.",
   },
 
   {
@@ -670,7 +670,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "They eliminate stochasticity.", isCorrect: false },
     ],
     explanation:
-      'Baselines are designed to reduce variance while keeping the expected gradient unchanged. To reason through the choices, select the statements that match the criterion in the prompt: "They reduce variance without changing expectation.". Do not select statements that miss that criterion: "They bias the gradient."; "They change the optimal policy."; "They eliminate stochasticity.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "A valid baseline subtracts a reference value from returns so updates depend on relative advantage rather than raw return scale. When the baseline is action-independent, it keeps the expected policy gradient unchanged while reducing variance. It does not change the optimal policy or eliminate stochasticity; it only makes the estimator less noisy.",
   },
 
   {
@@ -688,7 +688,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "They eliminate distribution shift.", isCorrect: false },
     ],
     explanation:
-      'Importance sampling ratios reweight samples to account for differences between old and new policies. To reason through the choices, select the statements that match the criterion in the prompt: "They correct for policy mismatch.". Do not select statements that miss that criterion: "They are always close to 1."; "They are unnecessary in off-policy learning."; "They eliminate distribution shift.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Importance sampling ratios compare how likely the sampled actions are under the new policy versus the behavior policy that generated the data. Those ratios correct the estimator for policy mismatch in off-policy learning. They are not guaranteed to stay close to 1, and large deviations are exactly why off-policy policy-gradient updates can become unstable.",
   },
 
   {
@@ -709,7 +709,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       },
     ],
     explanation:
-      'High variance is a central challenge in policy gradient methods and motivates variance-reduction techniques. To reason through the choices, select the statements that match the criterion in the prompt: "Variance is a major practical challenge.". Do not select statements that miss that criterion: "Variance decreases with smaller batch sizes."; "Variance is unaffected by reward design."; "Variance disappears in continuous action spaces.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Policy-gradient variance is a major practical challenge because noisy estimates can point updates in unreliable directions. Larger batches, better baselines, reward normalization, and denser feedback can reduce variance, while smaller batches usually make estimates noisier. Continuous action spaces do not make variance disappear; they often make careful estimator design more important.",
   },
 
   {
@@ -727,7 +727,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "They require no assumptions.", isCorrect: false },
     ],
     explanation:
-      'Off-policy methods improve sample efficiency but introduce new stability challenges. To reason through the choices, select the statements that match the criterion in the prompt: "They allow more gradient updates per batch.". Do not select statements that miss that criterion: "They are always more stable than on-policy methods."; "They avoid importance sampling."; "They require no assumptions.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Off-policy methods can improve sample efficiency by reusing a batch for more than one update or by learning from data generated by older policies. That reuse creates policy-distribution mismatch, so corrections such as importance sampling or constraints are needed. The extra reuse does not make the method automatically more stable, assumption-free, or able to avoid correction terms.",
   },
 
   {
@@ -746,7 +746,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "Optimize environment dynamics.", isCorrect: false },
     ],
     explanation:
-      'Policy gradients reinforce actions that lead to good outcomes and suppress poor ones. To reason through the choices, select the statements that match the criterion in the prompt: "Do more high-reward actions and less low-reward actions.". Do not select statements that miss that criterion: "Copy expert demonstrations."; "Predict rewards directly."; "Optimize environment dynamics.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "The intuition of policy gradients is to increase the probability of sampled actions that led to high return and decrease the probability of actions associated with poor return. This is different from copying expert demonstrations, because the signal comes from reward on the agent's own behavior. It also does not train a reward predictor or optimize the environment dynamics; it updates the policy.",
   },
 
   {
@@ -770,7 +770,7 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "Gradients are deterministic.", isCorrect: false },
     ],
     explanation:
-      'Policy gradients rely on Monte Carlo estimates from sampled rollouts. To reason through the choices, select the statements that match the criterion in the prompt: "Gradients are estimated using sampled trajectories.". Do not select statements that miss that criterion: "Exact gradients can be computed analytically."; "Gradients require differentiating through the environment."; "Gradients are deterministic.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Policy-gradient methods estimate gradients from sampled trajectories because the expected-return objective is an expectation over possible rollouts. The likelihood-ratio form avoids differentiating through the environment transition function, which is crucial when the dynamics are unknown or nondifferentiable. The resulting estimate is stochastic rather than a deterministic exact analytic gradient.",
   },
 
   {
@@ -788,6 +788,6 @@ export const cs224rLecture3PolicyGradientsQuestions: Question[] = [
       { text: "They are unsuitable for continuous control.", isCorrect: false },
     ],
     explanation:
-      'Actor-critic methods build directly on policy gradient ideas while addressing variance and sample efficiency. To reason through the choices, select the statements that match the criterion in the prompt: "They form the foundation of actor-critic methods.". Do not select statements that miss that criterion: "They are low-variance by default."; "They eliminate the need for exploration."; "They are unsuitable for continuous control.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Policy gradients provide the actor update used by actor-critic methods, while the critic supplies value estimates to reduce variance and improve data use. Plain policy gradients are not low-variance by default, which is one reason actor-critic methods are introduced. They still need exploration and are commonly used for continuous-control problems rather than being unsuitable for them.",
   },
 ];

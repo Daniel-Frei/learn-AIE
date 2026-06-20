@@ -1,7 +1,7 @@
 // components/QuizQuestionSection.tsx
 "use client";
 
-import { useId } from "react";
+import { useId, useRef } from "react";
 import { getQuestionType, type Question } from "../lib/quiz";
 import MathText from "./MathText";
 import RatingDeltaIndicator from "./RatingDeltaIndicator";
@@ -151,6 +151,12 @@ export default function QuizQuestionSection({
 }: Props) {
   const hasQuestion = availableCount > 0 && !!currentQuestion;
   const optionIdPrefix = useId();
+  const pointerStartRef = useRef<{
+    x: number;
+    y: number;
+    optionIndex: number;
+  } | null>(null);
+  const pointerMovedRef = useRef(false);
 
   return (
     <section className="space-y-4">
@@ -239,8 +245,38 @@ export default function QuizQuestionSection({
                   tabIndex={0}
                   aria-checked={selected}
                   aria-labelledby={`${optionIdPrefix}-option-${idx}`}
+                  onPointerDown={(event) => {
+                    if (event.button !== 0) return;
+                    pointerStartRef.current = {
+                      x: event.clientX,
+                      y: event.clientY,
+                      optionIndex: idx,
+                    };
+                    pointerMovedRef.current = false;
+                  }}
+                  onPointerMove={(event) => {
+                    const start = pointerStartRef.current;
+                    if (!start || start.optionIndex !== idx) return;
+
+                    const moved =
+                      Math.abs(event.clientX - start.x) > 4 ||
+                      Math.abs(event.clientY - start.y) > 4;
+                    if (moved) pointerMovedRef.current = true;
+                  }}
+                  onPointerCancel={() => {
+                    pointerStartRef.current = null;
+                    pointerMovedRef.current = false;
+                  }}
                   onClick={(event) => {
-                    if (hasTextSelectionInside(event.currentTarget)) return;
+                    const wasDragSelection = pointerMovedRef.current;
+                    pointerStartRef.current = null;
+                    pointerMovedRef.current = false;
+                    if (
+                      wasDragSelection ||
+                      hasTextSelectionInside(event.currentTarget)
+                    ) {
+                      return;
+                    }
                     toggleOption(idx);
                   }}
                   onKeyDown={(event) => {

@@ -238,6 +238,7 @@ describe("quiz source registry helpers", () => {
     expect(ids.has("clinical-trials-l3")).toBe(true);
     expect(ids.has("clinical-trials-l4")).toBe(true);
     expect(ids.has("clinical-trials-l5")).toBe(true);
+    expect(ids.has("math-logs-exp-roots")).toBe(true);
     expect(ids.has("langchain-deepagents")).toBe(true);
   });
 

@@ -25,12 +25,12 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It is defined as an expectation over trajectories starting at \\(s\\).",
+        text: "It is defined as \\(V^\\pi(s)\\), an expectation over trajectories starting at \\(s\\).",
         isCorrect: true,
       },
     ],
     explanation:
-      "The value function captures how good a state is under a specific policy. It is the expected cumulative reward when starting from that state and acting according to the policy.",
+      "The value function \\(V^\\pi(s)\\) evaluates a state under a particular policy by taking an expectation over future trajectories that start at \\(s\\). It depends on the policy, rewards, and environment dynamics because all of those determine the future return. In some tasks that expected return can be interpreted as a probability of success, but the general definition is expected cumulative reward.",
   },
 
   {
@@ -58,7 +58,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       },
     ],
     explanation:
-      'The Q-function evaluates state–action pairs. It explicitly conditions on the initial action before following the policy thereafter. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It measures expected return after taking action \\(a\\) in state \\(s\\) and then following \\(\\pi\\)."; "It differs from \\(V^\\pi(s)\\) by conditioning on the first action."; "It marginalizes over future stochastic transitions."; "It includes immediate reward plus expected future rewards.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "The Q-function \\(Q^\\pi(s,a)\\) evaluates a state-action pair by fixing the first action and then following policy \\(\\pi\\) afterward. That conditioning is what distinguishes it from \\(V^\\pi(s)\\), which averages over the policy's action choice immediately. The estimate includes immediate reward and expected future rewards, with future stochastic transitions averaged inside the expectation.",
   },
 
   {
@@ -74,7 +74,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Positive advantage implies the action is better than expected.",
+        text: "Positive \\(A^\\pi(s,a)\\) implies the action is better than expected.",
         isCorrect: true,
       },
       {
@@ -83,7 +83,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       },
     ],
     explanation:
-      "The advantage function compares a chosen action to the expected action under the policy. It is central to reducing variance in policy gradient updates.",
+      "The advantage function compares the value of taking action \\(a\\) in state \\(s\\) against the policy's usual expected value at that state. The formula \\(A^\\pi(s,a)=Q^\\pi(s,a)-V^\\pi(s)\\) centers action values around the state-value baseline, so positive advantage means the action did better than the policy's average choice. This centered signal is useful in actor updates because it reduces variance while preserving which actions should be reinforced.",
   },
 
   {
@@ -110,7 +110,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       },
     ],
     explanation:
-      'Actor–critic algorithms separate policy learning and value estimation. The critic provides a learned signal that reduces noise in the actor update. To reason through the choices, select every statement because each one matches the criterion in the prompt: "They use a critic to estimate value functions."; "They use advantage estimates to update the actor."; "They improve sample efficiency compared to vanilla policy gradients."; "They consist of two separate parameterized models.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Actor-critic methods split the problem into an actor that represents the policy and a critic that estimates values or advantages. The critic gives the actor a learned training signal, often an advantage estimate, instead of relying only on raw sampled returns. This can improve sample efficiency and reduce variance compared with vanilla policy gradients, although it introduces a second learned model whose errors can affect the actor.",
   },
 
   {
@@ -126,12 +126,12 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "It is unbiased.", isCorrect: true },
       { text: "It suffers from high variance.", isCorrect: true },
       {
-        text: "It does not rely on bootstrapped predictions.",
+        text: "It does not rely on bootstrapped predictions such as \\(V(s_{t+1})\\).",
         isCorrect: true,
       },
     ],
     explanation:
-      'Monte Carlo directly regresses on sampled trajectory returns. While unbiased, variance grows with trajectory length. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Targets are full returns \\(G_t = \\sum_{t\'=t}^T r_{t\'}\\)."; "It is unbiased."; "It suffers from high variance."; "It does not rely on bootstrapped predictions.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Monte Carlo value estimation uses the full sampled return, such as \\(G_t = \\sum_{t'=t}^T r_{t'}\\), as the regression target for a state. Because it waits for actual trajectory outcomes instead of bootstrapping from current value predictions, the target is unbiased for the policy's return. The tradeoff is high variance, especially on long horizons where many future random events contribute to the return.",
   },
 
   {
@@ -147,12 +147,12 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       },
       { text: "It reduces variance relative to Monte Carlo.", isCorrect: true },
       {
-        text: "It introduces bias when value estimates are inaccurate.",
+        text: "It introduces bias when estimates such as \\(V(s_{t+1})\\) are inaccurate.",
         isCorrect: true,
       },
     ],
     explanation:
-      'Temporal difference uses the model’s own prediction as part of the target. This reduces variance but can propagate estimation errors. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Targets use \\(r_t + \\gamma V(s_{t+1})\\)."; "It bootstraps from the current value estimate."; "It reduces variance relative to Monte Carlo."; "It introduces bias when value estimates are inaccurate.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Temporal difference learning uses a target such as \\(r_t + \\gamma V(s_{t+1})\\), combining one observed reward with a bootstrapped prediction. Bootstrapping usually lowers variance compared with waiting for the full trajectory return. The cost is bias when the current value estimate is inaccurate, because the learner can propagate its own prediction errors into future targets.",
   },
 
   {
@@ -165,12 +165,15 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
         text: "\\(y_t = \\sum_{k=0}^{n-1} \\gamma^k r_{t+k} + \\gamma^n V(s_{t+n})\\).",
         isCorrect: true,
       },
-      { text: "They interpolate between Monte Carlo and TD.", isCorrect: true },
+      {
+        text: "They interpolate between one-step TD \\(r_t + \\gamma V(s_{t+1})\\) and Monte Carlo \\(G_t\\).",
+        isCorrect: true,
+      },
       { text: "Smaller \\(n\\) gives lower variance.", isCorrect: true },
       { text: "Larger \\(n\\) reduces bias.", isCorrect: true },
     ],
     explanation:
-      'n-step returns trade off bias and variance. They combine actual rewards for several steps with bootstrapped value predictions. To reason through the choices, select every statement because each one matches the criterion in the prompt: "\\(y_t = \\sum_{k=0}^{n-1} \\gamma^k r_{t+k} + \\gamma^n V(s_{t+n})\\)."; "They interpolate between Monte Carlo and TD."; "Smaller \\(n\\) gives lower variance."; "Larger \\(n\\) reduces bias.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "An n-step return uses several real rewards and then bootstraps from a value estimate, as in \\(y_t = \\sum_{k=0}^{n-1} \\gamma^k r_{t+k} + \\gamma^n V(s_{t+n})\\). This interpolates between one-step temporal difference learning and full Monte Carlo returns. Smaller \\(n\\) usually gives lower variance because it relies sooner on a prediction, while larger \\(n\\) reduces bootstrap bias by using more observed rewards.",
   },
 
   {
@@ -194,7 +197,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       },
     ],
     explanation:
-      'Discounting reduces the influence of distant rewards. It can be interpreted as a stochastic termination mechanism in the MDP. To reason through the choices, select every statement because each one matches the criterion in the prompt: "It weights future rewards exponentially."; "It prevents divergence for infinite horizons."; "It is equivalent to adding a termination probability \\(1-\\gamma\\)."; "Transition probabilities are scaled by \\(\\gamma\\).". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "A discount factor weights rewards farther in the future by powers of \\(\\gamma\\), which helps keep infinite-horizon returns finite when \\(\\gamma < 1\\). One useful interpretation is stochastic termination: with probability \\(1-\\gamma\\) the process ends, while continuing transitions receive the remaining probability mass. Under that transformed view, nonterminal transition probabilities are effectively scaled by \\(\\gamma\\), but the conceptual role is still to reduce the influence of distant rewards.",
   },
 
   {
@@ -213,7 +216,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "It still optimizes expected return.", isCorrect: true },
     ],
     explanation:
-      'Advantage-centered updates improve stability while keeping the same optimization objective. To reason through the choices, select every statement because each one matches the criterion in the prompt: "Actions with positive advantage are reinforced."; "Advantage serves as a learned baseline."; "It reduces gradient variance."; "It still optimizes expected return.". No listed statement should be rejected, so the important boundary is that all four claims contribute a valid part of the concept rather than introducing a competing misconception.',
+      "Advantage-based updates reinforce actions that did better than the policy's baseline expectation and suppress actions that did worse. The value term acts like a learned baseline, which can reduce gradient variance without changing the expected-return objective. The actor is still optimizing reward-seeking behavior; the advantage only changes the estimator used to assign credit.",
   },
 
   // ============================================================
@@ -235,14 +238,17 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
         text: "The loss is typically \\(L = (V_\\phi(s) - y)^2\\).",
         isCorrect: true,
       },
-      { text: "The labels remain fixed during training.", isCorrect: false },
+      {
+        text: "The labels remain fixed during training even when bootstrapped targets \\(y_t = r_t + \\gamma V(s_{t+1})\\) are recomputed.",
+        isCorrect: false,
+      },
       {
         text: "Multiple trajectories provide amortized supervision.",
         isCorrect: true,
       },
     ],
     explanation:
-      'Value learning is framed as regression. Labels change when bootstrapping is used. To reason through the choices, select the statements that match the criterion in the prompt: "Training data pairs states with observed returns."; "The loss is typically \\(L = (V_\\phi(s) - y)^2\\)."; "Multiple trajectories provide amortized supervision.". Do not select statements that miss that criterion: "The labels remain fixed during training.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Learning \\(V^\\pi\\) can be framed as supervised regression from states to return targets, often with a squared loss such as \\(L=(V_\\phi(s)-y)^2\\). Multiple trajectories provide many state-target pairs, allowing the value function to amortize information across states rather than memorize one rollout. The labels are not always fixed because bootstrapped targets can change as the current value estimates are updated.",
   },
 
   {
@@ -263,7 +269,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "It ignores cross-trajectory information.", isCorrect: true },
     ],
     explanation:
-      'Monte Carlo treats each trajectory independently. It does not exploit shared structure between similar states. To reason through the choices, select the statements that match the criterion in the prompt: "It only uses rewards from the sampled trajectory."; "Similar states across trajectories are not linked."; "It ignores cross-trajectory information.". Do not select statements that miss that criterion: "It propagates value across similar states.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "A pure Monte Carlo target for a state comes from the rewards observed later in that sampled trajectory. If the method treats those samples independently, it may fail to connect similar states across different trajectories and therefore misses shared structure. Propagating value across similar states requires function approximation or bootstrapping-style generalization, not just using each sampled return in isolation.",
   },
 
   {
@@ -274,11 +280,14 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
     options: [
       { text: "They depend on current value estimates.", isCorrect: true },
       { text: "They are updated every gradient step.", isCorrect: true },
-      { text: "They are unbiased.", isCorrect: false },
+      {
+        text: "They are unbiased even when bootstrapped estimates such as \\(V(s_{t+1})\\) are inaccurate.",
+        isCorrect: false,
+      },
       { text: "They reduce variance.", isCorrect: true },
     ],
     explanation:
-      'Bootstrapping lowers variance but introduces bias from imperfect predictions. To reason through the choices, select the statements that match the criterion in the prompt: "They depend on current value estimates."; "They are updated every gradient step."; "They reduce variance.". Do not select statements that miss that criterion: "They are unbiased.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Bootstrapped targets depend on the current value function because they include a prediction such as \\(V(s_{t+1})\\). As the value network changes, those targets can change from one gradient step to the next. This lowers variance by avoiding the full sampled return, but it is not unbiased when the value predictions used inside the target are wrong.",
   },
 
   {
@@ -293,7 +302,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "They increase data efficiency.", isCorrect: true },
     ],
     explanation:
-      'Replay buffers allow reuse of experience. However, they may introduce instability due to distribution mismatch. To reason through the choices, select the statements that match the criterion in the prompt: "They store transitions from past policies."; "They enable off-policy learning."; "They increase data efficiency.". Do not select statements that miss that criterion: "They always improve stability.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Replay buffers store transitions collected by earlier versions of the policy, so the learner can reuse experience instead of discarding each batch immediately. This enables off-policy learning and can improve data efficiency. The same reuse can create distribution mismatch between buffered actions and the current policy, so replay buffers do not always improve stability.",
   },
 
   {
@@ -311,7 +320,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "KL constraints can help stabilize learning.", isCorrect: true },
     ],
     explanation:
-      'Off-policy learning reweights samples but suffers if the new policy deviates significantly. To reason through the choices, select the statements that match the criterion in the prompt: "They require importance sampling."; "They can diverge if policies differ too much."; "KL constraints can help stabilize learning.". Do not select statements that miss that criterion: "Advantages remain accurate indefinitely.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Off-policy actor updates use data from a behavior policy while updating a different current policy, so importance sampling or related corrections are needed. If the policies differ too much, the correction weights and advantage estimates can become unreliable and learning can diverge. Constraints on policy change, such as KL limits, help keep updates in a region where old data and estimated advantages remain useful.",
   },
 
   {
@@ -327,7 +336,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Actor–critic improves sample usage.", isCorrect: true },
     ],
     explanation:
-      'Actor–critic augments policy gradients with learned value estimates but still depends on rewards. To reason through the choices, select the statements that match the criterion in the prompt: "Actor–critic learns what is good vs bad."; "Policy gradient uses raw sampled returns."; "Actor–critic improves sample usage.". Do not select statements that miss that criterion: "Actor–critic removes the need for rewards.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Vanilla policy gradients often use raw sampled returns to decide which actions to reinforce. Actor-critic methods add a critic that learns which states or actions are good, giving the actor a lower-variance training signal and often improving sample usage. The critic still learns from rewards or return targets, so actor-critic does not remove the need for reward information.",
   },
 
   {
@@ -348,7 +357,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Critic bias does not affect learning.", isCorrect: false },
     ],
     explanation:
-      'Since the policy relies on the critic’s predictions, systematic critic errors distort policy learning. To reason through the choices, select the statements that match the criterion in the prompt: "Errors in the critic propagate into the policy update."; "Biased value estimates lead to biased advantages."; "Critic bias affects gradient direction.". Do not select statements that miss that criterion: "Critic bias does not affect learning.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "The actor uses the critic's value or advantage estimates to decide which actions to reinforce. If the critic is systematically biased, the advantage estimates can point the policy update in the wrong direction or distort its magnitude. Critic bias therefore does affect learning, even though the critic is not the component that directly selects actions.",
   },
 
   {
@@ -366,7 +375,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       },
     ],
     explanation:
-      'n-step returns balance real rewards and bootstrapping, often yielding better bias-variance tradeoffs. To reason through the choices, select the statements that match the criterion in the prompt: "n-step uses more real rewards."; "TD uses only one-step rewards."; "n-step can reduce variance compared to Monte Carlo.". Do not select statements that miss that criterion: "n-step always has higher bias.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "One-step temporal difference learning uses the immediate reward plus a bootstrap value estimate, while n-step returns include more observed rewards before bootstrapping. Using more real rewards can reduce bootstrap bias, and still bootstrapping after \\(n\\) steps can reduce variance relative to full Monte Carlo. The bias-variance tradeoff depends on \\(n\\), so n-step returns are not always higher bias.",
   },
 
   {
@@ -381,7 +390,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "It depends on advantage estimates.", isCorrect: true },
     ],
     explanation:
-      'The actor selects actions while the critic evaluates them. To reason through the choices, select the statements that match the criterion in the prompt: "It represents the policy."; "It is updated via policy gradients."; "It depends on advantage estimates.". Do not select statements that miss that criterion: "It estimates values.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "The actor is the policy component: it represents how actions are selected from states or observations. It is usually updated with a policy-gradient-style objective that may use advantage estimates supplied by the critic. Estimating values is the critic's role, not the actor's role.",
   },
 
   // ============================================================
@@ -400,7 +409,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Monte Carlo has lower variance.", isCorrect: false },
     ],
     explanation:
-      'Monte Carlo gives correct expectations but noisy estimates. TD trades bias for variance reduction. To reason through the choices, select the statements that match the criterion in the prompt: "Monte Carlo is unbiased."; "TD has lower variance.". Do not select statements that miss that criterion: "TD is unbiased."; "Monte Carlo has lower variance.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Monte Carlo targets use sampled full returns, so they are unbiased for the policy's return but can be very noisy. Temporal difference targets use bootstrapped predictions, which usually lowers variance but can introduce bias when the prediction is inaccurate. That is why TD is not generally unbiased, and Monte Carlo is not the lower-variance choice.",
   },
 
   {
@@ -415,7 +424,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Guaranteed convergence.", isCorrect: false },
     ],
     explanation:
-      'Replay buffers help reuse data but introduce off-policy bias. To reason through the choices, select the statements that match the criterion in the prompt: "Distribution mismatch with current policy."; "Higher sample efficiency.". Do not select statements that miss that criterion: "Perfect unbiased gradients."; "Guaranteed convergence.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Replay buffers improve sample efficiency by letting the learner reuse past transitions for multiple updates. The cost is that buffered data may have been generated by older policies, creating mismatch with the current policy and possible off-policy bias. Reuse does not produce perfectly unbiased gradients or guarantee convergence; it must be paired with algorithms that handle the mismatch.",
   },
 
   {
@@ -430,7 +439,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "It removes future rewards.", isCorrect: false },
     ],
     explanation:
-      'Discounting controls magnitude and stability of value estimates. To reason through the choices, select the statements that match the criterion in the prompt: "It prioritizes near-term rewards."; "It prevents large value explosions.". Do not select statements that miss that criterion: "It increases variance."; "It removes future rewards.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Discounting gives more weight to near-term rewards than distant rewards when \\(\\gamma < 1\\). This can keep long-horizon or infinite-horizon value estimates bounded and numerically stable. It does not remove future rewards entirely, and its purpose is not to increase variance.",
   },
 
   {
@@ -442,10 +451,13 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "They use predictions of \\(V(s_{t+1})\\).", isCorrect: true },
       { text: "They reduce variance.", isCorrect: true },
       { text: "They are unbiased.", isCorrect: false },
-      { text: "They ignore rewards.", isCorrect: false },
+      {
+        text: "They ignore immediate rewards such as \\(r_t\\).",
+        isCorrect: false,
+      },
     ],
     explanation:
-      'TD leverages bootstrapped predictions but still includes immediate rewards. To reason through the choices, select the statements that match the criterion in the prompt: "They use predictions of \\(V(s_{t+1})\\)."; "They reduce variance.". Do not select statements that miss that criterion: "They are unbiased."; "They ignore rewards.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "A temporal difference target combines the immediate reward with a bootstrapped prediction such as \\(V(s_{t+1})\\). That prediction reduces variance relative to waiting for the full sampled return. The target does not ignore rewards, and it is not generally unbiased because a wrong value prediction can bias the target.",
   },
 
   {
@@ -460,7 +472,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "They remove need for importance weights.", isCorrect: false },
     ],
     explanation:
-      'KL constraints control step size but do not fix estimation bias. To reason through the choices, select the statements that match the criterion in the prompt: "They limit policy deviation."; "They stabilize off-policy updates.". Do not select statements that miss that criterion: "They eliminate bias."; "They remove need for importance weights.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "KL constraints limit how far the updated policy can move from the policy that generated or justified the data. That stabilizes off-policy or approximate actor updates by keeping importance ratios and advantage estimates from becoming too stale. A KL constraint does not eliminate estimator bias by itself, and it does not automatically remove the need for importance weighting or other corrections.",
   },
 
   {
@@ -475,7 +487,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Requires environment resets.", isCorrect: false },
     ],
     explanation:
-      'Critic updates are independent supervised learning steps. To reason through the choices, select the statements that match the criterion in the prompt: "Uses regression loss."; "Can take multiple gradient steps per batch.". Do not select statements that miss that criterion: "Directly changes the policy."; "Requires environment resets.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Critic training is usually a regression problem: fit value predictions to Monte Carlo, temporal difference, or n-step targets. Because this is a supervised-style update on stored data, the critic can often take multiple gradient steps per batch. Updating the critic does not directly change the actor's policy parameters, and the regression update itself does not require resetting the environment.",
   },
 
   {
@@ -490,7 +502,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "They are constant.", isCorrect: false },
     ],
     explanation:
-      'Advantages determine direction and magnitude of policy updates. To reason through the choices, select the statements that match the criterion in the prompt: "They guide actor updates."; "They compare action to baseline.". Do not select statements that miss that criterion: "They replace rewards."; "They are constant.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Advantages guide actor updates by measuring whether an action was better or worse than the baseline value for that state. This comparison determines both the sign and strength of the policy-gradient update. Advantages are computed from reward-derived value information, so they do not replace rewards, and they are not constant across states and actions.",
   },
 
   {
@@ -505,7 +517,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "n-step always low variance.", isCorrect: false },
     ],
     explanation:
-      'n controls bias-variance tradeoff. To reason through the choices, select the statements that match the criterion in the prompt: "Smaller n → lower variance."; "Larger n → lower bias.". Do not select statements that miss that criterion: "n-step always unbiased."; "n-step always low variance.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "The choice of \\(n\\) controls how much of the target is observed reward versus bootstrapped value prediction. Smaller \\(n\\) bootstraps earlier, which usually lowers variance but can increase bias from imperfect value estimates. Larger \\(n\\) uses more real rewards and therefore tends to lower bias, but n-step targets are not always unbiased or always low variance.",
   },
 
   {
@@ -529,7 +541,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Ignores failed rollouts.", isCorrect: false },
     ],
     explanation:
-      'Critic extracts signal even from imperfect rollouts. To reason through the choices, select the statements that match the criterion in the prompt: "Can learn from partial progress trajectories."; "More efficient than sparse reward policy gradients.". Do not select statements that miss that criterion: "Requires full reward success trajectories only."; "Ignores failed rollouts.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "The critic can learn from partial progress because value targets can assign useful estimates to intermediate states, not only to fully successful episodes. That makes actor-critic methods more data-efficient than relying only on sparse full-return policy-gradient signals. Failed rollouts can still teach the critic which states or actions have low value, so they are not ignored and full-success trajectories are not the only usable data.",
   },
 
   // ============================================================
@@ -548,7 +560,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "It removes need for rewards.", isCorrect: false },
     ],
     explanation:
-      'The critic evaluates how good states are under the current policy. To reason through the choices, select the statements that match the criterion in the prompt: "It estimates state values.". Do not select statements that miss that criterion: "It selects actions."; "It replaces the actor."; "It removes need for rewards.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "The critic estimates values, such as how good a state is under the current policy or how good a state-action pair is. The actor is the component that selects actions, so the critic does not replace it. The critic also still needs reward-derived targets; it turns rewards into a denser learning signal rather than removing rewards from the problem.",
   },
 
   {
@@ -557,13 +569,19 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
     difficulty: "medium",
     prompt: "Which best describes TD learning?",
     options: [
-      { text: "Regression on full trajectory returns.", isCorrect: false },
-      { text: "Bootstrap using next state value.", isCorrect: true },
+      {
+        text: "Regression on full trajectory returns \\(G_t\\) without bootstrapping.",
+        isCorrect: false,
+      },
+      {
+        text: "Bootstrap using the next state value \\(V(s_{t+1})\\).",
+        isCorrect: true,
+      },
       { text: "No supervision.", isCorrect: false },
       { text: "Pure imitation.", isCorrect: false },
     ],
     explanation:
-      'TD uses one-step reward plus estimated value. To reason through the choices, select the statements that match the criterion in the prompt: "Bootstrap using next state value.". Do not select statements that miss that criterion: "Regression on full trajectory returns."; "No supervision."; "Pure imitation.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Temporal difference learning bootstraps from the next state's value estimate, typically using a target like \\(r_t + \\gamma V(s_{t+1})\\). That differs from Monte Carlo regression on full trajectory returns. It is still supervised by reward-derived targets, and it is not imitation learning because the target is value prediction rather than copying expert actions.",
   },
 
   {
@@ -578,7 +596,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Environment deterministic.", isCorrect: false },
     ],
     explanation:
-      'Policy gradients assume actions come from the current policy distribution. To reason through the choices, select the statements that match the criterion in the prompt: "Actions weren’t sampled from current policy.". Do not select statements that miss that criterion: "Rewards are missing."; "Value function unnecessary."; "Environment deterministic.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Replay-buffer actor updates can be wrong when the actions in the buffer were sampled from an older policy but the update treats them as if they came from the current policy. That violates the distribution assumption behind an on-policy policy-gradient estimator. The issue is not missing rewards, a deterministic environment, or the absence of a value function; it is policy mismatch in the sampled actions.",
   },
 
   {
@@ -593,7 +611,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Advantage normalization.", isCorrect: false },
     ],
     explanation:
-      'Monte Carlo uses full returns directly. To reason through the choices, select the statements that match the criterion in the prompt: "Monte Carlo.". Do not select statements that miss that criterion: "Temporal difference."; "Replay buffers."; "Advantage normalization.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Monte Carlo estimation uses complete sampled returns, so it is unbiased for the value under the sampled policy but can have high variance. Temporal difference learning lowers variance by bootstrapping, replay buffers are a data-reuse mechanism, and advantage normalization rescales an actor-update signal. Those other techniques do not describe the full-return unbiased-but-noisy estimator.",
   },
 
   {
@@ -602,16 +620,19 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
     difficulty: "medium",
     prompt: "Which statement about discount factor is correct?",
     options: [
-      { text: "Gamma greater than one increases stability.", isCorrect: false },
       {
-        text: "Gamma less than one reduces long-term reward weight.",
+        text: "Gamma greater than one, \\(\\gamma > 1\\), increases stability for long-horizon value estimates.",
+        isCorrect: false,
+      },
+      {
+        text: "Gamma less than one, \\(\\gamma < 1\\), reduces long-term reward weight.",
         isCorrect: true,
       },
       { text: "Gamma eliminates variance.", isCorrect: false },
       { text: "Gamma only affects policy network.", isCorrect: false },
     ],
     explanation:
-      'Discounting exponentially shrinks distant rewards. To reason through the choices, select the statements that match the criterion in the prompt: "Gamma less than one reduces long-term reward weight.". Do not select statements that miss that criterion: "Gamma greater than one increases stability."; "Gamma eliminates variance."; "Gamma only affects policy network.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "When \\(\\gamma < 1\\), rewards farther in the future are multiplied by smaller powers of \\(\\gamma\\), so their contribution to return is reduced. This helps stabilize long-horizon value estimates, but setting \\(\\gamma > 1\\) would usually make long-term sums less stable rather than more stable. Discounting affects the return and value targets broadly; it does not eliminate variance or apply only to the policy network.",
   },
 
   {
@@ -626,7 +647,7 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Bias improves exploration.", isCorrect: false },
     ],
     explanation:
-      'Actor relies directly on critic estimates. To reason through the choices, select the statements that match the criterion in the prompt: "Bias affects policy updates.". Do not select statements that miss that criterion: "Bias has no effect."; "Bias only changes rewards."; "Bias improves exploration.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Critic bias affects policy updates because the actor uses critic-derived values or advantages to decide which actions to reinforce. If those estimates are systematically wrong, the actor can be pushed toward actions that are not actually better. The bias is in the learned evaluation signal, not in the rewards themselves, and it does not inherently improve exploration.",
   },
 
   {
@@ -636,12 +657,18 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
     prompt: "Which best describes n-step returns?",
     options: [
       { text: "Only one-step bootstrap.", isCorrect: false },
-      { text: "Full trajectory sum.", isCorrect: false },
-      { text: "Partial reward sum plus bootstrap.", isCorrect: true },
+      {
+        text: "Full trajectory sum \\(G_t\\) without a bootstrap term.",
+        isCorrect: false,
+      },
+      {
+        text: "Partial reward sum plus bootstrap value \\(V(s_{t+n})\\).",
+        isCorrect: true,
+      },
       { text: "No rewards used.", isCorrect: false },
     ],
     explanation:
-      'n-step mixes rewards and predicted values. To reason through the choices, select the statements that match the criterion in the prompt: "Partial reward sum plus bootstrap.". Do not select statements that miss that criterion: "Only one-step bootstrap."; "Full trajectory sum."; "No rewards used.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "An n-step return uses a partial sum of observed rewards and then bootstraps from a value prediction at the state reached after \\(n\\) steps. It is therefore between one-step temporal difference learning and full Monte Carlo returns. It is not reward-free, and it is not merely a one-step bootstrap unless \\(n=1\\).",
   },
 
   {
@@ -650,7 +677,10 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
     difficulty: "easy",
     prompt: "Which statement about actor–critic efficiency is correct?",
     options: [
-      { text: "Less efficient than policy gradients.", isCorrect: false },
+      {
+        text: "Less efficient than policy gradients because a critic can never reduce variance.",
+        isCorrect: false,
+      },
       {
         text: "Uses learned value estimates for better gradients.",
         isCorrect: true,
@@ -659,6 +689,6 @@ export const cs224rLecture4ActorCriticQuestions: Question[] = [
       { text: "Always unstable.", isCorrect: false },
     ],
     explanation:
-      'The critic reduces variance and improves data use. To reason through the choices, select the statements that match the criterion in the prompt: "Uses learned value estimates for better gradients.". Do not select statements that miss that criterion: "Less efficient than policy gradients."; "Does not require learning."; "Always unstable.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "Actor-critic efficiency comes from using learned value estimates to produce better, lower-variance actor gradients than raw-return policy gradients. The critic has to be learned, so the method is not learning-free, and critic errors can create instability if handled poorly. It is not inherently less efficient than vanilla policy gradients, nor is it always unstable.",
   },
 ];

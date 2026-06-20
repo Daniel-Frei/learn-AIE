@@ -202,26 +202,27 @@ export default function QuizHeader({
             {title}
           </h1>
           <div className="mt-2">
-            <p className="text-xs text-slate-400">
-              Glicko rating:{" "}
-              <span className="font-semibold text-slate-100">
-                {Math.round(userRating)}
-              </span>{" "}
-              +/-{" "}
-              <span className="font-semibold text-slate-100">
-                {Math.round(userRatingRd)}
+            <p className="flex min-h-5 flex-wrap items-center gap-x-1 text-xs text-slate-400">
+              <span>
+                Glicko rating:{" "}
+                <span className="font-semibold text-slate-100">
+                  {Math.round(userRating)}
+                </span>{" "}
+                +/-{" "}
+                <span className="font-semibold text-slate-100">
+                  {Math.round(userRatingRd)}
+                </span>
               </span>
-              {userRatingDelta !== null && (
-                <>
-                  {" "}
+              <span className="inline-flex h-4 min-w-9 items-center align-middle">
+                {userRatingDelta !== null && (
                   <RatingDeltaIndicator
                     delta={userRatingDelta}
                     label="Glicko rating"
                     testId="user-rating-delta"
                     className="align-middle"
                   />
-                </>
-              )}
+                )}
+              </span>
             </p>
           </div>
         </div>
