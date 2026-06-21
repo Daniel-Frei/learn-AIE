@@ -445,7 +445,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
   makeQuestion(
     "crash-probability-l0-q31",
     "hard",
-    "A delayed-value calculation uses \\(G=5+0.8\\cdot10+0.8^2\\cdot20\\). Which statements are correct?",
+    "An agent receives rewards 5 now, 10 one step later, and 20 two steps later, with discount factor \\(\\gamma=0.8\\). Which discounted-return statements are correct?",
     [
       ["\\(G=25.8\\).", true],
       ["The third term uses \\(0.8^2=0.64\\).", true],
@@ -455,7 +455,7 @@ export const CrashCourseProbabilityL0Questions: Question[] = [
         false,
       ],
     ],
-    "The weights are \\(1\\), \\(0.8\\), and \\(0.8^2\\), so the later terms do not get the same multiplier. The calculation is \\(5+8+12.8=25.8\\), and the final term uses \\(0.64\\), not another \\(0.8\\).",
+    "Discounted return weights immediate reward by 1, the next reward by \\(\\gamma\\), and the reward two steps later by \\(\\gamma^2\\). Here that gives \\(5+0.8\\cdot10+0.8^2\\cdot20=5+8+12.8=25.8\\); using the same \\(0.8\\) weight for both later rewards would overvalue the last reward.",
   ),
   makeQuestion(
     "crash-probability-l0-q32",

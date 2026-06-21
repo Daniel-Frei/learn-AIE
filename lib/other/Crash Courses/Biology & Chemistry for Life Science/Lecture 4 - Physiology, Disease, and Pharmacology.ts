@@ -424,7 +424,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
   makeQuestion(
     20,
     "medium",
-    "Which statement best distinguishes a predictive biomarker from a merely associated marker?",
+    "A marker is more common in patients with a disease, but a trial asks whether marker-positive patients respond better to a specific drug. Which statement best distinguishes a predictive biomarker from a merely associated marker?",
     [
       [
         "A predictive biomarker helps identify who is more likely to respond to a particular intervention.",
@@ -443,7 +443,7 @@ export const BiologyChemistryForLifeScienceLecture4Questions: Question[] = [
         false,
       ],
     ],
-    "Association alone is not enough for treatment selection. A predictive biomarker should add information about response to a specific intervention, which requires validation against treatment outcomes.",
+    "Association alone is not enough for treatment selection because the marker could simply travel with the disease. A predictive biomarker should add information about response to a specific intervention, which requires validation against treatment outcomes in marker-defined groups.",
   ),
   makeQuestion(
     21,

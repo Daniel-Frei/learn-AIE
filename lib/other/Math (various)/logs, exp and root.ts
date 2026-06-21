@@ -169,18 +169,12 @@ export const MathLogsExpRootsQuestions: Question[] = [
   makeQuestion(
     "math-logs-exp-roots-q11",
     "medium",
-    "A \\(\\$2000\\) deposit earns \\(6\\%\\) interest per year for 3 years. Which statements are correct?",
+    "A $2000 deposit earns \\(6\\%\\) interest per year for 3 years. Which statements are correct?",
     [
+      ["Annual compounding gives \\(2000(1.06)^3\\), about $2382.", true],
+      ["Continuous compounding gives \\(2000e^{0.18}\\), about $2394.", true],
       [
-        "Annual compounding gives \\(2000(1.06)^3\\), about \\(\\$2382\\).",
-        true,
-      ],
-      [
-        "Continuous compounding gives \\(2000e^{0.18}\\), about \\(\\$2394\\).",
-        true,
-      ],
-      [
-        "Annual compounding is exactly \\(2000(1+3\\cdot0.06)=\\$2360\\).",
+        "Annual compounding is exactly \\(2000(1+3\\cdot0.06)\\), or $2360.",
         false,
       ],
       ["Continuous compounding must be smaller because \\(e<3\\).", false],
@@ -217,7 +211,7 @@ export const MathLogsExpRootsQuestions: Question[] = [
   makeQuestion(
     "math-logs-exp-roots-q14",
     "medium",
-    "A solution changes from \\([H^+]=10^{-7}\\) to \\([H^+]=10^{-5}\\). Which pH statements are correct?",
+    "Using \\(\\text{pH}=-\\log_{10}[H^+]\\), a solution changes from \\([H^+]=10^{-7}\\) to \\([H^+]=10^{-5}\\). Which pH statements are correct?",
     [
       ["The pH changes from 7 to 5.", true],
       ["The hydrogen ion concentration becomes 100 times larger.", true],
@@ -232,7 +226,7 @@ export const MathLogsExpRootsQuestions: Question[] = [
   makeQuestion(
     "math-logs-exp-roots-q15",
     "medium",
-    "Sound intensity level changes by \\(10\\log_{10}(I_2/I_1)\\) decibels. Which statements are correct?",
+    "Sound intensity level changes by \\(10\\log_{10}(I_2/I_1)\\) decibels, where \\(I_1\\) is the starting intensity and \\(I_2\\) is the final intensity. Which statements are correct?",
     [
       ["A 10 dB increase means the intensity is multiplied by 10.", true],
       ["A 20 dB increase means the intensity is multiplied by 100.", true],
@@ -400,14 +394,11 @@ export const MathLogsExpRootsQuestions: Question[] = [
   makeQuestion(
     "math-logs-exp-roots-q27",
     "hard",
-    "A \\(\\$1000\\) investment earns \\(12\\%\\) for 2 years. Which comparisons are correct?",
+    "A $1000 investment earns \\(12\\%\\) for 2 years. Which comparisons are correct?",
     [
-      ["Annual compounding gives \\(1000(1.12)^2=\\$1254.40\\).", true],
-      [
-        "Continuous compounding gives \\(1000e^{0.24}\\), about \\(\\$1271\\).",
-        true,
-      ],
-      ["The continuous result is larger by about \\(\\$17\\).", true],
+      ["Annual compounding gives \\(1000(1.12)^2\\), or $1254.40.", true],
+      ["Continuous compounding gives \\(1000e^{0.24}\\), about $1271.", true],
+      ["The continuous result is larger by about $17.", true],
       [
         "Both methods give exactly the same result because the quoted rate is 12%.",
         false,
@@ -603,5 +594,485 @@ export const MathLogsExpRootsQuestions: Question[] = [
       ["If \\(0<b<1\\), the model decays as \\(t\\) increases.", true],
     ],
     "The starting value is found by using \\(b^0=1\\), and each one-step increase in \\(t\\) multiplies the output by another factor of \\(b\\). A factor of 1 leaves the value unchanged, while a positive factor below 1 repeatedly shrinks the value.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q41",
+    "easy",
+    "A dashboard plots \\(\\ln(\\text{cases})\\) on the vertical axis against time in days. For a stretch of days, the points lie close to a straight upward line. Which interpretations are correct?",
+    [
+      [
+        "The original case counts are growing by roughly a constant multiplicative factor each day.",
+        true,
+      ],
+      [
+        "Equal vertical gaps on the log plot correspond to equal ratios in the original counts.",
+        true,
+      ],
+      [
+        "The raw case counts must be increasing by the same absolute number each day.",
+        false,
+      ],
+      [
+        "Using a logarithmic vertical axis makes any data set look like a straight line.",
+        false,
+      ],
+    ],
+    "A straight line on a log-versus-time plot is the visual signature of exponential growth, because equal time steps add equal amounts to the log and therefore multiply the original quantity by equal factors. Linear additive growth would not stay straight after taking logs.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q42",
+    "easy",
+    "On a simplified earthquake scale, each increase of 1 in magnitude corresponds to about 32 times as much released energy. About how much more energy does a magnitude 6 event release than a magnitude 4 event?",
+    [
+      ["About \\(6-4\\), or 2 times as much.", false],
+      ["About \\(32\\), or 32 times as much.", false],
+      ["About \\(2\\cdot32\\), or 64 times as much.", false],
+      ["About \\(32^2\\), or roughly 1000 times as much.", true],
+    ],
+    "A two-step increase on this logarithmic scale multiplies by 32 twice. That gives \\(32^2=1024\\), so magnitudes that look only two units apart can represent about a thousandfold difference underneath.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q43",
+    "easy",
+    "Which statements correctly distinguish roots and logarithms as inverse operations for exponentiation?",
+    [
+      [
+        "\\(\\sqrt[3]{1000}=10\\) solves for the unknown base in \\(x^3=1000\\).",
+        true,
+      ],
+      [
+        "\\(\\log_{10}(1000)=3\\) solves for the unknown exponent in \\(10^x=1000\\).",
+        true,
+      ],
+      [
+        "Roots and logs both ask for the unknown exponent in the same equation.",
+        false,
+      ],
+      [
+        "Exponentiation has different inverse questions depending on whether the base or exponent is unknown.",
+        true,
+      ],
+    ],
+    "A root answers a base question such as \\(x^3=1000\\). A logarithm answers an exponent question such as \\(10^x=1000\\). Both undo exponentiation, but they undo different missing pieces.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q44",
+    "easy",
+    "Which statements about logarithm base conventions are correct?",
+    [
+      [
+        "In many engineering or calculator contexts, \\(\\log x\\) means \\(\\log_{10}x\\).",
+        true,
+      ],
+      ["In calculus, \\(\\ln x\\) means \\(\\log_e x\\).", true],
+      [
+        "In computer science, base-2 logarithms often appear when counting doublings or bits.",
+        true,
+      ],
+      [
+        "Changing the base of a logarithm rescales its values by a constant factor.",
+        true,
+      ],
+    ],
+    "Different fields often choose the base that makes their calculations natural: 10 for decimal magnitude, \\(e\\) for calculus, and 2 for binary growth. The change-of-base formula explains why these choices differ by constant scaling factors.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q45",
+    "medium",
+    "Using base-10 logarithms, which equalities are correct?",
+    [
+      ["\\(\\log_{10}(10^4\\cdot10^3)=7\\).", true],
+      ["\\(\\log_{10}(100^3)=6\\).", true],
+      ["\\(\\log_{10}(10^4+10^3)=7\\).", false],
+      ["\\(\\log_{10}((10^4)^3)=7\\).", false],
+    ],
+    "Products inside a logarithm become sums, so \\(10^4\\cdot10^3=10^7\\). Powers pull down as multipliers, so \\(100^3=(10^2)^3=10^6\\). Addition inside a log has no comparable general simplification.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q46",
+    "medium",
+    "An analyst wants to simplify \\(\\log(a+b)\\) for positive \\(a\\) and \\(b\\). Which statement is generally valid?",
+    [
+      ["\\(\\log(a+b)=\\log a+\\log b\\).", false],
+      ["\\(\\log(a+b)=(\\log a)(\\log b)\\).", false],
+      ["\\(\\log(a+b)=1/(\\log a+\\log b)\\).", false],
+      ["None of these product-style rewrites is generally valid.", true],
+    ],
+    "Logarithms have clean rules for products, quotients, and powers, but not for sums inside the input. Trying a simple example such as \\(a=10\\) and \\(b=100\\) quickly shows that the proposed formulas cannot hold in general.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q47",
+    "hard",
+    "Which statements correctly use the reciprocal relationship between swapped logarithm bases?",
+    [
+      ["\\(\\log_{10}(1000)=3\\).", true],
+      ["\\(\\log_{1000}(10)=1/3\\).", true],
+      ["\\(\\log_{10}(1000)\\,\\log_{1000}(10)=1\\).", true],
+      ["\\(\\log_{10}(1000)=\\log_{1000}(10)\\).", false],
+    ],
+    "Since \\(10^3=1000\\), going the other way asks for the exponent \\(x\\) in \\(1000^x=10\\), which is \\(1/3\\). In general, \\(\\log_a b\\) and \\(\\log_b a\\) are reciprocals when both are defined.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q48",
+    "hard",
+    "Use the approximation \\(2^{10}\\approx1000=10^3\\). Which approximations follow?",
+    [
+      ["\\(\\log_{10}2\\approx0.3\\).", true],
+      ["\\(\\log_2 10\\approx10/3\\).", true],
+      ["\\(\\log_2 1000\\approx3\\).", false],
+      ["\\(\\log_{10}2\\approx10/3\\).", false],
+    ],
+    "The relationship \\(2^{10}\\approx10^3\\) says that ten doublings give about three decimal orders of magnitude. Thus \\(\\log_{10}2\\approx3/10\\), while the reciprocal relationship gives \\(\\log_2 10\\approx10/3\\).",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q49",
+    "hard",
+    "What is the value of \\(\\displaystyle \\sum_{b=2}^{100}\\frac{1}{\\log_b(100!)}\\)?",
+    [
+      ["1.", true],
+      ["100.", false],
+      ["0.", false],
+      ["\\(\\log(100!)\\).", false],
+    ],
+    "By change of base, \\(1/\\log_b(100!)=\\log b/\\log(100!)\\), using any common log base. Adding from \\(b=2\\) to 100 gives \\((\\log2+\\log3+\\cdots+\\log100)/\\log(100!)\\), and the numerator is \\(\\log(2\\cdot3\\cdots100)=\\log(100!)\\).",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q50",
+    "medium",
+    "An account earns 100% interest over a year, split evenly into \\(n\\) compounding periods. Which statements are correct?",
+    [
+      [
+        "With one compounding period, principal \\(P\\) becomes \\(2P\\).",
+        true,
+      ],
+      [
+        "With two periods at 50% each, the account becomes \\(P(1+1/2)^2=2.25P\\).",
+        true,
+      ],
+      [
+        "With \\(n\\) equal periods, the account becomes \\(P(1+1/n)^n\\).",
+        true,
+      ],
+      ["As \\(n\\) grows, the multiplier approaches \\(e\\).", true],
+    ],
+    "More frequent compounding replaces one large multiplication by many smaller multiplications. The limiting multiplier for 100% continuously compounded growth is \\(\\lim_{n\\to\\infty}(1+1/n)^n=e\\).",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q51",
+    "medium",
+    "A population model is \\(P(t)=2^t\\), where \\(t\\) is measured in days. Which statements about the instantaneous growth rate are correct?",
+    [
+      [
+        "The instantaneous rate is proportional to the current population.",
+        true,
+      ],
+      ["The proportionality constant is \\(\\ln2\\) per day.", true],
+      [
+        "The derivative at day 5 is exactly the average increase from day 5 to day 6.",
+        false,
+      ],
+      [
+        "The derivative equals \\(P(t)\\) because any exponential is its own derivative.",
+        false,
+      ],
+    ],
+    "For \\(2^t\\), the derivative is \\((\\ln2)2^t\\), so the rate is a constant fraction of the current amount. A one-day average increase is a finite-interval change, while the derivative is the limiting instantaneous rate.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q52",
+    "medium",
+    "Which derivative is correct?",
+    [
+      ["\\(\\dfrac{d}{dt}2^t=(\\ln2)2^t\\).", true],
+      ["\\(\\dfrac{d}{dt}2^t=2^t\\).", false],
+      ["\\(\\dfrac{d}{dt}2^t=t2^{t-1}\\).", false],
+      ["\\(\\dfrac{d}{dt}2^t=2t\\).", false],
+    ],
+    "The base-\\(e\\) exponential is the one whose derivative equals itself. For another positive base, rewrite \\(2^t=e^{t\\ln2}\\), then differentiate to get the extra factor \\(\\ln2\\).",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q53",
+    "hard",
+    "For \\(F(t)=8^t\\), which statements are correct?",
+    [
+      ["\\(F'(t)=(\\ln8)8^t\\).", true],
+      ["\\(\\ln8=3\\ln2\\).", true],
+      ["\\(8^t=e^{t\\ln8}\\).", true],
+      ["The rate constant is 8 because the base is 8.", false],
+    ],
+    "Any positive-base exponential can be written with base \\(e\\): \\(8^t=e^{t\\ln8}\\). Since \\(8=2^3\\), the log rule gives \\(\\ln8=3\\ln2\\), and that logarithm is the proportionality constant in the derivative.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q54",
+    "easy",
+    "Which statements describe why the base \\(e\\) is special for exponentials?",
+    [
+      ["\\(\\dfrac{d}{dt}e^t=e^t\\).", true],
+      [
+        "At each point on \\(e^t\\), the tangent slope equals the graph height.",
+        true,
+      ],
+      [
+        "The base is chosen so the proportionality constant between value and derivative is 1.",
+        true,
+      ],
+      [
+        "Writing models as \\(e^{kt}\\) makes the growth or decay rate constant \\(k\\) visible.",
+        true,
+      ],
+    ],
+    "The number \\(e\\) is the exponential base that removes any extra constant from the derivative of \\(e^t\\). In the model \\(e^{kt}\\), the chain rule then leaves the meaningful rate constant \\(k\\).",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q55",
+    "medium",
+    "For \\(G(t)=e^{3t}\\), which statements are correct?",
+    [
+      ["\\(G'(t)=3e^{3t}\\).", true],
+      ["The instantaneous rate is 3 times the current value.", true],
+      [
+        "\\(G'(t)=e^{3t}\\) because every expression containing \\(e\\) is its own derivative.",
+        false,
+      ],
+      [
+        "The factor 3 disappears when differentiating because it is inside the exponent.",
+        false,
+      ],
+    ],
+    "The chain rule matters: differentiating the exponent \\(3t\\) contributes a factor of 3. Thus \\(e^{3t}\\) is still proportional to its derivative, but the proportionality constant is 3.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q56",
+    "medium",
+    "An investment follows \\(A(t)=A_0e^{0.06t}\\), with \\(t\\) in years. Which expression gives the doubling time?",
+    [
+      ["\\(\\ln2/0.06\\).", true],
+      ["\\(2/0.06\\).", false],
+      ["\\(0.06/\\ln2\\).", false],
+      ["\\(e^{0.06}/2\\).", false],
+    ],
+    "Set \\(2A_0=A_0e^{0.06t}\\), cancel \\(A_0\\), and take natural logs: \\(\\ln2=0.06t\\). Dividing by 0.06 gives the time; using 2 directly would confuse the target multiplier with the exponent that produces it.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q57",
+    "hard",
+    "A quantity satisfies the differential equation \\(dQ/dt=kQ\\). Which statements are correct?",
+    [
+      ["Its solutions have the form \\(Q(t)=Q(0)e^{kt}\\).", true],
+      [
+        "Positive \\(k\\) gives growth, while negative \\(k\\) gives decay.",
+        true,
+      ],
+      ["The units of \\(k\\) are reciprocal time units.", true],
+      [
+        "If \\(k=0.05\\), the amount increases by exactly 5 units each time unit.",
+        false,
+      ],
+    ],
+    "The equation says the rate is a constant fraction of the current amount, not a constant absolute increase. The solution is exponential, and the rate constant must have units that cancel the time units in the exponent.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q58",
+    "medium",
+    "An object cools toward room temperature, and the temperature difference \\(D(t)\\) from the room satisfies \\(dD/dt=-kD\\) for \\(k>0\\). Which statements are correct?",
+    [
+      ["\\(D(t)=D(0)e^{-kt}\\).", true],
+      [
+        "A larger temperature difference gives a proportionally larger cooling rate in magnitude.",
+        true,
+      ],
+      ["The object's absolute temperature must approach 0.", false],
+      [
+        "The difference drops by the same number of degrees during every minute.",
+        false,
+      ],
+    ],
+    "The model applies to the difference from the surrounding temperature. A negative proportional rate creates exponential decay toward zero difference, not a fixed-degree-per-minute linear drop and not necessarily cooling toward absolute zero.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q59",
+    "easy",
+    "Which statements about the natural logarithm are correct for positive inputs?",
+    [
+      [
+        "\\(\\ln x\\) is the exponent to which \\(e\\) must be raised to get \\(x\\).",
+        true,
+      ],
+      ["\\(e^{\\ln x}=x\\).", true],
+      ["\\(\\ln(e^r)=r\\).", true],
+      [
+        "The graph of \\(\\ln x\\) is the inverse reflection of the graph of \\(e^x\\).",
+        true,
+      ],
+    ],
+    "The natural log is the inverse function of the base-\\(e\\) exponential. That is why applying one after the other returns the original value, as long as the logarithm's positive-input domain is respected.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q60",
+    "medium",
+    "Which calculus statement about \\(\\ln x\\) is correct?",
+    [
+      ["\\(\\dfrac{d}{dx}\\ln x=1/x\\) for \\(x>0\\).", true],
+      ["\\(\\dfrac{d}{dx}e^x=\\ln x\\).", false],
+      ["\\(\\int 1/x\\,dx=x^2/2+C\\).", false],
+      [
+        "The derivative of \\(\\ln x\\) is constant because logarithms grow by equal steps.",
+        false,
+      ],
+    ],
+    "The natural log grows slowly, but not with a constant slope. Its derivative is \\(1/x\\), which also means \\(\\ln x\\) is an antiderivative of \\(1/x\\) on the positive real numbers.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q61",
+    "hard",
+    "A substance has half-life \\(h\\). Which statements about its remaining fraction after time \\(t\\) are correct?",
+    [
+      ["The remaining fraction is \\((1/2)^{t/h}\\).", true],
+      ["The same fraction can be written \\(e^{-(\\ln2)t/h}\\).", true],
+      [
+        "If the remaining fraction is \\(f\\), then \\(t=-h\\ln f/\\ln2\\).",
+        true,
+      ],
+      ["The continuous decay constant is \\(h/\\ln2\\).", false],
+    ],
+    "The exponent \\(t/h\\) counts elapsed half-lives. Rewriting with base \\(e\\) gives a decay constant \\(\\ln2/h\\), and solving \\(f=e^{-(\\ln2)t/h}\\) for time produces the negative log expression.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q62",
+    "easy",
+    "For ordinary real logarithms, which domain and base statements are correct?",
+    [
+      ["The input to the logarithm must be positive.", true],
+      ["The base must be positive and not equal to 1.", true],
+      ["Base 0 is valid because \\(0^x=0\\) for many \\(x\\).", false],
+      ["Base 1 is valid because \\(1^x=1\\) is easy to compute.", false],
+    ],
+    "A real logarithm asks for the exponent that maps a positive base to a positive input. Bases 0 and 1 do not produce a useful one-to-one exponential function, so they cannot support an ordinary real log function.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q63",
+    "hard",
+    "A runtime estimate is \\(c\\log_2 n\\), but a report must use \\(\\log_{10}n\\). Which coefficient preserves the same numerical values?",
+    [
+      ["\\(c/\\log_{10}2\\), about \\((10/3)c\\).", true],
+      ["\\(c\\log_{10}2\\), about \\(0.3c\\).", false],
+      ["\\(c\\), because logarithm bases only change notation.", false],
+      ["\\(c/10\\), because \\(2^{10}\\approx1000\\).", false],
+    ],
+    "Change of base gives \\(\\log_2 n=\\log_{10}n/\\log_{10}2\\). Since \\(\\log_{10}2\\approx0.3\\), the coefficient must be multiplied by about \\(10/3\\), not by 0.3.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q64",
+    "medium",
+    "Which statements explain why logarithmic scales are useful for measurements with huge ranges?",
+    [
+      [
+        "Additive steps on the scale can represent multiplicative changes in the measured quantity.",
+        true,
+      ],
+      [
+        "They compress values that span many orders of magnitude into a manageable numerical range.",
+        true,
+      ],
+      [
+        "Scales such as decibels and earthquake magnitude use this idea in different forms.",
+        true,
+      ],
+      [
+        "A step that looks small on the scale can represent a large underlying ratio.",
+        true,
+      ],
+    ],
+    "When the underlying quantity varies by factors rather than small additions, a log scale turns those factors into manageable additive increments. This is why log scales appear in contexts such as sound intensity, earthquake energy, and fast-growing public data.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q65",
+    "hard",
+    "A semi-log plot of data is described by \\(\\ln y=\\ln50+0.2t\\). Which statements are correct?",
+    [
+      ["The original model is \\(y=50e^{0.2t}\\).", true],
+      ["The instantaneous rate satisfies \\(dy/dt=0.2y\\).", true],
+      [
+        "Each one-unit increase in \\(t\\) multiplies \\(y\\) by \\(e^{0.2}\\).",
+        true,
+      ],
+      ["The model doubles exactly every 5 time units.", false],
+    ],
+    "Exponentiating both sides gives \\(y=50e^{0.2t}\\). The slope on the \\(\\ln y\\) plot is the continuous growth rate, so doubling time is \\(\\ln2/0.2\\), not simply \\(1/0.2=5\\).",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q66",
+    "easy",
+    "Suppose a simplified decibel scale says that every 10-decibel increase multiplies sound intensity by 10. Which statements are correct?",
+    [
+      ["Going from 70 dB to 80 dB multiplies intensity by 10.", true],
+      ["Going from 60 dB to 80 dB multiplies intensity by 100.", true],
+      ["Going from 60 dB to 80 dB multiplies intensity by 20.", false],
+      ["Every 1-decibel increase multiplies intensity by 10.", false],
+    ],
+    "On this scale, the multiplicative factor is attached to a 10-decibel step. Two such steps multiply by 10 twice, so a 20-decibel increase corresponds to a factor of 100.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q67",
+    "easy",
+    "What is \\(\\log_3(81)\\)?",
+    [
+      ["3.", false],
+      ["4.", true],
+      ["27.", false],
+      ["81.", false],
+    ],
+    "The logarithm asks for the exponent in \\(3^x=81\\). Because \\(81=3\\cdot3\\cdot3\\cdot3=3^4\\), the missing exponent is 4; the answer is not the base, the input, or an additive count.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q68",
+    "medium",
+    "For a positive base \\(a\\), which statements about \\(a^x\\) are correct?",
+    [
+      ["\\(a^x=e^{x\\ln a}\\).", true],
+      ["\\(\\dfrac{d}{dx}a^x=(\\ln a)a^x\\).", true],
+      [
+        "If \\(0<a<1\\), then \\(\\ln a<0\\), so the model decays as \\(x\\) increases.",
+        true,
+      ],
+      [
+        "Every exponential \\(a^x\\) has derivative exactly equal to itself.",
+        false,
+      ],
+    ],
+    "Rewriting with base \\(e\\) reveals the rate constant \\(\\ln a\\). Only when \\(a=e\\) is that constant exactly 1; bases below 1 have negative logarithms and describe decay.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q69",
+    "hard",
+    "Which statements connect \\(e\\) to limiting compounding expressions?",
+    [
+      ["\\(\\lim_{n\\to\\infty}(1+1/n)^n=e\\).", true],
+      ["\\(\\lim_{k\\to0}(1+k)^{1/k}=e\\).", true],
+      [
+        "Splitting 100% growth into more and more equal compounding periods approaches a finite multiplier, not infinity.",
+        true,
+      ],
+      [
+        "Those limits explain why \\(e\\) is the natural base for continuous compounding.",
+        true,
+      ],
+    ],
+    "The expressions \\((1+1/n)^n\\) and \\((1+k)^{1/k}\\) describe the same limiting idea from different parameterizations. As compounding becomes continuous, the multiplier approaches \\(e\\), giving a finite and reusable growth constant.",
+  ),
+  makeQuestion(
+    "math-logs-exp-roots-q70",
+    "hard",
+    "A measurement scale is defined by \\(S=\\log_{32}(E/C)\\), where \\(E\\) is energy and \\(C\\) is a fixed reference energy. Which statements are correct?",
+    [
+      ["Increasing \\(S\\) by 1 multiplies \\(E\\) by 32.", true],
+      ["The same relationship can be written \\(E=C\\,32^S\\).", true],
+      [
+        "The scale can be computed with natural logs as \\(S=\\ln(E/C)/\\ln32\\).",
+        true,
+      ],
+      ["\\(S=0\\) corresponds to \\(E=C\\).", true],
+    ],
+    "The logarithmic form says how many factors of 32 separate the measured energy from the reference. Exponentiating recovers \\(E=C32^S\\), and change of base lets the same scale be computed with any convenient logarithm.",
   ),
 ];

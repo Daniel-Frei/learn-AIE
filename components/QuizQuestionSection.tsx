@@ -176,7 +176,7 @@ export default function QuizQuestionSection({
             {showResult && questionRating !== null && (
               <span
                 data-testid="question-rating-line"
-                className="flex min-h-6 items-center justify-end gap-1 whitespace-nowrap leading-4"
+                className="flex h-8 items-center justify-end gap-1 whitespace-nowrap leading-4"
               >
                 Question Elo:{" "}
                 <span className="font-semibold text-slate-100">
@@ -193,7 +193,7 @@ export default function QuizQuestionSection({
               </span>
             )}
             {!showResult && (
-              <span aria-hidden="true" className="block min-h-6 leading-4" />
+              <span aria-hidden="true" className="block h-8 leading-4" />
             )}
           </span>
         )}

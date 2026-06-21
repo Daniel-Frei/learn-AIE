@@ -236,7 +236,7 @@ export const stanfordCME295Lecture9SynthesisFrontiersQuestions: Question[] = [
     "Which statements describe sparse mixture-of-experts designs in large language models?",
     [
       [
-        "Experts are commonly implemented as alternative feed-forward subnetworks inside transformer blocks.",
+        "Experts are commonly implemented as separate feed-forward networks that replace or augment the usual feed-forward sublayer inside transformer blocks.",
         true,
       ],
       [
@@ -307,15 +307,15 @@ export const stanfordCME295Lecture9SynthesisFrontiersQuestions: Question[] = [
         true,
       ],
       [
-        "It improves speed by reducing reads and writes to high-bandwidth memory (HBM) through tiling into smaller fast memory.",
+        "FlashAttention improves speed by reducing reads and writes to high-bandwidth memory (HBM) through tiling into smaller fast memory.",
         true,
       ],
       [
-        "It can recompute intermediate quantities during backpropagation when recomputation is cheaper than storing and rereading them.",
+        "FlashAttention can recompute intermediate quantities during backpropagation when recomputation is cheaper than storing and rereading them.",
         true,
       ],
       [
-        "It achieves its gains by materializing the full attention matrix in HBM for every layer and head.",
+        "FlashAttention would lose its memory advantage if it materialized the full attention matrix in HBM for every layer and head.",
         false,
       ],
     ],
@@ -1252,27 +1252,27 @@ export const stanfordCME295Lecture9SynthesisFrontiersQuestions: Question[] = [
     "RAG, tools, and agent wrappers are useful, but they do not erase core limitations of the modeling objective or deployment environment. Current systems still need reliability, security, personalization boundaries, interpretability, and safety work before they can handle broad autonomous responsibility.",
   ),
   makeQuestion(
-    "cme295-lect9-q60",
-    "easy",
-    "A student wants a durable practice loop for staying current after finishing a transformer and LLM course. Which actions are strongest?",
+    "cme295-lect9-q61",
+    "medium",
+    "A product team is choosing between a small language model and a much larger model for a high-volume autocomplete feature. Which evaluation questions are most relevant?",
     [
       [
-        "Track papers through arXiv and major ML/NLP venues, then read abstracts, figures, and methods with a specific question in mind.",
+        "Whether the smaller model is good enough at the target task once latency and serving cost are included.",
         true,
       ],
       [
-        "Inspect authors' code repositories or small reproducible examples when a method is important enough to understand operationally.",
+        "Whether the larger model's quality gain justifies its additional inference cost and energy use.",
         true,
       ],
       [
-        "Rely only on viral model announcements because technical details usually do not change how systems are built.",
+        "Whether the largest model should be chosen automatically because benchmark quality is the only deployment constraint.",
         false,
       ],
       [
-        "Memorize one resource list once and stop revisiting papers, code, or implementation notes.",
+        "Whether latency and cost can be ignored once a model is on the quality/cost Pareto frontier.",
         false,
       ],
     ],
-    "A durable learning loop combines papers, code, experiments, and periodic review. Announcements and resource lists are useful pointers, but real understanding comes from checking the method, seeing how it is implemented, and updating mental models as the field changes.",
+    "A quality/cost frontier is useful because deployment is not decided by capability alone. For a high-volume feature, a smaller model can be the better engineering choice if it meets the quality bar with lower latency, lower serving cost, and lower energy use.",
   ),
 ];

@@ -1,694 +1,962 @@
 import { Question } from "../../quiz";
 
 export const cs224rLecture4ActorCriticQuestions: Question[] = [
-  // ============================================================
-  // ALL TRUE (Q1–Q9)
-  // ============================================================
-
   {
-    id: "cs224r-lect4-q01",
+    id: "cs224r-lect4-q36",
     chapter: 4,
     difficulty: "easy",
     prompt:
-      "Which statements correctly describe the value function \\(V^\\pi(s)\\)?",
+      "Which statements correctly define the value, Q, and advantage functions used by actor-critic methods?",
     options: [
       {
-        text: "It represents expected future rewards when following policy \\(\\pi\\) from state \\(s\\).",
+        text: "\\(V^\\pi(s)\\) is the expected future return starting at state \\(s\\) and then following policy \\(\\pi\\).",
         isCorrect: true,
       },
       {
-        text: "It depends on both the policy and environment dynamics.",
+        text: "\\(Q^\\pi(s,a)\\) is the expected future return after starting at \\(s\\), taking action \\(a\\), and then following \\(\\pi\\).",
         isCorrect: true,
       },
       {
-        text: "It can be interpreted as a probability of success in some tasks.",
+        text: "\\(V^\\pi(s)=\\mathbb{E}_{a\\sim\\pi(\\cdot\\mid s)}[Q^\\pi(s,a)]\\), so the state value averages over the policy's action choices.",
         isCorrect: true,
       },
       {
-        text: "It is defined as \\(V^\\pi(s)\\), an expectation over trajectories starting at \\(s\\).",
+        text: "\\(A^\\pi(s,a)=Q^\\pi(s,a)-V^\\pi(s)\\), so advantage compares an action to the policy's baseline value at the same state.",
         isCorrect: true,
       },
     ],
     explanation:
-      "The value function \\(V^\\pi(s)\\) evaluates a state under a particular policy by taking an expectation over future trajectories that start at \\(s\\). It depends on the policy, rewards, and environment dynamics because all of those determine the future return. In some tasks that expected return can be interpreted as a probability of success, but the general definition is expected cumulative reward.",
+      "The lecture defines the critic quantities as expectations over future return under a policy. The key mathematical link is that a state value averages Q-values over the policy's action distribution, and advantage subtracts that state baseline from a specific action value.",
   },
 
   {
-    id: "cs224r-lect4-q02",
-    chapter: 4,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly describe the Q-function \\(Q^\\pi(s,a)\\)?",
-    options: [
-      {
-        text: "It measures expected return after taking action \\(a\\) in state \\(s\\) and then following \\(\\pi\\).",
-        isCorrect: true,
-      },
-      {
-        text: "It differs from \\(V^\\pi(s)\\) by conditioning on the first action.",
-        isCorrect: true,
-      },
-      {
-        text: "It marginalizes over future stochastic transitions.",
-        isCorrect: true,
-      },
-      {
-        text: "It includes immediate reward plus expected future rewards.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "The Q-function \\(Q^\\pi(s,a)\\) evaluates a state-action pair by fixing the first action and then following policy \\(\\pi\\) afterward. That conditioning is what distinguishes it from \\(V^\\pi(s)\\), which averages over the policy's action choice immediately. The estimate includes immediate reward and expected future rewards, with future stochastic transitions averaged inside the expectation.",
-  },
-
-  {
-    id: "cs224r-lect4-q03",
-    chapter: 4,
-    difficulty: "easy",
-    prompt:
-      "Which statements about the advantage function \\(A^\\pi(s,a)\\) are correct?",
-    options: [
-      { text: "\\(A^\\pi(s,a) = Q^\\pi(s,a) - V^\\pi(s)\\).", isCorrect: true },
-      {
-        text: "It measures how much better an action is than the policy’s average choice.",
-        isCorrect: true,
-      },
-      {
-        text: "Positive \\(A^\\pi(s,a)\\) implies the action is better than expected.",
-        isCorrect: true,
-      },
-      {
-        text: "It centers Q-values around the state value baseline.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "The advantage function compares the value of taking action \\(a\\) in state \\(s\\) against the policy's usual expected value at that state. The formula \\(A^\\pi(s,a)=Q^\\pi(s,a)-V^\\pi(s)\\) centers action values around the state-value baseline, so positive advantage means the action did better than the policy's average choice. This centered signal is useful in actor updates because it reduces variance while preserving which actions should be reinforced.",
-  },
-
-  {
-    id: "cs224r-lect4-q04",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe actor–critic methods?",
-    options: [
-      {
-        text: "They use a critic to estimate value functions.",
-        isCorrect: true,
-      },
-      {
-        text: "They use advantage estimates to update the actor.",
-        isCorrect: true,
-      },
-      {
-        text: "They improve sample efficiency compared to vanilla policy gradients.",
-        isCorrect: true,
-      },
-      {
-        text: "They consist of two separate parameterized models.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Actor-critic methods split the problem into an actor that represents the policy and a critic that estimates values or advantages. The critic gives the actor a learned training signal, often an advantage estimate, instead of relying only on raw sampled returns. This can improve sample efficiency and reduce variance compared with vanilla policy gradients, although it introduces a second learned model whose errors can affect the actor.",
-  },
-
-  {
-    id: "cs224r-lect4-q05",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about Monte Carlo value estimation are correct?",
-    options: [
-      {
-        text: "Targets are full returns \\(G_t = \\sum_{t'=t}^T r_{t'}\\).",
-        isCorrect: true,
-      },
-      { text: "It is unbiased.", isCorrect: true },
-      { text: "It suffers from high variance.", isCorrect: true },
-      {
-        text: "It does not rely on bootstrapped predictions such as \\(V(s_{t+1})\\).",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Monte Carlo value estimation uses the full sampled return, such as \\(G_t = \\sum_{t'=t}^T r_{t'}\\), as the regression target for a state. Because it waits for actual trajectory outcomes instead of bootstrapping from current value predictions, the target is unbiased for the policy's return. The tradeoff is high variance, especially on long horizons where many future random events contribute to the return.",
-  },
-
-  {
-    id: "cs224r-lect4-q06",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements correctly describe temporal difference learning?",
-    options: [
-      { text: "Targets use \\(r_t + \\gamma V(s_{t+1})\\).", isCorrect: true },
-      {
-        text: "It bootstraps from the current value estimate.",
-        isCorrect: true,
-      },
-      { text: "It reduces variance relative to Monte Carlo.", isCorrect: true },
-      {
-        text: "It introduces bias when estimates such as \\(V(s_{t+1})\\) are inaccurate.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Temporal difference learning uses a target such as \\(r_t + \\gamma V(s_{t+1})\\), combining one observed reward with a bootstrapped prediction. Bootstrapping usually lowers variance compared with waiting for the full trajectory return. The cost is bias when the current value estimate is inaccurate, because the learner can propagate its own prediction errors into future targets.",
-  },
-
-  {
-    id: "cs224r-lect4-q07",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements correctly describe n-step returns?",
-    options: [
-      {
-        text: "\\(y_t = \\sum_{k=0}^{n-1} \\gamma^k r_{t+k} + \\gamma^n V(s_{t+n})\\).",
-        isCorrect: true,
-      },
-      {
-        text: "They interpolate between one-step TD \\(r_t + \\gamma V(s_{t+1})\\) and Monte Carlo \\(G_t\\).",
-        isCorrect: true,
-      },
-      { text: "Smaller \\(n\\) gives lower variance.", isCorrect: true },
-      { text: "Larger \\(n\\) reduces bias.", isCorrect: true },
-    ],
-    explanation:
-      "An n-step return uses several real rewards and then bootstraps from a value estimate, as in \\(y_t = \\sum_{k=0}^{n-1} \\gamma^k r_{t+k} + \\gamma^n V(s_{t+n})\\). This interpolates between one-step temporal difference learning and full Monte Carlo returns. Smaller \\(n\\) usually gives lower variance because it relies sooner on a prediction, while larger \\(n\\) reduces bootstrap bias by using more observed rewards.",
-  },
-
-  {
-    id: "cs224r-lect4-q08",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements about discount factor \\(\\gamma\\) are correct?",
-    options: [
-      { text: "It weights future rewards exponentially.", isCorrect: true },
-      {
-        text: "It prevents divergence for infinite horizons.",
-        isCorrect: true,
-      },
-      {
-        text: "It is equivalent to adding a termination probability \\(1-\\gamma\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Transition probabilities are scaled by \\(\\gamma\\).",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "A discount factor weights rewards farther in the future by powers of \\(\\gamma\\), which helps keep infinite-horizon returns finite when \\(\\gamma < 1\\). One useful interpretation is stochastic termination: with probability \\(1-\\gamma\\) the process ends, while continuing transitions receive the remaining probability mass. Under that transformed view, nonterminal transition probabilities are effectively scaled by \\(\\gamma\\), but the conceptual role is still to reduce the influence of distant rewards.",
-  },
-
-  {
-    id: "cs224r-lect4-q09",
-    chapter: 4,
-    difficulty: "easy",
-    prompt:
-      "Which statements about advantage-based policy updates are correct?",
-    options: [
-      {
-        text: "Actions with positive advantage are reinforced.",
-        isCorrect: true,
-      },
-      { text: "Advantage serves as a learned baseline.", isCorrect: true },
-      { text: "It reduces gradient variance.", isCorrect: true },
-      { text: "It still optimizes expected return.", isCorrect: true },
-    ],
-    explanation:
-      "Advantage-based updates reinforce actions that did better than the policy's baseline expectation and suppress actions that did worse. The value term acts like a learned baseline, which can reduce gradient variance without changing the expected-return objective. The actor is still optimizing reward-seeking behavior; the advantage only changes the estimator used to assign credit.",
-  },
-
-  // ============================================================
-  // THREE TRUE (Q10–Q18)
-  // ============================================================
-
-  {
-    id: "cs224r-lect4-q10",
+    id: "cs224r-lect4-q37",
     chapter: 4,
     difficulty: "medium",
     prompt:
-      "Which statements about learning \\(V^\\pi\\) with supervised learning are correct?",
+      "Which equations correctly relate \\(V^\\pi\\), \\(Q^\\pi\\), and \\(A^\\pi\\)?",
     options: [
       {
-        text: "Training data pairs states with observed returns.",
+        text: "\\(V^\\pi(s)=\\mathbb{E}_{a\\sim\\pi(\\cdot\\mid s)}[Q^\\pi(s,a)]\\).",
         isCorrect: true,
       },
       {
-        text: "The loss is typically \\(L = (V_\\phi(s) - y)^2\\).",
+        text: "\\(A^\\pi(s,a)=Q^\\pi(s,a)-V^\\pi(s)\\).",
         isCorrect: true,
       },
       {
-        text: "The labels remain fixed during training even when bootstrapped targets \\(y_t = r_t + \\gamma V(s_{t+1})\\) are recomputed.",
+        text: "\\(V^\\pi(s)=\\max_a Q^\\pi(s,a)\\) for any stochastic policy.",
         isCorrect: false,
       },
       {
-        text: "Multiple trajectories provide amortized supervision.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Learning \\(V^\\pi\\) can be framed as supervised regression from states to return targets, often with a squared loss such as \\(L=(V_\\phi(s)-y)^2\\). Multiple trajectories provide many state-target pairs, allowing the value function to amortize information across states rather than memorize one rollout. The labels are not always fixed because bootstrapped targets can change as the current value estimates are updated.",
-  },
-
-  {
-    id: "cs224r-lect4-q11",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Why can Monte Carlo learning fail to generalize?",
-    options: [
-      {
-        text: "It only uses rewards from the sampled trajectory.",
-        isCorrect: true,
-      },
-      {
-        text: "Similar states across trajectories are not linked.",
-        isCorrect: true,
-      },
-      { text: "It propagates value across similar states.", isCorrect: false },
-      { text: "It ignores cross-trajectory information.", isCorrect: true },
-    ],
-    explanation:
-      "A pure Monte Carlo target for a state comes from the rewards observed later in that sampled trajectory. If the method treats those samples independently, it may fail to connect similar states across different trajectories and therefore misses shared structure. Propagating value across similar states requires function approximation or bootstrapping-style generalization, not just using each sampled return in isolation.",
-  },
-
-  {
-    id: "cs224r-lect4-q12",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about bootstrapped targets are correct?",
-    options: [
-      { text: "They depend on current value estimates.", isCorrect: true },
-      { text: "They are updated every gradient step.", isCorrect: true },
-      {
-        text: "They are unbiased even when bootstrapped estimates such as \\(V(s_{t+1})\\) are inaccurate.",
+        text: "\\(A^\\pi(s,a)=V^\\pi(s)-Q^\\pi(s,a)\\), so positive advantage means the action is worse than the policy average.",
         isCorrect: false,
       },
-      { text: "They reduce variance.", isCorrect: true },
     ],
     explanation:
-      "Bootstrapped targets depend on the current value function because they include a prediction such as \\(V(s_{t+1})\\). As the value network changes, those targets can change from one gradient step to the next. This lowers variance by avoiding the full sampled return, but it is not unbiased when the value predictions used inside the target are wrong.",
+      "The value function is an expectation over actions sampled from the current policy, not a maximum over actions unless the policy has a special greedy form. Advantage is Q minus V, so its sign says whether the chosen action is better or worse than the policy's usual action mixture at that state.",
   },
 
   {
-    id: "cs224r-lect4-q13",
+    id: "cs224r-lect4-q38",
     chapter: 4,
     difficulty: "hard",
-    prompt: "Which statements about replay buffers are correct?",
-    options: [
-      { text: "They store transitions from past policies.", isCorrect: true },
-      { text: "They enable off-policy learning.", isCorrect: true },
-      { text: "They always improve stability.", isCorrect: false },
-      { text: "They increase data efficiency.", isCorrect: true },
-    ],
-    explanation:
-      "Replay buffers store transitions collected by earlier versions of the policy, so the learner can reuse experience instead of discarding each batch immediately. This enables off-policy learning and can improve data efficiency. The same reuse can create distribution mismatch between buffered actions and the current policy, so replay buffers do not always improve stability.",
-  },
+    prompt: `A policy at state \\(s\\) chooses actions with these probabilities and Q-values:
 
-  {
-    id: "cs224r-lect4-q14",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about off-policy actor updates are correct?",
+| Action | \\(\\pi(a\\mid s)\\) | \\(Q^\\pi(s,a)\\) |
+| --- | ---: | ---: |
+| \\(a_1\\) | 0.7 | 2 |
+| \\(a_2\\) | 0.3 | 5 |
+
+Which option correctly computes \\(V^\\pi(s)\\) and the two advantages?`,
     options: [
-      { text: "They require importance sampling.", isCorrect: true },
       {
-        text: "They can diverge if policies differ too much.",
+        text: "\\(V^\\pi(s)=2.9\\), \\(A^\\pi(s,a_1)=-0.9\\), and \\(A^\\pi(s,a_2)=2.1\\).",
         isCorrect: true,
       },
-      { text: "Advantages remain accurate indefinitely.", isCorrect: false },
-      { text: "KL constraints can help stabilize learning.", isCorrect: true },
+      {
+        text: "\\(V^\\pi(s)=3.5\\), \\(A^\\pi(s,a_1)=-1.5\\), and \\(A^\\pi(s,a_2)=1.5\\).",
+        isCorrect: false,
+      },
+      {
+        text: "\\(V^\\pi(s)=5\\), \\(A^\\pi(s,a_1)=-3\\), and \\(A^\\pi(s,a_2)=0\\).",
+        isCorrect: false,
+      },
+      {
+        text: "\\(V^\\pi(s)=2.9\\), \\(A^\\pi(s,a_1)=0.9\\), and \\(A^\\pi(s,a_2)=-2.1\\).",
+        isCorrect: false,
+      },
     ],
     explanation:
-      "Off-policy actor updates use data from a behavior policy while updating a different current policy, so importance sampling or related corrections are needed. If the policies differ too much, the correction weights and advantage estimates can become unreliable and learning can diverge. Constraints on policy change, such as KL limits, help keep updates in a region where old data and estimated advantages remain useful.",
+      "The value is the policy-weighted average \\(0.7\\cdot2+0.3\\cdot5=2.9\\), not the unweighted average or maximum. Advantages are computed as \\(Q-V\\), so \\(a_1\\) is below the policy baseline and \\(a_2\\) is above it.",
   },
 
   {
-    id: "cs224r-lect4-q15",
+    id: "cs224r-lect4-q39",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "Which statements correctly describe replacing reward-to-go with an advantage estimate in the policy-gradient update?",
+    options: [
+      {
+        text: "The actor update can use \\(\\nabla_\\theta J(\\theta)\\approx \\frac{1}{N}\\sum_i\\sum_t\\nabla_\\theta\\log\\pi_\\theta(a_{i,t}\\mid s_{i,t})\\hat A^\\pi(s_{i,t},a_{i,t})\\).",
+        isCorrect: true,
+      },
+      {
+        text: "When \\(\\hat A^\\pi(s_{i,t},a_{i,t})>0\\), gradient ascent increases \\(\\log\\pi_\\theta(a_{i,t}\\mid s_{i,t})\\).",
+        isCorrect: true,
+      },
+      {
+        text: "When \\(\\hat A^\\pi(s_{i,t},a_{i,t})<0\\), the score term pushes down the likelihood of \\(a_{i,t}\\) at \\(s_{i,t}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Using advantage changes the objective to \\(\\sum_i\\log\\pi_\\theta(a_i\\mid s_i)\\) and removes the expected-return objective.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The advantage is a lower-variance weighting signal for the same expected-return objective when it estimates the true advantage. The actor still follows a policy-gradient update; the critic only changes how credit is assigned to sampled actions.",
+  },
+
+  {
+    id: "cs224r-lect4-q40",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "Which equations correctly express the one-step estimate used to turn a value estimate into an advantage estimate?",
+    options: [
+      {
+        text: "\\(Q^\\pi(s_t,a_t)\\approx r(s_t,a_t)+V^\\pi(s_{t+1})\\) when \\(s_{t+1}\\) is the sampled next state.",
+        isCorrect: true,
+      },
+      {
+        text: "\\(A^\\pi(s_t,a_t)\\approx r(s_t,a_t)+V^\\pi(s_{t+1})-V^\\pi(s_t)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(A^\\pi(s_t,a_t)\\approx V^\\pi(s_t)-r(s_t,a_t)-V^\\pi(s_{t+1})\\), so a good action has a negative score.",
+        isCorrect: false,
+      },
+      {
+        text: "\\(Q^\\pi(s_t,a_t)\\approx V^\\pi(s_t)-r(s_t,a_t)\\), because the next state is ignored in temporal-difference learning.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The slide derives a one-step estimate by taking the observed immediate reward and adding the value of the sampled next state. Subtracting \\(V^\\pi(s_t)\\) converts that Q estimate into an advantage relative to the current state's baseline.",
+  },
+
+  {
+    id: "cs224r-lect4-q41",
     chapter: 4,
     difficulty: "easy",
     prompt:
-      "Which statements about actor–critic vs policy gradient are correct?",
+      "Which steps are part of the on-policy actor-critic algorithm described in the lecture?",
     options: [
-      { text: "Actor–critic learns what is good vs bad.", isCorrect: true },
-      { text: "Policy gradient uses raw sampled returns.", isCorrect: true },
-      { text: "Actor–critic removes the need for rewards.", isCorrect: false },
-      { text: "Actor–critic improves sample usage.", isCorrect: true },
+      {
+        text: "Collect trajectories by running the current policy \\(\\pi_\\theta\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Fit a critic such as \\(\\hat V^\\pi_\\phi\\) to return targets from the collected batch.",
+        isCorrect: true,
+      },
+      {
+        text: "Estimate advantages, for example \\(\\hat A(s_t,a_t)=r(s_t,a_t)+\\gamma\\hat V_\\phi(s_{t+1})-\\hat V_\\phi(s_t)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Update the actor with a step such as \\(\\theta\\leftarrow\\theta+\\alpha\\sum_{t,i}\\nabla_\\theta\\log\\pi_\\theta(a_{t,i}\\mid s_{t,i})\\hat A_{t,i}\\).",
+        isCorrect: true,
+      },
     ],
     explanation:
-      "Vanilla policy gradients often use raw sampled returns to decide which actions to reinforce. Actor-critic methods add a critic that learns which states or actions are good, giving the actor a lower-variance training signal and often improving sample usage. The critic still learns from rewards or return targets, so actor-critic does not remove the need for reward information.",
+      "Actor-critic adds a critic-fitting step between data collection and policy improvement. The actor still updates by policy gradient, but the reward-to-go weight is replaced by a learned estimate of how advantageous each sampled action was.",
   },
 
   {
-    id: "cs224r-lect4-q16",
+    id: "cs224r-lect4-q42",
     chapter: 4,
     difficulty: "hard",
-    prompt: "Which statements about critic bias are correct?",
+    prompt:
+      "For one transition, suppose \\(r_t=0.4\\), \\(\\gamma=0.9\\), \\(\\hat V(s_{t+1})=2.0\\), and \\(\\hat V(s_t)=1.3\\). Which value is the one-step advantage estimate \\(\\hat A_t=r_t+\\gamma\\hat V(s_{t+1})-\\hat V(s_t)\\)?",
+    options: [
+      { text: "\\(0.9\\)", isCorrect: true },
+      { text: "\\(2.2\\)", isCorrect: false },
+      { text: "\\(-0.9\\)", isCorrect: false },
+      { text: "\\(0.5\\)", isCorrect: false },
+    ],
+    explanation:
+      "The temporal-difference advantage estimate is \\(0.4+0.9\\cdot2.0-1.3=0.9\\). The common mistakes are forgetting the discount, failing to subtract the current value baseline, or reversing the sign of the baseline subtraction.",
+  },
+
+  {
+    id: "cs224r-lect4-q43",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "Which statements correctly describe Monte Carlo value-function estimation?",
     options: [
       {
-        text: "Errors in the critic propagate into the policy update.",
+        text: "A target can be \\(y_{i,t}=\\sum_{t'=t}^{T}r(s_{i,t'},a_{i,t'})\\).",
         isCorrect: true,
       },
       {
-        text: "Biased value estimates lead to biased advantages.",
+        text: "The critic can be fit with a regression loss such as \\(\\mathcal{L}(\\phi)=\\frac{1}{2}\\sum_i\\lVert\\hat V^\\pi_\\phi(s_i)-y_i\\rVert^2\\).",
         isCorrect: true,
       },
-      { text: "Critic bias affects gradient direction.", isCorrect: true },
-      { text: "Critic bias does not affect learning.", isCorrect: false },
-    ],
-    explanation:
-      "The actor uses the critic's value or advantage estimates to decide which actions to reinforce. If the critic is systematically biased, the advantage estimates can point the policy update in the wrong direction or distort its magnitude. Critic bias therefore does affect learning, even though the critic is not the component that directly selects actions.",
-  },
-
-  {
-    id: "cs224r-lect4-q17",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about n-step vs TD are correct?",
-    options: [
-      { text: "n-step uses more real rewards.", isCorrect: true },
-      { text: "TD uses only one-step rewards.", isCorrect: true },
-      { text: "n-step always has higher bias.", isCorrect: false },
       {
-        text: "n-step can reduce variance compared to Monte Carlo.",
+        text: "The target uses the rollout's observed summed rewards rather than a bootstrap value estimate.",
         isCorrect: true,
       },
-    ],
-    explanation:
-      "One-step temporal difference learning uses the immediate reward plus a bootstrap value estimate, while n-step returns include more observed rewards before bootstrapping. Using more real rewards can reduce bootstrap bias, and still bootstrapping after \\(n\\) steps can reduce variance relative to full Monte Carlo. The bias-variance tradeoff depends on \\(n\\), so n-step returns are not always higher bias.",
-  },
-
-  {
-    id: "cs224r-lect4-q18",
-    chapter: 4,
-    difficulty: "easy",
-    prompt: "Which statements about the actor are correct?",
-    options: [
-      { text: "It represents the policy.", isCorrect: true },
-      { text: "It is updated via policy gradients.", isCorrect: true },
-      { text: "It estimates values.", isCorrect: false },
-      { text: "It depends on advantage estimates.", isCorrect: true },
-    ],
-    explanation:
-      "The actor is the policy component: it represents how actions are selected from states or observations. It is usually updated with a policy-gradient-style objective that may use advantage estimates supplied by the critic. Estimating values is the critic's role, not the actor's role.",
-  },
-
-  // ============================================================
-  // TWO TRUE (Q19–Q27)
-  // ============================================================
-
-  {
-    id: "cs224r-lect4-q19",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which are true about Monte Carlo vs TD?",
-    options: [
-      { text: "Monte Carlo is unbiased.", isCorrect: true },
-      { text: "TD has lower variance.", isCorrect: true },
-      { text: "TD is unbiased.", isCorrect: false },
-      { text: "Monte Carlo has lower variance.", isCorrect: false },
-    ],
-    explanation:
-      "Monte Carlo targets use sampled full returns, so they are unbiased for the policy's return but can be very noisy. Temporal difference targets use bootstrapped predictions, which usually lowers variance but can introduce bias when the prediction is inaccurate. That is why TD is not generally unbiased, and Monte Carlo is not the lower-variance choice.",
-  },
-
-  {
-    id: "cs224r-lect4-q20",
-    chapter: 4,
-    difficulty: "hard",
-    prompt: "Which are consequences of replay buffers?",
-    options: [
-      { text: "Distribution mismatch with current policy.", isCorrect: true },
-      { text: "Higher sample efficiency.", isCorrect: true },
-      { text: "Perfect unbiased gradients.", isCorrect: false },
-      { text: "Guaranteed convergence.", isCorrect: false },
-    ],
-    explanation:
-      "Replay buffers improve sample efficiency by letting the learner reuse past transitions for multiple updates. The cost is that buffered data may have been generated by older policies, creating mismatch with the current policy and possible off-policy bias. Reuse does not produce perfectly unbiased gradients or guarantee convergence; it must be paired with algorithms that handle the mismatch.",
-  },
-
-  {
-    id: "cs224r-lect4-q21",
-    chapter: 4,
-    difficulty: "easy",
-    prompt: "Which statements about discounting are correct?",
-    options: [
-      { text: "It prioritizes near-term rewards.", isCorrect: true },
-      { text: "It prevents large value explosions.", isCorrect: true },
-      { text: "It increases variance.", isCorrect: false },
-      { text: "It removes future rewards.", isCorrect: false },
-    ],
-    explanation:
-      "Discounting gives more weight to near-term rewards than distant rewards when \\(\\gamma < 1\\). This can keep long-horizon or infinite-horizon value estimates bounded and numerically stable. It does not remove future rewards entirely, and its purpose is not to increase variance.",
-  },
-
-  {
-    id: "cs224r-lect4-q22",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statements about TD targets are correct?",
-    options: [
-      { text: "They use predictions of \\(V(s_{t+1})\\).", isCorrect: true },
-      { text: "They reduce variance.", isCorrect: true },
-      { text: "They are unbiased.", isCorrect: false },
       {
-        text: "They ignore immediate rewards such as \\(r_t\\).",
+        text: "The target is \\(y_{i,t}=r(s_{i,t},a_{i,t})+\\hat V_\\phi(s_{i,t+1})\\) and must be recomputed every gradient step.",
         isCorrect: false,
       },
     ],
     explanation:
-      "A temporal difference target combines the immediate reward with a bootstrapped prediction such as \\(V(s_{t+1})\\). That prediction reduces variance relative to waiting for the full sampled return. The target does not ignore rewards, and it is not generally unbiased because a wrong value prediction can bias the target.",
+      "Monte Carlo estimation supervises the value function with full sampled returns from the rollout. That avoids bootstrap bias, but the target can have high variance because it depends on all later stochastic events in the trajectory.",
   },
 
   {
-    id: "cs224r-lect4-q23",
+    id: "cs224r-lect4-q44",
     chapter: 4,
     difficulty: "hard",
-    prompt: "Which statements about KL constraints are correct?",
+    prompt: `A trajectory prefix reaches state \\(p\\), receives reward 0, then reaches state \\(b\\). In the data, state \\(b\\) appears on two continuations with final rewards \\(-1\\) and \\(+1\\), so the current learned estimate is \\(\\hat V(b)=0\\). For state \\(p\\) on the negative trajectory, which statements compare Monte Carlo and bootstrapped targets correctly?`,
     options: [
-      { text: "They limit policy deviation.", isCorrect: true },
-      { text: "They stabilize off-policy updates.", isCorrect: true },
-      { text: "They eliminate bias.", isCorrect: false },
-      { text: "They remove need for importance weights.", isCorrect: false },
+      {
+        text: "The Monte Carlo target for \\(p\\) on that trajectory is \\(-1\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The one-step bootstrapped target for \\(p\\) is \\(0+\\hat V(b)=0\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The Monte Carlo target for \\(p\\) must average the two continuations from \\(b\\), so it is \\(0\\).",
+        isCorrect: false,
+      },
+      {
+        text: "The bootstrapped target for \\(p\\) must ignore \\(\\hat V(b)\\), so it is \\(-1\\).",
+        isCorrect: false,
+      },
     ],
     explanation:
-      "KL constraints limit how far the updated policy can move from the policy that generated or justified the data. That stabilizes off-policy or approximate actor updates by keeping importance ratios and advantage estimates from becoming too stale. A KL constraint does not eliminate estimator bias by itself, and it does not automatically remove the need for importance weighting or other corrections.",
+      "Monte Carlo uses the observed future return from the sampled trajectory, so the negative trajectory labels \\(p\\) with \\(-1\\). Bootstrapping can use the learned value of the next state, which has already aggregated information from both continuations through \\(\\hat V(b)=0\\).",
   },
 
   {
-    id: "cs224r-lect4-q24",
+    id: "cs224r-lect4-q45",
     chapter: 4,
     difficulty: "medium",
-    prompt: "Which are true about critic training?",
+    prompt:
+      "Which statements correctly describe bootstrapping or temporal-difference value learning?",
     options: [
-      { text: "Uses regression loss.", isCorrect: true },
-      { text: "Can take multiple gradient steps per batch.", isCorrect: true },
-      { text: "Directly changes the policy.", isCorrect: false },
-      { text: "Requires environment resets.", isCorrect: false },
+      {
+        text: "A bootstrapped target can be \\(y_{i,t}=r(s_{i,t},a_{i,t})+\\hat V^\\pi_\\phi(s_{i,t+1})\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The target \\(y_{i,t}\\) can change as \\(\\hat V^\\pi_\\phi(s_{i,t+1})\\) changes during gradient descent.",
+        isCorrect: true,
+      },
+      {
+        text: "Bootstrapping can reduce variance compared with full Monte Carlo returns \\(\\sum_{t'=t}^{T}r(s_{i,t'},a_{i,t'})\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Bootstrapping can introduce bias when \\(\\hat V^\\pi_\\phi(s_{i,t+1})\\neq V^\\pi(s_{i,t+1})\\).",
+        isCorrect: true,
+      },
     ],
     explanation:
-      "Critic training is usually a regression problem: fit value predictions to Monte Carlo, temporal difference, or n-step targets. Because this is a supervised-style update on stored data, the critic can often take multiple gradient steps per batch. Updating the critic does not directly change the actor's policy parameters, and the regression update itself does not require resetting the environment.",
+      "Temporal-difference learning uses the model's own current estimate of the next state's value as part of the label. That can propagate information across related states with less variance, but it also means bad value estimates can contaminate the target.",
   },
 
   {
-    id: "cs224r-lect4-q25",
-    chapter: 4,
-    difficulty: "easy",
-    prompt: "Which statements about advantages are correct?",
-    options: [
-      { text: "They guide actor updates.", isCorrect: true },
-      { text: "They compare action to baseline.", isCorrect: true },
-      { text: "They replace rewards.", isCorrect: false },
-      { text: "They are constant.", isCorrect: false },
-    ],
-    explanation:
-      "Advantages guide actor updates by measuring whether an action was better or worse than the baseline value for that state. This comparison determines both the sign and strength of the policy-gradient update. Advantages are computed from reward-derived value information, so they do not replace rewards, and they are not constant across states and actions.",
-  },
-
-  {
-    id: "cs224r-lect4-q26",
+    id: "cs224r-lect4-q46",
     chapter: 4,
     difficulty: "hard",
-    prompt: "Which are true about n-step bias/variance?",
+    prompt:
+      "Suppose an n-step target uses \\(n=3\\), rewards \\((r_t,r_{t+1},r_{t+2})=(1,0,2)\\), \\(\\gamma=0.9\\), and \\(\\hat V(s_{t+3})=5\\). Which value matches \\(y_t=\\sum_{k=0}^{2}\\gamma^k r_{t+k}+\\gamma^3\\hat V(s_{t+3})\\)?",
     options: [
-      { text: "Smaller n → lower variance.", isCorrect: true },
-      { text: "Larger n → lower bias.", isCorrect: true },
-      { text: "n-step always unbiased.", isCorrect: false },
-      { text: "n-step always low variance.", isCorrect: false },
+      { text: "\\(6.265\\)", isCorrect: true },
+      { text: "\\(8.0\\)", isCorrect: false },
+      { text: "\\(5.445\\)", isCorrect: false },
+      { text: "\\(3.52\\)", isCorrect: false },
     ],
     explanation:
-      "The choice of \\(n\\) controls how much of the target is observed reward versus bootstrapped value prediction. Smaller \\(n\\) bootstraps earlier, which usually lowers variance but can increase bias from imperfect value estimates. Larger \\(n\\) uses more real rewards and therefore tends to lower bias, but n-step targets are not always unbiased or always low variance.",
+      "The target is \\(1+0.9\\cdot0+0.9^2\\cdot2+0.9^3\\cdot5=1+0+1.62+3.645=6.265\\). Omitting the bootstrap term, discounting the wrong rewards, or summing undiscounted quantities gives the distractor values.",
   },
 
   {
-    id: "cs224r-lect4-q27",
+    id: "cs224r-lect4-q47",
     chapter: 4,
     difficulty: "medium",
-    prompt: "Which statements about actor-critic data use are correct?",
+    prompt:
+      "Which statements correctly describe n-step returns as the lecture's middle ground between Monte Carlo and one-step bootstrapping?",
     options: [
       {
-        text: "Can learn from partial progress trajectories.",
+        text: "\\(y_{i,t}=\\sum_{t'=t}^{t+n-1}r(s_{i,t'},a_{i,t'})+\\hat V^\\pi_\\phi(s_{i,t+n})\\) is the undiscounted version shown before adding \\(\\gamma\\).",
         isCorrect: true,
       },
       {
-        text: "More efficient than sparse reward policy gradients.",
+        text: "\\(n=1\\) recovers a one-step target like \\(r(s_{i,t},a_{i,t})+\\hat V^\\pi_\\phi(s_{i,t+1})\\), which usually has less variance than full Monte Carlo.",
         isCorrect: true,
       },
       {
-        text: "Requires full reward success trajectories only.",
+        text: "Larger \\(n\\) includes more terms from \\(\\sum_{t'=t}^{t+n-1}r(s_{i,t'},a_{i,t'})\\), which can reduce bootstrap bias.",
+        isCorrect: true,
+      },
+      {
+        text: "Changing \\(n\\) changes the policy objective to \\(\\max_a Q^\\pi(s,a)\\), so the actor becomes greedier by definition.",
         isCorrect: false,
       },
-      { text: "Ignores failed rollouts.", isCorrect: false },
     ],
     explanation:
-      "The critic can learn from partial progress because value targets can assign useful estimates to intermediate states, not only to fully successful episodes. That makes actor-critic methods more data-efficient than relying only on sparse full-return policy-gradient signals. Failed rollouts can still teach the critic which states or actions have low value, so they are not ignored and full-success trajectories are not the only usable data.",
-  },
-
-  // ============================================================
-  // ONE TRUE (Q28–Q35)
-  // ============================================================
-
-  {
-    id: "cs224r-lect4-q28",
-    chapter: 4,
-    difficulty: "easy",
-    prompt: "Which statement about the critic is correct?",
-    options: [
-      { text: "It selects actions.", isCorrect: false },
-      { text: "It estimates state values.", isCorrect: true },
-      { text: "It replaces the actor.", isCorrect: false },
-      { text: "It removes need for rewards.", isCorrect: false },
-    ],
-    explanation:
-      "The critic estimates values, such as how good a state is under the current policy or how good a state-action pair is. The actor is the component that selects actions, so the critic does not replace it. The critic also still needs reward-derived targets; it turns rewards into a denser learning signal rather than removing rewards from the problem.",
+      "The lecture presents n-step returns as a bias-variance interpolation, not a different reward objective. Looking ahead farther includes more actual rewards, while bootstrapping sooner tends to keep the target less noisy.",
   },
 
   {
-    id: "cs224r-lect4-q29",
+    id: "cs224r-lect4-q48",
     chapter: 4,
     difficulty: "medium",
-    prompt: "Which best describes TD learning?",
+    prompt:
+      "Which statements correctly describe the discount factor in the actor-critic value target?",
     options: [
       {
-        text: "Regression on full trajectory returns \\(G_t\\) without bootstrapping.",
+        text: "The one-step target becomes \\(y_{i,t}\\approx r(s_{i,t},a_{i,t})+\\gamma\\hat V^\\pi_\\phi(s_{i,t+1})\\).",
+        isCorrect: true,
+      },
+      {
+        text: "One interpretation of \\(\\gamma\\in[0,1]\\) is a modified Markov decision process with probability \\(1-\\gamma\\) of transitioning to a zero-reward terminal state.",
+        isCorrect: true,
+      },
+      {
+        text: "Discounting multiplies the policy-gradient log-probability term by \\(1-\\gamma\\) and leaves value targets unchanged.",
         isCorrect: false,
       },
       {
-        text: "Bootstrap using the next state value \\(V(s_{t+1})\\).",
-        isCorrect: true,
+        text: "Using \\(\\gamma<1\\) means future rewards are removed entirely from the return.",
+        isCorrect: false,
       },
-      { text: "No supervision.", isCorrect: false },
-      { text: "Pure imitation.", isCorrect: false },
     ],
     explanation:
-      "Temporal difference learning bootstraps from the next state's value estimate, typically using a target like \\(r_t + \\gamma V(s_{t+1})\\). That differs from Monte Carlo regression on full trajectory returns. It is still supervised by reward-derived targets, and it is not imitation learning because the target is value prediction rather than copying expert actions.",
+      "Discounting scales the future value term and therefore reduces the influence of distant rewards. The lecture also gives the equivalent modified-MDP view: most ordinary transitions are scaled by \\(\\gamma\\), with the remaining probability going to a terminal zero-reward state.",
   },
 
   {
-    id: "cs224r-lect4-q30",
+    id: "cs224r-lect4-q49",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "An infinite-horizon state receives reward 1 at every future step. Which option correctly compares undiscounted return with discounted return at \\(\\gamma=0.99\\)?",
+    options: [
+      {
+        text: "The undiscounted sum diverges, while the discounted sum is \\(\\sum_{k=0}^{\\infty}0.99^k=100\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The undiscounted sum is 100, while the discounted sum diverges.",
+        isCorrect: false,
+      },
+      {
+        text: "Both sums are 100 because the episode is infinite.",
+        isCorrect: false,
+      },
+      {
+        text: "Both sums are finite only when \\(\\gamma>1\\).",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The lecture motivates discounting partly because undiscounted infinite-horizon values can become infinitely large. With constant reward 1 and \\(\\gamma=0.99\\), the geometric series is \\(1/(1-0.99)=100\\).",
+  },
+
+  {
+    id: "cs224r-lect4-q50",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "Which equations or steps match the full on-policy actor-critic walkthrough?",
+    options: [
+      {
+        text: "Collect a batch \\(\\{(s_{1,i},a_{1,i},\\ldots,s_{T,i},a_{T,i})\\}\\) from \\(\\pi_\\theta\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Fit \\(\\hat V^{\\pi_\\theta}_\\phi\\) to summed or n-step return targets in the batch.",
+        isCorrect: true,
+      },
+      {
+        text: "Estimate \\(\\hat A^{\\pi_\\theta}(s_{t,i},a_{t,i})=r(s_{t,i},a_{t,i})+\\gamma\\hat V^{\\pi_\\theta}_\\phi(s_{t+1,i})-\\hat V^{\\pi_\\theta}_\\phi(s_{t,i})\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Update \\(\\theta\\leftarrow\\theta+\\alpha\\nabla_\\theta J(\\theta)\\) using a policy-gradient estimate weighted by \\(\\hat A\\).",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "The actor-critic walkthrough has a critic-fitting phase followed by an advantage-weighted actor update. The parameters \\(\\phi\\) belong to the critic, while \\(\\theta\\) belongs to the actor policy.",
+  },
+
+  {
+    id: "cs224r-lect4-q51",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "Which statements correctly distinguish critic parameters \\(\\phi\\) from actor parameters \\(\\theta\\)?",
+    options: [
+      {
+        text: "\\(\\hat V_\\phi\\) is trained with a critic loss such as \\(\\mathcal{L}(\\phi)=\\frac{1}{2}\\sum_i\\lVert\\hat V_\\phi(s_i)-y_i\\rVert^2\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\pi_\\theta(a\\mid s)\\) is updated by a policy-gradient step such as \\(\\theta\\leftarrow\\theta+\\alpha\\nabla_\\theta J(\\theta)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Updating \\(\\phi\\) directly changes action probabilities in \\(\\pi_\\theta(a\\mid s)\\), so no separate actor step is needed.",
+        isCorrect: false,
+      },
+      {
+        text: "The critic loss is minimized with respect to \\(\\theta\\), while the actor update is minimized with respect to \\(\\phi\\).",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The critic is the value estimator and the actor is the policy. They interact because the actor uses critic-derived advantages, but their parameter updates solve different optimization problems.",
+  },
+
+  {
+    id: "cs224r-lect4-q52",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "Which statements correctly explain why actor-critic can use data more efficiently than vanilla policy gradients in the lecture's walking and jacket-folding examples?",
+    options: [
+      {
+        text: "A critic can learn that an intermediate state is progress even when the whole trajectory later receives a poor or sparse final reward.",
+        isCorrect: true,
+      },
+      {
+        text: "Bootstrapped values can propagate information backward through nearby states instead of relying only on one full return sample.",
+        isCorrect: true,
+      },
+      {
+        text: "Advantage estimates can make the actor reinforce a helpful early action while suppressing a later bad action.",
+        isCorrect: true,
+      },
+      {
+        text: "Actor-critic improves efficiency by discarding failed or partial-progress rollouts before training.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The point of the critic is not to throw away failures; failures can teach which states or actions have low value. By estimating progress at intermediate states, actor-critic can use partial trajectories that raw return-weighted policy gradients would treat too coarsely.",
+  },
+
+  {
+    id: "cs224r-lect4-q53",
     chapter: 4,
     difficulty: "hard",
-    prompt: "Why can replay-buffer actor updates be incorrect?",
-    options: [
-      { text: "Actions weren’t sampled from current policy.", isCorrect: true },
-      { text: "Rewards are missing.", isCorrect: false },
-      { text: "Value function unnecessary.", isCorrect: false },
-      { text: "Environment deterministic.", isCorrect: false },
-    ],
-    explanation:
-      "Replay-buffer actor updates can be wrong when the actions in the buffer were sampled from an older policy but the update treats them as if they came from the current policy. That violates the distribution assumption behind an on-policy policy-gradient estimator. The issue is not missing rewards, a deterministic environment, or the absence of a value function; it is policy mismatch in the sampled actions.",
-  },
-
-  {
-    id: "cs224r-lect4-q31",
-    chapter: 4,
-    difficulty: "easy",
-    prompt: "Which method is unbiased but high variance?",
-    options: [
-      { text: "Temporal difference.", isCorrect: false },
-      { text: "Monte Carlo.", isCorrect: true },
-      { text: "Replay buffers.", isCorrect: false },
-      { text: "Advantage normalization.", isCorrect: false },
-    ],
-    explanation:
-      "Monte Carlo estimation uses complete sampled returns, so it is unbiased for the value under the sampled policy but can have high variance. Temporal difference learning lowers variance by bootstrapping, replay buffers are a data-reuse mechanism, and advantage normalization rescales an actor-update signal. Those other techniques do not describe the full-return unbiased-but-noisy estimator.",
-  },
-
-  {
-    id: "cs224r-lect4-q32",
-    chapter: 4,
-    difficulty: "medium",
-    prompt: "Which statement about discount factor is correct?",
+    prompt:
+      "Which expression is the actor-gradient estimate in the on-policy actor-critic walkthrough?",
     options: [
       {
-        text: "Gamma greater than one, \\(\\gamma > 1\\), increases stability for long-horizon value estimates.",
+        text: "\\(\\nabla_\\theta J(\\theta)\\approx\\sum_{t,i}\\nabla_\\theta\\log\\pi_\\theta(a_{t,i}\\mid s_{t,i})\\hat A^{\\pi_\\theta}(s_{t,i},a_{t,i})\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\nabla_\\phi J(\\phi)\\approx\\sum_{t,i}\\nabla_\\phi\\log\\pi_\\phi(a_{t,i}\\mid s_{t,i})\\hat V_\\phi(s_{t,i})\\).",
         isCorrect: false,
       },
       {
-        text: "Gamma less than one, \\(\\gamma < 1\\), reduces long-term reward weight.",
-        isCorrect: true,
+        text: "\\(\\nabla_\\theta J(\\theta)\\approx\\sum_{t,i}\\nabla_\\theta\\hat V_\\phi(s_{t,i})\\), so the actor follows the critic's value gradient directly.",
+        isCorrect: false,
       },
-      { text: "Gamma eliminates variance.", isCorrect: false },
-      { text: "Gamma only affects policy network.", isCorrect: false },
+      {
+        text: "\\(\\nabla_\\theta J(\\theta)\\approx\\sum_{t,i}\\log\\pi_\\theta(a_{t,i}\\mid s_{t,i})\\nabla_\\theta\\hat A(s_{t,i},a_{t,i})\\), so the score term is not needed.",
+        isCorrect: false,
+      },
     ],
     explanation:
-      "When \\(\\gamma < 1\\), rewards farther in the future are multiplied by smaller powers of \\(\\gamma\\), so their contribution to return is reduced. This helps stabilize long-horizon value estimates, but setting \\(\\gamma > 1\\) would usually make long-term sums less stable rather than more stable. Discounting affects the return and value targets broadly; it does not eliminate variance or apply only to the policy network.",
+      "The actor update is still a score-function policy gradient: differentiate the log probability of the sampled action with respect to actor parameters. The advantage supplies the scalar weight; it is not a replacement for the log-probability gradient.",
   },
 
   {
-    id: "cs224r-lect4-q33",
+    id: "cs224r-lect4-q54",
     chapter: 4,
     difficulty: "hard",
-    prompt: "Which statement about critic bias is correct?",
+    prompt:
+      "Which statements correctly describe what changes when one collected batch is reused for multiple actor-gradient steps?",
     options: [
-      { text: "Bias has no effect.", isCorrect: false },
-      { text: "Bias affects policy updates.", isCorrect: true },
-      { text: "Bias only changes rewards.", isCorrect: false },
-      { text: "Bias improves exploration.", isCorrect: false },
+      {
+        text: "After the first actor update, the data was generated by an older policy rather than exactly the current \\(\\pi_\\theta\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The action likelihood term can be corrected with an importance ratio such as \\(\\frac{\\pi_\\theta(a_i\\mid s_i)}{\\pi_{old}(a_i\\mid s_i)}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The advantage estimates \\(\\hat A^{\\pi_{old}}(s_i,a_i)\\) can become stale as \\(\\pi_\\theta\\) moves away from \\(\\pi_{old}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "A constraint such as \\(\\mathbb{E}_{s\\sim\\pi_{old}}[D_{KL}(\\pi_\\theta(\\cdot\\mid s)\\|\\pi_{old}(\\cdot\\mid s))]\\le\\delta\\) can limit policy movement.",
+        isCorrect: true,
+      },
     ],
     explanation:
-      "Critic bias affects policy updates because the actor uses critic-derived values or advantages to decide which actions to reinforce. If those estimates are systematically wrong, the actor can be pushed toward actions that are not actually better. The bias is in the learned evaluation signal, not in the rewards themselves, and it does not inherently improve exploration.",
+      "Multiple gradient steps improve sample usage but make the update increasingly off-policy. The lecture highlights two stabilizers: importance weighting and constraining policy movement so old data remains informative.",
   },
 
   {
-    id: "cs224r-lect4-q34",
+    id: "cs224r-lect4-q55",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly describe the importance-weighted policy update for reused actor-critic data?",
+    options: [
+      {
+        text: "A per-action ratio \\(\\frac{\\pi_\\theta(a_i\\mid s_i)}{\\pi_{old}(a_i\\mid s_i)}\\) accounts for the difference between the current and data-collection policies.",
+        isCorrect: true,
+      },
+      {
+        text: "The ratio becomes unreliable when the new and old policies are very different.",
+        isCorrect: true,
+      },
+      {
+        text: "The correction should use \\(\\frac{\\pi_{old}(a_i\\mid s_i)}{\\pi_\\theta(a_i\\mid s_i)}\\) because the old policy is the optimization target.",
+        isCorrect: false,
+      },
+      {
+        text: "Once an importance ratio is included, the batch can be reused indefinitely without variance or stale-advantage problems.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Importance weighting adjusts expectations from the old sampling policy toward the current policy, so the numerator is the current policy probability. Ratios can explode, vanish, or combine with stale advantages when policies drift too far apart.",
+  },
+
+  {
+    id: "cs224r-lect4-q56",
     chapter: 4,
     difficulty: "medium",
-    prompt: "Which best describes n-step returns?",
+    prompt:
+      "Which statement correctly states the KL-constraint idea used to stabilize multiple actor updates from one batch?",
     options: [
-      { text: "Only one-step bootstrap.", isCorrect: false },
       {
-        text: "Full trajectory sum \\(G_t\\) without a bootstrap term.",
+        text: "Constrain the update so \\(\\mathbb{E}_{s\\sim\\pi_{old}}[D_{KL}(\\pi_\\theta(\\cdot\\mid s)\\|\\pi_{old}(\\cdot\\mid s))]\\le\\delta\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Force \\(D_{KL}(\\pi_\\theta\\|\\pi_{old})\\) to be as large as possible so exploration increases.",
         isCorrect: false,
       },
       {
-        text: "Partial reward sum plus bootstrap value \\(V(s_{t+n})\\).",
-        isCorrect: true,
+        text: "Apply \\(D_{KL}(\\hat V_\\phi\\|\\hat Q_\\phi)\\) to the critic loss only, because actor probabilities are irrelevant once advantages are estimated.",
+        isCorrect: false,
       },
-      { text: "No rewards used.", isCorrect: false },
+      {
+        text: "Use KL to guarantee \\(\\frac{\\pi_\\theta(a\\mid s)}{\\pi_{old}(a\\mid s)}=1\\) for every action in the batch.",
+        isCorrect: false,
+      },
     ],
     explanation:
-      "An n-step return uses a partial sum of observed rewards and then bootstraps from a value prediction at the state reached after \\(n\\) steps. It is therefore between one-step temporal difference learning and full Monte Carlo returns. It is not reward-free, and it is not merely a one-step bootstrap unless \\(n=1\\).",
+      "The KL constraint keeps the new policy close enough to the old policy that old samples and advantage estimates remain useful. It is a soft stability constraint, not a guarantee that the two policies are identical.",
   },
 
   {
-    id: "cs224r-lect4-q35",
+    id: "cs224r-lect4-q57",
     chapter: 4,
-    difficulty: "easy",
-    prompt: "Which statement about actor–critic efficiency is correct?",
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly explain why naive replay-buffer actor-critic is broken and how the critic update is fixed?",
     options: [
       {
-        text: "Less efficient than policy gradients because a critic can never reduce variance.",
+        text: "Replay-buffer actions \\(a_i\\) may not have been sampled from the current policy \\(\\pi_\\theta(a\\mid s_i)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "For a buffered transition \\((s_i,a_i,r_i,s_i')\\), fitting \\(\\hat V(s_i)\\) directly to \\(r_i+\\gamma\\hat V(s_i')\\) treats the buffered action as if it represented the current policy's average action.",
+        isCorrect: true,
+      },
+      {
+        text: "The fix is to learn \\(\\hat Q(s_i,a_i)\\) with targets such as \\(y_i=r_i+\\gamma\\hat Q(s_i',a_i')\\), where \\(a_i'\\sim\\pi_\\theta(\\cdot\\mid s_i')\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The fix is to discard \\(s_i'\\) and train \\(\\hat Q(s_i,a_i)\\) only on immediate rewards \\(r_i\\).",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "A replay transition contains a specific historical action, not a fresh draw from the current policy. That makes a direct state-value target wrong for the buffered state, so the lecture moves to a Q-function target conditioned on the actual action and samples the next action from the current policy.",
+  },
+
+  {
+    id: "cs224r-lect4-q58",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "In the replay-buffer critic update, suppose \\(r_i=1\\), \\(\\gamma=0.9\\), and a current-policy sample at the next state has \\(\\hat Q(s_i',a_i')=4\\). Which target is used for \\(\\hat Q(s_i,a_i)\\)?",
+    options: [
+      { text: "\\(y_i=1+0.9\\cdot4=4.6\\)", isCorrect: true },
+      { text: "\\(y_i=0.9\\cdot(1+4)=4.5\\)", isCorrect: false },
+      { text: "\\(y_i=1-0.9\\cdot4=-2.6\\)", isCorrect: false },
+      {
+        text: "\\(y_i=4\\), because the immediate reward is ignored.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The off-policy critic target keeps the observed immediate reward from the buffered transition and adds the discounted Q estimate for a next action sampled from the current policy. The target is not just the next Q-value, and the reward is not discounted separately from the bootstrap term.",
+  },
+
+  {
+    id: "cs224r-lect4-q59",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly describe the replay-buffer policy-update fix on the slides?",
+    options: [
+      {
+        text: "Using \\(\\nabla_\\theta\\log\\pi_\\theta(a_i\\mid s_i)\\) with a buffered action \\(a_i\\) is wrong because \\(a_i\\) may not be an action the current policy would take.",
+        isCorrect: true,
+      },
+      {
+        text: "A practical fix samples \\(a_i^\\pi\\sim\\pi_\\theta(\\cdot\\mid s_i)\\) and uses \\(\\nabla_\\theta\\log\\pi_\\theta(a_i^\\pi\\mid s_i)\\hat Q(s_i,a_i^\\pi)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The policy update should use the buffered action because it has lower variance and is always unbiased.",
         isCorrect: false,
       },
       {
-        text: "Uses learned value estimates for better gradients.",
-        isCorrect: true,
+        text: "The policy update no longer needs a score-function or reparameterized gradient once \\(\\hat Q\\) is learned.",
+        isCorrect: false,
       },
-      { text: "Does not require learning.", isCorrect: false },
-      { text: "Always unstable.", isCorrect: false },
     ],
     explanation:
-      "Actor-critic efficiency comes from using learned value estimates to produce better, lower-variance actor gradients than raw-return policy gradients. The critic has to be learned, so the method is not learning-free, and critic errors can create instability if handled poorly. It is not inherently less efficient than vanilla policy gradients, nor is it always unstable.",
+      "The actor gradient must evaluate actions drawn from the current policy, not arbitrary historical actions from the replay buffer. The slide notes that this sampled-action update has higher variance but is convenient, and later algorithms can also use reparameterization for Gaussian policies.",
+  },
+
+  {
+    id: "cs224r-lect4-q60",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly describe the remaining state-distribution issue in replay-buffer actor-critic?",
+    options: [
+      {
+        text: "The states \\(s_i\\) sampled from the replay buffer may not come from the current policy's state distribution \\(p_\\theta(s)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The lecture's practical stance is to accept optimizing over a broader state distribution rather than perfectly correcting this mismatch.",
+        isCorrect: true,
+      },
+      {
+        text: "This mismatch means the learned policy may be optimized on states beyond those visited by the current policy.",
+        isCorrect: true,
+      },
+      {
+        text: "Sampling current-policy actions \\(a_i^\\pi\\) fully removes the state-distribution mismatch.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Sampling a current-policy action fixes the action mismatch in the actor gradient, but it does not make replay-buffer states come from the current policy. The lecture notes that the method accepts this broader training distribution in exchange for data reuse.",
+  },
+
+  {
+    id: "cs224r-lect4-q61",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "Which statements correctly compare more off-policy and less off-policy actor-critic methods?",
+    options: [
+      {
+        text: "Replay-buffer methods such as Soft Actor-Critic can be much more data efficient.",
+        isCorrect: true,
+      },
+      {
+        text: "More off-policy methods can be harder to tune because stale data and function-approximation errors matter more.",
+        isCorrect: true,
+      },
+      {
+        text: "Less off-policy methods such as PPO-style approaches typically use less replay and can be more stable.",
+        isCorrect: true,
+      },
+      {
+        text: "The tradeoff is not one-sided: data efficiency and stability can move in opposite directions.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "The lecture's comparison slide frames replay-buffer actor-critic as data efficient but often harder to tune and less stable. Less off-policy approaches use fresher data, which can reduce mismatch at the cost of more environment interaction.",
+  },
+
+  {
+    id: "cs224r-lect4-q62",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "Which statement correctly describes the reparameterization-trick aside for Gaussian policies?",
+    options: [
+      {
+        text: "For a Gaussian policy, reparameterization can provide another way to estimate the actor gradient through a sampled action.",
+        isCorrect: true,
+      },
+      {
+        text: "Reparameterization is the reason Monte Carlo value targets become unbiased.",
+        isCorrect: false,
+      },
+      {
+        text: "Reparameterization removes the need to learn a Q-function in replay-buffer actor-critic.",
+        isCorrect: false,
+      },
+      {
+        text: "Reparameterization is a KL constraint that keeps \\(\\pi_\\theta\\) close to \\(\\pi_{old}\\).",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The aside is specifically about estimating policy gradients for continuous, often Gaussian, policies. It is separate from the value-target bias issue, the need for a critic, and the KL-constrained update idea.",
+  },
+
+  {
+    id: "cs224r-lect4-q63",
+    chapter: 4,
+    difficulty: "easy",
+    prompt:
+      "Which statements correctly distinguish the actor and critic in actor-critic methods?",
+    options: [
+      {
+        text: "The actor represents the policy \\(\\pi_\\theta(a\\mid s)\\), whose log probability appears in the actor-gradient term.",
+        isCorrect: true,
+      },
+      {
+        text: "The critic estimates quantities such as \\(V^\\pi(s)\\), \\(Q^\\pi(s,a)\\), or \\(A^\\pi(s,a)=Q^\\pi(s,a)-V^\\pi(s)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The actor is trained by minimizing \\(\\frac{1}{2}\\sum_i\\lVert\\hat V_\\phi(s_i)-y_i\\rVert^2\\) with respect to \\(\\phi\\).",
+        isCorrect: false,
+      },
+      {
+        text: "The critic samples actions from \\(\\pi_\\theta\\) and directly executes them in the environment.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The actor chooses actions through the policy, while the critic evaluates states or actions. The two components interact through advantage or Q estimates, but their roles and parameter updates are distinct.",
+  },
+
+  {
+    id: "cs224r-lect4-q64",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "At a state \\(s\\), suppose \\(V^\\pi(s)=3\\), \\(Q^\\pi(s,a_1)=2\\), and \\(Q^\\pi(s,a_2)=5\\). Which statements correctly interpret the advantages?",
+    options: [
+      {
+        text: "\\(A^\\pi(s,a_1)=-1\\), so an actor-gradient update should reduce the likelihood of \\(a_1\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(A^\\pi(s,a_2)=2\\), so an actor-gradient update should increase the likelihood of \\(a_2\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The value baseline \\(V^\\pi(s)=3\\) is what makes the sign of the update depend on relative action quality, not just raw return scale.",
+        isCorrect: true,
+      },
+      {
+        text: "\\(a_1\\) should be reinforced because its Q-value is positive.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Advantage compares each action against the state baseline, so a positive Q-value can still be below average for that state. Actor-critic reinforces actions with positive advantage and suppresses actions with negative advantage.",
+  },
+
+  {
+    id: "cs224r-lect4-q65",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "Which statements correctly describe labels in bootstrapped critic training?",
+    options: [
+      {
+        text: "The label can depend on the current critic through a term such as \\(\\hat V_\\phi(s_{t+1})\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Because \\(\\phi\\) changes, labels like \\(y_t=r_t+\\hat V_\\phi(s_{t+1})\\) may be updated on every gradient step.",
+        isCorrect: true,
+      },
+      {
+        text: "Bootstrapped labels such as \\(r_t+\\hat V_\\phi(s_{t+1})\\) can propagate information backward without waiting for \\(\\sum_{t'=t}^{T}r_{t'}\\).",
+        isCorrect: true,
+      },
+      {
+        text: "A practical initialization strategy can start with Monte Carlo targets \\(\\sum_{t'=t}^{T}r_{t'}\\) before relying more heavily on bootstrapping.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Bootstrapping is powerful because the critic can use its own current estimate as supervision for nearby earlier states. The price is that the target is moving, so implementation choices around initialization and label updates matter.",
+  },
+
+  {
+    id: "cs224r-lect4-q66",
+    chapter: 4,
+    difficulty: "medium",
+    prompt:
+      "Which statements correctly describe the critic regression objective used in the lecture?",
+    options: [
+      {
+        text: "A typical critic loss is \\(\\mathcal{L}(\\phi)=\\frac{1}{2}\\sum_i\\lVert\\hat V^\\pi_\\phi(s_i)-y_i\\rVert^2\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The critic can take multiple gradient steps on this regression loss without directly changing the policy parameters.",
+        isCorrect: true,
+      },
+      {
+        text: "The critic loss is \\(\\sum_i\\log\\pi_\\theta(a_i\\mid s_i)y_i\\), so it is optimized with respect to actor parameters.",
+        isCorrect: false,
+      },
+      {
+        text: "The regression target \\(y_i\\) must always be the immediate reward only.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The critic is trained as a supervised regression problem from states or state-action pairs to return targets. The target can be Monte Carlo, bootstrapped, or n-step; it is not limited to immediate reward.",
+  },
+
+  {
+    id: "cs224r-lect4-q67",
+    chapter: 4,
+    difficulty: "hard",
+    prompt: `A stochastic policy has three actions at state \\(s\\):
+
+| Action | \\(\\pi(a\\mid s)\\) | \\(Q^\\pi(s,a)\\) |
+| --- | ---: | ---: |
+| \\(a_1\\) | 0.2 | 1 |
+| \\(a_2\\) | 0.5 | 0 |
+| \\(a_3\\) | 0.3 | 4 |
+
+Which option correctly computes \\(V^\\pi(s)\\)?`,
+    options: [
+      {
+        text: "\\(V^\\pi(s)=0.2\\cdot1+0.5\\cdot0+0.3\\cdot4=1.4\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(V^\\pi(s)=\\frac{1+0+4}{3}=1.67\\), because action probabilities are ignored.",
+        isCorrect: false,
+      },
+      {
+        text: "\\(V^\\pi(s)=4\\), because the value uses the best action's Q-value.",
+        isCorrect: false,
+      },
+      {
+        text: "\\(V^\\pi(s)=0\\), because the most likely action has Q-value 0.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The value function averages Q-values under the policy's action probabilities. It is neither the best action value, the unweighted average, nor just the value of the most likely action.",
+  },
+
+  {
+    id: "cs224r-lect4-q68",
+    chapter: 4,
+    difficulty: "easy",
+    prompt:
+      "Which statements correctly describe policy evaluation in the actor-critic lecture?",
+    options: [
+      {
+        text: "Policy evaluation means estimating how good states or actions are for a fixed policy.",
+        isCorrect: true,
+      },
+      {
+        text: "Monte Carlo estimation, bootstrapping, and n-step returns are three value-estimation approaches discussed for policy evaluation.",
+        isCorrect: true,
+      },
+      {
+        text: "Policy evaluation can supply the critic signal used by an actor-critic policy update.",
+        isCorrect: true,
+      },
+      {
+        text: "Policy evaluation requires knowing the environment transition model exactly.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The lecture uses policy evaluation to mean learning value estimates from sampled data. It does not require an explicit dynamics model; the examples fit values from rollouts and bootstrapped targets.",
+  },
+
+  {
+    id: "cs224r-lect4-q69",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly describe the modified-MDP interpretation of discounting shown on the slides?",
+    options: [
+      {
+        text: "Ordinary transition probabilities can be viewed as scaled to \\(\\tilde p(s'\\mid s,a)=\\gamma p(s'\\mid s,a)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The remaining probability \\(1-\\gamma\\) can be viewed as going to a zero-reward absorbing terminal state.",
+        isCorrect: true,
+      },
+      {
+        text: "The modified-MDP view requires scaling ordinary transitions by \\(1-\\gamma\\) and terminal transitions by \\(\\gamma\\).",
+        isCorrect: false,
+      },
+      {
+        text: "The modified-MDP view applies only to the actor network and not to value targets.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The slide's interpretation of discounting is a stochastic termination model: continue according to the original dynamics with probability mass \\(\\gamma\\), and terminate with probability mass \\(1-\\gamma\\). This is another way to understand why future rewards are geometrically downweighted.",
+  },
+
+  {
+    id: "cs224r-lect4-q70",
+    chapter: 4,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly summarize the replay-buffer actor-critic variant after the slide fixes?",
+    options: [
+      {
+        text: "The replay buffer stores transitions \\((s_i,a_i,r_i,s_i')\\) collected over prior time steps.",
+        isCorrect: true,
+      },
+      {
+        text: "The critic is better represented as \\(\\hat Q_\\phi(s,a)\\), with targets like \\(y_i=r_i+\\gamma\\hat Q_\\phi(s_i',a_i')\\), because buffered actions are specific actions.",
+        isCorrect: true,
+      },
+      {
+        text: "The actor update can sample \\(a_i^\\pi\\sim\\pi_\\theta(\\cdot\\mid s_i)\\) and use \\(\\hat Q(s_i,a_i^\\pi)\\) to weight the policy-gradient term.",
+        isCorrect: true,
+      },
+      {
+        text: "The method accepts that replay states come from a broader distribution, roughly \\(p_{\\mathcal{R}}(s)\\neq p_\\theta(s)\\), than the current policy's exact state distribution.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "The fixed replay-buffer variant changes both the critic target and the policy update to handle action mismatch, then accepts the remaining state-distribution mismatch. That is the foundation of more off-policy actor-critic algorithms such as Soft Actor-Critic.",
   },
 ];

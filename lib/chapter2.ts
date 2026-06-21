@@ -556,14 +556,14 @@ export const chapter2Questions: Question[] = [
     chapter: 2,
     difficulty: "medium",
     prompt:
-      "In autoregressive language modeling, how is the probability of a sequence w₁…wₙ typically factorized?",
+      "In autoregressive language modeling, how is the probability of a token sequence \\(w_1,\\ldots,w_n\\) typically factorized?",
     options: [
       {
-        text: "As the product ∏ᵢ P(wᵢ | w₁:ᵢ₋₁).",
+        text: "As the product \\(\\prod_i P(w_i \\mid w_{1:i-1})\\).",
         isCorrect: true,
       },
       {
-        text: "As the sum ∑ᵢ P(wᵢ | w₁:ᵢ₋₁).",
+        text: "As the sum \\(\\sum_i P(w_i \\mid w_{1:i-1})\\).",
         isCorrect: false,
       },
       {
@@ -576,7 +576,7 @@ export const chapter2Questions: Question[] = [
       },
     ],
     explanation:
-      'The chain rule expresses the joint probability as a product of conditional probabilities for each token given its predecessors. To reason through the choices, select the statements that match the criterion in the prompt: "As the product ∏ᵢ P(wᵢ | w₁:ᵢ₋₁)."; "Using the chain rule of probability.". Do not select statements that miss that criterion: "As the sum ∑ᵢ P(wᵢ | w₁:ᵢ₋₁)."; "Assuming all tokens are independent of each other.". This contrast makes the conceptual boundary explicit instead of relying on familiar-sounding wording.',
+      "The chain rule expresses the joint probability as a product of conditional next-token probabilities, so each token is conditioned on the previous tokens. Adding the probabilities would not produce the joint sequence probability, and assuming independence would remove the autoregressive context that the model is trained to use.",
   },
   {
     id: "ch2-q22",

@@ -1,1019 +1,996 @@
 import { Question } from "../../quiz";
 
-// lib/lectures/Stanford CME295 Transformers & LLMs/lecture5_Off-Policy Actor Critic Methods.ts
-
 export const lecture5_OffPolicyActorCriticQuestions: Question[] = [
-  // 1 (Easy) — 1 true
   {
-    id: "cs224r-lect5-q01",
+    id: "cs224r-lect5-q36",
     chapter: 5,
     difficulty: "easy",
     prompt:
-      "In off-policy actor-critic, what does an importance ratio like \\(w_t = \\frac{\\pi_{\\theta'}(a_t\\mid s_t)}{\\pi_{\\theta}(a_t\\mid s_t)}\\) primarily do?",
+      "Which statements correctly set up the off-policy actor-critic problem when one batch is reused for multiple policy-gradient steps?",
     options: [
       {
-        text: "It reweights data collected under \\(\\pi_{\\theta}\\) to estimate gradients for \\(\\pi_{\\theta'}\\).",
+        text: "Data can be collected by \\(\\pi_\\theta(a\\mid s)\\) while gradients are evaluated for a later policy \\(\\pi_{\\theta'}(a\\mid s)\\).",
         isCorrect: true,
       },
       {
-        text: "It converts a stochastic policy into a deterministic greedy policy.",
-        isCorrect: false,
-      },
-      {
-        text: "It replaces the need to estimate advantages \\(\\hat A\\) entirely.",
-        isCorrect: false,
-      },
-      {
-        text: "It makes the learning signal independent of how the data was collected.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Importance sampling reweights samples from a behavior policy \\(\\pi_{\\theta}\\) so we can form an estimator for the target policy \\(\\pi_{\\theta'}\\). It does not remove the need for advantage/value estimation, and it does not magically eliminate distribution shift when policies differ a lot.",
-  },
-
-  // 2 (Easy) — 2 true
-  {
-    id: "cs224r-lect5-q02",
-    chapter: 5,
-    difficulty: "easy",
-    prompt:
-      "Which statements about the advantage function \\(A^{\\pi}(s,a)=Q^{\\pi}(s,a)-V^{\\pi}(s)\\) are correct?",
-    options: [
-      {
-        text: "\\(A^{\\pi}(s,a)\\) measures how much better action \\(a\\) is than the policy’s average action at \\(s\\).",
+        text: "The likelihood ratio \\(\\rho_{t,i}(\\theta')=\\frac{\\pi_{\\theta'}(a_{t,i}\\mid s_{t,i})}{\\pi_\theta(a_{t,i}\\mid s_{t,i})}\\) corrects for the policy mismatch in the sampled action.",
         isCorrect: true,
       },
       {
-        text: "If \\(A^{\\pi}(s,a) > 0\\), increasing \\(\\pi(a\\mid s)\\) tends to improve the objective locally (for that \\(\\pi\\)).",
+        text: "The advantage estimate \\(\\hat A^{\\pi_\theta}(s_{t,i},a_{t,i})\\) is still tied to the old data-collection policy \\(\\pi_\\theta\\).",
         isCorrect: true,
       },
       {
-        text: "\\(A^{\\pi}(s,a)\\) is defined without reference to any policy \\(\\pi\\).",
-        isCorrect: false,
-      },
-      {
-        text: "\\(A^{\\pi}(s,a)\\) must be nonnegative for all \\((s,a)\\).",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Advantage compares an action’s expected return to the policy’s baseline value at that state. Positive advantage means the action is better than the policy’s typical behavior at \\(s\\), so pushing probability mass toward it is beneficial for small updates under that same policy.",
-  },
-
-  // 3 (Easy) — 3 true
-  {
-    id: "cs224r-lect5-q03",
-    chapter: 5,
-    difficulty: "easy",
-    prompt:
-      "Why can taking many gradient steps on a single batch in off-policy actor-critic become unstable?",
-    options: [
-      {
-        text: "The advantage estimates \\(\\hat A\\) are computed under the old policy and can become outdated as the policy changes.",
-        isCorrect: true,
-      },
-      {
-        text: "The surrogate objective can incentivize making the importance ratio \\(\\pi_{\\theta'}(a\\mid s)/\\pi_{\\theta}(a\\mid s)\\) very large for some samples.",
-        isCorrect: true,
-      },
-      {
-        text: "Over-optimizing on a finite batch can cause overfitting to that batch’s idiosyncrasies (poor generalization to new rollouts).",
-        isCorrect: true,
-      },
-      {
-        text: "Automatic differentiation (e.g., PyTorch) introduces bias that grows with the number of gradient steps.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "The core issue is mismatch: you keep updating the policy while keeping \\(\\hat A\\) fixed from old data, so the learning signal stops matching the current policy. Because the ratio can be pushed far from 1, the policy can overfit the batch and become unstable.",
-  },
-
-  // 4 (Easy) — all true
-  {
-    id: "cs224r-lect5-q04",
-    chapter: 5,
-    difficulty: "easy",
-    prompt:
-      "Consider the surrogate objective form \\(\\tilde J(\\theta') = \\sum_{i,t} \\frac{\\pi_{\\theta'}(a_{i,t}\\mid s_{i,t})}{\\pi_{\\theta}(a_{i,t}\\mid s_{i,t})} \\hat A_{\\pi_{\\theta}}(s_{i,t},a_{i,t})\\). Which statements are correct?",
-    options: [
-      {
-        text: "It is constructed so that differentiating w.r.t. \\(\\theta'\\) yields the off-policy policy-gradient estimator with importance weights.",
-        isCorrect: true,
-      },
-      {
-        text: "The denominator \\(\\pi_{\\theta}(a\\mid s)\\) is treated as a constant when optimizing over \\(\\theta'\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Large positive advantages encourage increasing \\(\\pi_{\\theta'}(a\\mid s)\\) relative to \\(\\pi_{\\theta}(a\\mid s)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "If advantages stay accurate for the updated policy, maximizing \\(\\tilde J\\) can improve expected return.",
+        text: "Taking too many steps on one batch can make fixed advantages \\(\\hat A^{\\pi_\\theta}\\) stale relative to \\(\\pi_{\\theta'}\\).",
         isCorrect: true,
       },
     ],
     explanation:
-      "This surrogate is a practical way to get the desired gradient via autodiff while reusing behavior-policy data. The denominator is fixed because it came from the data-collection policy, and positive \\(\\hat A\\) pushes the ratio upward for those actions.",
+      "The key tension is that the data and advantages come from an older policy while the optimizer changes the current policy. Importance ratios let the same batch estimate a gradient for \\(\\theta'\\), but the correction is fragile when the policies drift too far apart.",
   },
 
-  // 5 (Medium) — 1 true
   {
-    id: "cs224r-lect5-q05",
+    id: "cs224r-lect5-q37",
     chapter: 5,
     difficulty: "medium",
     prompt:
-      "In PPO-style clipping, what does it mean to clip an importance weight \\(w = \\frac\\pi{\\pi_\\text{old}}\\) to \\([1-\\epsilon,1+\\epsilon]\\)?",
+      "Which expressions correctly describe the importance-weighted policy-gradient estimator for reusing data from \\(\\pi_\\theta\\) while updating \\(\\pi_{\\theta'}\\)?",
     options: [
       {
-        text: "The objective stops giving additional incentive to increase (or decrease) \\(w\\) once it leaves \\([1-\\epsilon,1+\\epsilon]\\).",
+        text: "\\(\\nabla_{\\theta'}J(\\theta')\\approx \\sum_{t,i}\\frac{\\pi_{\\theta'}(a_{t,i}\\mid s_{t,i})}{\\pi_{\\theta}(a_{t,i}\\mid s_{t,i})}\\nabla_{\\theta'}\\log\\pi_{\\theta'}(a_{t,i}\\mid s_{t,i})\\hat A^{\\pi_\\theta}(s_{t,i},a_{t,i})\\).",
         isCorrect: true,
       },
       {
-        text: "The policy parameters are projected back to a KL ball after each gradient step.",
+        text: "The denominator is the behavior-policy probability of the sampled action, so it is treated as fixed when differentiating with respect to \\(\\theta'\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(\\nabla_{\\theta'}J(\\theta')\\approx \\sum_{t,i}\\frac{\\pi_{\\theta}(a_{t,i}\\mid s_{t,i})}{\\pi_{\\theta'}(a_{t,i}\\mid s_{t,i})}\\nabla_{\\theta'}\\log\\pi_{\\theta}(a_{t,i}\\mid s_{t,i})\\hat A^{\\pi_{\\theta'}}(s_{t,i},a_{t,i})\\).",
         isCorrect: false,
       },
       {
-        text: "The advantage estimates \\(\\hat A\\) are rescaled so their magnitudes fall in \\([1-\\epsilon,1+\\epsilon]\\).",
-        isCorrect: false,
-      },
-      {
-        text: "The replay buffer is truncated to keep only transitions whose \\(w\\) lies in \\([1-\\epsilon,1+\\epsilon]\\).",
+        text: "The ratio can be omitted after the first gradient step because \\(\\hat A^{\\pi_\theta}\\) already contains the policy mismatch correction.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Clipping modifies the surrogate so extreme ratios no longer improve the objective beyond a bound. It is not a projection step, and it does not change the replay buffer or directly rescale \\(\\hat A\\).",
+      "The ratio must put the target policy probability over the behavior policy probability for the same sampled action. The score-function term is differentiated under the updated policy, while the old-policy denominator and old-policy advantage estimates are not themselves recomputed inside that gradient.",
   },
 
-  // 6 (Medium) — 2 true
   {
-    id: "cs224r-lect5-q06",
+    id: "cs224r-lect5-q38",
+    chapter: 5,
+    difficulty: "hard",
+    prompt: `A transition was collected under \\(\\pi_\\theta\\). For the sampled action, \\(\\pi_\\theta(a\\mid s)=0.10\\), \\(\\pi_{\\theta'}(a\\mid s)=0.25\\), and \\(\\hat A^{\\pi_\theta}(s,a)=3\\). Ignoring the shared score-vector direction, which scalar multiplier appears in the importance-weighted actor update?`,
+    options: [
+      {
+        text: "\\(7.5\\), because \\(\\frac{0.25}{0.10}\\cdot 3=7.5\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(1.2\\), because \\(\\frac{0.10}{0.25}\\cdot 3=1.2\\).",
+        isCorrect: false,
+      },
+      {
+        text: "\\(3.0\\), because importance weights are used only for negative advantages.",
+        isCorrect: false,
+      },
+      {
+        text: "\\(0.75\\), because the target probability multiplies the advantage without division.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The off-policy correction uses the target-over-behavior ratio, so the sampled action receives \\(2.5\\) times its old-policy advantage. Reversing the ratio would downweight exactly the action whose probability increased under the new policy.",
+  },
+
+  {
+    id: "cs224r-lect5-q39",
     chapter: 5,
     difficulty: "medium",
     prompt:
-      "Why does PPO take a per-sample minimum between the unclipped and clipped objectives?",
+      "Why can repeatedly maximizing the same importance-weighted surrogate overfit a single batch of actor-critic data?",
     options: [
       {
-        text: "It ensures the clipped objective is a lower bound on the unclipped surrogate, preventing clipping from artificially improving the objective.",
+        text: "Large positive old-policy advantages can keep pushing \\(\\pi_{\\theta'}(a\\mid s)/\\pi_\theta(a\\mid s)\\) upward for the same sampled actions.",
         isCorrect: true,
       },
       {
-        text: "It avoids cases where clipping would reduce the penalty for a badly-updated sample (e.g., huge ratio with negative advantage).",
+        text: "The advantage labels \\(\\hat A^{\\pi_\\theta}\\) were estimated from a finite batch under \\(\\pi_\theta\\), so they can become inaccurate after the policy changes substantially.",
         isCorrect: true,
       },
       {
-        text: "It makes the policy update exactly unbiased even for very large policy changes.",
-        isCorrect: false,
+        text: "A neural policy can push \\(\\pi_{\\theta'}(a\\mid s)\\) close to 1 around high-advantage samples and lose useful exploration.",
+        isCorrect: true,
       },
       {
-        text: "It removes the need to tune \\(\\epsilon\\) because the minimum adapts automatically.",
+        text: "The problem is that automatic differentiation makes \\(\\nabla_{\\theta'}\\pi_\\theta(a\\mid s)\\neq0\\) for the old-policy denominator.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Taking the minimum prevents the optimizer from ‘benefiting’ from clipping in pathological cases where clipping would otherwise raise the objective. It improves stability, but it does not guarantee unbiasedness for large deviations and still depends on \\(\\epsilon\\).",
+      "The instability comes from optimizing against stale labels and finite-batch quirks, not from a basic autodiff error. Constraining the update keeps the new policy near the data-collection policy so the old advantage estimates remain more meaningful.",
   },
 
-  // 7 (Medium) — 3 true
   {
-    id: "cs224r-lect5-q07",
-    chapter: 5,
-    difficulty: "medium",
-    prompt: "Which statements about KL-penalized policy updates are correct?",
-    options: [
-      {
-        text: "Adding \\(-\\beta\\,D_{\\mathrm{KL}}(\\pi_{\\theta'}(\\cdot\\mid s)\\|\\pi_{\\theta}(\\cdot\\mid s))\\) discourages large changes to the action distribution.",
-        isCorrect: true,
-      },
-      {
-        text: "The coefficient \\(\\beta\\) controls the tradeoff between improving the surrogate and staying close to the old policy.",
-        isCorrect: true,
-      },
-      {
-        text: "Keeping the policy close helps because advantage estimates computed under the old policy are more likely to remain valid.",
-        isCorrect: true,
-      },
-      {
-        text: "A KL penalty guarantees monotonic improvement in expected return for any \\(\\beta\\).",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "KL penalties are a common way to constrain update size in distribution space. They help with stale advantages by limiting drift, but they do not provide a universal monotonic-improvement guarantee without additional conditions/analysis.",
-  },
-
-  // 8 (Medium) — all true
-  {
-    id: "cs224r-lect5-q08",
+    id: "cs224r-lect5-q40",
     chapter: 5,
     difficulty: "medium",
     prompt:
-      "Generalized Advantage Estimation (GAE) can be_toggle as combining multiple horizons. Which statements are correct?",
+      "Which statements correctly connect the surrogate objective \\(\\tilde J(\\theta')\\approx\\sum_{t,i}\\rho_{t,i}(\\theta')\\hat A^{\\pi_\theta}_{t,i}\\) to the importance-weighted policy gradient?",
     options: [
       {
-        text: "GAE mixes multi-step temporal-difference residuals to trade off bias and variance in \\(\\hat A\\).",
+        text: "Differentiating \\(\\pi_{\\theta'}(a\\mid s)\\) gives \\(\\pi_{\\theta'}(a\\mid s)\\nabla_{\\theta'}\\log\\pi_{\\theta'}(a\\mid s)\\), which recovers the score-function form.",
         isCorrect: true,
       },
       {
-        text: "Smaller effective horizons typically reduce variance but may increase bias if the value function is imperfect.",
+        text: "The surrogate makes it visually clear why \\(\\hat A^{\\pi_\\theta}_{t,i}>0\\) incentivizes increasing \\(\\rho_{t,i}(\\theta')\\).",
         isCorrect: true,
       },
       {
-        text: "Discount \\(\\gamma\\) and the GAE mixing parameter (often \\(\\lambda\\)) appear together in weighting future terms (e.g., \\((\\gamma\\lambda)^{k}\\)).",
-        isCorrect: true,
+        text: "The surrogate is maximized by differentiating \\(\\hat A^{\\pi_\theta}_{t,i}\\) through \\(\\phi\\) on every actor step, producing \\(\\nabla_{\\theta'}\\hat A^{\\pi_\theta}\\).",
+        isCorrect: false,
       },
       {
-        text: "GAE is used to estimate advantages even if the value function \\(\\hat V\\) is trained with Monte Carlo or bootstrapped targets.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "GAE constructs \\(\\hat A\\) by exponentially weighting TD residuals, commonly involving \\(\\gamma\\lambda\\). It’s compatible with different value-fitting approaches; the key is that advantage estimation uses a controlled mix of horizons.",
-  },
-
-  // 9 (Easy) — 3 true
-  {
-    id: "cs224r-lect5-q09",
-    chapter: 5,
-    difficulty: "easy",
-    prompt:
-      "A replay buffer in off-policy reinforcement learning is best described by which statements?",
-    options: [
-      {
-        text: "It stores past transitions \\((s,a,r,s')\\) from (potentially) many earlier policies.",
-        isCorrect: true,
-      },
-      {
-        text: "Training updates sample minibatches from the buffer rather than only using the most recent on-policy batch.",
-        isCorrect: true,
-      },
-      {
-        text: "It enables much higher data reuse, often improving sample efficiency.",
-        isCorrect: true,
-      },
-      {
-        text: "It guarantees that the state distribution matches the current policy’s on-policy visitation distribution.",
+        text: "The surrogate removes the need to know the behavior probability \\(\\pi_\\theta(a_{t,i}\\mid s_{t,i})\\) for each sampled action.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Replay buffers let you reuse older experience by sampling random minibatches of transitions. The buffer’s state distribution is not necessarily the current on-policy distribution; that mismatch is part of what makes off-policy learning both powerful and tricky.",
+      "The surrogate is a convenient objective whose gradient has the desired importance-weighted score term. It still depends on knowing the behavior probability in the denominator and treats the old batch's advantage estimates as fixed actor-update weights.",
   },
 
-  // 10 (Medium) — 1 true
   {
-    id: "cs224r-lect5-q10",
+    id: "cs224r-lect5-q41",
     chapter: 5,
     difficulty: "medium",
     prompt:
-      "If you train a value function \\(\\hat V\\) using bootstrapped targets \\(y = r + \\gamma\\hat V(s')\\) on data sampled uniformly from a replay buffer, which policy’s value are you most directly approximating?",
+      "Which statements correctly describe using a Kullback-Leibler (KL) constraint or penalty between \\(\\pi_{\\theta'}\\) and \\(\\pi_\theta\\) during repeated policy updates?",
     options: [
       {
-        text: "A complicated mixture of past behavior policies represented in the buffer, not strictly the current policy.",
+        text: "It discourages \\(\\pi_{\\theta'}(\\cdot\\mid s)\\) from moving too far from \\(\\pi_\\theta(\\cdot\\mid s)\\), the policy that produced the batch.",
         isCorrect: true,
       },
       {
-        text: "Exactly the current policy \\(\\pi_{\\theta}\\), because \\(\\hat V\\) is a function only of state.",
-        isCorrect: false,
+        text: "Keeping \\(D_{KL}(\\pi_{\\theta'}\\|\\pi_\\theta)\\) small makes old-policy advantages more likely to remain useful for \\(\\pi_{\\theta'}\\).",
+        isCorrect: true,
       },
       {
-        text: "Exactly the oldest policy in the buffer, because its data dominates early on.",
-        isCorrect: false,
+        text: "It can be written as a term such as \\(-\\beta D_{KL}(\\pi_{\\theta'}(\\cdot\\mid s)\\|\\pi_\theta(\\cdot\\mid s))\\) when maximizing a surrogate.",
+        isCorrect: true,
       },
       {
-        text: "A policy-independent quantity that depends only on environment dynamics.",
+        text: "It exactly fixes replay-buffer state-distribution mismatch by making \\(p_{\\mathcal R}(s)=p_{\\theta'}(s)\\) for all later updates.",
         isCorrect: false,
       },
     ],
     explanation:
-      "When transitions come from many behavior policies, the induced distribution over next states/actions reflects that history. Bootstrapping \\(\\hat V\\) on the buffer does not cleanly correspond to \\(V^{\\pi_{\\theta}}\\) unless the data distribution matches the current policy’s distribution.",
+      "The KL term is a local step-size control for policy updates on a recent batch. It does not solve the harder replay-buffer problem where the states themselves may come from many older policies.",
   },
 
-  // 11 (Hard) — 2 true
   {
-    id: "cs224r-lect5-q11",
+    id: "cs224r-lect5-q42",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "For PPO-style clipping with \\(\\rho=\\frac{\\pi_{\\theta'}(a\\mid s)}{\\pi_\theta(a\\mid s)}\\), which statements are correct?",
+    options: [
+      {
+        text: "The clipped term uses \\(\\mathrm{clip}(\\rho,1-\\epsilon,1+\\epsilon)\\hat A\\) as one candidate objective contribution.",
+        isCorrect: true,
+      },
+      {
+        text: "For \\(\\hat A>0\\), clipping above \\(1+\\epsilon\\) stops rewarding further increases in the sampled action's probability.",
+        isCorrect: true,
+      },
+      {
+        text: "For \\(\\hat A<0\\), clipping below \\(1-\\epsilon\\) stops rewarding further decreases in the sampled action's probability.",
+        isCorrect: true,
+      },
+      {
+        text: "Clipping guarantees \\(D_{KL}(\\pi_{\\theta'}(\\cdot\\mid s)\\|\\pi_\\theta(\\cdot\\mid s))\\le\\epsilon\\) at every state.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Clipping controls the incentive created by each sampled ratio, which is weaker than a hard distribution-level KL constraint. The sign of the advantage matters because increasing a bad action and decreasing a good action should not be rewarded.",
+  },
+
+  {
+    id: "cs224r-lect5-q43",
+    chapter: 5,
+    difficulty: "hard",
+    prompt: `Use the PPO clipped objective contribution
+\\[
+\\min\\left(\\rho \\hat A,\\; \\mathrm{clip}(\\rho,1-\\epsilon,1+\\epsilon)\\hat A\\right).
+\\]
+If \\(\\epsilon=0.2\\), \\(\\rho=1.5\\), and \\(\\hat A=4\\), what contribution is used?`,
+    options: [
+      {
+        text: "\\(4.8\\), because \\(\\min(1.5\\cdot4,1.2\\cdot4)=4.8\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(6.0\\), because \\(1.5\\cdot4\\) is the unclipped contribution.",
+        isCorrect: false,
+      },
+      {
+        text: "\\(3.2\\), because the ratio is always clipped to \\(1-\\epsilon=0.8\\).",
+        isCorrect: false,
+      },
+      {
+        text: "\\(1.2\\), because clipping returns only the clipped ratio.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "For a positive advantage, a ratio above \\(1.2\\) would keep rewarding an already-large probability increase. The clipped candidate is \\(4.8\\), and the per-sample minimum selects it over the larger unclipped contribution.",
+  },
+
+  {
+    id: "cs224r-lect5-q44",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "Why does PPO use the per-sample minimum between the unclipped and clipped surrogate terms?",
+    options: [
+      {
+        text: "It prevents clipping from accidentally increasing the objective for a sample when the ratio moved in a harmful direction.",
+        isCorrect: true,
+      },
+      {
+        text: "It makes the clipped surrogate a conservative version of the original importance-weighted term for that sample.",
+        isCorrect: true,
+      },
+      {
+        text: "It makes the objective exactly unbiased for arbitrarily large changes from \\(\\pi_\theta\\) to \\(\\pi_{\\theta'}\\).",
+        isCorrect: false,
+      },
+      {
+        text: "It eliminates the need to collect new batches after the PPO epochs are finished.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The minimum implements a pessimistic choice between the raw and clipped ratio contributions. It improves local stability, but PPO is still a biased practical surrogate and still refreshes data after multiple gradient steps.",
+  },
+
+  {
+    id: "cs224r-lect5-q45",
     chapter: 5,
     difficulty: "hard",
     prompt:
-      "To make replay-buffer actor-critic less ‘broken’, the lecture suggests fitting \\(Q^{\\pi}(s,a)\\) instead of \\(V^{\\pi}(s)\\). Which statements are correct?",
+      "Which statements correctly describe generalized advantage estimation (GAE) as used with PPO?",
     options: [
       {
-        text: "Because \\(Q^{\\pi}(s,a)\\) conditions on \\(a\\), it is acceptable that the stored action came from an older policy.",
+        text: "It starts from value estimates \\(\\hat V^\\pi\\) that can be fit with Monte Carlo, bootstrapped, or n-step-style targets.",
         isCorrect: true,
       },
       {
-        text: "A Bellman-style target can use \\(a'\\sim\\pi_{\\theta}(\\cdot\\mid s')\\) even when \\((s,a,r,s')\\) came from the buffer.",
+        text: "An n-step advantage can be written in the form \\(\\hat A_n(s_t,a_t)=\\sum_{k=0}^{n-1}\\gamma^k r_{t+k}-\\hat V(s_t)+\\gamma^n\\hat V(s_{t+n})\\).",
         isCorrect: true,
       },
       {
-        text: "Fitting \\(Q\\) eliminates the need for any coverage of the action space by the replay buffer.",
-        isCorrect: false,
+        text: "GAE combines several horizon lengths, for example \\(\\hat A_{GAE}(s_t,a_t)=\\sum_{n=1}^{N}w_n\\hat A_n(s_t,a_t)\\).",
+        isCorrect: true,
       },
       {
-        text: "Using \\(Q\\) makes the resulting policy update fully on-policy again.",
-        isCorrect: false,
+        text: "Choosing weights that emphasize shorter horizons can reduce variance by cutting off the return earlier.",
+        isCorrect: true,
       },
     ],
     explanation:
-      "Conditioning on \\(a\\) allows off-policy actions in the dataset to still be valid inputs to the critic. The key trick is to bootstrap with next actions sampled from the current policy, but you still need reasonable coverage; otherwise the critic learns on out-of-distribution actions/states.",
+      "GAE is a weighted mixture of advantage estimates with different bootstrap horizons. Shorter horizons rely more on the critic and usually reduce variance, while longer horizons use more observed rewards and can reduce bootstrap bias.",
   },
 
-  // 12 (Hard) — 3 true
   {
-    id: "cs224r-lect5-q12",
+    id: "cs224r-lect5-q46",
     chapter: 5,
     difficulty: "hard",
-    prompt:
-      "Consider the Bellman-style relation for a fixed policy \\(\\pi_{\\theta}\\): \\n\\(Q^{\\pi_{\\theta}}(s,a) = r(s,a) + \\gamma\\,\\mathbb{E}_{s'\\sim p(\\cdot\\mid s,a),\\,a'\\sim\\pi_{\\theta}(\\cdot\\mid s')}[Q^{\\pi_{\\theta}}(s',a')]\\). Which statements are correct?",
+    prompt: `For a two-step advantage estimate, use
+\\[
+\\hat A_2(s_t,a_t)=r_t+\\gamma r_{t+1}-\\hat V(s_t)+\\gamma^2\\hat V(s_{t+2}).
+\\]
+If \\(r_t=1\\), \\(r_{t+1}=2\\), \\(\\gamma=0.5\\), \\(\\hat V(s_t)=3\\), and \\(\\hat V(s_{t+2})=4\\), what is \\(\\hat A_2\\)?`,
     options: [
       {
-        text: "It holds for any \\((s,a)\\) pair, not only those selected by the current policy at \\(s\\).",
+        text: "\\(0\\), because \\(1+0.5\\cdot2-3+0.25\\cdot4=0\\).",
         isCorrect: true,
       },
       {
-        text: "Using a single sampled \\(s'\\) from the replay buffer is a Monte Carlo approximation of the expectation over next states.",
-        isCorrect: true,
+        text: "\\(1\\), because the bootstrap term is \\(0.5\\cdot4\\).",
+        isCorrect: false,
       },
       {
-        text: "Sampling \\(a'\\) from the current policy at \\(s'\\) targets the current policy’s \\(Q\\) rather than the behavior policy’s future actions.",
-        isCorrect: true,
+        text: "\\(-1\\), because the second reward is omitted in a two-step estimate.",
+        isCorrect: false,
       },
       {
-        text: "The equation implies \\(Q^{\\pi_{\\theta}}(s,a)\\) can be estimated accurately even if \\(s\\) is never observed in data.",
+        text: "\\(4\\), because the baseline \\(\\hat V(s_t)\\) is added rather than subtracted.",
         isCorrect: false,
       },
     ],
     explanation:
-      "The Bellman equation is policy-defined and applies to any \\((s,a)\\). In practice you approximate expectations using sampled next states from the buffer and next actions from the current policy, but you still need data coverage of relevant states (or generalization) to learn meaningful values.",
+      "The two-step estimate includes two discounted rewards, subtracts the current-state baseline, and then adds the discounted bootstrap value. The exponent on the bootstrap term is \\(\\gamma^2\\), not \\(\\gamma\\).",
   },
 
-  // 13 (Hard) — all true
   {
-    id: "cs224r-lect5-q13",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "A practical off-policy critic update described in the lecture resembles supervised regression with target \\(y_i = r_i + \\gamma\\,\\hat Q(s'_i, a'_i)\\) where \\(a'_i\\sim\\pi_{\\theta}(\\cdot\\mid s'_i)\\). Which statements are correct?",
-    options: [
-      {
-        text: "The input to the critic network is \\((s_i,a_i)\\), where \\(a_i\\) may come from an older behavior policy stored in the replay buffer.",
-        isCorrect: true,
-      },
-      {
-        text: "The target uses \\(a'_i\\) sampled from the current policy, not necessarily the buffer’s next action, to better match \\(Q^{\\pi_{\\theta}}\\).",
-        isCorrect: true,
-      },
-      {
-        text: "This update is a form of bootstrapping (temporal-difference learning) because the target depends on the current critic’s estimate.",
-        isCorrect: true,
-      },
-      {
-        text: "Accuracy of \\(y_i\\) depends on having enough coverage of actions/states relevant to the current policy (or strong generalization).",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "This is a TD-style regression objective: fit \\(\\hat Q(s,a)\\) to a bootstrapped label that uses \\(\\hat Q\\) at the next state. The crucial off-policy detail is that next actions come from the current policy, while current actions can be older—yet the update still needs reasonable distribution coverage.",
-  },
-
-  // 14 (Medium) — 2 true
-  {
-    id: "cs224r-lect5-q14",
+    id: "cs224r-lect5-q47",
     chapter: 5,
     difficulty: "medium",
     prompt:
-      "In the replay-buffer variant, why might using \\(\\hat Q\\) directly in the actor update be appealing compared to using \\(\\hat A\\)?",
+      "Which statements correctly describe the bias-variance role of GAE horizon weights such as \\(w_n\\propto\\lambda^{n-1}\\)?",
     options: [
       {
-        text: "It avoids needing a separate baseline \\(\\hat V\\) (or average reward baseline) to form \\(\\hat A\\).",
+        text: "Smaller \\(\\lambda\\) gives more weight to short-horizon estimates and generally lowers variance.",
         isCorrect: true,
       },
       {
-        text: "Higher variance can be tolerable because replay buffers provide many more training samples overall.",
+        text: "Larger \\(\\lambda\\) keeps more long-horizon return information and can reduce bootstrap bias.",
         isCorrect: true,
       },
       {
-        text: "It makes the policy gradient unbiased even if \\(\\hat Q\\) is poorly estimated.",
+        text: "Setting \\(\\lambda=0\\) makes the estimate independent of the value function.",
         isCorrect: false,
       },
       {
-        text: "It guarantees the policy will remain close to the behavior policies in the buffer.",
+        text: "Setting \\(\\lambda\\) changes the PPO clipping interval from \\([1-\\epsilon,1+\\epsilon]\\) to \\([1-\\lambda,1+\\lambda]\\).",
         isCorrect: false,
       },
     ],
     explanation:
-      "Using \\(\\hat Q\\) can simplify the pipeline by not requiring a baseline to construct advantages. The tradeoff is often higher variance, but the buffer provides lots of data, which can compensate; it does not guarantee unbiasedness or policy closeness by itself.",
+      "GAE's horizon weights control how quickly the advantage estimate cuts off future rewards and bootstraps. The clipping parameter \\(\\epsilon\\) controls policy-ratio incentives, while \\(\\lambda\\) controls the advantage estimator.",
   },
 
-  // 15 (Medium) — 1 true
   {
-    id: "cs224r-lect5-q15",
+    id: "cs224r-lect5-q48",
     chapter: 5,
     difficulty: "medium",
     prompt:
-      "In the replay-buffer actor step described, what action is used inside \\(\\nabla_\\theta \\log \\pi_{\\theta}(a\\mid s)\\,\\hat Q(s,a)\\)?",
+      "Which steps belong in the practical PPO loop for actor-critic learning?",
     options: [
       {
-        text: "An action \\(a\\) sampled from the current policy \\(a\\sim\\pi_{\\theta}(\\cdot\\mid s)\\), not necessarily the buffer’s stored action.",
+        text: "Collect a batch of trajectories from the current policy \\(\\pi_\theta\\).",
         isCorrect: true,
       },
       {
-        text: "The buffer’s stored action \\(a\\) is always used, because otherwise gradients cannot be computed.",
-        isCorrect: false,
-      },
-      {
-        text: "A greedy action \\(a=\\arg\\max_a \\hat Q(s,a)\\) is always used to reduce variance.",
-        isCorrect: false,
-      },
-      {
-        text: "An action sampled uniformly at random to encourage exploration.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "The lecture’s fix samples the actor’s action from the current policy at the current state, then evaluates it with the critic. This mirrors the same idea used in the critic target: use buffer states, but sample current-policy actions when you need actions that should reflect the current policy.",
-  },
-
-  // 16 (Easy) — all true
-  {
-    id: "cs224r-lect5-q16",
-    chapter: 5,
-    difficulty: "easy",
-    prompt:
-      "Which statements about on-policy vs. off-policy learning in this lecture’s framing are correct?",
-    options: [
-      {
-        text: "On-policy updates use data collected from the same policy being updated (or very close to it).",
+        text: "Fit a value function \\(\\hat V_\\phi^{\\pi_\theta}\\) on the collected data.",
         isCorrect: true,
       },
       {
-        text: "Off-policy methods aim to reuse data collected from older or different behavior policies.",
+        text: "Estimate advantages, often with GAE, using the fitted value function.",
         isCorrect: true,
       },
       {
-        text: "Importance sampling is one mechanism to correct for differences between behavior and target policies.",
-        isCorrect: true,
-      },
-      {
-        text: "Replay buffers are a common tool to enable large-scale data reuse across many updates.",
+        text: "Take several actor gradient steps on the clipped surrogate, then collect a fresh batch.",
         isCorrect: true,
       },
     ],
     explanation:
-      "On-policy learning ties data collection tightly to the current policy, limiting reuse. Off-policy learning breaks that link via corrections (importance weights) and/or structural changes (replay buffers), enabling much more sample reuse.",
+      "PPO is more off-policy than one-step vanilla policy gradient because it reuses one batch for several actor updates. It is still not a replay-buffer method because the data is refreshed after those epochs rather than sampled indefinitely from all past experience.",
   },
 
-  // 17 (Easy) — 2 true
   {
-    id: "cs224r-lect5-q17",
-    chapter: 5,
-    difficulty: "easy",
-    prompt:
-      "Which of the following are reasonable interpretations of why PPO is called ‘proximal’?",
-    options: [
-      {
-        text: "It aims to keep the new policy distribution relatively close to the old one during updates.",
-        isCorrect: true,
-      },
-      {
-        text: "Clipping (or KL penalties) reduces incentives for the policy to move too far in one update.",
-        isCorrect: true,
-      },
-      {
-        text: "It guarantees the policy parameters move by a fixed Euclidean distance each step.",
-        isCorrect: false,
-      },
-      {
-        text: "It forces the action probabilities to remain unchanged for all states.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "‘Proximal’ refers to restricting how drastically the policy distribution changes during optimization. PPO does this implicitly via clipping or explicitly via KL penalties, but it is not a fixed Euclidean step rule and does not freeze probabilities.",
-  },
-
-  // 18 (Hard) — 1 true
-  {
-    id: "cs224r-lect5-q18",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Suppose \\(\\hat A(s,a) < 0\\) and the ratio \\(w = \\frac{\\pi_{\\theta'}(a\\mid s)}{\\pi_{\\theta}(a\\mid s)}\\) becomes very large (e.g., \\(w=9\\)). Why can PPO’s ‘min with unclipped’ trick matter here?",
-    options: [
-      {
-        text: "Because clipping \\(w\\) down (e.g., to \\(1+\\epsilon\\)) could make the objective less negative, unintentionally making the objective larger than the unclipped one for this sample.",
-        isCorrect: true,
-      },
-      {
-        text: "Because clipping always makes gradients unbiased, but only if advantages are negative.",
-        isCorrect: false,
-      },
-      {
-        text: "Because taking the minimum forces \\(w\\) to equal exactly 1 for negative advantages.",
-        isCorrect: false,
-      },
-      {
-        text: "Because it replaces \\(\\hat A\\) with \\(-\\hat A\\) to stabilize learning.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "If \\(\\hat A<0\\), then reducing \\(w\\) via clipping can make \\(w\\hat A\\) less negative, which increases the objective for that sample. The per-sample minimum prevents the optimizer from getting a ‘free boost’ from clipping in such cases.",
-  },
-
-  // 19 (Medium) — all true
-  {
-    id: "cs224r-lect5-q19",
+    id: "cs224r-lect5-q49",
     chapter: 5,
     difficulty: "medium",
     prompt:
-      "Which statements about ‘data efficiency’ vs. ‘stability’ tradeoffs between PPO and SAC (as described here) are correct?",
+      "Which interpretations of PPO implementation hyperparameters are correct?",
     options: [
       {
-        text: "Replay-buffer off-policy methods (e.g., SAC-like) can be far more data efficient due to extensive reuse of past experience.",
+        text: "A clipping range such as \\(\\epsilon=0.2\\) bounds each sampled ratio contribution to use \\([0.8,1.2]\\) inside the clipped term.",
         isCorrect: true,
       },
       {
-        text: "These more off-policy methods can be harder to tune and may be less stable than PPO in practice.",
+        text: "Multiple epochs \\(M>1\\) over a batch increase data reuse but make stale-advantage overfitting more relevant.",
         isCorrect: true,
       },
       {
-        text: "PPO is often used when stable learning is prioritized, especially when data is cheap (e.g., simulation).",
-        isCorrect: true,
-      },
-      {
-        text: "PPO is commonly cited as a practical choice in reinforcement learning for language models.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "SAC-style replay-buffer learning reuses old experience heavily, improving sample efficiency but increasing sensitivity to hyperparameters and critic errors. PPO’s clipped (or KL-constrained) updates are often more stable, and PPO is widely used in RLHF-style settings.",
-  },
-
-  // 20 (Hard) — 2 true
-  {
-    id: "cs224r-lect5-q20",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "The replay-buffer actor-critic still has a mismatch: buffer states \\(s\\) are not sampled from the current on-policy state distribution \\(p_{\\pi_{\\theta}}(s)\\). Which statements are correct?",
-    options: [
-      {
-        text: "This mismatch cannot be fully ‘fixed’ by a simple action correction, because it is about which states are visited, not just actions chosen.",
-        isCorrect: true,
-      },
-      {
-        text: "Training on a broader state distribution can sometimes be beneficial, yielding a policy that performs well on more states than it currently visits.",
-        isCorrect: true,
-      },
-      {
-        text: "This mismatch means the algorithm is equivalent to on-policy actor-critic after enough updates.",
+        text: "A minibatch size such as \\(64\\) means PPO collects only \\(64\\) total environment timesteps before refreshing data.",
         isCorrect: false,
       },
       {
-        text: "The mismatch disappears automatically if you set \\(\\gamma=1\\).",
+        text: "Increasing \\(M\\) always improves the final policy because clipping makes \\(\\rho\\hat A\\) immune to overfitting risk.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Off-policy replay buffers change the state distribution used for updates. You can sample current-policy actions for those states, but you cannot undo the fact that those states came from older behaviors; sometimes the broader distribution can be helpful, but it is not ‘on-policy again.’",
+      "The batch can contain thousands of timesteps while the optimizer uses smaller minibatches for many updates. Reusing a batch improves sample efficiency, but PPO's clipping is a stabilizer rather than a guarantee that more updates are always better.",
   },
 
-  // 21 (Easy) — 1 true
   {
-    id: "cs224r-lect5-q21",
+    id: "cs224r-lect5-q50",
     chapter: 5,
     difficulty: "easy",
     prompt:
-      "In the lecture’s off-policy actor-critic ‘Version 1’ (multiple gradient steps), what is the key reason importance weights are used?",
+      "Which statements correctly describe the replay-buffer version of off-policy actor-critic?",
     options: [
       {
-        text: "To estimate the gradient for the updated policy \\(\\pi_{\\theta'}\\) using data collected under \\(\\pi_{\\theta}\\).",
+        text: "The replay buffer stores previous transitions such as \\((s_i,a_i,r_i,s'_i)\\).",
         isCorrect: true,
       },
       {
-        text: "To ensure the value function \\(\\hat V\\) never needs to be retrained.",
-        isCorrect: false,
+        text: "Updates can use minibatches \\(\\{(s_i,a_i,r_i,s'_i)\\}\\sim\\mathcal R\\) rather than only the most recent rollout batch.",
+        isCorrect: true,
       },
       {
-        text: "To turn Monte Carlo value targets into temporal-difference targets.",
-        isCorrect: false,
+        text: "The algorithm must adjust value and actor equations because \\(a_i\\) in \\(\\mathcal R\\) can come from older policies.",
+        isCorrect: true,
       },
       {
-        text: "To remove the need for a stochastic policy during training.",
+        text: "Once \\(\\mathcal R\\) is used, the actor update is automatically on-policy with respect to \\(p_\\theta(s,a)\\).",
         isCorrect: false,
       },
     ],
     explanation:
-      "Importance weights are the mechanism that lets you reuse the same batch for multiple updates by correcting for the policy change. They do not remove the need to fit \\(\\hat V\\), and they are unrelated to Monte Carlo vs. TD targets.",
+      "Replay buffers make the algorithm more off-policy by reusing older experience. That reuse is valuable only if the critic and actor updates avoid treating old actions and old future rollouts as if they came from the current policy.",
   },
 
-  // 22 (Hard) — 3 true
   {
-    id: "cs224r-lect5-q22",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Which statements about ‘action coverage’ for the replay-buffer \\(Q\\)-learning-style target \\(y=r+\\gamma\\hat Q(s',a')\\) are correct?",
-    options: [
-      {
-        text: "If the buffer rarely contains transitions near actions the current policy would take, \\(\\hat Q\\) may be inaccurate in the relevant regions.",
-        isCorrect: true,
-      },
-      {
-        text: "Neural network generalization can help interpolate between seen actions, but it is not a substitute for any coverage at all.",
-        isCorrect: true,
-      },
-      {
-        text: "Keeping the policy from changing too quickly can help maintain overlap between buffer actions and current-policy actions.",
-        isCorrect: true,
-      },
-      {
-        text: "If you sample \\(a'\\) from the current policy, action coverage becomes irrelevant.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "Even though \\(a'\\) is sampled from the current policy, the critic still learns from buffer transitions and must generalize to the policy’s action regions. Without sufficient overlap/coverage, the critic’s bootstrapped targets can become unreliable and destabilize learning.",
-  },
-
-  // 23 (Easy) — 2 true
-  {
-    id: "cs224r-lect5-q23",
-    chapter: 5,
-    difficulty: "easy",
-    prompt:
-      "Which statements about the clipping range \\(\\epsilon\\) in PPO are correct?",
-    options: [
-      {
-        text: "Smaller \\(\\epsilon\\) usually constrains policy updates more tightly by keeping ratios closer to 1.",
-        isCorrect: true,
-      },
-      {
-        text: "Larger \\(\\epsilon\\) generally allows more aggressive policy changes on each batch.",
-        isCorrect: true,
-      },
-      {
-        text: "Changing \\(\\epsilon\\) changes the reward function of the environment.",
-        isCorrect: false,
-      },
-      {
-        text: "With clipping, the importance ratio is forced to equal 1 exactly for all samples.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "The clipping range bounds how far the ratio can move before the surrogate stops improving due to that movement. It’s a policy-update constraint, not an environment modification, and ratios can still vary within \\([1-\\epsilon,1+\\epsilon]\\).",
-  },
-
-  // 24 (Medium) — 3 true
-  {
-    id: "cs224r-lect5-q24",
+    id: "cs224r-lect5-q51",
     chapter: 5,
     difficulty: "medium",
     prompt:
-      "Why can off-policy methods be ‘more data efficient’ than on-policy ones, in the sense used in these lectures?",
+      "Why is the naive replay-buffer update \\(y_i=r_i+\\gamma\\hat V_\\phi(s'_i)\\) not the right way to learn \\(V^{\\pi_\theta}\\) for the current policy from all old data?",
     options: [
       {
-        text: "They can take many learning updates per unit of collected experience by reusing old transitions.",
+        text: "The sampled actions and next states in the buffer were produced by past policies, so the fitted value tends to represent a mixture of past behavior rather than \\(\\pi_\theta\\).",
         isCorrect: true,
       },
       {
-        text: "Replay buffers let training sample from a large pool of past experience rather than discarding it after one update.",
+        text: "A state-value target \\(\\hat V(s_i)\\) does not condition on \\(a_i\\), even though that old action determined the observed reward and next state.",
         isCorrect: true,
       },
       {
-        text: "They can improve reward faster as a function of environment timesteps, even if wall-clock compute may increase.",
-        isCorrect: true,
+        text: "The update is invalid because \\(s'_i\\) is never observed in replay-buffer tuples \\((s_i,a_i,r_i,s'_i)\\).",
+        isCorrect: false,
       },
       {
-        text: "They always require fewer gradient steps because each update is perfectly accurate.",
+        text: "The update is invalid because value functions cannot minimize losses such as \\(\\sum_i\\lVert\\hat V(s_i)-y_i\\rVert^2\\).",
         isCorrect: false,
       },
     ],
     explanation:
-      "Data efficiency here refers to performance vs. environment interaction steps: reuse means more learning signal per collected transition. That does not mean fewer gradient steps; often it means more gradient steps per timestep, which can cost more compute.",
+      "The problem is not the loss form or a missing next state; the problem is policy mismatch. A state-value function averages over actions from a policy, and replay-buffer samples do not generally reflect the current policy's action distribution.",
   },
 
-  // 25 (Hard) — all true
   {
-    id: "cs224r-lect5-q25",
+    id: "cs224r-lect5-q52",
     chapter: 5,
     difficulty: "hard",
     prompt:
-      "Suppose PPO uses the clipped surrogate \\(\\min(w\\hat A, \\mathrm{clip}(w,1-\\epsilon,1+\\epsilon)\\hat A)\\) per sample. Which statements are correct?",
+      "Which statements correctly explain why fitting \\(Q^{\\pi_\theta}(s,a)\\) helps with replay-buffer data?",
     options: [
       {
-        text: "If \\(\\hat A>0\\) and \\(w>1+\\epsilon\\), the clipped term becomes \\((1+\\epsilon)\\hat A\\), limiting incentive to increase \\(w\\) further.",
+        text: "\\(Q^{\\pi_\theta}(s,a)\\) conditions on the first action \\(a\\), so \\(\\hat Q_\\phi(s_i,a_i)\\) can use the buffered action as a critic input.",
         isCorrect: true,
       },
       {
-        text: "If \\(\\hat A<0\\) and \\(w<1-\\epsilon\\), clipping can limit incentive to decrease \\(w\\) further in that direction.",
+        text: "The Bellman relation can be written \\(Q^{\\pi_\theta}(s,a)=r(s,a)+\\gamma\\mathbb{E}_{s'\\sim p(\\cdot\\mid s,a),\\bar a'\\sim\\pi_\theta(\\cdot\\mid s')}[Q^{\\pi_\theta}(s',\\bar a')]\\).",
         isCorrect: true,
       },
       {
-        text: "Taking the minimum ensures the chosen per-sample objective is never larger than the unclipped objective for that sample.",
+        text: "The next action in \\(\\hat Q(s'_i,a'_i)\\) should use \\(a'_i\\sim\\pi_\\theta(\\cdot\\mid s'_i)\\), giving targets like \\(y_i=r_i+\\gamma\\hat Q(s'_i,a'_i)\\).",
         isCorrect: true,
       },
       {
-        text: "The mechanism aims to prevent overly large policy updates driven by extreme ratios on a finite batch.",
+        text: "The target \\(y_i=r_i+\\gamma\\hat Q(s'_i,a'_i)\\) still relies on coverage because \\(a'_i\\sim\\pi_\\theta(\\cdot\\mid s'_i)\\) may differ from buffered actions.",
         isCorrect: true,
       },
     ],
     explanation:
-      "Clipping flattens the objective outside a ratio band, preventing runaway incentives. The per-sample minimum maintains a conservative (lower-bound) objective relative to the unclipped surrogate, improving stability when ratios become extreme.",
+      "Q-functions let the update accept an off-policy first action while making the future part follow the current policy through a new next-action sample. This does not create information about unseen actions for free, so action coverage and function approximation quality remain central.",
   },
 
-  // 26 (Medium) — 2 true
   {
-    id: "cs224r-lect5-q26",
+    id: "cs224r-lect5-q53",
+    chapter: 5,
+    difficulty: "hard",
+    prompt: `A replay-buffer transition has \\(r_i=1.5\\) and \\(\\gamma=0.9\\). For the next state, a current-policy sample gives \\(a'_i\\sim\\pi_\theta(\\cdot\\mid s'_i)\\), and the critic predicts \\(\\hat Q_\phi(s'_i,a'_i)=4\\). What is the one-sample target \\(y_i\\) for fitting \\(\\hat Q_\phi(s_i,a_i)\\)?`,
+    options: [
+      { text: "\\(5.1\\), because \\(y_i=1.5+0.9\\cdot4\\).", isCorrect: true },
+      {
+        text: "\\(3.6\\), because \\(y_i=0.9\\cdot4\\) omits the immediate reward.",
+        isCorrect: false,
+      },
+      {
+        text: "\\(4.0\\), because \\(y_i=\\hat Q(s'_i,a'_i)\\) drops both \\(r_i\\) and \\(\\gamma\\).",
+        isCorrect: false,
+      },
+      {
+        text: "\\(1.5\\), because \\(y_i=r_i\\) would ignore the current-policy bootstrap term.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The target is the immediate reward plus the discounted current-policy bootstrap estimate. The next action is not taken from the old trajectory; it is newly sampled from the current policy at the buffered next state.",
+  },
+
+  {
+    id: "cs224r-lect5-q54",
     chapter: 5,
     difficulty: "medium",
     prompt:
-      "Which statements about the ‘surrogate objective’ vs. the ‘true objective’ are correct?",
+      "Which statements correctly describe the action-coverage requirement for replay-buffer Q targets?",
     options: [
       {
-        text: "The true objective \\(J(\\theta)\\) is the expected (discounted) return under \\(\\pi_{\\theta}\\), which is typically intractable to compute exactly.",
+        text: "The buffer must contain enough nearby state-action experience for \\(\\hat Q(s,a)\\) to generalize to actions the current policy may choose.",
         isCorrect: true,
       },
       {
-        text: "A surrogate objective \\(\\tilde J\\) is designed so its gradient matches (or approximates) the policy-gradient estimator used in practice.",
+        text: "If the current policy chooses actions far outside the buffer's support, the target \\(r+\gamma\\hat Q(s',a')\\) can be an unstable extrapolation.",
         isCorrect: true,
       },
       {
-        text: "The surrogate objective is always exactly equal to the true objective for all \\(\\theta\\).",
-        isCorrect: false,
+        text: "A stochastic policy and function approximation can help by giving multiple current-policy action samples across a minibatch.",
+        isCorrect: true,
       },
       {
-        text: "Using a surrogate objective removes the need for stochastic sampling from the policy.",
+        text: "Coverage is irrelevant because the Bellman equation is exact for all neural-network predictions.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Surrogates are optimization conveniences: they’re built to yield desired gradients under sampling, not to be exactly equal to expected return. They still rely on stochastic sampling and approximate value/advantage estimates.",
+      "The Bellman equation specifies the true Q-function, but the learned critic must estimate it from finite data. When the replay buffer lacks relevant actions, the critic may bootstrap from guesses rather than grounded estimates.",
   },
 
-  // 27 (Easy) — all true
   {
-    id: "cs224r-lect5-q27",
-    chapter: 5,
-    difficulty: "easy",
-    prompt:
-      "In the lecture’s summary of PPO, which steps are part of the high-level loop?",
-    options: [
-      {
-        text: "Collect a batch of trajectories (or timesteps) using the current policy.",
-        isCorrect: true,
-      },
-      {
-        text: "Fit a value function (critic) using returns or bootstrapped targets on that batch.",
-        isCorrect: true,
-      },
-      {
-        text: "Compute advantage estimates (often with GAE) from rewards and the fitted value function.",
-        isCorrect: true,
-      },
-      {
-        text: "Update the policy for multiple epochs on the collected batch using the clipped PPO surrogate.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "PPO alternates between data collection, critic fitting, advantage computation, and multiple policy updates on the same batch. The clipping (and sometimes KL) is what enables multiple stable epochs on one batch.",
-  },
-
-  // 28 (Hard) — 1 true
-  {
-    id: "cs224r-lect5-q28",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "In the replay-buffer ‘Version 2’, why is estimating \\(V^{\\pi}(s)\\) from buffer data conceptually problematic?",
-    options: [
-      {
-        text: "Because the buffer contains trajectories from many policies, the future evolution after \\(s\\) in the data does not reflect following the current policy \\(\\pi\\) thereafter.",
-        isCorrect: true,
-      },
-      {
-        text: "Because \\(V^{\\pi}(s)\\) is undefined unless the environment is deterministic.",
-        isCorrect: false,
-      },
-      {
-        text: "Because \\(V^{\\pi}(s)\\) cannot be represented by a neural network.",
-        isCorrect: false,
-      },
-      {
-        text: "Because value functions require access to the policy’s gradients, which the buffer does not store.",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "The issue is policy mismatch: the data’s continuation from \\(s\\) reflects older policies’ actions, not the current one. That makes a naive \\(V\\)-target built from buffer rollouts correspond to some messy mixture, not \\(V^{\\pi_{\\theta}}\\).",
-  },
-
-  // 29 (Medium) — 3 true
-  {
-    id: "cs224r-lect5-q29",
+    id: "cs224r-lect5-q55",
     chapter: 5,
     difficulty: "medium",
     prompt:
-      "Which statements about how SAC-style updates use replay-buffer transitions are correct (at the level described in this lecture)?",
+      "Which statements correctly describe the critic loss in the replay-buffer off-policy actor-critic update?",
     options: [
       {
-        text: "Transitions \\((s,a,r,s')\\) are sampled from the replay buffer for critic training.",
+        text: "A typical target is \\(y_i=r_i+\gamma\\hat Q_\phi^{\\pi}(s'_i,a'_i)\\), where \\(a'_i\\sim\\pi_\theta(\\cdot\\mid s'_i)\\).",
         isCorrect: true,
       },
       {
-        text: "The next action \\(a'\\) used in the critic target is sampled from the current policy \\(\\pi_{\\theta}(\\cdot\\mid s')\\).",
+        text: "A typical loss is \\(\\mathcal{L}(\\phi)=\\frac{1}{N}\\sum_i\\lVert\\hat Q_\phi^{\\pi}(s_i,a_i)-y_i\\rVert^2\\).",
         isCorrect: true,
       },
       {
-        text: "The actor update can use \\(a\\sim\\pi_{\\theta}(\\cdot\\mid s)\\) and weight it by \\(\\hat Q(s,a)\\).",
-        isCorrect: true,
+        text: "The target must use \\(a'_i\\) from the replay buffer's original future trajectory to preserve off-policy correctness.",
+        isCorrect: false,
       },
       {
-        text: "The method guarantees that critic targets are exact because replay buffers store ‘future rewards’.",
+        text: "The critic loss is optimized with respect to \\(\\theta\\) because the actor's log probability appears in \\(\\hat Q_\phi\\).",
         isCorrect: false,
       },
     ],
     explanation:
-      "Replay buffers provide off-policy transitions, but the critic target bootstraps with current-policy actions at the next state. Nothing is exact: targets depend on function approximation and one-sample estimates of expectations rather than stored true future returns.",
+      "The critic is a regression problem in \\(\\phi\\), with labels built from rewards and current-policy bootstrap actions. Using old future actions would make the target follow the past policy instead of the current actor.",
   },
 
-  // 30 (Hard) — 2 true
   {
-    id: "cs224r-lect5-q30",
+    id: "cs224r-lect5-q56",
     chapter: 5,
     difficulty: "hard",
     prompt:
-      "The lecture mentions the reparameterization trick for Gaussian policies. Which statements are correct?",
+      "Which statements correctly describe the actor update after switching from \\(\\hat V\\) and \\(\\hat A\\) to \\(\\hat Q\\) in the replay-buffer algorithm?",
     options: [
       {
-        text: "It can reduce gradient estimator variance by expressing \\(a=\\mu_{\\theta}(s)+\\sigma_{\\theta}(s)\\odot\\epsilon\\) with \\(\\epsilon\\sim\\mathcal N(0,I)\\).",
+        text: "It is convenient to use \\(\\hat Q^\pi(s,a)\\) rather than \\(\\hat A^\pi(s,a)\\), even though this removes the average-reward baseline.",
         isCorrect: true,
       },
       {
-        text: "It enables differentiating through sampled actions by moving randomness into \\(\\epsilon\\).",
+        text: "The action used inside \\(\\nabla_\theta\\log\\pi_\theta(a\\mid s)\\hat Q(s,a)\\) should be sampled from the current policy.",
         isCorrect: true,
       },
       {
-        text: "It is only applicable to discrete action spaces.",
-        isCorrect: false,
+        text: "The resulting estimator can have higher variance than an advantage estimator, but replay-buffer data reuse helps compensate.",
+        isCorrect: true,
       },
       {
-        text: "It removes the need for any critic/value function in actor-critic.",
+        text: "The actor should always use the buffered action \\(a_i\\), because it has an observed reward attached to it.",
         isCorrect: false,
       },
     ],
     explanation:
-      "For continuous (e.g., Gaussian) policies, reparameterization rewrites sampling as a deterministic transform of noise, which can lower variance and allow pathwise derivatives. It’s not for discrete spaces by default and does not eliminate the need for a critic in actor-critic methods.",
+      "The actor is trying to improve the current policy, so its score term should be evaluated on current-policy actions. Buffered actions are useful critic inputs, but treating them as current actor samples would reintroduce the same action-mismatch problem.",
   },
 
-  // 31 (Easy) — 1 true
   {
-    id: "cs224r-lect5-q31",
-    chapter: 5,
-    difficulty: "easy",
-    prompt:
-      "In the multiple-gradient-step setting, why does the ratio \\(\\frac{\\pi_{\\theta'}(a\\mid s)}{\\pi_{\\theta}(a\\mid s)}\\) start near 1 and then drift?",
-    options: [
-      {
-        text: "Initially \\(\\theta'\\approx\\theta\\), but after updates \\(\\pi_{\\theta'}\\) changes while \\(\\pi_{\\theta}\\) (data-collection policy) stays fixed.",
-        isCorrect: true,
-      },
-      {
-        text: "Because advantages \\(\\hat A\\) are renormalized to have mean 1 each step.",
-        isCorrect: false,
-      },
-      {
-        text: "Because rewards are discounted by \\(\\gamma\\), which forces the ratio toward 1.",
-        isCorrect: false,
-      },
-      {
-        text: "Because replay buffers automatically resample actions to match \\(\\pi_{\\theta'}\\).",
-        isCorrect: false,
-      },
-    ],
-    explanation:
-      "The denominator comes from the frozen behavior policy that generated the data, while the numerator changes with every policy update. Therefore the ratio begins close to 1 but can become extreme if many updates are taken without collecting new data.",
-  },
-
-  // 32 (Hard) — all true
-  {
-    id: "cs224r-lect5-q32",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Consider why off-policy with replay buffers can enable real-robot learning in short time horizons (as suggested by the examples). Which statements are correct at a conceptual level?",
-    options: [
-      {
-        text: "Reusing each real-world transition many times via replay can drastically reduce required environment interaction.",
-        isCorrect: true,
-      },
-      {
-        text: "Critic bootstrapping can propagate value information without requiring full Monte Carlo rollouts for every update.",
-        isCorrect: true,
-      },
-      {
-        text: "High sample efficiency matters more on real robots because data collection is expensive and slow compared to simulation.",
-        isCorrect: true,
-      },
-      {
-        text: "The approach still requires careful tuning and can be less stable due to function approximation and off-policy issues.",
-        isCorrect: true,
-      },
-    ],
-    explanation:
-      "Replay buffers and bootstrapped critics let you squeeze more learning out of each physical interaction, which is crucial for robots. The price is sensitivity: off-policy critic errors and hyperparameters can destabilize training, so engineering/tuning matters.",
-  },
-
-  // 33 (Medium) — 2 true
-  {
-    id: "cs224r-lect5-q33",
+    id: "cs224r-lect5-q57",
     chapter: 5,
     difficulty: "medium",
     prompt:
-      "Which statements correctly relate PPO/SAC to imitation learning as discussed near the end?",
+      "Which equations correctly use current-policy action samples in the replay-buffer actor update?",
     options: [
       {
-        text: "Reinforcement learning can sometimes surpass imitation learning on success rate because it can improve beyond the demonstrations.",
+        text: "\\(a_i^\\pi\\sim\\pi_\theta(\\cdot\\mid s_i)\\), then \\(\\nabla_\theta J(\\theta)\\approx\\frac{1}{N}\\sum_i\\nabla_\theta\\log\\pi_\theta(a_i^\\pi\\mid s_i)\\hat Q^\pi(s_i,a_i^\\pi)\\).",
         isCorrect: true,
       },
       {
-        text: "Imitation learning can be simpler but may plateau if demonstrations are imperfect or limited.",
+        text: "For the critic target, \\(a'_i\\sim\\pi_\theta(\\cdot\\mid s'_i)\\), then \\(y_i=r_i+\gamma\\hat Q^\pi(s'_i,a'_i)\\).",
         isCorrect: true,
       },
       {
-        text: "Imitation learning always yields faster policies than reinforcement learning.",
+        text: "\\(a_i^\\pi=a_i^{buffer}\\), then \\(\\nabla_\theta J(\\theta)\\approx\\frac{1}{N}\\sum_i\\nabla_\theta\\log\\pi_\theta(a_i^{buffer}\\mid s_i)\\hat Q^\pi(s_i,a_i^{buffer})\\).",
         isCorrect: false,
       },
       {
-        text: "PPO and SAC are forms of supervised imitation learning with different loss functions.",
+        text: "For the critic target, \\(a'_i=a_{i+1}^{buffer}\\), then \\(y_i=r_i+\gamma\\hat Q^\pi(s'_i,a_{i+1}^{buffer})\\).",
         isCorrect: false,
       },
     ],
     explanation:
-      "Imitation learning copies behavior from demonstrations and can be limited by demonstration quality and coverage. RL optimizes reward directly and can exceed demos, though it may require more tuning; PPO/SAC are RL algorithms, not supervised imitation methods.",
+      "Both the current-state actor action and the next-state bootstrap action should come from \\(\\pi_\theta\\). The replay buffer supplies states, actions, rewards, and next states, but not the current policy's action choices.",
   },
 
-  // 34 (Easy) — 3 true
   {
-    id: "cs224r-lect5-q34",
+    id: "cs224r-lect5-q58",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "After the replay-buffer algorithm fixes the action mismatch with Q-functions and current-policy action samples, what state-distribution issue remains?",
+    options: [
+      {
+        text: "The sampled states \\(s_i\\) still come from the replay buffer rather than exactly from the current policy's state distribution \\(p_\theta(s)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The resulting policy is optimized on a broader distribution of states than the current policy alone might visit.",
+        isCorrect: true,
+      },
+      {
+        text: "This remaining mismatch is accepted in practical off-policy actor-critic rather than fully corrected by the basic algorithm.",
+        isCorrect: true,
+      },
+      {
+        text: "The state mismatch disappears because \\(a'_i\\sim\\pi_\theta(\\cdot\\mid s'_i)\\) in the critic target.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Sampling current-policy actions fixes action mismatch, not the distribution of states in the minibatch. The practical algorithm accepts learning over a broader replay distribution, which is useful but not identical to an on-policy state distribution.",
+  },
+
+  {
+    id: "cs224r-lect5-q59",
     chapter: 5,
     difficulty: "easy",
     prompt:
-      "Which statements about why clipping/constraints help with ‘overfitting the advantages’ are correct?",
+      "Which statement correctly describes the reparameterization-trick note for Gaussian policies in off-policy actor-critic?",
     options: [
       {
-        text: "They reduce incentives to make \\(\\pi_{\\theta'}\\) drastically different from the data-collection policy \\(\\pi_{\\theta}\\).",
+        text: "It can provide an alternative lower-variance way to estimate actor gradients through sampled Gaussian actions.",
         isCorrect: true,
       },
       {
-        text: "Smaller policy changes make it more plausible that \\(\\hat A_{\\pi_{\\theta}}\\) remains a useful learning signal for \\(\\pi_{\\theta'}\\).",
-        isCorrect: true,
+        text: "It replaces the replay buffer by generating synthetic transitions from the policy distribution.",
+        isCorrect: false,
       },
       {
-        text: "They can prevent ratios from becoming extreme, which otherwise amplifies noise from finite-batch advantage estimates.",
-        isCorrect: true,
+        text: "It is the mechanism that clips PPO ratios to \\([1-\\epsilon,1+\\epsilon]\\).",
+        isCorrect: false,
       },
       {
-        text: "They eliminate the need to collect fresh data ever again.",
+        text: "It makes the critic target independent of \\(\\hat Q(s',a')\\).",
         isCorrect: false,
       },
     ],
     explanation:
-      "Constraints/clipping keep the update ‘proximal’, so advantage estimates computed from the old policy are less stale. They also bound the influence of any single sample via the ratio, but they do not remove the need to periodically refresh data as the policy evolves.",
+      "The reparameterization trick is about differentiating through stochastic continuous-action samples, such as Gaussian actions. It is separate from replay storage, PPO clipping, and the Bellman target used to fit the critic.",
   },
 
-  // 35 (Hard) — 1 true
   {
-    id: "cs224r-lect5-q35",
+    id: "cs224r-lect5-q60",
+    chapter: 5,
+    difficulty: "easy",
+    prompt:
+      "Which comparisons between PPO and SAC-style replay-buffer actor-critic are correct?",
+    options: [
+      {
+        text: "PPO is more on-policy because it reuses a recent rollout batch for several updates and then recollects.",
+        isCorrect: true,
+      },
+      {
+        text: "SAC-style methods are more off-policy because they sample minibatches from a replay buffer of past experience.",
+        isCorrect: true,
+      },
+      {
+        text: "PPO is often more stable and plug-and-play, while SAC-style methods are often more data efficient.",
+        isCorrect: true,
+      },
+      {
+        text: "Replay-buffer methods can be harder to tune because Q-function bootstrapping and off-policy data introduce extra instability.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "PPO and SAC trade off stability and sample efficiency in different ways. PPO constrains local policy updates on fresh data, while SAC-style replay-buffer learning extracts more updates from old data but leans harder on accurate Q-function estimates.",
+  },
+
+  {
+    id: "cs224r-lect5-q61",
     chapter: 5,
     difficulty: "hard",
     prompt:
-      "Suppose your replay buffer contains transitions from very early random policies and your current policy is much more competent. What is a key risk for the critic target \\(y=r+\\gamma\\hat Q(s',a')\\) with \\(a'\\sim\\pi_{\\theta}(\\cdot\\mid s')\\)?",
+      "Which statements correctly describe the Markov-property distinction in the PPO-versus-SAC practical guidelines?",
     options: [
       {
-        text: "The next-state \\(s'\\) distribution may come from parts of the state space rarely visited by the current policy, so \\(\\hat Q(s',a')\\) may be extrapolating and unstable.",
+        text: "A Monte Carlo value estimate \\(G_t=\\sum_{k\\ge0}\\gamma^k r_{t+k}\\) can reduce reliance on one-step Markov bootstrapping.",
         isCorrect: true,
       },
       {
-        text: "The target becomes exact because early random policies explore widely.",
+        text: "Replay-buffer SAC-style targets rely heavily on the Markov structure because they bootstrap with \\(r_i+\\gamma\\hat Q(s'_i,a'_i)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "If observations are non-Markov, one-step Q targets can be misleading because \\(s'_i\\) may not contain all information needed for future return.",
+        isCorrect: true,
+      },
+      {
+        text: "Using full observed returns can be more robust to hidden state, but \\(G_t\\)-style targets usually cost variance and data efficiency.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "Bootstrapped Q-learning-style updates assume the next observation is sufficient for predicting future value under the policy. Monte Carlo returns can avoid that particular one-step modeling assumption, but they usually pay with noisier estimates and less efficient learning.",
+  },
+
+  {
+    id: "cs224r-lect5-q62",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "Which uses of demonstrations match the PPO/SAC practical comparison?",
+    options: [
+      {
+        text: "For PPO, demonstrations can initialize or pretrain the policy before online reinforcement learning.",
+        isCorrect: true,
+      },
+      {
+        text: "For SAC-style replay-buffer learning, demonstrations can be added to the replay buffer as useful prior experience.",
+        isCorrect: true,
+      },
+      {
+        text: "For PPO, demonstrations remove the need to estimate advantages during policy updates.",
         isCorrect: false,
       },
       {
-        text: "The target no longer depends on \\(\\gamma\\) because \\(a'\\) comes from the current policy.",
-        isCorrect: false,
-      },
-      {
-        text: "The actor update becomes on-policy as soon as the buffer is large enough.",
+        text: "For SAC-style methods, demonstrations make the Bellman target exact even when action coverage is poor.",
         isCorrect: false,
       },
     ],
     explanation:
-      "Old-data replay can force the critic to evaluate current-policy actions in next states that are off-distribution for the current policy. That can lead to extrapolation error and unstable bootstrapping, even though replay improves sample efficiency in many settings.",
+      "Demonstrations can seed either family of methods, but they do not replace the RL updates. PPO still needs an actor-critic objective, and SAC-style methods still need grounded Q estimates with enough coverage around relevant actions.",
+  },
+
+  {
+    id: "cs224r-lect5-q63",
+    chapter: 5,
+    difficulty: "medium",
+    prompt:
+      "Which deployment-oriented statements correctly follow from the PPO/SAC comparison?",
+    options: [
+      {
+        text: "SAC-style replay-buffer learning can be sample efficient enough for some real-robot reinforcement-learning settings.",
+        isCorrect: true,
+      },
+      {
+        text: "PPO is a common choice when stable learning is more important than raw environment-sample efficiency, such as many simulation or language-model settings.",
+        isCorrect: true,
+      },
+      {
+        text: "Imitation learning can be useful for initialization, but RL can improve beyond demonstrations when reward optimization is feasible.",
+        isCorrect: true,
+      },
+      {
+        text: "SAC is preferred for all language-model reinforcement learning because replay buffers remove policy-distribution shift.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "Algorithm choice depends on the cost of data, the stability requirements, and the domain. Replay buffers are powerful for sample efficiency, while PPO-style updates remain attractive when predictable optimization behavior matters.",
+  },
+
+  {
+    id: "cs224r-lect5-q64",
+    chapter: 5,
+    difficulty: "hard",
+    prompt: `For two PPO samples, use \\(\\epsilon=0.2\\) and
+\\[
+L_i=\\min(\\rho_i A_i,\\mathrm{clip}(\\rho_i,0.8,1.2)A_i).
+\\]
+
+| sample | \\(\\rho_i\\) | \\(A_i\\) |
+| --- | ---: | ---: |
+| 1 | 1.4 | 2 |
+| 2 | 0.6 | -3 |
+
+What is \\(L_1+L_2\\)?`,
+    options: [
+      {
+        text: "\\(0.0\\), because \\(L_1=2.4\\) and \\(L_2=-2.4\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(1.0\\), because \\(L_1=2.8\\) and \\(L_2=-1.8\\).",
+        isCorrect: false,
+      },
+      {
+        text: "\\(-0.6\\), because \\(L_1=2.4\\) and \\(L_2=-3.0\\).",
+        isCorrect: false,
+      },
+      {
+        text: "\\(-0.4\\), because \\(L_1=2.4\\) and \\(L_2=-2.8\\).",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "For the positive-advantage sample, the minimum selects the clipped contribution \\(1.2\\cdot2=2.4\\). For the negative-advantage sample, the clipped contribution is \\(0.8\\cdot(-3)=-2.4\\), which is lower than \\(0.6\\cdot(-3)=-1.8\\), so the two contributions sum to zero.",
+  },
+
+  {
+    id: "cs224r-lect5-q65",
+    chapter: 5,
+    difficulty: "hard",
+    prompt: `With \\(\\epsilon=0.2\\), \\(\\rho=0.6\\), and \\(\\hat A=-5\\), which PPO clipped-objective contribution is used?
+\\[
+\\min(\\rho\\hat A,\\mathrm{clip}(\\rho,0.8,1.2)\\hat A)
+\\]`,
+    options: [
+      { text: "\\(-4\\), because \\(\\min(-3,-4)=-4\\).", isCorrect: true },
+      {
+        text: "\\(-3\\), because \\(0.6\\cdot(-5)=-3\\) is the unclipped term.",
+        isCorrect: false,
+      },
+      {
+        text: "\\(4\\), because PPO takes the magnitude of negative advantages.",
+        isCorrect: false,
+      },
+      {
+        text: "\\(-6\\), because the ratio is clipped to \\(1.2\\) for all negative advantages.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "For a negative advantage, decreasing the action probability too far can make the unclipped objective less negative and therefore look better under maximization. The per-sample minimum selects the more pessimistic clipped value, \\(-4\\), in that case.",
+  },
+
+  {
+    id: "cs224r-lect5-q66",
+    chapter: 5,
+    difficulty: "hard",
+    prompt: "Which classifications of actor-critic variants are correct?",
+    options: [
+      {
+        text: "One gradient step on one freshly collected batch is the most on-policy version among the variants discussed.",
+        isCorrect: true,
+      },
+      {
+        text: "PPO is partially off-policy because it takes multiple gradient steps on a batch collected by a previous policy.",
+        isCorrect: true,
+      },
+      {
+        text: "Replay-buffer actor-critic is more off-policy because it samples updates from many past batches, not only the latest rollout.",
+        isCorrect: true,
+      },
+      {
+        text: "A replay buffer makes PPO more on-policy because it stores the exact action probabilities from old policies.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The variants differ by how aggressively they reuse data from policies other than the current one. Storing old data does not make an update on-policy; it increases the need for corrections or algorithmic changes.",
+  },
+
+  {
+    id: "cs224r-lect5-q67",
+    chapter: 5,
+    difficulty: "hard",
+    prompt: `A sampled action had behavior probability \\(\\pi_\theta(a\\mid s)=0.02\\). During surrogate optimization, \\(\\pi_{\\theta'}(a\\mid s)\\) rises to \\(0.40\\) and \\(\hat A^{\\pi_\theta}(s,a)=1\\). Which statement best explains the instability risk?`,
+    options: [
+      {
+        text: "The ratio becomes \\(20\\), so a finite-batch positive advantage can create a very large incentive to overfit that sampled action.",
+        isCorrect: true,
+      },
+      {
+        text: "The ratio becomes \\(0.05\\), so the update almost ignores the sampled action despite its positive advantage.",
+        isCorrect: false,
+      },
+      {
+        text: "The ratio is irrelevant because \\(\\hat A=1\\) implies the policy is already optimal at that state.",
+        isCorrect: false,
+      },
+      {
+        text: "The denominator is differentiated through \\(\\theta'\\), so the ratio necessarily becomes negative.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "A small behavior probability in the denominator can make the importance ratio very large when the new policy raises that action's probability. PPO clipping or KL penalties are ways to reduce this incentive before it dominates the batch.",
+  },
+
+  {
+    id: "cs224r-lect5-q68",
+    chapter: 5,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly distinguish the replay-buffer \\(\\hat V\\) mistake from the \\(\\hat Q\\) fix?",
+    options: [
+      {
+        text: "The naive \\(\\hat V\\) target uses \\(r_i+\\gamma\\hat V(s'_i)\\), but \\(r_i\\) and \\(s'_i\\) resulted from a buffered action sampled by an old policy.",
+        isCorrect: true,
+      },
+      {
+        text: "The \\(\\hat Q\\) fix uses the buffered first action as part of the critic input, so the target is about \\(Q(s_i,a_i)\\) rather than just \\(V(s_i)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The \\(\\hat Q\\) target replaces the buffered future continuation with a current-policy next action \\(a'_i\\sim\\pi_\theta(\\cdot\\mid s'_i)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "The \\(\\hat Q\\) fix still needs enough coverage for the critic to evaluate current-policy actions accurately.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "The Q-function does not pretend the old action was sampled from the current policy; it conditions on that action. The future part of the target is then made current-policy-specific by sampling the next action from \\(\\pi_\theta\\), subject to the usual coverage limitations.",
+  },
+
+  {
+    id: "cs224r-lect5-q69",
+    chapter: 5,
+    difficulty: "hard",
+    prompt: `At a replay-buffer next state \\(s'_i\\), the current policy has
+
+| action | \\(\\pi_\theta(a\\mid s'_i)\\) | \\(\\hat Q(s'_i,a)\\) |
+| --- | ---: | ---: |
+| \\(a_1\\) | 0.25 | 2 |
+| \\(a_2\\) | 0.75 | 6 |
+
+If using the exact expectation instead of one sampled \\(a'_i\\), what is the bootstrap term \\(\\mathbb{E}_{a'\\sim\\pi_\theta}[\\hat Q(s'_i,a')]\\)?`,
+    options: [
+      {
+        text: "\\(5.0\\), because \\(0.25\\cdot2+0.75\\cdot6=5.0\\).",
+        isCorrect: true,
+      },
+      {
+        text: "\\(4.0\\), because the two Q-values are averaged without policy probabilities.",
+        isCorrect: false,
+      },
+      {
+        text: "\\(6.0\\), because the target always uses the greedy action under \\(\\hat Q\\).",
+        isCorrect: false,
+      },
+      {
+        text: "\\(2.0\\), because the buffered action must be reused in the next state.",
+        isCorrect: false,
+      },
+    ],
+    explanation:
+      "The Bellman target for a stochastic current policy takes an expectation over actions from that policy. A one-sample target approximates this expectation, but the exact expectation is the policy-weighted average of the next-action Q-values.",
+  },
+
+  {
+    id: "cs224r-lect5-q70",
+    chapter: 5,
+    difficulty: "hard",
+    prompt:
+      "Which statements correctly summarize the SAC-style replay-buffer actor-critic algorithm described by the equations?",
+    options: [
+      {
+        text: "Collect \\((s,a,r,s')\\) by acting with the current policy and add the transition to \\(\\mathcal R\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Sample a minibatch from \\(\\mathcal R\\), and fit \\(\\hat Q_\phi\\) with targets \\(y_i=r_i+\gamma\\hat Q_\phi(s'_i,a'_i)\\), where \\(a'_i\\sim\\pi_\theta(\\cdot\\mid s'_i)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Update the actor with current-policy samples \\(a_i^\pi\\sim\\pi_\theta(\\cdot\\mid s_i)\\) and a term like \\(\\nabla_\theta\\log\\pi_\theta(a_i^\pi\\mid s_i)\\hat Q(s_i,a_i^\pi)\\).",
+        isCorrect: true,
+      },
+      {
+        text: "Accept that replay states may come from a broader distribution than the exact current-policy state distribution.",
+        isCorrect: true,
+      },
+    ],
+    explanation:
+      "The replay-buffer algorithm fixes action mismatch by using Q-functions and current-policy action samples in both critic and actor updates. Its remaining approximation is that the states are sampled from replay, which improves data reuse but is not exactly the current policy's state distribution.",
   },
 ];

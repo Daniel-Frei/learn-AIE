@@ -624,7 +624,8 @@ export const cs224rLecture2ImitationLearningQuestions: Question[] = [
     id: "cs224r-lect2-q25",
     chapter: 2,
     difficulty: "medium",
-    prompt: "Which statements about Gaussian policies are correct?",
+    prompt:
+      "Which statements about a single Gaussian policy for continuous actions are correct?",
     options: [
       { text: "They are unimodal distributions.", isCorrect: true },
       {
