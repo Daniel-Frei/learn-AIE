@@ -21,6 +21,7 @@ import { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS22
 import { cs224rLecture4ActorCriticQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture4_Actor-Critic Methods";
 import { lecture5_OffPolicyActorCriticQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture5_Off-Policy Actor Critic Methods";
 import { cs224rLecture6QLearningQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture6_Q-Learning";
+import { cs224rLecture7OfflineRLQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture7_Offline Reinforcement Learning";
 import { OtherRL_introductiontoReinforcementLearning } from "./lectures/Other RL/introduction to Reinforcement Learning";
 import { L5_DeepReinforcementLearning } from "./lectures/MIT 6.S191 Deep Learning 2026/L5_Deep Reinforcement Learning";
 import { L1_IntroductionToNeuralNetworksAndDeepLearning as MIT6S191L1IntroductionQuestions } from "./lectures/MIT 6.S191 Deep Learning 2026/L1_Introduction";
@@ -333,6 +334,15 @@ export const QUESTION_SOURCES = [
     seriesLabel: "Stanford CS224R Deep Reinforcement Learning",
     topic: "RL" as const,
     questions: cs224rLecture6QLearningQuestions,
+  },
+  {
+    id: "cs224r-lect7" as const,
+    label: "Stanford CS224R Lecture 7",
+    title: "Stanford CS224R Lecture 7: Offline Reinforcement Learning",
+    seriesId: "stanford-cs224r" as const,
+    seriesLabel: "Stanford CS224R Deep Reinforcement Learning",
+    topic: "RL" as const,
+    questions: cs224rLecture7OfflineRLQuestions,
   },
   {
     id: "other-rl-intro" as const,
@@ -800,6 +810,8 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
     "Off-policy actor-critic lecture about replay data, importance sampling, Q-learning links, and stability challenges.",
   "cs224r-lect6":
     "Q-learning lecture about Bellman optimality, replay buffers, target networks, overestimation, Double DQN, and N-step returns.",
+  "cs224r-lect7":
+    "Offline RL lecture about static datasets, behavior-policy shift, OOD action overestimation, filtered behavior cloning, AWR, IQL, CQL, and conservative value estimation.",
   "other-rl-intro":
     "Introductory reinforcement learning material about agents, rewards, environments, and value-based learning.",
   "mit6s191-l1":
@@ -1063,6 +1075,7 @@ export { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS22
 export { cs224rLecture4ActorCriticQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture4_Actor-Critic Methods";
 export { lecture5_OffPolicyActorCriticQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture5_Off-Policy Actor Critic Methods";
 export { cs224rLecture6QLearningQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture6_Q-Learning";
+export { cs224rLecture7OfflineRLQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture7_Offline Reinforcement Learning";
 export { OtherRL_introductiontoReinforcementLearning } from "./lectures/Other RL/introduction to Reinforcement Learning";
 export { L5_DeepReinforcementLearning } from "./lectures/MIT 6.S191 Deep Learning 2026/L5_Deep Reinforcement Learning";
 export { L1_IntroductionToNeuralNetworksAndDeepLearning as MIT6S191L1IntroductionQuestions } from "./lectures/MIT 6.S191 Deep Learning 2026/L1_Introduction";

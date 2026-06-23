@@ -160,7 +160,7 @@ export default function QuizQuestionSection({
 
   return (
     <section className="space-y-4">
-      <div className="flex min-h-10 justify-between text-xs uppercase tracking-wide text-slate-400">
+      <div className="flex h-14 justify-between text-xs uppercase tracking-wide text-slate-400">
         <span>
           Question {hasQuestion ? currentIndex + 1 : 0} of {availableCount}
         </span>

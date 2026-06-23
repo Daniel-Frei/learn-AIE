@@ -398,7 +398,7 @@ export const cs224rLecture6QLearningQuestions: Question[] = [
     chapter: 6,
     difficulty: "medium",
     prompt:
-      "Which steps belong in the full Q-learning-with-replay loop shown by the algorithmic slides?",
+      "Which steps belong in a full Q-learning-with-replay training loop?",
     options: [
       {
         text: "Collect transitions \\((s_i,a_i,s_i',r_i)\\) using some behavior policy and add them to the replay buffer \\(\\mathcal R\\).",
@@ -461,7 +461,7 @@ export const cs224rLecture6QLearningQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "A nonterminal target can use \\(y_i=r_i+\gamma\\max_{a'}Q_{\\phi^-}(s_i',a')\\).",
+        text: "A nonterminal target can use \\(y_i=r_i+\\gamma\\max_{a'}Q_{\\phi^-}(s_i',a')\\).",
         isCorrect: true,
       },
       {
@@ -874,7 +874,7 @@ export const cs224rLecture6QLearningQuestions: Question[] = [
     chapter: 6,
     difficulty: "easy",
     prompt:
-      "Which high-level algorithm-selection statements are consistent with the online RL methods summarized in the lecture?",
+      "Which high-level algorithm-selection statements are consistent with common online reinforcement learning method tradeoffs?",
     options: [
       {
         text: "PPO-style methods are often chosen for stability and ease of use when data efficiency is less important.",

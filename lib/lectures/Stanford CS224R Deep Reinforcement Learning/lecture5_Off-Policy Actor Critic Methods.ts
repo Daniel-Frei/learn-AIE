@@ -13,11 +13,11 @@ export const lecture5_OffPolicyActorCriticQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The likelihood ratio \\(\\rho_{t,i}(\\theta')=\\frac{\\pi_{\\theta'}(a_{t,i}\\mid s_{t,i})}{\\pi_\theta(a_{t,i}\\mid s_{t,i})}\\) corrects for the policy mismatch in the sampled action.",
+        text: "The likelihood ratio \\(\\rho_{t,i}(\\theta')=\\frac{\\pi_{\\theta'}(a_{t,i}\\mid s_{t,i})}{\\pi_\\theta(a_{t,i}\\mid s_{t,i})}\\) corrects for the policy mismatch in the sampled action.",
         isCorrect: true,
       },
       {
-        text: "The advantage estimate \\(\\hat A^{\\pi_\theta}(s_{t,i},a_{t,i})\\) is still tied to the old data-collection policy \\(\\pi_\\theta\\).",
+        text: "The advantage estimate \\(\\hat A^{\\pi_\\theta}(s_{t,i},a_{t,i})\\) is still tied to the old data-collection policy \\(\\pi_\\theta\\).",
         isCorrect: true,
       },
       {
@@ -49,7 +49,7 @@ export const lecture5_OffPolicyActorCriticQuestions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "The ratio can be omitted after the first gradient step because \\(\\hat A^{\\pi_\theta}\\) already contains the policy mismatch correction.",
+        text: "The ratio can be omitted after the first gradient step because \\(\\hat A^{\\pi_\\theta}\\) already contains the policy mismatch correction.",
         isCorrect: false,
       },
     ],
@@ -61,7 +61,7 @@ export const lecture5_OffPolicyActorCriticQuestions: Question[] = [
     id: "cs224r-lect5-q38",
     chapter: 5,
     difficulty: "hard",
-    prompt: `A transition was collected under \\(\\pi_\\theta\\). For the sampled action, \\(\\pi_\\theta(a\\mid s)=0.10\\), \\(\\pi_{\\theta'}(a\\mid s)=0.25\\), and \\(\\hat A^{\\pi_\theta}(s,a)=3\\). Ignoring the shared score-vector direction, which scalar multiplier appears in the importance-weighted actor update?`,
+    prompt: `A transition was collected under \\(\\pi_\\theta\\). For the sampled action, \\(\\pi_\\theta(a\\mid s)=0.10\\), \\(\\pi_{\\theta'}(a\\mid s)=0.25\\), and \\(\\hat A^{\\pi_\\theta}(s,a)=3\\). Ignoring the shared score-vector direction, which scalar multiplier appears in the importance-weighted actor update?`,
     options: [
       {
         text: "\\(7.5\\), because \\(\\frac{0.25}{0.10}\\cdot 3=7.5\\).",
@@ -92,11 +92,11 @@ export const lecture5_OffPolicyActorCriticQuestions: Question[] = [
       "Why can repeatedly maximizing the same importance-weighted surrogate overfit a single batch of actor-critic data?",
     options: [
       {
-        text: "Large positive old-policy advantages can keep pushing \\(\\pi_{\\theta'}(a\\mid s)/\\pi_\theta(a\\mid s)\\) upward for the same sampled actions.",
+        text: "Large positive old-policy advantages can keep pushing \\(\\pi_{\\theta'}(a\\mid s)/\\pi_\\theta(a\\mid s)\\) upward for the same sampled actions.",
         isCorrect: true,
       },
       {
-        text: "The advantage labels \\(\\hat A^{\\pi_\\theta}\\) were estimated from a finite batch under \\(\\pi_\theta\\), so they can become inaccurate after the policy changes substantially.",
+        text: "The advantage labels \\(\\hat A^{\\pi_\\theta}\\) were estimated from a finite batch under \\(\\pi_\\theta\\), so they can become inaccurate after the policy changes substantially.",
         isCorrect: true,
       },
       {
@@ -117,7 +117,7 @@ export const lecture5_OffPolicyActorCriticQuestions: Question[] = [
     chapter: 5,
     difficulty: "medium",
     prompt:
-      "Which statements correctly connect the surrogate objective \\(\\tilde J(\\theta')\\approx\\sum_{t,i}\\rho_{t,i}(\\theta')\\hat A^{\\pi_\theta}_{t,i}\\) to the importance-weighted policy gradient?",
+      "Which statements correctly connect the surrogate objective \\(\\tilde J(\\theta')\\approx\\sum_{t,i}\\rho_{t,i}(\\theta')\\hat A^{\\pi_\\theta}_{t,i}\\) to the importance-weighted policy gradient?",
     options: [
       {
         text: "Differentiating \\(\\pi_{\\theta'}(a\\mid s)\\) gives \\(\\pi_{\\theta'}(a\\mid s)\\nabla_{\\theta'}\\log\\pi_{\\theta'}(a\\mid s)\\), which recovers the score-function form.",
@@ -128,7 +128,7 @@ export const lecture5_OffPolicyActorCriticQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The surrogate is maximized by differentiating \\(\\hat A^{\\pi_\theta}_{t,i}\\) through \\(\\phi\\) on every actor step, producing \\(\\nabla_{\\theta'}\\hat A^{\\pi_\theta}\\).",
+        text: "The surrogate is maximized by differentiating \\(\\hat A^{\\pi_\\theta}_{t,i}\\) through \\(\\phi\\) on every actor step, producing \\(\\nabla_{\\theta'}\\hat A^{\\pi_\\theta}\\).",
         isCorrect: false,
       },
       {
@@ -145,7 +145,7 @@ export const lecture5_OffPolicyActorCriticQuestions: Question[] = [
     chapter: 5,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe using a Kullback-Leibler (KL) constraint or penalty between \\(\\pi_{\\theta'}\\) and \\(\\pi_\theta\\) during repeated policy updates?",
+      "Which statements correctly describe using a Kullback-Leibler (KL) constraint or penalty between \\(\\pi_{\\theta'}\\) and \\(\\pi_\\theta\\) during repeated policy updates?",
     options: [
       {
         text: "It discourages \\(\\pi_{\\theta'}(\\cdot\\mid s)\\) from moving too far from \\(\\pi_\\theta(\\cdot\\mid s)\\), the policy that produced the batch.",
@@ -156,7 +156,7 @@ export const lecture5_OffPolicyActorCriticQuestions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "It can be written as a term such as \\(-\\beta D_{KL}(\\pi_{\\theta'}(\\cdot\\mid s)\\|\\pi_\theta(\\cdot\\mid s))\\) when maximizing a surrogate.",
+        text: "It can be written as a term such as \\(-\\beta D_{KL}(\\pi_{\\theta'}(\\cdot\\mid s)\\|\\pi_\\theta(\\cdot\\mid s))\\) when maximizing a surrogate.",
         isCorrect: true,
       },
       {
@@ -173,7 +173,7 @@ export const lecture5_OffPolicyActorCriticQuestions: Question[] = [
     chapter: 5,
     difficulty: "medium",
     prompt:
-      "For PPO-style clipping with \\(\\rho=\\frac{\\pi_{\\theta'}(a\\mid s)}{\\pi_\theta(a\\mid s)}\\), which statements are correct?",
+      "For PPO-style clipping with \\(\\rho=\\frac{\\pi_{\\theta'}(a\\mid s)}{\\pi_\\theta(a\\mid s)}\\), which statements are correct?",
     options: [
       {
         text: "The clipped term uses \\(\\mathrm{clip}(\\rho,1-\\epsilon,1+\\epsilon)\\hat A\\) as one candidate objective contribution.",
@@ -243,7 +243,7 @@ If \\(\\epsilon=0.2\\), \\(\\rho=1.5\\), and \\(\\hat A=4\\), what contribution 
         isCorrect: true,
       },
       {
-        text: "It makes the objective exactly unbiased for arbitrarily large changes from \\(\\pi_\theta\\) to \\(\\pi_{\\theta'}\\).",
+        text: "It makes the objective exactly unbiased for arbitrarily large changes from \\(\\pi_\\theta\\) to \\(\\pi_{\\theta'}\\).",
         isCorrect: false,
       },
       {
@@ -350,11 +350,11 @@ If \\(r_t=1\\), \\(r_{t+1}=2\\), \\(\\gamma=0.5\\), \\(\\hat V(s_t)=3\\), and \\
       "Which steps belong in the practical PPO loop for actor-critic learning?",
     options: [
       {
-        text: "Collect a batch of trajectories from the current policy \\(\\pi_\theta\\).",
+        text: "Collect a batch of trajectories from the current policy \\(\\pi_\\theta\\).",
         isCorrect: true,
       },
       {
-        text: "Fit a value function \\(\\hat V_\\phi^{\\pi_\theta}\\) on the collected data.",
+        text: "Fit a value function \\(\\hat V_\\phi^{\\pi_\\theta}\\) on the collected data.",
         isCorrect: true,
       },
       {
@@ -431,10 +431,10 @@ If \\(r_t=1\\), \\(r_{t+1}=2\\), \\(\\gamma=0.5\\), \\(\\hat V(s_t)=3\\), and \\
     chapter: 5,
     difficulty: "medium",
     prompt:
-      "Why is the naive replay-buffer update \\(y_i=r_i+\\gamma\\hat V_\\phi(s'_i)\\) not the right way to learn \\(V^{\\pi_\theta}\\) for the current policy from all old data?",
+      "Why is the naive replay-buffer update \\(y_i=r_i+\\gamma\\hat V_\\phi(s'_i)\\) not the right way to learn \\(V^{\\pi_\\theta}\\) for the current policy from all old data?",
     options: [
       {
-        text: "The sampled actions and next states in the buffer were produced by past policies, so the fitted value tends to represent a mixture of past behavior rather than \\(\\pi_\theta\\).",
+        text: "The sampled actions and next states in the buffer were produced by past policies, so the fitted value tends to represent a mixture of past behavior rather than \\(\\pi_\\theta\\).",
         isCorrect: true,
       },
       {
@@ -459,14 +459,14 @@ If \\(r_t=1\\), \\(r_{t+1}=2\\), \\(\\gamma=0.5\\), \\(\\hat V(s_t)=3\\), and \\
     chapter: 5,
     difficulty: "hard",
     prompt:
-      "Which statements correctly explain why fitting \\(Q^{\\pi_\theta}(s,a)\\) helps with replay-buffer data?",
+      "Which statements correctly explain why fitting \\(Q^{\\pi_\\theta}(s,a)\\) helps with replay-buffer data?",
     options: [
       {
-        text: "\\(Q^{\\pi_\theta}(s,a)\\) conditions on the first action \\(a\\), so \\(\\hat Q_\\phi(s_i,a_i)\\) can use the buffered action as a critic input.",
+        text: "\\(Q^{\\pi_\\theta}(s,a)\\) conditions on the first action \\(a\\), so \\(\\hat Q_\\phi(s_i,a_i)\\) can use the buffered action as a critic input.",
         isCorrect: true,
       },
       {
-        text: "The Bellman relation can be written \\(Q^{\\pi_\theta}(s,a)=r(s,a)+\\gamma\\mathbb{E}_{s'\\sim p(\\cdot\\mid s,a),\\bar a'\\sim\\pi_\theta(\\cdot\\mid s')}[Q^{\\pi_\theta}(s',\\bar a')]\\).",
+        text: "The Bellman relation can be written \\(Q^{\\pi_\\theta}(s,a)=r(s,a)+\\gamma\\mathbb{E}_{s'\\sim p(\\cdot\\mid s,a),\\bar a'\\sim\\pi_\\theta(\\cdot\\mid s')}[Q^{\\pi_\\theta}(s',\\bar a')]\\).",
         isCorrect: true,
       },
       {
@@ -486,7 +486,7 @@ If \\(r_t=1\\), \\(r_{t+1}=2\\), \\(\\gamma=0.5\\), \\(\\hat V(s_t)=3\\), and \\
     id: "cs224r-lect5-q53",
     chapter: 5,
     difficulty: "hard",
-    prompt: `A replay-buffer transition has \\(r_i=1.5\\) and \\(\\gamma=0.9\\). For the next state, a current-policy sample gives \\(a'_i\\sim\\pi_\theta(\\cdot\\mid s'_i)\\), and the critic predicts \\(\\hat Q_\phi(s'_i,a'_i)=4\\). What is the one-sample target \\(y_i\\) for fitting \\(\\hat Q_\phi(s_i,a_i)\\)?`,
+    prompt: `A replay-buffer transition has \\(r_i=1.5\\) and \\(\\gamma=0.9\\). For the next state, a current-policy sample gives \\(a'_i\\sim\\pi_\\theta(\\cdot\\mid s'_i)\\), and the critic predicts \\(\\hat Q_\\phi(s'_i,a'_i)=4\\). What is the one-sample target \\(y_i\\) for fitting \\(\\hat Q_\\phi(s_i,a_i)\\)?`,
     options: [
       { text: "\\(5.1\\), because \\(y_i=1.5+0.9\\cdot4\\).", isCorrect: true },
       {
@@ -518,7 +518,7 @@ If \\(r_t=1\\), \\(r_{t+1}=2\\), \\(\\gamma=0.5\\), \\(\\hat V(s_t)=3\\), and \\
         isCorrect: true,
       },
       {
-        text: "If the current policy chooses actions far outside the buffer's support, the target \\(r+\gamma\\hat Q(s',a')\\) can be an unstable extrapolation.",
+        text: "If the current policy chooses actions far outside the buffer's support, the target \\(r+\\gamma\\hat Q(s',a')\\) can be an unstable extrapolation.",
         isCorrect: true,
       },
       {
@@ -542,11 +542,11 @@ If \\(r_t=1\\), \\(r_{t+1}=2\\), \\(\\gamma=0.5\\), \\(\\hat V(s_t)=3\\), and \\
       "Which statements correctly describe the critic loss in the replay-buffer off-policy actor-critic update?",
     options: [
       {
-        text: "A typical target is \\(y_i=r_i+\gamma\\hat Q_\phi^{\\pi}(s'_i,a'_i)\\), where \\(a'_i\\sim\\pi_\theta(\\cdot\\mid s'_i)\\).",
+        text: "A typical target is \\(y_i=r_i+\\gamma\\hat Q_\\phi^{\\pi}(s'_i,a'_i)\\), where \\(a'_i\\sim\\pi_\\theta(\\cdot\\mid s'_i)\\).",
         isCorrect: true,
       },
       {
-        text: "A typical loss is \\(\\mathcal{L}(\\phi)=\\frac{1}{N}\\sum_i\\lVert\\hat Q_\phi^{\\pi}(s_i,a_i)-y_i\\rVert^2\\).",
+        text: "A typical loss is \\(\\mathcal{L}(\\phi)=\\frac{1}{N}\\sum_i\\lVert\\hat Q_\\phi^{\\pi}(s_i,a_i)-y_i\\rVert^2\\).",
         isCorrect: true,
       },
       {
@@ -554,7 +554,7 @@ If \\(r_t=1\\), \\(r_{t+1}=2\\), \\(\\gamma=0.5\\), \\(\\hat V(s_t)=3\\), and \\
         isCorrect: false,
       },
       {
-        text: "The critic loss is optimized with respect to \\(\\theta\\) because the actor's log probability appears in \\(\\hat Q_\phi\\).",
+        text: "The critic loss is optimized with respect to \\(\\theta\\) because the actor's log probability appears in \\(\\hat Q_\\phi\\).",
         isCorrect: false,
       },
     ],
@@ -570,11 +570,11 @@ If \\(r_t=1\\), \\(r_{t+1}=2\\), \\(\\gamma=0.5\\), \\(\\hat V(s_t)=3\\), and \\
       "Which statements correctly describe the actor update after switching from \\(\\hat V\\) and \\(\\hat A\\) to \\(\\hat Q\\) in the replay-buffer algorithm?",
     options: [
       {
-        text: "It is convenient to use \\(\\hat Q^\pi(s,a)\\) rather than \\(\\hat A^\pi(s,a)\\), even though this removes the average-reward baseline.",
+        text: "It is convenient to use \\(\\hat Q^\\pi(s,a)\\) rather than \\(\\hat A^\\pi(s,a)\\), even though this removes the average-reward baseline.",
         isCorrect: true,
       },
       {
-        text: "The action used inside \\(\\nabla_\theta\\log\\pi_\theta(a\\mid s)\\hat Q(s,a)\\) should be sampled from the current policy.",
+        text: "The action used inside \\(\\nabla_\\theta\\log\\pi_\\theta(a\\mid s)\\hat Q(s,a)\\) should be sampled from the current policy.",
         isCorrect: true,
       },
       {
@@ -598,24 +598,24 @@ If \\(r_t=1\\), \\(r_{t+1}=2\\), \\(\\gamma=0.5\\), \\(\\hat V(s_t)=3\\), and \\
       "Which equations correctly use current-policy action samples in the replay-buffer actor update?",
     options: [
       {
-        text: "\\(a_i^\\pi\\sim\\pi_\theta(\\cdot\\mid s_i)\\), then \\(\\nabla_\theta J(\\theta)\\approx\\frac{1}{N}\\sum_i\\nabla_\theta\\log\\pi_\theta(a_i^\\pi\\mid s_i)\\hat Q^\pi(s_i,a_i^\\pi)\\).",
+        text: "\\(a_i^\\pi\\sim\\pi_\\theta(\\cdot\\mid s_i)\\), then \\(\\nabla_\\theta J(\\theta)\\approx\\frac{1}{N}\\sum_i\\nabla_\\theta\\log\\pi_\\theta(a_i^\\pi\\mid s_i)\\hat Q^\\pi(s_i,a_i^\\pi)\\).",
         isCorrect: true,
       },
       {
-        text: "For the critic target, \\(a'_i\\sim\\pi_\theta(\\cdot\\mid s'_i)\\), then \\(y_i=r_i+\gamma\\hat Q^\pi(s'_i,a'_i)\\).",
+        text: "For the critic target, \\(a'_i\\sim\\pi_\\theta(\\cdot\\mid s'_i)\\), then \\(y_i=r_i+\\gamma\\hat Q^\\pi(s'_i,a'_i)\\).",
         isCorrect: true,
       },
       {
-        text: "\\(a_i^\\pi=a_i^{buffer}\\), then \\(\\nabla_\theta J(\\theta)\\approx\\frac{1}{N}\\sum_i\\nabla_\theta\\log\\pi_\theta(a_i^{buffer}\\mid s_i)\\hat Q^\pi(s_i,a_i^{buffer})\\).",
+        text: "\\(a_i^\\pi=a_i^{buffer}\\), then \\(\\nabla_\\theta J(\\theta)\\approx\\frac{1}{N}\\sum_i\\nabla_\\theta\\log\\pi_\\theta(a_i^{buffer}\\mid s_i)\\hat Q^\\pi(s_i,a_i^{buffer})\\).",
         isCorrect: false,
       },
       {
-        text: "For the critic target, \\(a'_i=a_{i+1}^{buffer}\\), then \\(y_i=r_i+\gamma\\hat Q^\pi(s'_i,a_{i+1}^{buffer})\\).",
+        text: "For the critic target, \\(a'_i=a_{i+1}^{buffer}\\), then \\(y_i=r_i+\\gamma\\hat Q^\\pi(s'_i,a_{i+1}^{buffer})\\).",
         isCorrect: false,
       },
     ],
     explanation:
-      "Both the current-state actor action and the next-state bootstrap action should come from \\(\\pi_\theta\\). The replay buffer supplies states, actions, rewards, and next states, but not the current policy's action choices.",
+      "Both the current-state actor action and the next-state bootstrap action should come from \\(\\pi_\\theta\\). The replay buffer supplies states, actions, rewards, and next states, but not the current policy's action choices.",
   },
 
   {
@@ -626,7 +626,7 @@ If \\(r_t=1\\), \\(r_{t+1}=2\\), \\(\\gamma=0.5\\), \\(\\hat V(s_t)=3\\), and \\
       "After the replay-buffer algorithm fixes the action mismatch with Q-functions and current-policy action samples, what state-distribution issue remains?",
     options: [
       {
-        text: "The sampled states \\(s_i\\) still come from the replay buffer rather than exactly from the current policy's state distribution \\(p_\theta(s)\\).",
+        text: "The sampled states \\(s_i\\) still come from the replay buffer rather than exactly from the current policy's state distribution \\(p_\\theta(s)\\).",
         isCorrect: true,
       },
       {
@@ -638,7 +638,7 @@ If \\(r_t=1\\), \\(r_{t+1}=2\\), \\(\\gamma=0.5\\), \\(\\hat V(s_t)=3\\), and \\
         isCorrect: true,
       },
       {
-        text: "The state mismatch disappears because \\(a'_i\\sim\\pi_\theta(\\cdot\\mid s'_i)\\) in the critic target.",
+        text: "The state mismatch disappears because \\(a'_i\\sim\\pi_\\theta(\\cdot\\mid s'_i)\\) in the critic target.",
         isCorrect: false,
       },
     ],
@@ -881,7 +881,7 @@ What is \\(L_1+L_2\\)?`,
     id: "cs224r-lect5-q67",
     chapter: 5,
     difficulty: "hard",
-    prompt: `A sampled action had behavior probability \\(\\pi_\theta(a\\mid s)=0.02\\). During surrogate optimization, \\(\\pi_{\\theta'}(a\\mid s)\\) rises to \\(0.40\\) and \\(\hat A^{\\pi_\theta}(s,a)=1\\). Which statement best explains the instability risk?`,
+    prompt: `A sampled action had behavior probability \\(\\pi_\\theta(a\\mid s)=0.02\\). During surrogate optimization, \\(\\pi_{\\theta'}(a\\mid s)\\) rises to \\(0.40\\) and \\(\\hat A^{\\pi_\\theta}(s,a)=1\\). Which statement best explains the instability risk?`,
     options: [
       {
         text: "The ratio becomes \\(20\\), so a finite-batch positive advantage can create a very large incentive to overfit that sampled action.",
@@ -920,7 +920,7 @@ What is \\(L_1+L_2\\)?`,
         isCorrect: true,
       },
       {
-        text: "The \\(\\hat Q\\) target replaces the buffered future continuation with a current-policy next action \\(a'_i\\sim\\pi_\theta(\\cdot\\mid s'_i)\\).",
+        text: "The \\(\\hat Q\\) target replaces the buffered future continuation with a current-policy next action \\(a'_i\\sim\\pi_\\theta(\\cdot\\mid s'_i)\\).",
         isCorrect: true,
       },
       {
@@ -929,7 +929,7 @@ What is \\(L_1+L_2\\)?`,
       },
     ],
     explanation:
-      "The Q-function does not pretend the old action was sampled from the current policy; it conditions on that action. The future part of the target is then made current-policy-specific by sampling the next action from \\(\\pi_\theta\\), subject to the usual coverage limitations.",
+      "The Q-function does not pretend the old action was sampled from the current policy; it conditions on that action. The future part of the target is then made current-policy-specific by sampling the next action from \\(\\pi_\\theta\\), subject to the usual coverage limitations.",
   },
 
   {
@@ -938,12 +938,12 @@ What is \\(L_1+L_2\\)?`,
     difficulty: "hard",
     prompt: `At a replay-buffer next state \\(s'_i\\), the current policy has
 
-| action | \\(\\pi_\theta(a\\mid s'_i)\\) | \\(\\hat Q(s'_i,a)\\) |
+| action | \\(\\pi_\\theta(a\\mid s'_i)\\) | \\(\\hat Q(s'_i,a)\\) |
 | --- | ---: | ---: |
 | \\(a_1\\) | 0.25 | 2 |
 | \\(a_2\\) | 0.75 | 6 |
 
-If using the exact expectation instead of one sampled \\(a'_i\\), what is the bootstrap term \\(\\mathbb{E}_{a'\\sim\\pi_\theta}[\\hat Q(s'_i,a')]\\)?`,
+If using the exact expectation instead of one sampled \\(a'_i\\), what is the bootstrap term \\(\\mathbb{E}_{a'\\sim\\pi_\\theta}[\\hat Q(s'_i,a')]\\)?`,
     options: [
       {
         text: "\\(5.0\\), because \\(0.25\\cdot2+0.75\\cdot6=5.0\\).",
@@ -978,11 +978,11 @@ If using the exact expectation instead of one sampled \\(a'_i\\), what is the bo
         isCorrect: true,
       },
       {
-        text: "Sample a minibatch from \\(\\mathcal R\\), and fit \\(\\hat Q_\phi\\) with targets \\(y_i=r_i+\gamma\\hat Q_\phi(s'_i,a'_i)\\), where \\(a'_i\\sim\\pi_\theta(\\cdot\\mid s'_i)\\).",
+        text: "Sample a minibatch from \\(\\mathcal R\\), and fit \\(\\hat Q_\\phi\\) with targets \\(y_i=r_i+\\gamma\\hat Q_\\phi(s'_i,a'_i)\\), where \\(a'_i\\sim\\pi_\\theta(\\cdot\\mid s'_i)\\).",
         isCorrect: true,
       },
       {
-        text: "Update the actor with current-policy samples \\(a_i^\pi\\sim\\pi_\theta(\\cdot\\mid s_i)\\) and a term like \\(\\nabla_\theta\\log\\pi_\theta(a_i^\pi\\mid s_i)\\hat Q(s_i,a_i^\pi)\\).",
+        text: "Update the actor with current-policy samples \\(a_i^\\pi\\sim\\pi_\\theta(\\cdot\\mid s_i)\\) and a term like \\(\\nabla_\\theta\\log\\pi_\\theta(a_i^\\pi\\mid s_i)\\hat Q(s_i,a_i^\\pi)\\).",
         isCorrect: true,
       },
       {
