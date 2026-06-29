@@ -200,6 +200,57 @@ export const LEARNING_EXPERIENCES = [
       "Read survival, hazard-ratio, forest-plot, and evidence-synthesis claims cautiously.",
     ],
   },
+  {
+    sourceId: "ai-agents-memory-survey",
+    shortTitle: "Memory System Workbench",
+    title: "AI Agents: Memory in the Age of AI Agents",
+    summary:
+      "Design an agent memory system through the survey's forms, functions, and dynamics taxonomy, then inspect retrieval, evolution, and trust tradeoffs.",
+    durationMinutes: 18,
+    level: "After basic LLM agent concepts",
+    sourceMaterialPath:
+      "lib/other/AI agents/Memory/transcripts-and-files/Memory in the Age of AI Agents - A Survey.pdf",
+    outcomes: [
+      "Separate memory forms from memory functions and lifecycle dynamics.",
+      "Choose between token-level, parametric, and latent memory carriers for concrete agent pressures.",
+      "Trace formation, evolution, and retrieval decisions through a managed memory subsystem.",
+      "Explain why multimodal, shared, RL-controlled, and trustworthy memory are frontier problems.",
+    ],
+  },
+  {
+    sourceId: "ai-agents-agent-native-memory",
+    shortTitle: "Memory Evaluation Console",
+    title: "AI Agents: Are We Ready For An Agent-Native Memory System?",
+    summary:
+      "Stress agent memory architectures across workload, retrieval, update, horizon, and cost bottlenecks.",
+    durationMinutes: 18,
+    level: "After basic LLM agent concepts",
+    sourceMaterialPath:
+      "lib/other/AI agents/Memory/transcripts-and-files/Are We Ready For An Agent-Native Memory System.pdf",
+    outcomes: [
+      "Decompose agent memory systems into representation, extraction, retrieval, and maintenance modules.",
+      "Match memory architectures to workload bottlenecks across LongMemEval, LoCoMo, DB-Bench, and cost traces.",
+      "Explain why evidence assembly, update fidelity, and horizon structure matter beyond top-1 retrieval.",
+      "Use component ablations to reason about representation granularity, extraction coverage, retrieval planning, and conservative maintenance.",
+    ],
+  },
+  {
+    sourceId: "ai-agents-atommem",
+    shortTitle: "AtomMem Pipeline Debugger",
+    title: "AI Agents: AtomMem",
+    summary:
+      "Debug the AtomMem pipeline from noisy dialogue through atomic facts, verification, event/profile memory, graph recall, and evaluation tradeoffs.",
+    durationMinutes: 18,
+    level: "After basic LLM agent and memory concepts",
+    sourceMaterialPath:
+      "lib/other/AI agents/Memory/transcripts-and-files/AtomMem Building Simple and Effective Memory System.pdf",
+    outcomes: [
+      "Explain why AtomMem uses self-contained atomic facts instead of raw logs or loose summaries.",
+      "Trace verification, residual storage, event memory, and temporal profiles through a memory update.",
+      "Diagnose how entity, event, and temporal graph edges support associative recall.",
+      "Interpret AtomMem's ablations, retrieval-capacity tradeoffs, latency results, and limitations.",
+    ],
+  },
 ] as const satisfies readonly LearningExperience[];
 
 const QUESTION_SOURCE_BY_ID = new Map(

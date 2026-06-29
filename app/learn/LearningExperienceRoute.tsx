@@ -6,10 +6,13 @@ import {
   type LearningExperience,
 } from "../../lib/learning";
 import type { SourceId } from "../../lib/quiz";
+import AgentNativeMemoryLearningPage from "../../components/learning/pages/AgentNativeMemoryLearningPage";
+import AtomMemLearningPage from "../../components/learning/pages/AtomMemLearningPage";
 import CrashProbabilityL3LearningPage from "../../components/learning/pages/CrashProbabilityL3LearningPage";
 import CrashProbabilityL4LearningPage from "../../components/learning/pages/CrashProbabilityL4LearningPage";
 import CrashProbabilityL5LearningPage from "../../components/learning/pages/CrashProbabilityL5LearningPage";
 import ClinicalTrialsL3LearningPage from "../../components/learning/pages/ClinicalTrialsL3LearningPage";
+import MemorySurveyLearningPage from "../../components/learning/pages/MemorySurveyLearningPage";
 import StanfordCME295Lecture1LearningPage from "../../components/learning/pages/StanfordCME295Lecture1LearningPage";
 import StanfordCME295Lecture2LearningPage from "../../components/learning/pages/StanfordCME295Lecture2LearningPage";
 import StanfordCME295Lecture3LearningPage from "../../components/learning/pages/StanfordCME295Lecture3LearningPage";
@@ -30,6 +33,9 @@ const LEARNING_PAGE_COMPONENTS: Partial<
   "crash-probability-l4": CrashProbabilityL4LearningPage,
   "crash-probability-l5": CrashProbabilityL5LearningPage,
   "clinical-trials-l3": ClinicalTrialsL3LearningPage,
+  "ai-agents-memory-survey": MemorySurveyLearningPage,
+  "ai-agents-agent-native-memory": AgentNativeMemoryLearningPage,
+  "ai-agents-atommem": AtomMemLearningPage,
 };
 
 type LearningExperienceRouteProps = {

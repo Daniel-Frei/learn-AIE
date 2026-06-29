@@ -66,6 +66,9 @@ import { MIT15773L3DeepLearningForComputerVisionQuestions } from "./lectures/MIT
 import { MIT15773L4ComputerVisionTransferLearningQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L4_Computer Vision –Transfer Learning and Fine-Tuning";
 import { L5NLPBasicsQuestions } from "./lectures/MIT 15.773 Hands-On Deep Learning Spring 2024/L5_NLP Basics";
 import { CodeAsAgentHarnessQuestions } from "./other/AI agents/Code as Agent Harness";
+import { AreWeReadyForAnAgentNativeMemorySystemQuestions } from "./other/AI agents/Memory/Are We Ready For An Agent-Native Memory System";
+import { AtomMemBuildingSimpleAndEffectiveMemorySystemQuestions } from "./other/AI agents/Memory/AtomMem Building Simple and Effective Memory System";
+import { MemoryInTheAgeOfAIAgentsSurveyQuestions } from "./other/AI agents/Memory/Memory in the Age of AI Agents - A Survey";
 import { DeepAgentsQuestions } from "./other/Langchain/Deepagents";
 import { mixedQuestions } from "./other/other";
 
@@ -758,6 +761,34 @@ export const QUESTION_SOURCES = [
     questions: CodeAsAgentHarnessQuestions,
   },
   {
+    id: "ai-agents-memory-survey" as const,
+    label: "AI Agents Memory Survey",
+    title: "AI Agents: Memory in the Age of AI Agents",
+    seriesId: "ai-agents" as const,
+    seriesLabel: "AI Agents",
+    topic: "NLP" as const,
+    questions: MemoryInTheAgeOfAIAgentsSurveyQuestions,
+  },
+  {
+    id: "ai-agents-agent-native-memory" as const,
+    label: "AI Agents Agent-Native Memory",
+    title: "AI Agents: Are We Ready For An Agent-Native Memory System?",
+    seriesId: "ai-agents" as const,
+    seriesLabel: "AI Agents",
+    topic: "NLP" as const,
+    balance: false,
+    questions: AreWeReadyForAnAgentNativeMemorySystemQuestions,
+  },
+  {
+    id: "ai-agents-atommem" as const,
+    label: "AI Agents AtomMem",
+    title: "AI Agents: AtomMem",
+    seriesId: "ai-agents" as const,
+    seriesLabel: "AI Agents",
+    topic: "NLP" as const,
+    questions: AtomMemBuildingSimpleAndEffectiveMemorySystemQuestions,
+  },
+  {
     id: "langchain-deepagents" as const,
     label: "LangChain Deep Agents",
     title: "LangChain Deep Agents",
@@ -911,6 +942,12 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
     "Clinical trials crash course lesson about medical devices, diagnostics, real-world evidence, decentralized trials, adaptive designs, AI, and end-to-end development risk.",
   "ai-agents-code-harness":
     "AI agents material about code as executable, inspectable, stateful harness infrastructure for reasoning, action, memory, verification, and multi-agent coordination.",
+  "ai-agents-memory-survey":
+    "AI agents survey material about memory forms, functions, dynamics, retrieval, evolution, multimodal/shared memory, reinforcement learning, and trustworthy memory systems.",
+  "ai-agents-agent-native-memory":
+    "AI agents material about agent-native memory representation, retrieval, maintenance, workload-aligned evaluation, update robustness, long-horizon stability, and operation cost.",
+  "ai-agents-atommem":
+    "AI agents material about AtomMem atomic facts, event memory, temporal profiles, associative graph recall, long-memory evaluation, ablations, and retrieval cost.",
   "langchain-deepagents":
     "LangChain Deep Agents material about planning, tools, subagents, memory, and agent orchestration.",
   other:
@@ -1131,5 +1168,8 @@ export { ClinicalTrialsLecture3Questions } from "./other/Crash Courses/Clinical 
 export { ClinicalTrialsLecture4Questions } from "./other/Crash Courses/Clinical Trials/Lecture 4 - Running Clinical Trials";
 export { ClinicalTrialsLecture5Questions } from "./other/Crash Courses/Clinical Trials/Lecture 5 - Modern Clinical Research and The Future";
 export { CodeAsAgentHarnessQuestions } from "./other/AI agents/Code as Agent Harness";
+export { AreWeReadyForAnAgentNativeMemorySystemQuestions } from "./other/AI agents/Memory/Are We Ready For An Agent-Native Memory System";
+export { AtomMemBuildingSimpleAndEffectiveMemorySystemQuestions } from "./other/AI agents/Memory/AtomMem Building Simple and Effective Memory System";
+export { MemoryInTheAgeOfAIAgentsSurveyQuestions } from "./other/AI agents/Memory/Memory in the Age of AI Agents - A Survey";
 export { DeepAgentsQuestions } from "./other/Langchain/Deepagents";
 export { mixedQuestions } from "./other/other";

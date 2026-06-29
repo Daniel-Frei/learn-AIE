@@ -39,6 +39,7 @@ test("lists available learning courses", async ({ page }) => {
   await expect(
     page.getByRole("link", { name: /clinical trials crash course/i }),
   ).toBeVisible();
+  await expect(page.getByRole("link", { name: /ai agents/i })).toBeVisible();
   await expect(
     page.getByRole("link", { name: /crash course medicine/i }),
   ).toBeVisible();
@@ -68,6 +69,25 @@ test("lists learning experiences for a selected course", async ({ page }) => {
       timeout: ROUTE_TRANSITION_TIMEOUT_MS,
     },
   );
+});
+
+test("lists the AI Agents memory learning page for its course", async ({
+  page,
+}) => {
+  await page.goto("/learn/ai-agents");
+
+  await expect(
+    page.getByRole("heading", { name: /^AI Agents$/i }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /memory system workbench/i }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /memory evaluation console/i }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /atommem pipeline debugger/i }),
+  ).toBeVisible();
 });
 
 test("lists the standalone Medicine learning page for its course", async ({
@@ -1212,6 +1232,147 @@ test("renders the Clinical Trials L3 learning page and supports checks", async (
   await expect(absoluteRiskCheck.getByRole("status")).toHaveText(/correct/i);
 });
 
+test("renders the AI Agents memory survey learning page and supports the design workbench", async ({
+  page,
+}) => {
+  await page.goto("/learn/ai-agents/ai-agents-memory-survey");
+
+  await expect(
+    page.getByRole("heading", {
+      name: /design memory as a managed subsystem/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /build the memory system the scenario actually needs/i,
+    }),
+  ).toBeVisible();
+  await expect(page.locator(".katex-display").first()).toBeVisible();
+  await expect(page.getByText(/\\\[.*M_\{t\+1\}/)).toHaveCount(0);
+
+  const boundaryLab = page.getByTestId("memory-boundary-lab");
+  await boundaryLab.getByRole("button", { name: /classical rag/i }).click();
+  await expect(
+    boundaryLab.getByText(/retrieve external knowledge/i),
+  ).toBeVisible();
+
+  const workbench = page.getByTestId("memory-design-workbench");
+  await expect(workbench.getByRole("status")).toHaveText(
+    /strong survey-aligned design/i,
+  );
+  await workbench.getByRole("button", { name: /base weights/i }).click();
+  await expect(workbench.getByRole("status")).toHaveText(/hard to audit/i);
+  await workbench.getByRole("button", { name: /coding agent/i }).click();
+  await workbench.getByRole("button", { name: /^skills/i }).click();
+  await workbench.getByRole("button", { name: /adapters/i }).click();
+  await expect(workbench.getByText(/modular competence/i)).toBeVisible();
+
+  const frontierBoard = page.getByTestId("memory-frontier-board");
+  await frontierBoard.getByRole("button", { name: /shared memory/i }).click();
+  await expect(frontierBoard.getByText(/common substrate/i)).toBeVisible();
+});
+
+test("renders the AI Agents agent-native memory learning page and supports the evaluation console", async ({
+  page,
+}) => {
+  await page.goto("/learn/ai-agents/ai-agents-agent-native-memory");
+
+  await expect(
+    page.getByRole("heading", {
+      name: /evaluate memory like infrastructure/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /stress a memory architecture before trusting the answer/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /retrieval is evidence assembly/i,
+    }),
+  ).toBeVisible();
+  await expect(page.locator(".katex-display").first()).toBeVisible();
+  await expect(page.getByText(/\\\[.*M_\{sys\}/)).toHaveCount(0);
+
+  const moduleRack = page.getByTestId("agent-native-module-rack");
+  await moduleRack
+    .getByRole("button", { name: /Q: Retrieval and routing/i })
+    .click();
+  await expect(
+    moduleRack.getByText(/How does a query find useful evidence/i),
+  ).toBeVisible();
+
+  const console = page.getByTestId("agent-native-evaluation-console");
+  await expect(console.getByRole("status")).toHaveText(/strong workload fit/i);
+  await console
+    .getByRole("button", { name: /Latest-state fact update/i })
+    .click();
+  await console
+    .getByRole("button", { name: /Relation-aware graph memory/i })
+    .click();
+  await expect(console.getByText(/Temporal update fidelity/i)).toBeVisible();
+  await console.getByRole("button", { name: /Abstractive summary/i }).click();
+  await expect(console.getByText(/summary-heavy/i)).toBeVisible();
+
+  const evidenceLab = page.getByTestId("agent-native-evidence-distance-lab");
+  await evidenceLab
+    .getByRole("button", { name: /Flat semantic cache/i })
+    .click();
+  await evidenceLab
+    .getByRole("button", { name: /Direct top-1 retrieval/i })
+    .click();
+  await expect(
+    evidenceLab.getByText(/long-range reconstruction/i),
+  ).toBeVisible();
+
+  const ablationBoard = page.getByTestId("agent-native-ablation-board");
+  await ablationBoard.getByRole("button", { name: /Retrieval/i }).click();
+  await expect(ablationBoard.getByText(/Planning only/i)).toBeVisible();
+});
+
+test("renders the AI Agents AtomMem learning page and supports the pipeline debugger", async ({
+  page,
+}) => {
+  await page.goto("/learn/ai-agents/ai-agents-atommem");
+
+  await expect(
+    page.getByRole("heading", {
+      name: /debug a memory pipeline before trusting its answer/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /run one memory design and watch where it fails/i,
+    }),
+  ).toBeVisible();
+  await expect(page.locator(".katex-display").first()).toBeVisible();
+  await expect(page.getByText(/\\\[.*S_h/)).toHaveCount(0);
+
+  const representationLab = page.getByTestId("atommem-representation-lab");
+  await representationLab.getByRole("button", { name: /raw log/i }).click();
+  await expect(representationLab.getByRole("status")).toHaveText(
+    /noise-heavy retrieval/i,
+  );
+
+  const debuggerLab = page.getByTestId("atommem-pipeline-debugger");
+  await expect(debuggerLab.getByRole("status")).toHaveText(
+    /strong atommem-style design/i,
+  );
+  await debuggerLab
+    .getByRole("button", { name: /graph recall enabled/i })
+    .click();
+  await expect(
+    debuggerLab.getByText(/graph recall is disabled/i),
+  ).toBeVisible();
+  await debuggerLab.getByRole("button", { name: /^0\.9$/i }).click();
+  await expect(debuggerLab.getByText(/high event weight/i)).toBeVisible();
+
+  const ablationBoard = page.getByTestId("atommem-ablation-board");
+  await ablationBoard.getByRole("button", { name: /w\/o graph/i }).click();
+  await expect(ablationBoard.getByText(/remote dependencies/i)).toBeVisible();
+});
+
 test("renders the standalone Medicine Lecture 1 page and supports clinical reasoning interactions", async ({
   page,
 }) => {
@@ -1259,6 +1420,56 @@ test("keeps the Clinical Trials L3 learning page usable at mobile width", async 
 
   await expect(
     page.getByRole("link", { name: /start questions/i }),
+  ).toBeVisible();
+  const scrollWidth = await page.evaluate(
+    () => document.documentElement.scrollWidth,
+  );
+  const viewportWidth = await page.evaluate(() => window.innerWidth);
+  expect(scrollWidth).toBeLessThanOrEqual(viewportWidth + 1);
+});
+
+test("keeps the AI Agents memory survey learning page usable at mobile width", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/learn/ai-agents/ai-agents-memory-survey");
+
+  await expect(
+    page.getByRole("link", { name: /start memory survey questions/i }).first(),
+  ).toBeVisible();
+  const scrollWidth = await page.evaluate(
+    () => document.documentElement.scrollWidth,
+  );
+  const viewportWidth = await page.evaluate(() => window.innerWidth);
+  expect(scrollWidth).toBeLessThanOrEqual(viewportWidth + 1);
+});
+
+test("keeps the AI Agents agent-native memory learning page usable at mobile width", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/learn/ai-agents/ai-agents-agent-native-memory");
+
+  await expect(
+    page
+      .getByRole("link", { name: /start agent-native memory questions/i })
+      .first(),
+  ).toBeVisible();
+  const scrollWidth = await page.evaluate(
+    () => document.documentElement.scrollWidth,
+  );
+  const viewportWidth = await page.evaluate(() => window.innerWidth);
+  expect(scrollWidth).toBeLessThanOrEqual(viewportWidth + 1);
+});
+
+test("keeps the AI Agents AtomMem learning page usable at mobile width", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/learn/ai-agents/ai-agents-atommem");
+
+  await expect(
+    page.getByRole("link", { name: /start atommem questions/i }).first(),
   ).toBeVisible();
   const scrollWidth = await page.evaluate(
     () => document.documentElement.scrollWidth,
@@ -1558,6 +1769,84 @@ test("transitions from Clinical Trials L3 learning into its quiz source", async 
     page.getByRole("button", { name: /choose filters/i }),
   ).toBeVisible();
   await expect(page.getByText(/question 1 of 60/i)).toBeVisible({
+    timeout: 10000,
+  });
+});
+
+test("transitions from AI Agents memory survey learning into its quiz source", async ({
+  page,
+}) => {
+  await page.goto("/learn/ai-agents/ai-agents-memory-survey");
+
+  await page
+    .getByRole("link", { name: /start memory survey questions/i })
+    .first()
+    .click();
+
+  await expect(page).toHaveURL(/\/\?source=ai-agents-memory-survey$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
+  await expect(
+    page.getByRole("heading", {
+      name: /ai agents: memory in the age of ai agents/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /choose filters/i }),
+  ).toBeVisible();
+  await expect(page.getByText(/question 1 of 40/i)).toBeVisible({
+    timeout: 10000,
+  });
+});
+
+test("transitions from AI Agents agent-native memory learning into its quiz source", async ({
+  page,
+}) => {
+  await page.goto("/learn/ai-agents/ai-agents-agent-native-memory");
+
+  await page
+    .getByRole("link", { name: /start agent-native memory questions/i })
+    .first()
+    .click();
+
+  await expect(page).toHaveURL(/\/\?source=ai-agents-agent-native-memory$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
+  await expect(
+    page.getByRole("heading", {
+      name: /ai agents: are we ready for an agent-native memory system\?/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /choose filters/i }),
+  ).toBeVisible();
+  await expect(page.getByText(/question 1 of 40/i)).toBeVisible({
+    timeout: 10000,
+  });
+});
+
+test("transitions from AI Agents AtomMem learning into its quiz source", async ({
+  page,
+}) => {
+  await page.goto("/learn/ai-agents/ai-agents-atommem");
+
+  await page
+    .getByRole("link", { name: /start atommem questions/i })
+    .first()
+    .click();
+
+  await expect(page).toHaveURL(/\/\?source=ai-agents-atommem$/, {
+    timeout: ROUTE_TRANSITION_TIMEOUT_MS,
+  });
+  await expect(
+    page.getByRole("heading", {
+      name: /ai agents: atommem/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: /choose filters/i }),
+  ).toBeVisible();
+  await expect(page.getByText(/question 1 of 40/i)).toBeVisible({
     timeout: 10000,
   });
 });

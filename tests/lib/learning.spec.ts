@@ -117,6 +117,32 @@ describe("learning experience registry", () => {
       "Clinical Trials/transcripts-and-files/Lecture 3 - overview.md",
     );
 
+    const memorySurveyExperience = getLearningExperience(
+      "ai-agents-memory-survey",
+    );
+    expect(memorySurveyExperience?.title).toContain(
+      "Memory in the Age of AI Agents",
+    );
+    expect(memorySurveyExperience?.sourceMaterialPath).toContain(
+      "AI agents/Memory/transcripts-and-files/Memory in the Age of AI Agents - A Survey.pdf",
+    );
+
+    const agentNativeMemoryExperience = getLearningExperience(
+      "ai-agents-agent-native-memory",
+    );
+    expect(agentNativeMemoryExperience?.title).toContain(
+      "Are We Ready For An Agent-Native Memory System?",
+    );
+    expect(agentNativeMemoryExperience?.sourceMaterialPath).toContain(
+      "AI agents/Memory/transcripts-and-files/Are We Ready For An Agent-Native Memory System.pdf",
+    );
+
+    const atomMemExperience = getLearningExperience("ai-agents-atommem");
+    expect(atomMemExperience?.title).toContain("AtomMem");
+    expect(atomMemExperience?.sourceMaterialPath).toContain(
+      "AI agents/Memory/transcripts-and-files/AtomMem Building Simple and Effective Memory System.pdf",
+    );
+
     expect(getLearningExperience("missing-source")).toBeNull();
   });
 
@@ -127,6 +153,7 @@ describe("learning experience registry", () => {
         "Stanford CME295 Transformers & LLMs",
         "Crash Course Probability",
         "Clinical Trials Crash Course",
+        "AI Agents",
       ]),
     );
 
@@ -202,6 +229,34 @@ describe("learning experience registry", () => {
         "/learn/stanford-cme295/cme295-lect9",
       );
     }
+
+    const memorySurveyExperience = getLearningExperience(
+      "ai-agents-memory-survey",
+    );
+    expect(memorySurveyExperience).not.toBeNull();
+    if (memorySurveyExperience) {
+      expect(getLearningExperiencePath(memorySurveyExperience)).toBe(
+        "/learn/ai-agents/ai-agents-memory-survey",
+      );
+    }
+
+    const agentNativeMemoryExperience = getLearningExperience(
+      "ai-agents-agent-native-memory",
+    );
+    expect(agentNativeMemoryExperience).not.toBeNull();
+    if (agentNativeMemoryExperience) {
+      expect(getLearningExperiencePath(agentNativeMemoryExperience)).toBe(
+        "/learn/ai-agents/ai-agents-agent-native-memory",
+      );
+    }
+
+    const atomMemExperience = getLearningExperience("ai-agents-atommem");
+    expect(atomMemExperience).not.toBeNull();
+    if (atomMemExperience) {
+      expect(getLearningExperiencePath(atomMemExperience)).toBe(
+        "/learn/ai-agents/ai-agents-atommem",
+      );
+    }
   });
 
   it("derives lecture and chapter labels for course cards", () => {
@@ -242,6 +297,34 @@ describe("learning experience registry", () => {
     if (probabilityLecture5) {
       expect(getLearningExperienceSequenceLabel(probabilityLecture5)).toBe(
         "Lecture 5",
+      );
+    }
+
+    const memorySurveyExperience = getLearningExperience(
+      "ai-agents-memory-survey",
+    );
+    expect(memorySurveyExperience).not.toBeNull();
+    if (memorySurveyExperience) {
+      expect(getLearningExperienceSequenceLabel(memorySurveyExperience)).toBe(
+        "AI Agents Memory Survey",
+      );
+    }
+
+    const agentNativeMemoryExperience = getLearningExperience(
+      "ai-agents-agent-native-memory",
+    );
+    expect(agentNativeMemoryExperience).not.toBeNull();
+    if (agentNativeMemoryExperience) {
+      expect(
+        getLearningExperienceSequenceLabel(agentNativeMemoryExperience),
+      ).toBe("AI Agents Agent-Native Memory");
+    }
+
+    const atomMemExperience = getLearningExperience("ai-agents-atommem");
+    expect(atomMemExperience).not.toBeNull();
+    if (atomMemExperience) {
+      expect(getLearningExperienceSequenceLabel(atomMemExperience)).toBe(
+        "AI Agents AtomMem",
       );
     }
 
@@ -306,6 +389,13 @@ describe("quiz source query parsing", () => {
     expect(parseQuizSourceParam("clinical-trials-l3")).toBe(
       "clinical-trials-l3",
     );
+    expect(parseQuizSourceParam("ai-agents-memory-survey")).toBe(
+      "ai-agents-memory-survey",
+    );
+    expect(parseQuizSourceParam("ai-agents-agent-native-memory")).toBe(
+      "ai-agents-agent-native-memory",
+    );
+    expect(parseQuizSourceParam("ai-agents-atommem")).toBe("ai-agents-atommem");
   });
 
   it("uses the first array value and rejects missing or unknown values", () => {
