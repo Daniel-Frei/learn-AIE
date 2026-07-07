@@ -10,6 +10,15 @@ export type StandaloneLearningPage = {
 export const standaloneLearningPagesBySeries: Partial<
   Record<SourceSeriesId, readonly StandaloneLearningPage[]>
 > = {
+  "ai-agents": [
+    {
+      href: "/learn/ai-agents/ai-agents-agent-native-memory/presentation",
+      sequenceLabel: "Presentation",
+      shortTitle: "Agent-Native Memory Talk Deck",
+      summary:
+        "Scroll through a visual presenter page for the agent-native memory paper, built around modules, workloads, retrieval, updates, cost, and ablations.",
+    },
+  ],
   "stanford-cme295": [
     {
       href: "/learn/stanford-cme295/lecture-6",

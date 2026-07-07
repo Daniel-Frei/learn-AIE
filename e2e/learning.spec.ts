@@ -86,6 +86,9 @@ test("lists the AI Agents memory learning page for its course", async ({
     page.getByRole("link", { name: /memory evaluation console/i }),
   ).toBeVisible();
   await expect(
+    page.getByRole("link", { name: /agent-native memory talk deck/i }),
+  ).toBeVisible();
+  await expect(
     page.getByRole("link", { name: /atommem pipeline debugger/i }),
   ).toBeVisible();
 });
@@ -1331,6 +1334,388 @@ test("renders the AI Agents agent-native memory learning page and supports the e
   await expect(ablationBoard.getByText(/Planning only/i)).toBeVisible();
 });
 
+test("renders the AI Agents agent-native memory presentation deck", async ({
+  page,
+}) => {
+  let printCalled = false;
+  await page.exposeFunction("markPresentationPrintCalled", () => {
+    printCalled = true;
+  });
+  await page.addInitScript(() => {
+    window.print = () => {
+      const marker = (
+        window as unknown as { markPresentationPrintCalled?: () => void }
+      ).markPresentationPrintCalled;
+      marker?.();
+    };
+  });
+
+  await page.goto(
+    "/learn/ai-agents/ai-agents-agent-native-memory/presentation",
+    { waitUntil: "domcontentloaded" },
+  );
+
+  await expect(
+    page.locator("#slide-1").getByRole("heading", {
+      name: /are we ready for an agent-native memory system\?/i,
+      level: 1,
+    }),
+  ).toBeVisible();
+  await expect(page.getByTestId("presentation-paper-title")).toBeVisible();
+  await expect(page.getByTestId("presentation-agenda")).toBeVisible();
+  const exportButton = page.getByTestId("presentation-pdf-export");
+  const exportButtonStart = await exportButton.evaluate((element) => {
+    const rect = element.getBoundingClientRect();
+    return { top: rect.top, viewportHeight: window.innerHeight };
+  });
+  expect(exportButtonStart.top).toBeGreaterThan(
+    exportButtonStart.viewportHeight,
+  );
+
+  const slideRail = page.getByTestId("presentation-slide-rail");
+  await expect
+    .poll(() =>
+      slideRail.evaluate((element) => getComputedStyle(element).opacity),
+    )
+    .toBe("0");
+  await page.getByRole("navigation", { name: "Presentation sections" }).hover();
+  await expect
+    .poll(() =>
+      slideRail.evaluate((element) => getComputedStyle(element).opacity),
+    )
+    .toBe("1");
+  const activeSlideId = () =>
+    page.evaluate(() => {
+      const slides = Array.from(
+        document.querySelectorAll<HTMLElement>(
+          ".agent-native-presentation-slide",
+        ),
+      );
+      const anchorY = 72;
+      return slides.reduce(
+        (best, slide) => {
+          const distance = Math.abs(
+            slide.getBoundingClientRect().top - anchorY,
+          );
+          return distance < best.distance ? { id: slide.id, distance } : best;
+        },
+        { id: "", distance: Number.POSITIVE_INFINITY },
+      ).id;
+    });
+
+  await page.keyboard.press("Home");
+  await expect.poll(activeSlideId).toBe("slide-1");
+  await page.keyboard.press("Space");
+  await expect.poll(activeSlideId).toBe("slide-2");
+  await page.keyboard.press("ArrowRight");
+  await expect.poll(activeSlideId).toBe("slide-3");
+  await page.keyboard.press("ArrowRight");
+  await expect.poll(activeSlideId).toBe("slide-4");
+  await page.keyboard.down("Shift");
+  await page.keyboard.press("Space");
+  await page.keyboard.up("Shift");
+  await expect.poll(activeSlideId).toBe("slide-3");
+  await page.keyboard.press("Home");
+  await expect.poll(activeSlideId).toBe("slide-1");
+
+  for (const heading of [
+    /1\. introduction/i,
+    /2\. preliminaries/i,
+    /3\. method overview/i,
+    /4\. end-to-end assessment/i,
+    /5\. fine-grained component comparison/i,
+    /6\. conclusion/i,
+  ]) {
+    await expect(page.getByRole("heading", { name: heading })).toBeVisible();
+  }
+  await expect(
+    page.getByText(/cognitive labels become system-design labels/i),
+  ).toHaveCount(0);
+  await expect(
+    page.locator("#slide-8 .agent-native-presentation-slide-copy"),
+  ).not.toHaveCount(0);
+  await expect(
+    page.locator("#slide-7 .agent-native-presentation-slide-copy"),
+  ).not.toHaveCount(0);
+  await expect(
+    page.getByTestId("presentation-motivation-system-evaluation"),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/evaluate the memory layer as a system/i),
+  ).toBeVisible();
+  await expect(
+    page.getByTestId("presentation-benchmark-failure-modes"),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/Memory is modular, but benchmarks are not/i),
+  ).toBeVisible();
+  await expect(
+    page.getByTestId("presentation-figure-one-architectures"),
+  ).toBeVisible();
+  await expect(page.getByText(/adapted from figure 1/i)).toHaveCount(0);
+  await expect(page.getByTestId("presentation-evaluation-scope")).toHaveCount(
+    0,
+  );
+  await expect(page.getByText(/long-horizon stability/i).first()).toBeVisible();
+  await expect(page.getByTestId("presentation-module-map")).toBeVisible();
+  await expect(page.getByTestId("presentation-scope-contrasts")).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /the formal anchor is four modules/i,
+    }),
+  ).toBeVisible();
+  await expect(page.getByTestId("presentation-method-overview")).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /section 3 is the design-space map/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByTestId("presentation-table-one-taxonomy"),
+  ).toBeVisible();
+  await expect(
+    page.getByTestId("presentation-table-one-infographic"),
+  ).toBeVisible();
+  await expect(
+    page.getByAltText(/Simplified visual table mapping memory systems/i),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/Paper Table 1: systems normalized/i),
+  ).toHaveCount(0);
+  await expect(
+    page.getByText(/Presenter Table 1: memory systems/i),
+  ).toHaveCount(0);
+  await expect(page.getByTestId("presentation-figure-2-large")).toBeVisible();
+  await expect(page.getByTestId("presentation-figure-3-large")).toBeVisible();
+  await expect(page.getByTestId("presentation-figure-4-large")).toBeVisible();
+  await expect(page.getByTestId("presentation-figure-5-large")).toBeVisible();
+  await expect(page.getByTestId("presentation-figure-6-large")).toBeVisible();
+  await expect(
+    page.getByAltText(/Table 1 from the paper mapping agent memory systems/i),
+  ).toBeVisible();
+  await expect(
+    page.getByTestId("presentation-architecture-primer"),
+  ).toBeVisible();
+  await expect(
+    page.getByTestId("presentation-architecture-examples"),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /four paper buckets organize the comparison/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /use the paper's system buckets for the comparison/i,
+    }),
+  ).toBeVisible();
+  const architectureExamples = page.getByTestId(
+    "presentation-architecture-examples",
+  );
+  await expect(
+    architectureExamples.getByText(/Reference baselines/i),
+  ).toBeVisible();
+  await expect(
+    architectureExamples.getByText(/Sequential context/i),
+  ).toBeVisible();
+  await expect(
+    architectureExamples.getByText(/Structural \/ topological/i),
+  ).toBeVisible();
+  await expect(
+    architectureExamples.getByText(/Multi-paradigm hybrid/i),
+  ).toBeVisible();
+  const benchmarkExplainer = page.getByTestId(
+    "presentation-benchmark-explainer",
+  );
+  await expect(benchmarkExplainer).toBeVisible();
+  await expect(benchmarkExplainer.getByText(/LoCoMo/i)).toBeVisible();
+  await expect(
+    benchmarkExplainer.getByText(/300 turns and 9K tokens/i),
+  ).toBeVisible();
+  await expect(benchmarkExplainer.getByText(/LongMemEval/i)).toBeVisible();
+  await expect(benchmarkExplainer.getByText(/DB-Bench/i)).toBeVisible();
+  await expect(benchmarkExplainer.getByText(/LongBench/i)).toBeVisible();
+  await expect(
+    benchmarkExplainer.getByText(/21 datasets across 6/i),
+  ).toBeVisible();
+  await expect(
+    page.getByTestId("presentation-evaluation-landscape"),
+  ).toBeVisible();
+  await expect(page.getByTestId("presentation-system-lineup")).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /RQ1: no universal winner/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByTestId("presentation-rq1-effectiveness"),
+  ).toBeVisible();
+  await expect(page.getByText(/MemOS leads LoCoMo EM/i)).toBeVisible();
+  await expect(
+    page.getByTestId("presentation-rq2-retrieval-fidelity"),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/SimpleMem leads early localization/i),
+  ).toBeVisible();
+  await expect(
+    page.getByTestId("presentation-rq3-update-robustness"),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/Zep leads the knowledge-update slice/i),
+  ).toBeVisible();
+  await expect(page.getByTestId("presentation-rq4-long-horizon")).toBeVisible();
+  await expect(page.getByText(/Embedding RAG drops sharply/i)).toBeVisible();
+  await expect(
+    page.getByTestId("presentation-rq5-operation-cost"),
+  ).toBeVisible();
+  await expect(page.getByText(/LightMem and MemTree sit near/i)).toBeVisible();
+  await expect(page.getByTestId("presentation-figure-7-full")).toBeVisible();
+  await expect(page.getByTestId("presentation-figure-8-full")).toBeVisible();
+  await expect(page.getByTestId("presentation-table-2-full")).toBeVisible();
+  await expect(page.getByTestId("presentation-figure-10-full")).toBeVisible();
+  await expect(page.getByTestId("presentation-figure-11-full")).toBeVisible();
+  await expect(
+    page.getByTestId("presentation-section-five-overview"),
+  ).toBeVisible();
+  await expect(
+    page.getByTestId("presentation-m1-representation-ablation"),
+  ).toBeVisible();
+  await expect(
+    page.getByTestId("presentation-m2-extraction-ablation"),
+  ).toBeVisible();
+  await expect(
+    page.getByTestId("presentation-m3-retrieval-ablation"),
+  ).toBeVisible();
+  await expect(
+    page.getByTestId("presentation-m4-maintenance-ablation"),
+  ).toBeVisible();
+  await expect(page.getByTestId("presentation-table-3-full")).toBeVisible();
+  await expect(page.getByTestId("presentation-table-4-full")).toBeVisible();
+  await expect(page.getByTestId("presentation-table-5-full")).toBeVisible();
+  await expect(page.getByTestId("presentation-figure-12-full")).toBeVisible();
+  await page
+    .getByRole("button", { name: /enlarge Figure 7: effectiveness/i })
+    .click();
+  await expect(page.getByTestId("presentation-figure-lightbox")).toBeVisible();
+  await expect(page.getByTestId("presentation-lightbox-close")).toBeVisible();
+  await page.getByRole("button", { name: /close enlarged figure/i }).click();
+  await expect(page.getByTestId("presentation-figure-lightbox")).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", {
+      name: /the answer is: not fully ready/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /open learning page/i }),
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("link", { name: /start question set/i }),
+  ).toHaveCount(0);
+  await page.locator("#slide-46").scrollIntoViewIfNeeded();
+  await expect(exportButton).toBeInViewport();
+  await exportButton.click();
+  await expect.poll(() => printCalled).toBe(true);
+
+  await page.emulateMedia({ media: "print" });
+  await expect(page.getByRole("navigation", { name: "Primary" })).toBeHidden();
+  await expect(
+    page.getByRole("navigation", { name: "Presentation sections" }),
+  ).toBeHidden();
+  await expect(page.getByTestId("presentation-pdf-export")).toBeHidden();
+
+  const printStyles = await page.locator("#slide-1").evaluate((element) => {
+    const styles = window.getComputedStyle(element);
+    return {
+      breakAfter: styles.breakAfter,
+      overflow: styles.overflow,
+      pageBreakAfter: styles.pageBreakAfter,
+    };
+  });
+  expect(`${printStyles.breakAfter} ${printStyles.pageBreakAfter}`).toMatch(
+    /page|always/,
+  );
+  expect(printStyles.overflow).toBe("hidden");
+});
+
+test("does not surface a hydration warning when the body is mutated before presentation hydration", async ({
+  page,
+}) => {
+  const hydrationWarnings: string[] = [];
+  let htmlMutated = false;
+  page.on("console", (message) => {
+    if (
+      message.type() === "error" &&
+      message.text().includes("A tree hydrated but some attributes")
+    ) {
+      hydrationWarnings.push(message.text());
+    }
+  });
+
+  await page.route(
+    "**/learn/ai-agents/ai-agents-agent-native-memory/presentation**",
+    async (route) => {
+      const response = await route.fetch();
+      const headers = response.headers();
+      delete headers["content-length"];
+      const html = await response.text();
+      const mutatedHtml = html.replace(
+        /<body([^>]*)class="/,
+        '<body$1class="extension-added-body-class ',
+      );
+
+      htmlMutated = mutatedHtml !== html;
+      await route.fulfill({
+        body: mutatedHtml,
+        headers,
+        status: response.status(),
+      });
+    },
+  );
+
+  await page.goto(
+    "/learn/ai-agents/ai-agents-agent-native-memory/presentation",
+    { waitUntil: "domcontentloaded" },
+  );
+
+  expect(htmlMutated).toBe(true);
+  await expect(
+    page.locator("#slide-1").getByRole("heading", {
+      name: /are we ready for an agent-native memory system\?/i,
+      level: 1,
+    }),
+  ).toBeVisible();
+  await page.waitForTimeout(500);
+  expect(hydrationWarnings).toEqual([]);
+});
+
+test("does not surface a hydration warning on the unmodified presentation route", async ({
+  page,
+}) => {
+  const hydrationWarnings: string[] = [];
+  page.on("console", (message) => {
+    if (
+      message.type() === "error" &&
+      message.text().includes("A tree hydrated but some attributes")
+    ) {
+      hydrationWarnings.push(message.text());
+    }
+  });
+
+  await page.goto(
+    "/learn/ai-agents/ai-agents-agent-native-memory/presentation",
+    { waitUntil: "domcontentloaded" },
+  );
+
+  await expect(
+    page.locator("#slide-1").getByRole("heading", {
+      name: /are we ready for an agent-native memory system\?/i,
+      level: 1,
+    }),
+  ).toBeVisible();
+  await page.waitForTimeout(500);
+  expect(hydrationWarnings).toEqual([]);
+});
+
 test("renders the AI Agents AtomMem learning page and supports the pipeline debugger", async ({
   page,
 }) => {
@@ -1454,6 +1839,28 @@ test("keeps the AI Agents agent-native memory learning page usable at mobile wid
     page
       .getByRole("link", { name: /start agent-native memory questions/i })
       .first(),
+  ).toBeVisible();
+  const scrollWidth = await page.evaluate(
+    () => document.documentElement.scrollWidth,
+  );
+  const viewportWidth = await page.evaluate(() => window.innerWidth);
+  expect(scrollWidth).toBeLessThanOrEqual(viewportWidth + 1);
+});
+
+test("keeps the AI Agents agent-native memory presentation deck usable at mobile width", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(
+    "/learn/ai-agents/ai-agents-agent-native-memory/presentation",
+    { waitUntil: "domcontentloaded" },
+  );
+
+  await expect(
+    page.locator("#slide-1").getByRole("heading", {
+      name: /are we ready for an agent-native memory system\?/i,
+      level: 1,
+    }),
   ).toBeVisible();
   const scrollWidth = await page.evaluate(
     () => document.documentElement.scrollWidth,

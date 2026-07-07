@@ -289,18 +289,7 @@ test("lets users select answer text without toggling the answer", async ({
   await expect(firstOption).toHaveAttribute("aria-checked", "false");
   await expect(firstOptionText).toHaveCSS("cursor", "pointer");
 
-  const box = await firstOptionText.boundingBox();
-  expect(box, "first answer option text should be visible").not.toBeNull();
-  if (!box) return;
-
-  await page.mouse.move(box.x + 2, box.y + box.height / 2);
-  await page.mouse.down();
-  await page.mouse.move(
-    box.x + Math.min(box.width - 2, 420),
-    box.y + box.height / 2,
-    { steps: 12 },
-  );
-  await page.mouse.up();
+  await firstOptionText.selectText();
 
   const selectedText = await page.evaluate(
     () => window.getSelection()?.toString().trim() ?? "",
