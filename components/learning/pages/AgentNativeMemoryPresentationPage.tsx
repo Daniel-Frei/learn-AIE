@@ -21,6 +21,7 @@ const assetBase = "/learning/agent-native-memory/presentation";
 const sectionThreeAssetBase = `${assetBase}/section-3`;
 const sectionFourAssetBase = `${assetBase}/section-4`;
 const sectionFiveAssetBase = `${assetBase}/section-5`;
+const sectionSixAssetBase = `${assetBase}/section-6`;
 
 const paperAssets = {
   figure2: {
@@ -95,6 +96,12 @@ const paperAssets = {
     width: 1020,
     height: 450,
   },
+  metricsOverview: {
+    src: `${sectionFourAssetBase}/metrics.png`,
+    alt: "Infographic explaining Exact Match, Answer F1, ROUGE-L F1, and ROUGE-L Recall evaluation metrics",
+    width: 1672,
+    height: 941,
+  },
   table3: {
     src: `${sectionFiveAssetBase}/table-3-representation-storage.png`,
     alt: "Table 3 from the paper showing ablations of representation and storage mechanisms",
@@ -119,6 +126,12 @@ const paperAssets = {
     width: 1005,
     height: 555,
   },
+  table1EmpiricalHighlights: {
+    src: `${sectionSixAssetBase}/table-1-empirical-highlights.png`,
+    alt: "Highlighted system table showing empirical findings across representation, storage, extraction, retrieval routing, and maintenance choices",
+    width: 1672,
+    height: 941,
+  },
 } as const;
 
 const slideNav = [
@@ -127,7 +140,6 @@ const slideNav = [
   ["1", "Introduction"],
   ["Problem", "Systems evaluation"],
   ["Failures", "Modular causes"],
-  ["Figure 1", "Fragmented architectures"],
   ["2", "Preliminaries"],
   ["Lens", "Four modules"],
   ["Boundaries", "Not RAG"],
@@ -140,12 +152,10 @@ const slideNav = [
   ["Figure 4", "Extraction"],
   ["Figure 5", "Retrieval"],
   ["Figure 6", "Maintenance"],
-  ["Primer", "Paper buckets"],
-  ["Systems", "Table 1 buckets"],
-  ["Benchmarks", "What is tested"],
+  ["Table 1", "Reminder"],
   ["4", "End-to-end"],
-  ["Evaluation", "Five RQs"],
-  ["Lineup", "Systems and pressures"],
+  ["Benchmarks", "What is tested"],
+  ["Metrics", "Metric guide"],
   ["RQ1", "Workload fit"],
   ["Fig 7", "Effectiveness"],
   ["RQ2", "Evidence assembly"],
@@ -167,7 +177,14 @@ const slideNav = [
   ["M4", "Maintenance"],
   ["Fig 12", "Maintenance"],
   ["6", "Conclusion"],
+  ["Highlights", "Findings table"],
   ["Close", "Readiness"],
+  ["Appendix", "Backup"],
+  ["Figure 1", "Architectures"],
+  ["Evaluation", "Five RQs"],
+  ["Primer", "Paper buckets"],
+  ["Systems", "Table 1 buckets"],
+  ["Lineup", "Systems and pressures"],
 ] as const;
 
 const agendaItems = [
@@ -203,23 +220,28 @@ const sectionDividers = {
   method: {
     number: "3",
     title: "Method Overview",
-    thesis:
-      "This is the design-space map: representation, extraction, retrieval, and maintenance become comparable choices.",
-    beats: ["Table 1 taxonomy", "write path", "read path"],
+    thesis: "Breaks agent memory into modular design choices.",
+    beats: [
+      "Memory representation",
+      "Extraction strategies",
+      "Routing/maintenance",
+    ],
   },
   assessment: {
     number: "4",
     title: "End-to-End Assessment",
-    thesis:
-      "The taxonomy becomes an empirical test across workloads, evidence retrieval, updates, horizons, and cost.",
-    beats: ["RQ1-RQ5", "benchmark workloads", "cost-performance trade-offs"],
+    thesis: "Evaluating memory systems across workloads and failure modes",
+    beats: ["Task effectiveness", "Retrieval fidelity", "Update robustness"],
   },
   components: {
     number: "5",
     title: "Fine-Grained Component Comparison",
-    thesis:
-      "The paper moves from ranking systems to diagnosing the module choices that cause each failure mode.",
-    beats: ["representation", "extraction", "retrieval", "maintenance"],
+    thesis: "Isolating which memory components cause performance differences.",
+    beats: [
+      "Component ablations",
+      "Representation granularity",
+      "Conservative consolidation",
+    ],
   },
   conclusion: {
     number: "6",
@@ -232,6 +254,12 @@ const sectionDividers = {
       "update correctly",
       "bound cost",
     ],
+  },
+  appendix: {
+    number: "A",
+    title: "Appendix",
+    thesis: "Backup architecture and system-lineup context for discussion.",
+    beats: ["architecture buckets", "system examples", "evaluation lineup"],
   },
 } as const;
 
@@ -269,23 +297,23 @@ const moduleCards = [
 const figureOneArchitectures = [
   {
     name: "Stream + reflection",
-    visual: ["event log", "reflection", "write-back"],
-    point: "keeps experience as a time-ordered stream",
+    visual: ["Event log", "Reflection", "Write-back"],
+    point: "Keeps experience as a time-ordered stream",
   },
   {
     name: "Hierarchical tiers",
-    visual: ["core", "summary", "archive"],
-    point: "moves memories between fast and long-term stores",
+    visual: ["Core", "Summary", "Archive"],
+    point: "Moves memories between fast and long-term stores",
   },
   {
     name: "Knowledge graph",
-    visual: ["entity", "relation", "version"],
-    point: "turns facts into linked, timestamped structure",
+    visual: ["Entity", "Relation", "Version"],
+    point: "Turns facts into linked, timestamped structure",
   },
   {
     name: "Hybrid multi-store",
-    visual: ["text", "vector", "graph"],
-    point: "routes across several backends and indexes",
+    visual: ["Text", "Vector", "Graph"],
+    point: "Routes across several backends and indexes",
   },
 ] as const;
 
@@ -315,17 +343,17 @@ const benchmarkLimitations = [
 const scopeContrasts = [
   {
     label: "RAG",
-    old: "read-only retrieval from a mostly static corpus",
+    old: "Read-only retrieval from a mostly static corpus",
     memory: "writes, revises, and governs agent-specific state",
   },
   {
     label: "Context engineering",
-    old: "chooses what enters the finite prompt right now",
+    old: "Chooses what enters the finite prompt right now",
     memory: "decides what is stored, maintained, and retrievable later",
   },
   {
     label: "Traditional DB workload",
-    old: "exact predicates over cleaner transactional or analytic data",
+    old: "Exact predicates over cleaner transactional or analytic data",
     memory: "semantic access over partial, conflicting, heterogeneous traces",
   },
 ] as const;
@@ -382,10 +410,18 @@ const architectureExamples = [
 ] as const;
 
 const methodModuleQuestions = [
-  ["R", "Represent / store", "text fact, graph edge, or composite object?"],
-  ["S", "Extract", "does the correction become a new memory item?"],
-  ["Q", "Retrieve / route", "does the current query surface London?"],
-  ["U", "Maintain", "is Paris stale, versioned, or historical?"],
+  [
+    "R",
+    "Represent / store",
+    "What form does memory take, and where is it stored?",
+  ],
+  ["S", "Extract", "What gets written into memory?"],
+  ["Q", "Retrieve / route", "How does relevant memory come back?"],
+  [
+    "U",
+    "Maintain",
+    "How does memory stay current, bounded, and non-contradictory?",
+  ],
 ] as const;
 
 const benchmarkExplainers = [
@@ -450,45 +486,36 @@ const rqFindings = [
     figure: paperAssets.figure7,
     figureLabel: "Figure 7: effectiveness across workloads and metrics",
     beats: [
-      "memory should match workload",
-      "Exact Match is only one lens",
-      "graph, hybrid, and trace-preserving designs win different slices",
+      "No single memory architecture wins everywhere.",
+      "Exact Match misses synthesis/execution success.",
+      "Finding 1: Match memory design to workload bottleneck.",
     ],
-    anchor:
-      "Zep and Cognee are strong on LongMemEval; MemOS leads LoCoMo EM; Letta is strong on DB-Bench.",
-    metrics: ["EM", "F1", "ROUGE-L", "LLM judge", "task success"],
   },
   {
     label: "RQ2",
     testId: "presentation-rq2-retrieval-fidelity",
-    title: "Evidence Assembly",
+    title: "Retrieval",
     tested: "retrieval fidelity",
     figure: paperAssets.figure8,
     figureLabel: "Figure 8: retrieval recall and evidence-distance drift",
     beats: [
-      "top-1 similarity is not enough",
-      "long-range answers need a support set",
-      "linked or hierarchical memory helps scattered evidence",
+      "Retrieval is evidence assembly, not top-1 ranking.",
+      "Structured links/hierarchies help with distant evidence.",
+      "Finding 2: Organized evidence beats flat similarity search.",
     ],
-    anchor:
-      "SimpleMem leads early localization at Recall@1, while A-MEM and MemTree strengthen at larger retrieval budgets.",
-    metrics: ["R@K", "R@10", "distance gap", "support set"],
   },
   {
     label: "RQ3",
     testId: "presentation-rq3-update-robustness",
-    title: "Temporal Update Fidelity",
+    title: "Memory Updates",
     tested: "dynamic memory robustness",
     figure: paperAssets.table2,
     figureLabel: "Table 2: robustness over memory update settings",
     beats: [
-      "revisions need temporal structure",
-      "current facts must outrank stale facts",
-      "larger LLMs do not repair weak memory grounding",
+      "Structured temporal evidence handles updates best.",
+      "Stronger LLMs help after grounding, not before.",
+      "Finding 3: Update robustness is a pipeline-design problem.",
     ],
-    anchor:
-      "Zep leads the knowledge-update slice; Cognee is strong on temporal reasoning; model scaling does not fix weak grounding.",
-    metrics: ["temporal", "knowledge update", "temporal reasoning"],
   },
   {
     label: "RQ4",
@@ -499,29 +526,23 @@ const rqFindings = [
     figureLabel:
       "Figure 10: context length, session growth, and distance drift",
     beats: [
-      "more storage is not enough",
-      "right abstraction narrows attention",
-      "relations and hierarchy keep distant evidence reachable",
+      "Long-term stability needs links or hierarchy.",
+      "More context alone degrades with distractors.",
+      "Finding 4: Choose abstractions, not just more storage.",
     ],
-    anchor:
-      "Embedding RAG drops sharply as evidence distance grows, while relation-aware and hierarchical systems degrade less.",
-    metrics: ["context length", "session growth", "distance drift"],
   },
   {
     label: "RQ5",
     testId: "presentation-rq5-operation-cost",
-    title: "Operational Scaling Rule",
+    title: "Latency",
     tested: "cost-performance trade-off",
     figure: paperAssets.figure11,
     figureLabel: "Figure 11: operation cost and latency frontier",
     beats: [
-      "maintenance scope drives cost",
-      "localized updates win the frontier",
-      "global reorganization can dominate latency",
+      "Localized maintenance is most cost-efficient.",
+      "Global reorganization becomes very expensive.",
+      "Finding 5: Maintenance scope drives the cost-utility trade-off.",
     ],
-    anchor:
-      "LightMem and MemTree sit near the efficiency frontier; richer graph or multi-store systems can be much slower.",
-    metrics: ["latency", "utility", "maintenance scope"],
   },
 ] as const;
 
@@ -531,64 +552,56 @@ const componentLessons = [
     testId: "presentation-m1-representation-ablation",
     module: "representation and storage",
     title: "Preserve evidence first",
-    verdict:
-      "Abstraction is lossy: structure only helps if the needed facts survive.",
     figure: paperAssets.table3,
     figureLabel: "Table 3: representation and storage ablations",
     beats: [
-      "raw conversational content wins overall",
-      "summary memory drops sharply",
-      "deeper structure cannot recover discarded facts",
+      "Preserve original content over stronger abstraction.",
+      "Raw/high-retention memory best supports exact detail recall.",
+      "Compression can preserve reasoning, but weakens exact matching.",
+      "Finding 6: Granularity matters more than compactness or structure.",
     ],
-    chips: ["raw", "compressed", "summary", "tree", "graph"],
   },
   {
     label: "M2",
     testId: "presentation-m2-extraction-ablation",
     module: "extraction",
     title: "Write broadly, filter later",
-    verdict:
-      "Write-time extraction should preserve context because future questions recombine cues.",
     figure: paperAssets.table4,
     figureLabel: "Table 4: memory extraction strategy ablations",
     beats: [
-      "coverage-preserving writes are safer",
-      "selective extraction can hurt reasoning",
-      "assistant turns can preserve clarifications",
+      "Coverage-preserving extraction is most stable.",
+      "Avoid aggressive write-time filtering.",
+      "Coarser segmentation keeps related cues together.",
+      "Finding 7: Preserve context first; filter later.",
     ],
-    chips: ["topic split", "memorize", "raw turns"],
   },
   {
     label: "M3",
     testId: "presentation-m3-retrieval-ablation",
     module: "retrieval and routing",
     title: "Targeted structure beats extra deliberation",
-    verdict:
-      "A little planning and balanced fusion help; extra reflection can add noise.",
     figure: paperAssets.table5,
     figureLabel: "Table 5: retrieval and routing ablations",
     beats: [
-      "balanced dense/sparse fusion wins",
-      "lightweight planning improves lookup",
-      "reflection adds little after routing is set",
+      "Planning and balanced fusion improve retrieval.",
+      "Moderate hybrid fusion beats sparse-heavy retrieval.",
+      "Extra reflection adds little and may hurt.",
+      "Finding 8: Targeted structure beats added complexity.",
     ],
-    chips: ["fusion", "planning", "reflection"],
   },
   {
     label: "M4",
     testId: "presentation-m4-maintenance-ablation",
     module: "maintenance",
     title: "Consolidate carefully",
-    verdict:
-      "Maintenance must connect related facts without compressing sparse details away.",
     figure: paperAssets.figure12,
     figureLabel: "Figure 12: maintenance strategy ablations",
     beats: [
-      "conservative merge slightly improves MemoryOS",
-      "delayed flushing hurts",
-      "single-topic summaries underperform",
+      "Conservative consolidation works best.",
+      "Delayed flushing leaves evidence fragmented.",
+      "Overly coarse summaries hide useful cues.",
+      "Finding 9: Balanced updates preserve long-horizon consistency.",
     ],
-    chips: ["merge", "flush", "summary"],
   },
 ] as const;
 
@@ -600,11 +613,11 @@ const sectionFiveFrame = [
 ] as const;
 
 const conclusionContributions = [
-  [Database, "data-management view", "memory is persistent system state"],
-  [Layers3, "taxonomy", "architectures become comparable modules"],
-  [Gauge, "end-to-end evaluation", "workloads expose different winners"],
-  [Wrench, "component diagnosis", "ablations identify failure causes"],
-  [ShieldCheck, "design guidance", "choose memory by workload and cost"],
+  [Gauge, "no universal winner", "workload determines what works"],
+  [Layers3, "evidence preservation", "details are easily lost"],
+  [Search, "retrieval fidelity", "assemble evidence, not just top-1"],
+  [ShieldCheck, "update fidelity", "stale facts remain hard"],
+  [Wrench, "bounded cost", "local maintenance scales better"],
 ] as const;
 
 type SlideProps = {
@@ -674,7 +687,7 @@ function Slide({
     >
       {layout === "wide" ? (
         <div className="agent-native-presentation-slide-wide mx-auto flex min-h-[calc(100vh-10rem)] w-full max-w-7xl flex-col justify-start gap-4">
-          <div className="agent-native-presentation-slide-copy relative z-10 max-w-5xl">
+          <div className="agent-native-presentation-slide-copy relative z-10 w-full">
             <p
               className={`agent-native-presentation-slide-eyebrow text-sm font-semibold uppercase tracking-wide ${
                 tone === "dark" ? "text-cyan-300" : "text-blue-700"
@@ -817,7 +830,7 @@ function PaperFigure({
               aria-modal="true"
               aria-label={label}
               data-testid="presentation-figure-lightbox"
-              className="agent-native-presentation-no-print fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/95 p-4"
+              className="agent-native-presentation-no-print fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/95 p-0"
             >
               <button
                 type="button"
@@ -828,18 +841,19 @@ function PaperFigure({
               >
                 <X aria-hidden="true" size={30} strokeWidth={2.8} />
               </button>
-              <div className="max-h-[94vh] max-w-[96vw]">
-                <Image
-                  src={asset.src}
-                  alt={asset.alt}
-                  width={asset.width}
-                  height={asset.height}
-                  loading="eager"
-                  unoptimized
-                  sizes="96vw"
-                  className="max-h-[88vh] max-w-[96vw] rounded-lg bg-white object-contain"
-                />
-                <p className="mt-3 text-center text-sm font-semibold uppercase tracking-wide text-slate-300">
+              <div className="flex h-full w-full flex-col items-center justify-center gap-3 px-3 pb-4 pt-16">
+                <div className="relative min-h-0 w-screen flex-1">
+                  <Image
+                    src={asset.src}
+                    alt={asset.alt}
+                    fill
+                    loading="eager"
+                    unoptimized
+                    sizes="98vw"
+                    className="object-contain drop-shadow-2xl"
+                  />
+                </div>
+                <p className="text-center text-sm font-semibold uppercase tracking-wide text-slate-300">
                   {label}
                 </p>
               </div>
@@ -923,6 +937,8 @@ function SectionDividerGraphic({
 }: {
   section: (typeof sectionDividers)[keyof typeof sectionDividers];
 }) {
+  const sectionLabel = section.number === "A" ? "appendix" : "paper section";
+
   return (
     <div className="rounded-lg border border-white/10 bg-slate-950 p-6 shadow-2xl">
       <div className="grid gap-6 md:grid-cols-[0.45fr_1fr] md:items-center">
@@ -931,7 +947,7 @@ function SectionDividerGraphic({
         </div>
         <div>
           <p className="text-sm font-semibold uppercase tracking-wide text-cyan-300">
-            paper section
+            {sectionLabel}
           </p>
           <h2
             aria-label={`${section.number}. ${section.title}`}
@@ -1010,19 +1026,19 @@ function MotivationSystemEvaluationGraphic() {
       className="rounded-lg border border-slate-200 bg-white p-5 shadow-xl"
     >
       <div className="grid gap-5 lg:grid-cols-[0.9fr_auto_1.1fr] lg:items-stretch">
-        <div className="rounded-lg bg-slate-950 p-6 text-white">
-          <p className="text-sm font-semibold uppercase tracking-wide text-cyan-300">
+        <div className="rounded-lg border border-slate-200 bg-slate-50 p-6 text-slate-950">
+          <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">
             before
           </p>
           <p className="mt-10 text-5xl font-black leading-tight">
             Did the agent answer correctly?
           </p>
-          <p className="mt-8 text-lg leading-8 text-slate-300">
+          <p className="mt-8 text-lg leading-8 text-slate-700">
             Most evaluations looked from the outside: report a task score, then
             treat the memory system as one black box.
           </p>
-          <div className="mt-8 rounded-lg border border-cyan-300/30 bg-cyan-300/10 p-4">
-            <p className="text-sm font-semibold uppercase tracking-wide text-cyan-100">
+          <div className="mt-8 rounded-lg border border-slate-200 bg-white p-4">
+            <p className="text-sm font-semibold uppercase tracking-wide text-slate-600">
               final accuracy can improve while the cause stays hidden
             </p>
           </div>
@@ -1032,8 +1048,8 @@ function MotivationSystemEvaluationGraphic() {
             <ArrowRight aria-hidden="true" size={36} strokeWidth={3} />
           </div>
         </div>
-        <div className="rounded-lg border border-slate-200 bg-slate-50 p-6 text-slate-950">
-          <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">
+        <div className="rounded-lg bg-slate-950 p-6 text-white">
+          <p className="text-sm font-semibold uppercase tracking-wide text-cyan-300">
             after
           </p>
           <p className="mt-10 text-4xl font-black leading-tight">
@@ -1041,19 +1057,16 @@ function MotivationSystemEvaluationGraphic() {
           </p>
           <div className="mt-8 grid gap-3 sm:grid-cols-2">
             {[
-              ["retrieval quality", "was the right evidence surfaced?"],
-              ["update correctness", "did stale facts lose priority?"],
-              ["long-horizon stability", "does performance survive distance?"],
-              ["operational cost", "what did indexing and querying cost?"],
-            ].map(([label, detail]) => (
+              "Retrieval quality",
+              "Update correctness",
+              "Long-horizon stability",
+              "Operational cost",
+            ].map((label) => (
               <div
                 key={label}
-                className="rounded-lg border border-slate-200 bg-white p-4"
+                className="rounded-lg border border-white/10 bg-white/10 p-4"
               >
-                <p className="text-lg font-black text-slate-950">{label}</p>
-                <p className="mt-1 text-sm leading-6 text-slate-500">
-                  {detail}
-                </p>
+                <p className="text-lg font-black text-white">{label}</p>
               </div>
             ))}
           </div>
@@ -1103,25 +1116,14 @@ function ScopeContrastGraphic() {
         {scopeContrasts.map((contrast) => (
           <div
             key={contrast.label}
-            className="grid gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4 md:grid-cols-[0.32fr_minmax(0,1fr)_minmax(0,1fr)] md:items-stretch"
+            className="grid gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4 md:grid-cols-[0.34fr_minmax(0,1fr)] md:items-stretch"
           >
-            <p className="flex items-center text-3xl font-black text-slate-950">
+            <p className="flex min-h-28 items-center text-3xl font-black leading-tight text-slate-950">
               {contrast.label}
             </p>
-            <div className="flex h-full flex-col justify-center rounded-lg bg-white p-4">
-              <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">
-                nearby concept
-              </p>
-              <p className="mt-2 text-base leading-6 text-slate-700">
+            <div className="flex min-h-28 flex-col justify-center rounded-lg bg-white p-5 shadow-sm">
+              <p className="text-xl font-semibold leading-8 text-slate-800">
                 {contrast.old}
-              </p>
-            </div>
-            <div className="flex h-full flex-col justify-center rounded-lg bg-slate-950 p-4 text-white">
-              <p className="text-sm font-semibold uppercase tracking-wide text-cyan-300">
-                agent memory
-              </p>
-              <p className="mt-2 text-base leading-6 text-slate-300">
-                {contrast.memory}
               </p>
             </div>
           </div>
@@ -1137,15 +1139,15 @@ function ModuleSystemGraphic() {
       data-testid="presentation-module-map"
       className="rounded-lg border border-slate-200 bg-white p-5 shadow-xl"
     >
-      <div className="rounded-lg bg-slate-950 p-5 text-white">
+      <div className="rounded-lg border border-slate-200 bg-slate-50 p-5 text-slate-950">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-cyan-300">
+          <p className="text-sm font-semibold uppercase tracking-wide text-blue-700">
             Formal lens
           </p>
           <h3 className="mt-2 text-3xl font-black md:text-4xl">
             memory as a lifecycle
           </h3>
-          <p className="mt-3 max-w-4xl text-sm leading-6 text-slate-400">
+          <p className="mt-3 max-w-4xl text-sm leading-6 text-slate-700">
             The memory object is persistent state outside learned weights and
             outside the current prompt; the system is evaluated through four
             lifecycle modules.
@@ -1160,15 +1162,17 @@ function ModuleSystemGraphic() {
               key={module.letter}
               className="rounded-lg bg-slate-950 p-4 text-white"
             >
-              <div
-                className={`flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${module.tone} text-slate-950`}
-              >
-                <Icon aria-hidden="true" size={24} />
+              <div className="flex items-center gap-4">
+                <div
+                  className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${module.tone} text-slate-950`}
+                >
+                  <Icon aria-hidden="true" size={24} />
+                </div>
+                <p className="text-4xl font-black tracking-normal">
+                  {module.letter}
+                </p>
               </div>
-              <p className="mt-5 text-4xl font-black tracking-normal">
-                {module.letter}
-              </p>
-              <h3 className="mt-1 text-lg font-semibold">{module.title}</h3>
+              <h3 className="mt-5 text-lg font-semibold">{module.title}</h3>
               <p className="mt-2 text-sm leading-6 text-slate-300">
                 {module.caption}
               </p>
@@ -1190,35 +1194,21 @@ function MethodOverviewGraphic() {
       data-testid="presentation-method-overview"
       className="rounded-lg border border-white/10 bg-slate-950 p-5 shadow-2xl"
     >
-      <div className="grid gap-4 md:grid-cols-[0.9fr_1.1fr]">
-        <div className="rounded-lg border border-cyan-300/30 bg-cyan-300/10 p-5 text-white">
-          <p className="text-sm font-semibold uppercase tracking-wide text-cyan-200">
-            running example
-          </p>
-          <p className="mt-8 text-4xl font-black leading-tight">
-            &quot;I used to live in Paris, but now I live in London.&quot;
-          </p>
-          <p className="mt-6 text-base leading-7 text-slate-300">
-            The method section asks what each memory module must do with that
-            one correction.
-          </p>
-        </div>
-        <div className="grid gap-3">
-          {methodModuleQuestions.map(([letter, title, body]) => (
-            <div
-              key={letter}
-              className="grid grid-cols-[3rem_1fr] gap-4 rounded-lg border border-white/10 bg-white/5 p-4"
-            >
-              <div className="flex h-11 w-11 items-center justify-center rounded-full bg-cyan-300 text-lg font-black text-slate-950">
-                {letter}
-              </div>
-              <div>
-                <p className="text-2xl font-black text-white">{title}</p>
-                <p className="mt-1 text-sm leading-6 text-slate-400">{body}</p>
-              </div>
+      <div className="grid gap-3 md:grid-cols-2">
+        {methodModuleQuestions.map(([letter, title, body]) => (
+          <div
+            key={letter}
+            className="grid grid-cols-[3.25rem_1fr] gap-4 rounded-lg border border-white/10 bg-white/5 p-5"
+          >
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-cyan-300 text-lg font-black text-slate-950">
+              {letter}
             </div>
-          ))}
-        </div>
+            <div>
+              <p className="text-2xl font-black text-white">{title}</p>
+              <p className="mt-2 text-base leading-7 text-slate-300">{body}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -1240,12 +1230,13 @@ function TableOneTaxonomyGraphic() {
   );
 }
 
-function TableOneInfographic() {
+function TableOneInfographic({
+  testId = "presentation-table-one-infographic",
+}: {
+  testId?: string;
+}) {
   return (
-    <div
-      data-testid="presentation-table-one-infographic"
-      className="mx-auto w-full max-w-7xl"
-    >
+    <div data-testid={testId} className="mx-auto w-full max-w-7xl">
       <PaperFigure
         asset={paperAssets.table1Infographic}
         label="Presenter Table 1: memory systems by module choice"
@@ -1396,13 +1387,13 @@ function BenchmarkExplainerGraphic() {
   return (
     <div
       data-testid="presentation-benchmark-explainer"
-      className="rounded-lg border border-slate-200 bg-white p-3 shadow-xl"
+      className="rounded-lg border border-slate-200 bg-white p-5 shadow-xl"
     >
-      <div className="grid gap-2 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-2">
         {benchmarkExplainers.map((benchmark) => (
           <div
             key={benchmark.name}
-            className="rounded-lg border border-slate-200 bg-slate-50 p-3"
+            className="rounded-lg border border-slate-200 bg-slate-50 p-5"
           >
             <div className="flex items-start justify-between gap-3">
               <div>
@@ -1415,7 +1406,7 @@ function BenchmarkExplainerGraphic() {
               </div>
               <Gauge aria-hidden="true" className="text-blue-600" size={26} />
             </div>
-            <div className="mt-3 grid gap-2">
+            <div className="mt-4 grid gap-3">
               {[
                 ["tests", benchmark.measures],
                 ["scale", benchmark.scale],
@@ -1423,12 +1414,12 @@ function BenchmarkExplainerGraphic() {
               ].map(([label, value]) => (
                 <div
                   key={label}
-                  className="grid grid-cols-[4.4rem_1fr] gap-2 rounded-lg bg-white p-2"
+                  className="grid grid-cols-[5.75rem_1fr] gap-3 rounded-lg bg-white p-3"
                 >
                   <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                     {label}
                   </p>
-                  <p className="text-xs font-semibold leading-5 text-slate-800">
+                  <p className="text-sm font-semibold leading-6 text-slate-800">
                     {value}
                   </p>
                 </div>
@@ -1553,6 +1544,27 @@ function SystemLineupGraphic() {
   );
 }
 
+function FindingPoint({
+  text,
+  accentClassName = "text-blue-950",
+}: {
+  text: string;
+  accentClassName?: string;
+}) {
+  const match = /^(Finding \d:)(.*)$/.exec(text);
+
+  if (!match) {
+    return <>{text}</>;
+  }
+
+  return (
+    <>
+      <span className={`font-black ${accentClassName}`}>{match[1]}</span>
+      {match[2]}
+    </>
+  );
+}
+
 function RqFindingGraphic({ index }: { index: number }) {
   const finding = rqFindings[index];
   return (
@@ -1572,38 +1584,22 @@ function RqFindingGraphic({ index }: { index: number }) {
           >
             {finding.title}
           </h2>
-          <div className="mt-8 flex flex-wrap gap-2">
-            {finding.metrics.map((metric) => (
-              <span
-                key={metric}
-                className="rounded-full border border-cyan-300/30 bg-cyan-300/10 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-cyan-100"
-              >
-                {metric}
-              </span>
-            ))}
-          </div>
         </div>
         <div className="grid content-start gap-3">
-          <div className="rounded-lg bg-cyan-50 p-5">
-            <p className="text-sm font-semibold uppercase tracking-wide text-cyan-800">
-              concrete result anchor
-            </p>
-            <p className="mt-3 text-2xl font-semibold leading-snug text-slate-950">
-              {finding.anchor}
-            </p>
-          </div>
-          <div className="grid gap-3 md:grid-cols-3">
-            {finding.beats.map((beat, beatIndex) => (
-              <div key={beat} className="rounded-lg bg-blue-50 p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-blue-700">
-                  takeaway {beatIndex + 1}
-                </p>
-                <p className="mt-3 text-xl font-semibold leading-tight text-slate-950">
-                  {beat}
-                </p>
-              </div>
-            ))}
-          </div>
+          {finding.beats.map((beat) => (
+            <div
+              key={beat}
+              className="grid grid-cols-[1.1rem_1fr] gap-4 rounded-lg bg-blue-50 p-5"
+            >
+              <span
+                aria-hidden="true"
+                className="mt-2 h-3 w-3 rounded-full bg-blue-600"
+              />
+              <p className="text-2xl font-semibold leading-tight text-slate-950">
+                <FindingPoint text={beat} />
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -1668,35 +1664,22 @@ function ComponentLessonGraphic({ index }: { index: number }) {
           >
             {lesson.title}
           </h2>
-          <div className="mt-8 flex flex-wrap gap-2">
-            {lesson.chips.map((chip) => (
-              <span
-                key={chip}
-                className="rounded-full border border-violet-300/30 bg-violet-300/10 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-violet-100"
-              >
-                {chip}
-              </span>
-            ))}
-          </div>
         </div>
         <div className="grid content-start gap-3">
-          <div className="rounded-lg bg-violet-50 p-5">
-            <p className="text-sm font-semibold uppercase tracking-wide text-violet-700">
-              component result
-            </p>
-            <p className="mt-3 text-2xl font-semibold leading-snug text-slate-950">
-              {lesson.verdict}
-            </p>
-          </div>
-          <div className="grid gap-3 md:grid-cols-3">
-            {lesson.beats.map((beat) => (
-              <div key={beat} className="rounded-lg bg-slate-100 p-4">
-                <p className="text-lg font-semibold leading-tight text-slate-950">
-                  {beat}
-                </p>
-              </div>
-            ))}
-          </div>
+          {lesson.beats.map((beat) => (
+            <div
+              key={beat}
+              className="grid grid-cols-[1.1rem_1fr] gap-4 rounded-lg bg-violet-50 p-5"
+            >
+              <span
+                aria-hidden="true"
+                className="mt-2 h-3 w-3 rounded-full bg-violet-600"
+              />
+              <p className="text-xl font-semibold leading-tight text-slate-950">
+                <FindingPoint text={beat} accentClassName="text-violet-950" />
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -1712,11 +1695,11 @@ function ReadinessChecklist() {
             conclusion
           </p>
           <p className="mt-8 text-5xl font-black leading-tight">
-            Not fully ready.
+            What we learned
           </p>
           <p className="mt-6 text-base leading-7 text-slate-300">
             The architectures are promising, but behavior is workload-dependent,
-            component-sensitive, and operationally costly.
+            component-sensitive, and cost-sensitive.
           </p>
         </div>
         <div className="grid gap-3">
@@ -1745,8 +1728,8 @@ function ReadinessChecklist() {
       </div>
       <div className="mt-5 rounded-lg bg-cyan-300 p-4 text-slate-950">
         <p className="text-2xl font-black leading-tight">
-          Preserve the right evidence, retrieve it reliably, update it
-          correctly, and keep cost bounded.
+          Preserve evidence -&gt; retrieve reliably -&gt; update correctly -&gt;
+          bound cost.
         </p>
       </div>
       <div className="agent-native-presentation-no-print mt-5 flex flex-wrap justify-end gap-3">
@@ -2104,7 +2087,6 @@ export default function AgentNativeMemoryPresentationPage() {
         index="04"
         eyebrow="Motivation"
         title="Why agent memory needs a systems evaluation"
-        subtitle="Agent memory is becoming the persistent data layer of LLM agents, but current evaluations still often treat it like a black-box NLP component."
         tone="light"
         layout="wide"
       >
@@ -2124,17 +2106,6 @@ export default function AgentNativeMemoryPresentationPage() {
       <Slide
         id="slide-6"
         index="06"
-        eyebrow="Figure 1"
-        title="The design space has already fragmented"
-        subtitle="Stream-and-reflection systems, tiered memory, knowledge graphs, and hybrid stores look different, but all need the same lifecycle discipline."
-        layout="wide"
-      >
-        <FigureOneArchitectureGraphic />
-      </Slide>
-
-      <Slide
-        id="slide-7"
-        index="07"
         eyebrow="Section 2"
         title="2. Preliminaries"
         subtitle="The section is mostly scope-setting: it defines memory as persistent state, then separates it from nearby concepts."
@@ -2145,19 +2116,20 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-8"
-        index="08"
+        id="slide-7"
+        index="07"
         eyebrow="Four-module lens"
         title="The formal anchor is four modules"
         subtitle="The paper defines memory as persistent state, then decomposes the memory system into representation, extraction, retrieval, and maintenance."
         tone="light"
+        layout="wide"
       >
         <ModuleSystemGraphic />
       </Slide>
 
       <Slide
-        id="slide-9"
-        index="09"
+        id="slide-8"
+        index="08"
         eyebrow="Scope boundaries"
         title="Agent memory is broader than RAG or context engineering"
         subtitle="It also differs from ordinary database workloads because access is semantic, observations are uncertain, and workloads are heterogeneous."
@@ -2167,8 +2139,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-10"
-        index="10"
+        id="slide-9"
+        index="09"
         eyebrow="Section 3"
         title="3. Method Overview"
         subtitle="This is the paper's taxonomy of agent memory systems, not a new memory algorithm."
@@ -2179,18 +2151,18 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-11"
-        index="11"
+        id="slide-10"
+        index="10"
         eyebrow="Method overview"
-        title="Section 3 is the design-space map"
+        title="Design-space map"
         subtitle="The paper turns the four-module lens into concrete mechanism choices used by real memory systems."
       >
         <MethodOverviewGraphic />
       </Slide>
 
       <Slide
-        id="slide-12"
-        index="12"
+        id="slide-11"
+        index="11"
         eyebrow="Table 1"
         title="Systems become combinations of module choices"
         tone="light"
@@ -2200,8 +2172,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-13"
-        index="13"
+        id="slide-12"
+        index="12"
         eyebrow="Table 1 infographic"
         title="Table 1 compresses the field into four module choices"
         subtitle="This simplified view is the presenter version of Table 1: each system bucket is a combination of representation, extraction, retrieval, and maintenance choices."
@@ -2211,13 +2183,12 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-14"
-        index="14"
+        id="slide-13"
+        index="13"
         eyebrow="Figure 2"
-        title="Logical representation: what shape does memory take?"
-        subtitle="Flat text is simple, graph/tree topology makes relations explicit, and composite objects carry text, metadata, embeddings, and links together."
+        title="Memory Representation"
         tone="blue"
-        layout="visualOnly"
+        layout="wide"
       >
         <LargeFigureWithCallouts
           asset={paperAssets.figure2}
@@ -2227,13 +2198,12 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-15"
-        index="15"
+        id="slide-14"
+        index="14"
         eyebrow="Figure 3"
-        title="Physical storage: where does memory live?"
-        subtitle="The storage substrate controls indexing, capacity, latency, and how many systems must be coordinated on each write."
+        title="Memory Storage"
         tone="blue"
-        layout="visualOnly"
+        layout="wide"
       >
         <LargeFigureWithCallouts
           asset={paperAssets.figure3}
@@ -2243,11 +2213,10 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-16"
-        index="16"
+        id="slide-15"
+        index="15"
         eyebrow="Extraction"
         title="Extraction decides what can ever be recovered"
-        subtitle="The write path transforms conversations, tool calls, and observations into raw traces, semantic facts, or structured records."
         tone="green"
         layout="wide"
       >
@@ -2260,11 +2229,10 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-17"
-        index="17"
+        id="slide-16"
+        index="16"
         eyebrow="Retrieval"
         title="Retrieval is routing, not just vector search"
-        subtitle="Relevant memory can come back through attention, dense search, graph traversal, LLM-planned routing, or hybrid execution."
         layout="wide"
       >
         <LargeFigureWithCallouts
@@ -2275,11 +2243,10 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-18"
-        index="18"
+        id="slide-17"
+        index="17"
         eyebrow="Maintenance"
-        title="Maintenance prevents hallucinations of the past"
-        subtitle="Agent memory must handle contradiction, staleness, growth, and forgetting after memory has already been created."
+        title="Maintenance"
         tone="green"
         layout="wide"
       >
@@ -2292,41 +2259,19 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
+        id="slide-18"
+        index="18"
+        eyebrow="Table 1 reminder"
+        title="Keep the taxonomy in view before the results"
+        subtitle="Before the empirical section, this repeats the simplified Table 1 map: each evaluated system is a bundle of representation, extraction, retrieval, and maintenance choices."
+        layout="visualOnly"
+      >
+        <TableOneInfographic testId="presentation-table-one-infographic-reminder" />
+      </Slide>
+
+      <Slide
         id="slide-19"
         index="19"
-        eyebrow="Architecture primer"
-        title="Four paper buckets organize the comparison"
-        subtitle="Before the results, treat each system as a member of the Table 1 buckets: baselines, sequential context, structural/topological, or multi-paradigm hybrid."
-        tone="light"
-      >
-        <ArchitecturePrimerGraphic />
-      </Slide>
-
-      <Slide
-        id="slide-20"
-        index="20"
-        eyebrow="Table 1 categories"
-        title="Use the paper's system buckets for the comparison"
-        subtitle="These are the same buckets used to keep named systems comparable across representation, extraction, retrieval, and maintenance choices."
-      >
-        <ArchitectureExamplesGraphic />
-      </Slide>
-
-      <Slide
-        id="slide-21"
-        index="21"
-        eyebrow="Benchmark primer"
-        title="What are the workloads actually testing?"
-        subtitle="The paper combines conversation memory, cross-session facts, procedural state, and long-context robustness because each stresses a different memory failure mode."
-        tone="light"
-        layout="wide"
-      >
-        <BenchmarkExplainerGraphic />
-      </Slide>
-
-      <Slide
-        id="slide-22"
-        index="22"
         eyebrow="Section 4"
         title="4. End-to-End Assessment"
         subtitle="Section 3 mapped mechanisms. Section 4 asks whether those design choices change behavior in practice."
@@ -2337,29 +2282,35 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-23"
-        index="23"
-        eyebrow="Section 4"
-        title="The taxonomy becomes an empirical test"
-        subtitle="Section 3 mapped mechanisms. Section 4 asks whether those design choices change task success, retrieval fidelity, updates, long-horizon stability, and operating cost."
-        tone="blue"
+        id="slide-20"
+        index="20"
+        eyebrow="Benchmark primer"
+        title="What are the workloads actually testing?"
+        subtitle="The paper combines conversation memory, cross-session facts, procedural state, and long-context robustness because each stresses a different memory failure mode."
+        tone="light"
+        layout="wide"
       >
-        <EvaluationGraphic />
+        <BenchmarkExplainerGraphic />
       </Slide>
 
       <Slide
-        id="slide-24"
-        index="24"
-        eyebrow="Systems"
-        title="The comparison is deliberately heterogeneous"
-        subtitle="The lineup mixes baselines and memory architectures so the paper can compare failure modes, not just named products."
+        id="slide-21"
+        index="21"
+        eyebrow="Metrics"
+        title="Metrics"
+        tone="light"
+        layout="wide"
       >
-        <SystemLineupGraphic />
+        <LargeFigureSlideGraphic
+          asset={paperAssets.metricsOverview}
+          label="Metrics overview for EM, Answer F1, ROUGE-L F1, and ROUGE-L Recall"
+          testId="presentation-metrics-overview"
+        />
       </Slide>
 
       <Slide
-        id="slide-25"
-        index="25"
+        id="slide-22"
+        index="22"
         eyebrow="RQ1"
         title="RQ1: no universal winner"
         subtitle="The headline is workload-aligned memory: the right architecture depends on whether the task needs exact recall, semantic synthesis, or executable state."
@@ -2371,8 +2322,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-26"
-        index="26"
+        id="slide-23"
+        index="23"
         eyebrow="Figure 7"
         title="The winners shift by workload and metric"
         subtitle="The paper's main effectiveness figure is easiest to present as a full-slide chart."
@@ -2387,8 +2338,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-27"
-        index="27"
+        id="slide-24"
+        index="24"
         eyebrow="RQ2"
         title="RQ2: retrieval is evidence assembly"
         subtitle="The paper separates final answer quality from whether memory surfaced the whole evidence set needed to answer."
@@ -2400,8 +2351,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-28"
-        index="28"
+        id="slide-25"
+        index="25"
         eyebrow="Figure 8"
         title="Retrieval quality depends on the support set"
         subtitle="Figure 8 separates early localization from broader evidence coverage and distance drift."
@@ -2416,8 +2367,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-29"
-        index="29"
+        id="slide-26"
+        index="26"
         eyebrow="RQ3"
         title="RQ3: stale facts are a pipeline failure"
         subtitle="A stronger answer model helps expression after grounding, but it cannot reliably rescue memory that stores revisions as undifferentiated text."
@@ -2429,8 +2380,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-30"
-        index="30"
+        id="slide-27"
+        index="27"
         eyebrow="Table 2"
         title="Update robustness is not one thing"
         subtitle="The table separates LoCoMo temporal questions, LongMemEval knowledge updates, and LongMemEval temporal reasoning."
@@ -2445,8 +2396,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-31"
-        index="31"
+        id="slide-28"
+        index="28"
         eyebrow="RQ4"
         title="RQ4: long horizons reward organization"
         subtitle="As history grows, the hard part shifts from storing more to narrowing attention around the right session, entity, or relation."
@@ -2458,8 +2409,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-32"
-        index="32"
+        id="slide-29"
+        index="29"
         eyebrow="Figure 10"
         title="Long-horizon degradation has several forms"
         subtitle="Figure 10 compares context length, session history growth, and evidence-distance drift."
@@ -2474,8 +2425,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-33"
-        index="33"
+        id="slide-30"
+        index="30"
         eyebrow="RQ5"
         title="RQ5: cost changes the ranking"
         subtitle="The operational question is utility per latency and maintenance scope, not only answer quality."
@@ -2487,8 +2438,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-34"
-        index="34"
+        id="slide-31"
+        index="31"
         eyebrow="Figure 11"
         title="Rich structure can become expensive"
         subtitle="Figure 11 is the paper's systems argument: accuracy has to be read against operation latency."
@@ -2503,8 +2454,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-35"
-        index="35"
+        id="slide-32"
+        index="32"
         eyebrow="Section 5"
         title="5. Fine-Grained Component Comparison"
         subtitle="Section 5 changes one memory component at a time to diagnose why whole-system results differ."
@@ -2515,8 +2466,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-36"
-        index="36"
+        id="slide-33"
+        index="33"
         eyebrow="Section 5"
         title="Now the paper asks why"
         subtitle="Section 4 ranked whole systems. Section 5 changes individual memory components one at a time to diagnose the source of each failure mode."
@@ -2527,8 +2478,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-37"
-        index="37"
+        id="slide-34"
+        index="34"
         eyebrow="M1 ablation"
         title="M1: abstraction is lossy"
         subtitle="The representation ablation warns that structure cannot recover evidence that compression or summarization already removed."
@@ -2540,8 +2491,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-38"
-        index="38"
+        id="slide-35"
+        index="35"
         eyebrow="Table 3"
         title="Representation: raw evidence survives best"
         subtitle="Table 3 is the strongest warning against over-compressing memory before retrieval."
@@ -2556,8 +2507,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-39"
-        index="39"
+        id="slide-36"
+        index="36"
         eyebrow="M2 ablation"
         title="M2: write broadly, filter later"
         subtitle="Coverage-preserving extraction is safer because minor details can become important only when later evidence is combined."
@@ -2569,8 +2520,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-40"
-        index="40"
+        id="slide-37"
+        index="37"
         eyebrow="Table 4"
         title="Extraction: early filtering is risky"
         subtitle="Table 4 compares how write-time extraction strategies trade lexical precision against downstream reasoning."
@@ -2585,8 +2536,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-41"
-        index="41"
+        id="slide-38"
+        index="38"
         eyebrow="M3 ablation"
         title="M3: structure beats gratuitous reasoning"
         subtitle="Balanced retrieval fusion and lightweight planning help, but extra reflection does not automatically improve routing."
@@ -2598,8 +2549,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-42"
-        index="42"
+        id="slide-39"
+        index="39"
         eyebrow="Table 5"
         title="Retrieval: targeted routing beats extra reflection"
         subtitle="Table 5 separates useful planning and balanced fusion from extra deliberation overhead."
@@ -2614,8 +2565,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-43"
-        index="43"
+        id="slide-40"
+        index="40"
         eyebrow="M4 ablation"
         title="M4: consolidate without erasing detail"
         subtitle="Maintenance works best when it connects related facts without leaving memory fragmented or summarizing away sparse cues."
@@ -2627,8 +2578,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-44"
-        index="44"
+        id="slide-41"
+        index="41"
         eyebrow="Figure 12"
         title="Maintenance: balanced consolidation wins cautiously"
         subtitle="Figure 12 supports the conservative version of the claim: the gains are real but modest."
@@ -2643,8 +2594,8 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-45"
-        index="45"
+        id="slide-42"
+        index="42"
         eyebrow="Section 6"
         title="6. Conclusion"
         subtitle="The conclusion restates the core contribution: agent memory needs lifecycle design, not a single universal architecture."
@@ -2655,13 +2606,94 @@ export default function AgentNativeMemoryPresentationPage() {
       </Slide>
 
       <Slide
-        id="slide-46"
-        index="46"
+        id="slide-43"
+        index="43"
+        eyebrow="Conclusion"
+        title="Empirical findings mapped back onto the taxonomy"
+        subtitle="The strongest results concentrate around workload-aligned representation, routing, and maintenance choices."
+        tone="light"
+        layout="wide"
+      >
+        <LargeFigureSlideGraphic
+          asset={paperAssets.table1EmpiricalHighlights}
+          label="Highlighted empirical findings across Table 1 memory-system categories"
+          testId="presentation-conclusion-highlights"
+        />
+      </Slide>
+
+      <Slide
+        id="slide-44"
+        index="44"
         eyebrow="Close"
         title="The answer is: not fully ready"
-        subtitle="Agent-native memory is not solved by longer context, RAG, or more summarization. It needs deliberate design across the whole lifecycle."
+        subtitle="Agent-native memory is not solved by longer context, RAG, or summarization alone. It needs deliberate design across representation, retrieval, updating, and maintenance."
       >
         <ReadinessChecklist />
+      </Slide>
+
+      <Slide
+        id="slide-45"
+        index="45"
+        eyebrow="Appendix"
+        title="Appendix"
+        subtitle="Backup architecture and system-lineup context for discussion."
+        layout="visualOnly"
+        hideHiddenTitle
+      >
+        <SectionDividerGraphic section={sectionDividers.appendix} />
+      </Slide>
+
+      <Slide
+        id="slide-46"
+        index="46"
+        eyebrow="Figure 1"
+        title="The design space has already fragmented"
+        subtitle="Stream-and-reflection systems, tiered memory, knowledge graphs, and hybrid stores look different, but all need the same lifecycle discipline."
+        layout="wide"
+      >
+        <FigureOneArchitectureGraphic />
+      </Slide>
+
+      <Slide
+        id="slide-47"
+        index="47"
+        eyebrow="Section 4"
+        title="The taxonomy becomes an empirical test"
+        subtitle="Section 3 mapped mechanisms. Section 4 asks whether those design choices change task success, retrieval fidelity, updates, long-horizon stability, and operating cost."
+        tone="blue"
+      >
+        <EvaluationGraphic />
+      </Slide>
+
+      <Slide
+        id="slide-48"
+        index="48"
+        eyebrow="Architecture primer"
+        title="Four paper buckets organize the comparison"
+        subtitle="Treat each system as a member of the Table 1 buckets: baselines, sequential context, structural/topological, or multi-paradigm hybrid."
+        tone="light"
+      >
+        <ArchitecturePrimerGraphic />
+      </Slide>
+
+      <Slide
+        id="slide-49"
+        index="49"
+        eyebrow="Table 1 categories"
+        title="Use the paper's system buckets for the comparison"
+        subtitle="These are the same buckets used to keep named systems comparable across representation, extraction, retrieval, and maintenance choices."
+      >
+        <ArchitectureExamplesGraphic />
+      </Slide>
+
+      <Slide
+        id="slide-50"
+        index="50"
+        eyebrow="Systems"
+        title="The comparison is deliberately heterogeneous"
+        subtitle="The lineup mixes baselines and memory architectures so the paper can compare failure modes, not just named products."
+      >
+        <SystemLineupGraphic />
       </Slide>
     </main>
   );

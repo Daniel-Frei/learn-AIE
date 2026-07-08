@@ -1460,6 +1460,12 @@ test("renders the AI Agents agent-native memory presentation deck", async ({
   await expect(page.getByTestId("presentation-module-map")).toBeVisible();
   await expect(page.getByTestId("presentation-scope-contrasts")).toBeVisible();
   await expect(
+    page.locator("#slide-8").getByText(/^nearby concept$/i),
+  ).toHaveCount(0);
+  await expect(
+    page.getByText(/Read-only retrieval from a mostly static corpus/i),
+  ).toBeVisible();
+  await expect(
     page.getByRole("heading", {
       name: /the formal anchor is four modules/i,
     }),
@@ -1467,7 +1473,7 @@ test("renders the AI Agents agent-native memory presentation deck", async ({
   await expect(page.getByTestId("presentation-method-overview")).toBeVisible();
   await expect(
     page.getByRole("heading", {
-      name: /section 3 is the design-space map/i,
+      name: /^Design-space map$/i,
     }),
   ).toBeVisible();
   await expect(
@@ -1477,7 +1483,12 @@ test("renders the AI Agents agent-native memory presentation deck", async ({
     page.getByTestId("presentation-table-one-infographic"),
   ).toBeVisible();
   await expect(
-    page.getByAltText(/Simplified visual table mapping memory systems/i),
+    page.getByTestId("presentation-table-one-infographic-reminder"),
+  ).toBeVisible();
+  await expect(
+    page
+      .getByAltText(/Simplified visual table mapping memory systems/i)
+      .first(),
   ).toBeVisible();
   await expect(
     page.getByText(/Paper Table 1: systems normalized/i),
@@ -1541,6 +1552,10 @@ test("renders the AI Agents agent-native memory presentation deck", async ({
   await expect(
     page.getByTestId("presentation-evaluation-landscape"),
   ).toBeVisible();
+  await expect(
+    page.locator("#slide-47").getByTestId("presentation-evaluation-landscape"),
+  ).toBeVisible();
+  await expect(page.getByTestId("presentation-metrics-overview")).toBeVisible();
   await expect(page.getByTestId("presentation-system-lineup")).toBeVisible();
   await expect(
     page.getByRole("heading", {
@@ -1550,25 +1565,46 @@ test("renders the AI Agents agent-native memory presentation deck", async ({
   await expect(
     page.getByTestId("presentation-rq1-effectiveness"),
   ).toBeVisible();
-  await expect(page.getByText(/MemOS leads LoCoMo EM/i)).toBeVisible();
+  await expect(
+    page.getByText(/Match memory design to workload bottleneck/i),
+  ).toBeVisible();
   await expect(
     page.getByTestId("presentation-rq2-retrieval-fidelity"),
   ).toBeVisible();
   await expect(
-    page.getByText(/SimpleMem leads early localization/i),
+    page.getByRole("heading", {
+      name: /RQ2: Retrieval/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/Organized evidence beats flat similarity search/i),
   ).toBeVisible();
   await expect(
     page.getByTestId("presentation-rq3-update-robustness"),
   ).toBeVisible();
   await expect(
-    page.getByText(/Zep leads the knowledge-update slice/i),
+    page.getByRole("heading", {
+      name: /RQ3: Memory Updates/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/Update robustness is a pipeline-design problem/i),
   ).toBeVisible();
   await expect(page.getByTestId("presentation-rq4-long-horizon")).toBeVisible();
-  await expect(page.getByText(/Embedding RAG drops sharply/i)).toBeVisible();
+  await expect(
+    page.getByText(/Choose abstractions, not just more storage/i),
+  ).toBeVisible();
   await expect(
     page.getByTestId("presentation-rq5-operation-cost"),
   ).toBeVisible();
-  await expect(page.getByText(/LightMem and MemTree sit near/i)).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: /RQ5: Latency/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/Maintenance scope drives the cost-utility trade-off/i),
+  ).toBeVisible();
   await expect(page.getByTestId("presentation-figure-7-full")).toBeVisible();
   await expect(page.getByTestId("presentation-figure-8-full")).toBeVisible();
   await expect(page.getByTestId("presentation-table-2-full")).toBeVisible();
@@ -1581,18 +1617,35 @@ test("renders the AI Agents agent-native memory presentation deck", async ({
     page.getByTestId("presentation-m1-representation-ablation"),
   ).toBeVisible();
   await expect(
+    page.getByText(/Granularity matters more than compactness or structure/i),
+  ).toBeVisible();
+  await expect(
     page.getByTestId("presentation-m2-extraction-ablation"),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/Preserve context first; filter later/i),
   ).toBeVisible();
   await expect(
     page.getByTestId("presentation-m3-retrieval-ablation"),
   ).toBeVisible();
   await expect(
+    page.getByText(/Targeted structure beats added complexity/i),
+  ).toBeVisible();
+  await expect(
     page.getByTestId("presentation-m4-maintenance-ablation"),
   ).toBeVisible();
+  await expect(
+    page.getByText(/Balanced updates preserve long-horizon consistency/i),
+  ).toBeVisible();
+  await expect(page.getByText(/component result/i)).toHaveCount(0);
+  await expect(page.getByText(/takeaway 1/i)).toHaveCount(0);
   await expect(page.getByTestId("presentation-table-3-full")).toBeVisible();
   await expect(page.getByTestId("presentation-table-4-full")).toBeVisible();
   await expect(page.getByTestId("presentation-table-5-full")).toBeVisible();
   await expect(page.getByTestId("presentation-figure-12-full")).toBeVisible();
+  await expect(
+    page.getByTestId("presentation-conclusion-highlights"),
+  ).toBeVisible();
   await page
     .getByRole("button", { name: /enlarge Figure 7: effectiveness/i })
     .click();
@@ -1600,9 +1653,49 @@ test("renders the AI Agents agent-native memory presentation deck", async ({
   await expect(page.getByTestId("presentation-lightbox-close")).toBeVisible();
   await page.getByRole("button", { name: /close enlarged figure/i }).click();
   await expect(page.getByTestId("presentation-figure-lightbox")).toHaveCount(0);
+  const figure10 = page.getByTestId("presentation-figure-10-full");
+  await figure10.scrollIntoViewIfNeeded();
+  const slideFigure10Box = await figure10.locator("img").boundingBox();
+  expect(slideFigure10Box).not.toBeNull();
+  await figure10
+    .getByRole("button", { name: /enlarge Figure 10: context length/i })
+    .click();
+  const figure10Lightbox = page.getByTestId("presentation-figure-lightbox");
+  await expect(figure10Lightbox).toBeVisible();
+  const enlargedFigure10Box = await figure10Lightbox
+    .locator("img")
+    .boundingBox();
+  expect(enlargedFigure10Box).not.toBeNull();
+  expect(enlargedFigure10Box!.width).toBeGreaterThan(
+    slideFigure10Box!.width * 1.04,
+  );
+  await page.getByRole("button", { name: /close enlarged figure/i }).click();
+  await expect(page.getByTestId("presentation-figure-lightbox")).toHaveCount(0);
   await expect(
     page.getByRole("heading", {
       name: /the answer is: not fully ready/i,
+    }),
+  ).toBeVisible();
+  await expect(page.getByText(/summarization alone/i)).toBeVisible();
+  await expect(page.getByText(/What we learned/i)).toBeVisible();
+  await expect(page.getByText(/cost-sensitive/i)).toBeVisible();
+  await expect(page.getByText(/evidence preservation/i)).toBeVisible();
+  await expect(
+    page.getByText(/assemble evidence, not just top-1/i),
+  ).toBeVisible();
+  await expect(page.getByText(/stale facts remain hard/i)).toBeVisible();
+  await expect(
+    page.getByText(/local maintenance scales better/i),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      /Preserve evidence -> retrieve reliably -> update correctly -> bound cost/i,
+    ),
+  ).toBeVisible();
+  await expect(page.getByText(/operationally costly/i)).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", {
+      name: /A\. Appendix/i,
     }),
   ).toBeVisible();
   await expect(
@@ -1611,7 +1704,7 @@ test("renders the AI Agents agent-native memory presentation deck", async ({
   await expect(
     page.getByRole("link", { name: /start question set/i }),
   ).toHaveCount(0);
-  await page.locator("#slide-46").scrollIntoViewIfNeeded();
+  await page.locator("#slide-44").scrollIntoViewIfNeeded();
   await expect(exportButton).toBeInViewport();
   await exportButton.click();
   await expect.poll(() => printCalled).toBe(true);
