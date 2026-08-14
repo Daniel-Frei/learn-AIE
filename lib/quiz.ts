@@ -15,6 +15,7 @@ import { stanfordCME295Lecture6ReasoningQuestions } from "./lectures/Stanford CM
 import { stanfordCME295Lecture7RagToolsAgentsQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture7_rag_tools_agents";
 import { stanfordCME295Lecture8EvaluationQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture8_evaluation";
 import { stanfordCME295Lecture9SynthesisFrontiersQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture9_synthesis_frontiers";
+import { stanfordCME296Lecture1DiffusionQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture1_diffusion";
 import { cs224rLecture1IntroQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture1_intro";
 import { cs224rLecture2ImitationLearningQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture2_Imitation Learning";
 import { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture3_Policy Gradients";
@@ -86,6 +87,7 @@ export type SourceSeriesId =
   | "aie-foundations"
   | "aie-building-apps"
   | "stanford-cme295"
+  | "stanford-cme296"
   | "stanford-cs224r"
   | "other-rl"
   | "mit-6s191-2026"
@@ -284,6 +286,15 @@ export const QUESTION_SOURCES = [
     seriesLabel: "Stanford CME295 Transformers & LLMs",
     topic: "NLP" as const,
     questions: stanfordCME295Lecture9SynthesisFrontiersQuestions,
+  },
+  {
+    id: "cme296-lect1" as const,
+    label: "Stanford CME296 Lecture 1",
+    title: "Stanford CME296 Lecture 1: Diffusion, DDPM & DDIM",
+    seriesId: "stanford-cme296" as const,
+    seriesLabel: "Stanford CME296 Diffusion & Large Vision Models",
+    topic: "DL" as const,
+    questions: stanfordCME296Lecture1DiffusionQuestions,
   },
   {
     id: "cs224r-lect1" as const,
@@ -840,6 +851,8 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
     "Evaluation lecture about human ratings, rule-based metrics, LLM-as-a-Judge, factuality, agent failure modes, benchmarks, reliability, and benchmark limits.",
   "cme295-lect9":
     "Course synthesis lecture about transformer and LLM fundamentals, multimodal transformers, diffusion LLMs, data, hardware, deployment tradeoffs, and open problems.",
+  "cme296-lect1":
+    "Diffusion lecture about Gaussian forward corruption, ELBO-based DDPM training and sampling, and deterministic DDIM acceleration.",
   "cs224r-lect1":
     "Deep reinforcement learning introduction about MDPs, value functions, policies, and the RL problem setup.",
   "cs224r-lect2":
@@ -1119,6 +1132,7 @@ export { stanfordCME295Lecture6ReasoningQuestions } from "./lectures/Stanford CM
 export { stanfordCME295Lecture7RagToolsAgentsQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture7_rag_tools_agents";
 export { stanfordCME295Lecture8EvaluationQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture8_evaluation";
 export { stanfordCME295Lecture9SynthesisFrontiersQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture9_synthesis_frontiers";
+export { stanfordCME296Lecture1DiffusionQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture1_diffusion";
 export { cs224rLecture1IntroQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture1_intro";
 export { cs224rLecture2ImitationLearningQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture2_Imitation Learning";
 export { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture3_Policy Gradients";

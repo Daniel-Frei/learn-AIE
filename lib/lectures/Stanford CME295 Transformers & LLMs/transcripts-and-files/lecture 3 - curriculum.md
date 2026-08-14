@@ -138,14 +138,21 @@ Assessment targets:
 
 ## Assessment Blueprint
 
-Use applied traces:
+The registered quiz uses 60 questions, weighted by the deck's teaching time and worked visual sequences rather than assigning an equal quota to every named technique:
 
-- Define an LLM and reject near-miss definitions.
-- Diagnose MoE routing collapse and propose a mitigation.
-- Decode from a toy distribution under greedy, top-k, top-p, and temperature.
-- Write a guided decoding constraint for JSON-like output.
-- Trace KV cache reuse during generation.
-- Compare PagedAttention, latent attention, speculative decoding, and multi-token prediction by what resource each targets.
+- **LLM overview — 6 questions:** the working decoder-only definition, sequence probabilities, architecture-family boundaries, and scale dimensions.
+- **Mixture of Experts — 9 questions:** dense/sparse routing, weighted outputs, token-level paths, active versus total parameters, routing collapse, and the auxiliary balancing signal.
+- **Response generation — 18 questions:** autoregressive traces, greedy and beam path scoring, top-k/top-p filtering and renormalization, temperature, and guided decoding.
+- **Prompting strategies — 5 questions:** context budgeting and context rot, prompt structure, zero-shot/few-shot tradeoffs, in-context learning, and self-consistency.
+- **Inference optimizations — 22 questions:** optimization categories, KV-cache reuse and sizing, MHA/GQA/MQA cache tradeoffs, PagedAttention allocation, latent compression, speculative acceptance/correction, and multi-token prediction.
+
+Prefer applied traces and calculations over repeated definitions:
+
+- Compare local greedy choices with sequence-level beam scores.
+- Calculate nuclei, renormalized sampling probabilities, and temperature-scaled odds.
+- Trace which expert or cached tensor is active for a token and quantify the resulting parameter or memory footprint.
+- Distinguish structural validity from factual validity in guided generation.
+- Compare PagedAttention, latent attention, speculative decoding, and multi-token prediction by the resource and representation each changes.
 
 ## Follow-Up Practice
 

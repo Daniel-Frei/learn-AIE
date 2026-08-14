@@ -11,7 +11,7 @@ function makeQuestion(
   explanation: string,
 ): Question {
   if (optionSeeds.length !== 4) {
-    throw new Error(`CME295 Lecture 3 question ${id} needs 4 options.`);
+    throw new Error("CME295 Lecture 3 question " + id + " needs 4 options.");
   }
 
   return {
@@ -25,1777 +25,1254 @@ function makeQuestion(
 }
 
 export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
+  // LLM overview (6): working definition, scale, and decoder-only behavior.
   makeQuestion(
-    "cme295-lect3-q101",
+    "cme295-lect3-q181",
     "easy",
-    "A model receives the token sequence `[BOS] A teddy bear` and predicts a distribution for the next token. Which statement best identifies the language-modeling task?",
+    "Which properties are part of the working definition of a modern large language model (LLM) used here?",
     [
       [
-        "Estimate the probability of the next token conditioned on the preceding tokens.",
+        "It assigns probabilities to token sequences and generates autoregressively with a decoder-only Transformer.",
         true,
       ],
       [
-        "Encode the sequence into a single fixed document vector for classification.",
+        "Its scale reflects parameters, training tokens, and the compute used to train or serve it.",
+        true,
+      ],
+      [
+        "It must contain an encoder that turns every input into one fixed vector before generation.",
         false,
       ],
       [
-        "Translate the sequence by attending to a separate encoder output.",
-        false,
-      ],
-      [
-        "Assign each previous token to a hand-written syntactic category.",
+        "It must use cross-attention to a separate encoder stream for every output token.",
         false,
       ],
     ],
-    "A language model assigns probabilities to token sequences by modeling the next-token distribution given the tokens already present. The other choices describe representation learning, encoder-decoder translation, or manual linguistic annotation rather than autoregressive language modeling.",
+    "The working convention combines a language-modeling objective with a large decoder-only Transformer and substantial model, data, and compute scale. Encoder-only representation models and encoder-decoder models remain useful Transformer families, but neither of the last two properties is required by this lecture's narrower LLM definition.",
   ),
   makeQuestion(
-    "cme295-lect3-q102",
+    "cme295-lect3-q182",
     "easy",
-    "Which statements correctly distinguish current large language models from BERT-style encoder-only models?",
+    "A decoder-only language model assigns probabilities one token at a time. Which expression gives the probability of a sequence \\(w_1,\\ldots,w_T\\) after a beginning-of-sequence token?",
     [
-      [
-        "Current large language models are generally decoder-only text-to-text generators.",
-        true,
-      ],
-      [
-        "BERT-style models are useful for contextual embeddings and classification-style tasks.",
-        true,
-      ],
-      [
-        "BERT-style models use the decoder stack and cross-attention as their core architecture.",
-        false,
-      ],
-      [
-        "Encoder-only models match the current text-generating definition of a large language model.",
-        false,
-      ],
+      ["\\(\\prod_{t=1}^{T} P(w_t\\mid w_{<t})\\)", true],
+      ["\\(\\sum_{t=1}^{T} P(w_t\\mid w_{<t})\\)", false],
+      ["\\(\\prod_{t=1}^{T} P(w_{t-1}\\mid w_t)\\)", false],
+      ["\\(P(w_T\\mid w_1)\\) regardless of the intervening prefix", false],
     ],
-    "The lecture uses the current convention that large language models are large text-to-text language models, usually decoder-only. BERT is important, but it is encoder-only and is mainly used to produce contextual representations for tasks such as classification rather than to generate text autoregressively.",
+    "The chain rule factorizes a sequence probability into the product of next-token probabilities conditioned on the complete earlier prefix. Adding the conditionals does not produce a sequence probability, reversing the conditionals changes the modeled direction, and conditioning only on the first token discards most of the autoregressive context.",
   ),
   makeQuestion(
-    "cme295-lect3-q103",
+    "cme295-lect3-q183",
     "easy",
-    "Which statements describe the scale dimensions that make a language model 'large'?",
+    "A Transformer is being converted from an encoder-decoder translation model into a decoder-only text generator. Which architectural consequences follow?",
     [
-      ["Parameter count reaches the billion-parameter range or beyond.", true],
       [
-        "Pretraining data is measured in hundreds of billions or trillions of tokens.",
+        "Causal self-attention remains so a position cannot use future target tokens.",
         true,
       ],
-      ["Training and serving require substantial accelerator compute.", true],
       [
-        "The model becomes large because it stores one human-written rule for each vocabulary item.",
+        "The decoder feed-forward sublayers, residual paths, and normalization remain part of the stack.",
+        true,
+      ],
+      [
+        "Cross-attention to encoder outputs is removed because there is no separate encoder stream.",
+        true,
+      ],
+      [
+        "An output projection still converts decoder hidden states into vocabulary-token scores.",
+        true,
+      ],
+    ],
+    "A decoder-only model keeps causal self-attention, feed-forward and residual machinery, normalization, and a vocabulary projection, while removing cross-attention that expected a separate encoder representation. The causal mask still prevents a generated position from reading future target tokens unavailable at inference time.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q184",
+    "medium",
+    "A team compares three pretrained Transformers: Model A is encoder-only and produces contextual embeddings, Model B is encoder-decoder and maps text to text, and Model C is decoder-only and generates from a causal prefix. Which classifications are accurate under the working convention?",
+    [
+      [
+        "Model C is the clearest match for the modern text-generating LLM category.",
+        true,
+      ],
+      [
+        "Model A resembles the BERT family and is naturally suited to representation or classification tasks.",
+        true,
+      ],
+      ["Model B must be decoder-only because its output is text.", false],
+      [
+        "Model A becomes autoregressive merely by adding a classification head to its pooled embedding.",
         false,
       ],
     ],
-    "Large language models are large along model-size, data-size, and compute dimensions. A rule table is not the mechanism described here; the model learns neural parameters from a very large corpus and then uses those parameters for next-token prediction.",
+    "Output modality alone does not identify the Transformer family: an encoder-decoder model can also produce text, while the working LLM convention emphasizes a causal decoder-only backbone. Adding a classifier to an encoder-only model changes the downstream task head but does not turn bidirectional encoding into autoregressive next-token generation.",
   ),
   makeQuestion(
-    "cme295-lect3-q104",
+    "cme295-lect3-q185",
+    "medium",
+    "A sparse model is advertised as a very large language model. Which measurements are needed to interpret that claim responsibly?",
+    [
+      [
+        "Total stored parameter count, because it measures the model's full capacity pool.",
+        true,
+      ],
+      [
+        "Active parameters per token, because sparse routing may use only part of that pool.",
+        true,
+      ],
+      [
+        "Pretraining-token scale, because model size alone does not describe how much data shaped the weights.",
+        true,
+      ],
+      [
+        "Training and serving compute, because equal parameter counts can have different operational costs.",
+        true,
+      ],
+    ],
+    "The word large compresses several distinct dimensions: stored capacity, active computation, data scale, and hardware work. Sparse Mixture-of-Experts models make the distinction especially important because a huge expert pool can coexist with a much smaller active path for each token.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q186",
+    "hard",
+    "For the sequence [BOS] A teddy [EOS], a model gives \\(P(A\\mid[BOS])=0.5\\), \\(P(teddy\\mid[BOS],A)=0.2\\), and \\(P([EOS]\\mid[BOS],A,teddy)=0.4\\). What sequence probability does the autoregressive factorization assign?",
+    [
+      ["\\(0.5\\times0.2\\times0.4=0.04\\)", true],
+      ["\\(0.5+0.2+0.4=1.10\\)", false],
+      ["\\((0.5+0.2+0.4)/3\\approx0.367\\)", false],
+      ["\\(0.4/0.2=2.0\\)", false],
+    ],
+    "The joint probability of an autoregressive sequence is the product of the conditional next-token probabilities, so the result is \\(0.04\\). The sum and average do not represent the probability of all three choices occurring in sequence, while the ratio compares two conditionals without applying the chain rule.",
+  ),
+
+  // Mixture of Experts (9): routing, active capacity, and collapse.
+  makeQuestion(
+    "cme295-lect3-q187",
     "easy",
-    "Which statements correctly characterize the decoder-only Transformer backbone used by modern text-generating LLMs?",
+    "Where does a Mixture-of-Experts (MoE) module usually enter a decoder block, and what new component chooses its computation path?",
     [
       [
-        "Masked self-attention prevents a position from using future tokens during next-token prediction.",
-        true,
-      ],
-      ["The feed-forward network remains part of each decoder block.", true],
-      ["Residual and normalization layers remain part of the stack.", true],
-      [
-        "Cross-attention to an encoder is removed because there is no encoder stream.",
-        true,
-      ],
-    ],
-    "Decoder-only models keep the causal self-attention and feed-forward machinery needed for autoregressive generation. Cross-attention belongs to encoder-decoder models, so it is removed when the architecture keeps only the decoder side.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q105",
-    "medium",
-    "A dense feed-forward decoder block and a sparse Mixture-of-Experts (MoE) block have the same input token representation. Which statement best describes the MoE substitution?",
-    [
-      [
-        "The feed-forward sublayer is replaced by several feed-forward experts plus a learned router that chooses expert contributions.",
+        "Several expert feed-forward networks replace or augment the ordinary feed-forward sublayer.",
         true,
       ],
       [
-        "The masked self-attention sublayer is replaced by a tokenizer that chooses longer subwords.",
+        "A learned router scores experts from the current token representation.",
+        true,
+      ],
+      [
+        "The tokenizer selects one expert before it has produced token representations.",
         false,
       ],
       [
-        "The residual connections are replaced by a beam-search decoder during training.",
-        false,
-      ],
-      [
-        "The output softmax is replaced by a fixed table of expert names.",
+        "Beam search assigns complete output sequences to attention heads inside the block.",
         false,
       ],
     ],
-    "MoE layers usually replace the expensive feed-forward sublayer with multiple expert feed-forward networks and a router. Attention, tokenization, residual connections, and the vocabulary softmax are different parts of the system and are not the MoE substitution described in the lecture.",
+    "Modern Transformer MoE layers normally target the parameter-heavy feed-forward network and add a learned gate or router for token-level expert selection. Tokenization and beam search occur at different system layers, so they cannot perform the representation-dependent routing described by the MoE computation.",
   ),
   makeQuestion(
-    "cme295-lect3-q106",
-    "medium",
-    "Which statements correctly compare dense and sparse MoE computation?",
-    [
-      [
-        "Dense MoE forms a weighted combination using contributions from the expert set.",
-        true,
-      ],
-      [
-        "Sparse MoE restricts computation to selected top-k experts for a token.",
-        true,
-      ],
-      [
-        "Sparse MoE routes tokens by selecting a separate encoder-decoder architecture for each prompt.",
-        false,
-      ],
-      [
-        "Dense MoE reduces compute by skipping the router and running a single expert chosen before training.",
-        false,
-      ],
-    ],
-    "Dense MoE can weight many expert outputs, while sparse MoE limits active computation to top-k selected experts. The router chooses experts inside a layer, not whole model architectures, and dense MoE does not get its cost savings by using a preselected single expert.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q107",
-    "medium",
-    "For an MoE layer with gate values \\(G(x)_i\\) and expert outputs \\(E_i(x)\\), which statements about \\(\\hat{y}=\\sum_i G(x)_iE_i(x)\\) are correct?",
-    [
-      [
-        "The gate values determine how much each expert contributes to the layer output.",
-        true,
-      ],
-      [
-        "The experts and gate can be trained jointly through the model objective.",
-        true,
-      ],
-      [
-        "A sparse top-k version sets nonselected experts' contribution to zero for that token.",
-        true,
-      ],
-      [
-        "The formula describes a post-hoc majority vote over completed text responses.",
-        false,
-      ],
-    ],
-    "The MoE formula is a layer computation: a learned gate weights expert subnetworks and the weighted outputs are combined. It is not a voting procedure over final completions; voting appears later in self-consistency prompting and operates at the response level.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q108",
-    "hard",
-    "Which statements correctly explain why the feed-forward network is the natural target for MoE layers inside a decoder block?",
-    [
-      [
-        "The feed-forward network often projects through a larger hidden dimension \\(d_{ff}\\), making it parameter-heavy.",
-        true,
-      ],
-      [
-        "Replacing the feed-forward network with experts lets the model increase total capacity while controlling active parameters.",
-        true,
-      ],
-      [
-        "Attention heads and MoE experts are separate design axes, so expert routing is not tied to one expert per attention head.",
-        true,
-      ],
-      [
-        "The feed-forward network is the location where the model stores the KV cache for previous tokens.",
-        false,
-      ],
-    ],
-    "The feed-forward sublayer is a large part of the decoder block's parameter and compute budget, so it is the usual location for expert substitution. KV cache storage is associated with attention keys and values during inference, not with making the feed-forward network into a set of experts.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q109",
-    "medium",
-    "Which statement best describes routing collapse in an MoE model?",
-    [
-      [
-        "A small subset of experts receives most tokens, leaving other experts underused.",
-        true,
-      ],
-      [
-        "The model switches from sparse routing to beam search during generation.",
-        false,
-      ],
-      ["The tokenizer merges rare words into expert identifiers.", false],
-      [
-        "The KV cache stores key vectors in non-contiguous memory blocks.",
-        false,
-      ],
-    ],
-    "Routing collapse is a training failure mode where the router repeatedly sends tokens to the same experts, reducing the value of having many experts. Beam search, tokenization, and KV-cache memory layout are separate topics and do not describe the expert-utilization failure.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q110",
-    "hard",
-    "Which statements correctly describe the auxiliary load-balancing quantities used to reduce MoE routing collapse?",
-    [
-      [
-        "\\(f_i\\) measures the fraction of tokens routed to expert \\(i\\).",
-        true,
-      ],
-      [
-        "\\(P_i\\) measures the average routing probability assigned to expert \\(i\\).",
-        true,
-      ],
-      [
-        "The added loss term is unrelated to whether expert usage becomes more uniform.",
-        false,
-      ],
-      [
-        "The auxiliary term replaces next-token prediction as the main training objective.",
-        false,
-      ],
-    ],
-    "The auxiliary objective supplements the language-modeling loss by discouraging severe expert imbalance, so it is directly related to expert-usage uniformity. It uses routing statistics such as the fraction of tokens and average routing probability for each expert, but it does not replace the main task of predicting language-model targets.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q111",
-    "medium",
-    "Which statements about token-level MoE routing are correct?",
-    [
-      [
-        "Different tokens in the same sequence can be routed to different experts.",
-        true,
-      ],
-      [
-        "The router uses a token representation as input when making a routing decision.",
-        true,
-      ],
-      [
-        "Routing decisions are fixed once for the whole prompt before the first decoder layer runs.",
-        false,
-      ],
-      [
-        "A single prompt-level expert is chosen before tokenization and reused for the whole network.",
-        false,
-      ],
-    ],
-    "The lecture emphasizes routing at the token level: each token representation can be sent to an expert selected by the router. This is finer-grained than choosing one expert for an entire prompt before the model computes token representations, and routing can vary across positions and layers.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q112",
-    "medium",
-    "Which statements correctly describe why sparse MoE can support very large total parameter counts?",
-    [
-      ["More experts increase total stored parameters.", true],
-      [
-        "Top-k routing keeps active parameters for a token much smaller than total parameters.",
-        true,
-      ],
-      [
-        "Increasing expert count can increase model capacity without proportional forward-pass compute.",
-        true,
-      ],
-      [
-        "The active-parameter budget can stay controlled even as the stored expert pool grows.",
-        true,
-      ],
-    ],
-    "Sparse MoE separates total parameters from active parameters: many experts can exist, but a token uses a selected subset. This is why MoE can raise stored capacity while keeping the per-token compute tied to top-k routing rather than to the full expert pool.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q113",
-    "hard",
-    "A sparse MoE layer has 8 experts and uses top-2 routing for each token. Which statement best describes one forward pass for a single token at that layer?",
-    [
-      [
-        "The router scores the experts and the token is processed by the two selected experts for that layer.",
-        true,
-      ],
-      [
-        "The token is processed by eight experts and the top two are chosen after the output text is complete.",
-        false,
-      ],
-      [
-        "Two attention heads are disabled and the remaining heads act as feed-forward experts.",
-        false,
-      ],
-      [
-        "Two vocabulary tokens are sampled before the expert outputs are computed.",
-        false,
-      ],
-    ],
-    "Top-k routing is a layer-internal compute decision: the router chooses expert subnetworks for a token representation before that layer's output is produced. It is not a post-generation selection, an attention-head pruning rule, or a decoding step over vocabulary tokens.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q114",
-    "hard",
-    "Which statements correctly connect FLOPs to dense and sparse LLM design?",
-    [
-      [
-        "FLOPs count floating point additions, multiplications, and related arithmetic work.",
-        true,
-      ],
-      [
-        "Sparse MoE can lower active forward-pass FLOPs relative to running every expert.",
-        true,
-      ],
-      [
-        "FLOPs measure wall-clock latency directly, independent of hardware and memory movement.",
-        false,
-      ],
-      [
-        "A model with fewer FLOPs per token necessarily stores fewer total parameters.",
-        false,
-      ],
-    ],
-    "FLOPs are a useful hardware-agnostic count of arithmetic work, but they are not the same as wall-clock latency because memory movement and hardware throughput matter. Sparse MoE can reduce active compute for a token while storing many inactive expert parameters, so total capacity and per-token compute must be reasoned about separately.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q115",
-    "hard",
-    "Which statements about noisy gating and auxiliary losses in MoE training are correct?",
-    [
-      [
-        "Noisy gating perturbs router scores so less-used experts have chances to receive tokens during training.",
-        true,
-      ],
-      [
-        "Auxiliary losses can penalize imbalanced expert usage at the batch level.",
-        true,
-      ],
-      [
-        "Both techniques eliminate the need to train the router jointly with the experts.",
-        false,
-      ],
-      [
-        "Both techniques make expert routing independent of the learned token representations.",
-        false,
-      ],
-    ],
-    "Noisy gating and load-balancing losses are tools for keeping expert usage healthy while the router is being learned. They do not remove joint training or make routing independent of representations; the router still uses learned signals, but the training setup discourages collapse.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q116",
-    "medium",
-    "Which statements correctly distinguish expert capacity from active computation in MoE LLMs?",
-    [
-      [
-        "Capacity refers to the larger pool of stored expert parameters available to the model.",
-        true,
-      ],
-      [
-        "Active computation refers to the parameters used for a particular token's forward pass.",
-        true,
-      ],
-      [
-        "A trillion-parameter sparse MoE can use far fewer than a trillion parameters for one token.",
-        true,
-      ],
-      [
-        "The stored expert pool and the active expert subset answer different scaling questions.",
-        true,
-      ],
-    ],
-    "MoE makes it possible to store a large pool of expert parameters while activating a subset for each token. The important distinction is total capacity versus active parameters, because a model can be large in storage while keeping each routed token's computation much smaller.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q117",
+    "cme295-lect3-q188",
     "easy",
-    "During autoregressive generation, what happens after the model samples or selects one next token?",
+    "Which comparisons between dense and sparse Mixture-of-Experts computation are correct?",
     [
+      ["A dense MoE can combine contributions from the full expert set.", true],
       [
-        "The new token is appended to the sequence and the model predicts the following token from the extended prefix.",
+        "A sparse MoE uses top-k routing so only selected experts process a token.",
         true,
       ],
       [
-        "The entire training set is updated before the next token is considered.",
-        false,
+        "Both forms use learned gate values to determine expert contributions.",
+        true,
       ],
       [
-        "The decoder removes causal masking because the next token is already known.",
-        false,
-      ],
-      [
-        "The model switches from probabilities to hand-written grammar rules for the rest of the response.",
+        "Sparse routing means one expert is chosen once for the entire prompt and for every layer.",
         false,
       ],
     ],
-    "Autoregressive generation repeats next-token prediction: each chosen token becomes part of the prefix for the following step. The model weights are not updated during ordinary inference, and causal masking remains part of the decoder-only computation.",
+    "Dense and sparse MoE differ in how many expert outputs remain active in the weighted combination, not in whether routing is learned. Sparse routing is typically token- and layer-dependent, so different tokens and different layers may use different expert subsets rather than sharing one prompt-level choice.",
   ),
   makeQuestion(
-    "cme295-lect3-q118",
+    "cme295-lect3-q189",
+    "medium",
+    "A dense MoE has scalar expert outputs \\(E_1(x)=4\\), \\(E_2(x)=1\\), and \\(E_3(x)=-2\\), with gate weights \\((0.7,0.2,0.1)\\). What is the combined output \\(\\sum_i G(x)_iE_i(x)\\)?",
+    [
+      ["\\(2.8\\)", true],
+      ["\\(3.0\\)", false],
+      ["\\(1.0\\)", false],
+      ["\\(0.7\\)", false],
+    ],
+    "The weighted sum is \\(0.7(4)+0.2(1)+0.1(-2)=2.8\\). The nearby distractors result from ignoring the negative expert, averaging the raw expert outputs without the gate, or reporting a gate weight instead of the gated expert combination.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q190",
+    "medium",
+    "An MoE layer has eight 2-billion-parameter experts and routes each token to the top two experts. Ignore shared non-expert parameters. Which statements follow for one token at this layer?",
+    [
+      ["The stored expert pool contains 16 billion parameters.", true],
+      ["The active expert path uses 4 billion parameters.", true],
+      ["Six experts do not execute for that token.", true],
+      [
+        "Adding experts can raise total capacity without making per-token expert compute grow in direct proportion.",
+        true,
+      ],
+    ],
+    "Eight experts of 2 billion parameters produce a 16-billion-parameter pool, while top-two routing activates 4 billion expert parameters for this token. The other six experts remain available for other tokens but do not execute here, which is the capacity-versus-active-compute separation that motivates sparse MoE designs.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q191",
+    "medium",
+    "In one decoder layer, the tokens 'The', 'bear', and 'reads' are routed to experts 2, 5, and 2. Which inferences are justified?",
+    [
+      [
+        "The routing decision is fine-grained enough for tokens in one sequence to take different expert paths.",
+        true,
+      ],
+      ["Expert 2 is active for two token computations in this layer.", true],
+      [
+        "The complete prompt was permanently assigned to expert 2 before tokenization.",
+        false,
+      ],
+      [
+        "Expert 2 in every later decoder layer must be the same network and receive the same tokens.",
+        false,
+      ],
+    ],
+    "The trace demonstrates token-level routing within one specific layer and shows two routed token computations for expert 2 there. Expert identities are local to their layer, and later routers receive different hidden representations, so neither a fixed prompt assignment nor identical downstream routing follows.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q192",
     "hard",
-    "A decoder outputs logits `[4.0, 2.0, 1.0, -1.0]` for four candidate tokens. Which statements about greedy decoding are correct?",
+    "A four-expert router sends 80% of a mini-batch to one expert. Which facts make the auxiliary load-balancing objective relevant?",
     [
       [
-        "Greedy decoding chooses the token with logit `4.0` at this step.",
+        "\\(f_i\\) records the fraction of batch tokens actually routed to expert \\(i\\).",
         true,
       ],
-      ["The choice is deterministic for fixed logits.", true],
       [
-        "Greedy decoding keeps several candidate continuations before choosing a final sequence.",
-        false,
+        "\\(P_i\\) records the average routing probability assigned to expert \\(i\\).",
+        true,
       ],
       [
-        "Greedy decoding samples among the four tokens according to the softmax probabilities.",
+        "Penalizing concentrated routing statistics can push the learned router toward broader expert use.",
+        true,
+      ],
+      [
+        "The auxiliary term replaces next-token prediction, so language modeling is no longer optimized.",
         false,
       ],
     ],
-    "Greedy decoding takes the highest-scoring token at each step, so fixed logits produce a fixed next token. It keeps one path rather than a beam of candidates, and it is not the same as sampling from the softmax distribution.",
+    "The balancing term is computed from routing frequency and routing-probability statistics over a training batch, making it sensitive to the described concentration. It supplements the main language-modeling loss; removing next-token learning would defeat the purpose of training a capable MoE language model.",
   ),
   makeQuestion(
-    "cme295-lect3-q119",
-    "medium",
-    "Which statements correctly describe beam search in sequence generation?",
-    [
-      [
-        "It keeps several high-scoring partial sequences instead of committing to one token path.",
-        true,
-      ],
-      [
-        "It is useful when high-likelihood structured outputs are preferred.",
-        true,
-      ],
-      [
-        "It is designed to maximize diversity by sampling tail tokens from the full vocabulary.",
-        false,
-      ],
-      [
-        "It draws the next token from the full vocabulary distribution without ranking candidate paths.",
-        false,
-      ],
-    ],
-    "Beam search tracks multiple candidate sequences to approximate high-probability completions. It is not broad stochastic sampling from the full vocabulary, and that is why it can be less suitable for creative open-ended generation than sampling methods.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q120",
-    "medium",
-    "Which statements correctly compare greedy decoding and beam search?",
-    [
-      [
-        "Greedy decoding keeps one path, while beam search keeps multiple candidate paths.",
-        true,
-      ],
-      [
-        "Beam search requires more computation than greedy decoding because it expands and scores more candidates.",
-        true,
-      ],
-      [
-        "Both methods can be deterministic when model outputs and tie-breaking are fixed.",
-        true,
-      ],
-      [
-        "Beam search broadens high-probability search without introducing token-sampling randomness.",
-        true,
-      ],
-    ],
-    "Greedy and beam search are likelihood-oriented decoding strategies rather than randomness-oriented creativity controls. Beam search broadens search over high-probability paths, but sampling methods are the tools used when controlled randomness and diversity are desired.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q121",
-    "easy",
-    "A model produces token probabilities where `bear` has the highest probability at the current step. Which statement best describes top-k sampling with `k = 4`?",
-    [
-      [
-        "It restricts the candidate set to the four most probable tokens and samples within that set.",
-        true,
-      ],
-      [
-        "It deterministically emits `bear` because `bear` has the highest probability.",
-        false,
-      ],
-      [
-        "It samples from the smallest probability-mass set whose total exceeds a threshold `p`.",
-        false,
-      ],
-      [
-        "It changes the model weights so the four tokens become more likely in future prompts.",
-        false,
-      ],
-    ],
-    "Top-k sampling truncates the vocabulary to the k highest-probability candidates and then samples from the truncated distribution. Deterministically taking the top token is greedy decoding, while cumulative probability thresholding is top-p sampling.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q122",
-    "medium",
-    "Which statements correctly describe top-p, or nucleus, sampling?",
-    [
-      [
-        "It forms the smallest high-probability token set whose cumulative probability reaches the chosen threshold.",
-        true,
-      ],
-      [
-        "The number of tokens in the candidate set can change from one decoding step to another.",
-        true,
-      ],
-      [
-        "It is the same procedure as choosing a fixed number `k` of tokens at each step.",
-        false,
-      ],
-      [
-        "It scores whole completed sequences rather than next-token candidates.",
-        false,
-      ],
-    ],
-    "Top-p sampling is adaptive: the candidate set size depends on how probability mass is distributed at the current step. A fixed candidate count is top-k sampling, and sequence-level scoring belongs to search methods such as beam search rather than nucleus sampling.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q123",
-    "medium",
-    "A next-token distribution is `A: 0.50`, `B: 0.25`, `C: 0.15`, `D: 0.06`, `E: 0.04`. With top-p sampling at `p = 0.90`, which statements are correct?",
-    [
-      [
-        "The nucleus contains `A`, `B`, and `C` because their cumulative probability is `0.90`.",
-        true,
-      ],
-      [
-        "`D` and `E` are excluded before renormalizing the remaining probabilities.",
-        true,
-      ],
-      [
-        "The candidate count is three for this step, even though `p` is not a count.",
-        true,
-      ],
-      [
-        "The method must include `D` because `D` is needed to make the cumulative probability greater than `0.90`.",
-        false,
-      ],
-    ],
-    "Top-p uses the smallest set reaching the threshold, and here `0.50 + 0.25 + 0.15 = 0.90`. The remaining candidates are removed for this sampling step, and the included probabilities are renormalized before drawing a token.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q124",
-    "medium",
-    "Which statements correctly describe temperature scaling before softmax?",
-    [
-      [
-        "Lower temperature makes high-logit tokens take a larger share of probability mass.",
-        true,
-      ],
-      [
-        "Higher temperature flattens the distribution and increases diversity pressure.",
-        true,
-      ],
-      ["Temperature rescales logits before probabilities are computed.", true],
-      ["Temperature leaves the tokenizer and vocabulary unchanged.", true],
-    ],
-    "Temperature is a decoding-time transformation of logits before softmax. It affects sharpness and diversity of token probabilities, while the tokenizer and vocabulary remain the same objects used by the trained model.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q125",
-    "easy",
-    "Which statement best explains why sampling can produce different completions for the same prompt?",
-    [
-      [
-        "Randomness enters when the decoder draws a token from the probability distribution.",
-        true,
-      ],
-      [
-        "The Transformer weights are retrained after each sampled token.",
-        false,
-      ],
-      [
-        "The context window randomly changes size during the forward pass.",
-        false,
-      ],
-      [
-        "The softmax layer stops producing probabilities after the first token.",
-        false,
-      ],
-    ],
-    "Sampling introduces randomness at token selection, so repeated generations can diverge even with the same prompt and model. Ordinary inference does not retrain weights, randomly resize the context window, or abandon next-token probability computation.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q126",
-    "medium",
-    "Which statements correctly describe logits and softmax in next-token prediction?",
-    [
-      ["Logits are unnormalized scores for vocabulary tokens.", true],
-      [
-        "Softmax converts logits into nonnegative probabilities that sum to one.",
-        true,
-      ],
-      [
-        "Temperature changes token strings before the tokenizer creates model inputs.",
-        false,
-      ],
-      [
-        "Softmax chooses the final token by itself without any decoding policy.",
-        false,
-      ],
-    ],
-    "The model produces logits, and softmax turns those scores into a probability distribution. Temperature rescales logits rather than token strings, and a separate decoding policy such as greedy selection, top-k sampling, top-p sampling, or beam search determines how the distribution is used.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q127",
-    "easy",
-    "A developer wants structured JSON output from an LLM. Which statement best describes guided decoding?",
-    [
-      [
-        "Constrain the next-token choices during generation so invalid JSON continuations are filtered out.",
-        true,
-      ],
-      [
-        "Ask for JSON, parse the final response, and retry from scratch after each invalid output.",
-        false,
-      ],
-      [
-        "Fine-tune the model until the vocabulary contains no tokens outside JSON syntax.",
-        false,
-      ],
-      [
-        "Run beam search and accept the highest-probability sequence even if it violates the schema.",
-        false,
-      ],
-    ],
-    "Guided decoding constrains token choices at inference time so the generator follows a formal output structure such as JSON. Retrying after failure is a weaker prompt-and-validate loop, while fine-tuning or beam search alone does not enforce valid next-token choices.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q128",
-    "easy",
-    "Which statements correctly identify valid-token filtering in guided decoding?",
-    [
-      [
-        "At the start of a JSON object, an opening brace can be allowed while unrelated word tokens are blocked.",
-        true,
-      ],
-      [
-        "After a property name in JSON, a colon can be allowed while a random noun can be blocked.",
-        true,
-      ],
-      [
-        "When several valid next tokens remain, a normal token-selection strategy can choose among them.",
-        true,
-      ],
-      [
-        "No model retraining is required merely because invalid next-token paths are filtered.",
-        true,
-      ],
-    ],
-    "Guided decoding works by filtering invalid next tokens according to a grammar, schema, or state machine, while still using the model distribution over valid choices. Invalid paths are constrained during inference rather than removed from the model weights through repeated retraining.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q129",
-    "medium",
-    "Which statement best separates top-k sampling from guided decoding?",
-    [
-      [
-        "Top-k limits candidates by probability rank, while guided decoding limits candidates by structural validity.",
-        true,
-      ],
-      [
-        "Top-k uses a grammar and guided decoding uses a fixed number of most probable tokens.",
-        false,
-      ],
-      [
-        "Top-k operates during training and guided decoding operates during tokenization.",
-        false,
-      ],
-      [
-        "Top-k produces JSON validity proofs and guided decoding optimizes sequence likelihood.",
-        false,
-      ],
-    ],
-    "Both methods restrict candidate next tokens, but they use different criteria. Top-k uses probability rank from the model distribution, while guided decoding uses an external validity constraint such as a schema or grammar.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q130",
-    "medium",
-    "Which statements about inference-time nondeterminism are correct?",
-    [
-      ["Sampling creates nondeterminism through random token draws.", true],
-      [
-        "Numerical and hardware effects can create small differences even for otherwise fixed inference settings.",
-        true,
-      ],
-      [
-        "Greedy decoding samples from the probability distribution after ranking the tokens.",
-        false,
-      ],
-      [
-        "Decoder-only Transformers require stochastic internal layers at inference to produce text.",
-        false,
-      ],
-    ],
-    "Nondeterminism can come from sampling and from numerical implementation details, but the Transformer computation itself need not contain stochastic layers during inference. Greedy decoding can be deterministic under fixed conditions because it chooses the top token rather than drawing a random one.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q131",
+    "cme295-lect3-q193",
     "hard",
-    "A generation system uses beam search for a creative writing prompt and gets repetitive, safe-sounding outputs. Which explanation best matches the decoding choice?",
+    "A router repeatedly sends nearly every token to expert 1 while seven experts receive almost no training signal. Which analyses are appropriate?",
     [
       [
-        "Beam search favors high-likelihood paths and can reduce diversity, so sampling methods are often a better fit for open-ended generation.",
+        "This is routing collapse because expert capacity exists but is not being used.",
         true,
       ],
       [
-        "Beam search samples many low-probability tokens, so the model becomes too random for creative writing.",
-        false,
-      ],
-      [
-        "Beam search disables the language model's probability distribution and uses hand-written templates.",
-        false,
-      ],
-      [
-        "Beam search routes each token to a different MoE expert, which prevents narrative variation.",
-        false,
-      ],
-    ],
-    "Beam search is designed to keep high-scoring candidate sequences, so it can converge on bland or repetitive high-probability text. Creative generation usually benefits from controlled sampling rather than a search procedure that primarily rewards likelihood.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q132",
-    "medium",
-    "Which statements correctly compare decoding controls?",
-    [
-      [
-        "Greedy decoding chooses the highest-probability token at the current step.",
+        "A load-balancing loss can add gradient pressure against the concentrated routing pattern.",
         true,
       ],
       [
-        "Top-k sampling samples after removing tokens outside the top-k set.",
+        "Noisy gating can occasionally expose less-used experts to tokens while routing is learned.",
         true,
       ],
       [
-        "Top-p sampling samples after removing tokens outside a cumulative-probability nucleus.",
-        true,
-      ],
-      [
-        "Guided decoding filters invalid continuations before the next token is chosen.",
+        "Balanced utilization alone would not prove that each expert learned a clean human-interpretable specialty.",
         true,
       ],
     ],
-    "Greedy, top-k, top-p, and guided decoding are different ways to use or constrain next-token probabilities. Guided decoding filters invalid continuations before token selection rather than waiting to repair invalid text after it has been generated.",
+    "The symptom is routing collapse, and both auxiliary balancing and noisy gating are plausible training remedies discussed for increasing expert participation. Utilization is only an operational signal: even a well-balanced router does not by itself establish that experts correspond to neat semantic categories or that routing quality is optimal.",
   ),
   makeQuestion(
-    "cme295-lect3-q133",
+    "cme295-lect3-q194",
+    "hard",
+    "For four experts, suppose the routing frequencies equal the average routing probabilities, so \\(f=P\\). Ignoring the common constants in the auxiliary loss, which candidate has the smallest value of \\(\\sum_i f_iP_i\\)?",
+    [
+      ["\\((0.25,0.25,0.25,0.25)\\)", true],
+      ["\\((0.40,0.30,0.20,0.10)\\)", false],
+      ["\\((0.50,0.20,0.20,0.10)\\)", false],
+      ["\\((1.00,0.00,0.00,0.00)\\)", false],
+    ],
+    "When \\(f=P\\), the relevant sum is the sum of squared shares. The uniform candidate gives \\(4(0.25^2)=0.25\\), which is lower than \\(0.30\\), \\(0.34\\), and \\(1.00\\) for the increasingly concentrated alternatives, illustrating why the term favors balanced use.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q195",
+    "hard",
+    "A visualization colors each token by the expert selected in decoder layer 0, and the sentence contains several colors. Which conclusions are supported?",
+    [
+      [
+        "The shown sentence did not route every token to one expert in that layer.",
+        true,
+      ],
+      [
+        "The plot is a layer-specific routing trace rather than a map of the entire model.",
+        true,
+      ],
+      [
+        "Each color proves that its expert has one stable, human-nameable linguistic function across all inputs.",
+        false,
+      ],
+      [
+        "One varied sentence proves that expert usage is balanced over the complete training distribution.",
+        false,
+      ],
+    ],
+    "Multiple colors rule out complete single-expert routing for this particular sentence and layer, and the layer label limits the trace's scope. Semantic specialization and population-level balance require broader analysis; neither follows from a single qualitative visualization.",
+  ),
+
+  // Response generation (18): autoregression, search, sampling, and constraints.
+  makeQuestion(
+    "cme295-lect3-q196",
     "easy",
-    "Which statement best describes context length, also called context window or window size?",
+    "A decoder has generated the prefix 'A teddy bear'. Which statements describe the next autoregressive step?",
     [
       [
-        "It is the number of tokens the model can process as the conditioning context for a generation step.",
+        "The complete prefix is used to produce scores for the next vocabulary token.",
         true,
       ],
       [
-        "It is the number of parameters activated by a sparse MoE router.",
-        false,
-      ],
-      [
-        "It is the number of examples needed before zero-shot learning becomes few-shot learning.",
-        false,
-      ],
-      ["It is the number of candidate paths kept by beam search.", false],
-    ],
-    "Context length is a token-capacity concept: it bounds how much prompt and generated text can be available to the model at a step. Expert activation count, number of examples, and beam width are different quantities with different effects.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q134",
-    "hard",
-    "Which statements about long context and context rot are correct?",
-    [
-      ["Longer context can increase compute and memory pressure.", true],
-      [
-        "Relevant information can become harder for the model to use as distracting tokens accumulate.",
+        "A decoding rule converts the next-token distribution into a chosen token.",
         true,
       ],
       [
-        "The answer being present in the context does not ensure the model retrieves and uses it well.",
+        "The chosen token is appended before the following prediction step.",
         true,
       ],
       [
-        "Adding tokens to the context improves retrieval quality by construction.",
+        "The model must update its trained weights after appending each token.",
         false,
       ],
     ],
-    "Long context increases the amount of information available, but it also raises attention and memory costs and can make retrieval less reliable. Context rot refers to degradation in effective use of relevant information, not to a guarantee that more tokens improve performance.",
+    "Autoregressive inference repeatedly scores a next token from the available prefix, chooses a token through a decoding policy, and appends it to extend the conditioning context. Ordinary generation keeps the trained parameters fixed; changing weights after every token would be online training rather than decoding.",
   ),
   makeQuestion(
-    "cme295-lect3-q135",
+    "cme295-lect3-q197",
+    "medium",
+    "At the first step, token A has probability 0.6 and token B has probability 0.4. The best continuation after A has conditional probability 0.5, while the best continuation after B has probability 0.9. Which statement is correct for the best two-token path?",
+    [
+      [
+        "The B path is better because \\(0.4\\times0.9=0.36\\), exceeding the A path's \\(0.6\\times0.5=0.30\\).",
+        true,
+      ],
+      [
+        "The A path is necessarily better because greedy decoding chose the larger first-step probability.",
+        false,
+      ],
+      [
+        "The paths tie because their first-step probabilities sum to one.",
+        false,
+      ],
+      [
+        "The B path has probability \\(0.4+0.9=1.3\\) because sequence scores add raw probabilities.",
+        false,
+      ],
+    ],
+    "A path probability multiplies conditional token probabilities, so the locally weaker first token can still lead to the stronger complete path. Greedy decoding cannot recover that alternative after committing to A, which illustrates why a locally optimal token does not guarantee a globally better sequence.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q198",
     "easy",
-    "Which statements correctly describe a prompt's main parts in the lecture's prompt-structure example?",
+    "Which comparisons among greedy decoding, beam search, and sampling are accurate?",
     [
-      ["Context gives background information the model should use.", true],
-      ["Instructions state the task to perform.", true],
-      ["Input supplies the concrete user case or content to transform.", true],
       [
-        "Constraints are unrelated to format, audience, or response requirements.",
+        "Greedy decoding commits to the highest-probability token at each step.",
+        true,
+      ],
+      ["Beam search retains several high-scoring partial sequences.", true],
+      [
+        "Sampling draws from an allowed probability distribution and can produce different outputs.",
+        true,
+      ],
+      [
+        "Beam search spends additional computation to explore more paths than greedy decoding.",
+        true,
+      ],
+    ],
+    "The three methods differ in how they turn next-token probabilities into a continuation: one local maximum, several scored paths, or a random draw. Beam search broadens likelihood-oriented search but costs more, while sampling is the mechanism among the three that directly introduces controlled output diversity.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q199",
+    "hard",
+    "A width-2 beam expands two prefixes. The joint scores of the four new paths are \\(P(Ax)=0.24\\), \\(P(Ay)=0.36\\), \\(P(Bx)=0.36\\), and \\(P(By)=0.04\\). Which paths remain after pruning, assuming ties are allowed?",
+    [
+      ["\\(Ay\\)", true],
+      ["\\(Bx\\)", true],
+      ["\\(Ax\\)", false],
+      ["\\(By\\)", false],
+    ],
+    "A width-2 beam keeps the two highest-scoring partial sequences across all expansions, which are \\(Ay\\) and \\(Bx\\), both at \\(0.36\\). It does not reserve one survivor per parent prefix, so \\(Ax\\) is pruned despite descending from A, and \\(By\\) is far below the cutoff.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q200",
+    "medium",
+    "A speech-recognition system prefers a highly likely completed transcript and can afford extra decoding work. Which observations support beam search over greedy decoding?",
+    [
+      [
+        "Keeping several partial transcripts delays commitment to one early token.",
+        true,
+      ],
+      [
+        "Sequence-level scores can rescue a path whose first token was not locally best.",
+        true,
+      ],
+      [
+        "The beam width trades additional compute and memory for broader search.",
+        true,
+      ],
+      [
+        "Beam search is preferable because it samples more tail tokens and therefore maximizes creativity.",
         false,
       ],
     ],
-    "Prompts can include context, instructions, input, and constraints. Constraints are precisely where format, audience, style, or other response requirements can be stated, so saying they are unrelated to those requirements reverses the prompt-structure idea.",
+    "Beam search is useful when exploring several high-likelihood candidates matters more than generating diverse creative continuations. Its extra state and expansions cost resources, and it remains likelihood-oriented rather than deliberately drawing low-probability tail tokens.",
   ),
   makeQuestion(
-    "cme295-lect3-q136",
-    "medium",
-    "Which statements correctly distinguish zero-shot and few-shot prompting?",
-    [
-      [
-        "Zero-shot prompting gives the task instruction without example input-output pairs.",
-        true,
-      ],
-      [
-        "Few-shot prompting includes examples in the prompt to shape the model's behavior.",
-        true,
-      ],
-      [
-        "Few-shot prompting consumes context tokens and can increase cost or latency.",
-        true,
-      ],
-      [
-        "Both zero-shot and few-shot prompting condition a fixed model through context.",
-        true,
-      ],
-    ],
-    "Zero-shot and few-shot prompting both steer a fixed model through context rather than weight updates. Few-shot examples can improve task alignment but use context budget and inference compute, while zero-shot prompting relies on the instruction and the model's existing capabilities.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q137",
+    "cme295-lect3-q201",
     "easy",
-    "Which statement best describes in-context learning?",
+    "A next-token distribution is A: 0.40, B: 0.30, C: 0.20, and D: 0.10. With top-k sampling at \\(k=2\\), which candidate set is sampled after filtering?",
     [
-      [
-        "The model changes its behavior based on information in the prompt while its weights remain fixed.",
-        true,
-      ],
-      [
-        "The optimizer performs gradient descent on the examples inside the prompt.",
-        false,
-      ],
-      [
-        "The router permanently assigns a prompt to a single MoE expert.",
-        false,
-      ],
-      [
-        "The KV cache stores examples from previous users and reuses them as training data.",
-        false,
-      ],
+      ["A and B", true],
+      ["A, B, and C", false],
+      ["C and D", false],
+      ["A only", false],
     ],
-    "In-context learning is behavioral adaptation through the prompt context, not gradient-based training on the fly. It should not be confused with MoE routing or KV-cache reuse, which operate at different layers of the inference system.",
+    "Top-k filtering uses probability rank, so the two highest-probability tokens A and B remain. The probabilities of the retained tokens are then renormalized for sampling; cumulative mass is not the rule for deciding the set size in top-k.",
   ),
   makeQuestion(
-    "cme295-lect3-q138",
-    "medium",
-    "Which statements about few-shot prompting tradeoffs are correct?",
-    [
-      ["Examples can clarify the desired input-output pattern.", true],
-      ["Examples consume part of the available context window.", true],
-      [
-        "Few-shot examples reduce input-token count because demonstrations are stored outside the prompt.",
-        false,
-      ],
-      [
-        "Examples remove the need to evaluate performance on benchmark or task data.",
-        false,
-      ],
-    ],
-    "Few-shot examples are useful because they demonstrate the target behavior, but they are not free. They use context budget and add tokens to process, and they still require evaluation because prompt examples do not prove generalization.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q139",
-    "medium",
-    "Which statements correctly describe chain-of-thought prompting?",
-    [
-      [
-        "It asks the model to produce intermediate reasoning before the final answer.",
-        true,
-      ],
-      ["It can improve performance on reasoning-heavy tasks.", true],
-      [
-        "It increases generated token count compared with a terse answer.",
-        true,
-      ],
-      [
-        "It enforces logical correctness by verifying each reasoning step against ground truth.",
-        false,
-      ],
-    ],
-    "Chain-of-thought prompting encourages explicit intermediate reasoning and can improve reasoning task performance. It also costs more tokens and does not by itself verify that the reasoning is correct or grounded in truth.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q140",
+    "cme295-lect3-q202",
     "hard",
-    "Which statements correctly describe chain-of-thought interpretability limits?",
+    "A distribution is A: 0.50, B: 0.30, C: 0.10, and D: 0.10. After top-k filtering with \\(k=2\\), which renormalized probabilities are correct?",
     [
-      [
-        "The visible reasoning can help debug where a response went wrong.",
-        true,
-      ],
-      [
-        "The reasoning trace can reveal that the model used a wrong date or premise from the prompt.",
-        true,
-      ],
-      ["The extra tokens create a latency and cost tradeoff.", true],
-      ["A fluent reasoning trace still needs answer-level evaluation.", true],
+      ["\\(P'(A)=0.50/(0.50+0.30)=0.625\\)", true],
+      ["\\(P'(B)=0.30/(0.50+0.30)=0.375\\)", true],
+      ["\\(P'(C)=0.10/(0.50+0.30)=0.125\\)", false],
+      ["\\(P'(D)=0.10/(0.50+0.30)=0.125\\)", false],
     ],
-    "Reasoning traces can be useful for inspection and root-cause analysis, but they are not a proof of correctness. A model can produce plausible-looking reasoning with an incorrect premise or invalid step, so chain-of-thought should be evaluated by outcomes as well as by trace readability.",
+    "Only A and B survive the rank cutoff, so their original mass of \\(0.80\\) is rescaled to one, giving \\(0.625\\) and \\(0.375\\). C and D are excluded before sampling and therefore receive zero probability, not a renormalized share.",
   ),
   makeQuestion(
-    "cme295-lect3-q141",
+    "cme295-lect3-q203",
+    "medium",
+    "A sorted distribution is A: 0.45, B: 0.30, C: 0.15, and D: 0.10. For top-p sampling with \\(p=0.80\\), which resulting nucleus and renormalized distribution are correct?",
+    [
+      [
+        "Keep A, B, C and use probabilities \\((0.50,0.333\\ldots,0.166\\ldots)\\).",
+        true,
+      ],
+      ["Keep A, B and use probabilities \\((0.60,0.40)\\).", false],
+      [
+        "Keep A, B, C and use the unchanged probabilities \\((0.45,0.30,0.15)\\).",
+        false,
+      ],
+      [
+        "Keep A, B, C, D and use the original distribution because 0.80 is not a token count.",
+        false,
+      ],
+    ],
+    "A and B reach only 0.75, so C is required; those three tokens reach 0.90 and D is excluded. Dividing their probabilities by 0.90 gives \\((0.50,0.333\\ldots,0.166\\ldots)\\); leaving the mass at 0.90 would not define a normalized sampling distribution.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q204",
+    "hard",
+    "Two decoding steps both use top-p with \\(p=0.80\\). Step 1 has sorted probabilities \\((0.75,0.15,0.06,0.04)\\); step 2 has \\((0.30,0.25,0.20,0.15,0.10)\\). Which conclusions follow?",
+    [
+      ["Step 1 needs its first two tokens to reach at least 0.80.", true],
+      ["Step 2 needs its first four tokens to reach at least 0.80.", true],
+      [
+        "The candidate count changes because top-p adapts to the shape of each distribution.",
+        true,
+      ],
+      [
+        "The more diffuse second distribution retains more candidates at this threshold.",
+        true,
+      ],
+    ],
+    "The first distribution reaches \\(0.90\\) after two tokens, while the second reaches only \\(0.75\\) after three and therefore needs a fourth token to reach \\(0.90\\). This is the defining adaptive behavior of nucleus sampling: the same mass threshold can create different set sizes as confidence changes.",
+  ),
+
+  makeQuestion(
+    "cme295-lect3-q205",
     "easy",
-    "Which statement best describes self-consistency prompting?",
+    "What is the direct effect of lowering temperature below 1 before applying softmax to fixed logits?",
     [
       [
-        "Generate several reasoning paths, parse their final answers, and aggregate the answers, often by majority vote.",
+        "Probability mass becomes more concentrated on the higher-logit tokens.",
         true,
       ],
+      ["The candidate set is truncated to a fixed number of tokens.", false],
       [
-        "Force the model to use the same hidden attention pattern for every sample.",
+        "A grammar removes tokens that would make the output structurally invalid.",
         false,
       ],
       [
-        "Keep one greedy completion and ask a second model to rewrite it as JSON.",
-        false,
-      ],
-      [
-        "Average the MoE router probabilities across experts to pick a final token.",
+        "The model's learned weights are updated to prefer shorter responses.",
         false,
       ],
     ],
-    "Self-consistency operates at the level of multiple sampled responses: it compares final answers after several reasoning paths. It is distinct from attention, guided decoding, and MoE routing, which operate inside a single generation process.",
+    "Temperature divides the logits before softmax, so a value below one enlarges logit differences and sharpens the resulting distribution. Fixed-rank truncation belongs to top-k, structural filtering belongs to guided decoding, and no parameter update occurs during this inference-time rescaling.",
   ),
   makeQuestion(
-    "cme295-lect3-q142",
+    "cme295-lect3-q206",
     "medium",
-    "Which statements about self-consistency tradeoffs are correct?",
+    "Two tokens have logits 2 and 0. Their probability odds after temperature scaling are \\(\\exp((2-0)/T)\\). Which comparisons are correct?",
     [
+      ["At \\(T=1\\), the odds are \\(e^2\\).", true],
+      ["At \\(T=2\\), the odds are \\(e^1\\).", true],
       [
-        "Sampling multiple reasoning paths can make the final answer more robust.",
-        true,
-      ],
-      ["Parsing or extracting the final answer is needed before voting.", true],
-      [
-        "The sampled paths must be generated serially because each path depends on the previous path's hidden state.",
+        "Raising \\(T\\) from 1 to 2 increases the odds in favor of the higher-logit token.",
         false,
       ],
       [
-        "Self-consistency reduces total compute because it samples fewer tokens than a single direct answer.",
+        "At \\(T=0.5\\), the odds become \\(e^1\\) because lower temperature flattens the distribution.",
         false,
       ],
     ],
-    "Self-consistency trades more generation work for robustness. The branches can be independent and parallelizable, but total compute and token usage generally increase because several completions are produced.",
+    "Dividing the logit gap by temperature gives gaps of 2 and 1 at temperatures 1 and 2, respectively. Higher temperature reduces the odds ratio and flattens the distribution, while \\(T=0.5\\) would produce a gap of 4 and odds of \\(e^4\\), making the distribution sharper.",
   ),
   makeQuestion(
-    "cme295-lect3-q143",
+    "cme295-lect3-q207",
+    "hard",
+    "At temperature \\(T=1\\), three token logits are \\((\\ln 4,\\ln 2,0)\\). Which softmax probability vector is correct?",
+    [
+      ["\\((4/7,2/7,1/7)\\)", true],
+      ["\\((4/6,2/6,0)\\)", false],
+      ["\\((\\ln4/(\\ln4+\\ln2),\\ln2/(\\ln4+\\ln2),0)\\)", false],
+      ["\\((1/2,1/3,1/6)\\)", false],
+    ],
+    "Exponentiating the logits yields unnormalized weights \\((4,2,1)\\), whose sum is 7, so the normalized probabilities are \\((4/7,2/7,1/7)\\). Softmax depends on exponentiated scores and their common normalizer, not on treating the logarithms themselves as linearly proportional probabilities.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q208",
     "easy",
-    "Which statement best explains the goal of KV caching during autoregressive inference?",
+    "A service must emit JSON that matches a known schema. Which statements describe guided decoding?",
     [
       [
-        "Store previous keys and values so later tokens can reuse them instead of recomputing them.",
+        "A state derived from the schema determines which next tokens can still form a valid output.",
         true,
       ],
       [
-        "Store previous query vectors because future tokens attend through old queries.",
-        false,
+        "Structurally invalid tokens can be masked before the next token is selected.",
+        true,
       ],
       [
-        "Store final text responses so the model can skip tokenization next time.",
-        false,
+        "The model's probabilities can still rank or sample among the remaining valid tokens.",
+        true,
       ],
       [
-        "Store MoE expert weights on the CPU so routing collapse disappears.",
-        false,
+        "The constraint can be applied at inference time without retraining the language model.",
+        true,
       ],
     ],
-    "During generation, the current token needs keys and values from previous tokens for attention. KV caching saves those key and value tensors, while previous queries are not the useful cached objects for computing the current token's attention over the prefix.",
+    "Guided decoding intersects the model's next-token possibilities with those allowed by a grammar or schema state, then applies a selection rule within that valid set. It is stronger than merely requesting JSON in prose because invalid structural continuations are removed during generation, yet it does not require changing the model weights.",
   ),
   makeQuestion(
-    "cme295-lect3-q144",
+    "cme295-lect3-q209",
     "medium",
-    "Which statements correctly describe KV caching?",
+    'A JSON generator has already emitted an opening brace followed by the property name "age". The schema now requires the key-value separator. Which next-token action best matches guided decoding?',
     [
       [
-        "It avoids recomputing key and value projections for earlier tokens at each new decoding step.",
+        "Allow a colon token and mask tokens that cannot begin the required separator.",
         true,
       ],
       [
-        "It is most relevant during autoregressive inference rather than teacher-forced training over a whole sequence.",
-        true,
-      ],
-      [
-        "Its memory footprint is constant with respect to sequence length once the first token is cached.",
+        "Keep every vocabulary token and repair the structure only after the response is complete.",
         false,
       ],
       [
-        "It changes the target model's next-token distribution by approximating attention scores.",
+        "Select the globally highest-probability token even if it closes the object before supplying a value.",
+        false,
+      ],
+      [
+        "Change top-k to the vocabulary size so the grammar has more choices.",
         false,
       ],
     ],
-    "KV caching is an exact reuse strategy for autoregressive inference: it stores tensors that would otherwise be recomputed. The tradeoff is memory, and that memory grows with generated or prompt sequence length rather than staying constant.",
+    "The parser state identifies the colon as the next required structural element, so guided decoding masks incompatible continuations before selection. Post-hoc repair and unconstrained maximum-probability decoding can still produce invalid structure, while increasing top-k does nothing to encode the JSON grammar.",
   ),
   makeQuestion(
-    "cme295-lect3-q145",
+    "cme295-lect3-q210",
+    "hard",
+    "A guided decoder returns valid JSON with fields for a patient's age and medication, but the medication is factually wrong. Which conclusions are warranted?",
+    [
+      [
+        "The decoder successfully enforced syntax but did not guarantee semantic correctness.",
+        true,
+      ],
+      [
+        "A separate factual, retrieval, or domain validation step is still needed.",
+        true,
+      ],
+      [
+        "The valid braces and field types prove that the underlying claim came from reliable evidence.",
+        false,
+      ],
+      [
+        "Replacing the grammar with greedy decoding would verify the medication value.",
+        false,
+      ],
+    ],
+    "A grammar can guarantee that a continuation belongs to a structural language such as a JSON schema, but it cannot establish that the generated values are true or safe. Semantic validation needs evidence-aware checks, and changing the unconstrained token-selection rule does not create that evidence.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q211",
+    "medium",
+    "A decoder applies both a JSON grammar and top-p sampling at one step. Which statements correctly describe their interaction?",
+    [
+      [
+        "The grammar can remove a high-probability token if that token would violate the current JSON state.",
+        true,
+      ],
+      [
+        "Top-p can then form a probability-mass nucleus among candidates that remain valid.",
+        true,
+      ],
+      [
+        "The surviving candidates must be renormalized before a probability draw.",
+        true,
+      ],
+      [
+        "The grammar and top-p are equivalent because both keep a fixed number of highest-ranked tokens.",
+        false,
+      ],
+    ],
+    "Grammar validity and nucleus probability are independent filters: one is structural, while the other adapts to probability mass. After their constraints are applied, the remaining weights need normalization for sampling; neither procedure implies a fixed candidate count.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q212",
     "easy",
-    "Which statements correctly explain why previous query vectors are not the main cached object in KV caching?",
+    "Which observations correctly separate probability shaping from nondeterministic token choice?",
     [
       [
-        "The current token forms a new query that attends to previous keys and values.",
-        true,
-      ],
-      ["Previous keys are needed because the current query scores them.", true],
-      [
-        "Previous values are needed because attention weights combine them into the current representation.",
+        "Sampling introduces randomness by drawing from the allowed token distribution.",
         true,
       ],
       [
-        "Previous queries are not the main cached object for computing the current token's attention over the prefix.",
+        "Greedy decoding is deterministic for fixed logits and fixed tie-breaking.",
+        true,
+      ],
+      [
+        "Hardware or numerical effects can still perturb logits in some nominally fixed inference pipelines.",
+        true,
+      ],
+      [
+        "Temperature reshapes probabilities, but randomness appears only when the subsequent selection rule samples.",
         true,
       ],
     ],
-    "In causal self-attention for a new token, the new representation supplies the query, while earlier tokens supply keys and values. This is why the cache focuses on K and V tensors rather than Q tensors from earlier positions.",
+    "Temperature changes the distribution but does not itself specify whether to draw randomly or take an argmax. Greedy selection is deterministic under fixed numerical results and tie behavior, whereas sampling is explicitly random; real hardware kernels can add a separate source of small numerical nondeterminism.",
   ),
   makeQuestion(
-    "cme295-lect3-q146",
-    "medium",
-    "Which statements correctly compare Multi-Head Attention (MHA), Grouped Query Attention (GQA), and Multi-Query Attention (MQA) for KV-cache size?",
-    [
-      [
-        "MHA keeps separate key/value projections for each attention head.",
-        true,
-      ],
-      ["GQA shares key/value projections across groups of query heads.", true],
-      [
-        "MQA is the extreme case where many query heads share one key/value set.",
-        true,
-      ],
-      [
-        "GQA can reduce KV-cache memory compared with full MHA by storing fewer distinct key/value heads.",
-        true,
-      ],
-    ],
-    "GQA and MQA reduce the number of key/value heads relative to full MHA, which reduces KV-cache storage and bandwidth. They do this by sharing K/V representations across query heads rather than duplicating separate K/V tensors for each head.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q147",
-    "medium",
-    "Which statements correctly describe why KV cache memory can limit serving throughput?",
-    [
-      [
-        "Each active request may need cached keys and values for each generated or prompt token.",
-        true,
-      ],
-      [
-        "Longer contexts increase the amount of cache memory held per request.",
-        true,
-      ],
-      [
-        "KV cache memory disappears after the prompt is tokenized, before generation starts.",
-        false,
-      ],
-      [
-        "KV caching removes the need to store model weights during inference.",
-        false,
-      ],
-    ],
-    "KV cache memory grows with request length and concurrency, so it can become a bottleneck even when the model weights are already loaded. Caching saves computation, but the cache persists during generation and does not eliminate the memory required for model parameters.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q148",
+    "cme295-lect3-q213",
     "hard",
-    "Which statements correctly describe PagedAttention-style memory management?",
+    "A creative-writing API must return schema-valid JSON, offer diverse story ideas, and reject outputs whose cited facts are unsupported. Which design best addresses all three requirements?",
     [
       [
-        "It stores KV cache blocks in smaller chunks rather than reserving one maximum-length contiguous region per request.",
+        "Use guided decoding for the schema, probability sampling for diversity, and a separate evidence check for factual claims.",
         true,
       ],
       [
-        "It uses a mapping from token positions to physical cache blocks.",
-        true,
-      ],
-      [
-        "It reduces wasted reserved memory when requests stop before the maximum context length.",
-        true,
-      ],
-      [
-        "It can reduce fragmentation by letting logical cache positions map to non-contiguous physical blocks.",
-        true,
-      ],
-    ],
-    "PagedAttention is a memory-management technique for KV cache storage, inspired by paging. It reduces fragmentation and waste by allocating fixed-size blocks and mapping logical positions to physical memory rather than reserving a single maximum-length block per request.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q149",
-    "medium",
-    "Which statement best distinguishes internal fragmentation from external fragmentation in the KV-cache serving example?",
-    [
-      [
-        "Internal fragmentation is reserved-but-unused space inside an allocation, while external fragmentation is unusable gaps between allocations.",
-        true,
-      ],
-      [
-        "Internal fragmentation is the router choosing one expert, while external fragmentation is top-p choosing several tokens.",
+        "Use greedy decoding alone because the highest-probability token guarantees valid JSON and factual support.",
         false,
       ],
       [
-        "Internal fragmentation is caused by tokenization, while external fragmentation is caused by temperature scaling.",
+        "Use beam search alone because retaining several paths proves that the final fields are grounded.",
         false,
       ],
       [
-        "Internal fragmentation stores queries, while external fragmentation stores values.",
+        "Use a very low temperature alone because a sharp distribution enforces the schema and validates citations.",
         false,
       ],
     ],
-    "The memory-management issue is about how cache space is allocated. Internal fragmentation wastes space inside reserved regions, while external fragmentation leaves scattered gaps between regions that are hard to use efficiently.",
+    "The requirements live at three different layers: grammatical constraints handle structure, stochastic decoding creates diversity, and evidence validation handles truth. No single likelihood-oriented decoding knob supplies all three guarantees, so collapsing the design to greedy, beam search, or temperature leaves important requirements unmet.",
   ),
+
+  // Prompting strategies (5): context budgeting and in-context behavior.
   makeQuestion(
-    "cme295-lect3-q150",
-    "hard",
-    "Which statements correctly describe multi-latent attention as a KV-cache reduction idea?",
-    [
-      [
-        "It stores a compressed latent representation instead of separate full key and value vectors for each head.",
-        true,
-      ],
-      [
-        "It factorizes projection work through a lower-dimensional intermediate representation.",
-        true,
-      ],
-      [
-        "It can share the compression representation across keys, values, or heads before decompression.",
-        true,
-      ],
-      [
-        "It keeps causal decoder behavior while changing the representation stored in the cache.",
-        true,
-      ],
-    ],
-    "Multi-latent attention reduces what must be stored by caching compact latent representations and later expanding them for attention use. It saves memory through representation design while causal decoder behavior remains part of generation.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q151",
-    "medium",
-    "Which statements correctly describe the difference between GQA and latent attention for cache efficiency?",
-    [
-      [
-        "GQA reduces the number of key/value heads by sharing K/V projections across query-head groups.",
-        true,
-      ],
-      [
-        "Latent attention reduces the dimensional payload stored for keys and values through compression.",
-        true,
-      ],
-      [
-        "Both are decoding policies that rank candidate vocabulary tokens by probability.",
-        false,
-      ],
-      [
-        "GQA and latent attention are two names for the same top-k expert routing rule.",
-        false,
-      ],
-    ],
-    "GQA and latent attention both attack KV-cache cost, but one reduces the number of K/V heads while the other compresses the representation stored for K/V. Neither is a vocabulary decoding policy or an MoE routing rule.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q152",
-    "medium",
-    "Which statements about exact inference optimizations are correct?",
-    [
-      ["KV caching avoids redundant key/value computations.", true],
-      [
-        "PagedAttention improves memory allocation for cached keys and values.",
-        true,
-      ],
-      [
-        "GQA and MQA reduce duplicated K/V storage across attention heads.",
-        true,
-      ],
-      [
-        "Exact optimizations aim to improve latency or memory use without changing the target model semantics.",
-        true,
-      ],
-    ],
-    "Exact optimizations preserve the model computation or intended distribution while making it faster or more memory-efficient. KV reuse, cache paging, and key/value sharing attack redundant work or memory pressure rather than deliberately changing the target model semantics.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q153",
-    "medium",
-    "Which statement best explains why inference can be memory-bound in large decoder models?",
-    [
-      [
-        "Moving model weights and KV-cache tensors through memory can dominate time compared with the arithmetic available on accelerators.",
-        true,
-      ],
-      [
-        "The tokenizer must read the whole internet before each generated token.",
-        false,
-      ],
-      [
-        "The loss function must backpropagate through the full training corpus at inference time.",
-        false,
-      ],
-      [
-        "Beam search disables accelerator arithmetic and runs every operation on the CPU.",
-        false,
-      ],
-    ],
-    "Large-model inference often spends much of its time moving weights and cache tensors rather than saturating arithmetic units. The other choices confuse inference with data collection, training backpropagation, or an inaccurate hardware story.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q154",
-    "hard",
-    "Which statements correctly classify the lecture's inference optimization families?",
-    [
-      ["Avoiding redundant work includes KV caching.", true],
-      ["Memory management includes PagedAttention.", true],
-      [
-        "Reformulating attention storage includes GQA, MQA, and latent attention.",
-        true,
-      ],
-      [
-        "Approximate token-prediction methods include speculative decoding and multi-token prediction.",
-        false,
-      ],
-    ],
-    "The first three items are exact or near-exact efficiency themes around attention computation and memory. Speculative decoding can preserve the target distribution under its accept/reject rule, while multi-token prediction changes the training/inference setup; the important point is to separate cache reuse, memory layout, attention representation, and token-level acceleration.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q155",
+    "cme295-lect3-q214",
     "easy",
-    "Which statement best describes speculative decoding?",
+    "Which statements correctly interpret context length, context size, or window size?",
     [
       [
-        "A smaller draft model proposes tokens, and a larger target model validates them so generation can advance faster.",
+        "They refer to the token budget the model can condition on for a generation step.",
         true,
       ],
       [
-        "A larger model writes a prompt, and a smaller model grades it after deployment.",
-        false,
-      ],
-      [
-        "The target model skips probability computation and accepts every draft token by default.",
-        false,
-      ],
-      [
-        "Several MoE experts vote on the final answer after the response is finished.",
-        false,
-      ],
-    ],
-    "Speculative decoding uses a fast draft model to propose candidate tokens and the target model to check them. The target model still computes probabilities; the method is not prompt grading or a post-response expert vote.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q156",
-    "hard",
-    "Which statements about speculative decoding's accept/reject step are correct?",
-    [
-      [
-        "If the target model assigns at least as much probability to the drafted token as the draft model did, the token can be accepted.",
+        "Prompt demonstrations and the user's input consume part of that token budget.",
         true,
       ],
       [
-        "If the target probability is lower, acceptance can occur with probability based on the ratio of target to draft probability.",
+        "Longer windows can increase attention compute and KV-cache memory even when the model weights are unchanged.",
         true,
       ],
       [
-        "After a rejection, generation resumes from the rejected position with an adjusted distribution.",
-        true,
-      ],
-      [
-        "The accept/reject rule is designed to preserve the target model's output distribution.",
+        "Context rot means adding more tokens can make relevant material harder to use.",
         true,
       ],
     ],
-    "The accept/reject rule is designed so the accepted tokens match the target model distribution rather than merely imitating the draft model. Rejections trigger resampling from an adjusted distribution, which is why the method can be fast while preserving the target distribution in the formal algorithm.",
+    "The three terms describe the available conditioning token budget, which must hold instructions, examples, source material, and other prompt content. More capacity has real compute and cache costs and does not guarantee perfect utilization; distracting or very long inputs can produce context-rot effects.",
   ),
   makeQuestion(
-    "cme295-lect3-q157",
-    "medium",
-    "Which statements correctly explain why speculative decoding can be faster?",
-    [
-      ["The draft model proposes several tokens cheaply.", true],
-      [
-        "The target model can evaluate the drafted tokens in a single forward pass.",
-        true,
-      ],
-      [
-        "When several draft tokens are accepted, the system advances multiple positions after one target-model pass.",
-        true,
-      ],
-      ["The method is faster because the target model is never called.", false],
-    ],
-    "Speculative decoding still uses the target model; its speedup comes from batching validation of draft tokens and accepting several positions at once when the draft is good. The draft model is useful because it is smaller or cheaper, not because it replaces the target model completely.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q158",
-    "medium",
-    "Which statements correctly describe the roles of draft and target models in speculative decoding?",
-    [
-      ["The draft model proposes candidate continuations.", true],
-      [
-        "The target model supplies the probability distributions used for validation.",
-        true,
-      ],
-      [
-        "The draft model should be cheaper to run than the target model for the method to help.",
-        true,
-      ],
-      [
-        "The target model is trained from scratch during each speculative decoding request.",
-        false,
-      ],
-    ],
-    "The draft model is a cheap proposer and the target model is the distribution authority. No per-request training occurs; speculative decoding is an inference-time method.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q159",
-    "medium",
-    "Which statements correctly describe multi-token prediction (MTP)?",
-    [
-      [
-        "The model is trained to predict multiple future tokens from a representation.",
-        true,
-      ],
-      [
-        "Extra prediction heads can act like an embedded draft mechanism at inference time.",
-        true,
-      ],
-      [
-        "MTP changes the training objective compared with ordinary next-token-only prediction.",
-        true,
-      ],
-      ["MTP is identical to increasing top-k during sampling.", false],
-    ],
-    "MTP changes the model and objective so multiple future-token predictions are available. Increasing top-k is only a decoding distribution truncation choice and does not add multi-token heads or change the training objective.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q160",
-    "hard",
-    "Which statements correctly compare speculative decoding and multi-token prediction?",
-    [
-      [
-        "Speculative decoding commonly uses a separate smaller draft model.",
-        true,
-      ],
-      ["MTP can embed draft-like heads inside the same model.", true],
-      [
-        "Speculative decoding's formal accept/reject scheme can preserve the target distribution.",
-        true,
-      ],
-      [
-        "MTP changes the objective by asking the model to predict multiple future tokens.",
-        true,
-      ],
-    ],
-    "Speculative decoding and MTP both try to move through output tokens faster, but they do it differently. MTP changes the model objective by predicting multiple future tokens, whereas sampler thresholds such as top-k and top-p are separate decoding controls.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q161",
-    "medium",
-    "Which statement best explains why speculative decoding includes the token after the draft block in the target-model pass?",
-    [
-      [
-        "Evaluating the drafted block also yields a distribution for the next position, which can be used if the draft tokens are accepted.",
-        true,
-      ],
-      [
-        "The extra token is needed to update the target model's weights before accepting the block.",
-        false,
-      ],
-      [
-        "The extra token lets the router rebalance MoE experts across the training batch.",
-        false,
-      ],
-      ["The extra token stores the JSON grammar for guided decoding.", false],
-    ],
-    "A target-model pass over the drafted sequence can produce probability distributions for each drafted token and the following position. That extra distribution is useful when the system accepts the draft tokens and needs to continue generation.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q162",
-    "medium",
-    "Which statements correctly connect inference acceleration to output quality?",
-    [
-      [
-        "Exact reuse methods such as KV caching aim to preserve the same model computation.",
-        true,
-      ],
-      [
-        "Speculative decoding's validation step aims to preserve the target model distribution.",
-        true,
-      ],
-      [
-        "Approximate methods must be evaluated for quality as well as speed.",
-        true,
-      ],
-      [
-        "Any speedup that lowers latency automatically improves answer correctness.",
-        false,
-      ],
-    ],
-    "Inference optimization is not just about lower latency; the quality and distribution of outputs still matter. Some methods are exact, some include validation to preserve a target distribution, and more approximate methods require empirical evaluation.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q163",
-    "hard",
-    "A serving system has short prompts, long generations, and repeated recomputation of old attention keys and values. Which optimization most directly addresses the repeated computation?",
-    [
-      ["KV caching.", true],
-      ["Auxiliary MoE load balancing.", false],
-      ["Few-shot prompting.", false],
-      ["Temperature scaling.", false],
-    ],
-    "The repeated computation is specifically the old key and value projections needed by later decoding steps, so KV caching is the direct fix. MoE balancing, prompting examples, and temperature affect different parts of modeling or generation behavior.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q164",
-    "hard",
-    "A serving system reserves memory for the maximum context length for each request, but most requests finish early. Which statements identify the most relevant problem and remedy?",
-    [
-      [
-        "The problem includes internal fragmentation from reserved but unused KV-cache slots.",
-        true,
-      ],
-      ["PagedAttention-style block allocation is a relevant remedy.", true],
-      [
-        "A logical-to-physical block mapping can let the cache use non-contiguous memory.",
-        true,
-      ],
-      [
-        "Temperature scaling is the relevant remedy because it makes responses shorter by definition.",
-        false,
-      ],
-    ],
-    "The described waste is a KV-cache memory-allocation problem, not a probability-sharpness problem. PagedAttention attacks the waste by allocating and mapping smaller blocks instead of reserving one large contiguous maximum-length region.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q165",
-    "medium",
-    "Which statement best describes multi-query attention (MQA) as the endpoint of grouped key/value sharing?",
-    [
-      ["Many query heads share a single set of key and value heads.", true],
-      [
-        "Each query head has its own independent key and value projection, as in full MHA.",
-        false,
-      ],
-      [
-        "Each MoE expert receives a separate copy of the vocabulary softmax.",
-        false,
-      ],
-      [
-        "The model predicts multiple future tokens with separate output heads.",
-        false,
-      ],
-    ],
-    "MQA is the high-sharing endpoint of the MHA-GQA-MQA family: query heads remain multiple, but key/value heads are shared heavily. It should not be confused with MoE expert routing or multi-token prediction heads.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q166",
-    "hard",
-    "Which statements correctly reason about cache compression in latent attention?",
-    [
-      [
-        "A lower-dimensional latent can be stored instead of full per-head key/value vectors.",
-        true,
-      ],
-      [
-        "Separate decompression matrices can recover key-like and value-like representations when needed.",
-        true,
-      ],
-      [
-        "Sharing the compressed representation across keys and values reduces duplicate cache payload.",
-        true,
-      ],
-      [
-        "Compression means attention no longer needs token representations from the prefix.",
-        false,
-      ],
-    ],
-    "Latent attention compresses what is stored, then reconstructs representations needed for attention. It does not remove the need for prefix information; it changes how that information is represented and cached.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q167",
-    "medium",
-    "Which statements correctly describe why very low-probability tokens are often filtered during sampling?",
-    [
-      [
-        "They can create incoherent continuations if sampled despite tiny probability.",
-        true,
-      ],
-      ["Top-k filtering removes candidates outside a fixed rank cutoff.", true],
-      [
-        "Top-p filtering removes candidates outside a probability-mass nucleus.",
-        true,
-      ],
-      [
-        "Filtering low-probability tokens turns sampling into beam search.",
-        false,
-      ],
-    ],
-    "Top-k and top-p sampling keep randomness while removing tail candidates that are unlikely to be useful. Beam search is a different search procedure over high-scoring paths, not just tail filtering followed by sampling.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q168",
-    "medium",
-    "Which statements correctly describe when guided decoding is useful?",
-    [
-      ["Generating machine-readable formats such as JSON.", true],
-      [
-        "Conforming to a grammar or schema while still using the model's probabilities.",
-        true,
-      ],
-      [
-        "Preventing invalid next-token choices during the generation process.",
-        true,
-      ],
-      [
-        "Pairing structural validity with semantic evaluation when factual correctness matters.",
-        true,
-      ],
-    ],
-    "Guided decoding is valuable for structural constraints, especially machine-readable output. It does not prove the semantic content is correct, so structurally valid responses still need semantic evaluation when the values or reasoning matter.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q169",
+    "cme295-lect3-q215",
     "easy",
-    "Which statement best identifies the main tradeoff of chain-of-thought prompting?",
+    "A prompt says: 'My teddy bear had a long day. Write a bedtime story. Location: a forest library. Use fewer than 200 words.' Which role does each part play?",
+    [
+      ["'My teddy bear had a long day' supplies background context.", true],
+      ["'Write a bedtime story' supplies the instruction.", true],
+      ["'Location: a forest library' supplies the concrete input.", true],
+      ["'Use fewer than 200 words' supplies a constraint.", true],
+    ],
+    "The prompt separates background, requested action, instance-specific content, and an output boundary. Making those roles explicit helps diagnose failures: changing the location is different from changing the task, and a length limit is a constraint rather than additional story context.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q216",
+    "medium",
+    "A classification prompt moves from zero-shot instructions to six labeled input-output demonstrations. Which consequences are plausible?",
     [
       [
-        "It can improve reasoning behavior but uses more output tokens and increases cost or latency.",
+        "The demonstrations can make the intended mapping clearer through in-context learning.",
         true,
       ],
       [
-        "It reduces token usage by hiding intermediate reasoning inside the KV cache.",
-        false,
+        "The examples consume input tokens and therefore increase context use and cost.",
+        true,
       ],
       [
-        "It replaces next-token prediction with supervised fine-tuning during inference.",
-        false,
+        "Preparing representative examples requires effort and can introduce example-selection bias.",
+        true,
       ],
       [
-        "It prevents arithmetic errors because every step is externally verified.",
+        "The model permanently updates its parameters from the demonstrations before answering.",
         false,
       ],
     ],
-    "Chain-of-thought prompting asks the model to produce intermediate reasoning, which can help on reasoning tasks. The cost is more generated text, and the reasoning is not automatically externally verified.",
+    "Few-shot prompting conditions the existing model on examples, often improving task specification at the price of prompt construction, tokens, latency, and possible bias from unrepresentative demonstrations. The examples affect the current forward pass through context; they do not trigger gradient descent or persist as a weight update.",
   ),
   makeQuestion(
-    "cme295-lect3-q170",
+    "cme295-lect3-q217",
+    "medium",
+    "A model follows a new label format after seeing three examples in its prompt, then loses that behavior when the examples are removed. Which explanation fits?",
+    [
+      [
+        "The behavior was induced by in-context learning while the examples were present.",
+        true,
+      ],
+      ["The trained weights can remain unchanged across both requests.", true],
+      [
+        "The first request necessarily fine-tuned the model and the second request rolled back that checkpoint.",
+        false,
+      ],
+      [
+        "The KV cache must have stored the examples as permanent training data shared with later users.",
+        false,
+      ],
+    ],
+    "In-context learning is temporary conditioning through the current token sequence, so removing the examples can remove the induced behavior without any parameter change. A request-local KV cache supports computation for that request and is not evidence of fine-tuning or cross-user training-data storage.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q218",
     "hard",
-    "Which statements correctly describe how self-consistency uses parallel sampled paths?",
+    "A self-consistency run samples five independent reasoning paths with final answers A, A, B, A, and B. Which statements correctly describe the aggregation and cost?",
     [
+      ["Majority vote returns A with three of five votes.", true],
       [
-        "Several completions can be sampled independently from the same prompt.",
+        "The system must extract a comparable final answer from each reasoning trace before voting.",
         true,
       ],
       [
-        "The final answers can be extracted from those completions and compared.",
+        "The five branches can run in parallel because one branch need not condition on another.",
         true,
       ],
       [
-        "Parallel sampling can keep latency closer to the slowest branch than to the sum of branch latencies.",
-        true,
-      ],
-      [
-        "Each branch must be appended to the context of the next branch before voting.",
+        "Compared with one direct answer, the method removes generation cost because only the majority trace is retained.",
         false,
       ],
     ],
-    "Self-consistency samples multiple paths that do not depend on one another, then aggregates their final answers. Because the branches are independent, they can be run in parallel rather than chained into one another's contexts.",
+    "Self-consistency aggregates independently sampled solutions, so A wins the final-answer vote and the branches can be parallelized after sharing the same prompt. Parallel execution can reduce wall-clock latency relative to serial execution, but all five completions still consume compute and generated tokens even if only one aggregate answer is returned.",
+  ),
+
+  // Inference optimizations (22): reuse, memory layout, attention sharing, and token prediction.
+  makeQuestion(
+    "cme295-lect3-q219",
+    "easy",
+    "Which mappings match the inference-efficiency categories in the optimization overview?",
+    [
+      ["Avoid redundant computation: key-value (KV) caching.", true],
+      ["Manage allocated memory: PagedAttention.", true],
+      [
+        "Reformulate token generation while preserving the target distribution: speculative decoding.",
+        true,
+      ],
+      [
+        "Architectural or representation approximations include GQA, latent attention, and Multi-Token Prediction.",
+        true,
+      ],
+    ],
+    "KV caching, PagedAttention, and speculative decoding attack repeated projections, wasteful cache allocation, and serial target-model token generation. GQA, latent attention, and Multi-Token Prediction instead alter architecture, stored representation, or prediction heads, so they belong to the approximation side of the overview rather than simple cache reuse.",
   ),
   makeQuestion(
-    "cme295-lect3-q171",
+    "cme295-lect3-q220",
+    "medium",
+    "A serving team records four bottlenecks: recomputing old attention tensors, reserving unused cache space, storing too many key/value heads, and taking one large-model pass per output token. Which remedies target those bottlenecks in the same order?",
+    [
+      ["KV caching targets recomputation of old keys and values.", true],
+      ["PagedAttention targets waste from cache allocation.", true],
+      [
+        "Grouped Query Attention (GQA) targets duplicated key/value-head storage.",
+        true,
+      ],
+      [
+        "Speculative decoding targets serial target-model token generation.",
+        true,
+      ],
+    ],
+    "Each technique corresponds to a different resource mechanism, so a useful diagnosis must match the symptom to the layer it changes. The methods can coexist: reuse does not solve allocation, head sharing does not validate draft tokens, and faster token proposals do not by themselves shrink the KV cache.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q221",
+    "easy",
+    "During generation of token \\(t+1\\), what does ordinary KV caching primarily avoid?",
+    [
+      [
+        "Recomputing the key and value projections already produced for prefix tokens \\(1,\\ldots,t\\).",
+        true,
+      ],
+      ["Computing a new query for token \\(t+1\\).", false],
+      ["Reading any representation of the prefix during attention.", false],
+      ["Producing vocabulary logits for the newly generated position.", false],
+    ],
+    "The current token still needs a fresh query, attention over prefix state, and an output distribution. KV caching saves work by reusing the earlier tokens' key and value projections rather than rebuilding those same tensors at every decoding step.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q222",
+    "easy",
+    "Why are previous keys and values cached while previous queries are not the main reusable state for the next token?",
+    [
+      ["The new token creates its own query to score the prefix keys.", true],
+      [
+        "Those attention scores weight the prefix values to form the new representation.",
+        true,
+      ],
+      [
+        "Previous queries were used to build previous outputs but are not needed to score the new query against the prefix.",
+        true,
+      ],
+      [
+        "Previous queries are discarded because a causal decoder never attends to earlier positions.",
+        false,
+      ],
+    ],
+    "For the new position, attention uses a new query together with the stored keys and values of earlier positions. Causality prevents attention to the future, not the past, so the reason for omitting old queries is their role in the formula rather than an inability to revisit the prefix.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q223",
+    "medium",
+    "Why is KV caching especially useful in autoregressive inference but not the same kind of win during teacher-forced training over a full sequence?",
+    [
+      [
+        "Inference revisits an expanding prefix once per generated token, creating repeated key/value work without a cache.",
+        true,
+      ],
+      [
+        "Teacher-forced training can compute representations for all sequence positions in parallel within a forward pass.",
+        true,
+      ],
+      [
+        "Training never computes keys or values, so there is nothing to cache.",
+        false,
+      ],
+      [
+        "Inference uses bidirectional attention, whereas training alone uses causal attention.",
+        false,
+      ],
+    ],
+    "Serial decoding repeatedly extends the same prefix, which makes reuse across steps valuable. Teacher forcing still computes keys and values and still uses causal masking for a decoder-only model, but it processes the known target positions together rather than issuing one expanding-prefix pass per generated token.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q224",
     "hard",
-    "A team adds few-shot examples, chain-of-thought instructions, and self-consistency voting to a math prompt. Which statements correctly predict system-level effects?",
+    "A model has 32 layers, 8 key/value heads per layer, head dimension 128, and a cached sequence length of 2048. Storing both K and V in bfloat16 uses how much memory for one request, ignoring metadata?",
     [
-      ["Few-shot examples increase input context length.", true],
-      ["Chain-of-thought increases expected output length.", true],
-      ["Self-consistency increases the number of sampled completions.", true],
       [
-        "These changes increase total token work even though the model weights remain fixed.",
+        "\\(32\\times2048\\times8\\times128\\times2\\) elements times 2 bytes, which is 256 MiB.",
         true,
       ],
+      ["\\(2048\\times128\\) elements times 2 bytes, which is 0.5 MiB.", false],
+      [
+        "\\(32\\times2048\\times8\\times128\\) elements times 2 bytes, which is 128 MiB because K and V share storage.",
+        false,
+      ],
+      [
+        "\\(32\\times8\\times128\\times2\\) elements times 2 bytes, which is 128 KiB because sequence length does not affect the cache.",
+        false,
+      ],
     ],
-    "Prompting techniques can improve task behavior, but they often increase token processing and generation work. Prompt text is not free: examples add input tokens, reasoning adds output tokens, and self-consistency multiplies the number of completions.",
+    "The cache stores a key and a value for every layer, cached position, key/value head, and head coordinate. That is 134,217,728 bfloat16 elements or 268,435,456 bytes, equal to 256 MiB; omitting layers, sequence positions, or the separate K/V payload produces the smaller distractors.",
   ),
   makeQuestion(
-    "cme295-lect3-q172",
+    "cme295-lect3-q225",
     "medium",
-    "Which statements correctly connect context length to prompting strategies?",
+    "A request has a cached prefix of length \\(L\\) and generates one new token. Which work still occurs with an ordinary KV cache?",
     [
+      ["The new token's query, key, and value projections are computed.", true],
       [
-        "Few-shot prompting uses part of the context window for demonstrations.",
+        "The new query is compared with the \\(L\\) cached keys plus the new key.",
         true,
       ],
       [
-        "Long instructions and constraints compete with source material for context budget.",
+        "The resulting attention weights combine the cached values plus the new value.",
         true,
       ],
       [
-        "Self-consistency usually creates separate sampled contexts rather than one ever-growing shared context.",
-        true,
-      ],
-      [
-        "A larger context window removes the need to design concise prompts.",
+        "The key and value projections for all \\(L\\) old tokens are recomputed before attention.",
         false,
       ],
     ],
-    "Context budget must be managed even when the model supports long windows, because cost, latency, and context-rot effects still matter. Few-shot examples and long instructions consume tokens, while self-consistency usually samples separate branches from the same prompt.",
+    "Caching removes repeated prefix projections, but it does not make attention independent of the prefix: the current query must still interact with all relevant cached keys and values. The cache therefore changes redundant projection work and memory use, not the causal dependency of the new token on earlier tokens.",
   ),
   makeQuestion(
-    "cme295-lect3-q173",
-    "easy",
-    "Which statement best describes the relationship between prompt constraints and guided decoding constraints?",
-    [
-      [
-        "Prompt constraints are text instructions to the model, while guided decoding enforces allowed next-token choices during generation.",
-        true,
-      ],
-      [
-        "Prompt constraints and guided decoding both require retraining the model before each response.",
-        false,
-      ],
-      [
-        "Prompt constraints operate on model weights, while guided decoding operates on the training dataset.",
-        false,
-      ],
-      [
-        "Prompt constraints are used for JSON, while guided decoding is used for MoE load balancing.",
-        false,
-      ],
-    ],
-    "Prompt constraints ask the model to follow instructions, but they do not mechanically prevent invalid continuations. Guided decoding adds an inference-time token filter, which is why it is stronger for structural validity such as JSON.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q174",
-    "medium",
-    "Which statements correctly describe the output layer's role in generation and acceleration?",
-    [
-      [
-        "The output layer produces token scores that decoding strategies convert into chosen tokens.",
-        true,
-      ],
-      [
-        "Speculative decoding tries to advance through output tokens faster by validating draft proposals.",
-        true,
-      ],
-      [
-        "Multi-token prediction modifies the model so multiple future tokens can be proposed from one representation.",
-        true,
-      ],
-      [
-        "KV-cache paging changes the vocabulary logits so fewer tokens need probabilities.",
-        false,
-      ],
-    ],
-    "Decoding strategies and token-prediction accelerators operate near the output-token process. PagedAttention is a memory-layout method for attention caches, not a way to reduce the vocabulary distribution directly.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q175",
-    "medium",
-    "Which statements correctly connect MoE and inference efficiency?",
-    [
-      [
-        "Sparse MoE can reduce active feed-forward computation per token.",
-        true,
-      ],
-      [
-        "The model must still store or access the expert parameters needed for routing and execution.",
-        true,
-      ],
-      ["Load balancing matters because unused experts waste capacity.", true],
-      [
-        "Sparse MoE is the same mechanism as KV caching because both skip previous tokens.",
-        false,
-      ],
-    ],
-    "Sparse MoE is a model-architecture efficiency idea for feed-forward computation, while KV caching is an inference reuse idea for attention tensors. Both can affect serving cost, but they operate on different parts of the model.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q176",
+    "cme295-lect3-q226",
     "hard",
-    "Which statements correctly compare active parameters, total parameters, and FLOPs in an MoE model?",
+    "A server holds 24 concurrent requests whose KV caches each occupy 0.5 GiB. If every context length doubles and cache size scales linearly with length, which capacity estimates are correct?",
     [
+      ["The original batch holds 12 GiB of KV-cache data.", true],
       [
-        "Total parameters include experts that are inactive for a particular token.",
+        "After doubling context length, the batch holds about 24 GiB of KV-cache data.",
         true,
       ],
       [
-        "Active parameters are the subset used in that token's forward pass.",
-        true,
+        "Doubling context length leaves cache memory unchanged because model weights are fixed.",
+        false,
       ],
       [
-        "Per-token FLOPs depend more directly on active computation than on inactive stored experts.",
-        true,
-      ],
-      [
-        "A higher total parameter count can coexist with controlled per-token FLOPs when routing is sparse.",
-        true,
-      ],
-    ],
-    "MoE design decouples total parameter count from per-token active computation. A model can store many experts while routing a token through a subset, so total parameters alone do not determine the forward-pass FLOPs for that token.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q177",
-    "medium",
-    "Which statement best diagnoses a model that has many experts but sends nearly every token to expert 3?",
-    [
-      [
-        "Routing collapse is occurring, so auxiliary balancing or noisy gating should be considered.",
-        true,
-      ],
-      ["Top-p sampling is using a threshold that is too low.", false],
-      ["KV caching is storing queries instead of values.", false],
-      [
-        "Self-consistency is sampling too many independent reasoning paths.",
+        "The new batch holds 48 GiB because both request count and context length doubled.",
         false,
       ],
     ],
-    "The symptom is expert-utilization imbalance inside an MoE layer, which is routing collapse. Sampling thresholds, cache contents, and self-consistency branch counts are different mechanisms with different failure modes.",
+    "Twenty-four requests times 0.5 GiB gives 12 GiB, and doubling only the per-request context doubles that cache total to roughly 24 GiB. The model weights may be unchanged, but request-local KV state scales with cached positions; the request count did not change in this scenario.",
   ),
   makeQuestion(
-    "cme295-lect3-q178",
-    "medium",
-    "Which statements correctly identify lecture concepts that preserve model weights during inference?",
-    [
-      [
-        "Prompting changes behavior through input context rather than weight updates.",
-        true,
-      ],
-      [
-        "Guided decoding constrains token choices without retraining the model.",
-        true,
-      ],
-      ["KV caching reuses stored tensors without modifying parameters.", true],
-      [
-        "Speculative decoding validates draft tokens by fine-tuning the target model online.",
-        false,
-      ],
-    ],
-    "Most inference-time controls discussed here operate without changing model weights. Speculative decoding uses draft and target model probabilities during generation; it does not fine-tune the target model for each request.",
-  ),
-  makeQuestion(
-    "cme295-lect3-q179",
+    "cme295-lect3-q227",
     "easy",
-    "Which statement best summarizes the lecture's view of LLM system design?",
+    "For a decoder with \\(h\\) query heads and \\(G\\) key/value groups, which head-count relationships are correct?",
     [
       [
-        "Modern LLM systems combine scale, sparse capacity, decoding controls, prompting, and inference optimizations to manage quality and cost.",
+        "Multi-Head Attention (MHA) uses \\(G=h\\), giving each query head its own key/value head.",
         true,
       ],
       [
-        "The main design rule is to maximize parameter count without considering active compute or memory.",
-        false,
+        "Grouped Query Attention (GQA) uses \\(1<G<h\\), sharing each key/value head across a query group.",
+        true,
       ],
       [
-        "The main design rule is to use greedy decoding for every open-ended generation task.",
-        false,
+        "Multi-Query Attention (MQA) uses \\(G=1\\), sharing one key/value set across all query heads.",
+        true,
       ],
       [
-        "The main design rule is to replace prompting with retraining for every user request.",
+        "GQA reduces cache memory by deleting query heads until only \\(G\\) queries remain.",
         false,
       ],
     ],
-    "The lecture connects several layers of design: model scale, MoE capacity, decoding behavior, prompt conditioning, and serving optimizations. Treating any one knob as the whole design misses the tradeoffs among quality, latency, memory, and compute.",
+    "MHA, GQA, and MQA form a sharing spectrum for keys and values while retaining multiple query heads. The memory reduction comes from fewer distinct K/V projections and cached heads, not from collapsing the query-head count to the number of groups.",
   ),
   makeQuestion(
-    "cme295-lect3-q180",
-    "easy",
-    "Which statements belong together as examples of inference-time techniques rather than pretraining-data changes?",
+    "cme295-lect3-q228",
+    "medium",
+    "A model has 32 query heads and uses GQA with 8 key/value heads. Which combined statement is correct?",
     [
       [
-        "Temperature, top-k, and top-p adjust token selection during generation.",
-        true,
-      ],
-      ["Guided decoding filters valid next tokens during generation.", true],
-      [
-        "KV caching and PagedAttention improve reuse and memory handling during serving.",
+        "Each K/V head is shared by four query heads, and the K/V cache is one quarter of the comparable full-MHA payload.",
         true,
       ],
       [
-        "Few-shot prompting and self-consistency condition or aggregate inference-time responses.",
+        "Each K/V head is shared by eight query heads, and the cache is one eighth of the MHA payload.",
+        false,
+      ],
+      [
+        "The model keeps eight query heads and creates 32 independent K/V heads.",
+        false,
+      ],
+      [
+        "The query and K/V head counts both remain 32, so only the attention softmax changes.",
+        false,
+      ],
+    ],
+    "Dividing 32 query heads into 8 groups gives four queries per shared K/V head, reducing the distinct cached K/V payload by a factor of four relative to MHA. Query diversity remains represented by 32 query heads; grouping changes which key/value projections they share.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q229",
+    "hard",
+    "A full-MHA KV cache occupies 16 GiB with 32 key/value heads. Holding all other dimensions fixed, which estimates are correct?",
+    [
+      ["GQA with 8 K/V heads would use about 4 GiB.", true],
+      ["MQA with 1 K/V head would use about 0.5 GiB.", true],
+      [
+        "The MQA cache would be one eighth the size of the 8-head GQA cache.",
+        true,
+      ],
+      [
+        "GQA with 8 K/V heads would still use 16 GiB because the query-head count remains 32.",
+        false,
+      ],
+    ],
+    "K/V cache size scales with the number of distinct key/value heads, so 8 of 32 heads gives \\(16/4=4\\) GiB and 1 of 32 gives \\(16/32=0.5\\) GiB. The MQA result is one eighth of the 8-head GQA result; retaining query heads does not restore the removed K/V payload.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q230",
+    "hard",
+    "A model designer moves from MHA to GQA while keeping 32 query heads but sharing 8 key/value heads. Which tradeoffs should be considered?",
+    [
+      [
+        "KV-cache memory and K/V memory bandwidth can fall because fewer distinct heads are stored and read.",
+        true,
+      ],
+      [
+        "The architectural sharing may affect quality, so the model should be trained or evaluated with that design.",
+        true,
+      ],
+      [
+        "The change is different from ordinary KV caching: it reduces what is stored per token rather than merely reusing old projections.",
+        true,
+      ],
+      [
+        "The query heads can remain distinct even though their groups share keys and values.",
         true,
       ],
     ],
-    "These techniques operate while using a trained model: they control decoding, constrain output structure, reuse inference tensors, manage cache memory, or change how prompts and samples are used. They are distinct from changing the pretraining corpus or retraining the model from scratch.",
+    "GQA is an architectural representation tradeoff that reduces K/V multiplicity while preserving multiple query heads, so it can improve memory efficiency but still needs quality evaluation. Ordinary KV caching and GQA are complementary: caching avoids recomputation across steps, whereas grouping shrinks each step's stored K/V state.",
+  ),
+
+  makeQuestion(
+    "cme295-lect3-q231",
+    "easy",
+    "Which statements describe PagedAttention-style KV-cache management?",
+    [
+      [
+        "A request's logical token positions can map to fixed-size physical cache blocks.",
+        true,
+      ],
+      [
+        "The physical blocks for one request need not be contiguous in device memory.",
+        true,
+      ],
+      [
+        "Allocating blocks as a sequence grows can reduce large reserved-but-unused regions.",
+        true,
+      ],
+      [
+        "Paging compresses each key and value vector into a lower-dimensional latent.",
+        false,
+      ],
+    ],
+    "PagedAttention changes allocation and address mapping: logical cache positions are backed by smaller physical blocks that can be placed non-contiguously. It does not change the numerical representation inside each key/value entry; lower-dimensional storage is the separate latent-attention idea.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q232",
+    "medium",
+    "A cache allocator uses blocks that hold 16 tokens. Two requests currently need 33 and 49 cached positions. Which allocation facts are correct?",
+    [
+      ["The first request needs 3 blocks and the second needs 4 blocks.", true],
+      ["Together they reserve capacity for 112 token positions.", true],
+      [
+        "Together they leave 30 positions unused inside their final blocks.",
+        true,
+      ],
+      [
+        "Each request needs exactly 2 blocks because only complete blocks count.",
+        false,
+      ],
+    ],
+    "Ceiling division gives \\(\\lceil33/16\\rceil=3\\) and \\(\\lceil49/16\\rceil=4\\), for seven blocks or 112 positions. The requests use 82 positions, leaving 30 positions of internal block slack; partial final blocks still require physical allocation.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q233",
+    "hard",
+    "An MHA layer has 32 heads of dimension 128, so full K and V storage uses \\(2\\times32\\times128=8192\\) scalar values per token. A latent-attention design stores one 512-value shared latent instead. What is the payload ratio for this simplified comparison?",
+    [
+      [
+        "\\(512/8192=1/16\\), so the stored payload is sixteen times smaller.",
+        true,
+      ],
+      [
+        "\\(512/4096=1/8\\), because K and V should be counted only once in the baseline.",
+        false,
+      ],
+      [
+        "\\(8192/512=16\\), so the latent payload is sixteen times larger.",
+        false,
+      ],
+      [
+        "\\(512/32=16\\), so compression depends only on the head count.",
+        false,
+      ],
+    ],
+    "The stated baseline includes both keys and values, so its 8192 scalars must be compared with the 512 stored latent scalars. Decompression can later produce key-like and value-like representations, but those reconstructed tensors do not change the simplified cache payload ratio given in the prompt.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q234",
+    "medium",
+    "A server already uses exact K/V vectors but wastes space by reserving a maximum-length contiguous region per request. A model team instead wants to reduce the dimensional payload stored for every token. Which technique matches each problem?",
+    [
+      [
+        "PagedAttention matches the allocation and fragmentation problem.",
+        true,
+      ],
+      [
+        "Latent attention matches the per-token representation-size problem.",
+        true,
+      ],
+      [
+        "PagedAttention matches both problems because paging automatically changes vector dimension.",
+        false,
+      ],
+      [
+        "Latent attention matches only fragmentation because its latent is stored in non-contiguous blocks by definition.",
+        false,
+      ],
+    ],
+    "Paging changes where and when cache blocks are allocated while keeping their contained representation conceptually intact. Latent attention changes what representation is stored by compressing key/value information, so the methods address orthogonal memory costs and may be combined.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q235",
+    "hard",
+    "A serving design combines GQA, a compressed latent cache, and PagedAttention. Which description of the combined design is accurate?",
+    [
+      [
+        "GQA reduces the number of distinct key/value head groups represented.",
+        true,
+      ],
+      [
+        "Latent attention reduces the dimensional payload stored for attention state.",
+        true,
+      ],
+      [
+        "PagedAttention maps the resulting logical cache into physical blocks to limit allocation waste.",
+        true,
+      ],
+      [
+        "Because the methods act on different mechanisms, their benefits and quality tradeoffs must be measured together rather than assumed to be interchangeable.",
+        true,
+      ],
+    ],
+    "The methods address head multiplicity, representation dimension, and physical allocation, respectively, so combining them is conceptually coherent. Their effects are not automatically multiplicative and architectural changes may affect quality, making end-to-end memory, latency, and model evaluation necessary.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q236",
+    "easy",
+    "Which statements correctly assign roles in speculative decoding?",
+    [
+      ["A cheaper draft model proposes several candidate tokens.", true],
+      [
+        "The target model evaluates those proposals and remains the authority for the desired output distribution.",
+        true,
+      ],
+      [
+        "Accepted draft tokens can advance generation by several positions after one target-model pass.",
+        true,
+      ],
+      [
+        "The target model is fine-tuned on the draft continuation during every request.",
+        false,
+      ],
+    ],
+    "Speculative decoding is an inference algorithm: the draft supplies cheap proposals and the target supplies validation probabilities. Its speedup comes when multiple proposals are accepted together, and no per-request training or weight update is part of that validation loop.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q237",
+    "hard",
+    "For a drafted token, let draft probability be \\(P\\) and target probability be \\(Q\\). Which acceptance calculations are correct?",
+    [
+      [
+        "If \\(P=0.6\\) and \\(Q=0.3\\), the token is accepted with probability \\(Q/P=0.5\\).",
+        true,
+      ],
+      [
+        "If \\(P=0.4\\) and \\(Q=0.7\\), the token is accepted with probability 1.",
+        true,
+      ],
+      [
+        "Whenever \\(Q<P\\), the token must be rejected with probability 1.",
+        false,
+      ],
+      [
+        "Acceptance depends only on whether the complete draft sequence has a larger joint score than the target's greedy sequence.",
+        false,
+      ],
+    ],
+    "The token-level acceptance probability is \\(\\min(1,Q/P)\\), giving 0.5 in the first case and certain acceptance in the second. A lower target probability does not force rejection; the randomized ratio rule is what allows the overall sampler to preserve the target distribution.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q238",
+    "hard",
+    "At a rejected position, the draft distribution is \\(P=(0.5,0.3,0.2)\\) for tokens A, B, C and the target distribution is \\(Q=(0.4,0.4,0.2)\\). The correction samples from the normalized positive residual \\([Q-P]_+\\). Which conclusions follow?",
+    [
+      [
+        "Only token B has positive residual mass, so the correction selects B.",
+        true,
+      ],
+      [
+        "Using the residual correction is part of preserving the target model's distribution after rejection.",
+        true,
+      ],
+      [
+        "Token A is most likely because it had the highest probability under the draft model.",
+        false,
+      ],
+      [
+        "Token C receives half the correction mass because its draft and target probabilities are equal.",
+        false,
+      ],
+    ],
+    "The residuals are \\((-0.1,0.1,0)\\), whose positive part normalizes entirely onto B. Draft preference alone cannot determine the replacement after rejection, and an equal target and draft probability contributes zero corrective mass rather than a positive share.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q239",
+    "easy",
+    "Which statements describe Multi-Token Prediction (MTP)?",
+    [
+      [
+        "Training adds prediction heads for several future token offsets.",
+        true,
+      ],
+      [
+        "The training objective supervises more than only the immediate next token.",
+        true,
+      ],
+      [
+        "The extra heads can provide draft-like future-token proposals within the same model.",
+        true,
+      ],
+      [
+        "MTP is another name for sampling from the top k vocabulary tokens.",
+        false,
+      ],
+    ],
+    "MTP changes the model and its training targets so one representation supports predictions for several future positions. Top-k is only an inference-time truncation of one next-token distribution and neither adds future-offset heads nor changes the training objective.",
+  ),
+  makeQuestion(
+    "cme295-lect3-q240",
+    "medium",
+    "Which comparisons between speculative decoding and Multi-Token Prediction are correct?",
+    [
+      [
+        "Speculative decoding commonly pairs a separate cheap draft model with a target model.",
+        true,
+      ],
+      [
+        "MTP builds multiple future-token prediction heads into one trained model.",
+        true,
+      ],
+      [
+        "Both approaches try to propose or validate more than one future token per expensive serial step.",
+        true,
+      ],
+      [
+        "Speculative decoding changes the inference algorithm, while MTP also changes the model's training objective.",
+        true,
+      ],
+    ],
+    "The two methods share a goal of advancing token generation in larger chunks but create proposals differently. Speculative decoding can wrap existing draft and target models with an acceptance sampler, whereas MTP trains built-in future-offset heads and therefore requires an architectural and objective change.",
   ),
 ];

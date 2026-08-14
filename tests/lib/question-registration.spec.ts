@@ -217,7 +217,7 @@ describe("question file registration", () => {
     expect(violations).toEqual([]);
   });
 
-  it("keeps rewritten CME295 Lecture 3 question IDs explicit and off the legacy ID range", () => {
+  it("keeps rewritten CME295 Lecture 3 question IDs explicit and off the legacy ID ranges", () => {
     const ids = getHardcodedHelperQuestionIds(
       cme295Lecture3FilePath,
       "stanfordCME295Lecture3LLMsQuestions",
@@ -227,16 +227,17 @@ describe("question file registration", () => {
     );
     const registeredIds =
       registeredSource?.questions.map((question) => question.id) ?? [];
-    const reusedLegacyIds = registeredIds.filter((id) =>
-      /^cme295-lect3-q(?:0[1-9]|[1-9][0-9]|100)$/.test(id),
-    );
+    const reusedLegacyIds = registeredIds.filter((id) => {
+      const match = id.match(/^cme295-lect3-q(\d+)$/);
+      return match ? Number(match[1]) <= 180 : false;
+    });
 
     expect(new Set(ids).size).toBe(ids.length);
     expect(registeredSource).toBeDefined();
     expect(registeredIds).toEqual(ids);
-    expect(registeredIds).toHaveLength(80);
-    expect(registeredIds[0]).toBe("cme295-lect3-q101");
-    expect(registeredIds[registeredIds.length - 1]).toBe("cme295-lect3-q180");
+    expect(registeredIds).toHaveLength(60);
+    expect(registeredIds[0]).toBe("cme295-lect3-q181");
+    expect(registeredIds[registeredIds.length - 1]).toBe("cme295-lect3-q240");
     expect(reusedLegacyIds).toEqual([]);
   });
 
