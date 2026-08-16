@@ -15,13 +15,20 @@ const questionFilePath = path.resolve(
 );
 
 describe("CME296 Lecture 1 question set", () => {
-  it("registers one 40-question deep-learning source with contiguous stable IDs", () => {
+  const expectedIds = [
+    "cme296-lect1-q01",
+    "cme296-lect1-q02",
+    "cme296-lect1-q06",
+    "cme296-lect1-q07",
+    "cme296-lect1-q08",
+    "cme296-lect1-q09",
+    "cme296-lect1-q10",
+    ...Array.from({ length: 18 }, (_, index) => `cme296-lect1-q${index + 23}`),
+  ];
+
+  it("registers the 25 questions selected by the DiffusionGemma study guide", () => {
     const source = QUESTION_SOURCES.find(
       (candidate) => candidate.id === "cme296-lect1",
-    );
-    const expectedIds = Array.from(
-      { length: 40 },
-      (_, index) => `cme296-lect1-q${String(index + 1).padStart(2, "0")}`,
     );
 
     expect(source).toMatchObject({
@@ -29,18 +36,17 @@ describe("CME296 Lecture 1 question set", () => {
       topic: "DL",
       questions: stanfordCME296Lecture1DiffusionQuestions,
     });
-    expect(stanfordCME296Lecture1DiffusionQuestions).toHaveLength(40);
+    expect(stanfordCME296Lecture1DiffusionQuestions).toHaveLength(25);
     expect(
       stanfordCME296Lecture1DiffusionQuestions.map((question) => question.id),
     ).toEqual(expectedIds);
   });
 
-  it("hardcodes every exported question ID instead of deriving it at runtime", () => {
+  it("hardcodes every candidate and explicitly selects the exported stable IDs", () => {
     const fileContents = fs.readFileSync(questionFilePath, "utf8");
     const questionArraySource = fileContents.slice(
-      fileContents.indexOf(
-        "export const stanfordCME296Lecture1DiffusionQuestions",
-      ),
+      fileContents.indexOf("const lecture1QuestionCandidates"),
+      fileContents.indexOf("const diffusionGemmaStudyGuideQuestionIds"),
     );
     const helperCalls = [
       ...questionArraySource.matchAll(/make(?:AssertionReason)?Question\(/g),
@@ -52,12 +58,11 @@ describe("CME296 Lecture 1 question set", () => {
     ].map((match) => match[1]);
 
     expect(hardcodedIds).toHaveLength(helperCalls.length);
-    expect(hardcodedIds).toEqual(
-      Array.from(
-        { length: 40 },
-        (_, index) => `cme296-lect1-q${String(index + 1).padStart(2, "0")}`,
-      ),
-    );
+    expect(hardcodedIds).toHaveLength(40);
+    expect(fileContents).toContain("diffusionGemmaStudyGuideQuestionIds");
+    expect(
+      stanfordCME296Lecture1DiffusionQuestions.map(({ id }) => id),
+    ).toEqual(expectedIds);
   });
 
   it("balances difficulty, question types, and answer counts", () => {
@@ -84,15 +89,15 @@ describe("CME296 Lecture 1 question set", () => {
       }
     }
 
-    expect(difficultyCounts).toEqual({ easy: 13, medium: 14, hard: 13 });
-    expect(assertionReasonCount).toBe(8);
-    expect(assertionReasonCorrectPositions).toEqual([2, 2, 1, 2, 1]);
-    expect(allCorrectAnswerCounts).toEqual({ 1: 10, 2: 10, 3: 10, 4: 10 });
+    expect(difficultyCounts).toEqual({ easy: 7, medium: 9, hard: 9 });
+    expect(assertionReasonCount).toBe(4);
+    expect(assertionReasonCorrectPositions).toEqual([0, 2, 1, 1, 0]);
+    expect(allCorrectAnswerCounts).toEqual({ 1: 6, 2: 7, 3: 6, 4: 6 });
     expect(multipleSelectCorrectAnswerCounts).toEqual({
       1: 2,
-      2: 10,
-      3: 10,
-      4: 10,
+      2: 7,
+      3: 6,
+      4: 6,
     });
   });
 

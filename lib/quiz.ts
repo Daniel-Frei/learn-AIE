@@ -16,6 +16,11 @@ import { stanfordCME295Lecture7RagToolsAgentsQuestions } from "./lectures/Stanfo
 import { stanfordCME295Lecture8EvaluationQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture8_evaluation";
 import { stanfordCME295Lecture9SynthesisFrontiersQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture9_synthesis_frontiers";
 import { stanfordCME296Lecture1DiffusionQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture1_diffusion";
+import { stanfordCME296Lecture2ScoreMatchingQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture2_score_matching";
+import { stanfordCME296Lecture3FlowMatchingQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture3_flow_matching";
+import { stanfordCME296Lecture6ModelTrainingQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture6_model_training";
+import { stanfordCME296Lecture8TextDiffusionQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture8_text_diffusion";
+import { diffusionGemmaTechnicalReportQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/DiffusionGemma Technical Report";
 import { cs224rLecture1IntroQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture1_intro";
 import { cs224rLecture2ImitationLearningQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture2_Imitation Learning";
 import { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture3_Policy Gradients";
@@ -295,6 +300,51 @@ export const QUESTION_SOURCES = [
     seriesLabel: "Stanford CME296 Diffusion & Large Vision Models",
     topic: "DL" as const,
     questions: stanfordCME296Lecture1DiffusionQuestions,
+  },
+  {
+    id: "cme296-lect2" as const,
+    label: "Stanford CME296 Lecture 2",
+    title: "Stanford CME296 Lecture 2: Continuous-Time Score Models",
+    seriesId: "stanford-cme296" as const,
+    seriesLabel: "Stanford CME296 Diffusion & Large Vision Models",
+    topic: "DL" as const,
+    questions: stanfordCME296Lecture2ScoreMatchingQuestions,
+  },
+  {
+    id: "cme296-lect3" as const,
+    label: "Stanford CME296 Lecture 3",
+    title: "Stanford CME296 Lecture 3: Flow Matching",
+    seriesId: "stanford-cme296" as const,
+    seriesLabel: "Stanford CME296 Diffusion & Large Vision Models",
+    topic: "DL" as const,
+    questions: stanfordCME296Lecture3FlowMatchingQuestions,
+  },
+  {
+    id: "cme296-lect6" as const,
+    label: "Stanford CME296 Lecture 6",
+    title: "Stanford CME296 Lecture 6: Post-Training & Distillation",
+    seriesId: "stanford-cme296" as const,
+    seriesLabel: "Stanford CME296 Diffusion & Large Vision Models",
+    topic: "DL" as const,
+    questions: stanfordCME296Lecture6ModelTrainingQuestions,
+  },
+  {
+    id: "cme296-lect8" as const,
+    label: "Stanford CME296 Lecture 8",
+    title: "Stanford CME296 Lecture 8: Diffusion for Text",
+    seriesId: "stanford-cme296" as const,
+    seriesLabel: "Stanford CME296 Diffusion & Large Vision Models",
+    topic: "NLP" as const,
+    questions: stanfordCME296Lecture8TextDiffusionQuestions,
+  },
+  {
+    id: "cme296-diffusiongemma" as const,
+    label: "DiffusionGemma Paper",
+    title: "DiffusionGemma Technical Report",
+    seriesId: "stanford-cme296" as const,
+    seriesLabel: "Stanford CME296 Diffusion & Large Vision Models",
+    topic: "NLP" as const,
+    questions: diffusionGemmaTechnicalReportQuestions,
   },
   {
     id: "cs224r-lect1" as const,
@@ -852,7 +902,17 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
   "cme295-lect9":
     "Course synthesis lecture about transformer and LLM fundamentals, multimodal transformers, diffusion LLMs, data, hardware, deployment tradeoffs, and open problems.",
   "cme296-lect1":
-    "Diffusion lecture about Gaussian forward corruption, ELBO-based DDPM training and sampling, and deterministic DDIM acceleration.",
+    "Diffusion lecture sections about forward and reverse intuition, DDPM training and sampling, and deterministic DDIM acceleration.",
+  "cme296-lect2":
+    "Score-model sections about continuous stochastic dynamics, variance-preserving and variance-exploding SDEs, reverse-time diffusion, and Euler-Maruyama sampling.",
+  "cme296-lect3":
+    "Flow-matching sections about trajectories, probability paths, conditional and marginal vector fields, tractable training, ODE inference, and links to diffusion paradigms.",
+  "cme296-lect6":
+    "Model-training sections about continued training, supervised and preference tuning, reward optimization, and progressive sampling distillation.",
+  "cme296-lect8":
+    "Text-diffusion sections about masked corruption, variable-noise reconstruction, coarse-to-fine inference, remasking, parallel generation, and autoregressive tradeoffs.",
+  "cme296-diffusiongemma":
+    "DiffusionGemma report on discrete text diffusion, blockwise generation, entropy-bounded sampling, SD·RL training, inference efficiency, adaptation, and limitations.",
   "cs224r-lect1":
     "Deep reinforcement learning introduction about MDPs, value functions, policies, and the RL problem setup.",
   "cs224r-lect2":
@@ -1133,6 +1193,11 @@ export { stanfordCME295Lecture7RagToolsAgentsQuestions } from "./lectures/Stanfo
 export { stanfordCME295Lecture8EvaluationQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture8_evaluation";
 export { stanfordCME295Lecture9SynthesisFrontiersQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture9_synthesis_frontiers";
 export { stanfordCME296Lecture1DiffusionQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture1_diffusion";
+export { stanfordCME296Lecture2ScoreMatchingQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture2_score_matching";
+export { stanfordCME296Lecture3FlowMatchingQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture3_flow_matching";
+export { stanfordCME296Lecture6ModelTrainingQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture6_model_training";
+export { stanfordCME296Lecture8TextDiffusionQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture8_text_diffusion";
+export { diffusionGemmaTechnicalReportQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/DiffusionGemma Technical Report";
 export { cs224rLecture1IntroQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture1_intro";
 export { cs224rLecture2ImitationLearningQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture2_Imitation Learning";
 export { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture3_Policy Gradients";

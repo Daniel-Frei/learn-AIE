@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { getLearningCoursePath, getLearningCourses } from "../../lib/learning";
-import { getStandaloneLearningPageCountForSeries } from "./standaloneLearningPages";
+import {
+  getStandaloneLearningCourses,
+  getStandaloneLearningPageCountForSeries,
+} from "./standaloneLearningPages";
 
 const standaloneLearningCourses = [
   {
@@ -13,7 +16,16 @@ const standaloneLearningCourses = [
 ] as const;
 
 export default function LearningIndexPage() {
-  const courses = getLearningCourses();
+  const quizLinkedCourses = getLearningCourses();
+  const quizLinkedSeriesIds = new Set(
+    quizLinkedCourses.map((course) => course.seriesId),
+  );
+  const courses = [
+    ...quizLinkedCourses,
+    ...getStandaloneLearningCourses().filter(
+      (course) => !quizLinkedSeriesIds.has(course.seriesId),
+    ),
+  ];
 
   return (
     <main className="min-h-[calc(100vh-4.25rem)] bg-slate-950 text-slate-50">
@@ -51,7 +63,10 @@ export default function LearningIndexPage() {
                 className="group rounded-lg border border-slate-800 bg-slate-900 p-5 transition-colors hover:border-sky-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
               >
                 <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
-                  <span>{learningPageCount} learning pages</span>
+                  <span>
+                    {learningPageCount} learning{" "}
+                    {learningPageCount === 1 ? "page" : "pages"}
+                  </span>
                   <span aria-hidden="true">/</span>
                   <span>{course.totalDurationMinutes} quiz-linked min</span>
                 </div>

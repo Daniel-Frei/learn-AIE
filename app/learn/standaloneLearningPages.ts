@@ -1,4 +1,5 @@
-import type { SourceSeriesId } from "../../lib/quiz";
+import type { LearningCourse } from "../../lib/learning";
+import { SOURCE_SERIES, type SourceSeriesId } from "../../lib/quiz";
 
 export type StandaloneLearningPage = {
   href: string;
@@ -42,6 +43,15 @@ export const standaloneLearningPagesBySeries: Partial<
         "Build evaluation scopes, agreement math, reference metrics, judge controls, factuality scoring, agent diagnostics, and benchmark tradeoffs.",
     },
   ],
+  "stanford-cme296": [
+    {
+      href: "/learn/stanford-cme296/diffusiongemma/presentation",
+      sequenceLabel: "Paper club",
+      shortTitle: "DiffusionGemma Talk Deck",
+      summary:
+        "Present DiffusionGemma through an interactive token canvas, discrete flow intuition, its blockwise architecture, sampler, training recipe, results, and limitations.",
+    },
+  ],
 };
 
 export function getStandaloneLearningPagesForSeries(
@@ -54,4 +64,26 @@ export function getStandaloneLearningPageCountForSeries(
   seriesId: SourceSeriesId,
 ): number {
   return getStandaloneLearningPagesForSeries(seriesId).length;
+}
+
+export function getStandaloneLearningCourse(
+  seriesId: SourceSeriesId,
+): LearningCourse | null {
+  const pages = getStandaloneLearningPagesForSeries(seriesId);
+  const series = SOURCE_SERIES.find((candidate) => candidate.id === seriesId);
+  if (!series || pages.length === 0) return null;
+
+  return {
+    seriesId,
+    label: series.label,
+    experiences: [],
+    totalDurationMinutes: 0,
+  };
+}
+
+export function getStandaloneLearningCourses(): LearningCourse[] {
+  return SOURCE_SERIES.flatMap((series) => {
+    const course = getStandaloneLearningCourse(series.id);
+    return course ? [course] : [];
+  });
 }

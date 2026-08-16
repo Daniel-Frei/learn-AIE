@@ -57,7 +57,7 @@ function makeAssertionReasonQuestion(
   };
 }
 
-export const stanfordCME296Lecture1DiffusionQuestions: Question[] = [
+const lecture1QuestionCandidates: Question[] = [
   makeQuestion(
     "cme296-lect1-q01",
     "easy",
@@ -837,3 +837,36 @@ export const stanfordCME296Lecture1DiffusionQuestions: Question[] = [
     "Both \\(10\\times\\) and \\(20\\times\\) remain within the \\(20\\%\\) quality-impact budget, but \\(20\\times\\) is the faster of those feasible schedules. The \\(50\\times\\) and \\(100\\times\\) settings violate the stated constraint, illustrating that aggressive step skipping can exchange substantial FID degradation for additional speed.",
   ),
 ];
+
+const diffusionGemmaStudyGuideQuestionIds = new Set([
+  "cme296-lect1-q01",
+  "cme296-lect1-q02",
+  "cme296-lect1-q06",
+  "cme296-lect1-q07",
+  "cme296-lect1-q08",
+  "cme296-lect1-q09",
+  "cme296-lect1-q10",
+  "cme296-lect1-q23",
+  "cme296-lect1-q24",
+  "cme296-lect1-q25",
+  "cme296-lect1-q26",
+  "cme296-lect1-q27",
+  "cme296-lect1-q28",
+  "cme296-lect1-q29",
+  "cme296-lect1-q30",
+  "cme296-lect1-q31",
+  "cme296-lect1-q32",
+  "cme296-lect1-q33",
+  "cme296-lect1-q34",
+  "cme296-lect1-q35",
+  "cme296-lect1-q36",
+  "cme296-lect1-q37",
+  "cme296-lect1-q38",
+  "cme296-lect1-q39",
+  "cme296-lect1-q40",
+]);
+
+export const stanfordCME296Lecture1DiffusionQuestions: Question[] =
+  lecture1QuestionCandidates.filter((question) =>
+    diffusionGemmaStudyGuideQuestionIds.has(question.id),
+  );

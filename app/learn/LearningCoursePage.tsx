@@ -75,8 +75,9 @@ export default function LearningCoursePage({
             the matching question set when you are ready.
           </p>
           <p className="text-sm font-semibold text-emerald-300">
-            {totalLearningPages} learning pages / {course.totalDurationMinutes}{" "}
-            quiz-linked min
+            {totalLearningPages} learning{" "}
+            {totalLearningPages === 1 ? "page" : "pages"} /{" "}
+            {course.totalDurationMinutes} quiz-linked min
           </p>
         </section>
 
