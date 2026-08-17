@@ -4,7 +4,7 @@ const route = "/learn/stanford-cme296/diffusiongemma/presentation";
 
 test.describe.configure({ mode: "serial" });
 
-test("presents the DiffusionGemma paper as a navigable 26-slide deck", async ({
+test("presents the DiffusionGemma paper as a navigable 45-slide deck", async ({
   page,
 }) => {
   await page.goto("/learn/stanford-cme296", { waitUntil: "domcontentloaded" });
@@ -23,23 +23,100 @@ test("presents the DiffusionGemma paper as a navigable 26-slide deck", async ({
   );
 
   await expect(
-    page.getByRole("heading", { level: 1, name: /DiffusionGemma/i }),
+    page.getByRole("heading", {
+      level: 1,
+      name: /Nearly the same intelligence\. Seven times the speed/i,
+    }),
   ).toBeVisible();
-  await expect(page.getByText(/It said YES/i)).toBeVisible();
-  await expect(page.getByText(/Then it changed its mind/i)).toBeVisible();
   await expect(
-    page.getByText(/How can rewriting a draft deliver/i),
+    page.getByText(/They moved the speed–capability frontier/i),
   ).toBeVisible();
-  await expect(page.getByTestId("diffusiongemma-slide")).toHaveCount(26);
+  await expect(
+    page.getByText(/The usual escape routes only bend the chain/i),
+  ).toHaveCount(0);
+  await expect(page.getByText(/Today's route/i)).toBeVisible();
+  await expect(page.locator("[data-section-divider]")).toHaveCount(6);
+  await expect(
+    page.getByText(/The shortest mental model: one Transformer, two modes/i),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/Five steps turn Gemma 4 into DiffusionGemma/i),
+  ).toBeVisible();
+  await expect(
+    page.getByTestId("conversion-roadmap").getByRole("listitem"),
+  ).toHaveCount(5);
+  await expect(
+    page.getByText(/Step 1 · Start from a model that already knows language/i),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/Step 2 · Change who each canvas token can see/i),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      /Steps 3–4 · Learn the whole clean block—and reuse the last guess/i,
+    ),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/At inference, the trained model alternates the two modes/i),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/Step 5 · Make a capable denoiser fast/i),
+  ).toBeVisible();
+  await expect(
+    page.getByText(
+      /The result: diffusion within blocks, autoregression between blocks/i,
+    ),
+  ).toBeVisible();
+  await expect(page.getByText(/Meet the checkpoint/i)).toHaveCount(0);
+  await expect(page.getByTestId("diffusiongemma-slide")).toHaveCount(45);
+  await expect(page.getByText(/^\d+ min$/)).toHaveCount(0);
   await expect(
     page.getByText(/Choose a route; learn the local moves/i),
   ).toBeVisible();
   await expect(
-    page.getByText(/Parallel inside a block; autoregressive across blocks/i),
-  ).toBeVisible();
-  await expect(
     page.getByText(/A new speed frontier—with an accuracy bill/i),
   ).toBeVisible();
+
+  await expect(
+    page.getByRole("button", {
+      name: /Enlarge Artificial Analysis · Output Speed/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", {
+      name: /Enlarge Artificial Analysis Intelligence Index/i,
+    }),
+  ).toBeVisible();
+  await expect(
+    page.locator('[data-section-divider="01"]').getByTestId("section-motif"),
+  ).toHaveCount(0);
+  await expect(
+    page.locator('[data-section-divider="02"]').getByTestId("section-motif"),
+  ).toHaveCount(0);
+  await expect(page.getByTestId("section-motif")).toHaveCount(4);
+
+  const agendaPositions = await page
+    .getByTestId("agenda-item")
+    .evaluateAll((items) =>
+      items.slice(0, 6).map((item) => {
+        const box = item.getBoundingClientRect();
+        return { x: box.x, y: box.y };
+      }),
+    );
+  expect(agendaPositions).toHaveLength(6);
+  expect(new Set(agendaPositions.map(({ x }) => Math.round(x))).size).toBe(1);
+  expect(agendaPositions.map(({ y }) => y)).toEqual(
+    [...agendaPositions.map(({ y }) => y)].sort((a, b) => a - b),
+  );
+
+  const imagesOutsideZoomControls = await page
+    .locator('[data-testid="diffusiongemma-slide"] img')
+    .evaluateAll((images) =>
+      images
+        .filter((image) => !image.closest('button[aria-label^="Enlarge "]'))
+        .map((image) => image.getAttribute("alt")),
+    );
+  expect(imagesOutsideZoomControls).toEqual([]);
 
   await page.keyboard.press("Home");
   await page.keyboard.press("ArrowRight");

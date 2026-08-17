@@ -1,3 +1,214 @@
+# DiffusionGemma Conversion-Story Follow-up
+
+## Goal
+
+Rework Section 2 into a concise, stepwise explanation of how the trained Gemma
+4 backbone becomes DiffusionGemma: reuse the checkpoint, change the canvas
+attention mask, train all-position denoising, add lightweight
+self-conditioning, and distill the sampler into the few-step regime.
+
+## Non-goals
+
+- Do not imply that DiffusionGemma adds a separately pretrained encoder.
+- Do not reproduce every implementation detail from the supplied explanation.
+- Do not change the other presentation sections, route registration, or quiz
+  behavior.
+
+## Steps
+
+- [x] Replace the current Section 2 sequence with one shared-backbone mental
+      model and a five-step conversion storyboard.
+- [x] Preserve the paper's conversion and inference figures as visual anchors.
+- [x] Update product memory and presentation E2E assertions.
+- [x] Verify formatting, types, focused E2E behavior, and responsive browser
+      layout.
+
+## Files to touch
+
+- `components/learning/pages/DiffusionGemmaPresentationPage.tsx`
+- `components/learning/pages/DiffusionGemmaPresentationPage.module.css`
+- `e2e/diffusiongemma-presentation.spec.ts`
+- `docs/product-scope.md`
+- `docs/team-preferences.md`
+- `PLANS.md`
+
+## Verification
+
+- `npx prettier --check` on touched files
+- `make lint`
+- `make types-check`
+- `npm run e2e -- e2e/diffusiongemma-presentation.spec.ts`
+- Browser evidence at 1440x900, 1280x800, and 390x844
+
+---
+
+# DiffusionGemma Full-Chart and Architecture-Clarity Follow-up
+
+## Goal
+
+Use the complete supplied benchmark charts, make every deck image enlargable,
+repair deck-wide content alignment, and explain precisely how Gemma 4's causal
+Transformer weights, DiffusionGemma's two attention modes, SFT, and the runtime
+generation diagram fit together.
+
+## Non-goals
+
+- Do not change route registration, quiz behavior, or shared navigation.
+- Do not present the supplied benchmark exports as controlled comparisons with
+  DiffusionGemma.
+- Do not add a separate pretrained encoder or imply that SFT alone defines the
+  runtime architecture.
+
+## Steps
+
+- [x] Re-read the architecture, generation, and SFT sections of the paper and
+      inspect the official model card and implementation.
+- [x] Replace cropped benchmark images with complete, clickable source exports
+      and overlay the requested capability highlights.
+- [x] Rework the agenda, section dividers, slide 12, and the Gemma-to-diffusion
+      explanation across slides 14-19.
+- [x] Normalize the content canvas so titles, visuals, and explanatory text use
+      the same available width.
+- [x] Update product memory and Playwright assertions.
+- [x] Verify focused tests plus desktop, laptop, and mobile browser evidence.
+
+## Files to touch
+
+- `components/learning/pages/DiffusionGemmaPresentationPage.tsx`
+- `components/learning/pages/DiffusionGemmaPresentationPage.module.css`
+- `public/learning/diffusiongemma/presentation/*`
+- `e2e/diffusiongemma-presentation.spec.ts`
+- `docs/product-scope.md`
+- `docs/team-preferences.md`
+- `PLANS.md`
+
+## Verification
+
+- `npx prettier --check` on touched source, test, and documentation files
+- `make types-check`
+- `npm run e2e -- e2e/diffusiongemma-presentation.spec.ts`
+- Browser evidence at 1440x900, 1280x800, and 390x844
+- `make check`
+
+---
+
+# DiffusionGemma Video-Paced Follow-up
+
+## Goal
+
+Turn the revised deck into a faster-moving live/video presentation with a
+speed-led opening, restored agenda and section dividers, readable external
+benchmark references, more visual motivation, and an explicit explanation of
+how a causal Gemma 4 checkpoint becomes DiffusionGemma.
+
+## Non-goals
+
+- Do not change route registration, quiz behavior, or shared navigation.
+- Do not claim that the Artificial Analysis charts directly score
+  DiffusionGemma when the supplied export does not include it.
+- Do not add runtime dependencies or regenerate leaderboard data.
+
+## Steps
+
+- [x] Audit the live deck, attached Artificial Analysis exports, paper, and
+      official model information.
+- [x] Rebuild the intro around speed, add source-faithful benchmark crops, and
+      restore the agenda.
+- [x] Add six section dividers while removing repeated section labels and time
+      estimates from content slides.
+- [x] Split motivation into short visual messages and add the Gemma 4 to
+      DiffusionGemma bridge, including the moved warm-start pipeline.
+- [x] Update product memory and Playwright assertions for the 45-slide deck.
+- [x] Verify focused tests plus desktop, laptop, and mobile browser evidence.
+
+## Files to touch
+
+- `components/learning/pages/DiffusionGemmaPresentationPage.tsx`
+- `components/learning/pages/DiffusionGemmaPresentationPage.module.css`
+- `public/learning/diffusiongemma/presentation/*`
+- `e2e/diffusiongemma-presentation.spec.ts`
+- `docs/product-scope.md`
+- `docs/team-preferences.md`
+- `PLANS.md`
+
+## Verification
+
+- `npx prettier --check` on touched source, test, and documentation files
+- `make types-check`
+- `npm run e2e -- e2e/diffusiongemma-presentation.spec.ts`
+- Browser evidence at 1440x900, 1280x800, and 390x844
+- `make check`
+
+---
+
+# DiffusionGemma Presentation Narrative Revision
+
+## Goal
+
+Rework the existing DiffusionGemma paper-club deck so it opens with a minimal,
+credible hook, makes the inference problem and competing approaches explicit,
+then gives a source-grounded model and architecture overview before the detailed
+diffusion mechanism.
+
+## Non-goals
+
+- Do not change shared quiz behavior, route registration, or app navigation.
+- Do not turn the talk into a generic paper summary or remove its interactive
+  denoising and entropy-sampling explanations.
+- Do not add runtime dependencies.
+
+## Experience brief
+
+- **Learner job:** explain why DiffusionGemma can move the speed/capability
+  frontier, what bottleneck it attacks, and how its block-diffusion architecture
+  works before following the training and evidence sections.
+- **Central object:** one 256-token canvas moving through encode, denoise,
+  commit, and append.
+- **Primary interaction:** inspect that canvas as tokens and confidence change,
+  then manipulate which positions the entropy-bounded sampler commits.
+- **Visual identity:** paper figures plus precise, slide-native system diagrams
+  that keep the same canvas visible across motivation, architecture, and
+  mechanism.
+- **Avoid:** a detached "intuition" chapter, a dense title composition, or a
+  result hook that omits the quality and hardware conditions.
+
+## Steps
+
+- [x] Audit the live deck, complete paper, official model card, and local product
+      guidance.
+- [x] Replace the title composition and add a source-grounded speed-frontier
+      hook before the existing thesis slide.
+- [x] Make Motivation the first section and explain the costs and ceilings of AR,
+      batching, speculative decoding, and MTP.
+- [x] Add a high-level DiffusionGemma section covering model identity,
+      architecture, generation loop, and the paper's three-part approach.
+- [x] Reorder the existing intuition slides into the mechanism sequence and keep
+      the interactive labs intact.
+- [x] Update product memory, Playwright coverage, and slide-count/navigation
+      assertions.
+- [x] Verify desktop, laptop, and mobile layouts plus focused and full repository
+      checks.
+
+## Files to touch
+
+- `components/learning/pages/DiffusionGemmaPresentationPage.tsx`
+- `components/learning/pages/DiffusionGemmaPresentationPage.module.css`
+- `public/learning/diffusiongemma/presentation/*`
+- `e2e/diffusiongemma-presentation.spec.ts`
+- `docs/product-scope.md`
+- `docs/team-preferences.md`
+- `PLANS.md`
+
+## Verification
+
+- `npx prettier --check` on touched source, test, and documentation files
+- `make types-check`
+- `npm run e2e -- e2e/diffusiongemma-presentation.spec.ts`
+- Browser evidence at 1440x900, 1280x800, and 390x844
+- `make check`
+
+---
+
 # CME295 Lecture 3 Question-Set Improvement
 
 ## Goal
