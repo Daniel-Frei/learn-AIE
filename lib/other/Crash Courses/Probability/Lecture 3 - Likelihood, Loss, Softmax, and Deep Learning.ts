@@ -1,1606 +1,1073 @@
 import { Question } from "../../../quiz";
 
+type OptionSpec = readonly [text: string, isCorrect: boolean];
+
+function makeQuestion(
+  id: string,
+  difficulty: Question["difficulty"],
+  prompt: string,
+  options: readonly [OptionSpec, OptionSpec, OptionSpec, OptionSpec],
+  explanation: string,
+): Question {
+  return {
+    id,
+    chapter: 3,
+    difficulty,
+    prompt,
+    options: options.map(([text, isCorrect]) => ({ text, isCorrect })),
+    explanation,
+  };
+}
+
 export const CrashCourseProbabilityL3Questions: Question[] = [
-  {
-    id: "crash-probability-l3-q01",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "A neural network emits logits \\(z=[2.1,1.3,-0.5]\\) for cat, dog, and car. Which interpretation is most accurate before applying softmax?",
-    options: [
-      {
-        text: "The logits are raw, unnormalized preference scores whose relative sizes rank the classes.",
-        isCorrect: true,
-      },
-      {
-        text: "The logits are already valid probabilities because there is one number for each class.",
-        isCorrect: false,
-      },
-      {
-        text: "The logits are log probabilities, so exponentiating each one directly gives probabilities that sum to one.",
-        isCorrect: false,
-      },
-      {
-        text: "The logits are the final sampled outputs, so no probability distribution remains after they are produced.",
-        isCorrect: false,
-      },
+  // Logits and softmax
+  makeQuestion(
+    "crash-probability-l3-q61",
+    "easy",
+    "A classifier produces logits \\((2.0,1.0,-1.0)\\). Which statement correctly describes these numbers before softmax?",
+    [
+      [
+        "They are unnormalized scores whose ordering influences class probabilities.",
+        true,
+      ],
+      ["They are probabilities because each lies below 2.", false],
+      ["They must sum to one before the prediction is valid.", false],
+      ["They are observed class frequencies from the training set.", false],
     ],
-    explanation:
-      "Logits are unconstrained scores: they may be negative, larger than one, and need not sum to anything meaningful. Softmax is needed because probabilities must be nonnegative and sum to one, while a final decision or sample is a separate step after probabilities are available.",
-  },
-  {
-    id: "crash-probability-l3-q02",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "For logits \\(z_i\\), which steps are part of the softmax construction \\(P(y_i)=\\frac{e^{z_i}}{\\sum_j e^{z_j}}\\)?",
-    options: [
-      {
-        text: "Exponentiate each logit so the unnormalized scores become positive.",
-        isCorrect: true,
-      },
-      {
-        text: "Divide each exponentiated score by the sum of all exponentiated scores.",
-        isCorrect: true,
-      },
-      {
-        text: "Subtract the largest probability from each class so the outputs can be negative.",
-        isCorrect: false,
-      },
-      {
-        text: "Set every class with a negative logit to probability zero before normalizing.",
-        isCorrect: false,
-      },
+    "Logits are real-valued model scores, so they can be negative and need not sum to one. Softmax exponentiates and normalizes them into probabilities; their relative differences, not a probability interpretation before that step, drive the result.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q62",
+    "easy",
+    "Which properties does softmax give to a finite vector of logits?",
+    [
+      ["Every output probability is positive.", true],
+      ["The output probabilities sum to one.", true],
+      ["Every output probability is equal when logits differ.", false],
+      ["The largest logit is converted to probability exactly one.", false],
     ],
-    explanation:
-      "Softmax uses exponentials to turn all scores into positive quantities and then normalizes by their total. Negative logits can still receive positive probability, and the normalization is over exponentiated logits, not over already formed probabilities.",
-  },
-  {
-    id: "crash-probability-l3-q03",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Suppose logits for cat, dog, and car are \\((2,1,0)\\), with \\(e^2\\approx7.39\\), \\(e^1\\approx2.72\\), and \\(e^0=1\\). Which statements about the softmax probabilities are correct?",
-    options: [
-      {
-        text: "The probability for cat is approximately \\(7.39/(7.39+2.72+1)\\approx0.67\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The probability for dog is approximately \\(2.72/(7.39+2.72+1)\\approx0.24\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The probability for car is approximately \\(1/(7.39+2.72+1)\\approx0.09\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The probability for car is exactly zero because its logit is zero.",
-        isCorrect: false,
-      },
+    "Exponentials are positive and division by their sum normalizes the outputs to one. Unequal logits generally yield unequal probabilities, and a finite largest logit still competes with positive mass from the other classes.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q63",
+    "medium",
+    "Two logits are \\(z_A=\\ln 3\\) and \\(z_B=0\\). Softmax is applied only to these classes. Which statements are correct?",
+    [
+      ["The unnormalized weights are 3 and 1.", true],
+      ["\\(P(A)=3/4\\).", true],
+      ["\\(P(B)=1/4\\).", true],
+      ["The logit difference implies \\(P(A)-P(B)=\\ln 3\\).", false],
     ],
-    explanation:
-      "Softmax exponentiates zero to one, so a zero logit still contributes positive mass. The three normalized values are approximately 0.67, 0.24, and 0.09, and together they form a valid distribution.",
-  },
-  {
-    id: "crash-probability-l3-q04",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "If the same constant \\(c\\) is added to every logit before softmax, which statements are correct?",
-    options: [
-      {
-        text: "The final softmax probabilities are unchanged.",
-        isCorrect: true,
-      },
-      {
-        text: "Each numerator and the denominator are multiplied by the same factor \\(e^c\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The ranking of classes by probability is unchanged.",
-        isCorrect: true,
-      },
-      {
-        text: "The entropy necessarily increases because all logits are numerically larger.",
-        isCorrect: false,
-      },
+    "Exponentiating produces weights \\(e^{\\ln3}=3\\) and \\(e^0=1\\), which normalize to three quarters and one quarter. Logit differences control probability ratios, not probability differences in the same numerical units.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q64",
+    "hard",
+    "A model has logits \\((1001,1000,999)\\). Which softmax procedures are mathematically equivalent and numerically sensible?",
+    [
+      ["Subtract 1001 and apply softmax to \\((0,-1,-2)\\).", true],
+      ["Use \\(e^{z_i-\\max_j z_j}/\\sum_k e^{z_k-\\max_j z_j}\\).", true],
+      ["Divide each logit by their sum and call the result softmax.", false],
+      [
+        "Clip the largest logit to zero while leaving the others unchanged.",
+        false,
+      ],
     ],
-    explanation:
-      "Adding a common constant gives \\(e^{z_i+c}=e^c e^{z_i}\\), and the shared factor cancels in the softmax ratio. Because the probability distribution is identical, ranking, decisions based on argmax, and entropy are unchanged.",
-  },
-  {
-    id: "crash-probability-l3-q05",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "For two classes \\(A\\) and \\(B\\) inside a softmax, suppose \\(z_A-z_B=1\\). Which statements follow from the role of exponentials?",
-    options: [
-      {
-        text: "The unnormalized exponentiated score for \\(A\\) is \\(e\\) times the score for \\(B\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The ratio \\(P(A)/P(B)\\) under softmax is \\(e^{z_A-z_B}=e\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The probability of \\(A\\) must be \\(e/(1+e)\\) no matter how many other classes are present.",
-        isCorrect: false,
-      },
-      {
-        text: "The class with the larger logit receives probability exactly one after softmax.",
-        isCorrect: false,
-      },
+    "Adding or subtracting the same constant from every logit leaves softmax unchanged because the common exponential factor cancels. Max subtraction prevents huge exponentials, whereas dividing raw scores or changing only one logit changes the modeled distribution.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q65",
+    "medium",
+    "Which statements about softmax probability ratios are correct?",
+    [
+      ["\\(p_i/p_j=e^{z_i-z_j}\\).", true],
+      ["Increasing only \\(z_i\\) increases \\(p_i/p_j\\).", true],
+      [
+        "Adding the same constant to all logits leaves every ratio unchanged.",
+        true,
+      ],
+      [
+        "A logit gap of zero gives equal probability to the two compared classes.",
+        true,
+      ],
     ],
-    explanation:
-      "Softmax makes odds depend on logit differences: \\(P(A)/P(B)=e^{z_A}/e^{z_B}=e^{z_A-z_B}\\). The absolute probability of \\(A\\) also depends on all other classes in the denominator, and a larger logit does not make the probability equal to one unless the others vanish in a limiting sense.",
-  },
-  {
-    id: "crash-probability-l3-q06",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "Which distinctions correctly separate model scores, probability distributions, and decisions?",
-    options: [
-      {
-        text: "A logit is a raw model score before probability normalization.",
-        isCorrect: true,
-      },
-      {
-        text: "A softmax probability distribution expresses normalized uncertainty across possible outputs.",
-        isCorrect: true,
-      },
-      {
-        text: "A decision rule or sampler chooses an output after the distribution has been produced.",
-        isCorrect: true,
-      },
-      {
-        text: "Once a highest-probability output is chosen, the remaining probabilities never contain useful information.",
-        isCorrect: false,
-      },
+    "The normalizing denominator cancels in a ratio, leaving the exponential of the logit difference. This explains softmax shift invariance, monotonic response to a class's score, and equal odds for equal logits.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q66",
+    "hard",
+    "Class A has logit 2 and class B has logit 0. Which statements are correct about their softmax probabilities within any larger class set?",
+    [
+      ["The odds ratio \\(p_A/p_B=e^2\\).", true],
+      [
+        "Adding another class changes each absolute probability but not \\(p_A/p_B\\).",
+        true,
+      ],
+      ["A has higher probability than B.", true],
+      [
+        "The probability of A is exactly \\(e^2\\), independent of normalization.",
+        false,
+      ],
     ],
-    explanation:
-      "The pipeline separates raw scores, normalized probabilities, and the final chosen or sampled output. The probability distribution remains useful because it encodes confidence and alternatives even when a decision rule selects only one class or token.",
-  },
-  {
-    id: "crash-probability-l3-q07",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "The correct class for one example is dog. Model A assigns \\(P(\\text{dog}\\mid x)=0.70\\), while Model B assigns \\(P(\\text{dog}\\mid x)=0.30\\). Which statement is correct?",
-    options: [
-      {
-        text: "Model A has higher likelihood for this observed example because it assigns more probability to the true label.",
-        isCorrect: true,
-      },
-      {
-        text: "Model B has higher likelihood because it spreads more probability away from dog.",
-        isCorrect: false,
-      },
-      {
-        text: "The likelihoods are equal because both models include dog among the possible labels.",
-        isCorrect: false,
-      },
-      {
-        text: "Likelihood cannot be evaluated for one example because it only applies to entire datasets.",
-        isCorrect: false,
-      },
+    "Softmax preserves pairwise odds as exponentiated logit gaps, so A is \\(e^2\\) times as probable as B. Other classes enlarge the denominator and change absolute probabilities, but the shared denominator cancels from the A-to-B ratio.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q67",
+    "easy",
+    "What probabilities result when softmax is applied to three equal logits?",
+    [
+      ["\\((1/3,1/3,1/3)\\)", true],
+      ["\\((1,1,1)\\)", false],
+      ["\\((0,0,0)\\)", false],
+      ["The result depends on the common logit value.", false],
     ],
-    explanation:
-      "For one labeled example, the likelihood contribution is the model probability assigned to the observed label. Model A assigns 0.70 to dog rather than 0.30, so it makes the observed outcome more probable under the model.",
-  },
-  {
-    id: "crash-probability-l3-q08",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "A model assigns probabilities \\(0.80\\), \\(0.60\\), and \\(0.50\\) to the correct labels of three independent training examples. Which statements about the dataset likelihood are correct?",
-    options: [
-      {
-        text: "The likelihood contribution for the three examples is \\(0.80\\cdot0.60\\cdot0.50=0.24\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The log-likelihood is \\(\\log(0.80)+\\log(0.60)+\\log(0.50)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The likelihood is the sum \\(0.80+0.60+0.50\\) because probabilities should be added across examples.",
-        isCorrect: false,
-      },
-      {
-        text: "The likelihood is the average \\((0.80+0.60+0.50)/3\\) because each example has equal weight.",
-        isCorrect: false,
-      },
+    "Equal logits have equal exponential weights, and normalization divides each by three identical weights. The common value cancels, so logits \\((0,0,0)\\) and \\((50,50,50)\\) produce the same uniform distribution.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q68",
+    "medium",
+    "A three-class model changes logits from \\((2,1,0)\\) to \\((7,6,5)\\). Which comparisons are correct?",
+    [
+      ["The softmax distribution is unchanged.", true],
+      ["Every pairwise logit difference is unchanged.", true],
+      ["Each class probability increases by 5.", false],
+      ["The new logits must overflow because one exceeds 1.", false],
     ],
-    explanation:
-      "The likelihood of multiple observed labels is formed by multiplying the model probabilities of those observed labels. Taking logs converts that product into a sum, while a plain sum or average of probabilities is not the likelihood.",
-  },
-  {
-    id: "crash-probability-l3-q09",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe likelihood as a function of model parameters \\(\\theta\\)?",
-    options: [
-      {
-        text: "The observed dataset is treated as fixed while training searches over parameter values.",
-        isCorrect: true,
-      },
-      {
-        text: "The objective can be written as \\(\\theta^*=\\arg\\max_\\theta L(\\theta)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Changing \\(\\theta\\) changes the probabilities \\(P_\\theta(y_i\\mid x_i)\\) assigned to the observed labels.",
-        isCorrect: true,
-      },
-      {
-        text: "Likelihood is automatically the posterior probability \\(P(\\theta\\mid\\text{data})\\) even when no prior distribution over parameters is specified.",
-        isCorrect: false,
-      },
+    "The second vector adds the same constant five to every score, so all exponential weights gain a common factor that cancels in normalization. Probabilities are not obtained by adding constants to logits, and logits are not restricted to the probability interval.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q69",
+    "hard",
+    "A binary classifier uses logits \\((a,b)\\). Which statements correctly relate its softmax output to the logit gap?",
+    [
+      ["\\(P(A)=1/(1+e^{-(a-b)})\\).", true],
+      [
+        "Only the difference \\(a-b\\), not their common offset, determines \\(P(A)\\).",
+        true,
+      ],
+      ["If \\(a-b\\) grows, \\(P(A)\\) approaches one.", true],
+      ["If \\(a=b\\), \\(P(A)=1\\) because A is listed first.", false],
     ],
-    explanation:
-      "Likelihood asks which parameter values make the fixed observed data probable under \\(P_\\theta\\). It is not the same as a posterior distribution over parameters unless a prior and Bayesian update are added.",
-  },
-  {
-    id: "crash-probability-l3-q10",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "For the token sequence The cat sleeps, which terms belong in a left-to-right next-token likelihood factorization?",
-    options: [
-      {
-        text: "\\(P(\\text{The})P(\\text{cat}\\mid\\text{The})P(\\text{sleeps}\\mid\\text{The cat})\\).",
-        isCorrect: true,
-      },
-      {
-        text: "A product of probabilities assigned to the actual observed tokens at their positions.",
-        isCorrect: true,
-      },
-      {
-        text: "A product over every vocabulary token at every position, regardless of which token appeared.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(P(\\text{The}\\mid\\text{cat sleeps})P(\\text{cat}\\mid\\text{sleeps})P(\\text{sleeps})\\) as the standard next-token training direction.",
-        isCorrect: false,
-      },
+    "Factoring \\(e^a\\) from the two-class softmax yields the logistic function of the score difference. Equal scores give equal half probabilities, while a growing positive gap makes A increasingly dominant without using class order.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q70",
+    "easy",
+    "Which model outputs commonly use softmax to represent a categorical distribution?",
+    [
+      ["A single-label image classifier over classes", true],
+      ["An LLM distribution over the next vocabulary token", true],
+      ["A stochastic policy over mutually exclusive actions", true],
+      ["An attention row that allocates weight across keys", true],
     ],
-    explanation:
-      "Next-token likelihood multiplies probabilities assigned to the tokens that actually appear, conditioned on the previous context. It does not multiply over all vocabulary entries, and the usual autoregressive direction conditions on earlier tokens rather than future ones.",
-  },
-  {
-    id: "crash-probability-l3-q11",
-    chapter: 3,
-    difficulty: "medium",
-    prompt: "Why are logs used when optimizing likelihood over many examples?",
-    options: [
-      {
-        text: "They turn products of probabilities into sums of log probabilities.",
-        isCorrect: true,
-      },
-      {
-        text: "They reduce numerical problems caused by multiplying many small probabilities.",
-        isCorrect: true,
-      },
-      {
-        text: "They change which parameter setting maximizes the objective because log is not monotonic.",
-        isCorrect: false,
-      },
-      {
-        text: "They make probabilities larger than one so gradient methods can optimize them.",
-        isCorrect: false,
-      },
+    "Each example needs positive normalized weights over a finite set of alternatives, which softmax supplies. Their interpretations differ—class, token, action, or attention allocation—but the normalization mechanism is shared.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q71",
+    "medium",
+    "A model outputs softmax probabilities \\((0.50,0.30,0.20)\\). Which score changes preserve the predicted argmax class?",
+    [
+      ["Adding the same constant to every original logit", true],
+      ["Increasing only the current largest logit", true],
+      ["Swapping the largest and smallest logits", false],
+      ["Replacing the distribution by its complement class by class", false],
     ],
-    explanation:
-      "Logs are useful because \\(\\log(ab)=\\log a+\\log b\\), turning a long product into a sum that is easier to compute and optimize. The logarithm is monotonic, so maximizing likelihood and maximizing log-likelihood choose the same parameters.",
-  },
-  {
-    id: "crash-probability-l3-q12",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Using natural logs, the probabilities assigned to three correct labels are \\(0.80\\), \\(0.60\\), and \\(0.50\\). What is the approximate sum log-likelihood?",
-    options: [
-      {
-        text: "\\(-1.427\\), because \\(\\log(0.80)+\\log(0.60)+\\log(0.50)\\approx-0.223-0.511-0.693\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(0.24\\), because the log-likelihood is the product of the three probabilities.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(1.427\\), because log-likelihood values for probabilities below one are positive.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(-0.476\\), because the sum log-likelihood must be divided by three before it is a log-likelihood.",
-        isCorrect: false,
-      },
+    "A common shift preserves the whole distribution, and increasing the leading score preserves and strengthens its lead. Swapping scores changes the ordering, while componentwise complements do not form the same categorical decision rule and need not even normalize.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q72",
+    "hard",
+    "Two models produce logits \\((4,2,0)\\) and \\((2,1,0)\\) for the same classes. Which statements are correct?",
+    [
+      ["Both models have the same argmax class.", true],
+      ["The first model has larger pairwise logit gaps.", true],
+      [
+        "The first model's softmax distribution is more concentrated on the top class.",
+        true,
+      ],
+      [
+        "The distributions are identical because the logits have the same ordering.",
+        false,
+      ],
     ],
-    explanation:
-      "The sum log-likelihood is the sum of the log probabilities, which is approximately \\(-1.427\\). Dividing by three would give an average log-likelihood, and the product 0.24 is the original likelihood rather than its logarithm.",
-  },
-  {
-    id: "crash-probability-l3-q13",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which comparisons correctly relate probability, log-likelihood, and negative log-likelihood for a correct answer?",
-    options: [
-      {
-        text: "\\(\\log(0.8)>\\log(0.2)\\), so assigning 0.8 to the correct answer gives higher log-likelihood than assigning 0.2.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(-\\log(0.8)<-\\log(0.2)\\), so assigning 0.8 gives lower negative log-likelihood than assigning 0.2.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(\\log(0.8)\\) is positive because 0.8 is close to one.",
-        isCorrect: false,
-      },
-      {
-        text: "Lower probability for the correct answer gives lower negative log-likelihood because the model is less confident.",
-        isCorrect: false,
-      },
+    "Multiplying all gaps by two preserves rank but sharpens the exponential ratios, so the first model assigns more mass to the leader. Argmax alone cannot reveal this difference in concentration or confidence.",
+  ),
+
+  // Likelihood and log-likelihood
+  makeQuestion(
+    "crash-probability-l3-q73",
+    "easy",
+    "A model assigns probability 0.8 to an observed class label. What is the likelihood contribution of that observation?",
+    [
+      ["0.8", true],
+      ["0.2", false],
+      ["1.0 because the label was observed", false],
+      ["The probability assigned to the model parameters", false],
     ],
-    explanation:
-      "For probabilities between zero and one, log values are negative, but larger probabilities have logs closer to zero. Negative log-likelihood reverses the sign, so low correct-answer probability creates a larger loss.",
-  },
-  {
-    id: "crash-probability-l3-q14",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "If the correct class is cat and a model assigns \\(P(\\text{cat}\\mid x)=0.20\\), what is the negative log-likelihood using natural logs?",
-    options: [
-      {
-        text: "\\(-\\log(0.20)\\approx1.609\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(\\log(0.20)\\approx-1.609\\), because loss values should be negative.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(1-0.20=0.80\\), because negative log-likelihood is the complement of probability.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(0.20\\), because the loss equals the probability of the correct class.",
-        isCorrect: false,
-      },
+    "For fixed observed data, likelihood evaluates how much probability the model assigns to what occurred, so the contribution is 0.8. Observation does not retroactively make the model probability one, and likelihood is a function of parameters rather than a posterior over them.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q74",
+    "easy",
+    "Two independent labeled examples receive correct-class probabilities 0.5 and 0.8. Which dataset likelihood calculations are correct?",
+    [
+      ["The likelihood is \\(0.5\\times0.8=0.4\\).", true],
+      ["The log-likelihood is \\(\\log0.5+\\log0.8\\).", true],
+      ["The likelihood is \\(0.5+0.8=1.3\\).", false],
+      ["The log-likelihood is \\(\\log(0.5+0.8)\\).", false],
     ],
-    explanation:
-      "For one example, negative log-likelihood is \\(-\\log P_\\theta(y_{\\text{true}}\\mid x)\\). It is not a probability complement; the logarithm makes the penalty grow rapidly as the correct-class probability becomes small.",
-  },
-  {
-    id: "crash-probability-l3-q15",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "For a dataset \\(\\mathcal{D}=\\{(x_i,y_i)\\}_{i=1}^n\\), which statements about total and average negative log-likelihood are correct?",
-    options: [
-      {
-        text: "The total NLL can be written as \\(-\\sum_{i=1}^n \\log P_\\theta(y_i\\mid x_i)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The average NLL \\(-\\frac{1}{n}\\sum_i\\log P_\\theta(y_i\\mid x_i)\\) has the same minimizer as the total NLL when \\(n\\) is fixed.",
-        isCorrect: true,
-      },
-      {
-        text: "The average NLL is interpretable as an average per-example penalty.",
-        isCorrect: true,
-      },
-      {
-        text: "Averaging NLL means training only maximizes the single largest correct-label probability in the dataset.",
-        isCorrect: false,
-      },
+    "Under the stated independence factorization, joint likelihood multiplies per-example probabilities, and a logarithm converts that product to a sum. Adding probabilities describes a union-like operation, not simultaneous observation of both training examples.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q75",
+    "medium",
+    "A Bernoulli model with parameter p observes outcomes 1, 1, 0. Which statements are correct?",
+    [
+      ["The likelihood is \\(L(p)=p^2(1-p)\\).", true],
+      ["The log-likelihood is \\(2\\log p+\\log(1-p)\\).", true],
+      ["The maximum-likelihood estimate is \\(p=2/3\\).", true],
+      [
+        "The likelihood is a probability distribution over p that must integrate to one.",
+        false,
+      ],
     ],
-    explanation:
-      "The total NLL sums penalties across examples, and the average NLL divides that sum by a fixed constant. Averaging changes the scale and aids comparison across dataset sizes, but it does not turn the objective into a maximum over only one example.",
-  },
-  {
-    id: "crash-probability-l3-q16",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "For a one-hot target distribution \\(p\\) and model distribution \\(q\\), which statements explain why classification cross-entropy becomes negative log-likelihood?",
-    options: [
-      {
-        text: "Cross-entropy is \\(H(p,q)=-\\sum_i p_i\\log q_i\\).",
-        isCorrect: true,
-      },
-      {
-        text: "When the correct class is cat, the one-hot target has \\(p_{\\text{cat}}=1\\) and \\(p_i=0\\) for other classes.",
-        isCorrect: true,
-      },
-      {
-        text: "Every incorrect class contributes a nonzero direct term to the loss even when its target probability is zero.",
-        isCorrect: false,
-      },
-      {
-        text: "Cross-entropy compares the target labels to raw logits without using the model probability distribution.",
-        isCorrect: false,
-      },
+    "Each observed success contributes p and the failure contributes \\(1-p\\), producing the stated product and log sum. Maximizing it matches p to the empirical success rate, but likelihood as a function of p is not automatically a normalized parameter distribution.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q76",
+    "hard",
+    "Model A assigns observed-token probabilities \\((0.8,0.5,0.25)\\); Model B assigns \\((0.6,0.6,0.4)\\). Which comparisons are correct?",
+    [
+      ["Model A likelihood is \\(0.8(0.5)(0.25)=0.10\\).", true],
+      [
+        "Model B likelihood is \\(0.6(0.6)(0.4)=0.144\\), so B fits this sequence better by likelihood.",
+        true,
+      ],
+      [
+        "A fits better because its largest individual probability 0.8 exceeds B's 0.6.",
+        false,
+      ],
+      [
+        "The two likelihoods should be compared by adding their per-token probabilities.",
+        false,
+      ],
     ],
-    explanation:
-      "With one-hot labels, all target mass is on the correct class, so the cross-entropy sum leaves only \\(-\\log q_{\\text{correct}}\\). Incorrect probabilities matter indirectly because probabilities must sum to one, not because they have nonzero one-hot target weights.",
-  },
-  {
-    id: "crash-probability-l3-q17",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "A soft target distribution is \\(p=(0.70,0.20,0.10)\\) for cat, dog, and fox. Which statements about cross-entropy with a model distribution \\(q\\) are correct?",
-    options: [
-      {
-        text: "The loss uses all target weights: \\(-0.70\\log q_{\\text{cat}}-0.20\\log q_{\\text{dog}}-0.10\\log q_{\\text{fox}}\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Soft labels can represent ambiguity, label smoothing, uncertain human labels, or knowledge distillation.",
-        isCorrect: true,
-      },
-      {
-        text: "One-hot cross-entropy is a special case where all target mass is placed on one class.",
-        isCorrect: true,
-      },
-      {
-        text: "Classes with nonzero target probability are ignored as long as the largest model probability is on cat.",
-        isCorrect: false,
-      },
+    "Sequence likelihood rewards assigning probability to every observed step, so one strong token cannot compensate automatically for weaker factors elsewhere. Multiplication gives B the larger joint likelihood even though A has the largest single probability.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q77",
+    "medium",
+    "Why is log-likelihood usually optimized instead of a long raw probability product?",
+    [
+      ["The logarithm turns products into sums.", true],
+      [
+        "Log is strictly increasing, so it preserves which positive likelihood is largest.",
+        true,
+      ],
+      [
+        "Summed log terms are easier to differentiate and aggregate across examples.",
+        true,
+      ],
+      [
+        "Working in log space reduces numerical underflow from multiplying many small probabilities.",
+        true,
+      ],
     ],
-    explanation:
-      "Soft labels require the full cross-entropy sum because more than one class can have nonzero target probability. A model cannot satisfy such a target merely by putting the argmax on cat; it is being trained to match the distributional target more closely.",
-  },
-  {
-    id: "crash-probability-l3-q18",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "The correct class is cat. Model A predicts \\((P(\\text{cat}),P(\\text{dog}))=(0.51,0.49)\\), and Model B predicts \\((0.99,0.01)\\). Which statements are correct?",
-    options: [
-      {
-        text: "Both models are accurate under an argmax decision rule.",
-        isCorrect: true,
-      },
-      {
-        text: "Model B has lower cross-entropy loss because it assigns much more probability to the correct class.",
-        isCorrect: true,
-      },
-      {
-        text: "Both models have the same cross-entropy loss because both choose cat.",
-        isCorrect: false,
-      },
-      {
-        text: "Accuracy captures the difference in confidence between 0.51 and 0.99.",
-        isCorrect: false,
-      },
+    "The logarithm changes representation without changing the maximizing parameters because it is monotonic. Its additive form supports stable computation, minibatch aggregation, and gradients while avoiding tiny products that can round to zero.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q78",
+    "hard",
+    "A sequence has token probabilities 0.9, 0.1, and 0.9 under a model. Which statements are correct?",
+    [
+      ["Its likelihood is \\(0.081\\).", true],
+      ["Its log-likelihood is \\(2\\log0.9+\\log0.1\\).", true],
+      [
+        "The low-probability middle token contributes the largest negative log penalty.",
+        true,
+      ],
+      [
+        "Replacing 0.1 by 0.2 would lower the likelihood because the sequence becomes less surprising.",
+        false,
+      ],
     ],
-    explanation:
-      "Accuracy only checks whether the selected class is correct, so both models count as correct under argmax. Cross-entropy uses the probability assigned to the correct class, so 0.99 gives a much smaller loss than 0.51.",
-  },
-  {
-    id: "crash-probability-l3-q19",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe how cross-entropy or negative log-likelihood handles confident mistakes?",
-    options: [
-      {
-        text: "Assigning \\(q_{\\text{correct}}=0.01\\) gives loss \\(-\\log(0.01)\\approx4.605\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Assigning \\(q_{\\text{correct}}=0.90\\) gives loss \\(-\\log(0.90)\\approx0.105\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The penalty grows rapidly as the probability assigned to the true class approaches zero.",
-        isCorrect: true,
-      },
-      {
-        text: "A confidently wrong model has low loss because high confidence is always rewarded.",
-        isCorrect: false,
-      },
+    "The chain factors multiply, and the logarithms add; the 0.1 token is the bottleneck and has the most negative log probability. Raising its assigned probability increases both likelihood and log-likelihood, making the observed sequence less surprising to the model.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q79",
+    "easy",
+    "Which model is preferred by maximum likelihood on fixed observed data?",
+    [
+      [
+        "The model assigning the larger probability to the complete observed dataset",
+        true,
+      ],
+      [
+        "The model with the largest number of classes regardless of its probabilities",
+        false,
+      ],
+      ["The model whose probabilities are closest to zero", false],
+      [
+        "The model that assigns probability one to an unobserved alternative",
+        false,
+      ],
     ],
-    explanation:
-      "The loss rewards probability assigned to the true label, not confidence by itself. A model that is confident in the wrong class leaves little probability for the correct class, which makes \\(-\\log q_{\\text{correct}}\\) large.",
-  },
-  {
-    id: "crash-probability-l3-q20",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly connect next-token prediction in large language models to cross-entropy?",
-    options: [
-      {
-        text: "At each position, predicting the next token is a classification problem over the vocabulary.",
-        isCorrect: true,
-      },
-      {
-        text: "The target is often represented as a one-hot distribution on the actual next token.",
-        isCorrect: true,
-      },
-      {
-        text: "The per-position loss is \\(-\\log P_\\theta(x_t\\mid x_1,\\ldots,x_{t-1})\\) for the observed token \\(x_t\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Training commonly averages or sums the token-level losses over many positions.",
-        isCorrect: true,
-      },
+    "Maximum likelihood compares parameter settings by the probability they give the data that actually occurred. Model size and probability on unobserved alternatives matter only through how they affect that observed-data probability and any separately chosen regularization.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q80",
+    "medium",
+    "A parameter value has likelihood 0.02 and another has likelihood 0.01 for the same data. Which statements are correct?",
+    [
+      ["The likelihood ratio is \\(0.02/0.01=2\\).", true],
+      ["Its log-likelihood exceeds the second by \\(\\log2\\).", true],
+      [
+        "The first parameter has posterior probability \\(2/3\\) without any prior or normalization.",
+        false,
+      ],
+      [
+        "A likelihood ratio of 2 proves the first model will generalize better.",
+        false,
+      ],
     ],
-    explanation:
-      "Language-model training treats each observed next token as the label for a large vocabulary classification problem. Cross-entropy penalizes low probability on the token that actually appeared, and sequence training aggregates those token-level penalties.",
-  },
-  {
-    id: "crash-probability-l3-q21",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe entropy for a discrete probability distribution?",
-    options: [
-      {
-        text: "Entropy can be written as \\(H(p)=-\\sum_i p_i\\log p_i\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Entropy is high when probability mass is spread across many plausible outcomes.",
-        isCorrect: true,
-      },
-      {
-        text: "Entropy is low when most probability mass is concentrated on one or a few outcomes.",
-        isCorrect: true,
-      },
-      {
-        text: "Entropy requires numeric outcome values and distances between them, so it cannot be used for tokens.",
-        isCorrect: false,
-      },
+    "The likelihood ratio is two, and taking logs turns that ratio into a difference of \\(\\log2\\). Likelihood alone is neither a normalized posterior over parameters nor a guarantee about unseen-data performance.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q81",
+    "hard",
+    "A dataset duplicates every observation once and otherwise keeps the same model. Which statements describe the effect on likelihood?",
+    [
+      [
+        "The new likelihood is the square of the original likelihood under the same factorization.",
+        true,
+      ],
+      ["The new log-likelihood is twice the original log-likelihood.", true],
+      ["The average log-likelihood per observation is unchanged.", true],
+      [
+        "The raw likelihood is unchanged because no new unique outcome was added.",
+        false,
+      ],
     ],
-    explanation:
-      "Entropy measures uncertainty in the probabilities themselves, so it works naturally for categorical outcomes such as labels or tokens. Variance needs numeric values, but entropy only needs a probability distribution over possibilities.",
-  },
-  {
-    id: "crash-probability-l3-q22",
-    chapter: 3,
-    difficulty: "easy",
-    prompt: "Which distribution over yes, no, and maybe has higher entropy?",
-    options: [
-      {
-        text: "\\((0.40,0.35,0.25)\\), because probability mass is more spread out across the three outcomes.",
-        isCorrect: true,
-      },
-      {
-        text: "\\((0.95,0.03,0.02)\\), because one outcome has the largest single probability.",
-        isCorrect: false,
-      },
-      {
-        text: "\\((0.95,0.03,0.02)\\), because lower uncertainty means higher entropy.",
-        isCorrect: false,
-      },
-      {
-        text: "Both distributions have the same entropy because they have the same number of outcomes.",
-        isCorrect: false,
-      },
+    "Duplicating all factors repeats the same product, squaring likelihood and doubling its logarithm. Dividing by the doubled observation count restores the same average, which is why average loss permits comparisons across dataset sizes.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q82",
+    "easy",
+    "Which statements correctly distinguish probability and likelihood?",
+    [
+      [
+        "Probability views \\(P_\\theta(x)\\) across data outcomes x for fixed \\(\\theta\\).",
+        true,
+      ],
+      [
+        "Likelihood views \\(L(\\theta;x)=P_\\theta(x)\\) across parameter values for fixed x.",
+        true,
+      ],
+      [
+        "The same expression \\(P_\\theta(x)\\) can be viewed in either direction depending on what varies.",
+        true,
+      ],
+      [
+        "A likelihood function need not sum or integrate to one over the parameter.",
+        true,
+      ],
     ],
-    explanation:
-      "Entropy is higher when the distribution is less concentrated and more outcomes remain plausible. The distribution \\((0.95,0.03,0.02)\\) is low entropy because it is already highly concentrated on one outcome.",
-  },
-  {
-    id: "crash-probability-l3-q23",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly compare entropy and variance in the context of AI outputs?",
-    options: [
-      {
-        text: "Variance is most natural for numerical random variables.",
-        isCorrect: true,
-      },
-      {
-        text: "Entropy is natural for categorical distributions such as tokens or class labels.",
-        isCorrect: true,
-      },
-      {
-        text: "It is awkward to ask for the variance of labels like cat, dog, and car without assigning arbitrary numbers to them.",
-        isCorrect: true,
-      },
-      {
-        text: "Entropy can measure uncertainty from the probabilities assigned to categorical outcomes.",
-        isCorrect: true,
-      },
+    "The numerical model expression can support two viewpoints: a distribution over data for fixed parameters or a score over parameters for fixed data. Normalization is required in the data direction, not automatically in the likelihood-as-function-of-parameters direction.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q83",
+    "medium",
+    "Two independent batches have likelihoods \\(L_1\\) and \\(L_2\\) under the same model. Which statements are correct for their combined data?",
+    [
+      ["The combined likelihood is \\(L_1L_2\\).", true],
+      ["The combined log-likelihood is \\(\\log L_1+\\log L_2\\).", true],
+      ["The combined likelihood is \\(L_1+L_2\\).", false],
+      [
+        "The lower-likelihood batch can be discarded without changing the objective.",
+        false,
+      ],
     ],
-    explanation:
-      "Variance measures spread around a numerical mean, so it fits numerical outcomes best. Entropy instead measures uncertainty in a probability distribution, which makes it well suited to classes, tokens, and actions.",
-  },
-  {
-    id: "crash-probability-l3-q24",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe temperature as a sampling-time modification of a probability distribution?",
-    options: [
-      {
-        text: "Lower temperature makes high-probability tokens more dominant and tends to reduce randomness.",
-        isCorrect: true,
-      },
-      {
-        text: "Higher temperature spreads probability more evenly and tends to increase diversity.",
-        isCorrect: true,
-      },
-      {
-        text: "Changing temperature affects how outputs are sampled from the model distribution rather than changing what the model has learned.",
-        isCorrect: true,
-      },
-      {
-        text: "Increasing temperature retrains the model so the training-set cross-entropy is automatically lower.",
-        isCorrect: false,
-      },
+    "Independence across the two batches makes their joint data probability a product, which becomes an additive log objective. Both batches contribute evidence; dropping one changes the data and the optimization target.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q84",
+    "hard",
+    "A next-token model gives a correct five-token continuation conditional probabilities \\((0.5,0.4,0.8,0.25,0.5)\\). Which statements are correct?",
+    [
+      [
+        "The continuation likelihood is \\(0.5(0.4)(0.8)(0.25)(0.5)=0.02\\).",
+        true,
+      ],
+      [
+        "Its total log-likelihood is the sum of the five log probabilities.",
+        true,
+      ],
+      [
+        "Improving the 0.25 factor to 0.50 doubles the sequence likelihood if other factors stay fixed.",
+        true,
+      ],
+      [
+        "The sequence likelihood is the arithmetic mean \\((0.5+0.4+0.8+0.25+0.5)/5=0.49\\).",
+        false,
+      ],
     ],
-    explanation:
-      "Temperature changes the sharpness of the distribution used for sampling at generation time. It can make outputs more deterministic or more diverse, but it is not a training update and does not by itself improve the learned likelihood objective.",
-  },
-  {
-    id: "crash-probability-l3-q25",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "In a reinforcement learning policy \\(\\pi(a\\mid s)\\), which statements about entropy are correct?",
-    options: [
-      {
-        text: "A high-entropy policy assigns meaningful probability to several actions and can support exploration.",
-        isCorrect: true,
-      },
-      {
-        text: "A low-entropy policy chooses one action almost always when most probability mass is concentrated there.",
-        isCorrect: true,
-      },
-      {
-        text: "A high-entropy policy always has higher expected return than a low-entropy policy.",
-        isCorrect: false,
-      },
-      {
-        text: "Policy entropy is the same quantity as the expected future return.",
-        isCorrect: false,
-      },
+    "Autoregressive sequence likelihood multiplies the conditional probability at every observed position, giving 0.02. A single factor's ratio scales the whole product, while averaging probabilities does not represent the probability of all tokens occurring in sequence.",
+  ),
+
+  // Negative log-likelihood and cross-entropy
+  makeQuestion(
+    "crash-probability-l3-q85",
+    "easy",
+    "A model assigns probability 0.5 to the correct class. What is its natural-log negative log-likelihood for this example?",
+    [
+      ["\\(-\\log0.5=\\log2\\approx0.693\\)", true],
+      ["\\(1-0.5=0.5\\)", false],
+      ["\\(\\log0.5\\approx-0.693\\)", false],
+      ["\\(-\\log1=0\\)", false],
     ],
-    explanation:
-      "Entropy describes how spread out the action probabilities are, not how much reward the policy will obtain. Exploration can be useful, but a policy still needs to choose actions that lead to reward in the environment.",
-  },
-  {
-    id: "crash-probability-l3-q26",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Using natural logs, compare distributions \\(A=(0.5,0.5)\\) and \\(B=(0.9,0.1)\\). Which statement is correct?",
-    options: [
-      {
-        text: "\\(H(A)=\\log 2\\) and \\(H(A)>H(B)\\), because \\(A\\) is more evenly spread.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(H(B)=\\log 2\\), because both distributions have two outcomes.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(H(A)=0\\), because the two probabilities in \\(A\\) are equal.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(H(B)>H(A)\\), because \\(B\\) has a larger maximum probability.",
-        isCorrect: false,
-      },
+    "Negative log-likelihood negates the log probability assigned to the observed class, yielding about 0.693. Raw error, unnegated log probability, and the loss for probability one are different quantities.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q86",
+    "easy",
+    "Which changes lower the negative log-likelihood of a fixed correct class?",
+    [
+      ["Increasing its predicted probability from 0.4 to 0.7", true],
+      ["Increasing its logit relative to competing logits", true],
+      ["Moving its probability from 0.4 to 0.1", false],
+      [
+        "Assigning more probability to an incorrect class while holding the correct probability fixed and normalization unchanged",
+        false,
+      ],
     ],
-    explanation:
-      "For two outcomes, entropy is maximized by the uniform distribution \\((0.5,0.5)\\), where the uncertainty is one natural-log unit of \\(\\log 2\\). Concentrating mass at \\((0.9,0.1)\\) lowers uncertainty even though the number of possible outcomes is unchanged.",
-  },
-  {
-    id: "crash-probability-l3-q27",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly describe the supervised neural-network training pipeline for probabilistic prediction?",
-    options: [
-      {
-        text: "An input is processed by a neural network to produce logits.",
-        isCorrect: true,
-      },
-      {
-        text: "Softmax can convert logits into a probability distribution over classes or tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "A loss such as negative log-likelihood or cross-entropy compares the predicted distribution to the observed target.",
-        isCorrect: true,
-      },
-      {
-        text: "Gradient updates adjust parameters so the model can assign higher probability to observed correct outputs.",
-        isCorrect: true,
-      },
+    "The function \\(-\\log p\\) decreases as the correct-class probability rises, and a larger relative logit tends to produce that rise. Lowering correct probability increases loss, while categorical normalization prevents freely adding mass to competitors without changing something else.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q87",
+    "medium",
+    "For one-hot target \\(y=(0,1,0)\\) and prediction \\(p=(0.2,0.5,0.3)\\), which statements are correct?",
+    [
+      ["Cross-entropy is \\(-\\sum_i y_i\\log p_i=-\\log0.5\\).", true],
+      [
+        "Only the target class contributes directly because the other target entries are zero.",
+        true,
+      ],
+      [
+        "This cross-entropy equals the example's negative log-likelihood.",
+        true,
+      ],
+      ["Cross-entropy is \\(-\\log0.2-\\log0.5-\\log0.3\\).", false],
     ],
-    explanation:
-      "The core pipeline is input to network, logits, softmax probabilities, loss, and parameter update. This connects the notation \\(P(y\\mid x)\\) to the practical mechanics of neural-network training.",
-  },
-  {
-    id: "crash-probability-l3-q28",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "In the cross-entropy expression \\(H(p,q)=-\\sum_i p_i\\log q_i\\), which interpretations of \\(p\\) and \\(q\\) are correct?",
-    options: [
-      {
-        text: "\\(p\\) is the target distribution, such as a one-hot label or a soft label.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(q\\) is the model distribution produced after normalization.",
-        isCorrect: true,
-      },
-      {
-        text: "For one-hot cat labels, \\(p_{\\text{cat}}=1\\) and the other target probabilities are zero.",
-        isCorrect: true,
-      },
-      {
-        text: "For soft labels, multiple entries of \\(p\\) can be nonzero and should be included in the loss.",
-        isCorrect: true,
-      },
+    "A one-hot target selects the log probability of the observed class, making categorical cross-entropy identical to negative log-likelihood. Summing every negative log would pretend all three mutually exclusive classes were simultaneously observed.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q88",
+    "hard",
+    "A soft target is \\(q=(0.7,0.3)\\). Which statements correctly compare predictions \\(p_A=(0.7,0.3)\\) and \\(p_B=(0.9,0.1)\\)?",
+    [
+      ["Cross-entropy for A is \\(-0.7\\log0.7-0.3\\log0.3\\).", true],
+      [
+        "A has lower cross-entropy than B because it matches the full target distribution.",
+        true,
+      ],
+      [
+        "B has \\(H(q,p_B)=0\\) because its argmax matches the target's largest class.",
+        false,
+      ],
+      [
+        "Only \\(-0.7\\log p_1\\) matters because soft targets behave like one-hot labels.",
+        false,
+      ],
     ],
-    explanation:
-      "Cross-entropy compares a target distribution with the model's predicted distribution. The one-hot case collapses to negative log-likelihood for the correct class, while soft labels keep multiple weighted terms.",
-  },
-  {
-    id: "crash-probability-l3-q29",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "After a training example produces high loss because the correct class has low probability, which effects are consistent with a gradient-based update on softmax-cross-entropy?",
-    options: [
-      {
-        text: "The model parameters are adjusted rather than changing the observed label in the dataset.",
-        isCorrect: true,
-      },
-      {
-        text: "If the update increases \\(q_{\\text{correct}}\\) while other conditions are comparable, the negative log-likelihood for that example decreases.",
-        isCorrect: true,
-      },
-      {
-        text: "Changing logits can change normalized probabilities because softmax couples the classes through a shared denominator.",
-        isCorrect: true,
-      },
-      {
-        text: "Repeating this across examples is a practical way to increase probability assigned to observed outputs.",
-        isCorrect: true,
-      },
+    "With soft targets, every positive target component weights a log predicted probability, so matching only the top class is insufficient. Prediction A reproduces q, while B places too little mass on the target's second component and incurs extra cross-entropy.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q89",
+    "medium",
+    "Which statements about negative log-likelihood (NLL) are correct?",
+    [
+      [
+        "Minimizing NLL is equivalent to maximizing likelihood on the same data.",
+        true,
+      ],
+      ["A correct-class probability near one gives loss near zero.", true],
+      [
+        "A correct-class probability approaching zero gives an increasingly large loss.",
+        true,
+      ],
+      [
+        "Dataset NLL adds the per-observation negative log probabilities under the usual factorization.",
+        true,
+      ],
     ],
-    explanation:
-      "Training treats the observed data as fixed and updates parameters so the model distribution better fits that data. Because softmax probabilities are coupled, changing logits can redistribute probability mass and reduce the loss when the correct label receives more probability.",
-  },
-  {
-    id: "crash-probability-l3-q30",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Mathematically, what happens to likelihood-based objectives if a model assigns probability zero to one observed correct label?",
-    options: [
-      {
-        text: "The product likelihood for the dataset becomes zero if that example is included.",
-        isCorrect: true,
-      },
-      {
-        text: "The log-likelihood includes \\(\\log 0\\), which is not finite and behaves like \\(-\\infty\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The negative log-likelihood has an infinite penalty in the idealized mathematical objective.",
-        isCorrect: true,
-      },
-      {
-        text: "This illustrates why near-zero probability on the observed answer is punished so strongly.",
-        isCorrect: true,
-      },
+    "Negating log-likelihood turns a maximization into the minimization convention used by optimizers. The logarithm strongly penalizes assigning tiny probability to an observed outcome, and independent data factors become additive per-example losses.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q90",
+    "hard",
+    "Two examples have correct-class probabilities 0.8 and 0.2. Which statements correctly describe their mean NLL?",
+    [
+      ["It is \\(-[\\log0.8+\\log0.2]/2\\).", true],
+      ["It equals \\(-\\log\\sqrt{0.8(0.2)}\\).", true],
+      ["The 0.2 example contributes the larger loss.", true],
+      ["It equals \\(-\\log[(0.8+0.2)/2]=-\\log0.5\\).", false],
     ],
-    explanation:
-      "A single zero probability makes a product likelihood zero and sends the log-likelihood to negative infinity in the mathematical limit. Softmax with finite logits usually gives positive probabilities, but the near-zero case still creates a very large NLL penalty.",
-  },
-  {
-    id: "crash-probability-l3-q31",
-    chapter: 3,
-    difficulty: "easy",
-    prompt:
-      "Which properties help softmax convert arbitrary logits into a valid categorical distribution?",
-    options: [
-      {
-        text: "Exponentials make each unnormalized score positive.",
-        isCorrect: true,
-      },
-      {
-        text: "Dividing by the sum of exponentials makes the probabilities sum to one.",
-        isCorrect: true,
-      },
-      {
-        text: "Higher logits still receive higher probabilities than lower logits.",
-        isCorrect: true,
-      },
-      {
-        text: "Negative logits can still produce positive probabilities after exponentiation.",
-        isCorrect: true,
-      },
+    "Averaging log losses is equivalent to taking the negative log of the geometric mean probability, not the arithmetic mean. The smaller probability produces a much larger penalty, reflecting the model's greater surprise at that observed label.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q91",
+    "easy",
+    "A model assigns probability 1 to the observed correct class. What is the categorical negative log-likelihood?",
+    [
+      ["0", true],
+      ["1", false],
+      ["\\(-1\\)", false],
+      ["Undefined because logarithms cannot use probabilities", false],
     ],
-    explanation:
-      "Softmax handles arbitrary real-valued logits by exponentiating and normalizing them. This produces positive probabilities that sum to one while preserving the ordering induced by the original logits.",
-  },
-  {
-    id: "crash-probability-l3-q32",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "For one-hot classification cross-entropy, which statements correctly describe how incorrect classes affect the loss?",
-    options: [
-      {
-        text: "The direct loss term is \\(-\\log q_{\\text{correct}}\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Incorrect classes matter indirectly because increasing \\(q_{\\text{correct}}\\) requires probability mass to move away from other classes.",
-        isCorrect: true,
-      },
-      {
-        text: "Increasing the correct-class probability from 0.70 to 0.80 lowers the loss even if the incorrect classes share the remaining mass differently.",
-        isCorrect: true,
-      },
-      {
-        text: "The largest incorrect-class probability contributes a separate positive term even when its one-hot target weight is zero.",
-        isCorrect: false,
-      },
+    "Because \\(\\log1=0\\), a perfectly predicted observed class incurs zero negative log-likelihood. Logarithms are defined for positive probabilities; the problematic boundary is probability zero, whose negative log diverges.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q92",
+    "medium",
+    "A batch has per-example NLL values 0.2, 0.8, 0.4, and 0.6. Which statements are correct?",
+    [
+      ["The mean batch loss is \\((0.2+0.8+0.4+0.6)/4=0.5\\).", true],
+      [
+        "The summed NLL is 2.0 and corresponds to the negative log of the batch likelihood under factorization.",
+        true,
+      ],
+      [
+        "The mean loss is \\(\\bar L=2.0\\) because likelihood multiplies.",
+        false,
+      ],
+      ["The lowest individual loss 0.2 is the correct batch objective.", false],
     ],
-    explanation:
-      "With a one-hot target, the sum directly keeps only the correct class term. Incorrect probabilities still matter through the normalization constraint, because probability assigned to them is probability not assigned to the correct class.",
-  },
-  {
-    id: "crash-probability-l3-q33",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "For an LLM token sequence of length \\(T\\), which statements match the average next-token negative log-likelihood objective?",
-    options: [
-      {
-        text: "A common form is \\(-\\frac{1}{T}\\sum_{t=1}^T\\log P_\\theta(x_t\\mid x_1,\\ldots,x_{t-1})\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Each term penalizes low probability assigned to the observed token \\(x_t\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Averaging by \\(T\\) gives a per-token loss scale that is easier to compare across sequence lengths.",
-        isCorrect: true,
-      },
-      {
-        text: "The conditioning context grows from previous tokens in an autoregressive model.",
-        isCorrect: true,
-      },
+    "Summed NLL aggregates the joint log objective, while dividing by batch size gives the common mean used for scale-stable optimization. Selecting a minimum ignores the other observations, and multiplication occurs before taking logs rather than among NLL values.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q93",
+    "hard",
+    "A language model's average token NLL is \\(\\log4\\). Which statements are correct?",
+    [
+      ["Its perplexity is \\(e^{\\log4}=4\\).", true],
+      [
+        "The geometric mean probability assigned to observed tokens is \\(e^{-\\log4}=1/4\\).",
+        true,
+      ],
+      ["Lowering average NLL lowers perplexity.", true],
+      [
+        "Perplexity 4 means exactly four vocabulary tokens have nonzero probability at every step.",
+        false,
+      ],
     ],
-    explanation:
-      "The LLM objective sums or averages the log-probability penalties for observed next tokens. The average form scales the loss per token while preserving the goal of assigning high probability to the actual sequence.",
-  },
-  {
-    id: "crash-probability-l3-q34",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "For a fixed dataset of \\(n\\) examples, which optimization objectives choose the same parameter values when probabilities are positive?",
-    options: [
-      {
-        text: "Maximizing \\(\\prod_i P_\\theta(y_i\\mid x_i)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Maximizing \\(\\sum_i\\log P_\\theta(y_i\\mid x_i)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Minimizing \\(-\\sum_i\\log P_\\theta(y_i\\mid x_i)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Minimizing \\(-\\frac{1}{n}\\sum_i\\log P_\\theta(y_i\\mid x_i)\\).",
-        isCorrect: true,
-      },
+    "Perplexity exponentiates average negative log-likelihood, so it is inversely related to the geometric mean observed-token probability. Its effective-choice interpretation is not a claim that the support literally contains four tokens at every context.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q94",
+    "easy",
+    "Which statements connect cross-entropy training to classification and language modeling?",
+    [
+      [
+        "The target label or next token identifies which observed outcome receives credit.",
+        true,
+      ],
+      [
+        "The model is penalized for assigning little probability to that observed outcome.",
+        true,
+      ],
+      [
+        "Loss is averaged or summed across training examples or token positions.",
+        true,
+      ],
+      [
+        "Optimization changes model parameters so future predicted distributions better fit data.",
+        true,
+      ],
     ],
-    explanation:
-      "Log is monotonic, so maximizing likelihood and maximizing log-likelihood are equivalent for positive probabilities. Negating converts maximization into minimization, and dividing by fixed \\(n\\) only rescales the objective.",
-  },
-  {
-    id: "crash-probability-l3-q35",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which AI examples correctly instantiate the idea of producing a probability distribution from logits?",
-    options: [
-      {
-        text: "An image classifier can map class logits to \\(P(\\text{class}\\mid\\text{image})\\).",
-        isCorrect: true,
-      },
-      {
-        text: "An LLM can map vocabulary-token logits to \\(P(\\text{next token}\\mid\\text{context})\\).",
-        isCorrect: true,
-      },
-      {
-        text: "A policy network can map action logits to \\(\\pi(a\\mid s)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "A classifier, language model, or policy can still separate probability estimation from the later decision or sampling step.",
-        isCorrect: true,
-      },
+    "Both tasks train normalized output distributions against observed outcomes, typically using one-hot targets and per-position negative log probabilities. Aggregating those losses produces an objective whose gradients adjust the logits and the network that generated them.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q95",
+    "medium",
+    "Model A gives the correct class probability 0.6 and Model B gives 0.3 on the same example. Which comparisons are correct?",
+    [
+      ["A has lower NLL because \\(-\\log0.6<-\\log0.3\\).", true],
+      [
+        "A has likelihood ratio \\(0.6/0.3=2\\) relative to B on this example.",
+        true,
+      ],
+      ["B has lower loss because \\(-\\log0.3<-\\log0.6\\).", false],
+      ["Their losses are equal if their argmax labels match.", false],
     ],
-    explanation:
-      "Classifiers, LLMs, and policy networks all commonly produce logits that are normalized into probabilities. The resulting distribution can then support classification, token generation, or action sampling without collapsing probability estimation and decision-making into the same concept.",
-  },
-  {
-    id: "crash-probability-l3-q36",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements about softmax probabilities and final choices are correct?",
-    options: [
-      {
-        text: "Softmax preserves ranking, so the largest logit receives the largest probability.",
-        isCorrect: true,
-      },
-      {
-        text: "An argmax decision rule chooses the class or token with the largest softmax probability.",
-        isCorrect: true,
-      },
-      {
-        text: "A stochastic sampler must always output the highest-probability token.",
-        isCorrect: false,
-      },
-      {
-        text: "A class with a lower logit can never be sampled because softmax gives it zero probability.",
-        isCorrect: false,
-      },
+    "NLL evaluates probability assigned to the observed outcome, so A both doubles the likelihood contribution and receives the smaller loss. Matching argmax decisions can hide substantial probability and loss differences.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q96",
+    "hard",
+    "A target distribution is \\(q=(0.5,0.5,0)\\). Which statements about cross-entropy \\(H(q,p)\\) are correct?",
+    [
+      ["It is \\(-0.5\\log p_1-0.5\\log p_2\\).", true],
+      [
+        "Putting zero probability on either of the first two classes makes the cross-entropy diverge.",
+        true,
+      ],
+      [
+        "Among normalized p, matching \\(p=(0.5,0.5,0)\\) minimizes the cross-entropy.",
+        true,
+      ],
+      [
+        "Class 3 contributes \\(-\\log p_3\\) despite its target weight being zero.",
+        false,
+      ],
     ],
-    explanation:
-      "Softmax ranking and argmax decisions line up, but sampling can still choose lower-probability outputs when they have positive probability. This is why the distribution contains more information than a single chosen output.",
-  },
-  {
-    id: "crash-probability-l3-q37",
-    chapter: 3,
-    difficulty: "medium",
-    type: "assertion-reason",
-    prompt:
-      "Assertion: Softmax outputs a valid probability distribution over classes.\n\nReason: The softmax denominator is the sum of the original logits, so the raw scores themselves are forced to sum to one.",
-    options: [
-      { text: "Assertion is true, Reason is false.", isCorrect: true },
-      { text: "Assertion is false, Reason is true.", isCorrect: false },
-      { text: "Both are false.", isCorrect: false },
-      {
-        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
-      {
-        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
+    "Cross-entropy weights each predicted log probability by the target mass, so the zero-target class has no direct term. Both positive-target classes must receive probability, and the optimum reproduces the target distribution rather than collapsing onto only one of them.",
+  ),
+
+  // Entropy, temperature, and calibration
+  makeQuestion(
+    "crash-probability-l3-q97",
+    "easy",
+    "Which of these three-class distributions has the highest entropy?",
+    [
+      ["\\((1/3,1/3,1/3)\\)", true],
+      ["\\((0.8,0.1,0.1)\\)", false],
+      ["\\((1,0,0)\\)", false],
+      ["\\((0.98,0.01,0.01)\\)", false],
     ],
-    explanation:
-      "The assertion is true because softmax produces positive probabilities that sum to one. The reason is false because the denominator is the sum of exponentiated logits, not the sum of the original raw logits.",
-  },
-  {
-    id: "crash-probability-l3-q38",
-    chapter: 3,
-    difficulty: "medium",
-    type: "assertion-reason",
-    prompt:
-      "Assertion: In maximum likelihood training, the observed dataset is the quantity adjusted by the optimizer.\n\nReason: The model parameters \\(\\theta\\) are changed so observed labels or tokens receive higher probability.",
-    options: [
-      { text: "Assertion is true, Reason is false.", isCorrect: false },
-      { text: "Assertion is false, Reason is true.", isCorrect: true },
-      { text: "Both are false.", isCorrect: false },
-      {
-        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
-      {
-        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
+    "Entropy is largest when probability mass is spread uniformly across the available outcomes. Concentrated distributions are more predictable and have lower entropy, with a point mass such as \\((1,0,0)\\) attaining zero.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q98",
+    "easy",
+    "Which comparisons between \\((0.5,0.5)\\) and \\((0.9,0.1)\\) are correct?",
+    [
+      ["The first distribution has higher entropy.", true],
+      ["The second distribution is more concentrated on one outcome.", true],
+      ["The second has higher entropy because 0.9 is a larger number.", false],
+      [
+        "Both have zero entropy because they each contain two probabilities.",
+        false,
+      ],
     ],
-    explanation:
-      "The assertion is false because likelihood treats the observed data as fixed during training. The reason is true: optimization changes parameters so the model assigns higher probability to what actually occurred in the dataset.",
-  },
-  {
-    id: "crash-probability-l3-q39",
-    chapter: 3,
-    difficulty: "hard",
-    type: "assertion-reason",
-    prompt:
-      "Assertion: With one-hot labels, classification cross-entropy equals the negative log-likelihood of the correct class.\n\nReason: The target distribution puts all probability mass on the correct class, so \\(-\\sum_i p_i\\log q_i\\) reduces to \\(-\\log q_{\\text{correct}}\\).",
-    options: [
-      { text: "Assertion is true, Reason is false.", isCorrect: false },
-      { text: "Assertion is false, Reason is true.", isCorrect: false },
-      { text: "Both are false.", isCorrect: false },
-      {
-        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
-        isCorrect: true,
-      },
-      {
-        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
+    "Entropy measures uncertainty across the whole distribution, not the magnitude of its largest entry in isolation. The balanced distribution is less predictable, while the 0.9/0.1 distribution concentrates mass and therefore has lower entropy.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q99",
+    "medium",
+    "For a fair binary distribution, which entropy statements are correct when natural logarithms are used?",
+    [
+      ["\\(H=-2(0.5\\log0.5)=\\log2\\).", true],
+      ["The entropy is larger than that of \\((1,0)\\).", true],
+      ["Swapping the two probabilities leaves entropy unchanged.", true],
+      [
+        "Entropy is \\(0.5\\) because only the largest probability is counted.",
+        false,
+      ],
     ],
-    explanation:
-      "Both statements are true, and the reason explains the assertion by showing how the cross-entropy sum collapses under a one-hot target. The incorrect classes have zero target weight in the direct sum, leaving the negative log probability of the observed correct class.",
-  },
-  {
-    id: "crash-probability-l3-q40",
-    chapter: 3,
-    difficulty: "medium",
-    type: "assertion-reason",
-    prompt:
-      "Assertion: A low-entropy next-token distribution is more concentrated than a high-entropy next-token distribution.\n\nReason: Softmax maps logits to positive probabilities that sum to one.",
-    options: [
-      { text: "Assertion is true, Reason is false.", isCorrect: false },
-      { text: "Assertion is false, Reason is true.", isCorrect: false },
-      { text: "Both are false.", isCorrect: false },
-      {
-        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
-      {
-        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
-        isCorrect: true,
-      },
+    "Entropy sums \\(-p_i\\log p_i\\) over every outcome, giving \\(\\log2\\) for a fair binary choice and zero for a deterministic one. The formula is symmetric in outcome labels, so reordering probabilities cannot change uncertainty.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q100",
+    "hard",
+    "A model's logits are divided by temperature T before softmax. Which statements correctly compare \\(T=0.5\\) with \\(T=2\\)?",
+    [
+      [
+        "\\(T=0.5\\) enlarges logit gaps and produces a sharper distribution.",
+        true,
+      ],
+      ["\\(T=2\\) shrinks logit gaps and generally raises entropy.", true],
+      [
+        "Higher temperature changes which logit is largest whenever logits are distinct.",
+        false,
+      ],
+      [
+        "Temperature retrains the model parameters before each token is sampled.",
+        false,
+      ],
     ],
-    explanation:
-      "Both statements are true: low entropy means probability mass is more concentrated, and softmax does produce valid probabilities from logits. The reason does not explain the entropy comparison, because normalization alone does not say whether the resulting distribution is concentrated or spread out.",
-  },
-  {
-    id: "crash-probability-l3-q41",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "For logits \\(z=(4,1,-2)\\) and softmax probabilities \\(q_i=\\frac{e^{z_i}}{\\sum_j e^{z_j}}\\), which statement is correct?",
-    options: [
-      {
-        text: "The odds ratio \\(q_1/q_2\\) is \\(e^{4-1}=e^3\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The probability difference \\(q_1-q_2\\) is exactly \\(4-1=3\\).",
-        isCorrect: false,
-      },
-      {
-        text: "The third class receives probability zero because its logit is negative.",
-        isCorrect: false,
-      },
-      {
-        text: "Subtracting 4 from all logits makes the first class probability exactly one.",
-        isCorrect: false,
-      },
+    "Dividing by a small positive T magnifies score differences, while a large T flattens them without changing their ordering. Temperature is a decoding transformation of a fixed logit vector, not a new training pass or a source of new knowledge.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q101",
+    "medium",
+    "Which statements correctly distinguish entropy, cross-entropy, and negative log-likelihood?",
+    [
+      ["Entropy summarizes uncertainty within one distribution.", true],
+      [
+        "Cross-entropy scores predicted probabilities using a target distribution.",
+        true,
+      ],
+      [
+        "With one-hot targets, per-example cross-entropy equals negative log-likelihood.",
+        true,
+      ],
+      [
+        "All three use logarithms and probability weights but answer different questions.",
+        true,
+      ],
     ],
-    explanation:
-      "Softmax odds between two classes depend only on the difference between their logits, so \\(q_1/q_2=e^{z_1-z_2}\\). Probability differences are not logit differences, negative logits still exponentiate to positive values, and a common shift does not change any softmax probability.",
-  },
-  {
-    id: "crash-probability-l3-q42",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Let \\(q_i(T)=\\frac{e^{z_i/T}}{\\sum_j e^{z_j/T}}\\) for temperature \\(T>0\\). Which statements are correct?",
-    options: [
-      {
-        text: "For two logits with \\(z_a>z_b\\), lowering \\(T\\) below 1 increases the odds ratio \\(q_a(T)/q_b(T)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "As \\(T\\to\\infty\\), the distribution approaches uniform over the classes with finite logits.",
-        isCorrect: true,
-      },
-      {
-        text: "A positive temperature can reverse the ranking of two unequal logits.",
-        isCorrect: false,
-      },
-      {
-        text: "Changing \\(T\\) changes the learned parameters \\(\\theta\\) in the same way as a gradient update.",
-        isCorrect: false,
-      },
+    "Entropy depends only on a distribution's own mass, whereas cross-entropy compares target weights with model probabilities. A one-hot target selects the observed class, recovering NLL, but that special equality does not erase the conceptual distinction among the quantities.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q102",
+    "hard",
+    "A binary classifier changes predictions from \\((0.6,0.4)\\) to \\((0.9,0.1)\\) while the first class is correct. Which statements are correct?",
+    [
+      [
+        "The correct-class NLL decreases from \\(-\\log0.6\\) to \\(-\\log0.9\\).",
+        true,
+      ],
+      [
+        "The entropy satisfies \\(H(0.9,0.1)<H(0.6,0.4)\\) because mass becomes more concentrated.",
+        true,
+      ],
+      [
+        "If the first class had been wrong, the sharper prediction would incur a larger NLL.",
+        true,
+      ],
+      ["Lower entropy guarantees better calibration across a dataset.", false],
     ],
-    explanation:
-      "Temperature rescales logit differences: \\(q_a/q_b=e^{(z_a-z_b)/T}\\), so smaller positive \\(T\\) sharpens odds and very large \\(T\\) washes finite differences toward uniformity. Positive rescaling preserves rankings, and sampling temperature is not itself a training update to the model parameters.",
-  },
-  {
-    id: "crash-probability-l3-q43",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "For one example with one-hot target class \\(c\\), softmax probabilities \\(q_j\\), and loss \\(\\ell=-\\log q_c\\), which gradient statements are correct?",
-    options: [
-      {
-        text: "For the correct class, \\(\\frac{\\partial \\ell}{\\partial z_c}=q_c-1\\).",
-        isCorrect: true,
-      },
-      {
-        text: "For an incorrect class \\(j\\neq c\\), \\(\\frac{\\partial \\ell}{\\partial z_j}=q_j\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The gradient components over all logits sum to zero.",
-        isCorrect: true,
-      },
-      {
-        text: "Increasing the correct-class logit while holding other logits fixed increases the loss.",
-        isCorrect: false,
-      },
+    "Sharpening toward the correct outcome improves this example's likelihood and lowers entropy, but sharpening toward a wrong outcome is punished strongly. Calibration is an empirical frequency property across predictions, so confidence alone cannot guarantee it.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q103",
+    "easy",
+    "A model makes many predictions at confidence 0.70, and about 70% are correct. What property does this illustrate at that confidence level?",
+    [
+      ["Calibration", true],
+      ["Maximum entropy", false],
+      ["Zero cross-entropy", false],
+      ["Class independence", false],
     ],
-    explanation:
-      "For softmax plus one-hot cross-entropy, the logit gradient has the compact form \\(q-p\\). The correct-class component is negative when \\(q_c<1\\), so gradient descent tends to raise the correct logit relative to the others, while incorrect-class components push their logits down.",
-  },
-  {
-    id: "crash-probability-l3-q44",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "For a two-class softmax with logits \\(z_1,z_2\\), which statements are correct?",
-    options: [
-      {
-        text: "\\(q_1=\\frac{e^{z_1}}{e^{z_1}+e^{z_2}}=\\frac{1}{1+e^{-(z_1-z_2)}}\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The log odds satisfy \\(\\log(q_1/q_2)=z_1-z_2\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Adding the same constant to \\(z_1\\) and \\(z_2\\) leaves both probabilities unchanged.",
-        isCorrect: true,
-      },
-      {
-        text: "For a positive example of class 1, the loss can be written as \\(-\\log q_1\\).",
-        isCorrect: true,
-      },
+    "Calibration aligns stated probabilities with observed frequencies in comparable forecast groups. It does not require a uniform distribution, zero training loss, or independence among class events. The comparison must use proportions from repeated forecasts rather than one outcome.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q104",
+    "medium",
+    "In a confidence bin, a model reports 0.80 on 500 predictions and gets 350 correct. Which statements are correct?",
+    [
+      ["Observed accuracy is \\(350/500=0.70\\).", true],
+      ["The model is overconfident by 0.10 in this bin.", true],
+      [
+        "The model is underconfident by \\(0.80-0.70=0.10\\) because 350 is greater than 80.",
+        false,
+      ],
+      [
+        "This bin alone determines the model's entropy on every prediction.",
+        false,
+      ],
     ],
-    explanation:
-      "The two-class softmax reduces to the logistic sigmoid applied to the logit difference. This makes the log-odds interpretation explicit, shows common-shift invariance, and connects binary classification loss to the same negative log-likelihood principle.",
-  },
-  {
-    id: "crash-probability-l3-q45",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "A model assigns correct-label probabilities \\(0.9\\) and \\(0.1\\) to two examples. Which statement correctly describes the average negative log-likelihood?",
-    options: [
-      {
-        text: "It is \\(-\\frac{1}{2}(\\log0.9+\\log0.1)=-\\log\\sqrt{0.09}\\approx1.204\\).",
-        isCorrect: true,
-      },
-      {
-        text: "It is \\(-\\log((0.9+0.1)/2)\\approx0.693\\) because likelihood uses the arithmetic mean probability.",
-        isCorrect: false,
-      },
-      {
-        text: "It is \\(0.9\\cdot0.1=0.09\\) because average NLL is the product likelihood.",
-        isCorrect: false,
-      },
-      {
-        text: "It changes if the two probabilities are assigned to the examples in the opposite order.",
-        isCorrect: false,
-      },
+    "The relevant comparison is between two proportions, reported confidence 0.80 and observed frequency 0.70, yielding overconfidence. The raw count is not comparable with a percentage, and calibration-bin data do not reconstruct each prediction's entropy.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q105",
+    "hard",
+    "Temperature scaling divides every logit by one learned positive scalar on validation data. Which statements are correct?",
+    [
+      [
+        "It preserves the class ranking and therefore preserves argmax predictions.",
+        true,
+      ],
+      [
+        "It can adjust confidence concentration without changing model features.",
+        true,
+      ],
+      [
+        "A temperature above one can soften an overconfident distribution.",
+        true,
+      ],
+      [
+        "It guarantees calibrated probabilities under every future distribution shift.",
+        false,
+      ],
     ],
-    explanation:
-      "Average NLL is the negative mean of log probabilities, which equals the negative log of the geometric mean of the correct-label probabilities. It is not the arithmetic-mean loss, not the raw likelihood product, and it is symmetric in the examples.",
-  },
-  {
-    id: "crash-probability-l3-q46",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "For an autoregressive token sequence \\(x_1,\\ldots,x_T\\), which statements correctly interpret \\(\\prod_{t=1}^T P_\\theta(x_t\\mid x_1,\\ldots,x_{t-1})\\)?",
-    options: [
-      {
-        text: "It is a chain-rule factorization of the probability assigned to the observed sequence under the model.",
-        isCorrect: true,
-      },
-      {
-        text: "It multiplies probabilities of the observed tokens, each conditioned on the previous context.",
-        isCorrect: true,
-      },
-      {
-        text: "It assumes the tokens are independent because all factors are multiplied.",
-        isCorrect: false,
-      },
-      {
-        text: "It requires summing over all vocabulary tokens at every position before any observed-token probability is used.",
-        isCorrect: false,
-      },
+    "A shared positive scale leaves logit order intact but changes score gaps and probability sharpness, which can improve validation calibration. That fitted relationship may fail after data shift, so scaling is not a universal guarantee.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q106",
+    "easy",
+    "Which statements about entropy are correct?",
+    [
+      ["A deterministic categorical distribution has entropy zero.", true],
+      [
+        "A uniform distribution over a fixed finite support has maximum entropy.",
+        true,
+      ],
+      ["Entropy depends on the whole probability distribution.", true],
+      [
+        "Changing decoding temperature can change entropy without changing model weights.",
+        true,
+      ],
     ],
-    explanation:
-      "The product is the standard left-to-right decomposition of a sequence probability into conditional next-token probabilities. Multiplication does not mean token independence here, because each factor can condition on the previous tokens.",
-  },
-  {
-    id: "crash-probability-l3-q47",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "For classes ordered as \\((\\text{cat},\\text{dog},\\text{fox})\\), a soft target is \\(p=(0.7,0.2,0.1)\\). Model A predicts \\(q_A=(0.7,0.2,0.1)\\), while Model B predicts \\(q_B=(0.9,0.05,0.05)\\). Which statements are correct?",
-    options: [
-      {
-        text: "Model A minimizes cross-entropy among model distributions that can match \\(p\\) exactly.",
-        isCorrect: true,
-      },
-      {
-        text: "Model B can have the correct argmax class while still being worse under soft-label cross-entropy.",
-        isCorrect: true,
-      },
-      {
-        text: "The loss for soft labels includes terms for dog and fox because their target probabilities are nonzero.",
-        isCorrect: true,
-      },
-      {
-        text: "Soft-label cross-entropy ignores all classes except the largest target-probability class.",
-        isCorrect: false,
-      },
+    "Entropy measures distributional uncertainty, ranging from zero for a point mass to its maximum at uniformity on fixed support. Because temperature reshapes probabilities produced from the same logits, it can change entropy at inference time without retraining.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q107",
+    "medium",
+    "Two predictions have equal argmax class: A is \\((0.51,0.49)\\), B is \\((0.99,0.01)\\). Which statements are correct?",
+    [
+      ["A has higher entropy than B.", true],
+      ["B assigns lower NLL if the first class is observed.", true],
+      [
+        "They communicate identical uncertainty because the chosen class matches.",
+        false,
+      ],
+      [
+        "B must be better calibrated on a dataset because it is more confident.",
+        false,
+      ],
     ],
-    explanation:
-      "Soft-label cross-entropy trains the whole predicted distribution, not only the most likely class. A model can put the argmax on the same class but still assign too little probability to other target-supported outcomes, increasing the distributional mismatch.",
-  },
-  {
-    id: "crash-probability-l3-q48",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "Which statements about \\(-\\log q_{\\text{correct}}\\) are correct for \\(0<q_{\\text{correct}}\\leq1\\)?",
-    options: [
-      {
-        text: "The loss is nonnegative.",
-        isCorrect: true,
-      },
-      {
-        text: "The loss is zero exactly when the correct answer receives probability one.",
-        isCorrect: true,
-      },
-      {
-        text: "The loss increases without bound as the correct-answer probability approaches zero.",
-        isCorrect: true,
-      },
-      {
-        text: "For independent examples, total NLL adds the per-example losses.",
-        isCorrect: true,
-      },
+    "A is nearly balanced and therefore more uncertain, while B strongly favors the observed first class and gives it smaller example loss. Whether that confidence matches long-run frequencies requires calibration evidence beyond these two distributions.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q108",
+    "hard",
+    "A four-class distribution changes from uniform \\((0.25,0.25,0.25,0.25)\\) toward one class while remaining normalized. Which statements are correct?",
+    [
+      [
+        "Its entropy decreases as the distribution becomes more concentrated.",
+        true,
+      ],
+      [
+        "The largest probability increases while at least some other mass decreases.",
+        true,
+      ],
+      [
+        "If the favored class is the target, its one-hot cross-entropy decreases.",
+        true,
+      ],
+      [
+        "Normalization prevents any change in uncertainty because the total stays one.",
+        false,
+      ],
     ],
-    explanation:
-      "Natural logarithms of probabilities at most one are nonpositive, so negating them gives a nonnegative loss. The log form also explains both the additive structure over examples and the severe penalty for assigning near-zero probability to the observed answer.",
-  },
-  {
-    id: "crash-probability-l3-q49",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "For fixed target distribution \\(p\\), which statement correctly uses the relationship \\(H(p,q)=H(p)+D_{\\mathrm{KL}}(p\\parallel q)\\)?",
-    options: [
-      {
-        text: "Minimizing cross-entropy over \\(q\\) is equivalent to minimizing \\(D_{\\mathrm{KL}}(p\\parallel q)\\) because \\(H(p)\\) does not depend on \\(q\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Minimizing cross-entropy over \\(q\\) is equivalent to changing \\(p\\) until \\(H(p)\\) is as small as possible.",
-        isCorrect: false,
-      },
-      {
-        text: "The equality implies \\(D_{\\mathrm{KL}}(p\\parallel q)=D_{\\mathrm{KL}}(q\\parallel p)\\) for all distributions.",
-        isCorrect: false,
-      },
-      {
-        text: "For soft labels, cross-entropy is minimized by assigning probability one to the single most likely target class.",
-        isCorrect: false,
-      },
+    "Normalization fixes total mass but not how that mass is distributed, so concentration lowers entropy. When concentration moves toward the observed target it also increases target probability and lowers NLL, though concentrating on a wrong class would do the opposite for loss.",
+  ),
+
+  // Optimization and deep-learning synthesis
+  makeQuestion(
+    "crash-probability-l3-q109",
+    "easy",
+    "For softmax cross-entropy with one-hot target y and probabilities p, which expression is the gradient with respect to logits?",
+    [
+      ["\\(p-y\\)", true],
+      ["\\(p+y\\)", false],
+      ["\\(y/p\\) for every class", false],
+      ["The scalar entropy H(p) copied to every logit", false],
     ],
-    explanation:
-      "When \\(p\\) is fixed, \\(H(p)\\) is a constant, so optimizing cross-entropy with respect to \\(q\\) is optimizing the mismatch term. KL divergence is not symmetric, and soft targets generally require matching probability mass beyond only the modal class.",
-  },
-  {
-    id: "crash-probability-l3-q50",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "For a categorical distribution over \\(k\\) possible outcomes using natural logs, which entropy statements are correct?",
-    options: [
-      {
-        text: "The maximum entropy is achieved by the uniform distribution \\(p_i=1/k\\).",
-        isCorrect: true,
-      },
-      {
-        text: "At the uniform distribution, \\(H(p)=\\log k\\).",
-        isCorrect: true,
-      },
-      {
-        text: "A distribution concentrated entirely on one outcome has entropy \\(\\log k\\).",
-        isCorrect: false,
-      },
-      {
-        text: "Entropy must increase whenever the most likely class probability increases.",
-        isCorrect: false,
-      },
+    "The softmax and cross-entropy derivatives combine to the simple classwise signal \\(p_i-y_i\\). It lowers the correct-class loss by pushing its logit upward and pushes competing logits according to the probability mass they currently receive.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q110",
+    "easy",
+    "A three-class prediction is \\(p=(0.2,0.5,0.3)\\) and the target is the second class. Which gradient components are correct?",
+    [
+      ["The correct-class component is \\(0.5-1=-0.5\\).", true],
+      ["The first-class component is \\(0.2-0=0.2\\).", true],
+      [
+        "Every component is negative because the total loss is positive.",
+        false,
+      ],
+      ["The components sum to one because p sums to one.", false],
     ],
-    explanation:
-      "Uniform mass is the most uncertain categorical distribution, giving \\(-k(1/k)\log(1/k)=\\log k\\). Concentrating mass on one outcome lowers entropy, and increasing the largest probability usually makes the distribution less spread out rather than more uncertain.",
-  },
-  {
-    id: "crash-probability-l3-q51",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "The correct class is \\(c\\). Model A assigns \\(q_c=0.45\\) but gives a different class probability \\(0.46\\); Model B assigns \\(q_c=0.40\\) and makes \\(c\\) the argmax. Which statements are correct?",
-    options: [
-      {
-        text: "Model A is inaccurate under argmax but has lower cross-entropy loss for this example than Model B.",
-        isCorrect: true,
-      },
-      {
-        text: "For a one-hot target, the direct cross-entropy comparison depends on \\(-\\log q_c\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Accuracy and cross-entropy can rank these two models differently on a single example.",
-        isCorrect: true,
-      },
-      {
-        text: "Model B must have lower cross-entropy because it chooses the correct class.",
-        isCorrect: false,
-      },
+    "The gradient \\(p-y\\) is negative for the underweighted correct class and positive for incorrect classes with probability mass. Its components sum to zero because both p and y sum to one, reflecting softmax's invariance to a common logit shift.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q111",
+    "medium",
+    "How does gradient descent respond to the gradient \\(p-y\\) for a one-hot target? Which statements are correct?",
+    [
+      [
+        "It tends to increase the correct-class logit because that gradient component is negative.",
+        true,
+      ],
+      [
+        "It tends to decrease incorrect-class logits with positive probability mass.",
+        true,
+      ],
+      [
+        "Larger incorrect probabilities receive larger positive gradient components.",
+        true,
+      ],
+      [
+        "It increases every logit equally, which leaves softmax unchanged.",
+        false,
+      ],
     ],
-    explanation:
-      "Cross-entropy is sensitive to the probability assigned to the true class, while accuracy only checks the final argmax decision. Since \\(-\\log(0.45)<-\\log(0.40)\\), Model A has lower loss even though its top predicted class is wrong.",
-  },
-  {
-    id: "crash-probability-l3-q52",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "For one-hot class \\(c\\), logits \\(z_j\\), and loss \\(\\ell=-\\log \\frac{e^{z_c}}{\\sum_j e^{z_j}}\\), which statements are correct?",
-    options: [
-      {
-        text: "The loss can be written as \\(\\ell=-z_c+\\log\\sum_j e^{z_j}\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Adding the same constant to every logit leaves \\(\\ell\\) unchanged.",
-        isCorrect: true,
-      },
-      {
-        text: "Increasing \\(z_c\\) while holding the other logits fixed lowers \\(\\ell\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Increasing an incorrect-class logit while holding \\(z_c\\) fixed raises \\(\\ell\\).",
-        isCorrect: true,
-      },
+    "Gradient descent subtracts the gradient, so a negative correct-class component raises that logit and positive competing components lower theirs. The adjustment is probability-sensitive, focusing more pressure on incorrect classes the model currently favors.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q112",
+    "hard",
+    "A correct class currently has probability 0.01 in a 100-class model. Which training-signal statements are correct?",
+    [
+      [
+        "Its NLL is \\(-\\log0.01\\approx4.605\\), indicating a large error.",
+        true,
+      ],
+      [
+        "Its logit gradient component is \\(0.01-1=-0.99\\), strongly pushing it upward under gradient descent.",
+        true,
+      ],
+      [
+        "Its low probability yields almost zero loss, so the example contributes little learning signal.",
+        false,
+      ],
+      [
+        "The gradient requires sampling a class rather than using the predicted probability vector.",
+        false,
+      ],
     ],
-    explanation:
-      "The log-sum-exp form follows by expanding \\(-\\log q_c\\). It shows both shift invariance and the competing effects of correct versus incorrect logits: raising the correct logit helps, while raising a rival logit increases the normalization term.",
-  },
-  {
-    id: "crash-probability-l3-q53",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "For two logits \\((2,0)\\), compare sampling temperatures \\(T=1\\) and \\(T=2\\). Which statement is correct?",
-    options: [
-      {
-        text: "At \\(T=2\\), the log-odds shrink from \\(2\\) to \\(1\\), making the distribution less concentrated and higher entropy.",
-        isCorrect: true,
-      },
-      {
-        text: "The entropy is identical because the higher-logit class stays the higher-probability class.",
-        isCorrect: false,
-      },
-      {
-        text: "The top-class probability at \\(T=2\\) is computed as \\(2/(2+0)\\).",
-        isCorrect: false,
-      },
-      {
-        text: "Changing from \\(T=1\\) to \\(T=2\\) performs a maximum-likelihood update on the model parameters.",
-        isCorrect: false,
-      },
+    "Assigning only one percent to an observed class is strongly penalized by the logarithm and produces a near-minus-one correct-logit gradient. Standard cross-entropy computes this signal directly from probabilities and the target without sampling the output class.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q113",
+    "medium",
+    "Which statements correctly describe empirical risk minimization with cross-entropy?",
+    [
+      [
+        "Training averages or sums losses over observed examples or token positions.",
+        true,
+      ],
+      ["Minibatches provide noisy estimates of the full-data gradient.", true],
+      [
+        "Parameter updates aim to increase probability assigned to observed targets in their contexts.",
+        true,
+      ],
+      [
+        "Calibration and generalization still require evaluation beyond the training loss.",
+        true,
+      ],
     ],
-    explanation:
-      "Temperature divides logits before softmax, so the two-class log-odds are divided by \\(T\\). The rank is preserved for positive temperature, but the distribution becomes flatter at \\(T=2\\), and no model weights are retrained by changing sampling temperature.",
-  },
-  {
-    id: "crash-probability-l3-q54",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "For \\(H(p,q)=-\\sum_i p_i\\log q_i\\), which conditions or consequences are correct?",
-    options: [
-      {
-        text: "\\(q\\) must be a valid probability distribution, with nonnegative entries summing to one.",
-        isCorrect: true,
-      },
-      {
-        text: "If \\(p_i>0\\) and \\(q_i=0\\), the idealized cross-entropy has an infinite penalty.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(q_i\\) can be negative when the corresponding logit is negative.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(p\\) must be one-hot; otherwise cross-entropy is undefined.",
-        isCorrect: false,
-      },
+    "Cross-entropy training uses sample averages to approximate expected loss, and stochastic minibatches make the update direction noisy but useful. Lower training loss improves fit to observed data; by itself it does not prove future calibration or generalization, so those require separate evaluation.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q114",
+    "hard",
+    "A dataset contains 90% class A and 10% class B. Which statements about unweighted cross-entropy training are correct?",
+    [
+      [
+        "Class A examples contribute more terms simply because they are more numerous.",
+        true,
+      ],
+      [
+        "A model predicting the class prior for every input can achieve 90% accuracy but still ignore useful features.",
+        true,
+      ],
+      [
+        "Class weighting can change the effective contribution of minority examples.",
+        true,
+      ],
+      [
+        "Cross-entropy automatically gives each class equal aggregate weight regardless of frequency.",
+        false,
+      ],
     ],
-    explanation:
-      "Cross-entropy is defined between distributions, so model probabilities must be nonnegative and normalized. Soft labels are valid targets, but assigning zero model probability where the target has positive mass makes the logarithmic penalty diverge.",
-  },
-  {
-    id: "crash-probability-l3-q55",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly connect maximum likelihood to empirical risk minimization for a fixed dataset?",
-    options: [
-      {
-        text: "Average NLL is the empirical mean of \\(-\\log P_\\theta(y_i\\mid x_i)\\) over training examples.",
-        isCorrect: true,
-      },
-      {
-        text: "For independent examples, minimizing total NLL is equivalent to maximizing the product likelihood.",
-        isCorrect: true,
-      },
-      {
-        text: "Duplicating every example the same number of times scales total NLL but leaves the average NLL value and minimizer unchanged.",
-        isCorrect: true,
-      },
-      {
-        text: "Maximum likelihood training lowers the probabilities assigned to observed labels so that the model stays uncertain.",
-        isCorrect: false,
-      },
+    "An ordinary example average reflects the empirical class frequencies, so majority examples dominate the aggregate count. Weighting can alter the target tradeoff, and accuracy alone can hide a model that merely repeats the base rate rather than learning conditional structure.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q115",
+    "easy",
+    "A neural network assigns more probability to the observed correct label after an update. What happens to that example's NLL?",
+    [
+      ["It decreases.", true],
+      ["It increases because confidence is penalized.", false],
+      ["It stays fixed because labels are one-hot.", false],
+      ["It becomes the entropy of the dataset.", false],
     ],
-    explanation:
-      "Average NLL is an empirical expectation of a per-example loss over the observed dataset. Total and average forms have the same minimizer for a fixed-size dataset, while duplicating all examples uniformly changes total scale but not the average objective.",
-  },
-  {
-    id: "crash-probability-l3-q56",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly connect softmax probability models to action policies and imitation-style losses?",
-    options: [
-      {
-        text: "A policy network can use softmax logits to define \\(\\pi_\\theta(a\\mid s)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "If an observed action \\(a\\) is treated as the target, a supervised imitation loss can use \\(-\\log \\pi_\\theta(a\\mid s)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "A non-argmax action can still be sampled when it has positive policy probability.",
-        isCorrect: true,
-      },
-      {
-        text: "Policy entropy can be used as a separate term to encourage exploration in reinforcement learning.",
-        isCorrect: true,
-      },
+    "Negative log-likelihood is a decreasing function of the observed-label probability, so raising that probability lowers the example loss. One-hot targets select the relevant probability; they do not freeze loss or turn it into a dataset-level entropy.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q116",
+    "medium",
+    "Which statements correctly separate training, decoding, and evaluation?",
+    [
+      ["Cross-entropy trains parameters using target outcomes.", true],
+      [
+        "Temperature can reshape a fixed model's output distribution during decoding.",
+        true,
+      ],
+      [
+        "Greedy decoding changes the likelihood objective used during completed training.",
+        false,
+      ],
+      [
+        "Low validation NLL automatically selects the best action for every downstream cost structure.",
+        false,
+      ],
     ],
-    explanation:
-      "Softmax over action logits gives a categorical policy, and observed-action imitation fits naturally into the same negative-log-probability framework. Reinforcement learning then adds decision-making over time, where entropy and exploration can matter beyond plain supervised prediction.",
-  },
-  {
-    id: "crash-probability-l3-q57",
-    chapter: 3,
-    difficulty: "medium",
-    prompt:
-      "For a soft binary target \\(p=(0.5,0.5)\\) and model prediction \\(q=(0.8,0.2)\\), which value is the cross-entropy using natural logs?",
-    options: [
-      {
-        text: "\\(-0.5\\log0.8-0.5\\log0.2\\approx0.916\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(-\\log0.8\\approx0.223\\), because the first class has the larger model probability.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(-\\log0.5\\approx0.693\\), because the target distribution is uniform.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(0.8\\cdot0.5+0.2\\cdot0.5=0.5\\), because cross-entropy is an arithmetic dot product.",
-        isCorrect: false,
-      },
+    "Training adjusts model weights to fit observed data, while decoding chooses how to turn a resulting distribution into outputs. Evaluation loss describes probabilistic fit but does not retroactively change the objective or encode every application's decision costs.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q117",
+    "hard",
+    "Two models have identical accuracy, but Model A assigns 0.51 to every correct prediction while Model B assigns 0.90. Which statements are correct on those examples?",
+    [
+      [
+        "Model B has lower NLL because it assigns more probability to observed labels.",
+        true,
+      ],
+      [
+        "Accuracy cannot distinguish their confidence on the correct examples.",
+        true,
+      ],
+      [
+        "Calibration still requires comparing each confidence level with empirical correctness frequencies.",
+        true,
+      ],
+      [
+        "Model B must be globally better because confidence 0.90 is always desirable.",
+        false,
+      ],
     ],
-    explanation:
-      "Soft-label cross-entropy weights the log model probabilities by the target probabilities, so both entries contribute. The one-hot shortcut \\(-\\log q_{\\text{correct}}\\) does not apply when the target has nonzero mass on both classes.",
-  },
-  {
-    id: "crash-probability-l3-q58",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "If a model's average NLL over observed tokens is \\(a\\), which statements correctly interpret \\(e^{-a}\\)?",
-    options: [
-      {
-        text: "\\(e^{-a}\\) is the geometric mean probability assigned to the observed tokens.",
-        isCorrect: true,
-      },
-      {
-        text: "Reducing average NLL from \\(0.7\\) to \\(0.5\\) multiplies this geometric mean by \\(e^{0.2}\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(e^{-a}\\) is the arithmetic mean of the observed-token probabilities.",
-        isCorrect: false,
-      },
-      {
-        text: "A larger average NLL means a larger geometric mean probability assigned to the observed tokens.",
-        isCorrect: false,
-      },
+    "Proper probabilistic loss distinguishes predictions that accuracy treats identically, rewarding more probability on realized outcomes. However, confidence can be harmful on mistakes or miscalibrated groups, so overall model quality requires evaluating all examples and frequency alignment.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q118",
+    "easy",
+    "Which steps form the standard probabilistic classification training pipeline?",
+    [
+      ["The network produces logits.", true],
+      ["Softmax converts logits to class probabilities.", true],
+      ["Cross-entropy compares those probabilities with the target.", true],
+      [
+        "Backpropagation carries the loss gradient into model parameters.",
+        true,
+      ],
     ],
-    explanation:
-      "Average NLL is \\(-\\frac{1}{T}\\sum_t\\log p_t\\), so exponentiating its negative gives \\((\\prod_t p_t)^{1/T}\\). This is a geometric mean, and lowering average NLL increases that geometric mean multiplicatively.",
-  },
-  {
-    id: "crash-probability-l3-q59",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "Which notation statements are correct across the likelihood and cross-entropy formulas?",
-    options: [
-      {
-        text: "In \\(P_\\theta(y_i\\mid x_i)\\), \\(\\theta\\) denotes model parameters that training changes.",
-        isCorrect: true,
-      },
-      {
-        text: "In \\(\\sum_{i=1}^n \\log P_\\theta(y_i\\mid x_i)\\), the index \\(i\\) ranges over dataset examples.",
-        isCorrect: true,
-      },
-      {
-        text: "In \\(H(p,q)=-\\sum_i p_i\\log q_i\\) for one example, the index \\(i\\) usually ranges over classes or outcomes.",
-        isCorrect: true,
-      },
-      {
-        text: "The symbol \\(i\\) must always refer to the same kind of object in every probability formula.",
-        isCorrect: false,
-      },
+    "These steps connect raw neural scores to a normalized predictive distribution and then to an optimization signal. Backpropagation applies the resulting derivatives through the network so future logits can assign more appropriate probabilities.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q119",
+    "medium",
+    "A model improves mean NLL from 1.2 to 0.9 on held-out data. Which statements are justified?",
+    [
+      [
+        "Its geometric-mean observed-outcome probability rises from \\(e^{-1.2}\\) to \\(e^{-0.9}\\).",
+        true,
+      ],
+      ["Its held-out perplexity \\(e^{\\text{NLL}}\\) decreases.", true],
+      ["Every individual held-out prediction improved.", false],
+      ["The model is necessarily calibrated in every confidence bin.", false],
     ],
-    explanation:
-      "Mathematical notation reuses indices locally, so the meaning of \\(i\\) depends on the formula: examples in a dataset sum, classes in a cross-entropy sum. The parameter subscript \\(\\theta\\) marks that the probability model changes as training updates the network.",
-  },
-  {
-    id: "crash-probability-l3-q60",
-    chapter: 3,
-    difficulty: "hard",
-    prompt:
-      "For a minibatch of examples with logits \\(z^{(m)}\\), correct classes \\(c_m\\), and per-example losses \\(\\ell_m=-z^{(m)}_{c_m}+\\log\\sum_j e^{z^{(m)}_j}\\), which statements are correct?",
-    options: [
-      {
-        text: "The minibatch total NLL is \\(\\sum_m \\ell_m\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The minibatch average NLL is \\(\\frac{1}{M}\\sum_{m=1}^M \\ell_m\\) for \\(M\\) examples.",
-        isCorrect: true,
-      },
-      {
-        text: "The same parameter vector \\(\\theta\\) can affect many \\(z^{(m)}\\), so a gradient step aggregates information across examples.",
-        isCorrect: true,
-      },
-      {
-        text: "For a fixed example, decreasing the margin of the correct logit relative to competing logits tends to increase the loss.",
-        isCorrect: true,
-      },
+    "Lower average NLL means the product-equivalent or geometric-mean probability of observed outcomes increased, and exponentiation therefore lowers perplexity. An aggregate improvement can include worse individual cases and does not by itself establish calibration.",
+  ),
+  makeQuestion(
+    "crash-probability-l3-q120",
+    "hard",
+    "A three-class model predicts \\(p=(0.7,0.2,0.1)\\) and the observed class is the second. Which statements are correct?",
+    [
+      ["The example NLL is \\(-\\log0.2\\).", true],
+      ["The logit gradient is \\((0.7,-0.8,0.1)\\).", true],
+      [
+        "Gradient descent tends to lower the first and third logits and raise the second.",
+        true,
+      ],
+      [
+        "The loss uses \\(-\\log0.7\\) because the first class is the model's argmax.",
+        false,
+      ],
     ],
-    explanation:
-      "Minibatch training adds or averages the same per-example log-sum-exp losses used for individual examples. Because the logits are produced by shared parameters, the gradient combines evidence from multiple examples about how to shift probability toward observed correct outputs.",
-  },
+    "Training scores the probability of the observed target, not the model's chosen argmax, so the relevant mass is 0.2. Subtracting the one-hot target gives the displayed gradient, which corrects the model's misplaced confidence toward class two.",
+  ),
 ];

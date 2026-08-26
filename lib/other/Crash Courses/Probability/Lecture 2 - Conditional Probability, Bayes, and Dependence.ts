@@ -1,1451 +1,1064 @@
 import { Question } from "../../../quiz";
 
+type OptionSpec = readonly [text: string, isCorrect: boolean];
+
+function makeQuestion(
+  id: string,
+  difficulty: Question["difficulty"],
+  prompt: string,
+  options: readonly [OptionSpec, OptionSpec, OptionSpec, OptionSpec],
+  explanation: string,
+): Question {
+  return {
+    id,
+    chapter: 2,
+    difficulty,
+    prompt,
+    options: options.map(([text, isCorrect]) => ({ text, isCorrect })),
+    explanation,
+  };
+}
+
 export const CrashCourseProbabilityL2Questions: Question[] = [
-  {
-    id: "crash-probability-l2-q01",
-    chapter: 2,
-    difficulty: "easy",
-    prompt:
-      "Which statement best interprets \\(P(A \\mid B)\\) in ordinary probability language?",
-    options: [
-      {
-        text: "The probability of \\(A\\) after restricting attention to cases where \\(B\\) is true.",
-        isCorrect: true,
-      },
-      {
-        text: "The probability that \\(A\\) and \\(B\\) are unrelated variables.",
-        isCorrect: false,
-      },
-      {
-        text: "The probability of \\(B\\) after \\(A\\) has been observed.",
-        isCorrect: false,
-      },
-      {
-        text: "A quantity that can be computed as \\(P(A,B)/P(B)\\) when \\(P(B)>0\\).",
-        isCorrect: true,
-      },
+  // Conditional and joint probability
+  makeQuestion(
+    "crash-probability-l2-q61",
+    "easy",
+    "What does \\(P(A\\mid B)\\) measure when \\(P(B)>0\\)?",
+    [
+      ["The fraction of probability inside B that also belongs to A", true],
+      ["The probability that A causes B", false],
+      ["The probability of A and B added together", false],
+      ["The probability of B after A has been ruled out", false],
     ],
-    explanation:
-      "\\(P(A\\mid B)\\) means the probability of \\(A\\) given that \\(B\\) is true, and it can be computed from the joint probability as \\(P(A,B)/P(B)\\) when \\(P(B)>0\\). It is different from \\(P(B\\mid A)\\), different from independence, and different from the unconditional probability \\(P(A)\\).",
-  },
-  {
-    id: "crash-probability-l2-q02",
-    chapter: 2,
-    difficulty: "easy",
-    prompt:
-      "Which examples correctly translate an AI prediction problem into conditional probability notation?",
-    options: [
-      {
-        text: "\\(P(\\text{spam}\\mid\\text{email text})\\) for spam classification.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(X_t\\mid X_1,\\ldots,X_{t-1})\\) for next-token prediction.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(S_{t+1}\\mid S_t,A_t)\\) for a reinforcement learning transition.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(\\epsilon\\mid x_t,t)\\) for predicting noise from a noisy diffusion state.",
-        isCorrect: true,
-      },
+    "Conditioning restricts attention to the outcomes in B and asks what share of that remaining probability also lies in A. It is an informational update, not by itself a causal claim, an addition rule, or a complement operation.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q62",
+    "easy",
+    "A card is drawn uniformly from a standard deck. Given that it is a face card, which calculations are correct?",
+    [
+      ["The conditioned sample space contains 12 face cards.", true],
+      ["\\(P(\\text{king}\\mid\\text{face card})=4/12=1/3\\).", true],
+      [
+        "The denominator remains 52 because conditioning does not change the relevant universe.",
+        false,
+      ],
+      ["The answer is \\(P(\\text{face card}\\mid\\text{king})\\).", false],
     ],
-    explanation:
-      "All four examples have the same structure: a target is predicted after conditioning on input information. Conditional probability is central because AI systems usually estimate how likely outputs are given inputs, contexts, states, or noisy observations.",
-  },
-  {
-    id: "crash-probability-l2-q03",
-    chapter: 2,
-    difficulty: "easy",
-    prompt:
-      'Before reading an email, a model has \\(P(\\text{spam})=0.20\\). After seeing the phrase "you have won a prize," it estimates \\(P(\\text{spam}\\mid\\text{phrase})=0.85\\). Which statements are correct?',
-    options: [
-      {
-        text: "\\(P(\\text{spam})=0.20\\) is unconditional in this comparison.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(\\text{spam}\\mid\\text{phrase})=0.85\\) is conditional on observed text.",
-        isCorrect: true,
-      },
-      {
-        text: "The phrase changes the model's probability estimate for spam.",
-        isCorrect: true,
-      },
-      {
-        text: "The two probabilities must be equal because they concern the same spam event.",
-        isCorrect: false,
-      },
+    "Once face card is known, the relevant equally likely outcomes are the twelve jacks, queens, and kings, four of which are kings. Keeping 52 or reversing the conditional answers a different probability question.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q63",
+    "medium",
+    "Among 200 emails, 50 are spam, 80 contain the word “free,” and 40 are both spam and contain “free.” Which statements are correct?",
+    [
+      ["\\(P(\\text{spam}\\cap\\text{free})=40/200=0.20\\).", true],
+      ["\\(P(\\text{spam}\\mid\\text{free})=40/80=0.50\\).", true],
+      ["\\(P(\\text{free}\\mid\\text{spam})=40/50=0.80\\).", true],
+      [
+        "The two conditional probabilities must be equal because they use the same intersection.",
+        false,
+      ],
     ],
-    explanation:
-      "The unconditional probability describes spam before using the phrase, while the conditional probability uses the phrase as information. Conditional probability is useful because evidence can change which outcomes are plausible.",
-  },
-  {
-    id: "crash-probability-l2-q04",
-    chapter: 2,
-    difficulty: "medium",
-    type: "assertion-reason",
-    prompt:
-      "Assertion: \\(P(y\\mid x)\\) is a natural mathematical form for prediction in supervised learning.\n\nReason: The expression asks for a probability distribution over an output after an input is known.",
-    options: [
-      { text: "Assertion is true, Reason is false.", isCorrect: false },
-      { text: "Assertion is false, Reason is true.", isCorrect: false },
-      { text: "Both are false.", isCorrect: false },
-      {
-        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
-        isCorrect: true,
-      },
-      {
-        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
+    "Both conditionals have the same joint numerator but different conditioned populations, producing 0.50 and 0.80. The joint probability uses all 200 emails as its denominator, so it is distinct from either conditional probability.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q64",
+    "hard",
+    "Suppose \\(P(A)=0.30\\), \\(P(B)=0.50\\), and \\(P(A\\cap B)=0.18\\). Which conditional probabilities are correct?",
+    [
+      ["\\(P(A\\mid B)=0.18/0.50=0.36\\).", true],
+      ["\\(P(B\\mid A)=0.18/0.30=0.60\\).", true],
+      [
+        "\\(P(A\\mid B)=P(B\\mid A)\\) because both concern the same events.",
+        false,
+      ],
+      ["\\(P(A\\mid B)=0.18/0.30\\) because A is written first.", false],
     ],
-    explanation:
-      "The assertion is true because supervised prediction uses input information to estimate likely outputs. The reason is also true and explains the assertion: \\(P(y\\mid x)\\) explicitly conditions the output distribution on the input.",
-  },
-  {
-    id: "crash-probability-l2-q05",
-    chapter: 2,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly distinguish joint, marginal, and conditional probabilities?",
-    options: [
-      {
-        text: "\\(P(A,B)\\) is the probability that \\(A\\) and \\(B\\) both happen.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(A)\\) can be a marginal probability that ignores the value of another variable.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(A\\mid B)\\) asks about \\(A\\) after \\(B\\) is known.",
-        isCorrect: true,
-      },
-      {
-        text: "A joint probability is the same object as an expected numerical value.",
-        isCorrect: false,
-      },
+    "The event after the conditioning bar supplies the denominator, so the two directions divide the same intersection by different marginal probabilities. Reversing the denominator is the classic inverse-probability error.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q65",
+    "medium",
+    "Which statements correctly connect conditional and joint probability when the required denominators are positive?",
+    [
+      ["\\(P(A\\mid B)=P(A\\cap B)/P(B)\\).", true],
+      ["\\(P(A\\cap B)=P(B)P(A\\mid B)\\).", true],
+      ["\\(P(A\\cap B)=P(A)P(B\\mid A)\\).", true],
+      [
+        "The two multiplication forms are equal because they describe the same intersection.",
+        true,
+      ],
     ],
-    explanation:
-      "Joint probability describes variables occurring together, marginal probability focuses on one variable, and conditional probability uses information about another event or variable. Expected value is a weighted average of numerical outcomes, so it is a different concept.",
-  },
-  {
-    id: "crash-probability-l2-q06",
-    chapter: 2,
-    difficulty: "medium",
-    prompt:
-      "In a 100-patient table, 30 patients have both fever and infection, and 40 patients have fever. What is \\(P(\\text{infection}\\mid\\text{fever})\\)?",
-    options: [
-      { text: "\\(0.30\\)", isCorrect: false },
-      { text: "\\(0.40\\)", isCorrect: false },
-      { text: "\\(0.75\\)", isCorrect: true },
-      { text: "\\(1.33\\)", isCorrect: false },
+    "Conditional probability and the multiplication rule are algebraic rearrangements of the same relationship. Either event can be taken first, provided the second factor is conditioned on the event used in the first factor.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q66",
+    "hard",
+    "A user opens an app with probability 0.60, and among users who open it, 25% purchase. Which conclusions are correct?",
+    [
+      ["\\(P(\\text{open}\\cap\\text{purchase})=0.60(0.25)=0.15\\).", true],
+      [
+        "The multiplication uses \\(P(\\text{purchase}\\mid\\text{open})\\), not the unconditional purchase rate.",
+        true,
+      ],
+      [
+        "Among 1,000 comparable users, about 150 are expected to both open and purchase.",
+        true,
+      ],
+      [
+        "The joint rate is 0.85 because open and purchase are consecutive steps.",
+        false,
+      ],
     ],
-    explanation:
-      "Conditional probability restricts the denominator to the fever cases. The calculation is \\(P(\\text{infection},\\text{fever})/P(\\text{fever})=0.30/0.40=0.75\\), not 30 divided by all 100 patients.",
-  },
-  {
-    id: "crash-probability-l2-q07",
-    chapter: 2,
-    difficulty: "medium",
-    prompt:
-      "Using the same 100-patient table with 30 fever-and-infection cases, 10 fever-and-no-infection cases, 5 no-fever-and-infection cases, and 55 no-fever-and-no-infection cases, which statements are correct?",
-    options: [
-      {
-        text: "\\(P(\\text{fever})=0.40\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(\\text{infection})=0.35\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(\\text{fever},\\text{infection})=0.35\\).",
-        isCorrect: false,
-      },
-      {
-        text: "\\(P(\\text{infection}\\mid\\text{fever})=P(\\text{infection})\\).",
-        isCorrect: false,
-      },
+    "A path probability multiplies the probability of reaching the open group by the conditional purchase rate within that group. Adding the two rates ignores that purchase is measured inside a restricted population and cannot produce the joint event.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q67",
+    "easy",
+    "In a dataset, 30 of 120 images contain a bicycle, and 18 of those 30 also contain a helmet. What is \\(P(\\text{helmet}\\mid\\text{bicycle})\\)?",
+    [
+      ["\\(18/30=0.60\\)", true],
+      ["\\(18/120=0.15\\)", false],
+      ["\\(30/120=0.25\\)", false],
+      ["\\(30/18\\approx1.67\\)", false],
     ],
-    explanation:
-      "The fever marginal is \\((30+10)/100=0.40\\), and the infection marginal is \\((30+5)/100=0.35\\). The joint fever-and-infection probability is \\(30/100=0.30\\), not 0.35, and \\(P(\\text{infection}\\mid\\text{fever})=0.75\\), so fever and infection are not independent in this table.",
-  },
-  {
-    id: "crash-probability-l2-q08",
-    chapter: 2,
-    difficulty: "medium",
-    prompt:
-      "Which formulas correctly connect joint and conditional probability when \\(P(B)>0\\)?",
-    options: [
-      {
-        text: "\\(P(A\\mid B)=\\frac{P(A,B)}{P(B)}\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(A,B)=P(A\\mid B)P(B)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(A,B)=P(B\\mid A)P(B)\\) when \\(P(A)>0\\).",
-        isCorrect: false,
-      },
-      {
-        text: "\\(P(A\\mid B)=P(B\\mid A)\\) for all events with positive probability.",
-        isCorrect: false,
-      },
+    "The bicycle condition restricts the denominator to the 30 bicycle images, of which 18 also have helmets. Dividing by all 120 gives a joint probability, while the other ratios answer marginal or inverted questions.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q68",
+    "medium",
+    "For three sequential tokens, which factorizations of their joint probability are valid?",
+    [
+      ["\\(P(x_1,x_2,x_3)=P(x_1)P(x_2\\mid x_1)P(x_3\\mid x_1,x_2)\\).", true],
+      [
+        "The chain rule remains valid without assuming token independence.",
+        true,
+      ],
+      [
+        "\\(P(x_1,x_2,x_3)=P(x_1)P(x_2)P(x_3)\\) for every language model.",
+        false,
+      ],
+      [
+        "Conditioning on previous tokens can be dropped because all tokens share one vocabulary.",
+        false,
+      ],
     ],
-    explanation:
-      "Conditional probability can be rearranged to express a joint probability as \\(P(A\\mid B)P(B)\\) or as \\(P(B\\mid A)P(A)\\). Multiplying \\(P(B\\mid A)\\) by \\(P(B)\\) mixes the wrong marginal with that conditional, and the reversed conditionals are not generally equal.",
-  },
-  {
-    id: "crash-probability-l2-q09",
-    chapter: 2,
-    difficulty: "medium",
-    prompt:
-      "In a click table, \\(P(\\text{click},\\text{likes sports})=0.20\\) and \\(P(\\text{click},\\text{does not like sports})=0.05\\). What is \\(P(\\text{click})\\)?",
-    options: [
-      { text: "\\(0.05\\)", isCorrect: false },
-      { text: "\\(0.20\\)", isCorrect: false },
-      { text: "\\(0.25\\)", isCorrect: true },
-      { text: "\\(0.75\\)", isCorrect: false },
+    "The chain rule decomposes a joint sequence probability into conditional next-step factors without an independence assumption. Replacing those factors by marginals would assert that context conveys no information, which contradicts the point of language modeling.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q69",
+    "hard",
+    "A joint table gives \\(P(X=0,Y=0)=0.15\\), \\(P(0,1)=0.25\\), \\(P(1,0)=0.10\\), and \\(P(1,1)=0.50\\). Which statements are correct?",
+    [
+      ["\\(P(X=1)=0.60\\).", true],
+      ["\\(P(Y=1)=0.75\\).", true],
+      ["\\(P(X=1\\mid Y=1)=0.50/0.75=2/3\\).", true],
+      [
+        "\\(P(X=1\\mid Y=1)=0.50\\) because the joint cell is already conditional.",
+        false,
+      ],
     ],
-    explanation:
-      "Marginalization adds all mutually exclusive ways the click event can occur. A user either likes sports or does not, so \\(P(\\text{click})=0.20+0.05=0.25\\).",
-  },
-  {
-    id: "crash-probability-l2-q10",
-    chapter: 2,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe marginalization in probability models?",
-    options: [
-      {
-        text: "It can compute \\(P(A)\\) by summing joint probabilities over values of another variable.",
-        isCorrect: true,
-      },
-      {
-        text: "It is useful when hidden causes or latent variables can produce the same visible outcome.",
-        isCorrect: true,
-      },
-      {
-        text: "It replaces the conditional transition model in reinforcement learning with the single most likely next state.",
-        isCorrect: false,
-      },
-      {
-        text: "It requires choosing the single most likely hidden variable and ignoring the rest.",
-        isCorrect: false,
-      },
+    "Row or column sums give the marginals, and conditioning renormalizes the relevant column to total one. A joint cell is measured against the full population, so it must be divided by \\(P(Y=1)\\) to become a conditional probability.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q70",
+    "easy",
+    "Which interpretations of joint and conditional probability are correct?",
+    [
+      ["\\(P(A\\cap B)\\) measures both events occurring.", true],
+      [
+        "\\(P(A\\mid B)\\) measures A inside the restricted B population.",
+        true,
+      ],
+      ["A joint table can be summed to obtain marginal probabilities.", true],
+      [
+        "A conditional distribution over all A outcomes sums to one for a fixed B.",
+        true,
+      ],
     ],
-    explanation:
-      "Marginalization sums over alternative possibilities rather than choosing only one. It can be used with hidden causes, latent topics, or possible future states, but it does not replace a transition model with only the most likely next state.",
-  },
-  {
-    id: "crash-probability-l2-q11",
-    chapter: 2,
-    difficulty: "medium",
-    type: "assertion-reason",
-    prompt:
-      "Assertion: \\(P(A)=\\sum_B P(A,B)\\) is a marginalization formula.\n\nReason: The formula adds the joint probabilities for the mutually exclusive ways that \\(A\\) can occur with different values of \\(B\\).",
-    options: [
-      { text: "Assertion is true, Reason is false.", isCorrect: false },
-      { text: "Assertion is false, Reason is true.", isCorrect: false },
-      { text: "Both are false.", isCorrect: false },
-      {
-        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
-        isCorrect: true,
-      },
-      {
-        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
+    "Joint probability locates overlap in the full population, while conditional probability rescales a selected slice. Summing a joint table removes an unwanted variable, and renormalization makes each well-defined conditional distribution total one.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q71",
+    "medium",
+    "Which statements about conditioning on a zero-probability event are correct in the elementary formula \\(P(A\\mid B)=P(A\\cap B)/P(B)\\)?",
+    [
+      ["The ratio is undefined when \\(P(B)=0\\).", true],
+      [
+        "One cannot repair the ratio by declaring its denominator to be one.",
+        true,
+      ],
+      [
+        "The conditional must equal zero because the numerator is also zero.",
+        false,
+      ],
+      [
+        "The conditional must equal \\(P(A)\\) because an impossible event carries no information.",
+        false,
+      ],
     ],
-    explanation:
-      "The assertion is true because marginalization recovers a probability for one variable by summing over another variable. The reason explains why the sum works: each value of \\(B\\) gives a mutually exclusive way for \\(A\\) to appear.",
-  },
-  {
-    id: "crash-probability-l2-q12",
-    chapter: 2,
-    difficulty: "easy",
-    prompt: "Which statements correctly describe independence and dependence?",
-    options: [
-      {
-        text: "If \\(A\\) and \\(B\\) are independent, knowing \\(B\\) does not change the probability of \\(A\\).",
-        isCorrect: true,
-      },
-      {
-        text: "One independence condition is \\(P(A\\mid B)=P(A)\\), when \\(P(B)>0\\).",
-        isCorrect: true,
-      },
-      {
-        text: "An equivalent independence condition is \\(P(A,B)=P(A)+P(B)\\).",
-        isCorrect: false,
-      },
-      {
-        text: "Dependence means two variables must always have the same value.",
-        isCorrect: false,
-      },
+    "The elementary definition requires division by a positive conditioned-event probability, and zero divided by zero has no determined value. More advanced continuous conditioning uses additional machinery, but neither zero nor the marginal follows from this undefined ratio.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q72",
+    "hard",
+    "An LLM assigns \\(P(\\text{bank}\\mid\\text{river context})=0.30\\) and \\(P(\\text{bank}\\mid\\text{finance context})=0.70\\). Which statements are correct?",
+    [
+      [
+        "The same token outcome can have different probabilities under different conditions.",
+        true,
+      ],
+      ["The context changes the conditional distribution being queried.", true],
+      [
+        "These two values alone do not determine the unconditional probability of bank without context frequencies.",
+        true,
+      ],
+      [
+        "The token bank is independent of context because its spelling is unchanged.",
+        false,
+      ],
     ],
-    explanation:
-      "Independence means information about one event does not change the probability of the other. The joint-product condition is \\(P(A,B)=P(A)P(B)\\), not a sum, and dependence means probabilities change when information is known rather than variables literally taking identical values.",
-  },
-  {
-    id: "crash-probability-l2-q13",
-    chapter: 2,
-    difficulty: "medium",
-    prompt:
-      "In one dataset, \\(P(\\text{infection})=0.35\\) while \\(P(\\text{infection}\\mid\\text{fever})=0.75\\). Which conclusions follow from this comparison?",
-    options: [
-      {
-        text: "Infection and fever are dependent in this table.",
-        isCorrect: true,
-      },
-      {
-        text: "Fever provides information about infection probability.",
-        isCorrect: true,
-      },
-      {
-        text: "Infection is more likely among fever cases than in the overall population.",
-        isCorrect: true,
-      },
-      {
-        text: "The events are independent because both probabilities are between 0 and 1.",
-        isCorrect: false,
-      },
+    "Conditional probabilities depend on which contextual population is considered, even when the token string is identical. An unconditional probability would average across context types using their frequencies, and the differing conditionals are direct evidence of dependence.",
+  ),
+
+  // Marginalization and the law of total probability
+  makeQuestion(
+    "crash-probability-l2-q73",
+    "easy",
+    "A joint distribution has \\(P(X=1,Y=0)=0.20\\) and \\(P(X=1,Y=1)=0.35\\). What is \\(P(X=1)\\)?",
+    [
+      ["\\(0.20+0.35=0.55\\)", true],
+      ["\\(0.35-0.20=0.15\\)", false],
+      ["\\(0.20\\times0.35=0.07\\)", false],
+      ["\\(0.35/0.20=1.75\\)", false],
     ],
-    explanation:
-      "The conditional probability differs from the marginal probability, so knowing fever changes the probability of infection in this dataset. Independent events would satisfy \\(P(\\text{infection}\\mid\\text{fever})=P(\\text{infection})\\), while merely being between 0 and 1 is required for any probability and says nothing about independence.",
-  },
-  {
-    id: "crash-probability-l2-q14",
-    chapter: 2,
-    difficulty: "medium",
-    prompt:
-      "Which AI examples rely on dependence between variables rather than independence?",
-    options: [
-      {
-        text: "Next-token prediction uses dependence between previous tokens and the next token.",
-        isCorrect: true,
-      },
-      {
-        text: "Image models use dependence among pixels and objects.",
-        isCorrect: true,
-      },
-      {
-        text: "Medical prediction uses dependence between symptoms and diagnoses.",
-        isCorrect: true,
-      },
-      {
-        text: "RL control uses dependence between actions and possible future states.",
-        isCorrect: true,
-      },
+    "The two Y values describe mutually exclusive ways for X to equal one, so marginalization adds their joint masses. Subtraction, multiplication, and division represent different relationships and do not remove Y from this joint distribution.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q74",
+    "easy",
+    "A factory uses machine A for 70% of items and machine B for 30%. Their defect rates are 2% and 5%. Which path probabilities are correct?",
+    [
+      ["\\(P(A\\cap\\text{defect})=0.70(0.02)=0.014\\).", true],
+      ["\\(P(B\\cap\\text{defect})=0.30(0.05)=0.015\\).", true],
+      ["The total defect rate is \\(0.02+0.05=0.07\\).", false],
+      [
+        "Machine usage rates are irrelevant because the defect rates are conditional.",
+        false,
+      ],
     ],
-    explanation:
-      "Machine learning is useful because inputs often contain information about outputs. If the relevant variables were independent, then the input, context, symptoms, or action would not change the target distribution in a useful way.",
-  },
-  {
-    id: "crash-probability-l2-q15",
-    chapter: 2,
-    difficulty: "medium",
-    prompt:
-      "If \\(X\\) and \\(Y\\) were independent in a supervised learning task, so that \\(P(Y\\mid X)=P(Y)\\), what would follow?",
-    options: [
-      {
-        text: "Knowing \\(X\\) would not improve the probability distribution for \\(Y\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The input would be useless for predicting the output in the probabilistic sense.",
-        isCorrect: true,
-      },
-      {
-        text: "A learned model could still improve prediction from \\(X\\) by exploiting hidden dependence between \\(X\\) and \\(Y\\) under this condition.",
-        isCorrect: false,
-      },
-      {
-        text: "The model would automatically become perfectly accurate because independence removes uncertainty.",
-        isCorrect: false,
-      },
+    "Each joint path multiplies the machine's population share by its within-machine defect rate. Adding raw conditional rates would weight the small and large production streams equally, so the usage probabilities are essential.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q75",
+    "medium",
+    "Continuing with machine A producing 70% at 2% defects and B producing 30% at 5% defects, which conclusions are correct?",
+    [
+      ["\\(P(\\text{defect})=0.014+0.015=0.029\\).", true],
+      [
+        "The calculation adds mutually exclusive A-defect and B-defect paths.",
+        true,
+      ],
+      ["The expected defective count is \\(1000(0.029)=29\\).", true],
+      [
+        "The total defect probability is \\((0.02+0.05)/2=0.035\\), the unweighted average of the machine rates.",
+        false,
+      ],
     ],
-    explanation:
-      "If \\(P(Y\\mid X)=P(Y)\\), the input does not change the output distribution. That condition rules out exploitable dependence between \\(X\\) and \\(Y\\) in this probabilistic setup; it does not remove uncertainty or guarantee accuracy.",
-  },
-  {
-    id: "crash-probability-l2-q16",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly distinguish ordinary independence from conditional independence?",
-    options: [
-      {
-        text: "Ordinary independence can be written as \\(A\\perp B\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Conditional independence can be written as \\(A\\perp B\\mid C\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Two variables can be statistically related overall but become closer to independent after conditioning on a third variable.",
-        isCorrect: true,
-      },
-      {
-        text: "Conditional independence means \\(A\\) and \\(B\\) have no relationship under any possible information.",
-        isCorrect: false,
-      },
+    "The machine events form a partition, so the law of total probability adds their weighted defect paths to obtain 2.9%. An unweighted average would apply only if the machines produced equal shares, which they do not.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q76",
+    "hard",
+    "A request is routed to region E with probability 0.50, W with 0.30, or C with 0.20. Timeout rates are 0.01, 0.04, and 0.03 respectively. Which calculations are correct?",
+    [
+      ["The E timeout path has probability \\(0.50(0.01)=0.005\\).", true],
+      ["The total timeout probability is \\(0.005+0.012+0.006=0.023\\).", true],
+      ["The total timeout probability is \\(0.01+0.04+0.03=0.08\\).", false],
+      ["The region paths overlap because every path ends in timeout.", false],
     ],
-    explanation:
-      "Conditional independence says the relationship is evaluated after conditioning on another variable. It does not require the variables to be unrelated in every unconditional view; the ice-cream and drowning example illustrates how season or temperature can explain an observed association.",
-  },
-  {
-    id: "crash-probability-l2-q17",
-    chapter: 2,
-    difficulty: "easy",
-    prompt:
-      "In Bayes' theorem \\(P(H\\mid D)=\\frac{P(D\\mid H)P(H)}{P(D)}\\), which term is the prior?",
-    options: [
-      { text: "\\(P(H)\\)", isCorrect: true },
-      { text: "\\(P(D\\mid H)\\)", isCorrect: false },
-      { text: "\\(P(H\\mid D)\\)", isCorrect: false },
-      { text: "\\(P(D)\\)", isCorrect: false },
+    "Routing regions are mutually exclusive causes of a request's path, so each conditional timeout rate must be weighted and the joint paths can then be added. Sharing the same final event does not make the preceding region paths overlap.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q77",
+    "medium",
+    "For \\(B_1,\\ldots,B_n\\) to support \\(P(A)=\\sum_iP(A\\mid B_i)P(B_i)\\), which statements are required or useful?",
+    [
+      ["The \\(B_i\\) events cover the relevant sample space.", true],
+      ["Distinct \\(B_i\\) events do not overlap.", true],
+      ["Each term is the joint probability \\(P(A\\cap B_i)\\).", true],
+      ["Adding the terms counts every way A occurs exactly once.", true],
     ],
-    explanation:
-      "The prior is \\(P(H)\\), the probability assigned to the hypothesis before using the new data \\(D\\). The likelihood is \\(P(D\\mid H)\\), the posterior is \\(P(H\\mid D)\\), and \\(P(D)\\) is the evidence or normalizer.",
-  },
-  {
-    id: "crash-probability-l2-q18",
-    chapter: 2,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly identify the parts of Bayes' theorem \\(P(H\\mid D)=\\frac{P(D\\mid H)P(H)}{P(D)}\\)?",
-    options: [
-      { text: "\\(P(H\\mid D)\\) is the posterior.", isCorrect: true },
-      { text: "\\(P(D\\mid H)\\) is the likelihood.", isCorrect: true },
-      { text: "\\(P(H)\\) is the prior.", isCorrect: true },
-      {
-        text: "\\(P(D)\\) is a normalizer that includes all ways the data can occur.",
-        isCorrect: true,
-      },
+    "An exhaustive, mutually exclusive partition breaks A into disjoint paths, and each weighted conditional equals the joint mass on one path. Because every outcome belongs to one partition cell, summing includes all of A without double-counting.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q78",
+    "hard",
+    "A latent topic \\(Z\\) is sports with probability 0.40 and finance with 0.60. A model emits “score” with probabilities 0.50 and 0.10 under those topics. Which statements are correct?",
+    [
+      ["The sports-and-score path is \\(0.40(0.50)=0.20\\).", true],
+      ["The finance-and-score path is \\(0.60(0.10)=0.06\\).", true],
+      ["The marginal \\(P(\\text{score})=0.26\\).", true],
+      [
+        "The marginal is 0.60 because the larger topic prior determines the output.",
+        false,
+      ],
     ],
-    explanation:
-      "Bayes' theorem updates a prior into a posterior by weighting hypotheses according to how likely they make the data. The evidence term normalizes the result so the posterior probabilities behave like probabilities.",
-  },
-  {
-    id: "crash-probability-l2-q19",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "A disease has \\(P(D)=0.01\\), test sensitivity \\(P(+\\mid D)=0.95\\), and false-positive rate \\(P(+\\mid \\neg D)=0.05\\). What is \\(P(D\\mid +)\\) approximately?",
-    options: [
-      { text: "\\(0.059\\)", isCorrect: false },
-      { text: "\\(0.161\\)", isCorrect: true },
-      { text: "\\(0.500\\)", isCorrect: false },
-      { text: "\\(0.950\\)", isCorrect: false },
+    "Marginalizing the hidden topic adds the weighted paths \\(0.40(0.50)+0.60(0.10)=0.26\\). The most common topic does not by itself determine the observed-token probability because likelihood under each topic also matters.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q79",
+    "easy",
+    "A user is on mobile with probability 0.65 and desktop with probability 0.35. Conversion rates are 0.08 and 0.12. What is the overall conversion probability?",
+    [
+      ["\\(0.65(0.08)+0.35(0.12)=0.094\\)", true],
+      ["\\(0.08+0.12=0.20\\)", false],
+      ["\\((0.08+0.12)/2=0.10\\)", false],
+      ["\\(0.65(0.35)=0.2275\\)", false],
     ],
-    explanation:
-      "The evidence probability is \\(P(+)=0.95\\cdot0.01+0.05\\cdot0.99=0.059\\). The posterior is \\((0.95\\cdot0.01)/0.059\\approx0.161\\), which is much lower than sensitivity because the disease is rare and false positives exist.",
-  },
-  {
-    id: "crash-probability-l2-q20",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "For the same disease-test setup with \\(P(D)=0.01\\), \\(P(+\\mid D)=0.95\\), and \\(P(+\\mid \\neg D)=0.05\\), which statements are correct?",
-    options: [
-      {
-        text: "The true-positive contribution to \\(P(+)\\) is \\(0.95\\cdot0.01=0.0095\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The false-positive contribution to \\(P(+)\\) is \\(0.05\\cdot0.99=0.0495\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The false-positive contribution is smaller than the true-positive contribution in this example.",
-        isCorrect: false,
-      },
-      {
-        text: "The posterior equals 0.95 because sensitivity and posterior probability are the same conditional.",
-        isCorrect: false,
-      },
+    "The device types partition users, so their conditional conversion rates receive weights equal to device prevalence. The result is 9.4%; raw addition, equal averaging, or multiplying device shares does not describe conversion paths.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q80",
+    "medium",
+    "A bag is chosen uniformly from two bags. Bag 1 has 3 red and 1 blue marble; Bag 2 has 1 red and 3 blue. Which statements are correct?",
+    [
+      ["\\(P(\\text{red})=0.5(3/4)+0.5(1/4)=0.5\\).", true],
+      [
+        "The red paths through the two bags are mutually exclusive and can be added.",
+        true,
+      ],
+      ["\\(P(\\text{red})=3/4\\) because Bag 1 has more red marbles.", false],
+      [
+        "The bag-selection probability can be omitted because a bag is chosen before the marble.",
+        false,
+      ],
     ],
-    explanation:
-      "The base rate makes no-disease cases far more common, so even a modest false-positive rate contributes many positives. Here \\(0.0495\\) is larger than \\(0.0095\\), and the posterior is not the sensitivity because \\(P(+\\mid D)\\) and \\(P(D\\mid +)\\) ask opposite conditional questions.",
-  },
-  {
-    id: "crash-probability-l2-q21",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly explain why base rates matter in Bayes' theorem?",
-    options: [
-      {
-        text: "A rare hypothesis can have a low posterior even when the evidence is fairly likely under that hypothesis.",
-        isCorrect: true,
-      },
-      {
-        text: "The denominator \\(P(D)\\) includes evidence produced by alternative hypotheses.",
-        isCorrect: true,
-      },
-      {
-        text: "False positives cannot dominate the evidence pool when the test has high sensitivity.",
-        isCorrect: false,
-      },
-      {
-        text: "Bayes' theorem ignores the prior once likelihoods are known.",
-        isCorrect: false,
-      },
+    "The experiment has two stages, so each red path includes both the bag choice and the conditional marble draw. The equally likely bags make the opposing compositions balance, and omitting the first-stage probability doubles the total mass.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q81",
+    "hard",
+    "A symptom occurs in 80% of infected patients and 10% of uninfected patients; prevalence is 5%. Which statements correctly compute the marginal symptom rate?",
+    [
+      ["The infected-symptom path is \\(0.05(0.80)=0.04\\).", true],
+      ["The uninfected-symptom path is \\(0.95(0.10)=0.095\\).", true],
+      ["\\(P(\\text{symptom})=0.135\\).", true],
+      [
+        "The symptom rate is 0.80 because sensitivity is the probability of infection after the symptom.",
+        false,
+      ],
     ],
-    explanation:
-      "Bayesian updating combines prior probability with likelihood, so the base rate remains important. A rare disease can still have many false positives relative to true positives because the no-disease population is much larger, even when sensitivity is high.",
-  },
-  {
-    id: "crash-probability-l2-q22",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "Suppose \\(P(D)=0.02\\), \\(P(+\\mid D)=0.90\\), and \\(P(+\\mid \\neg D)=0.10\\). Which statements are correct?",
-    options: [
-      {
-        text: "\\(P(+)=0.90\\cdot0.02+0.10\\cdot0.98=0.116\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(D\\mid +)=0.018/0.116\\approx0.155\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The posterior is much lower than 0.90 because \\(P(+\\mid D)\\) must be subtracted from \\(P(+\\mid \\neg D)\\).",
-        isCorrect: false,
-      },
-      {
-        text: "\\(P(D\\mid +)=P(+\\mid D)\\) because both conditionals mention disease and a positive test.",
-        isCorrect: false,
-      },
+    "The symptom can arise through infected and uninfected paths, which are disjoint and sum to 13.5%. Sensitivity is \\(P(\\text{symptom}\\mid\\text{infected})\\), not the marginal symptom rate or the reversed diagnostic probability.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q82",
+    "easy",
+    "Which statements correctly describe marginalization?",
+    [
+      [
+        "It removes an unwanted discrete variable through \\(P(X)=\\sum_zP(X,z)\\).",
+        true,
+      ],
+      ["It can turn a joint distribution \\(P(X,Z)\\) into \\(P(X)\\).", true],
+      [
+        "It accounts for multiple hidden paths that can produce the same observation.",
+        true,
+      ],
+      [
+        "For a continuous latent, the analogous operation is \\(p(x)=\\int p(x,z)\\,dz\\).",
+        true,
+      ],
     ],
-    explanation:
-      "The evidence term adds true positives and false positives, giving \\(0.116\\). Dividing the true-positive contribution \\(0.018\\) by that evidence gives about 15.5%; no subtraction of sensitivity from the false-positive rate is involved.",
-  },
-  {
-    id: "crash-probability-l2-q23",
-    chapter: 2,
-    difficulty: "medium",
-    prompt:
-      "Which pairs of conditional probabilities are generally different and should not be casually reversed?",
-    options: [
-      {
-        text: "\\(P(\\text{positive test}\\mid\\text{disease})\\) and \\(P(\\text{disease}\\mid\\text{positive test})\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(\\text{word bank}\\mid\\text{finance context})\\) and \\(P(\\text{finance context}\\mid\\text{word bank})\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(\\text{class}\\mid\\text{image})\\) and \\(P(\\text{image}\\mid\\text{class})\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(A\\mid B)\\) and \\(P(B\\mid A)\\), unless extra information shows they are equal.",
-        isCorrect: true,
-      },
+    "Marginalization aggregates all mutually compatible values of the variable being removed while retaining the observed quantity of interest. Sums handle discrete alternatives and integrals handle continuous ones, but the path-aggregation idea is the same.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q83",
+    "medium",
+    "A calculation applies the law of total probability using events “young” and “employed.” Which concerns are valid?",
+    [
+      [
+        "The events overlap, so their paths can double-count people who are both young and employed.",
+        true,
+      ],
+      [
+        "The events may fail to cover people who are neither young nor employed.",
+        true,
+      ],
+      [
+        "The calculation is valid merely because both event probabilities are known.",
+        false,
+      ],
+      [
+        "Conditional rates can be added without weights whenever event names differ.",
+        false,
+      ],
     ],
-    explanation:
-      "Conditionals have direction: the event after the bar is what is known. These pairs may be related by Bayes' theorem, but they are not interchangeable without priors and normalizing evidence.",
-  },
-  {
-    id: "crash-probability-l2-q24",
-    chapter: 2,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe Bayes' theorem as reweighting?",
-    options: [
-      {
-        text: "It starts with prior possibilities.",
-        isCorrect: true,
-      },
-      {
-        text: "It weights hypotheses by how likely they make the observed data.",
-        isCorrect: true,
-      },
-      {
-        text: "It normalizes by the prior probability of the favored hypothesis rather than by the probability of the observed data.",
-        isCorrect: false,
-      },
-      {
-        text: "It removes the need to consider hypotheses that also could have produced the data.",
-        isCorrect: false,
-      },
+    "A total-probability decomposition needs a mutually exclusive and exhaustive partition, which these two attributes do not provide. Knowing marginal probabilities does not fix overlap or uncovered cases, and weighted joint paths—not raw conditionals—must be added.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q84",
+    "hard",
+    "A three-class latent cause \\(Z\\) has priors \\((0.2,0.5,0.3)\\), and \\(P(D\\mid Z)=(0.9,0.4,0.1)\\). Which statements are correct?",
+    [
+      [
+        "The three D path masses are \\(0.2(0.9)=0.18\\), \\(0.5(0.4)=0.20\\), and \\(0.3(0.1)=0.03\\).",
+        true,
+      ],
+      ["\\(P(D)=0.41\\).", true],
+      [
+        "The middle cause contributes the most D mass despite not having the largest conditional likelihood.",
+        true,
+      ],
+      [
+        "The first cause must be the most common posterior cause because 0.9 is the largest likelihood.",
+        false,
+      ],
     ],
-    explanation:
-      "Bayes' theorem multiplies prior probability by likelihood and then normalizes across possible explanations for the data. The denominator is the evidence probability \\(P(D)\\), not merely the prior probability of whichever hypothesis looks favored.",
-  },
-  {
-    id: "crash-probability-l2-q25",
-    chapter: 2,
-    difficulty: "medium",
-    type: "assertion-reason",
-    prompt:
-      "Assertion: \\(P(D\\mid H)\\) and \\(P(H\\mid D)\\) are generally not the same quantity.\n\nReason: The evidence term \\(P(D)\\) normalizes posterior probabilities in Bayes' theorem.",
-    options: [
-      { text: "Assertion is true, Reason is false.", isCorrect: false },
-      { text: "Assertion is false, Reason is true.", isCorrect: false },
-      { text: "Both are false.", isCorrect: false },
-      {
-        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
-      {
-        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
-        isCorrect: true,
-      },
+    "Posterior evidence depends on prior times likelihood, so the path masses—not likelihoods alone—determine contributions to D. The middle cause contributes 0.20, slightly above the first cause's 0.18, and all paths sum to the evidence probability 0.41.",
+  ),
+
+  // Independence, dependence, and causal caution
+  makeQuestion(
+    "crash-probability-l2-q85",
+    "easy",
+    "Which equation expresses independence of events A and B?",
+    [
+      ["\\(P(A\\cap B)=P(A)P(B)\\)", true],
+      ["\\(P(A\\cup B)=P(A)+P(B)\\)", false],
+      ["\\(P(A\\mid B)=P(B\\mid A)\\)", false],
+      ["\\(P(A)+P(B)=1\\)", false],
     ],
-    explanation:
-      "The assertion is true because reversing the conditioning direction changes the question being asked. The reason is also true because Bayes' theorem uses \\(P(D)\\) as a normalizer, but that fact does not by itself explain why the two reversed conditionals are different.",
-  },
-  {
-    id: "crash-probability-l2-q26",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      'A text classifier uses Naive Bayes for spam detection. Which statements correctly describe the "naive" part?',
-    options: [
-      {
-        text: "It commonly assumes words are conditionally independent given the class.",
-        isCorrect: true,
-      },
-      {
-        text: "The assumption can be mathematically false while still practically useful.",
-        isCorrect: true,
-      },
-      {
-        text: "The model still uses Bayes-style reasoning to estimate \\(P(\\text{class}\\mid\\text{words})\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The assumption means words are independent before conditioning on the class in every text corpus.",
-        isCorrect: false,
-      },
+    "Independence means the joint probability factorizes into the product of marginals. Direct union addition characterizes disjointness, equality of reversed conditionals is not sufficient, and probabilities summing to one suggests a complement relationship instead.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q86",
+    "easy",
+    "When \\(P(A)>0\\) and \\(P(B)>0\\), which checks are each equivalent to independence?",
+    [
+      ["\\(P(A\\mid B)=P(A)\\).", true],
+      ["\\(P(B\\mid A)=P(B)\\).", true],
+      ["\\(P(A\\mid B)=1-P(A)\\).", false],
+      ["\\(P(A\\cap B)=0\\).", false],
     ],
-    explanation:
-      "Naive Bayes often assumes conditional independence of features given the class, not universal unconditional independence. The assumption is simplifying and imperfect, but it can make classification tractable and surprisingly effective.",
-  },
-  {
-    id: "crash-probability-l2-q27",
-    chapter: 2,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe Bayesian machine learning at the high level introduced here?",
-    options: [
-      {
-        text: "It can represent uncertainty over plausible models or parameters given data.",
-        isCorrect: true,
-      },
-      {
-        text: "It is useful in settings such as scientific modeling, small data, and medical decision support.",
-        isCorrect: true,
-      },
-      {
-        text: "It asks which models remain plausible after observing data.",
-        isCorrect: true,
-      },
-      {
-        text: "It always replaces neural-network training with exact closed-form posterior calculations.",
-        isCorrect: false,
-      },
+    "If learning either event leaves the probability of the other unchanged, the events are independent and the joint factorizes. A zero intersection instead describes disjoint events, which are usually dependent when both have positive probability.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q87",
+    "medium",
+    "Suppose \\(P(A)=0.4\\), \\(P(B)=0.5\\), and \\(P(A\\cap B)=0.2\\). Which statements are correct?",
+    [
+      ["\\(P(A)P(B)=0.2\\).", true],
+      ["A and B satisfy the product test for independence.", true],
+      ["\\(P(A\\mid B)=0.4=P(A)\\).", true],
+      [
+        "A and B are disjoint because their joint probability equals their product.",
+        false,
+      ],
     ],
-    explanation:
-      "The lecture introduces Bayesian machine learning as a way to reason about uncertainty over models and predictions, including uncertainty over plausible models or parameters. It does not claim that every Bayesian method has simple exact formulas or replaces all neural-network training procedures.",
-  },
-  {
-    id: "crash-probability-l2-q28",
-    chapter: 2,
-    difficulty: "medium",
-    prompt:
-      "Which statements accurately connect LLM behavior to Bayesian language without overclaiming the implementation?",
-    options: [
-      {
-        text: "LLMs are usually not implemented as explicit classical Bayesian inference systems.",
-        isCorrect: true,
-      },
-      {
-        text: "Prompt context can change which continuations are plausible.",
-        isCorrect: true,
-      },
-      {
-        text: "It is reasonable to describe some prompt effects as evidence shifting a conditional distribution.",
-        isCorrect: true,
-      },
-      {
-        text: 'A context about a laptop can shift the likely interpretation of "Apple" toward the company sense.',
-        isCorrect: true,
-      },
+    "The joint equals the product of marginals, and conditioning on B leaves A at 0.4, so both equivalent tests establish independence. Their positive intersection means they can co-occur and therefore are not disjoint.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q88",
+    "hard",
+    "Two cards are drawn from a 52-card deck without replacement. Which statements are correct about the events that the first and second cards are aces?",
+    [
+      ["\\(P(\\text{second ace}\\mid\\text{first ace})=3/51\\).", true],
+      [
+        "The two ace events are dependent because the first draw changes the second draw's probability.",
+        true,
+      ],
+      [
+        "The events are independent because both marginal ace probabilities equal \\(4/52\\).",
+        false,
+      ],
+      ["Their joint probability is \\((4/52)^2\\).", false],
     ],
-    explanation:
-      "The key nuance is to use Bayesian language as an interpretation of evidence and plausibility without claiming the model literally runs a hand-coded Bayes formula. Context changes next-token and meaning distributions in a way that fits conditional-probability language.",
-  },
-  {
-    id: "crash-probability-l2-q29",
-    chapter: 2,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly describe supervised learning as estimating \\(P(y\\mid x)\\)?",
-    options: [
-      {
-        text: "Training data can be represented as pairs \\((x_i,y_i)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "A classifier can estimate \\(P(Y=k\\mid X=x)\\) for class \\(k\\).",
-        isCorrect: true,
-      },
-      {
-        text: "A probabilistic regression model can estimate a distribution over possible numeric outputs.",
-        isCorrect: true,
-      },
-      {
-        text: "A non-probabilistic regression model may output an expected value such as \\(\\mathbb{E}[Y\\mid X=x]\\).",
-        isCorrect: true,
-      },
+    "Without replacement, observing an ace leaves three aces among 51 cards and lowers the second conditional probability. Equal marginals at the two positions do not imply independence; the joint must use \\((4/52)(3/51)\\).",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q89",
+    "medium",
+    "Which statements correctly describe dependence in data and AI?",
+    [
+      [
+        "Word order creates statistical dependence among tokens in a sentence.",
+        true,
+      ],
+      [
+        "Nearby pixels can be dependent because they often belong to the same object.",
+        true,
+      ],
+      [
+        "Dependence can make one variable informative for predicting another.",
+        true,
+      ],
+      [
+        "Observed dependence alone does not identify the direction or existence of a causal effect.",
+        true,
+      ],
     ],
-    explanation:
-      "Supervised learning uses input-output examples to learn how outputs depend on inputs. Classification often estimates class probabilities, while regression may estimate either a distribution or a conditional expected value.",
-  },
-  {
-    id: "crash-probability-l2-q30",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "Which factorization matches repeated conditional next-token prediction for a token sequence \\(X_1,\\ldots,X_T\\)?",
-    options: [
-      {
-        text: "\\(P(X_1,\\ldots,X_T)=\\prod_{t=1}^{T}P(X_t\\mid X_1,\\ldots,X_{t-1})\\), using an empty context for \\(t=1\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(X_1,\\ldots,X_T)=\\prod_{t=1}^{T}P(X_t)\\), regardless of context.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(P(X_1,\\ldots,X_T)=P(X_T\\mid X_1)\\), because only the first and last tokens matter.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(P(X_1,\\ldots,X_T)=\\sum_{t=1}^{T}P(X_t\\mid X_1,\\ldots,X_{t-1})\\), because sequence probabilities add across positions.",
-        isCorrect: false,
-      },
+    "Machine learning exploits statistical structure such as related words, pixels, symptoms, or actions and next states. Predictive dependence is not a causal proof because reverse direction, shared causes, or selection mechanisms can create the same association.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q90",
+    "hard",
+    "Weather \\(W\\) affects both umbrella use \\(U\\) and wet pavement \\(P\\). Suppose U and P are dependent marginally but independent after conditioning on W. Which statements are correct?",
+    [
+      [
+        "Weather is a common factor that can induce marginal association between U and P.",
+        true,
+      ],
+      [
+        "Conditional independence can be written \\(P(U,P\\mid W)=P(U\\mid W)P(P\\mid W)\\).",
+        true,
+      ],
+      [
+        "Marginal dependence does not prove umbrellas cause wet pavement.",
+        true,
+      ],
+      [
+        "Conditional factorization implies \\(P(U,P)=P(U)P(P)\\) after weather is marginalized.",
+        false,
+      ],
     ],
-    explanation:
-      "Autoregressive language modeling decomposes a sequence probability into a product of next-token conditional probabilities. Multiplying reflects joint probability factorization; adding the conditional probabilities would not produce a valid sequence probability.",
-  },
-  {
-    id: "crash-probability-l2-q31",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly compare an RL transition model and a policy?",
-    options: [
-      {
-        text: "\\(P(S_{t+1}\\mid S_t,A_t)\\) describes environment dynamics.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(\\pi(A_t\\mid S_t)\\) describes a conditional action distribution for the agent.",
-        isCorrect: true,
-      },
-      {
-        text: "Both expressions are conditional probability structures.",
-        isCorrect: true,
-      },
-      {
-        text: "The transition model and policy condition on exactly the same variables and predict exactly the same target.",
-        isCorrect: false,
-      },
+    "Mixing weather conditions associates umbrella use with wet pavement even when they separate within each weather stratum. Conditioning can remove the shared-factor path, but that within-stratum factorization does not force the mixed marginal distribution to factorize.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q91",
+    "easy",
+    "A fair coin is flipped twice. What is the relationship between the first-flip-head and second-flip-head events?",
+    [
+      ["They are independent.", true],
+      ["They are mutually exclusive.", false],
+      ["They are complements.", false],
+      ["They are conditionally impossible.", false],
     ],
-    explanation:
-      "The environment transition predicts next state from state and action, while the policy predicts an action distribution from the current state. Both use conditional probability, but they describe different parts of the reinforcement learning setup.",
-  },
-  {
-    id: "crash-probability-l2-q32",
-    chapter: 2,
-    difficulty: "medium",
-    prompt:
-      "Which conditional probability expressions fit diffusion-style denoising at the level introduced here?",
-    options: [
-      {
-        text: "\\(P(x_{t-1}\\mid x_t)\\), for a less noisy state given a noisy state.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(\\epsilon\\mid x_t,t)\\), for noise prediction given the noisy state and time step.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(\\text{clean structure}\\mid\\text{noisy observation})\\), as an informal denoising description.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(x_t)\\) alone, with no conditioning on the noisy input during denoising.",
-        isCorrect: false,
-      },
+    "The first result does not change the fair probability of the second, so the joint head-head probability is \\(1/4=(1/2)(1/2)\\). Both heads can occur together, so the events are neither disjoint nor complements.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q92",
+    "medium",
+    "Two cards are drawn with replacement and the deck is reshuffled after the first draw. Which statements are correct about drawing an ace at each position?",
+    [
+      [
+        "The second ace probability remains \\(4/52\\) after any first draw.",
+        true,
+      ],
+      [
+        "The ace events factorize because replacement restores the deck composition.",
+        true,
+      ],
+      [
+        "The second ace probability becomes \\(3/51\\) after a first ace.",
+        false,
+      ],
+      [
+        "Replacement makes the events disjoint because the first card is returned.",
+        false,
+      ],
     ],
-    explanation:
-      "Diffusion denoising is conditional because the model receives a noisy input and predicts something about the less noisy image or the noise itself. An unconditional probability of a noisy state alone misses the input-output structure emphasized in the lecture.",
-  },
-  {
-    id: "crash-probability-l2-q33",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "A robot action has transition probabilities \\(P(s_1\\mid s,a)=0.70\\), \\(P(s_2\\mid s,a)=0.20\\), and \\(P(s_3\\mid s,a)=0.10\\), with rewards 5, 0, and -10 in those next states. Which statements are correct?",
-    options: [
-      {
-        text: "The transition probabilities form a conditional distribution over next states.",
-        isCorrect: true,
-      },
-      {
-        text: "The expected immediate reward from these next states is \\(0.70\\cdot5+0.20\\cdot0+0.10\\cdot(-10)=2.5\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The action has a nonzero chance of a negative next-state reward.",
-        isCorrect: true,
-      },
-      {
-        text: "The most likely next state alone is enough to compute the expected reward exactly.",
-        isCorrect: false,
-      },
+    "Replacement plus reshuffling restores the original probability distribution before the second draw, giving independence. The \\(3/51\\) calculation belongs to no replacement, and independence permits both events rather than making them disjoint.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q93",
+    "hard",
+    "A dataset shows ice-cream sales and sunburn cases increasing together. Which conclusions are statistically responsible?",
+    [
+      ["The variables are associated in the observed data.", true],
+      ["Temperature or sunny weather is a plausible common cause.", true],
+      ["Conditioning on weather could change or remove the association.", true],
+      [
+        "The association establishes that buying ice cream causes sunburn.",
+        false,
+      ],
     ],
-    explanation:
-      "The conditional transition probabilities sum to one over possible next states for the given state-action pair. Expected reward uses every possible next state and its probability, not only the most likely next state.",
-  },
-  {
-    id: "crash-probability-l2-q34",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      'In the spam table, 45 of 100 emails are spam and contain "prize," 15 contain "prize" but are not spam, 5 are spam without "prize," and 35 are not spam without "prize." Which statements are correct?',
-    options: [
-      {
-        text: "\\(P(\\text{spam})=0.50\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(\\text{contains prize})=0.60\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(\\text{spam},\\text{contains prize})=0.45\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(\\text{spam}\\mid\\text{contains prize})=0.75\\).",
-        isCorrect: true,
-      },
+    "Dependence supports prediction but does not determine a causal arrow, and a shared seasonal factor can increase both variables. Stratifying by weather tests whether the marginal association was induced by mixing conditions rather than by one measured variable causing the other.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q94",
+    "easy",
+    "For independent events A and B with positive probabilities, which statements are correct?",
+    [
+      ["\\(P(A\\mid B)=P(A)\\).", true],
+      ["\\(P(B\\mid A)=P(B)\\).", true],
+      ["\\(P(A\\cap B)=P(A)P(B)\\).", true],
+      [
+        "Observing either event gives no probability information about the other.",
+        true,
+      ],
     ],
-    explanation:
-      "The marginal spam count is 50, the marginal prize count is 60, and the joint spam-and-prize count is 45 out of 100. The conditional probability among prize-containing emails is \\(45/60=0.75\\).",
-  },
-  {
-    id: "crash-probability-l2-q35",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      'A spam table has \\(P(\\text{spam})=0.50\\), \\(P(\\text{contains prize})=0.60\\), and \\(P(\\text{spam},\\text{contains prize})=0.45\\), so \\(P(\\text{spam}\\mid\\text{contains prize})=0.75\\). Are spam and "contains prize" independent?',
-    options: [
-      {
-        text: "No, because \\(P(\\text{spam}\\mid\\text{contains prize})=0.75\\) differs from \\(P(\\text{spam})=0.50\\).",
-        isCorrect: true,
-      },
-      {
-        text: "No, because \\(P(\\text{spam},\\text{contains prize})=0.45\\) differs from \\(P(\\text{spam})P(\\text{contains prize})=0.30\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The phrase contains predictive information about spam status in this table.",
-        isCorrect: true,
-      },
-      {
-        text: "Yes, because both spam and contains prize have marginal probabilities at least 0.50.",
-        isCorrect: false,
-      },
+    "These equations are equivalent ways to state that conditioning on one event does not change the other event's probability. Their equivalence requires the displayed conditionals to have positive denominators, which is guaranteed here.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q95",
+    "medium",
+    "Which distinctions between statistical and causal claims are correct?",
+    [
+      [
+        "A predictive association can be useful even when its cause is unknown.",
+        true,
+      ],
+      [
+        "Intervening on a variable asks a different question from merely conditioning on its observed value.",
+        true,
+      ],
+      [
+        "Independence proves that no hidden causal relationship exists under any measurement scheme.",
+        false,
+      ],
+      [
+        "Dependence identifies which variable should be changed to control the other.",
+        false,
+      ],
     ],
-    explanation:
-      "The conditional-probability and product-of-marginals checks both reject independence. Large marginal probabilities do not imply independence; what matters is whether knowing one event changes the probability of the other.",
-  },
-  {
-    id: "crash-probability-l2-q36",
-    chapter: 2,
-    difficulty: "medium",
-    type: "assertion-reason",
-    prompt:
-      "Assertion: If \\(X\\) and \\(Y\\) are independent, then \\(X\\) is useful for predicting \\(Y\\) in the probabilistic sense.\n\nReason: Independence means \\(P(Y\\mid X)=P(Y)\\).",
-    options: [
-      { text: "Assertion is true, Reason is false.", isCorrect: false },
-      { text: "Assertion is false, Reason is true.", isCorrect: true },
-      { text: "Both are false.", isCorrect: false },
-      {
-        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
-      {
-        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
+    "Prediction can exploit observed dependence without resolving why it exists, whereas causal decisions concern effects of interventions. Independence and dependence are properties of a specified distribution and do not alone settle hidden causes, direction, or intervention outcomes.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q96",
+    "hard",
+    "In each of two age groups, treatment and recovery are independent, but the treated population is mostly younger and the untreated population mostly older; younger patients recover more often. Which statements are correct?",
+    [
+      [
+        "Treatment and recovery can appear dependent after age groups are pooled.",
+        true,
+      ],
+      [
+        "Age can act as a common factor associated with treatment allocation and recovery.",
+        true,
+      ],
+      [
+        "Checking conditional recovery rates within age groups can reveal the stratified relationship.",
+        true,
+      ],
+      [
+        "Within-group independence guarantees pooled independence regardless of group proportions.",
+        false,
+      ],
     ],
-    explanation:
-      "The assertion is false because if \\(P(Y\\mid X)=P(Y)\\), then observing \\(X\\) does not change the distribution of \\(Y\\). The reason is true: that equality is exactly the probabilistic statement of independence in this prediction setting.",
-  },
-  {
-    id: "crash-probability-l2-q37",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      'Which statements correctly connect conditional probability to the statement "prediction = conditional probability"?',
-    options: [
-      {
-        text: "For classification, prediction can mean estimating \\(P(\\text{class}\\mid\\text{input})\\).",
-        isCorrect: true,
-      },
-      {
-        text: "For language modeling, prediction can mean estimating \\(P(\\text{next token}\\mid\\text{text prefix})\\).",
-        isCorrect: true,
-      },
-      {
-        text: "For RL dynamics, prediction can mean estimating \\(P(\\text{next state}\\mid\\text{state, action})\\).",
-        isCorrect: true,
-      },
-      {
-        text: "For denoising, prediction can mean estimating noise or cleaner structure conditioned on a noisy input.",
-        isCorrect: true,
-      },
+    "Pooling groups with different baseline recovery and treatment shares can induce a marginal association even when each stratum factorizes. This is why conditioning structure and population composition matter when interpreting dependence or evaluating a possible treatment effect.",
+  ),
+
+  // Bayes' theorem and base rates
+  makeQuestion(
+    "crash-probability-l2-q97",
+    "easy",
+    "In Bayes' theorem \\(P(H\\mid D)=P(D\\mid H)P(H)/P(D)\\), which term is the prior probability of the hypothesis?",
+    [
+      ["\\(P(H)\\)", true],
+      ["\\(P(D\\mid H)\\)", false],
+      ["\\(P(H\\mid D)\\)", false],
+      ["\\(P(D)\\)", false],
     ],
-    explanation:
-      "The same conditional form appears across AI domains: an output distribution is estimated after input information is known. The targets differ across domains, but the mathematical structure remains conditional probability.",
-  },
-  {
-    id: "crash-probability-l2-q38",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly identify the evidence term \\(P(D)\\) in Bayes' theorem?",
-    options: [
-      {
-        text: "It can be computed by summing \\(P(D\\mid H_i)P(H_i)\\) over a complete set of hypotheses.",
-        isCorrect: true,
-      },
-      {
-        text: "In a binary disease example, it includes both true positives and false positives.",
-        isCorrect: true,
-      },
-      {
-        text: "It acts as a normalizer for posterior probabilities.",
-        isCorrect: true,
-      },
-      {
-        text: "It is generally not the same as the likelihood \\(P(D\\mid H)\\) for one hypothesis.",
-        isCorrect: true,
-      },
+    "The prior \\(P(H)\\) represents belief in H before observing D. The likelihood describes data under H, the posterior is the updated belief, and the evidence normalizes across all hypotheses that could produce D.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q98",
+    "easy",
+    "For a medical test, which term pairings are correct?",
+    [
+      ["Sensitivity: \\(P(+\\mid\\text{disease})\\).", true],
+      ["Specificity: \\(P(-\\mid\\text{no disease})\\).", true],
+      ["Positive predictive value: \\(P(+\\mid\\text{disease})\\).", false],
+      ["False-positive rate: \\(P(+\\mid\\text{disease})\\).", false],
     ],
-    explanation:
-      "The evidence term describes how likely the observed data is overall, considering all ways the data can occur. It normalizes the posterior and is generally not equal to one hypothesis's likelihood because alternative hypotheses can also produce the data.",
-  },
-  {
-    id: "crash-probability-l2-q39",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "A hidden-topic model has \\(P(\\text{word}=w,Z=\\text{sports})=0.06\\), \\(P(w,Z=\\text{finance})=0.03\\), and \\(P(w,Z=\\text{health})=0.01\\). What is \\(P(\\text{word}=w)\\) after marginalizing over topic \\(Z\\)?",
-    options: [
-      { text: "\\(0.01\\)", isCorrect: false },
-      { text: "\\(0.03\\)", isCorrect: false },
-      { text: "\\(0.06\\)", isCorrect: false },
-      { text: "\\(0.10\\)", isCorrect: true },
+    "Sensitivity and specificity condition on true disease status and describe test behavior in those groups. Positive predictive value reverses the condition to \\(P(\\text{disease}\\mid+)\\), while false-positive rate is \\(P(+\\mid\\text{no disease})\\).",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q99",
+    "medium",
+    "In 1,000 people, disease prevalence is 1%. A test has 90% sensitivity and a 5% false-positive rate. Which natural-frequency statements are correct?",
+    [
+      ["About 10 people have the disease.", true],
+      ["About 9 diseased people test positive.", true],
+      ["About 49.5 of the 990 disease-free people test positive.", true],
+      ["About 900 people test positive because sensitivity is 90%.", false],
     ],
-    explanation:
-      "The word can occur through any of the hidden topic values, so marginalization sums those joint probabilities. The calculation is \\(0.06+0.03+0.01=0.10\\), not the largest single topic contribution.",
-  },
-  {
-    id: "crash-probability-l2-q40",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly synthesize Lecture 2's core probability ideas for AI?",
-    options: [
-      {
-        text: "Conditional probability explains how input information changes an output distribution.",
-        isCorrect: true,
-      },
-      {
-        text: "Joint probability describes variables or events appearing together.",
-        isCorrect: true,
-      },
-      {
-        text: "Marginalization sums over hidden or alternative possibilities.",
-        isCorrect: true,
-      },
-      {
-        text: "Dependence is what lets inputs contain useful information about outputs.",
-        isCorrect: true,
-      },
+    "Sensitivity applies only to the ten diseased people, while the false-positive rate applies to the much larger disease-free group. Applying 90% to all 1,000 confuses a conditional test characteristic with the population's positive-test rate.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q100",
+    "hard",
+    "Using prevalence 1%, sensitivity 90%, and false-positive rate 5%, which posterior calculations are correct after a positive result?",
+    [
+      ["\\(P(+)=0.01(0.90)+0.99(0.05)=0.0585\\).", true],
+      ["\\(P(\\text{disease}\\mid+)=0.009/0.0585\\approx0.154\\).", true],
+      ["The posterior is 0.90 because sensitivity reverses directly.", false],
+      ["The posterior is 0.01 because evidence cannot alter a prior.", false],
     ],
-    explanation:
-      "These ideas work together: prediction uses conditional probability, joint probabilities describe co-occurrence, marginalization handles hidden alternatives, and dependence makes learning possible. If inputs and outputs were independent, conditioning on the input would not improve prediction.",
-  },
-  {
-    id: "crash-probability-l2-q41",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "A table has \\(P(A,B)=0.18\\), \\(P(\\neg A,B)=0.12\\), \\(P(A,\\neg B)=0.22\\), and \\(P(\\neg A,\\neg B)=0.48\\). What is \\(P(A\\mid B)\\)?",
-    options: [
-      { text: "\\(0.18\\)", isCorrect: false },
-      { text: "\\(0.40\\)", isCorrect: false },
-      { text: "\\(0.60\\)", isCorrect: true },
-      { text: "\\(0.82\\)", isCorrect: false },
+    "The evidence probability includes true-positive and false-positive paths, so Bayes gives a posterior near 15.4%. The low base rate means false positives outnumber true positives despite good sensitivity, which is exactly why reversing sensitivity is wrong.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q101",
+    "medium",
+    "Which statements correctly explain the denominator \\(P(D)\\) in Bayes' theorem?",
+    [
+      ["It is the marginal probability of observing the data.", true],
+      [
+        "It can be computed by summing prior-times-likelihood paths over an exhaustive hypothesis partition.",
+        true,
+      ],
+      [
+        "It makes posterior probabilities across the hypotheses sum to one.",
+        true,
+      ],
+      [
+        "It includes ways the data can occur under alternatives to the focal hypothesis.",
+        true,
+      ],
     ],
-    explanation:
-      "The conditioning event has probability \\(P(B)=0.18+0.12=0.30\\). Therefore \\(P(A\\mid B)=P(A,B)/P(B)=0.18/0.30=0.60\\), not the joint probability by itself.",
-  },
-  {
-    id: "crash-probability-l2-q42",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly use the table with \\(P(A,B)=0.18\\), \\(P(\\neg A,B)=0.12\\), \\(P(A,\\neg B)=0.22\\), and \\(P(\\neg A,\\neg B)=0.48\\)?",
-    options: [
-      { text: "\\(P(A)=0.40\\).", isCorrect: true },
-      { text: "\\(P(B)=0.30\\).", isCorrect: true },
-      {
-        text: "\\(P(A\\mid B)=P(A)\\), so \\(A\\) and \\(B\\) are independent.",
-        isCorrect: false,
-      },
-      { text: "\\(P(A,B)=P(A)P(B)\\).", isCorrect: false },
+    "The evidence term totals every disjoint route to D and therefore sets the scale for comparing hypotheses. Dividing each weighted path by this common total normalizes the posterior distribution while accounting for alternative explanations of the observation.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q102",
+    "hard",
+    "Prior odds for a fault are 1:19, and an alarm is four times as likely under a fault as under no fault. Which statements are correct?",
+    [
+      ["The likelihood ratio is 4.", true],
+      ["Posterior odds are \\(4:19\\).", true],
+      ["The posterior fault probability is \\(4/(4+19)=4/23\\).", true],
+      [
+        "The posterior probability is \\(4/5\\) because the likelihood ratio is four.",
+        false,
+      ],
     ],
-    explanation:
-      "The marginal probabilities are \\(P(A)=0.18+0.22=0.40\\) and \\(P(B)=0.18+0.12=0.30\\). Independence would require \\(P(A,B)=0.40\\cdot0.30=0.12\\), but the observed joint probability is 0.18.",
-  },
-  {
-    id: "crash-probability-l2-q43",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "Suppose \\(P(S\\mid D_1)=0.80\\), \\(P(S\\mid D_2)=0.30\\), \\(P(D_1)=0.25\\), and \\(P(D_2)=0.75\\), where \\(D_1\\) and \\(D_2\\) are exhaustive disease states. Which statements are correct?",
-    options: [
-      {
-        text: "\\(P(S)=0.80\\cdot0.25+0.30\\cdot0.75=0.425\\).",
-        isCorrect: true,
-      },
-      { text: "\\(P(D_1,S)=0.20\\).", isCorrect: true },
-      { text: "\\(P(D_1\\mid S)\\approx0.471\\).", isCorrect: true },
-      {
-        text: "\\(P(D_1\\mid S)=0.80\\), because sensitivity and posterior are the same conditional.",
-        isCorrect: false,
-      },
+    "Bayes in odds form multiplies prior odds by the likelihood ratio, turning 1:19 into 4:19. Converting odds to probability requires dividing by the sum of both sides, so a likelihood ratio is not itself a posterior probability.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q103",
+    "easy",
+    "Why can a rare condition still have a modest posterior probability after an accurate positive test?",
+    [
+      [
+        "The large condition-free population can generate many false positives.",
+        true,
+      ],
+      [
+        "Sensitivity is defined as the posterior probability after a positive test.",
+        false,
+      ],
+      ["Bayes' theorem ignores prevalence when the test is accurate.", false],
+      ["A positive result makes the prior exactly zero.", false],
     ],
-    explanation:
-      "The symptom probability is found by marginalizing over the exhaustive disease states. The posterior is \\(P(D_1\\mid S)=P(S\\mid D_1)P(D_1)/P(S)=0.20/0.425\\approx0.471\\), which is not the same as \\(P(S\\mid D_1)\\).",
-  },
-  {
-    id: "crash-probability-l2-q44",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "A binary classifier gives \\(P(Y=1\\mid X=x)=0.70\\) and \\(P(Y=0\\mid X=x)=0.30\\). Which statements are correct?",
-    options: [
-      {
-        text: "This is a conditional distribution over \\(Y\\) for the fixed input \\(x\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The two probabilities sum to one for this binary output space.",
-        isCorrect: true,
-      },
-      {
-        text: "A maximum-probability decision rule would choose \\(Y=1\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The distribution still represents uncertainty about \\(Y\\) for this input.",
-        isCorrect: true,
-      },
+    "Even a small false-positive rate applied to a very large disease-free group can produce more positives than the true-positive path. Sensitivity conditions in the opposite direction, and Bayes combines rather than discards the prevalence prior.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q104",
+    "medium",
+    "A test has sensitivity 0.92 and specificity 0.96. Which statements are correct?",
+    [
+      ["Its false-negative rate is \\(1-0.92=0.08\\).", true],
+      ["Its false-positive rate is \\(1-0.96=0.04\\).", true],
+      ["Its positive predictive value is 0.92 for every population.", false],
+      ["Its disease prevalence is \\(1-0.96=0.04\\).", false],
     ],
-    explanation:
-      "For a fixed input, the classifier gives a conditional probability distribution over the possible labels. Choosing the largest probability is a decision rule applied to that distribution, not a removal of uncertainty.",
-  },
-  {
-    id: "crash-probability-l2-q45",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "Events \\(A\\) and \\(B\\) satisfy \\(P(A)=0.40\\), \\(P(B)=0.50\\), and \\(P(A,B)=0.20\\). Which conclusion is correct?",
-    options: [
-      { text: "\\(A\\) and \\(B\\) are independent.", isCorrect: true },
-      {
-        text: "\\(A\\) and \\(B\\) are dependent because \\(P(A,B)\\) is smaller than \\(P(B)\\).",
-        isCorrect: false,
-      },
-      { text: "\\(P(A\\mid B)=0.20\\).", isCorrect: false },
-      { text: "\\(P(B\\mid A)=0.50\\) proves dependence.", isCorrect: false },
+    "False-negative and false-positive rates complement sensitivity and specificity within their respective true-status groups. Predictive value additionally depends on prevalence, while specificity says nothing about how common disease is.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q105",
+    "hard",
+    "Disease prevalence is 20%. A test has sensitivity 0.80 and specificity 0.90. Which statements correctly analyze a negative result?",
+    [
+      ["\\(P(-\\cap\\text{disease})=0.20(0.20)=0.04\\).", true],
+      ["\\(P(-\\cap\\text{no disease})=0.80(0.90)=0.72\\).", true],
+      ["\\(P(\\text{disease}\\mid-)=0.04/(0.04+0.72)\\approx0.0526\\).", true],
+      [
+        "The posterior disease probability is the false-negative rate 0.20.",
+        false,
+      ],
     ],
-    explanation:
-      "Independence holds because \\(P(A)P(B)=0.40\\cdot0.50=0.20=P(A,B)\\). Also \\(P(A\\mid B)=0.20/0.50=0.40=P(A)\\), so knowing \\(B\\) does not change the probability of \\(A\\).",
-  },
-  {
-    id: "crash-probability-l2-q46",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "Ice cream purchases and drowning incidents are associated overall, but both vary strongly with temperature. Which statements correctly express the conditional-independence lesson?",
-    options: [
-      {
-        text: "The overall association can be partly explained by a third variable.",
-        isCorrect: true,
-      },
-      {
-        text: "A notation such as \\(A\\perp B\\mid C\\) means independence after conditioning on \\(C\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Conditional independence means the variables were necessarily independent before conditioning.",
-        isCorrect: false,
-      },
-      {
-        text: "Conditioning on temperature forces both variables to have equal probabilities.",
-        isCorrect: false,
-      },
+    "A negative result can occur through diseased false negatives or disease-free true negatives, so both weighted paths form the denominator. The false-negative rate conditions on disease and must not be reversed into the posterior after observing a negative.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q106",
+    "easy",
+    "Which Bayes terms have the stated interpretation?",
+    [
+      ["Prior: belief before the current observation", true],
+      ["Likelihood: probability of the observation under a hypothesis", true],
+      [
+        "Evidence: total probability of the observation across hypotheses",
+        true,
+      ],
+      ["Posterior: updated hypothesis probability after the observation", true],
     ],
-    explanation:
-      "Conditional independence is about what remains after a third variable is known. It does not say the variables were unassociated overall, and it does not require their probabilities to become equal.",
-  },
-  {
-    id: "crash-probability-l2-q47",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "A test has \\(P(D)=0.05\\), \\(P(+\\mid D)=0.90\\), and \\(P(+\\mid \\neg D)=0.20\\). Which statements are correct?",
-    options: [
-      {
-        text: "\\(P(+)=0.90\\cdot0.05+0.20\\cdot0.95=0.235\\).",
-        isCorrect: true,
-      },
-      { text: "\\(P(D\\mid +)=0.045/0.235\\approx0.191\\).", isCorrect: true },
-      {
-        text: "The false-positive contribution is \\(0.190\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(D\\mid +)=0.90\\), because the test is 90% sensitive.",
-        isCorrect: false,
-      },
+    "Bayes combines prior plausibility and data compatibility, then normalizes by the total probability of seeing the evidence. The result is a posterior distribution that reflects both the base rates and how strongly each hypothesis predicts the observation.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q107",
+    "medium",
+    "The same test is used in Population A with prevalence 1% and Population B with prevalence 20%. Sensitivity and specificity are unchanged. Which statements are correct?",
+    [
+      [
+        "A positive result generally has higher positive predictive value in Population B.",
+        true,
+      ],
+      [
+        "The likelihood terms can stay fixed while the posterior changes with the prior.",
+        true,
+      ],
+      [
+        "Both populations must have the same posterior because the test hardware is identical.",
+        false,
+      ],
+      [
+        "Prevalence affects sensitivity by definition, so sensitivity must rise to 20%.",
+        false,
+      ],
     ],
-    explanation:
-      "Bayes' theorem uses both the prior and the likelihood, and the evidence term includes true positives and false positives. The false-positive contribution is large because \\(\\neg D\\) has probability 0.95, so the posterior is about 19.1%, not 90%.",
-  },
-  {
-    id: "crash-probability-l2-q48",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly describe the chain-rule factorization behind autoregressive language modeling?",
-    options: [
-      {
-        text: "\\(P(X_1,X_2,X_3)=P(X_1)P(X_2\\mid X_1)P(X_3\\mid X_1,X_2)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The factorization uses conditional probabilities rather than assuming tokens are independent.",
-        isCorrect: true,
-      },
-      {
-        text: "A transformer language model can approximate the next-token conditionals in this product.",
-        isCorrect: true,
-      },
-      {
-        text: "Multiplying conditional probabilities is how the joint sequence probability is assembled.",
-        isCorrect: true,
-      },
+    "Higher prevalence increases the prior odds of disease, so the same likelihood ratio produces higher posterior odds after a positive result. Sensitivity and specificity are conditional test characteristics here; they do not equal prevalence or force population-invariant predictive values.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q108",
+    "hard",
+    "A screening model gives a posterior disease probability of 0.08. Missing disease costs 50 units, a false alarm costs 2, and correct decisions cost 0. Which statements are correct?",
+    [
+      ["Expected cost of no alarm is \\(0.08(50)=4\\).", true],
+      ["Expected cost of alarm is \\(0.92(2)=1.84\\).", true],
+      [
+        "The alarm minimizes expected cost even though disease is not the most probable state.",
+        true,
+      ],
+      [
+        "Bayesian updating alone fixes a universal 0.50 decision threshold.",
+        false,
+      ],
     ],
-    explanation:
-      "The chain rule decomposes a joint sequence probability into a product of conditional next-token probabilities. Autoregressive LLMs use this structure by repeatedly estimating the next token from the previous context.",
-  },
-  {
-    id: "crash-probability-l2-q49",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "Two hypotheses have unnormalized Bayes weights \\(w_1=0.12\\) and \\(w_2=0.03\\) after multiplying prior by likelihood. What is the posterior probability of hypothesis 1?",
-    options: [
-      { text: "\\(0.12\\)", isCorrect: false },
-      { text: "\\(0.15\\)", isCorrect: false },
-      { text: "\\(0.80\\)", isCorrect: true },
-      { text: "\\(4.00\\)", isCorrect: false },
+    "Bayes supplies a posterior probability, while a decision rule combines it with asymmetric consequences. Here the expensive miss makes an alarm preferable at 8%; a 0.50 threshold assumes a different and much more symmetric cost structure.",
+  ),
+
+  // Conditional distributions in AI
+  makeQuestion(
+    "crash-probability-l2-q109",
+    "easy",
+    "Which expression best represents probabilistic supervised prediction of an output y from input x?",
+    [
+      ["\\(P(y\\mid x)\\)", true],
+      ["\\(P(x\\mid y)\\) only", false],
+      ["\\(P(x)+P(y)\\)", false],
+      ["\\(P(y)/P(x)\\) without a joint model", false],
     ],
-    explanation:
-      "Posterior probabilities are normalized weights, not the raw prior-times-likelihood scores. The normalizer is \\(0.12+0.03=0.15\\), so \\(P(H_1\\mid D)=0.12/0.15=0.80\\); choosing 0.12 would skip the normalization step.",
-  },
-  {
-    id: "crash-probability-l2-q50",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "An RL policy has \\(\\pi(a_1\\mid s)=0.70\\) and \\(\\pi(a_2\\mid s)=0.30\\). Action \\(a_1\\) has expected reward 4 and action \\(a_2\\) has expected reward 10. Which statements are correct?",
-    options: [
-      {
-        text: "The policy is a conditional distribution over actions given state \\(s\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The policy-weighted expected immediate reward is \\(0.70\\cdot4+0.30\\cdot10=5.8\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The policy guarantees reward 5.8 on every trial.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(\\pi(a_1\\mid s)=0.70\\) describes the environment transition probability.",
-        isCorrect: false,
-      },
+    "Supervised prediction asks for a distribution over possible outputs after the input is known, which is \\(P(y\\mid x)\\). The reversed likelihood can be useful in a generative model, but it needs a prior and Bayes' theorem to answer the predictive direction.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q110",
+    "easy",
+    "Which statements correctly describe next-token prediction?",
+    [
+      [
+        "The model estimates a distribution conditioned on the preceding context.",
+        true,
+      ],
+      [
+        "Changing the context can change the probability of the same candidate token.",
+        true,
+      ],
+      [
+        "All tokens are independent because the output uses a categorical distribution.",
+        false,
+      ],
+      [
+        "The context is a future outcome that is marginalized away before prediction.",
+        false,
+      ],
     ],
-    explanation:
-      "A policy gives action probabilities conditioned on the state, while an environment transition model predicts next states. The expected reward averages over the stochastic action choice, so 5.8 is an average rather than a guaranteed realized reward.",
-  },
-  {
-    id: "crash-probability-l2-q51",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "A Naive Bayes spam model compares unnormalized scores \\(P(\\text{spam})P(w_1\\mid\\text{spam})P(w_2\\mid\\text{spam})\\) and \\(P(\\text{not spam})P(w_1\\mid\\text{not spam})P(w_2\\mid\\text{not spam})\\). Which statements are correct?",
-    options: [
-      {
-        text: "The product structure reflects a conditional-independence assumption for words given the class.",
-        isCorrect: true,
-      },
-      {
-        text: "The scores must be normalized before being interpreted as posterior probabilities.",
-        isCorrect: true,
-      },
-      {
-        text: "The class prior can change the final comparison even with the same word likelihoods.",
-        isCorrect: true,
-      },
-      {
-        text: "The model assumes \\(P(\\text{spam}\\mid w_1,w_2)=P(w_1,w_2\\mid\\text{spam})\\) without normalization.",
-        isCorrect: false,
-      },
+    "An LLM uses the observed prefix as conditioning information, allowing syntactic and semantic dependence to reshape the next-token distribution. Categorical output describes mutually exclusive next choices, not independence from the context that produced their probabilities.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q111",
+    "medium",
+    "A generative classifier models \\(P(x\\mid y)P(y)\\), while a discriminative classifier models \\(P(y\\mid x)\\) directly. Which statements are correct?",
+    [
+      [
+        "The generative model can use Bayes' theorem to obtain \\(P(y\\mid x)\\).",
+        true,
+      ],
+      [
+        "The class prior \\(P(y)\\) can affect the generative classifier's posterior.",
+        true,
+      ],
+      [
+        "Both approaches ultimately can produce a conditional distribution over labels.",
+        true,
+      ],
+      [
+        "The likelihood \\(P(x\\mid y)\\) is numerically identical to \\(P(y\\mid x)\\) for every dataset.",
+        false,
+      ],
     ],
-    explanation:
-      "Naive Bayes multiplies a class prior by feature likelihoods under a simplifying conditional-independence assumption. The resulting class scores need normalization to become posterior probabilities, and priors can materially affect the result.",
-  },
-  {
-    id: "crash-probability-l2-q52",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "A latent variable \\(Z\\) can take values \\(z_1,z_2,z_3\\). Which statements correctly describe marginalizing it out of \\(P(Y,Z\\mid X=x)\\)?",
-    options: [
-      { text: "\\(P(Y\\mid X=x)=\\sum_z P(Y,z\\mid X=x)\\).", isCorrect: true },
-      {
-        text: "Each term in the sum keeps the same observed input \\(X=x\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The operation accounts for multiple hidden explanations for \\(Y\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The operation is useful when \\(Z\\) is not directly observed.",
-        isCorrect: true,
-      },
+    "Generative classification combines a class prior with how each class produces features, then normalizes over classes; discriminative modeling targets the posterior directly. The reversed conditionals describe different populations and are not interchangeable.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q112",
+    "hard",
+    "A model has hidden state \\(Z\\in\\{0,1\\}\\), with \\(P(Z=1)=0.3\\), \\(P(X=x\\mid Z=1)=0.8\\), and \\(P(X=x\\mid Z=0)=0.2\\). Which calculations are correct?",
+    [
+      ["\\(P(X=x)=0.3(0.8)+0.7(0.2)=0.38\\).", true],
+      ["\\(P(Z=1\\mid X=x)=0.24/0.38\\approx0.632\\).", true],
+      [
+        "\\(P(X=x)=0.8\\) because the more explanatory state has the larger likelihood.",
+        false,
+      ],
+      [
+        "\\(P(Z=1\\mid X=x)=0.8\\) because posterior and likelihood reverse directly.",
+        false,
+      ],
     ],
-    explanation:
-      "Marginalizing a latent variable sums over its possible hidden values while keeping the observed conditioning information fixed. This lets the model account for several hidden explanations rather than committing to only one.",
-  },
-  {
-    id: "crash-probability-l2-q53",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "In a corpus, \\(P(\\text{word bank}\\mid\\text{finance context})=0.08\\) and \\(P(\\text{finance context}\\mid\\text{word bank})=0.60\\). Which statement is correct?",
-    options: [
-      {
-        text: "The two numbers can differ because they condition on different known information.",
-        isCorrect: true,
-      },
-      {
-        text: "The two numbers must be equal because they mention the same word and context.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(0.08\\) is the posterior probability of finance context after observing the word bank.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(0.60\\) is the probability of seeing the word bank inside finance contexts.",
-        isCorrect: false,
-      },
+    "The observation probability marginalizes both hidden-state paths, and Bayes divides the state-1 joint path by that evidence. Neither the largest likelihood nor the likelihood alone accounts for the prior probability of the hidden state.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q113",
+    "medium",
+    "Which statements correctly interpret a classifier output \\(P(Y\\mid X=x)\\)?",
+    [
+      [
+        "For fixed x, probabilities across mutually exclusive exhaustive Y classes sum to one.",
+        true,
+      ],
+      [
+        "The distribution can express ambiguity between plausible classes.",
+        true,
+      ],
+      [
+        "A decision rule may use the posterior together with costs rather than simply choosing the largest class.",
+        true,
+      ],
+      [
+        "Calibration asks whether repeated conditional probabilities align with observed class frequencies.",
+        true,
+      ],
     ],
-    explanation:
-      "The event after the conditioning bar is what is assumed known. Seeing finance context and asking about the word is not the same question as seeing the word bank and asking about the context.",
-  },
-  {
-    id: "crash-probability-l2-q54",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "Which rows can be valid conditional distributions over next states for a fixed state-action pair?",
-    options: [
-      { text: "\\((0.70,0.20,0.10)\\).", isCorrect: true },
-      { text: "\\((0.00,0.40,0.60)\\).", isCorrect: true },
-      { text: "\\((0.60,0.60,-0.20)\\).", isCorrect: false },
-      { text: "\\((0.50,0.30,0.30)\\).", isCorrect: false },
+    "A conditional classifier provides a normalized distribution for the observed input, preserving uncertainty that a label alone hides. That distribution can feed either an argmax or a cost-sensitive decision, and calibration evaluates whether its numerical probabilities behave like frequencies.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q114",
+    "hard",
+    "A prediction model observes feature X but a relevant discrete feature Z is missing. Which statements correctly describe \\(P(Y\\mid X)\\)?",
+    [
+      [
+        "It can be obtained by summing \\(P(Y\\mid X,Z)P(Z\\mid X)\\) over Z.",
+        true,
+      ],
+      [
+        "The weights are \\(P(Z=z\\mid X)\\), the conditional probabilities of missing-feature values given observed X.",
+        true,
+      ],
+      [
+        "The result averages predictions across possible Z values rather than selecting one without evidence.",
+        true,
+      ],
+      [
+        "The missing feature can be discarded without any averaging because conditioning removes uncertainty.",
+        false,
+      ],
     ],
-    explanation:
-      "For a fixed conditioning state-action pair, probabilities over next states must be nonnegative and sum to one. The invalid rows either include a negative probability or sum to more than one.",
-  },
-  {
-    id: "crash-probability-l2-q55",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "A diagnostic system has prior odds \\(P(H_1):P(H_2)=1:3\\). Evidence is four times as likely under \\(H_1\\) as under \\(H_2\\). Which statements are correct?",
-    options: [
-      { text: "The likelihood ratio favors \\(H_1\\).", isCorrect: true },
-      { text: "The posterior odds are \\(4\\cdot1:3=4:3\\).", isCorrect: true },
-      {
-        text: "The posterior probability of \\(H_1\\) is \\(4/7\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The posterior probability of \\(H_1\\) is \\(4/5\\) because the likelihood ratio is 4.",
-        isCorrect: false,
-      },
+    "The law of total probability marginalizes the unobserved feature using its distribution after the observed input is known. Picking one hidden value would understate uncertainty and generally produce a different predictive distribution.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q115",
+    "easy",
+    "In a stochastic environment, what does \\(P(S_{t+1}=s'\\mid S_t=s,A_t=a)\\) describe?",
+    [
+      [
+        "The distribution of the next state after a given current state and action",
+        true,
+      ],
+      ["The unconditional frequency of action a", false],
+      ["The probability that state s caused every prior reward", false],
+      ["The marginal distribution of all states with time removed", false],
     ],
-    explanation:
-      "Bayesian updating can be expressed in odds form: posterior odds equal prior odds times the likelihood ratio. Starting from \\(1:3\\) and multiplying by 4 gives \\(4:3\\), so the normalized posterior for \\(H_1\\) is \\(4/(4+3)=4/7\\).",
-  },
-  {
-    id: "crash-probability-l2-q56",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "Which equations are valid consequences of the conditional-probability definition when denominators are positive?",
-    options: [
-      { text: "\\(P(A,B)=P(A\\mid B)P(B)\\).", isCorrect: true },
-      { text: "\\(P(A,B,C)=P(A\\mid B,C)P(B\\mid C)P(C)\\).", isCorrect: true },
-      {
-        text: "\\(P(A\\mid B)=\\frac{P(B\\mid A)P(A)}{P(B)}\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(A)=\\sum_b P(A,b)\\) when the values \\(b\\) partition the other variable.",
-        isCorrect: true,
-      },
+    "The expression conditions on the current state-action pair and assigns probability to possible next states, forming a transition model. It does not specify how often the action is selected or make a causal statement about the entire past.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q116",
+    "medium",
+    "Why is dependence useful for prediction? Which statements are correct?",
+    [
+      [
+        "If Y depends on X, observing X can change the conditional distribution of Y.",
+        true,
+      ],
+      [
+        "A model can exploit stable dependence to reduce predictive uncertainty.",
+        true,
+      ],
+      ["Perfect independence makes X maximally informative about Y.", false],
+      [
+        "Dependence guarantees the learned relationship is causal and stable after every distribution shift.",
+        false,
+      ],
     ],
-    explanation:
-      "These equations are the basic algebra behind conditioning, Bayes' theorem, chain-rule factorization, and marginalization. They are valid only when the relevant conditioning denominators are positive and the summed values form a complete partition.",
-  },
-  {
-    id: "crash-probability-l2-q57",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "A feature \\(X\\) has \\(P(Y=1)=0.50\\), \\(P(Y=1\\mid X=0)=0.50\\), and \\(P(Y=1\\mid X=1)=0.50\\). Which conclusion best follows?",
-    options: [
-      {
-        text: "This feature does not change the distribution of \\(Y\\) in the shown cases.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(X\\) is guaranteed to be causally unrelated to \\(Y\\) in every possible setting.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(X=1\\) makes \\(Y=1\\) more likely than \\(X=0\\).",
-        isCorrect: false,
-      },
-      {
-        text: "The feature proves the classifier will be perfectly calibrated.",
-        isCorrect: false,
-      },
+    "Predictive features matter because their values change what outputs are probable; under independence, X leaves the Y distribution unchanged. Association can still be noncausal or unstable across environments, so useful prediction does not guarantee intervention validity or robustness.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q117",
+    "hard",
+    "A risk model is evaluated separately for two groups. In each group, among cases assigned probability 0.20, about 20% experience the event. Which statements are correct?",
+    [
+      ["The model is calibrated at 0.20 within each evaluated group.", true],
+      [
+        "This is a conditional frequency statement, not proof that every individual has identical causal risk.",
+        true,
+      ],
+      [
+        "Pooling the groups could hide group-specific miscalibration if only the aggregate were checked.",
+        true,
+      ],
+      [
+        "Calibration at one probability value proves perfect classification accuracy.",
+        false,
+      ],
     ],
-    explanation:
-      "The conditional probabilities shown are equal to the marginal probability, so this feature does not help distinguish \\(Y\\) in the displayed distribution. That is a statistical-prediction statement, not a universal causal proof or a calibration guarantee.",
-  },
-  {
-    id: "crash-probability-l2-q58",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly interpret \\(P(\\epsilon\\mid x_t,t)\\) in a diffusion-style denoising model?",
-    options: [
-      {
-        text: "The noise prediction is conditioned on the noisy state \\(x_t\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The time step \\(t\\) can change the relevant denoising distribution.",
-        isCorrect: true,
-      },
-      {
-        text: "The expression says the noise is predicted without seeing the noisy input.",
-        isCorrect: false,
-      },
-      {
-        text: "The expression is a joint probability of clean image and text prompt with no conditioning.",
-        isCorrect: false,
-      },
+    "Group-conditional calibration compares forecast bins with event frequencies within each group, while individual causal risk is a stronger concept. Aggregate checks can average away opposite subgroup errors, and calibration does not say the most likely label is always correct.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q118",
+    "easy",
+    "Which AI quantities are naturally conditional distributions?",
+    [
+      ["A class label given image features", true],
+      ["A next token given the preceding text", true],
+      ["A next state given the current state and action", true],
+      ["A denoised state given a noisy state and a text condition", true],
     ],
-    explanation:
-      "The vertical bar indicates that the noisy state and time step are information used for the prediction. Diffusion denoising is therefore a conditional problem, not an unconditional joint statement.",
-  },
-  {
-    id: "crash-probability-l2-q59",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "Events \\(A\\) and \\(B\\) satisfy \\(P(A)=0.60\\), \\(P(B)=0.50\\), and \\(P(A,B)=0.40\\). Which statements are correct?",
-    options: [
-      { text: "\\(P(A\\cup B)=0.70\\).", isCorrect: true },
-      { text: "\\(P(A\\mid B)=0.80\\).", isCorrect: true },
-      { text: "\\(P(B\\mid A)=\\frac{2}{3}\\).", isCorrect: true },
-      {
-        text: "The events are independent because \\(P(A\\cup B)<1\\).",
-        isCorrect: false,
-      },
+    "Classification, language modeling, reinforcement learning transitions, and conditional diffusion all predict uncertain outputs from known information. The objects differ, but each uses conditioning to restrict and reshape the relevant probability distribution.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q119",
+    "medium",
+    "A classifier knows \\(P(Y=1)=0.30\\) and \\(P(X=1\\mid Y=1)=0.80\\). Which statements are correct?",
+    [
+      ["\\(P(X=1,Y=1)=0.30(0.80)=0.24\\).", true],
+      [
+        "Computing \\(P(Y=1\\mid X=1)\\) also requires the total probability \\(P(X=1)\\).",
+        true,
+      ],
+      [
+        "\\(P(Y=1\\mid X=1)=0.80\\) because X and Y appear in both expressions.",
+        false,
+      ],
+      ["The joint probability is \\(0.30+0.80=1.10\\).", false],
     ],
-    explanation:
-      "The union is \\(0.60+0.50-0.40=0.70\\). The conditionals are \\(P(A\\mid B)=0.40/0.50=0.80\\) and \\(P(B\\mid A)=0.40/0.60=2/3\\), while independence would require \\(0.40=0.60\\cdot0.50\\), which is false.",
-  },
-  {
-    id: "crash-probability-l2-q60",
-    chapter: 2,
-    difficulty: "hard",
-    prompt:
-      "Which applied-math habits are essential when using conditional probability in AI systems?",
-    options: [
-      {
-        text: "Keep track of which event is after the conditioning bar.",
-        isCorrect: true,
-      },
-      {
-        text: "Check whether probabilities are joint, marginal, or conditional before combining them.",
-        isCorrect: true,
-      },
-      {
-        text: "Normalize Bayesian weights before treating them as posterior probabilities.",
-        isCorrect: true,
-      },
-      {
-        text: "Use marginalization when hidden alternatives can produce the observed event.",
-        isCorrect: true,
-      },
+    "The prior-times-likelihood product gives the joint path for class 1 and feature 1. Reversing to a posterior requires normalizing against all feature-1 paths, so the likelihood is insufficient without the evidence probability.",
+  ),
+  makeQuestion(
+    "crash-probability-l2-q120",
+    "hard",
+    "A mixture model has priors \\(P(Z=A)=0.25\\), \\(P(Z=B)=0.75\\) and likelihoods \\(P(x\\mid A)=0.60\\), \\(P(x\\mid B)=0.20\\). Which statements are correct?",
+    [
+      ["The A-and-x path is \\(0.25(0.60)=0.15\\).", true],
+      ["The B-and-x path is \\(0.75(0.20)=0.15\\).", true],
+      [
+        "The evidence probability is 0.30 and the posterior over A and B is \\((0.5,0.5)\\).",
+        true,
+      ],
+      [
+        "A must have larger posterior probability because its likelihood is three times larger.",
+        false,
+      ],
     ],
-    explanation:
-      "Most mistakes in this material come from mixing probability types, reversing conditionals, or forgetting hidden alternatives. Careful notation and normalization are what make the same probability tools reliable in classification, language modeling, reinforcement learning, and denoising.",
-  },
+    "Posterior comparison uses prior times likelihood: the smaller A prior exactly offsets its larger likelihood, giving equal joint path masses. Normalizing their sum produces equal posterior probabilities, illustrating why likelihood alone does not determine belief after data.",
+  ),
 ];

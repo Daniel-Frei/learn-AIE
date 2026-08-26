@@ -4,13 +4,13 @@
 
 # Overall Structure
 
-| Lecture |                                                  Topic | AI Connection                                       |
-| ------- | -----------------------------------------------------: | --------------------------------------------------- |
-| 1       | Probability as uncertainty, distributions, expectation | AI models as probability machines                   |
-| 2       |           Conditional probability, Bayes, independence | Inference, prediction, classification, transformers |
-| 3       |           Random variables, likelihood, loss functions | Deep learning, softmax, cross-entropy               |
-| 4       |             Sequential probability and decision-making | Reinforcement learning, Markov processes            |
-| 5       |           Sampling, latent variables, noise, diffusion | LLM decoding, VAEs, diffusion models                |
+| Lecture | Topic                                                                | AI Connection                                       |
+| ------- | -------------------------------------------------------------------- | --------------------------------------------------- |
+| 1       | Probability foundations, distributions, expectation, and uncertainty | AI models as probability machines                   |
+| 2       | Conditional, joint, total, and Bayesian probability                  | Inference, prediction, classification, transformers |
+| 3       | Likelihood, loss functions, and entropy                              | Deep learning, softmax, cross-entropy               |
+| 4       | Sequential probability, recursive expectation, and decisions         | Reinforcement learning, Markov processes            |
+| 5       | Sampling, latent variables, noise, and diffusion                     | LLM decoding, VAEs, diffusion models                |
 
 ---
 
@@ -23,9 +23,16 @@
 Students should understand:
 
 - what probability means in AI
+- how outcomes differ from events, which are sets of outcomes
+- the three probability axioms and the rules they imply
+- how complements, intersections, unions, and disjoint events combine
+- how to count large sample spaces using the multiplication principle,
+  factorials, permutations, and combinations
 - what a distribution is
 - what random variables are
+- how discrete probability mass differs from continuous probability density
 - what expectation means
+- why expectations add even when random variables are dependent
 - why probability is central to prediction, uncertainty, and learning
 
 ## Part 1 — Why Probability Matters in AI
@@ -51,16 +58,65 @@ Explain:
 
 - sample space
 - event
+- singleton event
 - probability of an event
 - probability between 0 and 1
 - mutually exclusive events
 - exhaustive events
 
+Make the set structure explicit:
+
+- complement, (A^c): “not (A)”
+- intersection, (A \cap B): “(A) and (B)”
+- union, (A \cup B): “(A) or (B), including both”
+- disjoint events: events with no overlap
+
+Introduce the three axioms:
+
+1. (P(A) \ge 0)
+2. (P(\Omega) = 1)
+3. probabilities of disjoint events add
+
+Then derive the working rules:
+
+[
+P(A^c) = 1 - P(A)
+]
+
+[
+P(A \cup B) = P(A) + P(B) - P(A \cap B)
+]
+
+Use Venn diagrams and outcome lists to make double-counting visible. When using
+“favorable outcomes divided by total outcomes,” state the required assumption:
+the elementary outcomes must be equally likely.
+
 Example:
 
 A language model has a vocabulary of 50,000 tokens. At one step, it assigns a probability to every possible next token. The total probability over all tokens must sum to 1.
 
-## Part 3 — Random Variables
+## Part 3 — Counting Large Sample Spaces
+
+Students should be able to count outcomes without listing them all.
+
+Use a two-question decision process:
+
+1. Is repetition allowed?
+2. Does order matter?
+
+Cover:
+
+- the multiplication principle for sequences of choices
+- (n^k) when repetition is allowed and order matters
+- factorial notation, (n!)
+- permutations, (P(n,k) = n!/(n-k)!), when order matters without replacement
+- combinations, ({n \choose k} = n!/[k!(n-k)]), when order does not matter
+
+Examples should include PINs/passwords, ordered officer roles, committees, and
+card hands. Emphasize that a counting formula is valid only after the outcome
+definition, repetition rule, and role of order are clear.
+
+## Part 4 — Random Variables
 
 Introduce a random variable as a numerical or symbolic quantity whose value is uncertain.
 
@@ -76,9 +132,25 @@ Examples:
 Important distinction:
 
 - the **outcome** is uncertain
+- the **random variable** is a function that maps each outcome to a value
 - the **distribution** describes how likely each outcome is
 
-## Part 4 — Discrete Probability Distributions
+Distinguish:
+
+- discrete random variables, described by a probability mass function (PMF)
+- continuous random variables, described by a probability density function (PDF)
+
+For a continuous variable, a single exact value has probability zero; interval
+probabilities are areas under the density:
+
+[
+P(a \le X \le b) = \int_a^b f_X(x)\,dx
+]
+
+Use a uniform bread-length or arrival-time example so the area calculation is
+simple geometry rather than a calculus exercise.
+
+## Part 5 — Discrete Probability Distributions
 
 Focus on discrete distributions first because they are central to classification and LLMs.
 
@@ -92,7 +164,7 @@ For LLMs, the next token is a categorical random variable.
 
 The model does not merely “choose a word.” It produces a distribution over possible words.
 
-## Part 5 — Expectation
+## Part 6 — Expectation
 
 Expectation is the weighted average outcome under uncertainty.
 
@@ -110,7 +182,21 @@ In reinforcement learning:
 
 > The agent chooses actions not just for immediate reward, but for expected future reward.
 
-## Part 6 — Variance and Uncertainty
+Add three important extensions:
+
+- a zero expected-value game is fair in the long run
+- expected value alone does not encode risk tolerance or how painful a rare loss
+  is
+- linearity of expectation does not require independence
+
+[
+\mathbb{E}[X+Y] = \mathbb{E}[X] + \mathbb{E}[Y]
+]
+
+Contrast that with multiplication: (\mathbb{E}[XY] =
+\mathbb{E}[X]\mathbb{E}[Y]) is guaranteed under independence, not in general.
+
+## Part 7 — Variance and Uncertainty
 
 Introduce variance informally:
 
@@ -124,7 +210,7 @@ AI examples:
 - noisy observations
 - generated outputs with randomness
 
-## Part 7 — Lecture Summary
+## Part 8 — Lecture Summary
 
 Students should leave with these core ideas:
 
@@ -133,6 +219,10 @@ Students should leave with these core ideas:
 3. Expectation is the mathematical idea behind average loss, average reward, and average prediction.
 4. Variance describes uncertainty or spread.
 5. Probability is the foundation for learning from data.
+6. Event algebra and counting make complex sample spaces manageable.
+7. Discrete probability assigns mass to values; continuous probability assigns
+   density whose area gives interval probability.
+8. Expectations add whether or not the variables are independent.
 
 ---
 
@@ -149,6 +239,9 @@ Students should understand:
 - Bayes’ theorem
 - joint and marginal probability
 - why prediction means estimating conditional distributions
+- the multiplication rule for dependent and independent events
+- the law of total probability
+- why base rates matter when interpreting test accuracy
 
 ## Part 1 — Conditional Probability
 
@@ -213,7 +306,24 @@ AI examples:
 - marginalizing over latent variables
 - considering all possible future states
 
-## Part 4 — Independence
+## Part 4 — The Law of Total Probability
+
+If (B_1,\ldots,B_n) form a mutually exclusive and exhaustive partition, then:
+
+[
+P(A) = \sum_i P(A \mid B_i)P(B_i)
+]
+
+Teach it as a path decomposition:
+
+1. list every mutually exclusive way the outcome can occur
+2. multiply along each path
+3. add the path probabilities
+
+Use the two-bag marble example, then connect it to disease base rates,
+machine-specific defect rates, latent causes, and next-state uncertainty.
+
+## Part 5 — Independence
 
 Explain:
 
@@ -224,6 +334,30 @@ P(A \mid B) = P(A)
 Meaning:
 
 > Learning (B) gives no information about (A).
+
+Give students three equivalent checks when the required probabilities are
+defined:
+
+[
+P(A \cap B)=P(A)P(B)
+]
+
+[
+P(A \mid B)=P(A)
+]
+
+[
+P(B \mid A)=P(B)
+]
+
+For sequential events, show the general multiplication rule first:
+
+[
+P(A \cap B)=P(A)P(B \mid A)
+]
+
+Only simplify it to (P(A)P(B)) when independence is justified. Use sampling
+with and without replacement as the central contrast.
 
 Then explain why independence is rare in AI.
 
@@ -238,7 +372,12 @@ Important message:
 
 > Much of machine learning is about discovering and exploiting dependence.
 
-## Part 5 — Bayes’ Theorem
+Also distinguish statistical from causal claims. Dependence can be produced by
+a shared factor, and conditional independence may appear after conditioning on
+that factor. Independence alone does not prove that no causal path or hidden
+cause exists.
+
+## Part 6 — Bayes’ Theorem
 
 Introduce Bayes’ theorem:
 
@@ -253,6 +392,22 @@ Explain the terms:
 - (P(H \mid D)): updated belief after seeing data
 - (P(D)): normalization term
 
+Compute (P(D)) with the law of total probability, rather than treating the
+denominator as an unexplained quantity.
+
+Use a medical-test example with natural frequencies (for example, 1,000 people)
+to separate:
+
+- sensitivity, (P(+ \mid \text{disease}))
+- specificity, (P(- \mid \text{no disease}))
+- false-positive rate
+- prevalence/base rate
+- positive predictive value, (P(\text{disease} \mid +))
+
+This directly addresses the reversed-conditional/base-rate error: high test
+accuracy does not imply an equally high posterior probability after a positive
+result.
+
 AI examples:
 
 - diagnosis given symptoms
@@ -260,7 +415,7 @@ AI examples:
 - updating beliefs after observations
 - Bayesian approaches to uncertainty
 
-## Part 6 — Prediction as Conditional Probability
+## Part 7 — Prediction as Conditional Probability
 
 Central AI framing:
 
@@ -280,7 +435,7 @@ Examples:
 - state → action value
 - noisy image → clean image estimate
 
-## Part 7 — Lecture Summary
+## Part 8 — Lecture Summary
 
 Students should leave with these ideas:
 
@@ -289,6 +444,11 @@ Students should leave with these ideas:
 3. LLMs learn something like (P(\text{next token} \mid \text{context})).
 4. Bayes’ theorem formalizes belief updating.
 5. Dependence between variables is what makes learning possible.
+6. The law of total probability adds the probabilities of every possible path
+   to an outcome.
+7. Multiplication uses conditional probability unless independence has been
+   established.
+8. Base rates are essential when reversing a conditional with Bayes’ theorem.
 
 ---
 
@@ -479,6 +639,8 @@ Students should understand:
 - policy
 - expected return
 - value functions
+- first-step equations and recursive expectation
+- expected waiting times for repeated random trials
 - exploration vs exploitation
 
 ## Part 1 — From Prediction to Action
@@ -623,7 +785,36 @@ Deep RL connection:
 
 > A neural network can approximate (Q(s,a)) or a policy (\pi(a \mid s)).
 
-## Part 8 — Exploration vs Exploitation
+## Part 8 — Recursive Expectation and First-Step Analysis
+
+Show how an expected value can be defined in terms of itself by conditioning on
+the first random step.
+
+For the number of fair-coin flips until the first head:
+
+[
+E = 1 + \frac{1}{2}(0) + \frac{1}{2}E
+]
+
+so (E=2). This replaces an infinite enumeration of tail sequences with one
+state equation.
+
+Then use two states—“no current head” and “one head so far”—to show why the
+expected wait for two consecutive heads is six flips. Connect the technique to:
+
+- geometric waiting times and convergent infinite probability series
+- random walks and queueing models
+- Markov states
+- the recursive structure of value/Bellman equations
+
+Core method:
+
+1. define enough states to preserve the relevant information
+2. condition on the next outcome
+3. write one expectation equation per state
+4. solve the simultaneous equations
+
+## Part 9 — Exploration vs Exploitation
 
 The agent faces a tradeoff:
 
@@ -638,7 +829,7 @@ Examples:
 - softmax action selection
 - entropy regularization
 
-## Part 9 — Lecture Summary
+## Part 10 — Lecture Summary
 
 Students should leave with these ideas:
 
@@ -648,6 +839,8 @@ Students should leave with these ideas:
 4. The goal is to maximize expected future reward.
 5. Value functions estimate expected return.
 6. Exploration requires controlled randomness.
+7. First-step analysis turns repeated or infinite random processes into
+   solvable recursive expectation equations.
 
 ---
 
@@ -901,5 +1094,35 @@ The most important concepts for this audience are:
 10. **Gaussian noise**
 
 These are the probabilistic ideas that show up again and again in AI.
+
+---
+
+# Supplied-Lecture Coverage Map
+
+This map records where every substantive concept from the supplied foundational
+probability lecture belongs in the course. It is a curriculum coverage contract,
+not a requirement to copy the source's examples or teaching order verbatim.
+
+| Supplied lecture concept                                                     | Course placement |
+| ---------------------------------------------------------------------------- | ---------------- |
+| Sample spaces; outcomes versus events; singleton events                      | Lecture 1        |
+| Non-negativity, normalization, and disjoint-additivity axioms                | Lecture 1        |
+| Complements, intersections, unions, Venn diagrams, and the addition rule     | Lecture 1        |
+| Multiplication principle, repetition, factorials, permutations, combinations | Lecture 1        |
+| Random variables as functions from outcomes to values                        | Lecture 1        |
+| Expected value, fair games, risk limitation, and linearity of expectation    | Lecture 1        |
+| Discrete versus continuous variables; PMFs, PDFs, interval area, uniform law | Lecture 1        |
+| Conditional probability as a restricted sample space                         | Lecture 2        |
+| Joint tables, marginals, and marginalization                                 | Lecture 2        |
+| Independence tests, dependence, multiplication rule, and common factors      | Lecture 2        |
+| Law of total probability as mutually exclusive path decomposition            | Lecture 2        |
+| Bayes’ theorem, priors, likelihood, evidence, posterior, and base rates      | Lecture 2        |
+| Recursive first-step expectation, waiting times, and state equations         | Lecture 4        |
+
+The lecture's examples—marbles, cards, coin flips, tests, games, continuous
+measurements, and waiting-time problems—should appear as worked practice where
+they clarify these concepts. AI examples then transfer the same reasoning to
+classification, language modeling, reinforcement learning, latent variables,
+and diffusion.
 
 ---

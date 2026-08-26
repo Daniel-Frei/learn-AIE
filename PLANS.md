@@ -1,3 +1,247 @@
+# Stanford CS109 Lectures 1-2 Question Sets
+
+## Goal
+
+Store the supplied Fall 2022 Stanford CS109 Lecture 1 and Lecture 2 source
+bundles, then add two selectable 35-question practice sources focused on the
+probability and counting content.
+
+## Non-goals
+
+- Do not create questions about course logistics, staff, assignments, grading,
+  general AI history, or classroom anecdotes.
+- Do not change quiz UI behavior or shared question infrastructure.
+- Do not add later CS109 lectures or a learning-experience page in this pass.
+
+## Steps
+
+- [x] Inspect both PDFs, both transcripts, repo conventions, and the archived
+      course identity.
+- [x] Store the paired lecture PDFs and transcripts under a new CS109 source
+      folder.
+- [x] Author 35 stable-ID, self-contained questions per lecture with balanced
+      difficulty and answer-count patterns.
+- [x] Register the new `stanford-cs109` series and both Math-topic sources, add
+      focused coverage, and update durable product documentation.
+- [x] Run the manual quality gate plus registration, guessability, type,
+      formatting, and full repository checks as appropriate.
+
+## Files to touch
+
+- `lib/lectures/Stanford CS109 Probability for Computer Scientists/lecture1_welcome_counting.ts`
+- `lib/lectures/Stanford CS109 Probability for Computer Scientists/lecture2_combinatorics.ts`
+- `lib/lectures/Stanford CS109 Probability for Computer Scientists/transcripts-and-files/*`
+- `lib/quiz.ts`
+- `tests/lib/cs109Questions.spec.ts`
+- `docs/product-scope.md`
+- `PLANS.md`
+
+## Verification
+
+- `npm run test:focused -- tests/lib/cs109Questions.spec.ts tests/lib/question-registration.spec.ts`
+- `$env:QUESTION_GUESSABILITY_SOURCE_IDS="cs109-lect1,cs109-lect2"; npm run test:question-guessability`
+- `make types-check`
+- `make format-check`
+- `make check`
+
+## Verification result
+
+- Focused CS109 and registration tests pass (13 tests), and targeted
+  guessability checks pass for both source IDs.
+- TypeScript, ESLint, 250 unit tests, mobile lint/types, and all 6 E2E smoke
+  tests pass; scoped Prettier and `git diff --check` also pass.
+- Repository-wide `make check` stops at the existing formatting baseline on 26
+  files outside the new CS109 course and test files. The remaining gates pass
+  when run independently.
+
+---
+
+# Crash Course Probability Question-Bank Rebuild
+
+## Goal
+
+Review and rebuild the registered Lecture 1-5 Probability question banks so
+each 60-question set teaches the revised curriculum with stronger mathematical
+fluency, applied reasoning, plausible distractors, and useful explanations.
+
+## Non-goals
+
+- Do not change the Lecture 0 prerequisite bank in this pass.
+- Do not change quiz UI behavior, source registration IDs, or the 60-question
+  size of any Lecture 1-5 bank.
+- Do not refactor unrelated question banks or learning experiences.
+
+## Steps
+
+- [x] Audit the revised syllabus, source overviews, registered banks, stable-ID
+      requirements, difficulty mix, answer patterns, and explanation quality.
+- [x] Define a 60-question coverage blueprint for each of Lectures 1-5.
+- [x] Replace low-diagnosticity and obsolete items, assigning new never-used IDs
+      to substantial replacements while keeping every bank at 60 questions.
+- [x] Add focused structural, coverage, difficulty, answer-pattern, and stable-ID
+      tests for all five banks.
+- [x] Update durable product memory and run registration, guessability, type,
+      formatting, and full repository checks as appropriate.
+
+## Files to touch
+
+- `lib/other/Crash Courses/Probability/Lecture 1 - Probability as the Language of AI.ts`
+- `lib/other/Crash Courses/Probability/Lecture 2 - Conditional Probability, Bayes, and Dependence.ts`
+- `lib/other/Crash Courses/Probability/Lecture 3 - Likelihood, Loss, Softmax, and Deep Learning.ts`
+- `lib/other/Crash Courses/Probability/Lecture 4 - Probability Over Time - Reinforcement Learning.ts`
+- `lib/other/Crash Courses/Probability/Lecture 5 - Sampling, Latent Variables, and Diffusion Models.ts`
+- `tests/lib/crashCourseProbabilityQuestions.spec.ts`
+- `docs/product-scope.md`
+- `docs/team-preferences.md`
+- `PLANS.md`
+
+## Verification
+
+- `npm run test:focused -- tests/lib/crashCourseProbabilityQuestions.spec.ts tests/lib/question-registration.spec.ts tests/lib/mit15773-answer-distribution.spec.ts`
+- `$env:QUESTION_GUESSABILITY_SOURCE_IDS="crash-probability-l1,crash-probability-l2,crash-probability-l3,crash-probability-l4,crash-probability-l5"; npm run test:question-guessability`
+- `make types-check`
+- `npx prettier --check` on touched files
+- `make check`
+
+---
+
+# Crash Course Probability Learning-Experience Rebuild
+
+## Goal
+
+Create complete, extensive, quiz-linked learning experiences for Probability
+L0-L5, adding the missing L0-L2 pages and substantially rebuilding L3-L5 around
+the expanded curriculum and the supplied talk's intuition-first explanations.
+
+## Non-goals
+
+- Do not change the six registered question banks or their stable question IDs.
+- Do not refactor unrelated learning experiences or the global app shell.
+- Do not introduce new runtime dependencies; React, browser-native controls,
+  KaTeX, CSS/SVG, and the existing Lucide icon set are sufficient.
+
+## Experience brief
+
+The six pages form one coherent **Probability Observatory**, but each station
+uses a different source-native learning object.
+
+| Source | Learner job                                                                           | Central object and primary interaction                                                                                                                 | Identity / avoided legacy pattern                                                                            |
+| ------ | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------ |
+| L0     | Decode and manipulate the prerequisite notation used later                            | A notation gym with a normalization bench, odds converter, shape checker, and geometric-sum dial                                                       | Graph-paper instrument desk; avoids an AI-flavored definition card list                                      |
+| L1     | Build probability from outcomes and events before formulas                            | A ten-marble event universe that visibly becomes complements, intersections, unions, random-variable values, PMFs, PDFs, and expectations              | Physical probability worktable; follows the talk's unique-outcome intuition and avoids a glossary-first page |
+| L2     | Update a probability when information changes the relevant universe                   | An evidence lens joining conditional filtering, joint tables, a two-bag path tree, and an interactive 1,000-person Bayes population                    | Investigation notebook; avoids presenting Bayes as a formula before base rates and natural frequencies       |
+| L3     | Trace how raw model scores become a learnable training signal                         | A training microscope where logits, temperature, the observed label, likelihood, cross-entropy, entropy, calibration, and gradients update together    | Bright model-inspection console; avoids detached formula cards                                               |
+| L4     | Choose actions by averaging stochastic futures and reasoning recursively              | A decision world combining a grid transition model, trajectory/value trace, exploration mixer, and first-step waiting-time equations                   | Map-and-timeline control room; avoids a shallow grid toggle disconnected from return and recursion           |
+| L5     | Turn a learned distribution into tokens or images while preserving hidden uncertainty | A generation forge linking token filtering/sampling, sequence likelihood, latent marginalization/posteriors, Gaussian noising, denoising, and guidance | Split token/image production bench; avoids independent labs that do not share one generation story           |
+
+## Steps
+
+- [x] Audit the source curriculum, quiz registry, existing L3-L5 pages, routes,
+      and tests.
+- [x] Build shared course navigation, accessible visual language, and tested
+      probability-math helpers.
+- [x] Implement and register the new L0-L2 learning experiences.
+- [x] Replace L3-L5 with extensive source-native experiences that preserve the
+      useful mechanisms while changing the obsolete page architecture.
+- [x] Update learning metadata, product memory, unit coverage, and Playwright
+      journeys for all six routes and quiz transitions.
+- [x] Run formatting, lint, types, unit tests, E2E, and browser UX review at
+      desktop, 1280x800 laptop, and 390x844 mobile widths.
+
+## Files to touch
+
+- `components/learning/probability/ProbabilityCourse.tsx`
+- `components/learning/probability/ProbabilityCourse.module.css`
+- `components/learning/pages/CrashProbabilityL0LearningPage.tsx`
+- `components/learning/pages/CrashProbabilityL1LearningPage.tsx`
+- `components/learning/pages/CrashProbabilityL2LearningPage.tsx`
+- `components/learning/pages/CrashProbabilityL3LearningPage.tsx`
+- `components/learning/pages/CrashProbabilityL4LearningPage.tsx`
+- `components/learning/pages/CrashProbabilityL5LearningPage.tsx`
+- `lib/probabilityLearning.ts`
+- `lib/learning.ts`
+- `app/learn/LearningExperienceRoute.tsx`
+- `tests/lib/probabilityLearning.spec.ts`
+- `tests/lib/learning.spec.ts`
+- `e2e/learning.spec.ts`
+- `docs/product-scope.md`
+- `docs/team-preferences.md`
+- `PLANS.md`
+
+## Verification
+
+- `npm run test:focused -- tests/lib/probabilityLearning.spec.ts tests/lib/learning.spec.ts`
+- focused Probability Playwright journeys and transitions in `e2e/learning.spec.ts`
+- `npx prettier --check` on touched files
+- `make lint`
+- `make types-check`
+- `make test`
+- `npm run e2e`
+- browser screenshots at 1440x900, 1280x800, and 390x844
+- `make check`
+
+## Verification result
+
+- All touched files pass targeted Prettier checks; repository-wide
+  `make check` still stops on 22 unrelated pre-existing formatting warnings.
+- Lint, TypeScript, 230 unit tests, mobile lint/types, and the 6-test E2E smoke
+  suite pass.
+- All 8 Probability learning/quiz journeys pass, including every L0-L5 mobile
+  route and active-station viewport check.
+- The complete E2E run passed 71/72 tests. The sole remaining failure is an
+  unrelated AI Agents presentation keyboard-navigation timing flake that passes
+  when rerun alone.
+- Live Playwright review at 1440x900, 1280x800, and 390x844 found no console or
+  network errors after fixing formula-trail labels, hydration-safe inline
+  values, and active-station centering.
+
+---
+
+# Probability Curriculum Lecture-Coverage Audit
+
+## Goal
+
+Audit the Crash Course Probability syllabus against the supplied probability
+lecture and add every missing concept to the appropriate dependency-ordered
+module.
+
+## Non-goals
+
+- Do not rewrite the registered quiz banks or learning pages in this pass.
+- Do not add measure-theoretic probability, advanced causal inference, or
+  calculus derivations beyond the supplied lecture's conceptual level.
+- Do not refactor unrelated course or quiz infrastructure.
+
+## Steps
+
+- [x] Inventory the supplied lecture and the existing syllabus/lecture
+      overviews.
+- [x] Add missing foundations to Lecture 1, conditional decomposition to
+      Lecture 2, and recursive expectation to Lecture 4.
+- [x] Add a source-to-curriculum coverage map and update durable product memory.
+- [x] Run Markdown formatting and repository verification appropriate for the
+      documentation-only changes.
+
+## Files to touch
+
+- `lib/other/Crash Courses/Probability/transcripts-and-files/Syllabus.md`
+- `lib/other/Crash Courses/Probability/transcripts-and-files/Lecture 1 - overview.md`
+- `lib/other/Crash Courses/Probability/transcripts-and-files/Lecture 2 - overview.md`
+- `lib/other/Crash Courses/Probability/transcripts-and-files/Lecture 4 - overview.md`
+- `docs/product-scope.md`
+- `docs/team-preferences.md`
+- `PLANS.md`
+
+## Verification
+
+- `npx prettier --check` on touched Markdown files (passed)
+- `git diff --check` (passed)
+- `make check` (stopped at the baseline format gate on 22 untouched files)
+- `make lint`, `make types-check`, `make test`, `npm run mobile:lint`,
+  `npm run mobile:types-check`, and `npm run e2e:smoke` (passed)
+
+---
+
 # DiffusionGemma Conversion-Story Follow-up
 
 ## Goal

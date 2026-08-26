@@ -1,1595 +1,1088 @@
 import { Question } from "../../../quiz";
 
+type OptionSpec = readonly [text: string, isCorrect: boolean];
+
+function makeQuestion(
+  id: string,
+  difficulty: Question["difficulty"],
+  prompt: string,
+  options: readonly [OptionSpec, OptionSpec, OptionSpec, OptionSpec],
+  explanation: string,
+): Question {
+  return {
+    id,
+    chapter: 5,
+    difficulty,
+    prompt,
+    options: options.map(([text, isCorrect]) => ({ text, isCorrect })),
+    explanation,
+  };
+}
+
 export const CrashCourseProbabilityL5Questions: Question[] = [
-  {
-    id: "crash-probability-l5-q01",
-    chapter: 5,
-    difficulty: "easy",
-    prompt:
-      "Which statement best captures the central probabilistic idea behind modern generative AI?",
-    options: [
-      {
-        text: "A generative model learns a probability structure and then samples concrete outputs from it.",
-        isCorrect: true,
-      },
-      {
-        text: "A generative model stores one canonical answer for each possible prompt and retrieves it deterministically.",
-        isCorrect: false,
-      },
-      {
-        text: "A generative model avoids uncertainty by converting every distribution into a fixed label before generation begins.",
-        isCorrect: false,
-      },
-      {
-        text: "A generative model is probabilistic only during training and becomes nonprobabilistic when producing text or images.",
-        isCorrect: false,
-      },
+  // Sampling, greedy decoding, and repeated draws
+  makeQuestion(
+    "crash-probability-l5-q61",
+    "easy",
+    "A token distribution is cat 0.5, dog 0.3, and fox 0.2. What does sampling from it mean?",
+    [
+      ["Randomly drawing one token with the listed probabilities", true],
+      [
+        "Treating the modal token cat as the definition of a categorical draw",
+        false,
+      ],
+      ["Averaging the three token names into one output", false],
+      ["Retraining the model until one probability becomes one", false],
     ],
-    explanation:
-      "The core idea is that generation turns learned probability distributions into concrete outputs by sampling or by a related decoding rule. The incorrect options confuse generation with lookup, deterministic classification, or probability that disappears at inference time.",
-  },
-  {
-    id: "crash-probability-l5-q02",
-    chapter: 5,
-    difficulty: "medium",
-    prompt:
-      "Let \\(X\\) be one sample from \\(P(A)=0.70\\), \\(P(B)=0.20\\), and \\(P(C)=0.10\\). If \\(N_C\\) counts how many times \\(C\\) appears in 1,000 independent samples, which statements are correct?",
-    options: [
-      {
-        text: "Greedy choice selects \\(A\\), but that rule is not the same random variable as \\(X\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(\\mathbb{E}[N_C]=100\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(\\operatorname{Var}(N_C)=1000\\cdot0.10\\cdot0.90=90\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The probability of seeing at least one \\(B\\) in 1,000 independent samples is \\(1-0.8^{1000}\\).",
-        isCorrect: true,
-      },
+    "Sampling turns a probability distribution into one random realized outcome while preserving positive chances for all three tokens. Always choosing cat is greedy decoding, not sampling, and neither averaging labels nor retraining is part of the draw.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q62",
+    "easy",
+    "The same cat/dog/fox distribution is sampled 1,000 independent times. Which expectations are correct?",
+    [
+      ["Cat should appear about 500 times.", true],
+      ["Dog should appear about 300 times.", true],
+      [
+        "Constraining each block of ten samples to contain exactly five cats.",
+        false,
+      ],
+      [
+        "Assigning fox zero sampling mass because it is not the modal token.",
+        false,
+      ],
     ],
-    explanation:
-      "A repeated sampling count for one outcome follows a binomial distribution with parameters \\(n=1000\\) and \\(p=0.10\\), giving mean \\(np\\) and variance \\(np(1-p)\\). Greedy decoding is a deterministic maximum rule, while sampling is random and supports event calculations such as the complement probability for seeing at least one \\(B\\).",
-  },
-  {
-    id: "crash-probability-l5-q03",
-    chapter: 5,
-    difficulty: "easy",
-    prompt:
-      "A language model assigns probabilities 0.50 to `mat`, 0.25 to `sofa`, 0.15 to `floor`, 0.07 to `chair`, and 0.03 to `car` after the words `The animal sat on the`. Which statements correctly distinguish sampling from choosing the maximum?",
-    options: [
-      {
-        text: "Choosing the maximum always selects `mat` for this one step.",
-        isCorrect: true,
-      },
-      {
-        text: "Sampling can produce `sofa` or `floor`, even though their probabilities are lower than `mat`.",
-        isCorrect: true,
-      },
-      {
-        text: "Sampling means choosing the most likely token and then adding random punctuation afterward.",
-        isCorrect: false,
-      },
-      {
-        text: "Choosing the maximum should produce `car` about 3 percent of the time because `car` has probability 0.03.",
-        isCorrect: false,
-      },
+    "Expected counts are sample size times probability, so cat and dog have expected counts 500 and 300. Random frequencies fluctuate in finite runs, and every positive-probability outcome—including fox—can be sampled.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q63",
+    "medium",
+    "A model distribution is \\((0.45,0.35,0.20)\\). Which statements correctly compare greedy decoding and sampling?",
+    [
+      ["Greedy decoding selects the first outcome.", true],
+      ["Sampling can select any of the three outcomes.", true],
+      [
+        "Repeated sampling should approach the full 45/35/20 frequency split.",
+        true,
+      ],
+      [
+        "Greedy decoding is a random draw whose frequency vector approaches \\((0.45,0.35,0.20)\\).",
+        false,
+      ],
     ],
-    explanation:
-      "Choosing the maximum is deterministic for a fixed distribution: it returns the highest-probability token. Sampling draws according to the full distribution, so lower-probability tokens can appear with their assigned probabilities.",
-  },
-  {
-    id: "crash-probability-l5-q04",
-    chapter: 5,
-    difficulty: "easy",
-    type: "assertion-reason",
-    prompt:
-      "Assertion: Sampling turns a probability distribution into an actual generated outcome.\n\nReason: A sample is a random draw whose long-run frequencies are governed by the distribution's probabilities.",
-    options: [
-      { text: "Assertion is true, Reason is false.", isCorrect: false },
-      { text: "Assertion is false, Reason is true.", isCorrect: false },
-      { text: "Both are false.", isCorrect: false },
-      {
-        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
-        isCorrect: true,
-      },
-      {
-        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
+    "Greedy decoding deterministically takes the argmax for this step, whereas sampling realizes the categorical distribution. Over repeated comparable draws, sampling frequencies approach the probabilities; greedy outputs remain concentrated on the first outcome.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q64",
+    "hard",
+    "Three independent samples are drawn from outcomes A and B with probabilities 0.7 and 0.3. Which calculations are correct for exactly two A outcomes?",
+    [
+      ["There are \\({3\\choose2}=3\\) positions for the single B.", true],
+      ["The probability is \\(3(0.7)^2(0.3)=0.441\\).", true],
+      [
+        "The probability is \\((0.7)^2(0.3)=0.147\\) because one arrangement represents the full count event.",
+        false,
+      ],
+      [
+        "The probability is \\(2/3\\) because two of the three outcomes are A.",
+        false,
+      ],
     ],
-    explanation:
-      "The assertion is true because a distribution only describes possible outcomes until a decoding or sampling rule produces a concrete output. The reason is true and explains the assertion: sampling is the random draw process that links probabilities to realized outcomes over time.",
-  },
-  {
-    id: "crash-probability-l5-q05",
-    chapter: 5,
-    difficulty: "medium",
-    prompt:
-      "At a next-token step, logits \\(z_i\\) are converted to probabilities by softmax. Which operation is greedy decoding?",
-    options: [
-      {
-        text: "Choose \\(\\arg\\max_i z_i\\), equivalently \\(\\arg\\max_i P(y_i\\mid\\text{context})\\) after softmax.",
-        isCorrect: true,
-      },
-      {
-        text: "Draw \\(y_i\\) from the categorical distribution \\(P(y_i\\mid\\text{context})\\).",
-        isCorrect: false,
-      },
-      {
-        text: "Lower the temperature until the entropy is small, then sample from the remaining distribution.",
-        isCorrect: false,
-      },
-      {
-        text: "Keep the top-k tokens, renormalize their probabilities, and sample from that restricted set.",
-        isCorrect: false,
-      },
+    "Each particular AAB ordering has probability \\(0.7^2 0.3\\), and three distinct orderings satisfy the count event. Omitting the combination factor counts only one sequence, while the observed fraction two thirds is not the model probability.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q65",
+    "medium",
+    "Which statements correctly describe multinomial sampling from a categorical distribution?",
+    [
+      [
+        "Each draw returns one category according to its probability mass.",
+        true,
+      ],
+      ["Counts across categories sum to the number of draws.", true],
+      ["Expected count for category i is \\(\\mathbb{E}[N_i]=np_i\\).", true],
+      [
+        "The joint count probability includes the arrangement factor \\(n!/\\prod_i N_i!\\).",
+        true,
+      ],
     ],
-    explanation:
-      "Softmax is monotone in each logit, so the largest logit also has the largest softmax probability. Greedy decoding selects that maximum directly; categorical sampling, temperature sampling, and top-k sampling are different decoding strategies.",
-  },
-  {
-    id: "crash-probability-l5-q06",
-    chapter: 5,
-    difficulty: "easy",
-    prompt:
-      "Which statements describe why probabilistic sampling is often used for open-ended generation?",
-    options: [
-      {
-        text: "It can produce multiple plausible continuations from the same prompt.",
-        isCorrect: true,
-      },
-      {
-        text: "It can make creative or diverse outputs more likely than a purely greedy rule.",
-        isCorrect: true,
-      },
-      {
-        text: "It can also choose low-probability tokens that hurt coherence if randomness is too high.",
-        isCorrect: true,
-      },
-      {
-        text: "It guarantees that every sampled output is more factual than the greedy output.",
-        isCorrect: false,
-      },
+    "Repeated categorical draws create random category counts whose means follow directly from linearity of expectation. A given count vector can arise through many ordered sequences, and the multinomial coefficient counts those arrangements.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q66",
+    "hard",
+    "A vocabulary has probabilities \\((0.5,0.3,0.2)\\). In four independent draws, what statements are correct for counts \\((2,1,1)\\)?",
+    [
+      [
+        "The number of ordered sequences with these counts is \\(4!/(2!1!1!)=12\\).",
+        true,
+      ],
+      ["Each such sequence has probability \\(0.5^2(0.3)(0.2)\\).", true],
+      ["The count-vector probability is \\(12(0.5^2)(0.3)(0.2)=0.18\\).", true],
+      [
+        "The count-vector probability is \\(P(N_1=2,N_2=1,N_3=1)=0.5\\) because the first category appears most often.",
+        false,
+      ],
     ],
-    explanation:
-      "Sampling is useful when many outputs could be reasonable, such as story openings, brainstormed ideas, or image variations. Its tradeoff is that diversity comes with less predictability and a greater chance of poor low-probability choices, so it does not guarantee factuality.",
-  },
-  {
-    id: "crash-probability-l5-q07",
-    chapter: 5,
-    difficulty: "medium",
-    prompt:
-      "A model assigns probabilities 0.60 to `Paris`, 0.15 to `Lyon`, 0.10 to `London`, 0.08 to `the`, and 0.07 to `banana`. Which statements correctly apply top-k and top-p sampling?",
-    options: [
-      {
-        text: "With top-k sampling and \\(k=3\\), the candidate set is `Paris`, `Lyon`, and `London` before renormalization.",
-        isCorrect: true,
-      },
-      {
-        text: "With top-p sampling and \\(p=0.90\\), the smallest prefix exceeding 0.90 includes `Paris`, `Lyon`, `London`, and `the`.",
-        isCorrect: true,
-      },
-      {
-        text: "With top-k sampling and \\(k=3\\), `banana` remains eligible because it has nonzero probability.",
-        isCorrect: false,
-      },
-      {
-        text: "With top-p sampling and \\(p=0.90\\), only `Paris` is eligible because it is the single most likely token.",
-        isCorrect: false,
-      },
+    "The multinomial coefficient counts every ordering with two first-category draws and one of each other category. Multiplying that count by one sequence probability gives 0.18; the modal count does not itself determine the event probability.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q67",
+    "easy",
+    "Why can two generations from the same prompt differ when token sampling is enabled?",
+    [
+      [
+        "Different random draws can realize different positive-probability tokens.",
+        true,
+      ],
+      ["The prompt changes automatically after the first generation.", false],
+      ["Sampling forces model weights to update between outputs.", false],
+      [
+        "Token probabilities become uniform when the sampler is activated.",
+        false,
+      ],
     ],
-    explanation:
-      "Top-k keeps the k highest-probability tokens, so k=3 keeps the first three tokens listed by probability. Nucleus or top-p sampling keeps the smallest high-probability set whose cumulative mass exceeds p, so 0.60+0.15+0.10=0.85 is not enough, while adding 0.08 gives 0.93.",
-  },
-  {
-    id: "crash-probability-l5-q08",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Why is greedy decoding not automatically the best strategy for every generation task?",
-    options: [
-      {
-        text: "Because locally selecting the most likely next token can still produce a dull, repetitive, or lower-quality full sequence.",
-        isCorrect: true,
-      },
-      {
-        text: "Because greedy decoding changes the model's training loss after every generated token.",
-        isCorrect: false,
-      },
-      {
-        text: "Because greedy decoding samples too often from extremely low-probability tokens.",
-        isCorrect: false,
-      },
-      {
-        text: "Because greedy decoding is the same as using the highest possible temperature.",
-        isCorrect: false,
-      },
+    "A fixed model and prompt can define the same conditional distributions while the random sampler realizes different branches. No weight update or uniformization is needed; later distributions can then diverge further because earlier sampled tokens become part of context.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q68",
+    "medium",
+    "A generated two-token sequence has \\(P(x_1=A)=0.6\\) and \\(P(x_2=B\\mid x_1=A)=0.4\\). Which statements are correct?",
+    [
+      ["The sequence probability \\(P(A,B)=0.6(0.4)=0.24\\).", true],
+      [
+        "Sampling A first changes the relevant next-token distribution to the one conditioned on A.",
+        true,
+      ],
+      [
+        "The sequence probability becomes \\(P(A,B)=1\\) because both tokens were eventually observed.",
+        false,
+      ],
+      ["The sequence probability is \\(0.6+0.4=1.0\\).", false],
     ],
-    explanation:
-      "Generation is sequential, so the best local token at one step need not lead to the best whole output. The other options mix up decoding with training updates, random sampling, and temperature scaling.",
-  },
-  {
-    id: "crash-probability-l5-q09",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "For two token logits with \\(z_a-z_b=2\\), temperature-modified softmax gives odds \\(P(a)/P(b)=e^{(z_a-z_b)/T}\\). Which statements are correct?",
-    options: [
-      {
-        text: "At \\(T=1\\), the odds ratio is \\(e^2\\).",
-        isCorrect: true,
-      },
-      {
-        text: "At \\(T=2\\), the odds ratio is \\(e\\), so the distribution is less sharp than at \\(T=1\\).",
-        isCorrect: true,
-      },
-      {
-        text: "For fixed unequal logits, lowering \\(T\\) below 1 increases the odds advantage of the larger logit.",
-        isCorrect: true,
-      },
-      {
-        text: "At \\(T=2\\), the lower-logit token becomes more likely than the higher-logit token.",
-        isCorrect: false,
-      },
+    "Autoregressive generation multiplies the probability of each realized token under its current context. Observation does not turn model probabilities into certainty, and adding conditional factors does not give a joint sequence probability.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q69",
+    "hard",
+    "A decoder samples without replacement from three items with initial weights 0.5, 0.3, and 0.2. The first item is drawn first. Which statements are correct for the second draw?",
+    [
+      [
+        "The remaining weights must be renormalized over the second and third items.",
+        true,
+      ],
+      [
+        "Their second-draw probabilities become \\(0.3/0.5=0.6\\) and \\(0.2/0.5=0.4\\).",
+        true,
+      ],
+      ["The removed item has second-draw probability zero.", true],
+      [
+        "The remaining probabilities stay \\((0.3,0.2)\\) even though their total is \\(0.5\\).",
+        false,
+      ],
     ],
-    explanation:
-      "Temperature rescales logit differences before softmax, so it changes odds without changing which logit is larger for positive \\(T\\). Higher temperature compresses odds toward 1, while lower temperature expands odds away from 1.",
-  },
-  {
-    id: "crash-probability-l5-q10",
-    chapter: 5,
-    difficulty: "medium",
-    prompt:
-      "For temperature-modified softmax, \\(P(y_i)=\\frac{e^{z_i/T}}{\\sum_j e^{z_j/T}}\\). Which statements are correct?",
-    options: [
-      {
-        text: "When \\(T<1\\), differences between logits have a stronger effect on the probabilities.",
-        isCorrect: true,
-      },
-      {
-        text: "When \\(T>1\\), probabilities tend to move closer together than they were at lower temperature.",
-        isCorrect: true,
-      },
-      {
-        text: "Changing \\(T\\) changes which logits the neural network computed for the prompt.",
-        isCorrect: false,
-      },
-      {
-        text: "Setting \\(T\\) changes the target labels used during model training.",
-        isCorrect: false,
-      },
+    "Removing an item changes the allowed sample space, so the surviving mass must be divided by its total 0.5. Renormalization preserves the survivors' relative odds while making the new conditional distribution sum to one.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q70",
+    "easy",
+    "Which statements about pseudo-random sampling in a model are correct?",
+    [
+      [
+        "A fixed seed can make a sampling run reproducible in a fixed implementation.",
+        true,
+      ],
+      [
+        "Changing the seed can produce a different valid sequence from the same probabilities.",
+        true,
+      ],
+      [
+        "Reproducibility of draws does not make the modeled distribution deterministic.",
+        true,
+      ],
+      [
+        "A sampled low-probability output is possible without being the model's preferred output.",
+        true,
+      ],
     ],
-    explanation:
-      "Dividing logits by a smaller positive temperature amplifies their relative differences, while a larger temperature compresses those differences. Temperature is a decoding-time control over probabilities derived from logits, not a change to the model's computed logits or training labels.",
-  },
-  {
-    id: "crash-probability-l5-q11",
-    chapter: 5,
-    difficulty: "medium",
-    type: "assertion-reason",
-    prompt:
-      "Assertion: Raising temperature does not make a model more knowledgeable.\n\nReason: Temperature changes how randomly we sample from the model's existing probability distribution.",
-    options: [
-      { text: "Assertion is true, Reason is false.", isCorrect: false },
-      { text: "Assertion is false, Reason is true.", isCorrect: false },
-      { text: "Both are false.", isCorrect: false },
-      {
-        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
-        isCorrect: true,
-      },
-      {
-        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
+    "A seed controls the pseudo-random number stream used to realize a stochastic rule, allowing experiments to be repeated. It does not remove probability mass or change which outcomes the distribution regards as more likely.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q71",
+    "medium",
+    "A model samples a token with probability 0.02 at each of 100 independent comparable trials. Which statements are correct?",
+    [
+      ["The expected count is \\(100(0.02)=2\\).", true],
+      [
+        "The probability of seeing it at least once is \\(1-(0.98)^{100}\\).",
+        true,
+      ],
+      ["It must occur exactly twice because the expected count is two.", false],
+      [
+        "Its 0.02 mass makes \\(P(N\\ge1)=0\\) when the sample contains 100 trials.",
+        false,
+      ],
     ],
-    explanation:
-      "The assertion is true: temperature can make outputs more or less varied, but it does not add facts, reasoning ability, or verification. The reason is also true and explains the assertion because temperature operates on the sampling distribution produced by the model.",
-  },
-  {
-    id: "crash-probability-l5-q12",
-    chapter: 5,
-    difficulty: "medium",
-    prompt:
-      "Which statements about choosing decoding temperature match sound probabilistic practice?",
-    options: [
-      {
-        text: "Lower temperature is often appropriate for factual or constrained tasks that need stable outputs.",
-        isCorrect: true,
-      },
-      {
-        text: "Medium to higher temperature can be useful when several creative alternatives are desired.",
-        isCorrect: true,
-      },
-      {
-        text: "Lower temperature can make output more stable without automatically making it more truthful.",
-        isCorrect: true,
-      },
-      {
-        text: "Truthfulness can still depend on model knowledge, retrieval, reasoning, prompting, and verification.",
-        isCorrect: true,
-      },
+    "Linearity gives expected count two, while the complement of no occurrences gives the at-least-once probability. Expectation is an average over repeated experiments and does not fix the realized count in one batch.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q72",
+    "hard",
+    "A three-token autoregressive sequence has conditional probabilities 0.8, 0.5, and 0.25 along one realized path. Which statements are correct?",
+    [
+      ["The path probability is \\(0.8(0.5)(0.25)=0.10\\).", true],
+      ["The path log-probability is \\(\\log0.8+\\log0.5+\\log0.25\\).", true],
+      [
+        "Changing the first sampled token can change the later conditional distributions and path probability.",
+        true,
+      ],
+      [
+        "The path probability is \\((0.8+0.5+0.25)/3\\), the arithmetic mean of its factors.",
+        false,
+      ],
     ],
-    explanation:
-      "Temperature is a practical diversity and stability control, not a truthfulness guarantee. Lower values often fit constrained tasks, higher values can support creative variation, and high-stakes reliability still needs evidence and verification outside the temperature setting.",
-  },
-  {
-    id: "crash-probability-l5-q13",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly connect temperature, entropy, and output diversity?",
-    options: [
-      {
-        text: "A lower-temperature distribution usually has lower entropy because probability mass is concentrated on fewer outcomes.",
-        isCorrect: true,
-      },
-      {
-        text: "A higher-temperature distribution usually has higher entropy because lower-probability outcomes receive more probability mass.",
-        isCorrect: true,
-      },
-      {
-        text: "Changing temperature can alter output diversity even when the underlying prompt and model weights are unchanged.",
-        isCorrect: true,
-      },
-      {
-        text: "Higher entropy guarantees that the sampled answer is semantically better than a lower-entropy answer.",
-        isCorrect: false,
-      },
+    "The chain rule multiplies each token probability under the context created by earlier realized tokens, and logs convert that product to a sum. Averaging factors ignores the requirement that all three conditional events occur along the sequence.",
+  ),
+
+  // Temperature, top-k, top-p, and entropy
+  makeQuestion(
+    "crash-probability-l5-q73",
+    "easy",
+    "What does lowering a positive softmax temperature usually do to a nonuniform token distribution?",
+    [
+      ["Makes it more concentrated on high-logit tokens", true],
+      [
+        "Pushes each \\(p_i\\) toward \\(1/V\\) more strongly than raising the temperature",
+        false,
+      ],
+      ["Changes the model weights before sampling", false],
+      ["Adds new tokens to the vocabulary", false],
     ],
-    explanation:
-      "Entropy measures uncertainty or spread in a distribution, so sharper distributions tend to have lower entropy and flatter distributions tend to have higher entropy. Higher entropy can support diversity, but it does not guarantee correctness, usefulness, or semantic quality.",
-  },
-  {
-    id: "crash-probability-l5-q14",
-    chapter: 5,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly define a latent variable in a generative setting?",
-    options: [
-      {
-        text: "A latent variable is hidden or not directly observed.",
-        isCorrect: true,
-      },
-      {
-        text: "A latent variable can help explain or generate observed data.",
-        isCorrect: true,
-      },
-      {
-        text: "A latent variable must be a visible label printed in the dataset.",
-        isCorrect: false,
-      },
-      {
-        text: "A latent variable is the same thing as the final sampled output in every generative model.",
-        isCorrect: false,
-      },
+    "Dividing logits by a smaller temperature magnifies their gaps, making high-scoring tokens more dominant. Temperature reshapes a fixed output distribution at decoding time; it neither retrains parameters nor changes the vocabulary.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q74",
+    "easy",
+    "Which comparisons are correct when temperature rises from 0.5 to 2 for fixed unequal logits?",
+    [
+      ["The distribution becomes flatter.", true],
+      ["Lower-ranked tokens generally receive more probability mass.", true],
+      [
+        "Positive scaling gives \\(\\arg\\max_i z_i/T\\ne\\arg\\max_i z_i\\).",
+        false,
+      ],
+      [
+        "The model acquires new factual knowledge from the higher temperature.",
+        false,
+      ],
     ],
-    explanation:
-      "A latent variable represents hidden structure, such as topic, style, intent, disease state, or user preference. It is useful because observed data often has underlying causes or factors that are not directly labeled.",
-  },
-  {
-    id: "crash-probability-l5-q15",
-    chapter: 5,
-    difficulty: "medium",
-    prompt:
-      "A document contains the words `stock`, `inflation`, `market`, and `central bank`, but no topic label is printed. Which interpretations are appropriate?",
-    options: [
-      {
-        text: "A topic such as economics can be treated as a possible latent variable explaining the observed words.",
-        isCorrect: true,
-      },
-      {
-        text: "The observed words are data \\(X\\), while a hidden topic can be represented as \\(Z\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The topic cannot be latent because humans can guess it from the words.",
-        isCorrect: false,
-      },
-      {
-        text: "The topic must be the next token selected by greedy decoding.",
-        isCorrect: false,
-      },
+    "A larger positive temperature shrinks score gaps without changing their order, spreading probability toward alternatives. This alters sampling diversity and error risk, not the information encoded in the model weights.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q75",
+    "medium",
+    "Two tokens have logits 2 and 0. Which statements correctly compare their odds under temperature T?",
+    [
+      ["Their odds ratio is \\(e^{2/T}\\).", true],
+      ["At \\(T=1\\), the ratio is \\(e^2\\).", true],
+      [
+        "At \\(T=2\\), the ratio falls to e, so the distribution is flatter.",
+        true,
+      ],
+      [
+        "At \\(T=0.5\\), the ratio is \\(e\\), so the distribution is flatter than at T=2.",
+        false,
+      ],
     ],
-    explanation:
-      "A variable can be latent even if it is inferable from evidence; latent means it is not directly observed as a recorded variable. In this example, the words are observed data and the topic is a hidden explanatory factor.",
-  },
-  {
-    id: "crash-probability-l5-q16",
-    chapter: 5,
-    difficulty: "medium",
-    type: "assertion-reason",
-    prompt:
-      "Assertion: In a simple latent-variable generative model, \\(Z\\) can be sampled before generating \\(X\\).\n\nReason: The model can represent generation as \\(z \\sim P(z)\\), then \\(x \\sim P(x \\mid z)\\).",
-    options: [
-      { text: "Assertion is true, Reason is false.", isCorrect: false },
-      { text: "Assertion is false, Reason is true.", isCorrect: false },
-      { text: "Both are false.", isCorrect: false },
-      {
-        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
-        isCorrect: true,
-      },
-      {
-        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
+    "Temperature divides the logit gap before exponentiation, making the odds \\(e^{2/T}\\). Small T enlarges the effective gap—at 0.5 the ratio is \\(e^4\\)—while large T reduces concentration. The positive scaling preserves which token has the higher logit.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q76",
+    "hard",
+    "A distribution over four tokens is \\((0.50,0.25,0.15,0.10)\\). Top-k decoding uses \\(k=2\\). Which statements are correct?",
+    [
+      ["The retained mass is \\(0.75\\).", true],
+      ["The renormalized distribution is \\((2/3,1/3,0,0)\\).", true],
+      [
+        "The retained sampling vector remains \\((0.50,0.25)\\) with total mass \\(0.75\\).",
+        false,
+      ],
+      [
+        "Top-k retains the smallest two probabilities to increase surprise.",
+        false,
+      ],
     ],
-    explanation:
-      "The assertion is true because latent-variable generation often starts by drawing a hidden factor. The reason is true and explains it: first sample the latent variable from a prior, then sample observed data conditioned on that latent value.",
-  },
-  {
-    id: "crash-probability-l5-q17",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly describe the probabilistic structure \\(z \\sim P(z)\\), \\(x \\sim P(x \\mid z)\\)?",
-    options: [
-      {
-        text: "\\(P(z)\\) describes how hidden variables are sampled before observed data is generated.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(x \\mid z)\\) describes a distribution over visible data conditioned on a latent value.",
-        isCorrect: true,
-      },
-      {
-        text: "Different sampled values of \\(z\\) can produce different styles, topics, identities, or other hidden structures in \\(x\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The structure can model hidden causes that make observed data less like random pixels or random words.",
-        isCorrect: true,
-      },
+    "Top-k removes all but the two highest-mass candidates and divides their probabilities by the surviving total. This preserves their 2:1 relative odds while forming a valid distribution over the restricted set.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q77",
+    "medium",
+    "Which statements correctly describe top-p (nucleus) sampling?",
+    [
+      ["Tokens are ordered from higher to lower probability.", true],
+      [
+        "The smallest prefix whose cumulative mass reaches the threshold is retained.",
+        true,
+      ],
+      ["Retained probabilities are renormalized before sampling.", true],
+      [
+        "The candidate-set size can vary with how concentrated the original distribution is.",
+        true,
+      ],
     ],
-    explanation:
-      "The notation says that a hidden variable is sampled and then observed data is sampled given that hidden value. All four statements preserve the key distinction between hidden structure and visible data in a generative model.",
-  },
-  {
-    id: "crash-probability-l5-q18",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly distinguish latent variables, latent spaces, and embeddings?",
-    options: [
-      {
-        text: "A probabilistic latent variable can be an explicitly sampled hidden variable in a generative process.",
-        isCorrect: true,
-      },
-      {
-        text: "An embedding or latent space can be a learned hidden representation even when it is not used as an explicitly sampled probabilistic variable.",
-        isCorrect: true,
-      },
-      {
-        text: "Every embedding vector must be sampled from \\(P(z)\\) before a model can use it.",
-        isCorrect: false,
-      },
-      {
-        text: "Latent spaces and latent variables are unrelated because one appears in neural networks and the other appears only in classical statistics.",
-        isCorrect: false,
-      },
+    "Top-p uses a probability-mass threshold rather than a fixed number of tokens, so sharp distributions may keep few candidates and flat ones more. Renormalization then turns the retained prefix into the actual sampling distribution.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q78",
+    "hard",
+    "Sorted token probabilities are \\((0.40,0.30,0.15,0.10,0.05)\\), and top-p uses \\(p=0.80\\). Which statements are correct?",
+    [
+      [
+        "The first three tokens are retained because cumulative masses are \\(0.40,0.70,0.85\\).",
+        true,
+      ],
+      [
+        "Their renormalized probabilities are \\((0.40/0.85,0.30/0.85,0.15/0.85)\\).",
+        true,
+      ],
+      [
+        "The fourth and fifth tokens receive zero probability after filtering.",
+        true,
+      ],
+      [
+        "The first two tokens are retained because \\(0.40+0.30=0.70\\) is closest to \\(p=0.80\\).",
+        false,
+      ],
     ],
-    explanation:
-      "Latent variables and embeddings share the idea of hidden internal structure, but explicit probabilistic sampling and learned vector representation are not identical operations. The incorrect options overstate the connection in one direction or deny a real conceptual relationship.",
-  },
-  {
-    id: "crash-probability-l5-q19",
-    chapter: 5,
-    difficulty: "medium",
-    prompt:
-      "Which statements fit a high-level Variational Autoencoder (VAE) generative model?",
-    options: [
-      {
-        text: "A data point \\(x\\) can be encoded into a latent representation \\(z\\).",
-        isCorrect: true,
-      },
-      {
-        text: "A latent representation can be sampled or regularized before decoding.",
-        isCorrect: true,
-      },
-      {
-        text: "A decoder can map \\(z\\) back toward visible data such as \\(\\hat{x}\\) or a generated sample.",
-        isCorrect: true,
-      },
-      {
-        text: "Using a Variational Autoencoder (VAE) for generation requires greedy decoding over next-token logits.",
-        isCorrect: false,
-      },
+    "Nucleus sampling keeps adding tokens until the cumulative mass first reaches or exceeds the threshold, so stopping at 0.70 would fall short. The retained 0.85 mass is divided out to form a normalized three-token distribution.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q79",
+    "easy",
+    "Which decoding method is deterministic for a fixed distribution when ties are resolved deterministically?",
+    [
+      ["Greedy argmax decoding", true],
+      ["Categorical sampling", false],
+      ["Top-p sampling after renormalization", false],
+      ["Temperature sampling at any positive temperature", false],
     ],
-    explanation:
-      "The VAE-style intuition is encode data into a latent representation, sample or regularize that representation, and decode back toward visible data. Greedy next-token decoding belongs to language-model generation and is not the defining operation of a VAE.",
-  },
-  {
-    id: "crash-probability-l5-q20",
-    chapter: 5,
-    difficulty: "medium",
-    prompt:
-      "In the simplified generative use of a Variational Autoencoder (VAE), which sequence is most appropriate?",
-    options: [
-      {
-        text: "Sample \\(z\\) from a prior such as \\(P(z)\\), then decode from \\(z\\) to data using something like \\(P(x \\mid z)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Choose the most frequent training example, copy its pixels, and call the copied image a latent variable.",
-        isCorrect: false,
-      },
-      {
-        text: "Start from text-token logits, apply top-p sampling, and treat the resulting token as a Gaussian prior.",
-        isCorrect: false,
-      },
-      {
-        text: "Train only a reward function \\(R(s,a,s')\\), then use discounted return as the decoder.",
-        isCorrect: false,
-      },
+    "Greedy decoding chooses the largest-probability token rather than drawing from the distribution, so a fixed tie rule makes it deterministic. Filtering or temperature can restrict or reshape probabilities, but the final sampling step remains random.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q80",
+    "medium",
+    "A decoder filters probabilities from \\((0.6,0.25,0.10,0.05)\\) to the first three tokens. Which statements are correct?",
+    [
+      ["The retained mass is \\(0.6+0.25+0.10=0.95\\).", true],
+      ["The third token's new probability is \\(0.10/0.95\\).", true],
+      ["Renormalization changes the retained tokens' pairwise odds.", false],
+      ["The removed token retains filtered probability \\(P=0.05\\).", false],
     ],
-    explanation:
-      "The simplified generative story is to sample a latent value and decode it into visible data. The incorrect options confuse VAE-style generation with memorization, language-model decoding, or reinforcement-learning reward notation.",
-  },
-  {
-    id: "crash-probability-l5-q21",
-    chapter: 5,
-    difficulty: "easy",
-    prompt:
-      "For a Gaussian or normal distribution written \\(X \\sim \\mathcal{N}(\\mu,\\sigma^2)\\), which statements are correct?",
-    options: [
-      {
-        text: "\\(\\mu\\) is the mean.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(\\sigma^2\\) is the variance.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(\\sigma\\) is the standard deviation.",
-        isCorrect: true,
-      },
-      {
-        text: "Larger variance means samples are more spread out.",
-        isCorrect: true,
-      },
+    "Filtering conditions the draw on the retained set, so each surviving probability is divided by their total 0.95 and removed mass becomes zero. A common divisor preserves pairwise odds among survivors even while increasing their absolute probabilities.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q81",
+    "hard",
+    "A distribution changes from \\((0.7,0.2,0.1)\\) to \\((0.5,0.3,0.2)\\). Which statements are correct?",
+    [
+      ["The second distribution has higher entropy.", true],
+      [
+        "Sampling from the second gives lower-ranked outcomes more total chance.",
+        true,
+      ],
+      ["The argmax outcome remains the first category.", true],
+      [
+        "The second distribution must have been produced by retraining rather than temperature or filtering.",
+        false,
+      ],
     ],
-    explanation:
-      "The notation \\(\\mathcal{N}(\\mu,\\sigma^2)\\) uses mean and variance as its two parameters. Standard deviation is the square root of variance, and increasing variance spreads probability mass farther from the mean.",
-  },
-  {
-    id: "crash-probability-l5-q22",
-    chapter: 5,
-    difficulty: "medium",
-    prompt:
-      "Why is Gaussian noise especially common in generative AI methods such as diffusion models?",
-    options: [
-      {
-        text: "It is mathematically convenient, easy to sample, and useful for representing uncertainty in high-dimensional data.",
-        isCorrect: true,
-      },
-      {
-        text: "It removes the need for a learned reverse process because Gaussian samples already contain clean images.",
-        isCorrect: false,
-      },
-      {
-        text: "It guarantees that every noised image has the same visible object identity as the original.",
-        isCorrect: false,
-      },
-      {
-        text: "It is used only because language models generate discrete tokens.",
-        isCorrect: false,
-      },
+    "Spreading mass away from the leader increases uncertainty and diversity while preserving the same most likely category. Many decoding transformations can reshape a distribution, so the probability change alone does not identify a weight update.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q82",
+    "easy",
+    "Which statements correctly describe decoding controls?",
+    [
+      ["Temperature changes relative sharpness through scaled logits.", true],
+      ["Top-k limits the candidate set to a fixed count.", true],
+      ["Top-p limits the candidate set by cumulative probability mass.", true],
+      ["Renormalization is needed after probability mass is removed.", true],
     ],
-    explanation:
-      "Gaussian noise is useful because it is easy to generate, analytically manageable, and a good controlled source of randomness. Diffusion still needs a learned reverse process because random noise by itself is not a clean image or a complete generator.",
-  },
-  {
-    id: "crash-probability-l5-q23",
-    chapter: 5,
-    difficulty: "medium",
-    prompt:
-      "An RGB image has resolution \\(512 \\times 512\\). Which statements correctly connect images and Gaussian noise?",
-    options: [
-      {
-        text: "The image can be viewed as a high-dimensional vector with \\(512 \\times 512 \\times 3\\) pixel-channel values.",
-        isCorrect: true,
-      },
-      {
-        text: "Adding larger-variance Gaussian noise generally makes the original image less recognizable.",
-        isCorrect: true,
-      },
-      {
-        text: "Adding Gaussian noise changes only the image caption, not the pixel values.",
-        isCorrect: false,
-      },
-      {
-        text: "If Gaussian noise is added to every pixel channel, the result must remain as clear as the original image.",
-        isCorrect: false,
-      },
+    "The three controls act at different stages but all shape the distribution used for the final draw. Filtering removes mass and therefore requires renormalization, while temperature changes the mass allocation before any optional filtering.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q83",
+    "medium",
+    "Which statements compare top-k and top-p correctly?",
+    [
+      [
+        "Top-k keeps the same maximum number of candidates across contexts.",
+        true,
+      ],
+      ["Top-p can adapt candidate count to distribution concentration.", true],
+      ["Top-p keeps exactly \\(p|V|\\) tokens in each context.", false],
+      ["Top-k chooses tokens uniformly after retaining them.", false],
     ],
-    explanation:
-      "Images can be represented as high-dimensional arrays or vectors, with separate channels for red, green, and blue. Noise perturbs those values, and larger noise variance makes visible structure harder to recover without a denoising model.",
-  },
-  {
-    id: "crash-probability-l5-q24",
-    chapter: 5,
-    difficulty: "hard",
-    type: "assertion-reason",
-    prompt:
-      "Assertion: In generative AI, noise can be useful rather than merely an error.\n\nReason: Gaussian noise is mathematically convenient and easy to sample.",
-    options: [
-      { text: "Assertion is true, Reason is false.", isCorrect: false },
-      { text: "Assertion is false, Reason is true.", isCorrect: false },
-      { text: "Both are false.", isCorrect: false },
-      {
-        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
-      {
-        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
-        isCorrect: true,
-      },
+    "Top-k uses a rank cutoff, while top-p uses a cumulative-mass cutoff and can therefore vary in set size. Both normally retain and renormalize the model's relative probabilities rather than sampling retained candidates uniformly.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q84",
+    "hard",
+    "A two-token distribution has logit gap \\(d>0\\). Which statements are correct as temperature varies?",
+    [
+      [
+        "As \\(T\\to0^+\\), probability concentrates on the higher logit.",
+        true,
+      ],
+      [
+        "As \\(T\\to\\infty\\), the two probabilities approach one half each.",
+        true,
+      ],
+      [
+        "The entropy approaches zero at the low-temperature limit and \\(\\log2\\) at the high-temperature limit.",
+        true,
+      ],
+      [
+        "At high positive T, \\(\\arg\\max_i z_i/T\\) becomes the lower-logit token.",
+        false,
+      ],
     ],
-    explanation:
-      "The assertion is true because noise can serve as uncertainty, regularization, exploration, latent randomness, or the starting material for diffusion generation. The reason is also true, but it is not the whole explanation for usefulness; convenience and easy sampling help, while the generative role comes from learning to transform noise into structured data.",
-  },
-  {
-    id: "crash-probability-l5-q25",
-    chapter: 5,
-    difficulty: "easy",
-    prompt:
-      "Which statements correctly identify the forward and reverse processes in a diffusion model?",
-    options: [
-      {
-        text: "The forward process gradually adds noise to real data, moving from \\(x_0\\) toward \\(x_T\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The reverse process starts from noise and gradually denoises toward a clean generated sample.",
-        isCorrect: true,
-      },
-      {
-        text: "The forward process is the learned image-generation process used at inference time.",
-        isCorrect: false,
-      },
-      {
-        text: "The reverse process means sorting tokens by probability from highest to lowest.",
-        isCorrect: false,
-      },
+    "Temperature changes the scale but not the sign of a positive logit gap, so ordering remains fixed. Extreme scaling connects nearly greedy concentration with a nearly uniform high-entropy distribution.",
+  ),
+
+  // Latent variables, marginalization, and posterior inference
+  makeQuestion(
+    "crash-probability-l5-q85",
+    "easy",
+    "Which quantity is a plausible latent variable for a collection of observed documents?",
+    [
+      ["An unobserved topic that influences word choices", true],
+      ["The exact visible words after they have been read", false],
+      ["The number of documents fixed by the dataset", false],
+      ["The filename extension stored with each document", false],
     ],
-    explanation:
-      "Diffusion uses a forward noising process to corrupt real data and a reverse denoising process to generate data. The forward process is usually fixed corruption, while the reverse process is the learned generative direction.",
-  },
-  {
-    id: "crash-probability-l5-q26",
-    chapter: 5,
-    difficulty: "medium",
-    prompt:
-      "Which statements are correct about a forward noising process \\(q(x_t\\mid x_{t-1})\\) in a diffusion model?",
-    options: [
-      {
-        text: "\\(x_0\\) represents clean real data such as an image.",
-        isCorrect: true,
-      },
-      {
-        text: "Each later step is noisier than the previous step when the noise schedule gradually increases corruption.",
-        isCorrect: true,
-      },
-      {
-        text: "By \\(x_T\\), the sample is close to pure Gaussian noise.",
-        isCorrect: true,
-      },
-      {
-        text: "The forward process is generation because it turns random noise directly into a clean image.",
-        isCorrect: false,
-      },
+    "A latent variable is unobserved but helps explain patterns in observed data, such as a topic shaping vocabulary. Visible words and recorded metadata are observed variables, while a fixed dataset size is a constant rather than a hidden per-document cause.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q86",
+    "easy",
+    "A generative latent-variable model first samples z and then x. Which probability components are involved?",
+    [
+      ["A prior \\(P(z)\\) over latent values", true],
+      ["A conditional generator \\(P(x\\mid z)\\)", true],
+      [
+        "A posterior \\(P(z\\mid x)\\) that is sufficient for generation without \\(P(x\\mid z)\\)",
+        false,
+      ],
+      ["A deterministic requirement mapping each z to a single x", false],
     ],
-    explanation:
-      "The forward process is a Markov noising chain that starts with clean data and gradually corrupts it. It creates noisy training inputs for a learned reverse process, but the forward direction itself destroys structure rather than generating new clean data.",
-  },
-  {
-    id: "crash-probability-l5-q27",
-    chapter: 5,
-    difficulty: "medium",
-    prompt:
-      "During diffusion training, what can the neural network be trained to predict from a noisy sample \\(x_t\\) and time step \\(t\\)?",
-    options: [
-      {
-        text: "The added noise \\(\\epsilon\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The original clean image \\(x_0\\).",
-        isCorrect: true,
-      },
-      {
-        text: "A previous less-noisy image such as \\(x_{t-1}\\), depending on the implementation.",
-        isCorrect: true,
-      },
-      {
-        text: "The next token in a discrete sentence, regardless of the image input.",
-        isCorrect: false,
-      },
+    "The generative story specifies how likely latent causes are and how each cause produces observations. Posterior inference reverses that story after x is seen, and the conditional generator can remain stochastic with many possible x values for one z.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q87",
+    "medium",
+    "A latent variable z has values 0 and 1 with priors 0.6 and 0.4; \\(P(x\\mid0)=0.2\\) and \\(P(x\\mid1)=0.7\\). Which statements are correct?",
+    [
+      ["The z=0 path to x is \\(0.6(0.2)=0.12\\).", true],
+      ["The z=1 path to x is \\(0.4(0.7)=0.28\\).", true],
+      ["The marginal \\(P(x)=0.40\\).", true],
+      [
+        "The marginal is 0.70 because that is the largest conditional likelihood.",
+        false,
+      ],
     ],
-    explanation:
-      "Diffusion implementations can parameterize the prediction target in several related ways, including noise, clean data, or the previous step. The common point is that the network learns how to move from noisy data toward cleaner data, not how to perform ordinary next-token prediction on unrelated text.",
-  },
-  {
-    id: "crash-probability-l5-q28",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Which expression best represents the conditional generation target for a text-to-image diffusion model guided by a prompt \\(c\\)?",
-    options: [
-      {
-        text: "\\(P(\\text{image} \\mid c)\\), with denoising steps such as \\(P(x_{t-1} \\mid x_t,t,c)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(c \\mid \\text{image})\\), with no distribution over generated images.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(P(\\text{image})=1\\) for the single image specified exactly by the prompt.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(\\pi(a \\mid s)\\), because every prompt-conditioned image model is an RL policy.",
-        isCorrect: false,
-      },
+    "Marginal probability adds the prior-weighted latent paths: \\(0.6(0.2)+0.4(0.7)=0.40\\). Selecting only the largest likelihood ignores both the alternative path and the latent priors. Both hidden states remain possible explanations of the observed x.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q88",
+    "hard",
+    "Using priors \\(P(z=0)=0.6,P(z=1)=0.4\\) and likelihoods \\(P(x\\mid0)=0.2,P(x\\mid1)=0.7\\), which posterior calculations are correct?",
+    [
+      ["\\(P(z=1,x)=0.28\\).", true],
+      ["\\(P(z=1\\mid x)=0.28/0.40=0.70\\).", true],
+      ["\\(P(z=1\\mid x)=0.40\\) because the prior is unchanged by x.", false],
+      ["\\(P(z=1\\mid x)=0.7/0.4=1.75\\).", false],
     ],
-    explanation:
-      "Text-to-image diffusion is conditional generation: the prompt guides a distribution over possible images. The reversed conditional, a deterministic one-image claim, and a reinforcement-learning policy notation all miss the prompt-guided denoising structure.",
-  },
-  {
-    id: "crash-probability-l5-q29",
-    chapter: 5,
-    difficulty: "medium",
-    type: "assertion-reason",
-    prompt:
-      "Assertion: Diffusion models use many denoising steps partly because turning pure static into a detailed image in one step is hard.\n\nReason: Each denoising step can learn a smaller conditional move from a noisy sample toward a cleaner sample.",
-    options: [
-      { text: "Assertion is true, Reason is false.", isCorrect: false },
-      { text: "Assertion is false, Reason is true.", isCorrect: false },
-      { text: "Both are false.", isCorrect: false },
-      {
-        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
-        isCorrect: true,
-      },
-      {
-        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
+    "Bayes normalizes the z=1 path by the total evidence, raising the latent probability from prior 0.4 to posterior 0.7. Dividing likelihood by prior reverses the required relationship and can even produce an invalid probability above one.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q89",
+    "medium",
+    "Which statements correctly describe latent-variable marginalization?",
+    [
+      ["For discrete z, \\(P(x)=\\sum_zP(x\\mid z)P(z)\\).", true],
+      ["For continuous z, \\(p(x)=\\int p(x\\mid z)p(z)\\,dz\\).", true],
+      [
+        "Marginalization accounts for multiple hidden explanations of the same observation.",
+        true,
+      ],
+      [
+        "Posterior inference uses the same joint paths but normalizes them after x is observed.",
+        true,
+      ],
     ],
-    explanation:
-      "The assertion is true because direct one-step generation from random noise to a detailed sample is a difficult transformation. The reason explains the design: many smaller conditional denoising steps let the model gradually form rough structure, objects, details, and a final image.",
-  },
-  {
-    id: "crash-probability-l5-q30",
-    chapter: 5,
-    difficulty: "medium",
-    prompt:
-      "Why can the same text prompt produce different diffusion images across runs?",
-    options: [
-      {
-        text: "Generation can start from different random noise samples.",
-        isCorrect: true,
-      },
-      {
-        text: "The prompt often leaves many valid details unspecified, such as viewpoint, lighting, season, or style.",
-        isCorrect: true,
-      },
-      {
-        text: "The model must delete the prompt after every denoising step and sample a new prompt.",
-        isCorrect: false,
-      },
-      {
-        text: "The model is forced to choose the same highest-probability image every time.",
-        isCorrect: false,
-      },
+    "The generative joint factors into prior and conditional terms, and summing or integrating removes the hidden variable. Bayes reuses those path weights in the opposite direction to compare which latent explanations are plausible after observing x.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q90",
+    "hard",
+    "A model has three equally likely latent styles, with likelihoods of an observed image x equal to 0.6, 0.3, and 0.1. Which statements are correct?",
+    [
+      ["The marginal likelihood is \\((0.6+0.3+0.1)/3=1/3\\).", true],
+      [
+        "Posterior style probabilities are \\((0.6,0.3,0.1)\\) after normalization.",
+        true,
+      ],
+      ["The first style has six times the posterior odds of the third.", true],
+      [
+        "The first style has posterior probability one because it has the largest likelihood.",
+        false,
+      ],
     ],
-    explanation:
-      "A prompt such as a red house in the mountains describes a broad set of possible images, not a single fully specified picture. Different noise starts and stochastic denoising choices can select different plausible members of that set.",
-  },
-  {
-    id: "crash-probability-l5-q31",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly describe uncertainty during diffusion generation?",
-    options: [
-      {
-        text: "At \\(x_T\\), many final images are possible because the sample is close to random noise.",
-        isCorrect: true,
-      },
-      {
-        text: "As denoising proceeds, the sample becomes increasingly committed to a particular structured output.",
-        isCorrect: true,
-      },
-      {
-        text: "Uncertainty increases until the final clean image has no relation to the prompt.",
-        isCorrect: false,
-      },
-      {
-        text: "The reverse process is deterministic lookup from a fixed table of all possible images.",
-        isCorrect: false,
-      },
+    "Equal priors make posterior weights proportional to the likelihoods, which already sum to one in their displayed ratio. The best explanation is more probable but not certain because the other latent paths also assign positive probability to x.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q91",
+    "easy",
+    "In a variational autoencoder (VAE), what is the encoder used to approximate?",
+    [
+      ["A latent posterior distribution given an observation", true],
+      ["The fixed list of training filenames", false],
+      ["A greedy next-token decoder", false],
+      ["The environment transition kernel in reinforcement learning", false],
     ],
-    explanation:
-      "Diffusion can be understood as turning random uncertainty into structured data through repeated denoising. The prompt and learned model guide the process, so uncertainty does not simply increase and the output is not a table lookup.",
-  },
-  {
-    id: "crash-probability-l5-q32",
-    chapter: 5,
-    difficulty: "medium",
-    prompt:
-      "Which statements correctly compare language-model generation and diffusion generation?",
-    options: [
-      {
-        text: "A language model often generates one discrete token at a time.",
-        isCorrect: true,
-      },
-      {
-        text: "A diffusion model often generates by updating a continuous noisy representation through denoising steps.",
-        isCorrect: true,
-      },
-      {
-        text: "Both can be conditional generative systems, using context or a prompt to guide outputs.",
-        isCorrect: true,
-      },
-      {
-        text: "Both use exactly the same data type, objective, and decoding algorithm.",
-        isCorrect: false,
-      },
+    "A VAE encoder maps an observed x to parameters of an approximate distribution over latent z values, supporting inference and sampling. The decoder then maps latent samples toward observations; the unrelated alternatives belong to other data or model structures.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q92",
+    "medium",
+    "Which statements correctly distinguish VAE training-time inference from generative sampling?",
+    [
+      ["The encoder approximates \\(q(z\\mid x)\\) for observed x.", true],
+      [
+        "Generation can sample z from a prior and then sample or decode x from \\(P(x\\mid z)\\).",
+        true,
+      ],
+      [
+        "Generation starts by copying the latent code of an existing observation.",
+        false,
+      ],
+      [
+        "The latent prior is a categorical next-token distribution by definition.",
+        false,
+      ],
     ],
-    explanation:
-      "Language models and diffusion models both rely on probability and conditioning, but their generation mechanisms differ. Language models work over token sequences, while diffusion models denoise continuous representations such as images, audio, or video latents.",
-  },
-  {
-    id: "crash-probability-l5-q33",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "How does reinforcement learning (RL) fit a repeated conditional-sampling pattern?",
-    options: [
-      {
-        text: "A policy \\(\\pi(a \\mid s)\\) can define a distribution over actions given a state.",
-        isCorrect: true,
-      },
-      {
-        text: "An agent can sample or choose an action, receive reward, and transition to another state.",
-        isCorrect: true,
-      },
-      {
-        text: "Exploration can involve deliberate randomness in actions or policies.",
-        isCorrect: true,
-      },
-      {
-        text: "RL is unrelated to probability because rewards are always known before actions are chosen.",
-        isCorrect: false,
-      },
+    "Inference asks which hidden codes explain a given observation, while generation starts with a sampled latent and uses the decoder to create a possible observation. A latent prior may be continuous, often Gaussian, and generation need not begin from an existing example.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q93",
+    "hard",
+    "A continuous latent z has density \\(p(z)\\) and decoder likelihood \\(p(x\\mid z)\\). Which statements are correct?",
+    [
+      ["The marginal density is \\(p(x)=\\int p(x\\mid z)p(z)\\,dz\\).", true],
+      [
+        "The posterior is proportional to \\(p(x\\mid z)p(z)\\) as a function of z.",
+        true,
+      ],
+      [
+        "A point estimate of z can miss uncertainty across several plausible latent explanations.",
+        true,
+      ],
+      [
+        "The marginal is obtained by maximizing \\(p(x\\mid z)\\) and discarding the remaining latent mass.",
+        false,
+      ],
     ],
-    explanation:
-      "Reinforcement learning uses probability in policies, transitions, exploration, and expected return. It fits the repeated conditional pattern because agents repeatedly choose actions from state-conditioned rules and then observe uncertain consequences.",
-  },
-  {
-    id: "crash-probability-l5-q34",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Which formulas or descriptions correctly match the shared repeated-conditional-step pattern across AI systems?",
-    options: [
-      {
-        text: "Language model generation uses terms like \\(P(x_t \\mid x_1,\\ldots,x_{t-1})\\) for the next token.",
-        isCorrect: true,
-      },
-      {
-        text: "Diffusion generation uses steps like \\(P(x_{t-1} \\mid x_t,\\text{condition})\\) or a related noise-prediction target.",
-        isCorrect: true,
-      },
-      {
-        text: "Reinforcement learning policies can use \\(\\pi(a \\mid s)\\) to choose actions from a state.",
-        isCorrect: true,
-      },
-      {
-        text: "All three can be viewed as repeatedly making conditional probabilistic moves rather than only producing one isolated label.",
-        isCorrect: true,
-      },
+    "Continuous marginalization integrates contributions from the entire latent space, while posterior inference renormalizes those contributions after observing x. A maximum-latent approximation answers a different question and can underrepresent ambiguity.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q94",
+    "easy",
+    "Which are plausible roles for latent variables?",
+    [
+      ["Representing document topic", true],
+      ["Representing image pose or lighting", true],
+      ["Representing a user's hidden preference", true],
+      ["Representing an unobserved environment state", true],
     ],
-    explanation:
-      "The common pattern is repeated conditional probability: next token from context, denoising step from noisy state and condition, or action from state. The details differ, but each system uses probability to move from a current context or state to a next concrete step.",
-  },
-  {
-    id: "crash-probability-l5-q35",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Which notation-role matches correctly connect probability to major AI workflows?",
-    options: [
-      {
-        text: "Prediction estimates probabilities over outputs, such as \\(P(y \\mid x)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Learning often makes observed training data more probable under the model, as in negative log-likelihood or cross-entropy.",
-        isCorrect: true,
-      },
-      {
-        text: "Decision-making can involve choosing actions to maximize expected future reward.",
-        isCorrect: true,
-      },
-      {
-        text: "Generation turns learned distributions into concrete outputs through sampling or related decoding.",
-        isCorrect: true,
-      },
+    "Each variable names hidden structure that can influence observed words, pixels, clicks, or transitions. Latent variables are modeling constructs rather than necessarily single human-interpretable truths, but these are all useful candidate interpretations.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q95",
+    "medium",
+    "An observation has equal posterior probability under two very different latent codes. Which statements are correct?",
+    [
+      [
+        "The observation leaves latent ambiguity rather than identifying one code with certainty.",
+        true,
+      ],
+      [
+        "Sampling from the posterior can represent both explanations across repeated draws.",
+        true,
+      ],
+      [
+        "The two codes have identical decoder distributions because their posteriors match.",
+        false,
+      ],
+      [
+        "Marginalization should delete one code to avoid double-counting uncertainty.",
+        false,
+      ],
     ],
-    explanation:
-      "These four roles connect probability to prediction, learning, decision-making, and generation. The notation emphasizes that modern AI systems use distributions not only to score outputs, but also to train models, select actions, and produce samples.",
-  },
-  {
-    id: "crash-probability-l5-q36",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Which notation-to-idea matches are correct in the final course summary?",
-    options: [
-      {
-        text: "\\(P(y \\mid x)\\) represents prediction from information or input.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(-\\log P(\\text{correct output})\\) represents a learning loss that penalizes low probability on observed correct outputs.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(x \\sim P_\\theta(x)\\) represents sampling from a learned generative distribution.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(\\mathbb{E}[G_t]\\) represents selecting the rarest token in language-model decoding.",
-        isCorrect: false,
-      },
+    "A posterior distribution represents uncertainty over hidden explanations compatible with the same evidence. Equal posterior mass does not make the latent states behaviorally identical, and marginalization should retain and weight both paths rather than choose arbitrarily.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q96",
+    "hard",
+    "A latent mixture has path masses for observation x equal to 0.05, 0.15, and 0.30. Which statements are correct?",
+    [
+      ["The marginal \\(P(x)=0.50\\).", true],
+      [
+        "The posterior probabilities of the three latent states are \\((0.10,0.30,0.60)\\).",
+        true,
+      ],
+      ["The third state is most plausible after x but not certain.", true],
+      [
+        "The posterior masses remain 0.05, 0.15, and 0.30 because joint paths already sum to one.",
+        false,
+      ],
     ],
-    explanation:
-      "The prediction, learning, and generation formulas match the roles emphasized in the final synthesis. \\(\\mathbb{E}[G_t]\\) belongs to reinforcement-learning decision-making and expected return, not rare-token selection.",
-  },
-  {
-    id: "crash-probability-l5-q37",
-    chapter: 5,
-    difficulty: "hard",
-    type: "assertion-reason",
-    prompt:
-      "Assertion: Greedy decoding is always more correct than sampling because it chooses the most likely token at every step.\n\nReason: A locally most likely token at one step does not always lead to the best full sequence.",
-    options: [
-      { text: "Assertion is true, Reason is false.", isCorrect: false },
-      { text: "Assertion is false, Reason is true.", isCorrect: true },
-      { text: "Both are false.", isCorrect: false },
-      {
-        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
-      {
-        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
+    "The path masses sum to the evidence 0.50 and must be divided by that total to become a posterior distribution. The third state receives most posterior mass, while the other positive paths preserve uncertainty.",
+  ),
+
+  // Gaussian noise and the forward diffusion process
+  makeQuestion(
+    "crash-probability-l5-q97",
+    "easy",
+    "In \\(X\\sim\\mathcal{N}(\\mu,\\sigma^2)\\), what does \\(\\sigma^2\\) denote?",
+    [
+      ["Variance", true],
+      ["Mean", false],
+      ["Standard deviation", false],
+      ["Probability that X equals zero", false],
     ],
-    explanation:
-      "The assertion is false because greedy decoding can be useful but is not automatically more correct for every task or full sequence. The reason is true: generation is sequential, so local next-token choices can create poor global outputs.",
-  },
-  {
-    id: "crash-probability-l5-q38",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly capture the optional classifier-free guidance intuition for text-to-image diffusion?",
-    options: [
-      {
-        text: "Guidance changes how strongly the prompt condition influences denoising.",
-        isCorrect: true,
-      },
-      {
-        text: "Very high guidance can improve prompt adherence while sometimes making images less natural or more distorted.",
-        isCorrect: true,
-      },
-      {
-        text: "Guidance removes the need for random initial noise because the prompt becomes the image.",
-        isCorrect: false,
-      },
-      {
-        text: "Guidance is the same as lowering token-sampling temperature in a language model.",
-        isCorrect: false,
-      },
+    "The second Gaussian parameter is variance, while its positive square root \\(\\sigma\\) is standard deviation and \\(\\mu\\) is the mean. A continuous normal variable assigns zero probability to any one exact point.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q98",
+    "easy",
+    "Which effects follow from increasing the variance of zero-mean Gaussian noise?",
+    [
+      ["Samples spread farther from zero on average.", true],
+      [
+        "The standard deviation increases as the square root of variance.",
+        true,
+      ],
+      ["Increasing variance makes a sampled noise value positive.", false],
+      ["The Gaussian mean necessarily shifts away from zero.", false],
     ],
-    explanation:
-      "Classifier-free guidance is presented as an intuition about changing the strength of the conditioning signal during denoising. It is not a replacement for noise, and it is not identical to temperature control in next-token sampling.",
-  },
-  {
-    id: "crash-probability-l5-q39",
-    chapter: 5,
-    difficulty: "hard",
-    type: "assertion-reason",
-    prompt:
-      "Assertion: A score-based intuition for diffusion is that the model learns a direction from noisy data back toward likely data.\n\nReason: This intuition says the model can replace all denoising steps with a single exact reconstruction of the final image.",
-    options: [
-      { text: "Assertion is true, Reason is false.", isCorrect: true },
-      { text: "Assertion is false, Reason is true.", isCorrect: false },
-      { text: "Both are false.", isCorrect: false },
-      {
-        text: "Both are true, and the Reason is the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
-      {
-        text: "Both are true, but the Reason is NOT the correct explanation of the Assertion.",
-        isCorrect: false,
-      },
+    "Variance controls spread, and standard deviation is its square root, while the distribution remains centered at the same mean. A zero-mean Gaussian remains symmetric with positive and negative samples even as its variance grows.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q99",
+    "medium",
+    "Let \\(X=\\mu+\\sigma Z\\) with \\(Z\\sim\\mathcal{N}(0,1)\\) and \\(\\sigma>0\\). Which statements are correct?",
+    [
+      ["\\(\\mathbb{E}[X]=\\mu\\).", true],
+      ["\\(\\operatorname{Var}(X)=\\sigma^2\\).", true],
+      [
+        "Sampling X can be implemented by sampling standard noise then scaling and shifting it.",
+        true,
+      ],
+      [
+        "\\(\\operatorname{Var}(X)=\\sigma\\) because scaling affects variance linearly.",
+        false,
+      ],
     ],
-    explanation:
-      "The assertion is true as a high-level score-based intuition: each step asks which direction makes a noisy sample look more like real data. The reason is false because this intuition does not imply that diffusion becomes a single exact reconstruction step.",
-  },
-  {
-    id: "crash-probability-l5-q40",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Which explanation best separates sampling controls from the learned probability model in generative AI?",
-    options: [
-      {
-        text: "Controls such as temperature, top-k, top-p, guidance, or random seed influence how a learned distribution is used, but they do not by themselves create new model knowledge.",
-        isCorrect: true,
-      },
-      {
-        text: "Sampling controls retrain the neural network after each prompt, so decoding and learning are the same operation.",
-        isCorrect: false,
-      },
-      {
-        text: "Sampling controls remove uncertainty from generative AI, so every prompt has exactly one correct output.",
-        isCorrect: false,
-      },
-      {
-        text: "Sampling controls matter only for diffusion models and have no connection to language models or RL policies.",
-        isCorrect: false,
-      },
+    "Shifting changes the mean and scaling by sigma multiplies variance by \\(\\sigma^2\\), producing the stated Gaussian. This reparameterized view is useful because one standard-noise sampler can generate many Gaussian distributions.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q100",
+    "hard",
+    "A forward noising step is \\(x_t=\\sqrt{\\bar\\alpha_t}x_0+\\sqrt{1-\\bar\\alpha_t}\\epsilon\\), with \\(\\epsilon\\sim\\mathcal{N}(0,I)\\). Which statements are correct?",
+    [
+      [
+        "Conditioned on \\(x_0\\), the mean of \\(x_t\\) is \\(\\sqrt{\\bar\\alpha_t}x_0\\).",
+        true,
+      ],
+      [
+        "Conditioned on \\(x_0\\), the noise covariance is \\((1-\\bar\\alpha_t)I\\).",
+        true,
+      ],
+      ["The formula is deterministic because \\(x_0\\) is known.", false],
+      [
+        "The noise coefficient should be \\(1-\\bar\\alpha_t\\) rather than its square root to obtain that variance.",
+        false,
+      ],
     ],
-    explanation:
-      "Sampling controls shape how outputs are drawn from, restricted by, or guided through the model's existing probability structure. They can change diversity, adherence, or repeatability, but the underlying learned knowledge and the need for validation remain separate issues.",
-  },
-  {
-    id: "crash-probability-l5-q41",
-    chapter: 5,
-    difficulty: "medium",
-    prompt:
-      "In 200 independent samples from a next-token distribution with \\(P(\\text{mat})=0.50\\), \\(P(\\text{sofa})=0.25\\), \\(P(\\text{floor})=0.15\\), \\(P(\\text{chair})=0.07\\), and \\(P(\\text{car})=0.03\\), which statements are correct?",
-    options: [
-      {
-        text: "The expected count of `sofa` is \\(200\\cdot0.25=50\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The variance of the `car` count is \\(200\\cdot0.03\\cdot0.97\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The covariance between the `sofa` count and the `car` count is \\(-200\\cdot0.25\\cdot0.03\\) under the multinomial model.",
-        isCorrect: true,
-      },
-      {
-        text: "The probability that the first two independent samples are both `mat` is \\(0.50^2=0.25\\).",
-        isCorrect: true,
-      },
+    "The standard Gaussian has covariance I, and multiplying it by the square root coefficient produces variance \\(1-\\bar\\alpha_t\\). Random epsilon keeps the noised sample stochastic even when the clean input and schedule are fixed.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q101",
+    "medium",
+    "Which statements correctly describe the forward diffusion process?",
+    [
+      ["It gradually corrupts real data with noise.", true],
+      ["Its schedule controls how much signal remains at each time.", true],
+      [
+        "For sufficiently late time, the distribution is designed to approach simple Gaussian noise.",
+        true,
+      ],
+      [
+        "It supplies paired clean and noisy examples for learning a reverse prediction.",
+        true,
+      ],
     ],
-    explanation:
-      "Repeated independent token sampling can be modeled with binomial or multinomial count variables. Means, variances, covariances, and multi-sample event probabilities come from the same categorical distribution rather than from the single greedy choice.",
-  },
-  {
-    id: "crash-probability-l5-q42",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Tokens are sorted by probability as \\(a:0.36\\), \\(b:0.24\\), \\(c:0.18\\), \\(d:0.12\\), and \\(e:0.10\\). With nucleus sampling threshold \\(p=0.75\\), which statements are correct?",
-    options: [
-      {
-        text: "The nucleus contains \\(a,b,c\\) because \\(0.36+0.24=0.60\\) is too small and adding \\(c\\) gives \\(0.78\\).",
-        isCorrect: true,
-      },
-      {
-        text: "After renormalization, \\(P'(c)=0.18/0.78\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Token \\(d\\) is excluded even though it has nonzero original probability.",
-        isCorrect: true,
-      },
-      {
-        text: "After truncation, the probabilities assigned to \\(a,b,c\\) still sum to \\(0.78\\) rather than 1.",
-        isCorrect: false,
-      },
+    "Forward diffusion is a fixed corruption mechanism rather than the generative direction, and its known noise construction creates supervised denoising targets. The schedule trades clean-signal strength against accumulated noise until the terminal state is easy to sample.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q102",
+    "hard",
+    "In the noising formula, \\(\\bar\\alpha_t=0.64\\), \\(x_0=2\\), and a realized scalar noise value is \\(\\epsilon=-1\\). Which statements are correct?",
+    [
+      ["The signal coefficient is \\(\\sqrt{0.64}=0.8\\).", true],
+      ["The noise coefficient is \\(\\sqrt{0.36}=0.6\\).", true],
+      ["The realized \\(x_t=0.8(2)+0.6(-1)=1.0\\).", true],
+      [
+        "The realized \\(x_t\\) equals the conditional mean 1.6 because Gaussian noise has mean zero.",
+        false,
+      ],
     ],
-    explanation:
-      "Top-p sampling first chooses the smallest high-probability prefix whose cumulative mass crosses the threshold, then renormalizes within that prefix. Excluded tokens have zero probability under the truncated sampler, and included probabilities must sum to one after renormalization.",
-  },
-  {
-    id: "crash-probability-l5-q43",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "For logits \\((3,1,0)\\), temperature-modified softmax uses \\(P_i(T)=\\frac{e^{z_i/T}}{\\sum_j e^{z_j/T}}\\) with \\(T>0\\). Which statements are correct?",
-    options: [
-      {
-        text: "At \\(T=1\\), the odds of the first token over the second token are \\(e^{3-1}=e^2\\).",
-        isCorrect: true,
-      },
-      {
-        text: "At \\(T=2\\), the odds of the first token over the second token are \\(e^{(3-1)/2}=e\\).",
-        isCorrect: true,
-      },
-      {
-        text: "For every positive \\(T\\), the first token remains the highest-probability token.",
-        isCorrect: true,
-      },
-      {
-        text: "As \\(T\\rightarrow\\infty\\), the distribution approaches uniform over the three tokens.",
-        isCorrect: true,
-      },
+    "The conditional mean averages over possible epsilon values and equals 1.6, but one realized sample includes its actual noise contribution. Substituting the given coefficients and epsilon yields 1.0, illustrating the distinction between mean and draw.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q103",
+    "easy",
+    "What is the role of the forward process in standard diffusion training?",
+    [
+      ["Create controlled noisy versions of real data", true],
+      ["Generate final samples by removing noise", false],
+      ["Choose the highest-probability text token", false],
+      ["Infer a reward-maximizing action policy", false],
     ],
-    explanation:
-      "Temperature rescales logit gaps before exponentiation, so pairwise odds become \\(e^{(z_i-z_j)/T}\\). Positive temperature preserves the ordering of unequal logits, while very large temperature washes out the differences and approaches a uniform distribution.",
-  },
-  {
-    id: "crash-probability-l5-q44",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Use base-2 entropy \\(H(P)=-\\sum_i p_i\\log_2 p_i\\). Which statements are correct for \\(P=(1/2,1/4,1/4)\\) and \\(Q=(1/3,1/3,1/3)\\)?",
-    options: [
-      {
-        text: "\\(H(P)=1.5\\) bits.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(H(Q)=\\log_2 3\\), which is about 1.585 bits.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(Q\\) has lower entropy than \\(P\\) because all outcomes in \\(Q\\) are equally likely.",
-        isCorrect: false,
-      },
-      {
-        text: "Entropy is the sampled token itself, not the expected surprisal of the distribution.",
-        isCorrect: false,
-      },
+    "The forward process is the known corruption path used to create inputs and targets for denoising training. Final generation follows a learned reverse direction, while token decoding and reinforcement-learning policies solve different probabilistic tasks.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q104",
+    "medium",
+    "Which statements correctly interpret \\(x_0,x_t,x_T\\) in diffusion notation?",
+    [
+      ["\\(x_0\\) denotes clean data at the start of forward noising.", true],
+      [
+        "\\(x_T\\) is designed to be close to the simple terminal noise distribution.",
+        true,
+      ],
+      [
+        "\\(x_t\\) must be either perfectly clean or pure noise with no mixture.",
+        false,
+      ],
+      ["Time t records model-training epochs rather than noise level.", false],
     ],
-    explanation:
-      "For \\(P\\), the entropy is \\(0.5\\cdot1+0.25\\cdot2+0.25\\cdot2=1.5\\) bits. The uniform three-outcome distribution has maximum entropy among three-outcome distributions, so it is slightly higher than \\(P\\), and entropy is a property of the distribution rather than the realized token.",
-  },
-  {
-    id: "crash-probability-l5-q45",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "At the first token, a model assigns \\(P(A)=0.6\\) and \\(P(B)=0.4\\). If \\(A\\) is chosen, the most likely second token has probability 0.2; if \\(B\\) is chosen, the most likely second token has probability 0.9. Which statements are correct?",
-    options: [
-      {
-        text: "Greedy decoding at the first step chooses \\(A\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The best two-token sequence beginning with \\(A\\) has probability \\(0.6\\cdot0.2=0.12\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The best two-token sequence beginning with \\(B\\) has probability \\(0.4\\cdot0.9=0.36\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Because \\(A\\) has the larger first-step probability, every two-token sequence beginning with \\(A\\) is more likely than every two-token sequence beginning with \\(B\\).",
-        isCorrect: false,
-      },
+    "Intermediate states combine attenuated signal and noise according to the schedule, connecting clean data to an approximately Gaussian terminal state. The diffusion time index labels corruption level, not the outer optimization epoch count.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q105",
+    "hard",
+    "The forward process is Markov with \\(q(x_t\\mid x_{t-1})\\). Which statements are correct?",
+    [
+      [
+        "Its joint path factorizes as \\(q(x_{1:T}\\mid x_0)=\\prod_{t=1}^Tq(x_t\\mid x_{t-1})\\).",
+        true,
+      ],
+      [
+        "Given \\(x_{t-1}\\), the next noisy state does not require the full earlier path.",
+        true,
+      ],
+      [
+        "A closed-form \\(q(x_t\\mid x_0)\\) can permit direct sampling of a training noise level.",
+        true,
+      ],
+      [
+        "Markov factorization implies \\(q(x_t\\mid x_0)=q(x_t)\\), so \\(x_t\\) is marginally independent of \\(x_0\\).",
+        false,
+      ],
     ],
-    explanation:
-      "The calculation shows why a locally largest first token need not produce the highest-probability full sequence. Greedy decoding optimizes one step at a time, while sequence probability multiplies conditional probabilities across steps.",
-  },
-  {
-    id: "crash-probability-l5-q46",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "A sorted token distribution is \\(a:0.40\\), \\(b:0.22\\), \\(c:0.18\\), \\(d:0.12\\), and \\(e:0.08\\). Which statements are correct for top-k with \\(k=3\\) and top-p with \\(p=0.70\\)?",
-    options: [
-      {
-        text: "Top-k with \\(k=3\\) keeps \\(a,b,c\\), whose original probability mass is \\(0.80\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Under top-k with \\(k=3\\), the renormalized probability of \\(b\\) is \\(0.22/0.80\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Top-p with \\(p=0.70\\) also keeps \\(a,b,c\\), because \\(0.40+0.22=0.62\\) is below the threshold and adding \\(c\\) reaches \\(0.80\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Token \\(d\\) is excluded by both of these restricted samplers.",
-        isCorrect: true,
-      },
+    "The Markov property makes the next corruption depend on the current noisy state, giving a product of local transitions. Marginal dependence on the clean origin remains, and Gaussian composition can provide a direct conditional from \\(x_0\\) to an arbitrary time.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q106",
+    "easy",
+    "Which properties make Gaussian noise convenient in generative modeling?",
+    [
+      ["It is easy to sample.", true],
+      ["Linear transformations have tractable means and covariances.", true],
+      ["Independent Gaussian increments combine into Gaussian noise.", true],
+      ["A standard Gaussian provides a simple terminal distribution.", true],
     ],
-    explanation:
-      "Top-k fixes the number of retained tokens, while top-p fixes a cumulative-probability threshold. In this example they happen to retain the same set, and both require renormalization over the retained mass.",
-  },
-  {
-    id: "crash-probability-l5-q47",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "A decoding rule restricts a distribution \\(p_i\\) to a retained set \\(S\\) with total mass \\(m=\\sum_{i\\in S}p_i\\). Which statements are correct?",
-    options: [
-      {
-        text: "The restricted categorical distribution should use \\(p'_i=p_i/m\\) for \\(i\\in S\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Expected values under the restricted distribution can differ from expected values under the original distribution.",
-        isCorrect: true,
-      },
-      {
-        text: "The unnormalized values \\(p_i\\) can be used directly as probabilities after truncation even though they sum to \\(m<1\\).",
-        isCorrect: false,
-      },
-      {
-        text: "Tokens outside \\(S\\) keep their original probabilities during the restricted sample.",
-        isCorrect: false,
-      },
+    "Gaussian distributions support efficient sampling and algebraically tractable transformations, making a controlled noising schedule practical. Their closure properties also help summarize many incremental corruption steps with a simple direct formula.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q107",
+    "medium",
+    "A clean scalar has value \\(x_0=0\\), and \\(x_t=\\sqrt{1-\\bar\\alpha_t}\\epsilon\\). Which statements are correct?",
+    [
+      ["The conditional mean of \\(x_t\\) is zero.", true],
+      ["Its conditional variance is \\(1-\\bar\\alpha_t\\).", true],
+      [
+        "A zero conditional mean makes the realized \\(x_t\\) equal zero.",
+        false,
+      ],
+      ["Its variance is \\(\\sqrt{1-\\bar\\alpha_t}\\).", false],
     ],
-    explanation:
-      "Truncation changes the support of the categorical distribution, so the remaining probabilities must be divided by their total retained mass. This can change probabilities and expectations because excluded outcomes receive zero probability under the restricted sampler.",
-  },
-  {
-    id: "crash-probability-l5-q48",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "A latent variable model has \\(P(Z=0)=0.3\\), \\(P(Z=1)=0.7\\), \\(P(X=x\\mid Z=0)=0.8\\), and \\(P(X=x\\mid Z=1)=0.2\\). What is \\(P(X=x)\\)?",
-    options: [
-      {
-        text: "\\(0.3\\cdot0.8+0.7\\cdot0.2=0.38\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(0.8+0.2=1.0\\), because the conditional probabilities are added without latent weights.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(0.3+0.7=1.0\\), because the prior over \\(Z\\) already sums to one.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(0.3\\cdot0.2+0.7\\cdot0.8=0.62\\), because the conditional probabilities should be swapped across latent states.",
-        isCorrect: false,
-      },
+    "Zero clean signal leaves a scaled standard-Gaussian random variable, whose mean is zero and variance is the square of its scale. A distribution's mean describes an average and does not force individual noise samples to equal it.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q108",
+    "hard",
+    "Two noising times use \\(\\bar\\alpha_a=0.9\\) and \\(\\bar\\alpha_b=0.1\\) for the same clean data. Which statements are correct?",
+    [
+      ["Time a retains a larger clean-signal coefficient.", true],
+      ["Time b uses a larger noise variance.", true],
+      [
+        "Predicting the original data is generally more uncertain at time b.",
+        true,
+      ],
+      [
+        "Both times have identical conditional distributions because their coefficients still sum in quadrature to one.",
+        false,
+      ],
     ],
-    explanation:
-      "The marginal probability of the observed event sums over the latent alternatives: \\(P(x)=\\sum_z P(z)P(x\\mid z)\\). The latent prior weights matter, and each conditional probability must stay paired with the latent state it conditions on.",
-  },
-  {
-    id: "crash-probability-l5-q49",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Using \\(P(Z=0)=0.3\\), \\(P(Z=1)=0.7\\), \\(P(X=x\\mid Z=0)=0.8\\), and \\(P(X=x\\mid Z=1)=0.2\\), which statements about the posterior after observing \\(X=x\\) are correct?",
-    options: [
-      {
-        text: "\\(P(Z=0,X=x)=0.3\\cdot0.8=0.24\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(Z=0\\mid X=x)=0.24/0.38\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(Z=0\\mid X=x)=0.3\\), because observing \\(x\\) cannot update a latent variable.",
-        isCorrect: false,
-      },
-      {
-        text: "\\(P(Z=0\\mid X=x)=0.8/0.2\\), because posterior probabilities compare only likelihoods.",
-        isCorrect: false,
-      },
+    "Although signal and noise variances are balanced to a common total scale, their allocations differ strongly. The later, low-alpha state hides more clean structure under noise and therefore poses a harder denoising inference problem.",
+  ),
+
+  // Reverse diffusion, guidance, and generative synthesis
+  makeQuestion(
+    "crash-probability-l5-q109",
+    "easy",
+    "What is learned in the reverse direction of a diffusion model?",
+    [
+      [
+        "How to move from a noisy state toward a less noisy state or an equivalent denoising target",
+        true,
+      ],
+      [
+        "How to add the fixed forward noise schedule to clean training data",
+        false,
+      ],
+      ["How to reduce generation to one greedy class argmax", false],
+      ["How to assign a fixed predetermined image to each prompt", false],
     ],
-    explanation:
-      "Bayes' rule updates the latent-state probability using both the prior and the likelihood. The posterior numerator is the joint probability for \\(Z=0\\) and \\(x\\), and the denominator is the marginal probability of \\(x\\) from summing over latent states.",
-  },
-  {
-    id: "crash-probability-l5-q50",
-    chapter: 5,
-    difficulty: "medium",
-    prompt: "For \\(X\\sim\\mathcal{N}(5,4)\\), which statements are correct?",
-    options: [
-      {
-        text: "The standard deviation is \\(2\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(Z=(X-5)/2\\) has a standard normal distribution.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(|X-5|\\le4)=P(|Z|\\le2)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The parameter \\(4\\) is the variance, not the standard deviation.",
-        isCorrect: true,
-      },
+    "The forward corruption is known, while a neural network learns a reverse conditional or related target such as noise or clean data prediction. The learned process remains generative and can map different initial noise samples to different valid outputs.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q110",
+    "easy",
+    "Why can the same text prompt produce different diffusion images?",
+    [
+      ["Generation can begin from different random noise samples.", true],
+      ["The prompt leaves many visual details unspecified.", true],
+      ["The model retrains on the prompt before producing an image.", false],
+      [
+        "Conditional generation removes its random initial state by definition.",
+        false,
+      ],
     ],
-    explanation:
-      "The notation \\(\\mathcal{N}(\\mu,\\sigma^2)\\) uses variance as the second parameter, so \\(\\sigma=2\\). Standardizing subtracts the mean and divides by the standard deviation, which converts interval statements about \\(X\\) into equivalent statements about a standard normal variable.",
-  },
-  {
-    id: "crash-probability-l5-q51",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Suppose a noising step is written \\(x_t=\\sqrt{\\alpha}\\,x_0+\\sqrt{1-\\alpha}\\,\\epsilon\\), where \\(0\\le\\alpha\\le1\\), \\(x_0\\) is fixed, and \\(\\epsilon\\sim\\mathcal{N}(0,I)\\). Which statements are correct?",
-    options: [
-      {
-        text: "\\(\\mathbb{E}[x_t\\mid x_0]=\\sqrt{\\alpha}\\,x_0\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(\\operatorname{Cov}(x_t\\mid x_0)=(1-\\alpha)I\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Smaller \\(\\alpha\\) gives the noise term more relative influence.",
-        isCorrect: true,
-      },
-      {
-        text: "For every data distribution of \\(x_0\\), the marginal distribution of \\(x_t\\) is exactly \\(\\mathcal{N}(0,I)\\) for all \\(\\alpha\\).",
-        isCorrect: false,
-      },
+    "A prompt constrains but rarely uniquely determines an image, and random initial states select different trajectories through that conditional distribution. Conditioning guides generation without collapsing all probability mass onto one fixed output.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q111",
+    "medium",
+    "A diffusion model predicts the noise \\(\\epsilon\\) used to create \\(x_t\\). Which statements are correct?",
+    [
+      [
+        "Training can compare predicted noise with the known sampled noise.",
+        true,
+      ],
+      [
+        "The network receives the noisy state and time index because denoising depends on noise level.",
+        true,
+      ],
+      ["A text condition can be supplied for conditional generation.", true],
+      [
+        "The network can ignore x_t because target noise is shared across the training batch.",
+        false,
+      ],
     ],
-    explanation:
-      "Conditioning on fixed \\(x_0\\), the only random term is the Gaussian noise, so expectation and covariance follow from affine transformation rules. The marginal distribution over \\(x_t\\) also depends on the data distribution unless the process has fully washed out the data contribution.",
-  },
-  {
-    id: "crash-probability-l5-q52",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly describe the Markov structure of a forward diffusion noising chain?",
-    options: [
-      {
-        text: "A common factorization is \\(q(x_{1:T}\\mid x_0)=\\prod_{t=1}^T q(x_t\\mid x_{t-1})\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Given \\(x_{t-1}\\), the next noised state \\(x_t\\) does not need the full earlier history \\(x_{0:t-2}\\) in a Markov forward chain.",
-        isCorrect: true,
-      },
-      {
-        text: "Closed-form expressions for \\(q(x_t\\mid x_0)\\) are useful because training often samples a time step directly.",
-        isCorrect: true,
-      },
-      {
-        text: "A noise schedule can control how much corruption is added at different time steps.",
-        isCorrect: true,
-      },
+    "Forward noising records the sampled target, turning reverse learning into a supervised prediction problem at varied times. The target differs across examples and draws, so the noisy input, time, and optional condition carry essential information.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q112",
+    "hard",
+    "A learned reverse Markov model uses transitions \\(p_\\theta(x_{t-1}\\mid x_t,c)\\). Which statements are correct?",
+    [
+      [
+        "Its conditional path factorizes as \\(p(x_T)\\prod_{t=1}^Tp_\\theta(x_{t-1}\\mid x_t,c)\\).",
+        true,
+      ],
+      [
+        "Generation begins by sampling \\(x_T\\) from a simple noise distribution.",
+        true,
+      ],
+      [
+        "Generation follows \\(q(x_{1:T}\\mid x_0)=\\prod_{t=1}^Tq(x_t\\mid x_{t-1})\\) after sampling \\(x_0\\) from the dataset.",
+        false,
+      ],
+      [
+        "The condition c is marginalized out even when prompt-guided output is requested.",
+        false,
+      ],
     ],
-    explanation:
-      "The forward process is usually designed as a Markov chain, which gives a product factorization over one-step noising transitions. Closed-form noising from \\(x_0\\) and a controlled noise schedule make training practical because the model can see noisy data at many levels of corruption.",
-  },
-  {
-    id: "crash-probability-l5-q53",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly interpret a learned reverse diffusion transition \\(p_\\theta(x_{t-1}\\mid x_t,c)\\), where \\(c\\) is a condition such as a text prompt?",
-    options: [
-      {
-        text: "It is a model-parameterized conditional distribution for moving from a noisy state toward a less-noisy state.",
-        isCorrect: true,
-      },
-      {
-        text: "Sampling from it can produce different denoising paths even with the same condition.",
-        isCorrect: true,
-      },
-      {
-        text: "It is the same object as the fixed forward noising transition \\(q(x_t\\mid x_{t-1})\\).",
-        isCorrect: false,
-      },
-      {
-        text: "Removing \\(c\\) from the conditioning set cannot change the distribution because prompts are not probabilistic information.",
-        isCorrect: false,
-      },
+    "Reverse generation starts from terminal noise and follows learned local conditionals toward data, optionally conditioned on information such as text. Sampling clean training data and running forward would be corruption rather than novel generation.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q113",
+    "medium",
+    "Which statements correctly connect diffusion to conditional probability?",
+    [
+      ["A denoising step can depend on the current noisy state.", true],
+      ["The time index conditions the model on the current noise level.", true],
+      ["A text prompt can condition which clean outputs are plausible.", true],
+      [
+        "Repeated reverse steps compose local conditional predictions into a generated sample.",
+        true,
+      ],
     ],
-    explanation:
-      "The reverse transition is learned and conditionally generates a less-noisy state from the current noisy state and optional guidance information. It is not the fixed corruption process, and conditioning information can change the distribution of plausible denoising moves.",
-  },
-  {
-    id: "crash-probability-l5-q54",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "A diffusion model forms \\(x_t\\) by adding known noise \\(\\epsilon\\) to \\(x_0\\), then trains \\(\\epsilon_\\theta(x_t,t,c)\\) with squared error. Which statements are correct?",
-    options: [
-      {
-        text: "The loss can be written in simplified form as \\(\\mathbb{E}[\\|\\epsilon-\\epsilon_\\theta(x_t,t,c)\\|^2]\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Including \\(t\\) matters because the amount and character of noise depend on the time step.",
-        isCorrect: true,
-      },
-      {
-        text: "Under squared error, the best predictor is a conditional mean of the target noise given the inputs.",
-        isCorrect: true,
-      },
-      {
-        text: "Training maximizes this squared-error loss so the model predicts noise as poorly as possible.",
-        isCorrect: false,
-      },
+    "Diffusion does not remove noise using one unconditional rule; it predicts an update from the noisy state, time, and optional guidance. Chaining those conditionals gradually turns a simple random initial state into a structured conditional output.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q114",
+    "hard",
+    "Classifier-free guidance combines an unconditional prediction \\(u\\) and conditional prediction \\(c\\) as \\(g=u+w(c-u)\\). Which statements are correct?",
+    [
+      ["At \\(w=0\\), \\(g=u\\).", true],
+      ["At \\(w=1\\), \\(g=c\\).", true],
+      [
+        "For \\(w>1\\), the prediction extrapolates beyond c in the conditional direction.",
+        true,
+      ],
+      [
+        "Increasing w obeys \\(d(\\text{naturalness})/dw>0\\) and \\(d(\\text{prompt fit})/dw>0\\) as a monotonic rule.",
+        false,
+      ],
     ],
-    explanation:
-      "A common diffusion training target is noise prediction, where the model receives the noisy sample, time step, and condition and predicts the added noise. Squared-error minimization encourages the prediction to approximate the conditional expectation of that noise, not to maximize error.",
-  },
-  {
-    id: "crash-probability-l5-q55",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "A classifier-free guidance style update can be written schematically as \\(\\hat{\\epsilon}=\\epsilon_{\\text{uncond}}+w(\\epsilon_{\\text{cond}}-\\epsilon_{\\text{uncond}})\\). Which statements are correct?",
-    options: [
-      {
-        text: "When \\(w=0\\), \\(\\hat{\\epsilon}=\\epsilon_{\\text{uncond}}\\).",
-        isCorrect: true,
-      },
-      {
-        text: "When \\(w=1\\), \\(\\hat{\\epsilon}=\\epsilon_{\\text{cond}}\\).",
-        isCorrect: true,
-      },
-      {
-        text: "When \\(w>1\\), the update extrapolates beyond the conditional prediction in the direction away from the unconditional prediction.",
-        isCorrect: true,
-      },
-      {
-        text: "Increasing guidance can improve prompt adherence while sometimes harming naturalness or introducing distortion.",
-        isCorrect: true,
-      },
+    "The formula interpolates from unconditional to conditional prediction and extrapolates when guidance exceeds one. Strong guidance can increase condition adherence but may reduce diversity or introduce distortions, so its effect is a controllable tradeoff rather than a guarantee.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q115",
+    "easy",
+    "Which description best contrasts LLM and diffusion generation?",
+    [
+      [
+        "LLMs usually sample discrete next tokens, while diffusion iteratively denoises continuous representations.",
+        true,
+      ],
+      [
+        "LLMs use unconditional token probabilities, while diffusion uses unconditional denoising probabilities.",
+        false,
+      ],
+      [
+        "Diffusion generates in one step, while LLMs retrain after appending a token.",
+        false,
+      ],
+      ["Both methods require greedy argmax at each generation step.", false],
     ],
-    explanation:
-      "The guidance expression interpolates or extrapolates between unconditional and conditional predictions. It changes how strongly the condition influences denoising, which can improve adherence but also creates a tradeoff with sample quality when pushed too far.",
-  },
-  {
-    id: "crash-probability-l5-q56",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "A Variational Autoencoder (VAE) uses a reparameterization \\(z=\\mu(x)+\\sigma(x)\\odot\\epsilon\\), where \\(\\epsilon\\sim\\mathcal{N}(0,I)\\). Which statements are correct?",
-    options: [
-      {
-        text: "Conditioned on \\(x\\), this represents a Gaussian latent variable with mean \\(\\mu(x)\\) and diagonal standard deviations \\(\\sigma(x)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The randomness is isolated in \\(\\epsilon\\), which helps gradients flow through \\(\\mu(x)\\) and \\(\\sigma(x)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "If \\(\\sigma(x)=0\\), then \\(z=\\mu(x)\\) becomes deterministic for that input.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(\\epsilon\\) must be sampled from the decoder output distribution \\(P(x\\mid z)\\), not from a standard normal.",
-        isCorrect: false,
-      },
+    "Both systems repeatedly use learned conditional distributions, but the state and update differ: an LLM appends a discrete token, while diffusion refines a noisy continuous sample. Neither process requires retraining or greedy selection during ordinary inference.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q116",
+    "medium",
+    "Which statements correctly compare LLM, RL-policy, and diffusion sampling?",
+    [
+      ["An LLM samples a token conditioned on context.", true],
+      [
+        "An RL transition kernel samples an action from \\(P(A_t\\mid S_t)\\).",
+        false,
+      ],
+      [
+        "A diffusion update uses a noisy state and optional prompt to parameterize a cleaner next state.",
+        true,
+      ],
+      [
+        "Each system requires its output to be a discrete vocabulary item.",
+        false,
+      ],
     ],
-    explanation:
-      "The reparameterization trick rewrites latent sampling as a deterministic transformation of parameters and independent standard Gaussian noise. This keeps the generative role of noise while making optimization through the latent parameters more tractable.",
-  },
-  {
-    id: "crash-probability-l5-q57",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly reason about a latent prior \\(z\\sim P(z)\\), latent space, and decoder distribution \\(P(x\\mid z)\\)?",
-    options: [
-      {
-        text: "The prior \\(P(z)\\) defines where latent samples are drawn before decoding.",
-        isCorrect: true,
-      },
-      {
-        text: "Interpolating between two latent vectors explores a path in latent space, but it is not the same operation as drawing an independent sample from the prior.",
-        isCorrect: true,
-      },
-      {
-        text: "Nearby latent points may decode to similar outputs in a smooth learned model, but the notation \\(z\\sim P(z)\\) alone does not guarantee semantic smoothness.",
-        isCorrect: true,
-      },
-      {
-        text: "A decoder distribution \\(P(x\\mid z)\\) can remain stochastic even after a particular \\(z\\) is fixed.",
-        isCorrect: true,
-      },
+    "An LLM draws a discrete token, while a diffusion model uses a noisy continuous state to parameterize the next denoising update. In reinforcement learning the policy samples the action; the transition kernel instead samples the environment's next state after that action.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q117",
+    "hard",
+    "An autoregressive model assigns a sequence conditional probabilities \\((0.9,0.8,0.2,0.5)\\). Which statements are correct?",
+    [
+      ["The sequence likelihood is \\(0.9(0.8)(0.2)(0.5)=0.072\\).", true],
+      [
+        "Its log-likelihood is \\(\\log0.9+\\log0.8+\\log0.2+\\log0.5\\).",
+        true,
+      ],
+      ["The 0.2 token contributes the largest negative log penalty.", true],
+      [
+        "A high \\(p(x_1)\\) cancels \\(\\prod_{t=2}^Tp(x_t\\mid x_{<t})\\) in sequence probability.",
+        false,
+      ],
     ],
-    explanation:
-      "Latent modeling separates the prior over hidden variables from the decoder distribution over visible data. Smooth latent spaces are a learned modeling property, not a consequence of notation alone, and a conditional decoder can still represent uncertainty after the latent value is chosen.",
-  },
-  {
-    id: "crash-probability-l5-q58",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "A prompt condition \\(c\\) leaves image style ambiguous. Let \\(P(Z=\\text{modern}\\mid c)=0.6\\), \\(P(Z=\\text{rustic}\\mid c)=0.4\\), \\(P(R\\mid Z=\\text{modern},c)=0.2\\), and \\(P(R\\mid Z=\\text{rustic},c)=0.7\\), where \\(R\\) is the event that the generated image has a red roof. Which statements are correct?",
-    options: [
-      {
-        text: "\\(P(R\\mid c)=0.6\\cdot0.2+0.4\\cdot0.7=0.40\\).",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(Z=\\text{rustic}\\mid R,c)=0.28/0.40=0.70\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The prompt condition does not uniquely determine the image because latent or unspecified factors can remain uncertain.",
-        isCorrect: true,
-      },
-      {
-        text: "\\(P(R\\mid c)=0.2+0.7=0.9\\), because conditional probabilities across latent styles should be added without weighting.",
-        isCorrect: false,
-      },
+    "Every observed step contributes multiplicatively, so one low conditional probability can substantially reduce the complete path likelihood. Log space makes that effect additive and shows the 0.2 factor as the largest surprise.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q118",
+    "easy",
+    "Which statements summarize probabilistic generation?",
+    [
+      ["A learned distribution represents multiple possible outputs.", true],
+      ["Sampling turns that distribution into a concrete realization.", true],
+      [
+        "Conditioning restricts generation toward information such as context or a prompt.",
+        true,
+      ],
+      [
+        "Repeated random generation can produce diversity while following the same model.",
+        true,
+      ],
     ],
-    explanation:
-      "This is the law of total probability and Bayes' rule applied inside a conditional generative setting. The prompt narrows the distribution, but hidden style variables or unspecified details can still affect the probability of visible image properties.",
-  },
-  {
-    id: "crash-probability-l5-q59",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "Which statements correctly compare probability factorizations for language models, diffusion models, and reinforcement learning (RL)?",
-    options: [
-      {
-        text: "An autoregressive language model can factor a sequence as \\(P(x_{1:T})=\\prod_{t=1}^T P(x_t\\mid x_{1:t-1})\\).",
-        isCorrect: true,
-      },
-      {
-        text: "A reverse diffusion sampler can be written schematically as starting from \\(p(x_T)\\) and applying transitions such as \\(\\prod_t p_\\theta(x_{t-1}\\mid x_t,c)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "An RL trajectory probability can involve policy terms such as \\(\\pi(a_t\\mid s_t)\\) and environment transition terms such as \\(P(s_{t+1}\\mid s_t,a_t)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "All three settings use conditional distributions to move from current context or state toward a next sampled object.",
-        isCorrect: true,
-      },
+    "Generative models preserve uncertainty over valid outputs until a sampling or decoding process realizes one. Context narrows the distribution, while residual probability and random initial choices allow repeated runs to differ.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q119",
+    "medium",
+    "A diffusion sampler is made deterministic given its initial noise, while initial noise is still sampled randomly. Which statements are correct?",
+    [
+      [
+        "Different initial noise samples can still produce different outputs.",
+        true,
+      ],
+      [
+        "Reusing the same initial noise and condition can make the trajectory reproducible.",
+        true,
+      ],
+      [
+        "The overall generator has no randomness because each transition is deterministic.",
+        false,
+      ],
+      [
+        "A deterministic path implies a single valid image for a prompt.",
+        false,
+      ],
     ],
-    explanation:
-      "The mathematical objects differ, but each setting uses a product or repetition of conditional distributions. This shared structure is why next-token generation, denoising, and sequential action selection can all be discussed as probabilistic step-by-step processes.",
-  },
-  {
-    id: "crash-probability-l5-q60",
-    chapter: 5,
-    difficulty: "hard",
-    prompt:
-      "A generated three-token sequence has conditional probabilities \\(0.5\\), \\(0.2\\), and \\(0.4\\) for the tokens that were actually selected. Which statements are correct?",
-    options: [
-      {
-        text: "The sequence probability under the autoregressive model is \\(0.5\\cdot0.2\\cdot0.4=0.04\\).",
-        isCorrect: true,
-      },
-      {
-        text: "The negative log-likelihood is \\(-\\log(0.04)\\), using the same log base consistently.",
-        isCorrect: true,
-      },
-      {
-        text: "The average per-token negative log-likelihood is \\(-\\frac{1}{3}\\log(0.04)\\).",
-        isCorrect: true,
-      },
-      {
-        text: "Increasing the model probability assigned to the selected tokens would lower the negative log-likelihood for this fixed sequence.",
-        isCorrect: true,
-      },
+    "Randomness can enter at the initial condition even when later updates are deterministic, so the complete generator remains a pushforward of a noise distribution. Fixing that noise can reproduce one path without collapsing the model's broader output space.",
+  ),
+  makeQuestion(
+    "crash-probability-l5-q120",
+    "hard",
+    "A conditional generator has latent prior \\(P(z)\\), decoder \\(P(x\\mid z,c)\\), and condition c. Which statements are correct?",
+    [
+      [
+        "Its conditional output distribution marginalizes latents: \\(P(x\\mid c)=\\sum_zP(x\\mid z,c)P(z\\mid c)\\) in the general discrete case.",
+        true,
+      ],
+      ["Sampling z can select one hidden route to a concrete output.", true],
+      [
+        "Posterior inference \\(P(z\\mid x,c)\\) asks which latent routes explain an observed conditioned output.",
+        true,
+      ],
+      [
+        "Conditioning gives \\(P(x\\mid z,c)=1\\) for the same x at each latent value z.",
+        false,
+      ],
     ],
-    explanation:
-      "Autoregressive sequence probability multiplies the conditional probabilities of the realized tokens. Negative log-likelihood turns that product into a sum of token-level losses, so assigning more probability to the observed sequence lowers the loss.",
-  },
+    "Conditional generation can preserve many hidden explanations and outcomes, combining their paths through marginalization and realizing one through sampling. Observing x reverses the question toward posterior latent inference, while the condition guides rather than uniquely determines every output.",
+  ),
 ];

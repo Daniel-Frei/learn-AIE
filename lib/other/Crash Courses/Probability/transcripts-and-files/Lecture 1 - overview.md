@@ -32,15 +32,15 @@ They all work with uncertainty.
 
 # Lecture Structure
 
-| Part |                              Topic |   Time |
-| ---- | ---------------------------------: | -----: |
-| 1    |      Why probability matters in AI |  8 min |
-| 2    |  Outcomes, events, and probability | 10 min |
-| 3    |                   Random variables | 10 min |
-| 4    | Discrete probability distributions | 12 min |
-| 5    |                        Expectation | 12 min |
-| 6    |           Variance and uncertainty |  6 min |
-| 7    |    Summary and bridge to Lecture 2 |  2 min |
+| Part | Topic                                                    |   Time |
+| ---- | -------------------------------------------------------- | -----: |
+| 1    | Why probability matters in AI                            |  5 min |
+| 2    | Outcomes, events, axioms, event algebra, and counting    | 20 min |
+| 3    | Random variables; discrete versus continuous probability |  8 min |
+| 4    | Discrete probability distributions                       | 10 min |
+| 5    | Expectation, decision limits, and linearity              | 10 min |
+| 6    | Variance and uncertainty                                 |  5 min |
+| 7    | Summary and bridge to Lecture 2                          |  2 min |
 
 ---
 
@@ -49,10 +49,16 @@ They all work with uncertainty.
 By the end of the lecture, students should understand:
 
 - what probability means in AI,
+- why an event is a set of outcomes rather than an outcome itself,
+- how the probability axioms produce complement and addition rules,
+- how to count sample spaces by checking repetition and order,
 - what a probability distribution is,
 - what a random variable is,
+- how PMFs for discrete variables differ from PDFs for continuous variables,
 - why AI predictions are often distributions rather than single answers,
 - how expectation represents an average under uncertainty,
+- why expectation is linear even for dependent variables,
+- why expected value does not capture every risk-sensitive decision,
 - why variance measures uncertainty or spread,
 - why probability is foundational for deep learning, LLMs, RL, and diffusion models.
 
@@ -60,7 +66,7 @@ By the end of the lecture, students should understand:
 
 # Part 1 — Why Probability Matters in AI
 
-**Time:** 8 minutes
+**Time:** 5 minutes
 
 ## 1.1 Motivation
 
@@ -224,7 +230,7 @@ Write this on the board:
 
 # Part 2 — Outcomes, Events, and Probability
 
-**Time:** 10 minutes
+**Time:** 20 minutes
 
 ## 2.1 Sample Space
 
@@ -457,7 +463,95 @@ The model must place all probability somewhere.
 
 ---
 
-## 2.8 Mini-Exercise
+## 2.8 The Three Probability Axioms
+
+Introduce the minimum formal foundation after students understand sample spaces
+and events.
+
+For every event (A):
+
+1. **Non-negativity:** (P(A) \ge 0).
+2. **Normalization:** (P(\Omega)=1).
+3. **Disjoint additivity:** if (A \cap B=\varnothing), then
+   (P(A \cup B)=P(A)+P(B)).
+
+These are not three formulas to memorize in isolation. They are the compact
+rules that make all valid probability assignments coherent.
+
+Use a fair die:
+
+- (A={1,2}) gives (P(A)=2/6 \ge 0)
+- the entire die sample space has probability (6/6=1)
+- (A={1,2}) and (B={5}) are disjoint, so their union has probability (3/6)
+
+---
+
+## 2.9 Complements, Intersections, and Unions
+
+Because events are sets, set operations give a precise language for compound
+questions.
+
+| Natural language | Event notation | Meaning                            |
+| ---------------- | -------------- | ---------------------------------- |
+| not (A)          | (A^c)          | outcomes outside (A)               |
+| (A) and (B)      | (A \cap B)     | outcomes in both events            |
+| (A) or (B)       | (A \cup B)     | outcomes in either, including both |
+
+Derive the complement rule:
+
+[
+P(A^c)=1-P(A)
+]
+
+Then show the general addition rule:
+
+[
+P(A \cup B)=P(A)+P(B)-P(A \cap B)
+]
+
+Use the king-or-heart card example and a Venn diagram. The overlapping king of
+hearts makes the double count concrete. Contrast this with king-or-queen, where
+the intersection is empty and the probabilities simply add.
+
+Use “at least one head in three flips” to show why the complement can turn
+seven favorable sequences into the single excluded sequence (TTT).
+
+---
+
+## 2.10 Counting Sample Spaces Without Listing Them
+
+The ratio:
+
+[
+P(A)=\frac{|A|}{|\Omega|}
+]
+
+is valid when the elementary outcomes are equally likely. The counting problem
+therefore begins by defining outcomes carefully, then asking:
+
+1. Is repetition allowed?
+2. Does order matter?
+
+Cover four common cases:
+
+| Choice structure                               | Count                             |
+| ---------------------------------------------- | --------------------------------- |
+| (k) ordered choices, repetition allowed        | (n^k)                             |
+| (k) ordered choices, no repetition             | (P(n,k)=n!/(n-k)!)                |
+| (k) unordered choices, no repetition           | ({n \choose k}=n!/[k!(n-k)])      |
+| Sequential choices with changing possibilities | multiply the choices at each step |
+
+Define factorial as (n!=n(n-1)\cdots1). Use PINs, officer roles, committees,
+lottery draws, and card hands to make the repetition/order decision visible.
+
+Teaching warning:
+
+> “Combination” in everyday speech does not tell you whether mathematical order
+> matters. A PIN is ordered even when people call it a combination.
+
+---
+
+## 2.11 Mini-Exercise
 
 Give students this distribution:
 
@@ -475,6 +569,8 @@ Ask:
 2. What is the probability of the event “next token is an article”?
 3. Do the probabilities sum to 1?
 4. Is “the” mutually exclusive with “a” at this token position?
+5. How many four-digit PINs are possible if repetition is allowed?
+6. How many three-person committees can be chosen from 10 people?
 
 Expected answers:
 
@@ -482,12 +578,14 @@ Expected answers:
 2. (0.40 + 0.25 + 0.10 = 0.75)
 3. Yes.
 4. Yes, only one next token is chosen at this step.
+5. (10^4=10{,}000).
+6. ({10 \choose 3}=120).
 
 ---
 
 # Part 3 — Random Variables
 
-**Time:** 10 minutes
+**Time:** 8 minutes
 
 ## 3.1 What Is a Random Variable?
 
@@ -682,17 +780,51 @@ Examples:
 - Gaussian noise,
 - latent embedding coordinate.
 
-For Lecture 1, focus mostly on discrete variables.
-
-Why?
-
-Because classification and LLM token prediction are easier starting points.
-
-Diffusion models need continuous probability later, but not yet in detail.
+Classification and LLM token prediction make discrete variables the easiest
+starting point. Continuous probability still needs a concrete foundation here
+because measurement, regression, latent spaces, and diffusion use it later.
 
 ---
 
-## 3.5 Mini-Exercise
+## 3.5 Probability Mass Versus Probability Density
+
+For a discrete random variable, a probability mass function (PMF) assigns
+probability directly to each value:
+
+[
+p_X(x)=P(X=x)
+]
+
+The masses are non-negative and sum to one.
+
+For a continuous random variable, a probability density function (PDF) assigns
+density, not point probability. A single exact value has probability zero:
+
+[
+P(X=x)=0
+]
+
+Interval probability is the area under the density:
+
+[
+P(a \le X \le b)=\int_a^b f_X(x)\,dx
+]
+
+Use a bread slicer whose lengths are uniform from 14 to 18 inches. The density
+has height (1/4), so:
+
+[
+P(15 \le X \le 17)=2\cdot\frac{1}{4}=\frac{1}{2}
+]
+
+Students do not need integration technique yet. They need the mental model:
+
+> Discrete probability adds mass at values; continuous probability measures
+> area across ranges.
+
+---
+
+## 3.6 Mini-Exercise
 
 Ask students:
 
@@ -714,7 +846,7 @@ Expected answers:
 
 # Part 4 — Discrete Probability Distributions
 
-**Time:** 12 minutes
+**Time:** 10 minutes
 
 ## 4.1 What Is a Probability Distribution?
 
@@ -1006,7 +1138,7 @@ Expected answers:
 
 # Part 5 — Expectation
 
-**Time:** 12 minutes
+**Time:** 10 minutes
 
 ## 5.1 What Is Expectation?
 
@@ -1145,6 +1277,62 @@ Important bridge to deep learning:
 
 ---
 
+## 5.4A Fair Games and the Limits of Expected Value
+
+A game with expected net payoff zero is fair in the long-run-average sense.
+Positive expectation favors the player; negative expectation favors the house.
+
+Expected value is a comparison tool, not a complete decision theory. A phone
+with an $800 replacement cost and a 5% annual breakage probability has an
+expected loss of $40, but a person may still rationally pay more than $40 to
+avoid a rare unaffordable loss. Risk tolerance, utility, and constraints can
+matter in addition to the mean.
+
+Teaching point:
+
+> “Higher expected value” and “better for every decision-maker” are not the same
+> claim.
+
+---
+
+## 5.4B Linearity of Expectation
+
+For any random variables with finite expectations:
+
+[
+\mathbb{E}[X+Y]=\mathbb{E}[X]+\mathbb{E}[Y]
+]
+
+This does **not** require independence.
+
+Use one die roll to define two fully dependent quantities:
+
+- (Y) is the number rolled
+- (X=4) for rolls 1–3 and (X=8) for rolls 4–6
+
+Then:
+
+[
+\mathbb{E}[X]=6,\qquad \mathbb{E}[Y]=3.5
+]
+
+and direct enumeration confirms:
+
+[
+\mathbb{E}[X+Y]=9.5=6+3.5
+]
+
+Contrast this with products. In general:
+
+[
+\mathbb{E}[XY] \ne \mathbb{E}[X]\mathbb{E}[Y]
+]
+
+Independence is a sufficient condition for the product factorization, but it is
+not needed for sums.
+
+---
+
 ## 5.5 Expected Next Token? A Useful Warning
 
 For numeric variables, expectation is straightforward.
@@ -1262,7 +1450,7 @@ Teaching point:
 
 # Part 6 — Variance and Uncertainty
 
-**Time:** 6 minutes
+**Time:** 5 minutes
 
 ## 6.1 Why Expectation Is Not Enough
 
@@ -1688,21 +1876,25 @@ Expected answers:
 
 Avoid spending too much time on:
 
-- combinatorics,
-- permutations,
-- binomial coefficients,
-- formal probability axioms,
 - measure theory,
-- continuous densities,
+- proofs of the probability axioms,
+- advanced combinatorial identities,
+- calculus techniques for difficult continuous densities,
 - Gaussian formulas,
 - Bayes’ theorem.
 
 Bayes should come in Lecture 2.
 
-Lecture 1 should be about building intuition around:
+Lecture 1 should establish the complete foundation:
 
 [
-\text{uncertainty} \rightarrow \text{random variable} \rightarrow \text{distribution} \rightarrow \text{expectation}
+\text{outcomes/events}
+\rightarrow
+\text{probability rules and counting}
+\rightarrow
+\text{random variables/distributions}
+\rightarrow
+\text{expectation}
 ]
 
 ---

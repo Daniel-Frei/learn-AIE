@@ -53,17 +53,17 @@ So the central probabilistic idea is expectation over possible futures.
 
 # Lecture Structure
 
-| Part |                           Topic |   Time |
-| ---- | ------------------------------: | -----: |
-| 1    |       From prediction to action |  7 min |
-| 2    |        States, actions, rewards |  8 min |
-| 3    |        Transition probabilities |  8 min |
-| 4    |             The Markov property |  7 min |
-| 5    |                        Policies |  8 min |
-| 6    |                 Expected return | 10 min |
-| 7    |                 Value functions |  8 min |
-| 8    |     Exploration vs exploitation |  3 min |
-| 9    | Summary and bridge to Lecture 5 |  1 min |
+| Part | Topic                                                |   Time |
+| ---- | ---------------------------------------------------- | -----: |
+| 1    | From prediction to action                            |  6 min |
+| 2    | States, actions, rewards                             |  7 min |
+| 3    | Transition probabilities                             |  7 min |
+| 4    | The Markov property                                  |  7 min |
+| 5    | Policies                                             |  7 min |
+| 6    | Expected return                                      | 10 min |
+| 7    | Value functions and recursive first-step expectation | 12 min |
+| 8    | Exploration vs exploitation                          |  3 min |
+| 9    | Summary and bridge to Lecture 5                      |  1 min |
 
 ---
 
@@ -80,6 +80,8 @@ By the end of the lecture, students should understand:
 - what expected return means,
 - what the discount factor does,
 - what value functions estimate,
+- how first-step analysis turns repeated random processes into state equations,
+- why an infinite waiting-time sample space can still have a finite expectation,
 - why exploration requires randomness,
 - how RL connects to deep learning and LLM alignment/RLHF.
 
@@ -117,7 +119,7 @@ This example is useful because it naturally illustrates:
 
 # Part 1 — From Prediction to Action
 
-**Time:** 7 minutes
+**Time:** 6 minutes
 
 ## 1.1 Recap from Lecture 3
 
@@ -256,7 +258,7 @@ Teaching point:
 
 # Part 2 — States, Actions, and Rewards
 
-**Time:** 8 minutes
+**Time:** 7 minutes
 
 ## 2.1 State
 
@@ -474,7 +476,7 @@ Expected answers:
 
 # Part 3 — Transition Probabilities
 
-**Time:** 8 minutes
+**Time:** 7 minutes
 
 ## 3.1 The Environment Is Often Stochastic
 
@@ -837,7 +839,7 @@ Expected answers:
 
 # Part 5 — Policies
 
-**Time:** 8 minutes
+**Time:** 7 minutes
 
 ## 5.1 What Is a Policy?
 
@@ -1308,7 +1310,7 @@ Future rewards matter more, so the return becomes larger when future rewards are
 
 # Part 7 — Value Functions
 
-**Time:** 8 minutes
+**Time:** 12 minutes
 
 ## 7.1 Why Value Functions?
 
@@ -1419,7 +1421,72 @@ Teaching point:
 
 ---
 
-## 7.6 Deep RL Connection
+## 7.6 First-Step Expectation: Waiting for a Head
+
+Recursive expectation is easiest to see before the Bellman equation.
+
+Let (E) be the expected number of fair-coin flips until the first head. The
+sample space has arbitrarily long tail sequences, but conditioning on the first
+flip gives one equation:
+
+[
+E
+=1
++\frac{1}{2}(0)
++\frac{1}{2}E
+]
+
+The first flip always costs one step. A head ends the process; a tail returns to
+the original state. Solving gives:
+
+[
+E=2
+]
+
+The equivalent infinite calculation uses the geometric waiting-time
+distribution. Its probabilities decrease geometrically and sum to one, so an
+infinite set of possible waiting times can still have finite total probability
+and finite expectation.
+
+---
+
+## 7.7 Multiple States: Two Consecutive Heads
+
+Now define enough state to preserve progress:
+
+- (E_0): expected additional flips with no current run of heads
+- (E_1): expected additional flips after exactly one head
+
+First-step equations:
+
+[
+E_0=1+\frac{1}{2}E_0+\frac{1}{2}E_1
+]
+
+[
+E_1=1+\frac{1}{2}E_0+\frac{1}{2}(0)
+]
+
+Solving gives:
+
+[
+E_0=6
+]
+
+This four-step method generalizes:
+
+1. define states that retain the information needed for the future
+2. condition on the next outcome
+3. write one expected-value equation per state
+4. solve the simultaneous equations
+
+Connect this to random walks, queueing systems, algorithm analysis, and RL. The
+same structural idea appears in value functions: expected value now depends on
+one transition plus expected value from the next state.
+
+---
+
+## 7.8 Deep RL Connection
 
 In tabular RL, you could store one value for each state or state-action pair.
 
@@ -1480,7 +1547,7 @@ This connects RL back to deep learning.
 
 ---
 
-## 7.7 Three Families of RL Methods
+## 7.9 Three Families of RL Methods
 
 Briefly mention, not in detail.
 
@@ -1519,7 +1586,7 @@ Do not go into algorithmic detail unless time allows.
 
 ---
 
-## 7.8 Mini-Exercise
+## 7.10 Mini-Exercise
 
 Given:
 
@@ -2034,7 +2101,9 @@ The most important ideas in Lecture 4 are:
 5. Return is cumulative future reward.
 6. Expected return is the objective.
 7. Value functions estimate expected future reward.
-8. Exploration is necessary because the agent must learn from uncertain actions.
+8. First-step analysis converts repeated random processes into recursive state
+   equations.
+9. Exploration is necessary because the agent must learn from uncertain actions.
 
 The deepest conceptual move is:
 
@@ -2083,7 +2152,8 @@ A good rule:
 
 # Optional Advanced Add-On If Time Allows
 
-If students are comfortable, add a short preview of the Bellman idea.
+After the first-step waiting-time examples, optionally show the Bellman equation
+as the RL version of the same recursive expectation idea.
 
 ## Bellman Intuition
 

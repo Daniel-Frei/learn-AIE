@@ -1,1537 +1,841 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import MathText from "../../MathText";
+import { Aperture, Dices, Sparkles } from "lucide-react";
 import type { LearningExperience } from "../../../lib/learning";
 import {
-  CheckForUnderstanding,
-  ConceptCard,
-  FormulaBlock,
-  LearningHero,
-  MisconceptionCallout,
-  QuizTransitionButton,
-  RecapSection,
-} from "../LearningPrimitives";
+  bayesPosterior,
+  entropyBits,
+  negativeLogLikelihood,
+  softmax,
+  topKDistribution,
+  topPDistribution,
+  trajectoryProbability,
+} from "../../../lib/probabilityLearning";
+import {
+  InlineProbabilityMath,
+  ProbabilityCheck,
+  ProbabilityCourse,
+  ProbabilityFormula,
+  ProbabilityInsight,
+  ProbabilityMetric,
+  ProbabilityQuizLaunch,
+  ProbabilitySection,
+  probabilityCourseStyles as styles,
+} from "../probability/ProbabilityCourse";
 
-type Props = {
-  experience: LearningExperience;
-};
+type Props = { experience: LearningExperience };
+const TOKENS = ["observatory", "garden", "answer", "storm", "silence"] as const;
+const BASE_LOGITS = [2.6, 2, 1.5, 0.7, 0];
 
-type DecodingMode = "sample" | "greedy" | "top-k" | "top-p";
-
-type TokenOption = {
-  label: string;
-  probability: number;
-};
-
-type DisplayToken = TokenOption & {
-  baseProbability: number;
-  temperatureProbability: number;
-  eligible: boolean;
-};
-
-type LatentKey = "style" | "lighting" | "season" | "viewpoint";
-
-type LatentOption = {
-  id: string;
-  label: string;
-  description: string;
-};
-
-type LatentState = Record<LatentKey, string>;
-
-type SeedId = "seed-a" | "seed-b";
-
-const BASE_TOKENS: readonly TokenOption[] = [
-  { label: "mat", probability: 0.5 },
-  { label: "sofa", probability: 0.25 },
-  { label: "floor", probability: 0.15 },
-  { label: "chair", probability: 0.07 },
-  { label: "car", probability: 0.03 },
-];
-
-const DRAW_VALUES = [0.14, 0.53, 0.82, 0.97] as const;
-
-const DECODING_MODES: readonly {
-  id: DecodingMode;
-  label: string;
-  description: string;
-}[] = [
-  {
-    id: "sample",
-    label: "Sample",
-    description: "Draw from every token after temperature scaling.",
-  },
-  {
-    id: "greedy",
-    label: "Greedy",
-    description: "Choose the largest probability and ignore the rest.",
-  },
-  {
-    id: "top-k",
-    label: "Top-k",
-    description: "Keep the three most likely tokens, then renormalize.",
-  },
-  {
-    id: "top-p",
-    label: "Top-p",
-    description: "Keep the smallest prefix whose mass reaches 0.90.",
-  },
-];
-
-const LATENT_OPTIONS: Record<LatentKey, readonly LatentOption[]> = {
-  style: [
-    {
-      id: "modern",
-      label: "Modern",
-      description: "flat roof, clean edges",
-    },
-    {
-      id: "rustic",
-      label: "Rustic",
-      description: "wood walls, simple shape",
-    },
-    {
-      id: "gothic",
-      label: "Gothic",
-      description: "steep roof, tall window",
-    },
-    {
-      id: "alpine",
-      label: "Alpine",
-      description: "wide roof, mountain cabin",
-    },
-  ],
-  lighting: [
-    { id: "morning", label: "Morning", description: "cool bright sky" },
-    { id: "sunset", label: "Sunset", description: "warm orange light" },
-    { id: "night", label: "Night", description: "dark sky, lit windows" },
-  ],
-  season: [
-    { id: "summer", label: "Summer", description: "green ground" },
-    { id: "winter", label: "Winter", description: "snow and pale contrast" },
-  ],
-  viewpoint: [
-    { id: "front", label: "Front", description: "symmetric front view" },
-    { id: "aerial", label: "Aerial", description: "roof-dominant view" },
-    { id: "interior", label: "Interior", description: "visible room cues" },
-  ],
-};
-
-const INITIAL_LATENT_STATE: LatentState = {
-  style: "alpine",
-  lighting: "sunset",
-  season: "winter",
-  viewpoint: "front",
-};
-
-const DIFFUSION_SEEDS: Record<
-  SeedId,
-  { label: string; finalLabel: string; promptFit: string }
-> = {
-  "seed-a": {
-    label: "Seed A",
-    finalLabel: "small cabin with a red roof",
-    promptFit: "a cabin near a cold lake",
-  },
-  "seed-b": {
-    label: "Seed B",
-    finalLabel: "tall house beside pine trees",
-    promptFit: "a mountain house at sunset",
-  },
-};
-
-const FINAL_PATTERNS: Record<SeedId, readonly string[]> = {
-  "seed-a": [
-    "ssssssss",
-    "ssmmmmss",
-    "smmssmms",
-    "sssrrsss",
-    "ssrrrrss",
-    "sswoowss",
-    "sswddwss",
-    "gggggggg",
-  ],
-  "seed-b": [
-    "ssssssss",
-    "sssmssss",
-    "ssmmmsss",
-    "sttrrrss",
-    "sttrrrrs",
-    "sswwwwts",
-    "ggwddwgg",
-    "gggggggg",
-  ],
-};
-
-const CELL_COLORS: Record<string, string> = {
-  s: "#8ed3f4",
-  m: "#64748b",
-  r: "#be3a34",
-  w: "#f1d6a8",
-  o: "#facc15",
-  d: "#8b5e34",
-  g: "#5a8f51",
-  t: "#1f7a4f",
-  n0: "#0f172a",
-  n1: "#334155",
-  n2: "#94a3b8",
-  n3: "#e2e8f0",
-  n4: "#f59e0b",
-};
-
-function formatProbability(value: number): string {
-  return value.toFixed(2);
-}
-
-function formatPercent(value: number): string {
-  return `${Math.round(value * 100)}%`;
-}
-
-function getTemperatureScaledTokens(temperature: number): DisplayToken[] {
-  const logits = BASE_TOKENS.map((token) => Math.log(token.probability));
-  const scaledLogits = logits.map((logit) => logit / temperature);
-  const maxLogit = Math.max(...scaledLogits);
-  const exponentials = scaledLogits.map((logit) => Math.exp(logit - maxLogit));
-  const total = exponentials.reduce((sum, value) => sum + value, 0);
-
-  return BASE_TOKENS.map((token, index) => ({
-    label: token.label,
-    probability: exponentials[index] / total,
-    baseProbability: token.probability,
-    temperatureProbability: exponentials[index] / total,
-    eligible: true,
-  }));
-}
-
-function applyDecodingMode(
-  tokens: readonly DisplayToken[],
-  mode: DecodingMode,
-): DisplayToken[] {
-  const sortedTokens = [...tokens].sort(
-    (first, second) => second.probability - first.probability,
-  );
-  let eligibleLabels = new Set(tokens.map((token) => token.label));
-
-  if (mode === "greedy") {
-    eligibleLabels = new Set([sortedTokens[0].label]);
-  }
-
-  if (mode === "top-k") {
-    eligibleLabels = new Set(
-      sortedTokens.slice(0, 3).map((token) => token.label),
-    );
-  }
-
-  if (mode === "top-p") {
-    const labels: string[] = [];
-    let cumulative = 0;
-    for (const token of sortedTokens) {
-      labels.push(token.label);
-      cumulative += token.probability;
-      if (cumulative >= 0.9) break;
-    }
-    eligibleLabels = new Set(labels);
-  }
-
-  const eligibleTotal = tokens.reduce(
-    (sum, token) =>
-      eligibleLabels.has(token.label) ? sum + token.probability : sum,
-    0,
-  );
-
-  return tokens.map((token) => {
-    const eligible = eligibleLabels.has(token.label);
-    const probability =
-      mode === "greedy"
-        ? eligible
-          ? 1
-          : 0
-        : eligible
-          ? token.probability / eligibleTotal
-          : 0;
-
-    return {
-      ...token,
-      probability,
-      eligible,
-    };
-  });
-}
-
-function getSelectedToken(tokens: readonly DisplayToken[], draw: number) {
-  let cumulative = 0;
-  const eligibleTokens = tokens.filter((token) => token.eligible);
-
-  for (const token of eligibleTokens) {
-    cumulative += token.probability;
-    if (draw <= cumulative) return token;
-  }
-
-  return eligibleTokens[eligibleTokens.length - 1];
-}
-
-function getEntropy(tokens: readonly DisplayToken[]): number {
-  return tokens.reduce((sum, token) => {
-    if (token.probability <= 0) return sum;
-    return sum - token.probability * Math.log2(token.probability);
-  }, 0);
-}
-
-function getModeDescription(mode: DecodingMode): string {
+function HeroGenerationForge() {
   return (
-    DECODING_MODES.find((item) => item.id === mode)?.description ??
-    "Draw from the adjusted distribution."
-  );
-}
-
-function getLatentOption(key: LatentKey, id: string): LatentOption {
-  const option = LATENT_OPTIONS[key].find((item) => item.id === id);
-  if (!option) {
-    throw new Error(`Unknown latent option ${key}:${id}`);
-  }
-  return option;
-}
-
-function pseudoNoise(seed: SeedId, x: number, y: number, step: number): number {
-  const seedOffset = seed === "seed-a" ? 17 : 53;
-  const value =
-    Math.sin((x + 1) * 12.9898 + (y + 1) * 78.233 + seedOffset * 4.719 + step) *
-    43758.5453;
-  return value - Math.floor(value);
-}
-
-function getFinalCell(seed: SeedId, x: number, y: number): string {
-  return FINAL_PATTERNS[seed][y][x];
-}
-
-function getNoisyCell(
-  seed: SeedId,
-  x: number,
-  y: number,
-  step: number,
-): string {
-  if (step === 0) return getFinalCell(seed, x, y);
-
-  const noiseShare = step / 5;
-  const revealNoise = pseudoNoise(seed, x, y, step);
-  if (revealNoise < noiseShare) {
-    return `n${Math.floor(pseudoNoise(seed, x + 3, y + 7, step + 11) * 5)}`;
-  }
-
-  return getFinalCell(seed, x, y);
-}
-
-function GenerationLotteryVisual() {
-  const draw = 0.53;
-  const sampledToken =
-    BASE_TOKENS.map((token, index) => ({
-      ...token,
-      cumulative: BASE_TOKENS.slice(0, index + 1).reduce(
-        (sum, item) => sum + item.probability,
-        0,
-      ),
-    })).find((token) => draw <= token.cumulative) ??
-    BASE_TOKENS[BASE_TOKENS.length - 1];
-
-  return (
-    <div className="rounded-lg border border-slate-800 bg-slate-900 p-5">
-      <div className="rounded-md border border-cyan-400/30 bg-cyan-950/20 px-4 py-3">
-        <p className="text-xs font-semibold uppercase text-cyan-200">Prompt</p>
-        <p className="mt-1 text-sm font-semibold text-slate-50">
-          The animal sat on the ...
-        </p>
-      </div>
-
-      <div className="mt-4 space-y-2">
-        <p className="text-xs font-semibold uppercase text-slate-400">
-          Learned next-token distribution
-        </p>
-        {BASE_TOKENS.map((token) => (
-          <div
-            key={token.label}
-            className="grid grid-cols-[3.5rem_1fr_3rem] items-center gap-3 text-sm"
-          >
-            <span className="font-semibold text-slate-100">{token.label}</span>
-            <div className="h-3 overflow-hidden rounded-full bg-slate-800">
-              <div
-                className="h-full rounded-full bg-cyan-300"
-                style={{ width: `${token.probability * 100}%` }}
-              />
-            </div>
-            <span className="font-mono text-xs text-slate-300">
-              {formatProbability(token.probability)}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-5 rounded-md border border-emerald-400/40 bg-emerald-950/20 px-4 py-3">
-        <p className="text-xs font-semibold uppercase text-emerald-200">
-          One possible sampled output
-        </p>
-        <p className="mt-1 text-sm leading-6 text-slate-200">
-          A random draw of <span className="font-mono">{draw.toFixed(2)}</span>{" "}
-          lands on <span className="font-semibold">{sampledToken.label}</span>.
-          Greedy decoding would choose{" "}
-          <span className="font-semibold">{BASE_TOKENS[0].label}</span> every
-          time.
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function GenerationMentalModel() {
-  const stages = [
-    {
-      title: "1. The model predicts a distribution",
-      body: "Before anything is generated, the model has assigned probability mass to possible next tokens or image states.",
-      accent: "border-cyan-400/50 bg-cyan-950/20 text-cyan-100",
-    },
-    {
-      title: "2. A decoding rule changes how it is used",
-      body: "Temperature reshapes probabilities. Top-k and top-p remove part of the tail. Greedy skips randomness and takes the maximum.",
-      accent: "border-amber-400/50 bg-amber-950/20 text-amber-100",
-    },
-    {
-      title: "3. Sampling realizes one output",
-      body: "The learner sees one token, one image, or one action, but many other outputs can still be valid under the same condition.",
-      accent: "border-emerald-400/50 bg-emerald-950/20 text-emerald-100",
-    },
-  ] as const;
-
-  return (
-    <section className="rounded-lg border border-slate-800 bg-slate-900 p-5">
-      <p className="text-xs font-semibold uppercase text-cyan-300">
-        Before the lab
-      </p>
-      <h2 className="mt-2 text-xl font-semibold text-slate-50">
-        Generation is a distribution, a rule, then a draw
-      </h2>
-      <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-300">
-        Keep these three objects separate. A trained model supplies the
-        probabilities; a decoding strategy decides which probabilities are
-        allowed and how sharp they are; a sample is the one outcome that gets
-        realized.
-      </p>
-      <div className="mt-5 grid gap-3 md:grid-cols-3">
-        {stages.map((stage) => (
-          <div
-            key={stage.title}
-            className={`rounded-md border p-4 ${stage.accent}`}
-          >
-            <h3 className="text-sm font-semibold">{stage.title}</h3>
-            <p className="mt-2 text-sm leading-6 text-slate-300">
-              {stage.body}
-            </p>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function DecodingVocabularyPanel() {
-  const rows = [
-    {
-      term: "Greedy",
-      effect: "Choose the largest probability directly.",
-      caution: "Stable, but can be dull or locally short-sighted.",
-    },
-    {
-      term: "Sampling",
-      effect: "Draw according to the probability mass.",
-      caution: "Creates variation, but the long tail can be risky.",
-    },
-    {
-      term: "Top-k",
-      effect: "Keep the k most likely tokens, then renormalize.",
-      caution: "Fixed-size candidate set; here the lab uses k=3.",
-    },
-    {
-      term: "Top-p",
-      effect: "Keep the smallest high-probability prefix whose mass reaches p.",
-      caution: "Variable-size candidate set; here the lab uses p=0.90.",
-    },
-    {
-      term: "Temperature",
-      effect: "Divide logits by T before softmax.",
-      caution: "Changes odds and entropy, not the model's knowledge.",
-    },
-    {
-      term: "Entropy",
-      effect: "Measure how spread out the used distribution is.",
-      caution: "Higher entropy means more diversity, not higher truth.",
-    },
-  ] as const;
-
-  return (
-    <section className="rounded-lg border border-slate-800 bg-slate-900 p-5">
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-start">
-        <div className="lg:w-72">
-          <p className="text-xs font-semibold uppercase text-amber-300">
-            Decode controls before sliders
-          </p>
-          <h2 className="mt-2 text-xl font-semibold text-slate-50">
-            What each control means
-          </h2>
-          <p className="mt-2 text-sm leading-6 text-slate-300">
-            The sampling lab uses one prompt and one base distribution so the
-            only thing changing is the decoding rule.
-          </p>
-        </div>
-        <div className="min-w-0 flex-1 overflow-x-auto rounded-md border border-slate-700">
-          <table className="min-w-full border-collapse text-left text-sm">
-            <thead className="bg-slate-950 text-slate-100">
-              <tr>
-                <th className="px-3 py-2 font-semibold">Control</th>
-                <th className="px-3 py-2 font-semibold">What changes</th>
-                <th className="px-3 py-2 font-semibold">What to watch</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800 bg-slate-950/40">
-              {rows.map((row) => (
-                <tr key={row.term}>
-                  <td className="whitespace-nowrap px-3 py-3 font-semibold text-slate-100">
-                    {row.term}
-                  </td>
-                  <td className="px-3 py-3 leading-6 text-slate-300">
-                    {row.effect}
-                  </td>
-                  <td className="px-3 py-3 leading-6 text-slate-300">
-                    {row.caution}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function SamplingDrawStrip({
-  tokens,
-  draw,
-}: {
-  tokens: readonly DisplayToken[];
-  draw: number;
-}) {
-  return (
-    <div className="rounded-md border border-slate-700 bg-slate-950 p-3">
-      <div className="flex items-center justify-between gap-3 text-xs text-slate-400">
-        <span>Random draw on [0, 1]</span>
-        <span className="font-mono text-slate-300">u = {draw.toFixed(2)}</span>
-      </div>
-      <div className="relative mt-3 flex h-8 overflow-hidden rounded-md bg-slate-800">
-        {tokens.map((token) => (
-          <div
-            key={token.label}
-            title={`${token.label}: ${formatProbability(token.probability)}`}
-            className={`h-full border-r border-slate-950/70 ${
-              token.eligible ? "bg-cyan-300" : "bg-slate-700"
-            }`}
-            style={{ width: `${token.probability * 100}%` }}
-          />
-        ))}
-        <div
-          className="absolute inset-y-0 w-0.5 bg-emerald-300"
-          style={{ left: `${draw * 100}%` }}
-          aria-hidden="true"
-        />
-      </div>
-      <div className="mt-2 flex flex-wrap gap-2">
-        {tokens
-          .filter((token) => token.eligible)
-          .map((token) => (
-            <span
-              key={token.label}
-              className="rounded border border-slate-700 px-2 py-1 text-xs text-slate-300"
-            >
-              {token.label}: {formatProbability(token.probability)}
-            </span>
-          ))}
-      </div>
-    </div>
-  );
-}
-
-function SamplingDistributionLab() {
-  const [temperature, setTemperature] = useState(1);
-  const [mode, setMode] = useState<DecodingMode>("sample");
-  const [drawIndex, setDrawIndex] = useState(0);
-
-  const scaledTokens = useMemo(
-    () => getTemperatureScaledTokens(temperature),
-    [temperature],
-  );
-  const displayTokens = useMemo(
-    () => applyDecodingMode(scaledTokens, mode),
-    [scaledTokens, mode],
-  );
-  const draw = DRAW_VALUES[drawIndex];
-  const selectedToken = getSelectedToken(displayTokens, draw);
-  const entropy = getEntropy(displayTokens);
-  const eligibleCount = displayTokens.filter((token) => token.eligible).length;
-
-  return (
-    <section
-      data-testid="sampling-lab"
-      className="rounded-lg border border-slate-800 bg-slate-900 p-5"
+    <div
+      className={styles.lab}
+      aria-label="A generation forge showing repeated conditional sampling"
     >
-      <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+      <div className={styles.labHeader}>
         <div>
-          <p className="text-xs font-semibold uppercase text-cyan-300">
-            Interactive model
-          </p>
-          <h2 className="mt-2 text-xl font-semibold text-slate-50">
-            Sampling distribution lab
-          </h2>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">
-            The prompt is &quot;The animal sat on the ...&quot;. Start with the
-            model&apos;s base probabilities, optionally reshape them with
-            temperature, then apply the decoding rule before drawing one token.
-          </p>
+          <p>Generation forge</p>
+          <h3>One distribution becomes one choice</h3>
         </div>
-        <p
-          role="status"
-          data-testid="sampling-summary"
-          className="rounded-md border border-cyan-400/50 bg-cyan-950/30 px-3 py-2 text-sm font-semibold text-cyan-100"
-        >
-          {DECODING_MODES.find((item) => item.id === mode)?.label} selects{" "}
-          {selectedToken.label} / entropy {entropy.toFixed(2)} bits
-        </p>
+        <Sparkles aria-hidden="true" size={35} />
       </div>
+      <div className={styles.formulaTrail}>
+        <div className={styles.formulaStep}>
+          <strong>condition</strong>
+          <span>“Beyond the hill stood an…”</span>
+        </div>
+        <div className={styles.formulaStep}>
+          <strong>distribution</strong>
+          <span>many plausible next tokens</span>
+        </div>
+        <div className={styles.formulaStep}>
+          <strong>sample</strong>
+          <span>one token becomes real</span>
+        </div>
+        <div className={styles.formulaStep}>
+          <strong>append</strong>
+          <span>the new token changes the next distribution</span>
+        </div>
+      </div>
+    </div>
+  );
+}
 
-      <div className="mt-5 grid gap-5 md:grid-cols-[0.9fr_1.1fr]">
-        <div className="space-y-5">
-          <div className="rounded-md border border-slate-700 bg-slate-950 p-3 text-xs leading-5 text-slate-300">
-            <p className="font-semibold text-slate-100">
-              What the lab numbers mean
-            </p>
-            <p className="mt-1">
-              <span className="font-semibold text-slate-100">Base</span> is the
-              original model probability.{" "}
-              <span className="font-semibold text-slate-100">After T</span> is
-              after temperature scaling.{" "}
-              <span className="font-semibold text-slate-100">Used</span> is the
-              final sampling probability after greedy/top-k/top-p filtering and
-              renormalization.
-            </p>
-          </div>
+function drawFromDistribution(
+  probabilities: readonly number[],
+  quantile: number,
+) {
+  let cumulative = 0;
+  for (let index = 0; index < probabilities.length; index += 1) {
+    cumulative += probabilities[index] ?? 0;
+    if (quantile <= cumulative) return index;
+  }
+  return probabilities.length - 1;
+}
 
-          <div>
-            <p className="text-sm font-semibold text-slate-100">
-              Decoding strategy
-            </p>
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              {DECODING_MODES.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  aria-pressed={mode === item.id}
-                  onClick={() => setMode(item.id)}
-                  className={`rounded-md border px-3 py-2 text-sm font-semibold transition-colors ${
-                    mode === item.id
-                      ? "border-cyan-300 bg-cyan-300 text-slate-950"
-                      : "border-slate-700 bg-slate-950 text-slate-200 hover:border-slate-500"
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-            </div>
-            <p className="mt-2 min-h-10 text-xs leading-5 text-slate-400">
-              {getModeDescription(mode)}
-            </p>
-          </div>
+function SamplingForgeLab() {
+  const [temperature, setTemperature] = useState(1);
+  const [mode, setMode] = useState<"greedy" | "sample" | "top-k" | "top-p">(
+    "sample",
+  );
+  const [topK, setTopK] = useState(3);
+  const [topP, setTopP] = useState(0.8);
+  const [draw, setDraw] = useState(42);
+  const base = useMemo(() => softmax(BASE_LOGITS, temperature), [temperature]);
+  const used = useMemo(() => {
+    if (mode === "greedy")
+      return base.map((_, index) =>
+        index === base.indexOf(Math.max(...base)) ? 1 : 0,
+      );
+    if (mode === "top-k") return topKDistribution(base, topK);
+    if (mode === "top-p") return topPDistribution(base, topP);
+    return base;
+  }, [base, mode, topK, topP]);
+  const selectedIndex = drawFromDistribution(used, draw / 100);
+  const selected = TOKENS[selectedIndex];
+  const entropy = entropyBits(used);
 
-          <label className="block space-y-2">
-            <div className="flex items-center justify-between gap-3 text-sm">
-              <span className="font-semibold text-slate-100">Temperature</span>
-              <span className="font-mono text-slate-300">
-                T = {temperature.toFixed(1)}
-              </span>
-            </div>
+  return (
+    <div className={styles.lab} data-testid="sampling-forge-lab">
+      <div className={styles.labHeader}>
+        <div>
+          <p>Next-token distribution</p>
+          <h3>Shape the menu, then use one random draw</h3>
+        </div>
+        <Dices aria-hidden="true" size={31} />
+      </div>
+      <div className={styles.controls}>
+        <label className={styles.control}>
+          <span>Temperature: {temperature.toFixed(1)}</span>
+          <input
+            aria-label="Sampling temperature"
+            type="range"
+            min="0.3"
+            max="2.5"
+            step="0.1"
+            value={temperature}
+            onChange={(event) => setTemperature(Number(event.target.value))}
+          />
+        </label>
+        <label className={styles.control}>
+          <span>Draw position: {draw}%</span>
+          <input
+            aria-label="Random draw position"
+            type="range"
+            min="1"
+            max="99"
+            value={draw}
+            onChange={(event) => setDraw(Number(event.target.value))}
+          />
+        </label>
+        {mode === "top-k" && (
+          <label className={styles.control}>
+            <span>k: {topK} tokens</span>
             <input
+              aria-label="Top k tokens"
               type="range"
-              aria-label="Temperature"
-              min="0.4"
-              max="1.8"
-              step="0.1"
-              value={temperature}
-              onChange={(event) => setTemperature(Number(event.target.value))}
-              className="w-full accent-cyan-300"
+              min="1"
+              max={TOKENS.length}
+              value={topK}
+              onChange={(event) => setTopK(Number(event.target.value))}
             />
-            <p className="text-xs leading-5 text-slate-400">
-              Low temperature sharpens the distribution. High temperature makes
-              lower-probability tokens more competitive.
-            </p>
           </label>
-
+        )}
+        {mode === "top-p" && (
+          <label className={styles.control}>
+            <span>p: {topP.toFixed(2)} cumulative mass</span>
+            <input
+              aria-label="Top p threshold"
+              type="range"
+              min="0.4"
+              max="1"
+              step="0.05"
+              value={topP}
+              onChange={(event) => setTopP(Number(event.target.value))}
+            />
+          </label>
+        )}
+      </div>
+      <div className={styles.buttonRow}>
+        {(["greedy", "sample", "top-k", "top-p"] as const).map((option) => (
           <button
             type="button"
-            onClick={() =>
-              setDrawIndex((current) => (current + 1) % DRAW_VALUES.length)
-            }
-            className="w-full rounded-md border border-emerald-400 bg-emerald-400 px-3 py-2 text-sm font-bold text-slate-950 transition-colors hover:bg-emerald-300"
+            className={mode === option ? styles.buttonActive : styles.button}
+            onClick={() => setMode(option)}
+            key={option}
           >
-            Draw next sample
+            {option}
           </button>
-
-          <div className="rounded-md border border-slate-700 bg-slate-950 p-3 text-sm text-slate-300">
-            <p>
-              Draw value: <span className="font-mono">{draw.toFixed(2)}</span>
-            </p>
-            <p>
-              Eligible candidates:{" "}
-              <span className="font-mono">{eligibleCount}</span>
-            </p>
-          </div>
-        </div>
-
-        <div className="grid gap-3">
-          <SamplingDrawStrip tokens={displayTokens} draw={draw} />
-          {displayTokens.map((token) => {
-            const isSelected = token.label === selectedToken.label;
-            return (
-              <div
-                key={token.label}
-                className={`rounded-md border bg-slate-950 p-3 ${
-                  isSelected
-                    ? "border-emerald-300"
-                    : token.eligible
-                      ? "border-slate-700"
-                      : "border-slate-800 opacity-60"
-                }`}
-              >
-                <div className="flex flex-wrap items-center justify-between gap-2 text-sm">
-                  <span className="font-semibold text-slate-100">
-                    {token.label}
-                  </span>
-                  <span className="font-mono text-slate-300">
-                    base {formatProbability(token.baseProbability)} / after T{" "}
-                    {formatProbability(token.temperatureProbability)} / used{" "}
-                    {formatProbability(token.probability)}
-                  </span>
-                </div>
-                <div className="mt-2 h-3 overflow-hidden rounded-full bg-slate-800">
-                  <div
-                    className={`h-full rounded-full ${
-                      isSelected ? "bg-emerald-300" : "bg-cyan-300"
-                    }`}
-                    style={{
-                      width: `${Math.max(2, token.probability * 100)}%`,
-                    }}
-                  />
-                </div>
-                <p className="mt-2 text-xs text-slate-400">
-                  {token.eligible
-                    ? isSelected
-                      ? "Selected by this draw."
-                      : "Eligible for this decoding rule."
-                    : "Excluded before sampling."}
-                </p>
-              </div>
-            );
-          })}
-        </div>
+        ))}
       </div>
-    </section>
+      <div className={styles.bars}>
+        {used.map((probability, index) => (
+          <div className={styles.barRow} key={TOKENS[index]}>
+            <span>
+              {TOKENS[index]}
+              {selectedIndex === index ? " · drawn" : ""}
+            </span>
+            <div className={styles.barTrack}>
+              <span
+                className={styles.barFill}
+                style={{
+                  width: `${Math.max(
+                    probability * 100,
+                    probability > 0 ? 1 : 0,
+                  ).toFixed(4)}%`,
+                }}
+              />
+            </div>
+            <strong>{(probability * 100).toFixed(1)}%</strong>
+          </div>
+        ))}
+      </div>
+      <div className={styles.metricGrid}>
+        <ProbabilityMetric
+          label="selected token"
+          value={selected ?? "—"}
+          detail={`draw at ${(draw / 100).toFixed(2)}`}
+        />
+        <ProbabilityMetric
+          label="entropy"
+          value={`${entropy.toFixed(2)} bits`}
+          detail="diversity in the used distribution"
+        />
+        <ProbabilityMetric
+          label="expected in 1,000"
+          value={String(Math.round((used[selectedIndex] ?? 0) * 1000))}
+          detail={`draws yielding “${selected}”`}
+        />
+      </div>
+      <ProbabilityFormula
+        label="Temperature rescales logits before softmax"
+        formula={String.raw`\[P_T(x_i)=\frac{e^{z_i/T}}{\sum_j e^{z_j/T}}\]`}
+      >
+        Lower T magnifies score gaps; higher T compresses them. Top-k keeps a
+        fixed number of candidates. Top-p keeps the smallest ranked set whose
+        cumulative mass reaches p, so its menu size adapts to uncertainty.
+      </ProbabilityFormula>
+    </div>
   );
 }
 
-function HousePreview({ latent }: { latent: LatentState }) {
-  const lighting = latent.lighting;
-  const season = latent.season;
-  const style = latent.style;
-  const sky =
-    lighting === "night"
-      ? "#172554"
-      : lighting === "sunset"
-        ? "#f7b267"
-        : "#93c5fd";
-  const ground = season === "winter" ? "#e0f2fe" : "#4d8b55";
-  const wall =
-    style === "modern"
-      ? "#cbd5e1"
-      : style === "gothic"
-        ? "#9ca3af"
-        : style === "alpine"
-          ? "#f4d6a4"
-          : "#b7794b";
-  const roof =
-    style === "modern" ? "#475569" : style === "gothic" ? "#4c1d95" : "#b91c1c";
-
-  return (
-    <svg
-      role="img"
-      aria-label="Generated house preview from selected latent variables"
-      viewBox="0 0 220 150"
-      className="h-auto w-full rounded-md border border-slate-700 bg-slate-950"
-    >
-      <rect width="220" height="150" fill={sky} />
-      <rect y="104" width="220" height="46" fill={ground} />
-      {season === "winter" && (
-        <path
-          d="M0 108 C35 96 68 118 108 106 C148 94 182 110 220 100 V150 H0 Z"
-          fill="#f8fafc"
-        />
-      )}
-      {lighting === "night" ? (
-        <circle cx="180" cy="28" r="12" fill="#fde68a" />
-      ) : (
-        <circle cx="178" cy="30" r="15" fill="#fef3c7" />
-      )}
-      {style === "modern" ? (
-        <>
-          <rect x="55" y="68" width="112" height="52" fill={wall} />
-          <rect x="48" y="58" width="126" height="14" fill={roof} />
-        </>
-      ) : (
-        <>
-          <polygon points="42,78 110,34 178,78" fill={roof} />
-          <rect x="58" y="76" width="104" height="48" fill={wall} />
-          {style === "gothic" && (
-            <polygon
-              points="92,76 110,42 128,76"
-              fill="#312e81"
-              opacity="0.55"
-            />
-          )}
-        </>
-      )}
-      <rect
-        x="98"
-        y="94"
-        width="23"
-        height="30"
-        fill={lighting === "night" ? "#92400e" : "#7c4a2d"}
-      />
-      <rect
-        x="70"
-        y="87"
-        width="20"
-        height="18"
-        fill={lighting === "night" ? "#fde047" : "#bae6fd"}
-      />
-      <rect
-        x="130"
-        y="87"
-        width="20"
-        height="18"
-        fill={lighting === "night" ? "#fde047" : "#bae6fd"}
-      />
-      {latent.viewpoint === "aerial" && (
-        <ellipse
-          cx="110"
-          cy="78"
-          rx="72"
-          ry="16"
-          fill="#0f172a"
-          opacity="0.18"
-        />
-      )}
-      {latent.viewpoint === "interior" && (
-        <rect
-          x="66"
-          y="82"
-          width="88"
-          height="35"
-          fill="#fef3c7"
-          opacity="0.45"
-        />
-      )}
-    </svg>
+function RepeatedConditioningLab() {
+  const [finalTokenProbability, setFinalTokenProbability] = useState(55);
+  const tokens = ["the", "night", "felt", "electric"];
+  const probabilities = [0.72, 0.48, 0.63, finalTokenProbability / 100];
+  const sequenceProbability = trajectoryProbability(probabilities);
+  const nll = probabilities.reduce(
+    (sum, value) => sum + negativeLogLikelihood(value),
+    0,
   );
-}
-
-function LatentVariableMixer() {
-  const [latent, setLatent] = useState<LatentState>(INITIAL_LATENT_STATE);
-  const selectedOptions = (Object.keys(LATENT_OPTIONS) as LatentKey[]).map(
-    (key) => ({
-      key,
-      option: getLatentOption(key, latent[key]),
-    }),
-  );
-
-  const visibleDescription = selectedOptions
-    .map(({ option }) => option.description)
-    .join(", ");
-
   return (
-    <section
-      data-testid="latent-variable-probe"
-      className="rounded-lg border border-slate-800 bg-slate-900 p-5"
-    >
-      <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+    <div className={styles.lab} data-testid="repeated-conditioning-lab">
+      <div className={styles.labHeader}>
         <div>
-          <p className="text-xs font-semibold uppercase text-amber-300">
-            Hidden structure
-          </p>
-          <h2 className="mt-2 text-xl font-semibold text-slate-50">
-            Latent house probe
-          </h2>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">
-            The visible image is not generated from pixels independently. In a
-            model, hidden variables such as style, lighting, season, and
-            viewpoint are sampled or inferred behind the scenes. The controls
-            here are probes: they let you inspect one possible hidden-state
-            explanation, not directly control a real model&apos;s latent
-            variables.
-          </p>
+          <p>Autoregressive sequence</p>
+          <h3>Generation is not one giant draw from a list of sentences</h3>
         </div>
-        <MathText
-          text={String.raw`\[z\sim P(z),\quad x\sim P(x\mid z)\]`}
-          className="overflow-x-auto rounded-md border border-amber-400/40 bg-amber-950/20 px-3 py-2 text-sm text-amber-100"
+        <Sparkles aria-hidden="true" size={31} />
+      </div>
+      <label className={styles.control}>
+        <span>
+          Probability of final observed token: {finalTokenProbability}%
+        </span>
+        <input
+          aria-label="Final token probability"
+          type="range"
+          min="5"
+          max="95"
+          step="5"
+          value={finalTokenProbability}
+          onChange={(event) =>
+            setFinalTokenProbability(Number(event.target.value))
+          }
+        />
+      </label>
+      <div className={styles.sequenceStrip}>
+        {tokens.map((token, index) => (
+          <div
+            className={styles.sequenceItem}
+            data-active={index === tokens.length - 1}
+            key={token}
+          >
+            <strong>{token}</strong>
+            <span>{probabilities[index]?.toFixed(2)}</span>
+          </div>
+        ))}
+      </div>
+      <div className={styles.metricGrid}>
+        <ProbabilityMetric
+          label="sequence probability"
+          value={sequenceProbability.toFixed(4)}
+          detail="product of conditional choices"
+        />
+        <ProbabilityMetric
+          label="sequence NLL"
+          value={nll.toFixed(3)}
+          detail="sum of token surprises"
         />
       </div>
+      <ProbabilityFormula
+        label="Chain rule for generation"
+        formula={String.raw`\[P(x_{1:n})=\prod_{t=1}^{n}P(x_t\mid x_{<t})\]`}
+      >
+        After each sample, the context changes. A low-probability early token
+        can move generation into a region with very different later
+        possibilities.
+      </ProbabilityFormula>
+    </div>
+  );
+}
 
-      <div className="mt-5 grid gap-5 md:grid-cols-[0.9fr_1.1fr]">
-        <div className="grid gap-4">
-          <div className="rounded-md border border-amber-400/40 bg-amber-950/20 p-3 text-sm leading-6 text-amber-50">
-            <p className="font-semibold">Probe a possible hidden state</p>
-            <p className="mt-1 text-slate-300">
-              In the probability notation, z is hidden. Selecting values here is
-              like asking: if this were the hidden cause, what visible x would
-              it make more likely?
-            </p>
-          </div>
-          {(Object.keys(LATENT_OPTIONS) as LatentKey[]).map((key) => (
-            <label key={key} className="block space-y-2">
-              <span className="text-sm font-semibold capitalize text-slate-100">
-                Probe {key}
-              </span>
-              <select
-                aria-label={`Probe ${key} latent factor`}
-                value={latent[key]}
-                onChange={(event) =>
-                  setLatent((current) => ({
-                    ...current,
-                    [key]: event.target.value,
-                  }))
-                }
-                className="w-full rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm text-slate-100"
-              >
-                {LATENT_OPTIONS[key].map((option) => (
-                  <option key={option.id} value={option.id}>
-                    {option.label}
-                  </option>
-                ))}
-              </select>
-            </label>
+function LatentVariableLab() {
+  const [rainPrior, setRainPrior] = useState(30);
+  const [umbrellaGivenRain, setUmbrellaGivenRain] = useState(90);
+  const [umbrellaWithoutRain, setUmbrellaWithoutRain] = useState(20);
+  const prior = rainPrior / 100;
+  const likelihood = umbrellaGivenRain / 100;
+  const falsePositiveRate = umbrellaWithoutRain / 100;
+  const umbrella = prior * likelihood + (1 - prior) * falsePositiveRate;
+  const posterior = bayesPosterior({ prior, likelihood, falsePositiveRate });
+  return (
+    <div className={styles.lab} data-testid="latent-variable-lab">
+      <div className={styles.labHeader}>
+        <div>
+          <p>Hidden weather, observed umbrella</p>
+          <h3>
+            A latent variable explains visible patterns without being directly
+            observed
+          </h3>
+        </div>
+        <Aperture aria-hidden="true" size={31} />
+      </div>
+      <div className={styles.controls}>
+        <label className={styles.control}>
+          <span>P(rain): {rainPrior}%</span>
+          <input
+            aria-label="Rain prior"
+            type="range"
+            min="5"
+            max="80"
+            step="5"
+            value={rainPrior}
+            onChange={(event) => setRainPrior(Number(event.target.value))}
+          />
+        </label>
+        <label className={styles.control}>
+          <span>P(umbrella | rain): {umbrellaGivenRain}%</span>
+          <input
+            aria-label="Umbrella given rain"
+            type="range"
+            min="50"
+            max="100"
+            step="5"
+            value={umbrellaGivenRain}
+            onChange={(event) =>
+              setUmbrellaGivenRain(Number(event.target.value))
+            }
+          />
+        </label>
+        <label className={styles.control}>
+          <span>P(umbrella | no rain): {umbrellaWithoutRain}%</span>
+          <input
+            aria-label="Umbrella without rain"
+            type="range"
+            min="0"
+            max="60"
+            step="5"
+            value={umbrellaWithoutRain}
+            onChange={(event) =>
+              setUmbrellaWithoutRain(Number(event.target.value))
+            }
+          />
+        </label>
+      </div>
+      <div className={styles.pathTree}>
+        <div className={styles.pathRow}>
+          <span className={styles.pathNode}>rain · {rainPrior}%</span>
+          <span className={styles.pathArrow}>→</span>
+          <span className={styles.pathNode}>
+            umbrella · {umbrellaGivenRain}%
+          </span>
+          <span className={styles.tag}>
+            joint {(prior * likelihood * 100).toFixed(1)}%
+          </span>
+        </div>
+        <div className={styles.pathRow}>
+          <span className={styles.pathNode}>no rain · {100 - rainPrior}%</span>
+          <span className={styles.pathArrow}>→</span>
+          <span className={styles.pathNode}>
+            umbrella · {umbrellaWithoutRain}%
+          </span>
+          <span className={styles.tag}>
+            joint {((1 - prior) * falsePositiveRate * 100).toFixed(1)}%
+          </span>
+        </div>
+      </div>
+      <div className={styles.metricGrid}>
+        <ProbabilityMetric
+          label="umbrella probability"
+          value={`${(umbrella * 100).toFixed(1)}%`}
+          detail="marginalize hidden weather"
+        />
+        <ProbabilityMetric
+          label="rain after umbrella"
+          value={`${(posterior * 100).toFixed(1)}%`}
+          detail="infer the hidden cause"
+        />
+      </div>
+      <div className={styles.grid2}>
+        <ProbabilityFormula
+          label="Generate an observation"
+          formula={String.raw`\[P(x)=\sum_z P(x\mid z)P(z)\]`}
+        >
+          Sum over every hidden route that could have produced x.
+        </ProbabilityFormula>
+        <ProbabilityFormula
+          label="Infer a latent cause"
+          formula={String.raw`\[P(z\mid x)=\frac{P(x\mid z)P(z)}{\sum_{z'}P(x\mid z')P(z')}\]`}
+        >
+          Condition on the observation and renormalize the latent alternatives.
+        </ProbabilityFormula>
+      </div>
+      <ProbabilityInsight
+        title="A latent coordinate is not automatically a human concept"
+        tone="warning"
+      >
+        <p>
+          A model may encode useful hidden factors without assigning one axis
+          cleanly to “weather,” “style,” or “sentiment.” Interpretability
+          requires evidence from interventions or reliable probes, not a
+          suggestive visualization alone.
+        </p>
+      </ProbabilityInsight>
+    </div>
+  );
+}
+
+function gaussianDensity(
+  value: number,
+  mean: number,
+  standardDeviation: number,
+) {
+  return (
+    Math.exp(-0.5 * ((value - mean) / standardDeviation) ** 2) /
+    (standardDeviation * Math.sqrt(2 * Math.PI))
+  );
+}
+
+function GaussianNoiseLab() {
+  const [mean, setMean] = useState(0);
+  const [standardDeviation, setStandardDeviation] = useState(1);
+  const points = Array.from({ length: 41 }, (_, index) => -4 + index * 0.2);
+  const densities = points.map((value) =>
+    gaussianDensity(value, mean, standardDeviation),
+  );
+  const maximum = Math.max(...densities);
+  return (
+    <div className={styles.lab} data-testid="gaussian-noise-lab">
+      <div className={styles.labHeader}>
+        <div>
+          <p>Continuous noise distribution</p>
+          <h3>Mean sets the center; standard deviation sets the noise scale</h3>
+        </div>
+        <Aperture aria-hidden="true" size={31} />
+      </div>
+      <div className={styles.controls}>
+        <label className={styles.control}>
+          <span>Mean μ: {mean.toFixed(1)}</span>
+          <input
+            aria-label="Gaussian mean"
+            type="range"
+            min="-2"
+            max="2"
+            step="0.1"
+            value={mean}
+            onChange={(event) => setMean(Number(event.target.value))}
+          />
+        </label>
+        <label className={styles.control}>
+          <span>Standard deviation σ: {standardDeviation.toFixed(1)}</span>
+          <input
+            aria-label="Gaussian standard deviation"
+            type="range"
+            min="0.4"
+            max="2"
+            step="0.1"
+            value={standardDeviation}
+            onChange={(event) =>
+              setStandardDeviation(Number(event.target.value))
+            }
+          />
+        </label>
+      </div>
+      <div
+        className={styles.densityPlot}
+        aria-label="Gaussian probability density"
+      >
+        <div className={styles.densityBars}>
+          {densities.map((density, index) => (
+            <span
+              key={points[index]}
+              className={styles.densityBar}
+              style={{ height: `${((density / maximum) * 90).toFixed(4)}%` }}
+            />
           ))}
         </div>
-
-        <div className="space-y-4">
-          <HousePreview latent={latent} />
-          <div className="rounded-md border border-slate-700 bg-slate-950 p-3">
-            <p className="text-sm font-semibold text-slate-100">
-              Observed output x
-            </p>
-            <p className="mt-2 text-sm leading-6 text-slate-300">
-              A generated house with {visibleDescription}. The latent variables
-              are hidden causes in the model; a viewer may infer them from
-              evidence, but the generated pixels are the observed data.
-            </p>
-          </div>
-          <div className="grid gap-2 rounded-md border border-slate-700 bg-slate-950 p-3 text-sm leading-6 text-slate-300">
-            <p>
-              <span className="font-semibold text-slate-100">
-                Sampled hidden factor:
-              </span>{" "}
-              z is drawn from P(z)
-            </p>
-            <p>
-              <span className="font-semibold text-slate-100">
-                Visible output from that factor:
-              </span>{" "}
-              x is drawn from P(x | z)
-            </p>
-            <p>
-              <span className="font-semibold text-slate-100">
-                Inference runs the question backward:
-              </span>{" "}
-              which hidden z would explain this visible x?
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {selectedOptions.map(({ key, option }) => (
-              <span
-                key={key}
-                className="rounded-md border border-amber-400/40 bg-amber-950/30 px-2 py-1 text-xs font-semibold text-amber-100"
-              >
-                {key}: {option.label}
-              </span>
-            ))}
-          </div>
+        <div className={styles.densityAxis}>
+          <span>−4</span>
+          <span>0</span>
+          <span>+4</span>
         </div>
       </div>
-    </section>
+      <ProbabilityFormula
+        label="Gaussian density"
+        formula={String.raw`\[p(x)=\frac{1}{\sigma\sqrt{2\pi}}\exp\!\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\]`}
+      >
+        This curve is a density, so probability is area across an interval—not
+        the height at one exact real number. Diffusion commonly uses independent
+        standard-normal noise with mean 0 and variance 1.
+      </ProbabilityFormula>
+    </div>
   );
 }
 
-function LatentMarginalizationExample() {
-  const rows = [
-    {
-      state: "alpine",
-      prior: 0.3,
-      likelihood: 0.8,
-    },
-    {
-      state: "modern",
-      prior: 0.7,
-      likelihood: 0.2,
-    },
-  ] as const;
-  const total = rows.reduce((sum, row) => sum + row.prior * row.likelihood, 0);
-
+function DiffusionLab() {
+  const [noiseStep, setNoiseStep] = useState(45);
+  const [seed, setSeed] = useState(2);
+  const alphaBar = 1 - noiseStep / 100;
+  const cells = useMemo(
+    () =>
+      Array.from({ length: 64 }, (_, index) => {
+        const row = Math.floor(index / 8);
+        const column = index % 8;
+        const distance = Math.abs(row - 3.5) + Math.abs(column - 3.5);
+        const clean = distance < 3.2 ? 1 : -1;
+        const noise = Math.sin((index + 1) * (seed * 12.9898 + 0.78)) * 0.95;
+        return Math.sqrt(alphaBar) * clean + Math.sqrt(1 - alphaBar) * noise;
+      }),
+    [alphaBar, seed],
+  );
   return (
-    <section className="rounded-lg border border-slate-800 bg-slate-900 p-5">
-      <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+    <div className={styles.lab} data-testid="diffusion-lab">
+      <div className={styles.labHeader}>
         <div>
-          <p className="text-xs font-semibold uppercase text-amber-300">
-            Worked example
-          </p>
-          <h2 className="mt-2 text-xl font-semibold text-slate-50">
-            Marginalize over hidden alternatives
-          </h2>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-300">
-            Suppose the visible event is R = &quot;the generated house has a red
-            roof&quot;. You do not observe the hidden style directly, so the
-            visible probability sums over possible hidden styles.
-          </p>
+          <p>Forward diffusion</p>
+          <h3>Mix a clean sample with a known amount of Gaussian noise</h3>
         </div>
-        <MathText
-          text={String.raw`\[P(R)=\sum_z P(z)P(R\mid z)\]`}
-          className="overflow-x-auto rounded-md border border-amber-400/40 bg-amber-950/20 px-3 py-2 text-sm text-amber-100"
-        />
+        <Sparkles aria-hidden="true" size={31} />
       </div>
-
-      <div className="mt-5 overflow-x-auto rounded-md border border-slate-700">
-        <table className="min-w-full border-collapse text-left text-sm">
-          <thead className="bg-slate-950 text-slate-100">
-            <tr>
-              <th className="px-3 py-2 font-semibold">Hidden style z</th>
-              <th className="px-3 py-2 font-semibold">Prior P(z)</th>
-              <th className="px-3 py-2 font-semibold">
-                Red-roof likelihood P(R | z)
-              </th>
-              <th className="px-3 py-2 font-semibold">Contribution</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-800 bg-slate-950/40">
-            {rows.map((row) => (
-              <tr key={row.state}>
-                <td className="px-3 py-3 font-semibold text-slate-100">
-                  {row.state}
-                </td>
-                <td className="px-3 py-3 font-mono text-slate-300">
-                  {formatProbability(row.prior)}
-                </td>
-                <td className="px-3 py-3 font-mono text-slate-300">
-                  {formatProbability(row.likelihood)}
-                </td>
-                <td className="px-3 py-3 font-mono text-slate-300">
-                  {formatProbability(row.prior * row.likelihood)}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-          <tfoot className="bg-slate-950 text-slate-100">
-            <tr>
-              <td className="px-3 py-3 font-semibold" colSpan={3}>
-                Total visible probability P(R)
-              </td>
-              <td className="px-3 py-3 font-mono font-semibold">
-                {formatProbability(total)}
-              </td>
-            </tr>
-          </tfoot>
-        </table>
+      <div className={styles.controls}>
+        <label className={styles.control}>
+          <span>Noise time t: {noiseStep}%</span>
+          <input
+            aria-label="Diffusion noise time"
+            type="range"
+            min="0"
+            max="100"
+            value={noiseStep}
+            onChange={(event) => setNoiseStep(Number(event.target.value))}
+          />
+        </label>
+        <label className={styles.control}>
+          <span>Noise seed: {seed}</span>
+          <input
+            aria-label="Diffusion noise seed"
+            type="range"
+            min="1"
+            max="9"
+            step="1"
+            value={seed}
+            onChange={(event) => setSeed(Number(event.target.value))}
+          />
+        </label>
       </div>
-
-      <p className="mt-4 text-sm leading-6 text-slate-300">
-        The common mistake is to add the likelihoods 0.8 and 0.2 directly. Each
-        conditional probability must stay paired with the prior probability of
-        the hidden state it conditions on.
-      </p>
-    </section>
-  );
-}
-
-function DiffusionNotationPrimer() {
-  const symbols = [
-    {
-      label: String.raw`\(x_0\)`,
-      meaning: "a clean data sample, such as a real image",
-    },
-    {
-      label: String.raw`\(x_t\)`,
-      meaning: "the same sample after t noising steps",
-    },
-    {
-      label: String.raw`\(x_T\)`,
-      meaning: "the late noisy state, close to pure Gaussian noise",
-    },
-    {
-      label: String.raw`\(\mathcal{N}(0,I)\)`,
-      meaning:
-        "standard Gaussian noise: mean 0, identity covariance I, independent unit-variance coordinates",
-    },
-    {
-      label: String.raw`\(p_\theta(x_{t-1}\mid x_t,c)\)`,
-      meaning:
-        "the learned reverse denoising model with parameters theta and condition c, such as a text prompt",
-    },
-  ] as const;
-
-  return (
-    <section className="rounded-lg border border-slate-800 bg-slate-900 p-5">
-      <p className="text-xs font-semibold uppercase text-rose-300">
-        Notation before denoising
-      </p>
-      <h2 className="mt-2 text-xl font-semibold text-slate-50">
-        Forward noise first, learned reverse process second
-      </h2>
-      <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-300">
-        Diffusion training creates a controlled noising path from clean data to
-        almost pure noise. Generation runs the learned direction backward: start
-        from noise, then repeatedly predict a slightly cleaner sample.
-      </p>
-
-      <div className="mt-5 grid gap-4 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="grid gap-3">
-          <div className="rounded-md border border-slate-700 bg-slate-950 p-4">
-            <p className="text-sm font-semibold text-slate-100">
-              Forward noising used during training
-            </p>
-            <MathText
-              text={String.raw`\[x_0\rightarrow x_1\rightarrow\cdots\rightarrow x_T,\quad x_T\approx\mathcal{N}(0,I)\]`}
-              className="mt-3 overflow-x-auto text-slate-100"
-            />
-            <p className="mt-3 text-sm leading-6 text-slate-300">
-              I is the identity matrix: it says each coordinate has variance 1
-              and no covariance with the others in this simplified noise model.
-            </p>
-          </div>
-          <div className="rounded-md border border-slate-700 bg-slate-950 p-4">
-            <p className="text-sm font-semibold text-slate-100">
-              Reverse denoising used for generation
-            </p>
-            <MathText
-              text={String.raw`\[x_T\rightarrow x_{T-1}\rightarrow\cdots\rightarrow x_0\]`}
-              className="mt-3 overflow-x-auto text-slate-100"
-            />
-            <p className="mt-3 text-sm leading-6 text-slate-300">
-              The reverse process is learned; it is not just undoing a stored
-              exact corruption path.
-            </p>
-          </div>
-        </div>
-
-        <div className="overflow-x-auto rounded-md border border-slate-700">
-          <table className="min-w-full border-collapse text-left text-sm">
-            <thead className="bg-slate-950 text-slate-100">
-              <tr>
-                <th className="px-3 py-2 font-semibold">Symbol</th>
-                <th className="px-3 py-2 font-semibold">Meaning here</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800 bg-slate-950/40">
-              {symbols.map((symbol) => (
-                <tr key={symbol.label}>
-                  <td className="whitespace-nowrap px-3 py-3 text-slate-100">
-                    <MathText text={symbol.label} inline />
-                  </td>
-                  <td className="px-3 py-3 leading-6 text-slate-300">
-                    {symbol.meaning}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function DiffusionPathLab() {
-  const [seed, setSeed] = useState<SeedId>("seed-a");
-  const [step, setStep] = useState(5);
-  const structurePercent = (5 - step) / 5;
-  const seedConfig = DIFFUSION_SEEDS[seed];
-
-  return (
-    <section
-      data-testid="diffusion-path-lab"
-      className="rounded-lg border border-slate-800 bg-slate-900 p-5"
-    >
-      <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+      <div className={styles.grid2}>
         <div>
-          <p className="text-xs font-semibold uppercase text-rose-300">
-            Reverse process
-          </p>
-          <h2 className="mt-2 text-xl font-semibold text-slate-50">
-            Diffusion denoising path
-          </h2>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">
-            This lab shows the learned reverse direction: start from
-            Gaussian-like noise and repeatedly predict a small move toward
-            cleaner structure. Different noise seeds can satisfy the same prompt
-            in different ways.
-          </p>
-        </div>
-        <p
-          role="status"
-          data-testid="diffusion-summary"
-          className="rounded-md border border-rose-400/50 bg-rose-950/30 px-3 py-2 text-sm font-semibold text-rose-100"
-        >
-          {seedConfig.label} / t={step} / structure{" "}
-          {formatPercent(structurePercent)}
-        </p>
-      </div>
-
-      <div className="mt-5 grid min-w-0 gap-5 md:grid-cols-[0.95fr_1.05fr]">
-        <div className="min-w-0 space-y-5">
-          <div
-            role="img"
-            aria-label={`Noisy diffusion sample for ${seedConfig.finalLabel}`}
-            className="grid aspect-square w-full max-w-md grid-cols-8 gap-1 rounded-md border border-slate-700 bg-slate-950 p-2"
-          >
-            {Array.from({ length: 64 }, (_, index) => {
-              const x = index % 8;
-              const y = Math.floor(index / 8);
-              const cell = getNoisyCell(seed, x, y, step);
+          <div className={styles.canvasGrid}>
+            {cells.map((value, index) => {
+              const tone = Math.max(0, Math.min(1, (value + 1.5) / 3));
+              const red = Math.round(44 + tone * 200);
+              const green = Math.round(28 + tone * 210);
+              const blue = Math.round(82 + tone * 165);
               return (
                 <span
-                  key={`${x}-${y}`}
-                  className="aspect-square rounded-sm"
-                  style={{ backgroundColor: CELL_COLORS[cell] }}
+                  aria-hidden="true"
+                  className={styles.canvasCell}
+                  key={index}
+                  style={{ backgroundColor: `rgb(${red}, ${green}, ${blue})` }}
                 />
               );
             })}
           </div>
-          <div className="rounded-md border border-slate-700 bg-slate-950 p-3 text-sm leading-6 text-slate-300">
-            <p>
-              Prompt condition:{" "}
-              <span className="font-semibold text-slate-100">
-                {seedConfig.promptFit}
-              </span>
-            </p>
-            <p>
-              Current sample:{" "}
-              {step === 5
-                ? "mostly random noise, many futures still plausible"
-                : step === 0
-                  ? seedConfig.finalLabel
-                  : "partly denoised, with visible structure emerging"}
-            </p>
-          </div>
+          <p className={styles.status}>
+            The same clean diamond, one sampled noise field, and a controllable
+            mixture.
+          </p>
         </div>
-
-        <div className="min-w-0 space-y-5">
-          <div>
-            <p className="text-sm font-semibold text-slate-100">Noise seed</p>
-            <div className="mt-2 grid grid-cols-2 gap-2">
-              {(Object.keys(DIFFUSION_SEEDS) as SeedId[]).map((seedId) => (
-                <button
-                  key={seedId}
-                  type="button"
-                  aria-pressed={seed === seedId}
-                  onClick={() => {
-                    setSeed(seedId);
-                    setStep(5);
-                  }}
-                  className={`rounded-md border px-3 py-2 text-sm font-semibold transition-colors ${
-                    seed === seedId
-                      ? "border-rose-300 bg-rose-300 text-slate-950"
-                      : "border-slate-700 bg-slate-950 text-slate-200 hover:border-slate-500"
-                  }`}
-                >
-                  {DIFFUSION_SEEDS[seedId].label}
-                </button>
-              ))}
-            </div>
+        <div className={styles.formulaTrail}>
+          <div className={styles.formulaStep}>
+            <strong>clean signal</strong>
+            <span>weight √ᾱ = {Math.sqrt(alphaBar).toFixed(2)}</span>
           </div>
-
-          <label className="block space-y-2">
-            <div className="flex items-center justify-between gap-3 text-sm">
-              <span className="font-semibold text-slate-100">
-                Denoising time step
-              </span>
-              <span className="font-mono text-slate-300">t = {step}</span>
-            </div>
-            <input
-              type="range"
-              aria-label="Denoising time step"
-              min="0"
-              max="5"
-              step="1"
-              value={step}
-              onChange={(event) => setStep(Number(event.target.value))}
-              className="w-full accent-rose-300"
-            />
-            <p className="text-xs leading-5 text-slate-400">
-              t=5 is high uncertainty near x_T. t=0 is the denoised generated
-              sample x_0.
-            </p>
-          </label>
-
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              onClick={() => setStep((current) => Math.max(0, current - 1))}
-              className="rounded-md border border-emerald-400 bg-emerald-400 px-3 py-2 text-sm font-bold text-slate-950 transition-colors hover:bg-emerald-300"
-            >
-              Denoise one step
-            </button>
-            <button
-              type="button"
-              onClick={() => setStep(5)}
-              className="rounded-md border border-slate-700 bg-slate-950 px-3 py-2 text-sm font-semibold text-slate-200 transition-colors hover:border-slate-500"
-            >
-              Reset noise
-            </button>
+          <div className={styles.formulaStep}>
+            <strong>random noise</strong>
+            <span>weight √(1−ᾱ) = {Math.sqrt(1 - alphaBar).toFixed(2)}</span>
           </div>
-
-          <MathText
-            text={String.raw`\[x_T\sim\mathcal{N}(0,I)\]`}
-            className="overflow-x-auto rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
-          />
-          <MathText
-            text={String.raw`\[x_T\rightarrow x_{T-1}\rightarrow\cdots\rightarrow x_0\]`}
-            className="overflow-x-auto rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
-          />
-          <MathText
-            text={String.raw`\[p_\theta(x_{t-1}\mid x_t,c)\]`}
-            className="overflow-x-auto rounded-md border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
-          />
+          <div className={styles.formulaStep}>
+            <strong>noisy sample</strong>
+            <span>the weighted sum shown at left</span>
+          </div>
         </div>
       </div>
-    </section>
+      <ProbabilityFormula
+        label="Closed-form forward noising"
+        formula={String.raw`\[x_t=\sqrt{\bar\alpha_t}\,x_0+\sqrt{1-\bar\alpha_t}\,\epsilon,\qquad \epsilon\sim\mathcal N(0,I)\]`}
+      >
+        Read it left to right: retain some clean signal, add a sampled noise
+        field, and obtain the noisy state at time t. The bar over α summarizes
+        all earlier small noising steps.
+      </ProbabilityFormula>
+    </div>
+  );
+}
+
+function ReverseAndGuidanceLab() {
+  const [guidance, setGuidance] = useState(2);
+  const unconditionalEstimate = 0.25;
+  const conditionalEstimate = -0.45;
+  const guided =
+    unconditionalEstimate +
+    guidance * (conditionalEstimate - unconditionalEstimate);
+  return (
+    <div className={styles.lab} data-testid="guidance-lab">
+      <div className={styles.labHeader}>
+        <div>
+          <p>Learned reverse process</p>
+          <h3>Predict a slightly cleaner distribution, sample, and repeat</h3>
+        </div>
+        <Sparkles aria-hidden="true" size={31} />
+      </div>
+      <div className={styles.formulaTrail}>
+        <div className={styles.formulaStep}>
+          <strong>
+            x<sub>T</sub>
+          </strong>
+          <span>nearly pure noise</span>
+        </div>
+        <div className={styles.formulaStep}>
+          <strong>model</strong>
+          <span>estimate noise or a cleaner state</span>
+        </div>
+        <div className={styles.formulaStep}>
+          <strong>
+            sample x<sub>t−1</sub>
+          </strong>
+          <span>one plausible reverse step</span>
+        </div>
+        <div className={styles.formulaStep}>
+          <strong>repeat</strong>
+          <span>structure gradually appears</span>
+        </div>
+      </div>
+      <label className={styles.control}>
+        <span>Prompt guidance scale w: {guidance.toFixed(1)}</span>
+        <input
+          aria-label="Prompt guidance scale"
+          type="range"
+          min="0"
+          max="6"
+          step="0.5"
+          value={guidance}
+          onChange={(event) => setGuidance(Number(event.target.value))}
+        />
+      </label>
+      <div className={styles.metricGrid}>
+        <ProbabilityMetric
+          label="unconditional estimate"
+          value={unconditionalEstimate.toFixed(2)}
+          detail="what fits generally"
+        />
+        <ProbabilityMetric
+          label="conditional estimate"
+          value={conditionalEstimate.toFixed(2)}
+          detail="what fits the prompt"
+        />
+        <ProbabilityMetric
+          label="guided estimate"
+          value={guided.toFixed(2)}
+          detail="extrapolated prompt direction"
+        />
+      </div>
+      <ProbabilityFormula
+        label="Classifier-free guidance"
+        formula={String.raw`\[\hat\epsilon_{guided}=\hat\epsilon_{uncond}+w(\hat\epsilon_{cond}-\hat\epsilon_{uncond})=${guided.toFixed(2)}\]`}
+      >
+        Stronger guidance usually improves prompt adherence but can reduce
+        sample diversity or introduce artifacts. It modifies the reverse
+        prediction; it does not make the process deterministic.
+      </ProbabilityFormula>
+      <ProbabilityInsight
+        title="Reverse diffusion cannot simply subtract the original noise"
+        tone="warning"
+      >
+        <p>
+          At generation time the original clean image and exact forward noise
+          are unknown. The model learns a conditional distribution of plausible
+          cleaner states. Different random seeds can therefore produce different
+          valid outputs for the same prompt.
+        </p>
+      </ProbabilityInsight>
+    </div>
   );
 }
 
 export default function CrashProbabilityL5LearningPage({ experience }: Props) {
   return (
-    <main className="bg-slate-950 text-slate-50">
-      <LearningHero
-        eyebrow="Crash Course Probability L5"
-        title="Turn uncertainty into generated output"
-        summary="Generative AI does not store one answer. It learns probability structure, adjusts how that distribution is used, then samples tokens, latent variables, actions, or denoising paths."
-        meta={`${experience.durationMinutes} min interactive prep / ${experience.level}`}
-        outcomes={experience.outcomes}
-        visual={<GenerationLotteryVisual />}
-      />
-
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-10 md:py-12">
-        <GenerationMentalModel />
-
-        <DecodingVocabularyPanel />
-
-        <FormulaBlock
-          title="Temperature changes odds, not knowledge"
-          formula={String.raw`\[P(y_i)=\frac{e^{z_i/T}}{\sum_j e^{z_j/T}}\]`}
-          explanation="A smaller positive T sharpens logit differences and lowers entropy. A larger T flattens probabilities and raises diversity. This happens before the sample is drawn, and neither setting adds facts or fixes a wrong model belief by itself."
-        />
-
-        <CheckForUnderstanding
-          testId="temperature-knowledge-check"
-          title="Check: temperature"
-          question="A model assigns high probability to a false claim. What does raising temperature do?"
+    <ProbabilityCourse
+      experience={experience}
+      station="l5"
+      kicker="Station L5 · Sampling, latent variables, and diffusion"
+      headline="A probability model describes possibilities. Sampling commits to one of them."
+      introduction="Generation repeatedly turns distributions into concrete choices. Language models sample tokens, latent-variable models sample hidden causes and observations, and diffusion models sample a path from noise toward structured data."
+      heroVisual={<HeroGenerationForge />}
+    >
+      <ProbabilitySection
+        id="sampling"
+        eyebrow="01 · From distribution to outcome"
+        title="Sampling preserves alternatives that greedy choice erases."
+        lead="Greedy decoding always selects the largest probability. Sampling allocates outcomes in proportion to probability. Temperature and truncation reshape the distribution before the draw, changing diversity without retraining the model."
+      >
+        <SamplingForgeLab />
+        <ProbabilityCheck
+          testId="l5-sampling-check"
+          title="Separate probability from outcome"
+          question="A token has 70% probability but is not drawn. Was the distribution wrong?"
+          options={[
+            {
+              label: "Yes—70% means it should occur",
+              explanation:
+                "Seventy percent is a long-run frequency, not a promise about one draw.",
+            },
+            {
+              label: "No—30% of valid draws choose something else",
+              explanation:
+                "A lower-probability outcome is expected to occur sometimes under honest sampling.",
+            },
+            {
+              label: "Only if temperature was 1",
+              explanation:
+                "Temperature shapes the distribution but does not turn a 70% event into certainty.",
+            },
+          ]}
           correctIndex={1}
-          options={[
-            {
-              label: "It adds new knowledge that makes the claim true.",
-              explanation:
-                "Temperature only changes how the existing distribution is sampled. It does not add external evidence or new reasoning.",
-            },
-            {
-              label:
-                "It flattens the distribution and may make alternatives more likely, but it does not verify truth.",
-              explanation:
-                "Temperature controls randomness and entropy. Truthfulness still depends on model knowledge, retrieval, reasoning, and verification.",
-            },
-            {
-              label:
-                "It turns the decoder into greedy decoding because all probabilities become sharper.",
-              explanation:
-                "Higher temperature usually flattens the distribution. Greedy decoding is a separate maximum-choice rule.",
-            },
-          ]}
         />
+      </ProbabilitySection>
 
-        <SamplingDistributionLab />
+      <ProbabilitySection
+        id="autoregressive"
+        eyebrow="02 · Sample, append, condition again"
+        title="Each generated choice changes the next probability universe."
+        lead="Autoregressive models factor a sequence into conditional next-token distributions. This is the same chain rule used for likelihood in L3, now run forward to create data rather than backward to score observed data."
+      >
+        <RepeatedConditioningLab />
+      </ProbabilitySection>
 
-        <LatentVariableMixer />
+      <ProbabilitySection
+        id="latent"
+        eyebrow="03 · Hidden variables"
+        title="Sometimes the model explains observations through an unobserved cause."
+        lead="A latent variable z is part of the model’s story but absent from the raw observation. Generation samples z then x given z; inference observes x and updates beliefs about z."
+      >
+        <LatentVariableLab />
+      </ProbabilitySection>
 
-        <LatentMarginalizationExample />
+      <ProbabilitySection
+        id="gaussian"
+        eyebrow="04 · Gaussian noise"
+        title="Diffusion needs a noise distribution we can sample and analyze."
+        lead="A Gaussian supplies continuous perturbations with controllable center and scale. Independent standard-normal noise creates a tractable forward process whose uncertainty can be added in many small steps."
+      >
+        <GaussianNoiseLab />
+      </ProbabilitySection>
 
-        <DiffusionNotationPrimer />
+      <ProbabilitySection
+        id="diffusion"
+        eyebrow="05 · Forward process"
+        title="Destroy structure in a controlled way so reversal becomes a learning problem."
+        lead="Forward diffusion gradually mixes data with random noise. Because that corruption rule is known, training can generate noisy examples at arbitrary times and ask a model to predict the added noise."
+      >
+        <DiffusionLab />
+      </ProbabilitySection>
 
-        <DiffusionPathLab />
+      <ProbabilitySection
+        id="reverse"
+        eyebrow="06 · Reverse process and guidance"
+        title="Generation follows a learned conditional path from noise to structure."
+        lead="The reverse transition is probabilistic because many clean samples could plausibly explain a noisy state. A prompt conditions those possibilities; guidance pushes the path toward prompt-compatible regions."
+      >
+        <ReverseAndGuidanceLab />
+        <div className={styles.tableWrap} style={{ marginTop: 22 }}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th scope="col">System</th>
+                <th scope="col">Condition</th>
+                <th scope="col">Distribution</th>
+                <th scope="col">One sampled step</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">LLM</th>
+                <td>prior tokens</td>
+                <td>
+                  <InlineProbabilityMath
+                    text={String.raw`\(P(x_t\mid x_{<t})\)`}
+                  />
+                </td>
+                <td>next token</td>
+              </tr>
+              <tr>
+                <th scope="row">RL policy</th>
+                <td>current state</td>
+                <td>
+                  <InlineProbabilityMath
+                    text={String.raw`\(\pi(a_t\mid s_t)\)`}
+                  />
+                </td>
+                <td>next action</td>
+              </tr>
+              <tr>
+                <th scope="row">Diffusion</th>
+                <td>noisy sample + prompt</td>
+                <td>
+                  <InlineProbabilityMath
+                    text={String.raw`\(p(x_{t-1}\mid x_t,c)\)`}
+                  />
+                </td>
+                <td>slightly cleaner sample</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </ProbabilitySection>
 
-        <section className="grid gap-4 md:grid-cols-2">
-          <ConceptCard title="Forward noising" label="Fixed corruption">
-            <MathText
-              text={String.raw`\[q(x_t\mid x_{t-1})\]`}
-              className="overflow-x-auto rounded-md bg-slate-950 px-3 py-2 text-slate-100"
-            />
-            <p>
-              Training creates noisy versions of real data by adding controlled
-              Gaussian noise until structure is almost washed out.
-            </p>
-          </ConceptCard>
-          <ConceptCard title="Reverse denoising" label="Learned generation">
-            <MathText
-              text={String.raw`\[p_\theta(x_{t-1}\mid x_t,c)\]`}
-              className="overflow-x-auto rounded-md bg-slate-950 px-3 py-2 text-slate-100"
-            />
-            <p>
-              Generation starts from random noise and repeatedly predicts a
-              less-noisy sample, guided by a condition such as a text prompt.
-            </p>
-          </ConceptCard>
-        </section>
-
-        <MisconceptionCallout
-          misconception="The same prompt should determine one exact image."
-          correction="A prompt is a condition, not a full specification. The exact shape, lighting, layout, and random seed can remain uncertain, so the model samples one plausible image from a large conditional distribution."
-        />
-
-        <CheckForUnderstanding
-          testId="diffusion-process-check"
-          title="Check: diffusion"
-          question="Which statement correctly separates the forward and reverse diffusion processes?"
-          correctIndex={2}
-          options={[
-            {
-              label:
-                "The forward process starts from pure noise and learns to add image details.",
-              explanation:
-                "That describes generation in the reverse direction, not the fixed forward corruption process.",
-            },
-            {
-              label:
-                "The reverse process is fixed Gaussian corruption that does not use learned predictions.",
-              explanation:
-                "The reverse process is the learned denoising direction used to generate samples.",
-            },
-            {
-              label:
-                "The forward process adds noise to data; the reverse process learns to denoise from noise toward data.",
-              explanation:
-                "Forward noising is fixed corruption during training. Reverse denoising is the learned generative sampler.",
-            },
-          ]}
-        />
-
-        <section className="rounded-lg border border-slate-800 bg-slate-900 p-5">
-          <h2 className="text-xl font-semibold text-slate-50">
-            One repeated probability pattern
-          </h2>
-          <div className="mt-4 grid gap-3 md:grid-cols-3">
-            <div className="rounded-md border border-slate-700 bg-slate-950 p-3">
-              <p className="text-sm font-semibold text-sky-200">LLM</p>
-              <MathText
-                text={String.raw`\[P(x_t\mid x_{<t})\]`}
-                className="mt-2 overflow-x-auto text-slate-100"
-              />
-              <p className="mt-2 text-sm leading-6 text-slate-300">
-                Predict and sample one token at a time.
-              </p>
-            </div>
-            <div className="rounded-md border border-slate-700 bg-slate-950 p-3">
-              <p className="text-sm font-semibold text-rose-200">Diffusion</p>
-              <MathText
-                text={String.raw`\[P(x_{t-1}\mid x_t,c)\]`}
-                className="mt-2 overflow-x-auto text-slate-100"
-              />
-              <p className="mt-2 text-sm leading-6 text-slate-300">
-                Predict a less-noisy sample at each step.
-              </p>
-            </div>
-            <div className="rounded-md border border-slate-700 bg-slate-950 p-3">
-              <p className="text-sm font-semibold text-emerald-200">RL</p>
-              <MathText
-                text={String.raw`\[\pi(a\mid s)\]`}
-                className="mt-2 overflow-x-auto text-slate-100"
-              />
-              <p className="mt-2 text-sm leading-6 text-slate-300">
-                Sample or choose an action from a policy.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <RecapSection
-          title="Before you start the MCQs"
-          items={[
-            "Sampling draws an outcome from a distribution; greedy decoding chooses the maximum.",
-            "Top-k and top-p restrict the candidate set, then renormalize before sampling.",
-            "Temperature changes entropy and diversity, not model knowledge.",
-            "Latent variables represent hidden structure that helps generate observed data.",
-            "Gaussian noise is useful because it is easy to sample and forms a controlled corruption process.",
-            "Diffusion learns the reverse process from noisy samples toward data.",
-            "The same prompt can yield many outputs because unspecified details remain probabilistic.",
-            "LLMs, diffusion models, and RL policies all use repeated conditional probability steps.",
-          ]}
-        />
-
-        <section className="flex flex-col gap-4 rounded-lg border border-emerald-500/40 bg-emerald-950/20 p-5 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h2 className="text-xl font-semibold text-emerald-100">
-              Ready for the Probability L5 questions
-            </h2>
-            <p className="mt-2 text-sm leading-6 text-slate-300">
-              Practice sampling counts, greedy versus probabilistic decoding,
-              top-k and top-p truncation, temperature odds, latent variables,
-              Gaussian noising, and diffusion reverse-process notation.
-            </p>
-          </div>
-          <QuizTransitionButton sourceId={experience.sourceId} />
-        </section>
-
-        <section className="rounded-lg border border-slate-800 bg-slate-900 p-5">
-          <h2 className="text-lg font-semibold text-slate-50">
-            Compact formula board
-          </h2>
-          <div className="mt-4 space-y-3 text-slate-200">
-            <MathText
-              text={String.raw`\[x\sim P(x),\quad \arg\max_x P(x)\]`}
-              className="overflow-x-auto"
-            />
-            <MathText
-              text={String.raw`\[P(y_i)=\frac{e^{z_i/T}}{\sum_j e^{z_j/T}}\]`}
-              className="overflow-x-auto"
-            />
-            <MathText
-              text={String.raw`\[z\sim P(z),\quad x\sim P(x\mid z)\]`}
-              className="overflow-x-auto"
-            />
-            <MathText
-              text={String.raw`\[X\sim\mathcal{N}(\mu,\sigma^2)\]`}
-              className="overflow-x-auto"
-            />
-            <MathText
-              text={String.raw`\[\epsilon\sim\mathcal{N}(0,I)\]`}
-              className="overflow-x-auto"
-            />
-            <MathText
-              text={String.raw`\[x_0\rightarrow x_1\rightarrow\cdots\rightarrow x_T\]`}
-              className="overflow-x-auto"
-            />
-            <MathText
-              text={String.raw`\[x_T\rightarrow x_{T-1}\rightarrow\cdots\rightarrow x_0\]`}
-              className="overflow-x-auto"
-            />
-          </div>
-        </section>
-      </div>
-    </main>
+      <ProbabilityQuizLaunch
+        experience={experience}
+        recap={[
+          "Sampling turns a distribution into one outcome; a likely event is not a guaranteed event.",
+          "Greedy, temperature, top-k, and top-p decoding trade determinism, diversity, and tail risk differently.",
+          "Autoregressive generation repeats conditional prediction and sampling one token at a time.",
+          "Latent-variable models marginalize hidden causes to predict observations and use Bayes to infer causes from observations.",
+          "Gaussian mean and variance control continuous noise; density height is not point probability.",
+          "Diffusion learns probabilistic reverse transitions from noise to data, with conditioning and guidance shaping the path.",
+        ]}
+      />
+    </ProbabilityCourse>
   );
 }

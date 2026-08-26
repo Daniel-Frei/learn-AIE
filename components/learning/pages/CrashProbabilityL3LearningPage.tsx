@@ -1,435 +1,666 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import MathText from "../../MathText";
+import { Gauge, Microscope, RefreshCcw } from "lucide-react";
 import type { LearningExperience } from "../../../lib/learning";
 import {
-  CheckForUnderstanding,
-  ConceptCard,
-  FormulaBlock,
-  InteractiveComparison,
-  LearningHero,
-  MisconceptionCallout,
-  ProcessSteps,
-  QuizTransitionButton,
-  RecapSection,
-  WorkedExample,
-} from "../LearningPrimitives";
+  crossEntropy,
+  entropyBits,
+  negativeLogLikelihood,
+  softmax,
+  trajectoryProbability,
+} from "../../../lib/probabilityLearning";
+import {
+  InlineProbabilityMath,
+  ProbabilityCheck,
+  ProbabilityCourse,
+  ProbabilityFormula,
+  ProbabilityInsight,
+  ProbabilityMetric,
+  ProbabilityQuizLaunch,
+  ProbabilitySection,
+  probabilityCourseStyles as styles,
+} from "../probability/ProbabilityCourse";
 
-type Props = {
-  experience: LearningExperience;
-};
+type Props = { experience: LearningExperience };
+const LABELS = ["cat", "dog", "car"] as const;
 
-const TOKEN_LABELS = ["cat", "dog", "car"] as const;
-
-function formatNumber(value: number): string {
-  return value.toFixed(2);
-}
-
-function LogitPipelineVisual() {
-  const stages = ["Input x", "Network", "Logits z", "Softmax", "P(y | x)"];
-
-  return (
-    <div className="rounded-lg border border-slate-800 bg-slate-900 p-5">
-      <div className="grid gap-3">
-        {stages.map((stage, index) => (
-          <div key={stage} className="flex items-center gap-3">
-            <div className="flex h-12 flex-1 items-center justify-center rounded-md border border-slate-700 bg-slate-950 px-3 text-sm font-semibold text-slate-100">
-              {stage}
-            </div>
-            {index < stages.length - 1 && (
-              <span className="text-lg font-semibold text-sky-300">-&gt;</span>
-            )}
-          </div>
-        ))}
-      </div>
-      <div className="mt-5 grid grid-cols-3 gap-2">
-        {[0.67, 0.24, 0.09].map((probability, index) => (
-          <div key={TOKEN_LABELS[index]} className="space-y-2">
-            <div className="h-24 rounded-md bg-slate-950 p-2">
-              <div
-                className="mt-auto rounded-sm bg-sky-400"
-                style={{ height: `${Math.max(8, probability * 100)}%` }}
-              />
-            </div>
-            <p className="text-center text-xs font-semibold text-slate-300">
-              {TOKEN_LABELS[index]} {probability.toFixed(2)}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function SoftmaxExplorer() {
-  const [logits, setLogits] = useState([2, 1, 0]);
-  const values = useMemo(() => {
-    const exponentials = logits.map((logit) => Math.exp(logit));
-    const total = exponentials.reduce((sum, value) => sum + value, 0);
-    return logits.map((logit, index) => ({
-      label: TOKEN_LABELS[index],
-      logit,
-      exp: exponentials[index],
-      probability: exponentials[index] / total,
-    }));
-  }, [logits]);
-
-  const updateLogit = (index: number, value: number) => {
-    setLogits((current) =>
-      current.map((logit, itemIndex) => (itemIndex === index ? value : logit)),
-    );
-  };
-
-  return (
-    <section className="rounded-lg border border-slate-800 bg-slate-900 p-5">
-      <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
-        <div>
-          <h2 className="text-xl font-semibold text-slate-50">
-            Softmax explorer
-          </h2>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-300">
-            Move the logits and watch the probabilities stay positive and sum to
-            one. The largest logit gets the largest probability, but the other
-            classes usually keep some probability mass.
-          </p>
-        </div>
-        <div className="rounded-md bg-slate-950 px-3 py-2 text-sm font-semibold text-emerald-300">
-          Sum:{" "}
-          {formatNumber(
-            values.reduce((sum, item) => sum + item.probability, 0),
-          )}
-        </div>
-      </div>
-
-      <div className="mt-5 grid gap-5 md:grid-cols-[0.95fr_1.05fr]">
-        <div className="space-y-4">
-          {values.map((item, index) => (
-            <label key={item.label} className="block space-y-2">
-              <div className="flex items-center justify-between gap-3 text-sm">
-                <span className="font-semibold text-slate-100">
-                  {item.label}
-                </span>
-                <span className="font-mono text-slate-300">
-                  z = {formatNumber(item.logit)}
-                </span>
-              </div>
-              <input
-                type="range"
-                aria-label={`${item.label} logit`}
-                min="-3"
-                max="5"
-                step="0.1"
-                value={item.logit}
-                onChange={(event) =>
-                  updateLogit(index, Number(event.target.value))
-                }
-                className="w-full accent-sky-400"
-              />
-            </label>
-          ))}
-        </div>
-
-        <div className="grid gap-3">
-          {values.map((item) => (
-            <div
-              key={item.label}
-              className="rounded-md border border-slate-800 bg-slate-950 p-3"
-            >
-              <div className="flex items-center justify-between gap-3 text-sm">
-                <span className="font-semibold text-slate-100">
-                  {item.label}
-                </span>
-                <span className="font-mono text-slate-300">
-                  e^z = {formatNumber(item.exp)} / p ={" "}
-                  {formatNumber(item.probability)}
-                </span>
-              </div>
-              <div className="mt-2 h-3 overflow-hidden rounded-full bg-slate-800">
-                <div
-                  className="h-full rounded-full bg-sky-400"
-                  style={{ width: `${Math.max(2, item.probability * 100)}%` }}
-                />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ProbabilityTable({
-  rows,
+function ProbabilityBars({
+  probabilities,
+  observed,
 }: {
-  rows: readonly { label: string; probability: string }[];
+  probabilities: readonly number[];
+  observed?: number;
 }) {
   return (
-    <div className="grid gap-2 text-sm">
-      {rows.map((row) => (
-        <div
-          key={row.label}
-          className="flex items-center justify-between gap-4 rounded-md bg-slate-950 px-3 py-2 text-slate-200"
-        >
-          <span>{row.label}</span>
-          <span className="font-mono">{row.probability}</span>
+    <div className={styles.bars}>
+      {probabilities.map((probability, index) => (
+        <div className={styles.barRow} key={LABELS[index]}>
+          <span>
+            {LABELS[index]}
+            {observed === index ? " · observed" : ""}
+          </span>
+          <div className={styles.barTrack}>
+            <span
+              className={styles.barFill}
+              style={{
+                width: `${Math.max(probability * 100, 1).toFixed(4)}%`,
+              }}
+            />
+          </div>
+          <strong>{(probability * 100).toFixed(1)}%</strong>
         </div>
       ))}
     </div>
   );
 }
 
+function HeroTrainingMicroscope() {
+  const probabilities = softmax([2.1, 1.3, -0.5]);
+  return (
+    <div
+      className={styles.lab}
+      aria-label="A microscope showing the training path from model scores to loss"
+    >
+      <div className={styles.labHeader}>
+        <div>
+          <p>One training example</p>
+          <h3>The observed word is “cat”</h3>
+        </div>
+        <Microscope aria-hidden="true" size={35} />
+      </div>
+      <div className={styles.formulaTrail}>
+        <div className={styles.formulaStep}>
+          <strong>scores</strong>
+          <span>2.1 · 1.3 · −0.5</span>
+        </div>
+        <div className={styles.formulaStep}>
+          <strong>softmax</strong>
+          <span>
+            {probabilities.map((value) => value.toFixed(2)).join(" · ")}
+          </span>
+        </div>
+        <div className={styles.formulaStep}>
+          <strong>look up cat</strong>
+          <span>{probabilities[0]?.toFixed(3)}</span>
+        </div>
+        <div className={styles.formulaStep}>
+          <strong>−log</strong>
+          <span>
+            {negativeLogLikelihood(probabilities[0] ?? 0).toFixed(3)} loss
+          </span>
+        </div>
+      </div>
+      <ProbabilityInsight title="Training has a concrete job" tone="success">
+        <p>
+          Move probability mass toward what actually happened, example after
+          example.
+        </p>
+      </ProbabilityInsight>
+    </div>
+  );
+}
+
+function SoftmaxMicroscopeLab() {
+  const [logits, setLogits] = useState([2.1, 1.3, -0.5]);
+  const [temperature, setTemperature] = useState(1);
+  const [observed, setObserved] = useState(0);
+  const probabilities = useMemo(
+    () => softmax(logits, temperature),
+    [logits, temperature],
+  );
+  const observedProbability = probabilities[observed] ?? 0;
+  const loss = negativeLogLikelihood(observedProbability);
+  const entropy = entropyBits(probabilities);
+  const maximum = Math.max(...logits.map((value) => value / temperature));
+  const shiftedExponentials = logits.map((value) =>
+    Math.exp(value / temperature - maximum),
+  );
+  const denominator = shiftedExponentials.reduce(
+    (sum, value) => sum + value,
+    0,
+  );
+  const setLogit = (index: number, value: number) =>
+    setLogits((current) =>
+      current.map((logit, candidate) => (candidate === index ? value : logit)),
+    );
+
+  return (
+    <div className={styles.lab} data-testid="softmax-microscope">
+      <div className={styles.labHeader}>
+        <div>
+          <p>Score → distribution</p>
+          <h3>Move one logit and watch every probability respond</h3>
+        </div>
+        <Gauge aria-hidden="true" size={31} />
+      </div>
+      <div className={styles.controls}>
+        {LABELS.map((label, index) => (
+          <label className={styles.control} key={label}>
+            <span>
+              {label} logit: {logits[index]?.toFixed(1)}
+            </span>
+            <input
+              aria-label={`${label} logit`}
+              type="range"
+              min="-3"
+              max="4"
+              step="0.1"
+              value={logits[index]}
+              onChange={(event) => setLogit(index, Number(event.target.value))}
+            />
+          </label>
+        ))}
+        <label className={styles.control}>
+          <span>Temperature: {temperature.toFixed(1)}</span>
+          <input
+            aria-label="Softmax temperature"
+            type="range"
+            min="0.3"
+            max="2.5"
+            step="0.1"
+            value={temperature}
+            onChange={(event) => setTemperature(Number(event.target.value))}
+          />
+        </label>
+      </div>
+      <div className={styles.buttonRow}>
+        <span className={styles.status}>Observed class:</span>
+        {LABELS.map((label, index) => (
+          <button
+            type="button"
+            key={label}
+            onClick={() => setObserved(index)}
+            className={observed === index ? styles.buttonActive : styles.button}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <ProbabilityBars probabilities={probabilities} observed={observed} />
+      <div className={styles.metricGrid}>
+        <ProbabilityMetric
+          label="sum"
+          value={probabilities
+            .reduce((sum, value) => sum + value, 0)
+            .toFixed(3)}
+          detail="a valid distribution"
+        />
+        <ProbabilityMetric
+          label="observed probability"
+          value={`${(observedProbability * 100).toFixed(1)}%`}
+          detail={`look up ${LABELS[observed]}`}
+        />
+        <ProbabilityMetric
+          label="NLL"
+          value={loss.toFixed(3)}
+          detail="lower is better"
+        />
+        <ProbabilityMetric
+          label="entropy"
+          value={`${entropy.toFixed(2)} bits`}
+          detail="distribution-wide uncertainty"
+        />
+      </div>
+      <ProbabilityFormula
+        label="Softmax with the arithmetic exposed"
+        formula={String.raw`\[p_i=\frac{e^{z_i/T-m}}{\sum_j e^{z_j/T-m}},\quad m=\max_j(z_j/T)\qquad \text{denominator}=${denominator.toFixed(3)}\]`}
+      >
+        Subtracting the maximum leaves every ratio unchanged but prevents huge
+        exponentials. Softmax cares about score differences: adding the same
+        constant to every logit does not change the probabilities.
+      </ProbabilityFormula>
+    </div>
+  );
+}
+
+function LikelihoodLedger() {
+  const [lastProbability, setLastProbability] = useState(40);
+  const stepProbabilities = [0.7, 0.6, 0.8, lastProbability / 100];
+  const likelihood = trajectoryProbability(stepProbabilities);
+  const logLikelihood = stepProbabilities.reduce(
+    (sum, value) => sum + Math.log(value),
+    0,
+  );
+  return (
+    <div className={styles.lab} data-testid="likelihood-ledger">
+      <div className={styles.labHeader}>
+        <div>
+          <p>Observed four-token sequence</p>
+          <h3>
+            Likelihood multiplies the probabilities assigned before seeing each
+            answer
+          </h3>
+        </div>
+        <Microscope aria-hidden="true" size={30} />
+      </div>
+      <label className={styles.control}>
+        <span>
+          Probability assigned to the fourth observed token: {lastProbability}%
+        </span>
+        <input
+          aria-label="Fourth observed-token probability"
+          type="range"
+          min="5"
+          max="95"
+          step="5"
+          value={lastProbability}
+          onChange={(event) => setLastProbability(Number(event.target.value))}
+        />
+      </label>
+      <div className={styles.sequenceStrip}>
+        {stepProbabilities.map((probability, index) => (
+          <div
+            className={styles.sequenceItem}
+            data-active={index === 3}
+            key={index}
+          >
+            <strong>token {index + 1}</strong>
+            <span>{probability.toFixed(2)}</span>
+          </div>
+        ))}
+      </div>
+      <div className={styles.metricGrid}>
+        <ProbabilityMetric
+          label="product likelihood"
+          value={likelihood.toFixed(4)}
+          detail="joint probability of the sequence"
+        />
+        <ProbabilityMetric
+          label="log-likelihood"
+          value={logLikelihood.toFixed(3)}
+          detail="same ranking, additive scale"
+        />
+        <ProbabilityMetric
+          label="sequence NLL"
+          value={(-logLikelihood).toFixed(3)}
+          detail="sum of token losses"
+        />
+        <ProbabilityMetric
+          label="mean token loss"
+          value={(-logLikelihood / 4).toFixed(3)}
+          detail="comparable across lengths"
+        />
+      </div>
+      <div className={styles.grid2}>
+        <ProbabilityFormula
+          label="Chain-rule likelihood"
+          formula={String.raw`\[P(x_{1:4})=\prod_{t=1}^{4}P(x_t\mid x_{<t})=${stepProbabilities.map((value) => value.toFixed(2)).join("\\times")}=${likelihood.toFixed(4)}\]`}
+        />
+        <ProbabilityFormula
+          label="Logs turn products into sums"
+          formula={String.raw`\[\log P(x_{1:4})=\sum_{t=1}^{4}\log P(x_t\mid x_{<t})=${logLikelihood.toFixed(3)}\]`}
+        />
+      </div>
+      <ProbabilityInsight
+        title="Likelihood is a function of the model"
+        tone="warning"
+      >
+        <p>
+          The observed sequence is now fixed. We compare parameter settings by
+          asking which one would have made that same data more probable. That is
+          why likelihood is not a probability distribution over parameters.
+        </p>
+      </ProbabilityInsight>
+    </div>
+  );
+}
+
+function CrossEntropyWorkbench() {
+  const [correctPrediction, setCorrectPrediction] = useState(70);
+  const [targetMode, setTargetMode] = useState<"hard" | "soft">("hard");
+  const prediction = [
+    correctPrediction / 100,
+    ((1 - correctPrediction / 100) * 2) / 3,
+    (1 - correctPrediction / 100) / 3,
+  ];
+  const target = targetMode === "hard" ? [1, 0, 0] : [0.8, 0.15, 0.05];
+  const loss = crossEntropy(target, prediction);
+  const hardNll = negativeLogLikelihood(prediction[0] ?? 0);
+  return (
+    <div className={styles.lab} data-testid="cross-entropy-workbench">
+      <div className={styles.labHeader}>
+        <div>
+          <p>Target distribution vs prediction</p>
+          <h3>Cross-entropy reads probability wherever the target has mass</h3>
+        </div>
+        <RefreshCcw aria-hidden="true" size={30} />
+      </div>
+      <div className={styles.buttonRow}>
+        <button
+          type="button"
+          className={
+            targetMode === "hard" ? styles.buttonActive : styles.button
+          }
+          onClick={() => setTargetMode("hard")}
+        >
+          One-hot target
+        </button>
+        <button
+          type="button"
+          className={
+            targetMode === "soft" ? styles.buttonActive : styles.button
+          }
+          onClick={() => setTargetMode("soft")}
+        >
+          Soft target
+        </button>
+      </div>
+      <label className={styles.control}>
+        <span>Model probability on cat: {correctPrediction}%</span>
+        <input
+          aria-label="Probability predicted for cat"
+          type="range"
+          min="5"
+          max="95"
+          step="5"
+          value={correctPrediction}
+          onChange={(event) => setCorrectPrediction(Number(event.target.value))}
+        />
+      </label>
+      <div className={styles.tableWrap}>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th scope="col">Class</th>
+              <th scope="col">Target</th>
+              <th scope="col">Prediction</th>
+              <th scope="col">Loss term</th>
+            </tr>
+          </thead>
+          <tbody>
+            {LABELS.map((label, index) => (
+              <tr key={label}>
+                <th scope="row">{label}</th>
+                <td>{target[index]?.toFixed(2)}</td>
+                <td>{prediction[index]?.toFixed(3)}</td>
+                <td>
+                  {target[index] === 0
+                    ? "0"
+                    : `${(-(target[index] ?? 0) * Math.log(prediction[index] ?? 1)).toFixed(3)}`}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className={styles.metricGrid}>
+        <ProbabilityMetric
+          label="cross-entropy"
+          value={loss.toFixed(3)}
+          detail="sum of target-weighted surprises"
+        />
+        <ProbabilityMetric
+          label="one-hot NLL"
+          value={hardNll.toFixed(3)}
+          detail="equal to CE for a hard cat target"
+        />
+      </div>
+      <ProbabilityFormula
+        label="Cross-entropy"
+        formula={String.raw`\[H(q,p)=-\sum_i q_i\log p_i\]`}
+      >
+        With a one-hot target, every term except the correct class disappears,
+        leaving{" "}
+        <InlineProbabilityMath text={String.raw`\(-\log p_{correct}\)`} />. Soft
+        targets preserve graded uncertainty or label smoothing.
+      </ProbabilityFormula>
+    </div>
+  );
+}
+
+function TrainingStepLab() {
+  const [catLogit, setCatLogit] = useState(0.5);
+  const [learningRate, setLearningRate] = useState(0.5);
+  const probabilities = softmax([catLogit, 0, 0]);
+  const catProbability = probabilities[0] ?? 0;
+  const gradient = catProbability - 1;
+  const nextLogit = catLogit - learningRate * gradient;
+  const nextProbability = softmax([nextLogit, 0, 0])[0] ?? 0;
+  return (
+    <div className={styles.lab} data-testid="training-step-lab">
+      <div className={styles.labHeader}>
+        <div>
+          <p>One transparent gradient step</p>
+          <h3>Loss supplies a direction, not just a score</h3>
+        </div>
+        <RefreshCcw aria-hidden="true" size={30} />
+      </div>
+      <div className={styles.controls}>
+        <label className={styles.control}>
+          <span>Current cat logit: {catLogit.toFixed(1)}</span>
+          <input
+            aria-label="Current cat logit"
+            type="range"
+            min="-2"
+            max="3"
+            step="0.1"
+            value={catLogit}
+            onChange={(event) => setCatLogit(Number(event.target.value))}
+          />
+        </label>
+        <label className={styles.control}>
+          <span>Learning rate: {learningRate.toFixed(1)}</span>
+          <input
+            aria-label="Learning rate"
+            type="range"
+            min="0.1"
+            max="1"
+            step="0.1"
+            value={learningRate}
+            onChange={(event) => setLearningRate(Number(event.target.value))}
+          />
+        </label>
+      </div>
+      <div className={styles.formulaTrail}>
+        <div className={styles.formulaStep}>
+          <strong>forward</strong>
+          <span>cat probability {catProbability.toFixed(3)}</span>
+        </div>
+        <div className={styles.formulaStep}>
+          <strong>loss</strong>
+          <span>{negativeLogLikelihood(catProbability).toFixed(3)}</span>
+        </div>
+        <div className={styles.formulaStep}>
+          <strong>gradient</strong>
+          <span>p − y = {gradient.toFixed(3)}</span>
+        </div>
+        <div className={styles.formulaStep}>
+          <strong>update</strong>
+          <span>
+            {catLogit.toFixed(2)} − {learningRate.toFixed(1)}(
+            {gradient.toFixed(3)}) = {nextLogit.toFixed(3)}
+          </span>
+        </div>
+        <div className={styles.formulaStep}>
+          <strong>next forward</strong>
+          <span>cat probability {nextProbability.toFixed(3)}</span>
+        </div>
+      </div>
+      <ProbabilityInsight title="A batch estimates an expectation">
+        <p>
+          Training usually averages this loss across a minibatch sampled from
+          the data. The batch gradient is a noisy estimate of the population
+          gradient; more data reduces noise but costs more computation per step.
+        </p>
+      </ProbabilityInsight>
+    </div>
+  );
+}
+
+function EntropyBench() {
+  const [topProbability, setTopProbability] = useState(34);
+  const top = topProbability / 100;
+  const probabilities = [top, (1 - top) / 2, (1 - top) / 2];
+  const entropy = entropyBits(probabilities);
+  return (
+    <div className={styles.lab} data-testid="entropy-bench">
+      <div className={styles.labHeader}>
+        <div>
+          <p>Distribution-wide uncertainty</p>
+          <h3>Confidence and correctness are different axes</h3>
+        </div>
+        <Gauge aria-hidden="true" size={30} />
+      </div>
+      <label className={styles.control}>
+        <span>Largest class probability: {topProbability}%</span>
+        <input
+          aria-label="Largest class probability"
+          type="range"
+          min="34"
+          max="98"
+          value={topProbability}
+          onChange={(event) => setTopProbability(Number(event.target.value))}
+        />
+      </label>
+      <ProbabilityBars probabilities={probabilities} />
+      <div className={styles.metricGrid}>
+        <ProbabilityMetric
+          label="entropy"
+          value={`${entropy.toFixed(3)} bits`}
+          detail="0 means fully concentrated"
+        />
+        <ProbabilityMetric
+          label="maximum here"
+          value={`${Math.log2(3).toFixed(3)} bits`}
+          detail="three equally likely classes"
+        />
+      </div>
+      <ProbabilityInsight
+        title="Low entropy is not evidence of truth"
+        tone="warning"
+      >
+        <p>
+          A model can be confidently wrong. Entropy describes concentration in
+          one prediction; calibration compares confidence with long-run
+          frequency, and accuracy checks which class won. A trustworthy system
+          needs all three views.
+        </p>
+      </ProbabilityInsight>
+    </div>
+  );
+}
+
 export default function CrashProbabilityL3LearningPage({ experience }: Props) {
   return (
-    <main className="bg-slate-950 text-slate-50">
-      <LearningHero
-        eyebrow="Crash Course Probability L3"
-        title="Make the observed answer more probable"
-        summary="Neural-network training looks less mysterious when you follow one path: raw logits become probabilities, the correct observed output gets scored, and the loss pushes that probability up."
-        meta={`${experience.durationMinutes} min interactive prep / ${experience.level}`}
-        outcomes={experience.outcomes}
-        visual={<LogitPipelineVisual />}
+    <ProbabilityCourse
+      experience={experience}
+      station="l3"
+      kicker="Station L3 · Likelihood, loss, and learning"
+      headline="Training asks one relentless question: did you make what happened probable?"
+      introduction="A network emits scores. Softmax turns them into a probability distribution. The observed answer selects one part of that distribution, a logarithm turns its probability into a usable loss, and gradients push the next prediction in a better direction."
+      heroVisual={<HeroTrainingMicroscope />}
+    >
+      <ProbabilitySection
+        id="softmax"
+        eyebrow="01 · Scores become probabilities"
+        title="A logit is evidence on a relative scale, not confidence."
+        lead="Softmax exponentiates score differences and normalizes them into positive numbers that sum to one. The microscope keeps every step visible so probability never appears by magic."
+      >
+        <SoftmaxMicroscopeLab />
+        <ProbabilityCheck
+          testId="l3-softmax-check"
+          title="Find the invariant"
+          question="What happens if you add 100 to every logit before applying softmax?"
+          options={[
+            {
+              label: "Every probability rises",
+              explanation:
+                "Probabilities must still sum to one, so they cannot all rise together.",
+            },
+            {
+              label: "The distribution is unchanged",
+              explanation:
+                "Softmax depends on differences; the common factor in numerator and denominator cancels.",
+            },
+            {
+              label: "The largest class becomes certain",
+              explanation:
+                "A shared shift changes no score gap, so it cannot sharpen the distribution.",
+            },
+          ]}
+          correctIndex={1}
+        />
+      </ProbabilitySection>
+
+      <ProbabilitySection
+        id="likelihood"
+        eyebrow="02 · Score the observed data"
+        title="Likelihood keeps the data fixed and turns the model knob."
+        lead="For each observed token, retrieve the probability the model assigned to that token given its context. Multiply across the sequence—or, in practice, add the logs."
+      >
+        <LikelihoodLedger />
+      </ProbabilitySection>
+
+      <ProbabilitySection
+        id="loss"
+        eyebrow="03 · From likelihood to loss"
+        title="The negative sign turns a goal to maximize into a quantity to minimize."
+        lead="A probability near one produces almost no surprise. A tiny probability produces a large penalty. Cross-entropy extends that idea from a single correct label to an entire target distribution."
+      >
+        <CrossEntropyWorkbench />
+        <div className={styles.grid2} style={{ marginTop: 22 }}>
+          <ProbabilityFormula
+            label="Negative log-likelihood"
+            formula={String.raw`\[\mathcal{L}_{NLL}=-\log P_\theta(y\mid x)\]`}
+          />
+          <ProbabilityInsight title="The logarithm gives useful geometry">
+            <p>
+              Logs convert products into sums, prevent long products from
+              underflowing to zero, and penalize confident mistakes strongly.
+              They also make independent example contributions additive.
+            </p>
+          </ProbabilityInsight>
+        </div>
+      </ProbabilitySection>
+
+      <ProbabilitySection
+        id="optimization"
+        eyebrow="04 · Close the learning loop"
+        title="The loss is valuable because it tells parameters how to move."
+        lead="For softmax plus cross-entropy, the gradient with respect to a class logit has an unusually readable form: predicted probability minus target probability."
+      >
+        <TrainingStepLab />
+      </ProbabilitySection>
+
+      <ProbabilitySection
+        id="entropy"
+        eyebrow="05 · Uncertainty across the whole distribution"
+        title="Entropy asks how spread out the alternatives are."
+        lead="NLL examines the observed answer. Entropy examines the full prediction without knowing which answer will occur. Uniform probability is maximally uncertain; concentrated probability is low entropy."
+      >
+        <EntropyBench />
+        <div className={styles.grid2} style={{ marginTop: 22 }}>
+          <ProbabilityFormula
+            label="Entropy"
+            formula={String.raw`\[H(P)=-\sum_i p_i\log_2 p_i\]`}
+          >
+            Each term is probability × surprise. The weighted average reports
+            expected surprise in bits.
+          </ProbabilityFormula>
+          <ProbabilityInsight title="Cross-entropy = target entropy + mismatch">
+            <p>
+              <InlineProbabilityMath
+                text={String.raw`\(H(q,p)=H(q)+D_{KL}(q\parallel p)\)`}
+              />
+              . The target’s own uncertainty cannot be removed; training reduces
+              the extra cost created when prediction p disagrees with target q.
+            </p>
+          </ProbabilityInsight>
+        </div>
+      </ProbabilitySection>
+
+      <ProbabilityQuizLaunch
+        experience={experience}
+        recap={[
+          "Logits are relative scores; softmax turns score differences into a normalized distribution.",
+          "Likelihood evaluates fixed observed data under competing model settings.",
+          "Sequence likelihood multiplies conditional token probabilities; log-likelihood adds their logs.",
+          "Negative log-likelihood rewards probability on the observed answer and heavily penalizes confident misses.",
+          "Cross-entropy handles one-hot and soft target distributions and drives classifier and LLM training.",
+          "Entropy measures distribution-wide uncertainty; confidence, calibration, and correctness are distinct.",
+        ]}
       />
-
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-10 md:py-12">
-        <ProcessSteps
-          title="The training pipeline"
-          steps={[
-            {
-              title: "Score possibilities",
-              body: "The network emits one raw score per class, token, or action. These scores are logits, not probabilities.",
-            },
-            {
-              title: "Normalize uncertainty",
-              body: "Softmax turns logits into a valid distribution so the model can say how much probability each possibility gets.",
-            },
-            {
-              title: "Penalize the miss",
-              body: "Negative log-likelihood and cross-entropy make low probability on the observed answer expensive.",
-            },
-          ]}
-        />
-
-        <section className="grid gap-4 md:grid-cols-3">
-          <ConceptCard title="Logit" label="Raw score">
-            <p>
-              A logit is an unconstrained preference score. It can be negative,
-              greater than one, and it does not need to sum to anything.
-            </p>
-          </ConceptCard>
-          <ConceptCard title="Probability" label="Normalized uncertainty">
-            <p>
-              A probability must be nonnegative and the probabilities across all
-              classes must sum to one.
-            </p>
-          </ConceptCard>
-          <ConceptCard title="Decision" label="Chosen output">
-            <p>
-              A decision or sample happens after the distribution exists. The
-              distribution contains more information than the final choice.
-            </p>
-          </ConceptCard>
-        </section>
-
-        <FormulaBlock
-          title="Softmax turns scores into a distribution"
-          formula="\\[P(y_i)=\\frac{e^{z_i}}{\\sum_j e^{z_j}}\\]"
-          explanation="Exponentials make every unnormalized score positive. Dividing by the shared total makes the probabilities sum to one while preserving the ranking implied by the logits."
-        />
-
-        <SoftmaxExplorer />
-
-        <CheckForUnderstanding
-          testId="logit-check"
-          title="Check: logits vs probabilities"
-          question="A network outputs logits [3, 1, 0] for classes A, B, and C. What can you conclude before softmax?"
-          correctIndex={1}
-          options={[
-            {
-              label: "The three numbers are already probabilities.",
-              explanation:
-                "Probabilities must satisfy the probability rules. These raw scores do not need to be between zero and one or sum to one.",
-            },
-            {
-              label:
-                "Class A has the highest raw score, but the scores still need normalization.",
-              explanation:
-                "The ranking is meaningful, but softmax is still needed before the model has a valid probability distribution.",
-            },
-            {
-              label:
-                "Class C must get zero probability because its logit is zero.",
-              explanation:
-                "A zero logit becomes e^0 = 1, so it can still receive positive probability after normalization.",
-            },
-          ]}
-        />
-
-        <InteractiveComparison
-          title="Likelihood asks about the observed answer"
-          prompt="The correct class is dog. Tap each model and decide which one training should prefer."
-          items={[
-            {
-              id: "model-a",
-              label: "Model A",
-              title: "Higher likelihood",
-              body: "Model A assigns 0.70 probability to the observed correct class, dog. For this example, that is the likelihood value that matters.",
-              detail: (
-                <ProbabilityTable
-                  rows={[
-                    { label: "cat", probability: "0.20" },
-                    { label: "dog", probability: "0.70" },
-                    { label: "car", probability: "0.10" },
-                  ]}
-                />
-              ),
-            },
-            {
-              id: "model-b",
-              label: "Model B",
-              title: "Lower likelihood",
-              body: "Model B spreads probability away from the observed answer. It may still assign dog some mass, but 0.30 is worse than 0.70 for this training example.",
-              detail: (
-                <ProbabilityTable
-                  rows={[
-                    { label: "cat", probability: "0.40" },
-                    { label: "dog", probability: "0.30" },
-                    { label: "car", probability: "0.30" },
-                  ]}
-                />
-              ),
-            },
-          ]}
-        />
-
-        <WorkedExample
-          title="Worked example: from likelihood to loss"
-          setup="For one image, the correct class is cat and the model assigns P(cat | image) = 0.80."
-          steps={[
-            "Likelihood for this example is 0.80 because the observed label is cat.",
-            "Log-likelihood is log(0.80), which is about -0.223 with natural logs.",
-            "Negative log-likelihood is -log(0.80), about 0.223. A higher correct probability would make this loss smaller.",
-          ]}
-        />
-
-        <FormulaBlock
-          title="Negative log-likelihood is the loss version"
-          formula="\\[\\text{NLL}=-\\log P_\\theta(y_{\\text{true}}\\mid x)\\]"
-          explanation="Training usually minimizes a loss. Maximum likelihood becomes a minimization problem by taking the negative log of the probability assigned to the observed answer."
-        />
-
-        <MisconceptionCallout
-          misconception="If the model chooses the right class, the probability does not matter."
-          correction="Accuracy only checks the final choice. Cross-entropy checks how much probability the model assigned to the correct answer. A 0.99 correct prediction is better training signal than a barely-correct 0.51 prediction."
-        />
-
-        <InteractiveComparison
-          title="Cross-entropy cares about confidence"
-          prompt="Both models choose cat if you take the highest probability. Cross-entropy still separates them."
-          items={[
-            {
-              id: "barely",
-              label: "Barely correct",
-              title: "Correct, but uncertain",
-              body: "P(cat) = 0.51 gives loss -log(0.51), about 0.67. It is accurate under argmax, but the model is barely leaning toward the observed class.",
-            },
-            {
-              id: "confident",
-              label: "Confidently correct",
-              title: "Correct and low loss",
-              body: "P(cat) = 0.99 gives loss -log(0.99), about 0.01. Cross-entropy rewards the model for assigning much more probability to the observed class.",
-            },
-          ]}
-        />
-
-        <FormulaBlock
-          title="Cross-entropy with one-hot targets"
-          formula="\\[H(p,q)=-\\sum_i p_i\\log q_i=-\\log q_{\\text{correct}}\\]"
-          explanation="With one-hot labels, every target probability is zero except the observed class. The whole sum collapses to negative log probability of the correct class."
-        />
-
-        <section className="grid gap-4 md:grid-cols-2">
-          <ConceptCard title="Low entropy" label="Confident distribution">
-            <ProbabilityTable
-              rows={[
-                { label: "Paris", probability: "0.95" },
-                { label: "Lyon", probability: "0.03" },
-                { label: "London", probability: "0.02" },
-              ]}
-            />
-            <p>
-              Probability mass is concentrated on one token, so uncertainty is
-              low.
-            </p>
-          </ConceptCard>
-          <ConceptCard title="High entropy" label="Spread distribution">
-            <ProbabilityTable
-              rows={[
-                { label: "Paris", probability: "0.40" },
-                { label: "Lyon", probability: "0.30" },
-                { label: "London", probability: "0.30" },
-              ]}
-            />
-            <p>
-              Several continuations are plausible, so uncertainty is higher.
-            </p>
-          </ConceptCard>
-        </section>
-
-        <CheckForUnderstanding
-          title="Check: entropy"
-          question="For next-token prediction, which distribution has higher entropy?"
-          correctIndex={1}
-          options={[
-            {
-              label: "yes 0.95, no 0.03, maybe 0.02",
-              explanation:
-                "This distribution is concentrated on one answer, so it has low entropy.",
-            },
-            {
-              label: "yes 0.40, no 0.35, maybe 0.25",
-              explanation:
-                "The probability mass is spread across more plausible answers, so uncertainty and entropy are higher.",
-            },
-          ]}
-        />
-
-        <RecapSection
-          title="Before you start the MCQs"
-          items={[
-            "Logits are raw scores; softmax converts them into probabilities.",
-            "Likelihood is the probability assigned to what actually happened.",
-            "Negative log-likelihood turns maximum likelihood into loss minimization.",
-            "With one-hot targets, cross-entropy is negative log probability of the correct class.",
-            "Entropy measures how spread out a categorical distribution is.",
-            "LLM next-token training uses the same idea at vocabulary scale.",
-          ]}
-        />
-
-        <section className="flex flex-col gap-4 rounded-lg border border-emerald-500/40 bg-emerald-950/20 p-5 md:flex-row md:items-center md:justify-between">
-          <div>
-            <h2 className="text-xl font-semibold text-emerald-100">
-              Ready for the Probability L3 questions
-            </h2>
-            <p className="mt-2 text-sm leading-6 text-slate-300">
-              Practice the same concepts with multiple-choice questions on
-              logits, softmax, likelihood, loss, cross-entropy, and entropy.
-            </p>
-          </div>
-          <QuizTransitionButton sourceId={experience.sourceId} />
-        </section>
-
-        <section className="rounded-lg border border-slate-800 bg-slate-900 p-5">
-          <h2 className="text-lg font-semibold text-slate-50">
-            Compact formula board
-          </h2>
-          <div className="mt-4 space-y-3 text-slate-200">
-            <MathText text="\\[\\text{logits}\\rightarrow\\text{softmax}\\rightarrow P(y\\mid x)\\]" />
-            <MathText text="\\[L(\\theta)=\\prod_i P_\\theta(y_i\\mid x_i)\\]" />
-            <MathText text="\\[\\text{NLL}=-\\sum_i\\log P_\\theta(y_i\\mid x_i)\\]" />
-          </div>
-        </section>
-      </div>
-    </main>
+    </ProbabilityCourse>
   );
 }

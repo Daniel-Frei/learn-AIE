@@ -8,6 +8,9 @@ import {
 import type { SourceId } from "../../lib/quiz";
 import AgentNativeMemoryLearningPage from "../../components/learning/pages/AgentNativeMemoryLearningPage";
 import AtomMemLearningPage from "../../components/learning/pages/AtomMemLearningPage";
+import CrashProbabilityL0LearningPage from "../../components/learning/pages/CrashProbabilityL0LearningPage";
+import CrashProbabilityL1LearningPage from "../../components/learning/pages/CrashProbabilityL1LearningPage";
+import CrashProbabilityL2LearningPage from "../../components/learning/pages/CrashProbabilityL2LearningPage";
 import CrashProbabilityL3LearningPage from "../../components/learning/pages/CrashProbabilityL3LearningPage";
 import CrashProbabilityL4LearningPage from "../../components/learning/pages/CrashProbabilityL4LearningPage";
 import CrashProbabilityL5LearningPage from "../../components/learning/pages/CrashProbabilityL5LearningPage";
@@ -29,6 +32,9 @@ const LEARNING_PAGE_COMPONENTS: Partial<
   "cme295-lect4": StanfordCME295Lecture4LearningPage,
   "cme295-lect5": StanfordCME295Lecture5LearningPage,
   "cme295-lect9": StanfordCME295Lecture9SynthesisPage,
+  "crash-probability-l0": CrashProbabilityL0LearningPage,
+  "crash-probability-l1": CrashProbabilityL1LearningPage,
+  "crash-probability-l2": CrashProbabilityL2LearningPage,
   "crash-probability-l3": CrashProbabilityL3LearningPage,
   "crash-probability-l4": CrashProbabilityL4LearningPage,
   "crash-probability-l5": CrashProbabilityL5LearningPage,

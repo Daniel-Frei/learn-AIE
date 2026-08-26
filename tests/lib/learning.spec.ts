@@ -160,14 +160,15 @@ describe("learning experience registry", () => {
     const probabilityCourse = getLearningCourse("crash-course-probability");
     expect(
       probabilityCourse?.experiences.map((experience) => experience.sourceId),
-    ).toEqual(
-      expect.arrayContaining([
-        "crash-probability-l3",
-        "crash-probability-l4",
-        "crash-probability-l5",
-      ]),
-    );
-    expect(probabilityCourse?.totalDurationMinutes).toBeGreaterThan(0);
+    ).toEqual([
+      "crash-probability-l0",
+      "crash-probability-l1",
+      "crash-probability-l2",
+      "crash-probability-l3",
+      "crash-probability-l4",
+      "crash-probability-l5",
+    ]);
+    expect(probabilityCourse?.totalDurationMinutes).toBe(222);
 
     const stanfordCourse = getLearningCourse("stanford-cme295");
     expect(
@@ -187,6 +188,23 @@ describe("learning experience registry", () => {
     expect(getLearningCoursePath("crash-course-probability")).toBe(
       "/learn/crash-course-probability",
     );
+
+    const probabilityFoundation = getLearningExperience("crash-probability-l0");
+    expect(probabilityFoundation?.durationMinutes).toBe(32);
+    expect(probabilityFoundation?.level).toMatch(/foundation/i);
+    if (probabilityFoundation) {
+      expect(getLearningExperiencePath(probabilityFoundation)).toBe(
+        "/learn/crash-course-probability/crash-probability-l0",
+      );
+    }
+
+    const probabilityEvidence = getLearningExperience("crash-probability-l2");
+    expect(probabilityEvidence?.outcomes.join(" ")).toMatch(/Bayes/i);
+    if (probabilityEvidence) {
+      expect(getLearningExperiencePath(probabilityEvidence)).toBe(
+        "/learn/crash-course-probability/crash-probability-l2",
+      );
+    }
 
     const probabilityExperience = getLearningExperience("crash-probability-l3");
     expect(probabilityExperience).not.toBeNull();

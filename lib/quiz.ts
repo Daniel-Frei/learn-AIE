@@ -21,6 +21,8 @@ import { stanfordCME296Lecture3FlowMatchingQuestions } from "./lectures/Stanford
 import { stanfordCME296Lecture6ModelTrainingQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture6_model_training";
 import { stanfordCME296Lecture8TextDiffusionQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture8_text_diffusion";
 import { diffusionGemmaTechnicalReportQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/DiffusionGemma Technical Report";
+import { stanfordCS109Lecture1WelcomeCountingQuestions } from "./lectures/Stanford CS109 Probability for Computer Scientists/lecture1_welcome_counting";
+import { stanfordCS109Lecture2CombinatoricsQuestions } from "./lectures/Stanford CS109 Probability for Computer Scientists/lecture2_combinatorics";
 import { cs224rLecture1IntroQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture1_intro";
 import { cs224rLecture2ImitationLearningQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture2_Imitation Learning";
 import { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture3_Policy Gradients";
@@ -51,7 +53,7 @@ import { CrashCourseLinearAlgebraL3Questions } from "./other/Crash Course Linear
 import { CrashCourseLinearAlgebraL4Questions } from "./other/Crash Course Linear Algebra/Lecture 4 - Eigenvectors, SVD, and Representation Learning";
 import { CrashCourseLinearAlgebraL5Questions } from "./other/Crash Course Linear Algebra/Lecture 5 - Linear Algebra in LLMs and RL";
 import { CrashCourseProbabilityL0Questions } from "./other/Crash Courses/Probability/Lecture 0 - Probability Prerequisites";
-import { CrashCourseProbabilityL1Questions } from "./other/Crash Courses/Probability/Lecture 1 - overview";
+import { CrashCourseProbabilityL1Questions } from "./other/Crash Courses/Probability/Lecture 1 - Probability as the Language of AI";
 import { CrashCourseProbabilityL2Questions } from "./other/Crash Courses/Probability/Lecture 2 - Conditional Probability, Bayes, and Dependence";
 import { CrashCourseProbabilityL3Questions } from "./other/Crash Courses/Probability/Lecture 3 - Likelihood, Loss, Softmax, and Deep Learning";
 import { CrashCourseProbabilityL4Questions } from "./other/Crash Courses/Probability/Lecture 4 - Probability Over Time - Reinforcement Learning";
@@ -93,6 +95,7 @@ export type SourceSeriesId =
   | "aie-building-apps"
   | "stanford-cme295"
   | "stanford-cme296"
+  | "stanford-cs109"
   | "stanford-cs224r"
   | "other-rl"
   | "mit-6s191-2026"
@@ -345,6 +348,24 @@ export const QUESTION_SOURCES = [
     seriesLabel: "Stanford CME296 Diffusion & Large Vision Models",
     topic: "NLP" as const,
     questions: diffusionGemmaTechnicalReportQuestions,
+  },
+  {
+    id: "cs109-lect1" as const,
+    label: "Stanford CS109 Lecture 1",
+    title: "Stanford CS109 Lecture 1: Welcome & Core Counting",
+    seriesId: "stanford-cs109" as const,
+    seriesLabel: "Stanford CS109 Probability for Computer Scientists",
+    topic: "Math" as const,
+    questions: stanfordCS109Lecture1WelcomeCountingQuestions,
+  },
+  {
+    id: "cs109-lect2" as const,
+    label: "Stanford CS109 Lecture 2",
+    title: "Stanford CS109 Lecture 2: Combinatorics",
+    seriesId: "stanford-cs109" as const,
+    seriesLabel: "Stanford CS109 Probability for Computer Scientists",
+    topic: "Math" as const,
+    questions: stanfordCS109Lecture2CombinatoricsQuestions,
   },
   {
     id: "cs224r-lect1" as const,
@@ -913,6 +934,10 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
     "Text-diffusion sections about masked corruption, variable-noise reconstruction, coarse-to-fine inference, remasking, parallel generation, and autoregressive tradeoffs.",
   "cme296-diffusiongemma":
     "DiffusionGemma report on discrete text diffusion, blockwise generation, entropy-bounded sampling, SD·RL training, inference efficiency, adaptation, and limitations.",
+  "cs109-lect1":
+    "Probability introduction covering experiments, outcomes, events, base-rate intuition, product and sum rules, and two-set inclusion-exclusion.",
+  "cs109-lect2":
+    "Combinatorics lecture about permutations, repeated objects, combinations, bucket assignments, the divider method, and nonnegative integer solutions.",
   "cs224r-lect1":
     "Deep reinforcement learning introduction about MDPs, value functions, policies, and the RL problem setup.",
   "cs224r-lect2":
@@ -1198,6 +1223,8 @@ export { stanfordCME296Lecture3FlowMatchingQuestions } from "./lectures/Stanford
 export { stanfordCME296Lecture6ModelTrainingQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture6_model_training";
 export { stanfordCME296Lecture8TextDiffusionQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture8_text_diffusion";
 export { diffusionGemmaTechnicalReportQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/DiffusionGemma Technical Report";
+export { stanfordCS109Lecture1WelcomeCountingQuestions } from "./lectures/Stanford CS109 Probability for Computer Scientists/lecture1_welcome_counting";
+export { stanfordCS109Lecture2CombinatoricsQuestions } from "./lectures/Stanford CS109 Probability for Computer Scientists/lecture2_combinatorics";
 export { cs224rLecture1IntroQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture1_intro";
 export { cs224rLecture2ImitationLearningQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture2_Imitation Learning";
 export { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture3_Policy Gradients";
@@ -1229,7 +1256,7 @@ export { CrashCourseLinearAlgebraL3Questions } from "./other/Crash Course Linear
 export { CrashCourseLinearAlgebraL4Questions } from "./other/Crash Course Linear Algebra/Lecture 4 - Eigenvectors, SVD, and Representation Learning";
 export { CrashCourseLinearAlgebraL5Questions } from "./other/Crash Course Linear Algebra/Lecture 5 - Linear Algebra in LLMs and RL";
 export { CrashCourseProbabilityL0Questions } from "./other/Crash Courses/Probability/Lecture 0 - Probability Prerequisites";
-export { CrashCourseProbabilityL1Questions } from "./other/Crash Courses/Probability/Lecture 1 - overview";
+export { CrashCourseProbabilityL1Questions } from "./other/Crash Courses/Probability/Lecture 1 - Probability as the Language of AI";
 export { CrashCourseProbabilityL2Questions } from "./other/Crash Courses/Probability/Lecture 2 - Conditional Probability, Bayes, and Dependence";
 export { CrashCourseProbabilityL3Questions } from "./other/Crash Courses/Probability/Lecture 3 - Likelihood, Loss, Softmax, and Deep Learning";
 export { CrashCourseProbabilityL4Questions } from "./other/Crash Courses/Probability/Lecture 4 - Probability Over Time - Reinforcement Learning";

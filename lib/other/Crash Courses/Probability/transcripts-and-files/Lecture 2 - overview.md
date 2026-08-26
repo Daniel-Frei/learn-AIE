@@ -65,15 +65,15 @@ The whole lecture should make students feel that conditional probability is not 
 
 # Lecture Structure
 
-| Part |                                       Topic |   Time |
-| ---- | ------------------------------------------: | -----: |
-| 1    | From probability to conditional probability | 10 min |
-| 2    |                           Joint probability |  8 min |
-| 3    |    Marginal probability and marginalization |  8 min |
-| 4    |                 Independence and dependence | 10 min |
-| 5    |                              Bayes’ theorem | 14 min |
-| 6    |       Prediction as conditional probability |  8 min |
-| 7    |             Summary and bridge to Lecture 3 |  2 min |
+| Part | Topic                                                 |   Time |
+| ---- | ----------------------------------------------------- | -----: |
+| 1    | From probability to conditional probability           | 10 min |
+| 2    | Joint probability                                     |  8 min |
+| 3    | Marginalization and the law of total probability      | 10 min |
+| 4    | Multiplication, independence, and dependence          | 10 min |
+| 5    | Bayes’ theorem, base rates, and reversed conditionals | 14 min |
+| 6    | Prediction as conditional probability                 |  6 min |
+| 7    | Summary and bridge to Lecture 3                       |  2 min |
 
 ---
 
@@ -86,9 +86,13 @@ By the end of the lecture, students should understand:
 - what joint probability means,
 - what marginal probability means,
 - how marginalization works,
+- how the law of total probability decomposes an outcome into paths,
+- when the multiplication rule needs a conditional probability,
 - what independence means,
+- how to test independence without confusing it with causation,
 - why dependence is what makes learning possible,
 - how Bayes’ theorem updates beliefs using evidence,
+- why prevalence/base rates change the meaning of a positive test,
 - why LLMs, classifiers, RL systems, and diffusion models all rely on conditional structure.
 
 ---
@@ -520,7 +524,7 @@ Expected answers:
 
 # Part 3 — Marginal Probability and Marginalization
 
-**Time:** 8 minutes
+**Time:** 10 minutes
 
 ## 3.1 What Is Marginal Probability?
 
@@ -599,7 +603,47 @@ It can occur with fever or without fever.
 
 ---
 
-## 3.4 Why Marginalization Matters in AI
+## 3.4 The Law of Total Probability
+
+Marginalization becomes the law of total probability when each joint term is
+written as a conditional path.
+
+If (B_1,\ldots,B_n) are mutually exclusive and exhaustive, then:
+
+[
+P(A)=\sum_i P(A \mid B_i)P(B_i)
+]
+
+The learner should read this as:
+
+> List every possible route to (A), multiply along each route, and add the route
+> probabilities.
+
+Use two bags:
+
+- choose Bag A with probability (0.70); it contains blue with probability (0.50)
+- choose Bag B with probability (0.30); it contains blue with probability (7/8)
+
+Then:
+
+[
+P(\text{blue})
+=0.70(0.50)+0.30\left(\frac{7}{8}\right)
+=0.6125
+]
+
+The bag choice forms a partition, so the two paths cannot overlap and cover all
+ways to draw blue. This same structure appears in machine-specific defect rates,
+disease prevalence, latent-variable models, and stochastic next states.
+
+Teaching warning:
+
+> Do not add arbitrary scenarios. The conditioning cases must be mutually
+> exclusive and exhaustive for the formula to cover the whole probability.
+
+---
+
+## 3.5 Why Marginalization Matters in AI
 
 Marginalization appears whenever there are hidden or alternative possibilities.
 
@@ -658,7 +702,7 @@ Even if students do not need the formal math yet, they should understand the int
 
 ---
 
-## 3.5 Mini-Exercise
+## 3.6 Mini-Exercise
 
 Given:
 
@@ -703,6 +747,34 @@ Equivalent formula:
 [
 P(A,B) = P(A)P(B)
 ]
+
+When the conditionals are defined, students can check independence in three
+equivalent ways:
+
+[
+P(A \cap B)=P(A)P(B)
+]
+
+[
+P(A \mid B)=P(A)
+]
+
+[
+P(B \mid A)=P(B)
+]
+
+Start from the rule that is always valid:
+
+[
+P(A \cap B)=P(A)P(B \mid A)
+]
+
+For independent events, (P(B \mid A)=P(B)), which produces the familiar product
+(P(A)P(B)). For dependent events, the conditional term must remain.
+
+Sampling with replacement can make successive draws independent. Sampling
+without replacement usually makes them dependent because the first draw changes
+the second draw's smaller sample space.
 
 Meaning:
 
@@ -892,6 +964,13 @@ For this crash course, the main takeaway is enough:
 
 > Dependence can be real, indirect, or explained by another variable.
 
+Statistical caution:
+
+> Independence is a statement about a probability distribution, not proof that
+> no causal connection or hidden common cause exists. Conditioning on a shared
+> factor can sometimes explain a dependence, but causal conclusions require
+> assumptions beyond these probability equalities.
+
 ---
 
 ## 4.6 Mini-Exercise
@@ -1077,6 +1156,15 @@ includes:
 
 This is what makes the probabilities sum correctly.
 
+Compute the evidence with the law of total probability:
+
+[
+P(D)=P(D \mid H)P(H)+P(D \mid H^c)P(H^c)
+]
+
+This makes the denominator interpretable rather than an unexplained
+normalization trick.
+
 ---
 
 ## 5.4 Medical Test Example
@@ -1096,6 +1184,17 @@ P(\text{positive} \mid \text{disease}) = 0.95
 [
 P(\text{positive} \mid \text{no disease}) = 0.05
 ]
+
+Name the quantities explicitly:
+
+- prevalence/base rate: (P(\text{disease}))
+- sensitivity: (P(\text{positive}\mid\text{disease}))
+- false-positive rate: (P(\text{positive}\mid\text{no disease}))
+- specificity: (1-\text{false-positive rate})
+- positive predictive value: (P(\text{disease}\mid\text{positive}))
+
+Also show the same calculation with natural frequencies in 1,000 people so
+students can see the true-positive and false-positive groups directly.
 
 Question:
 
@@ -1385,7 +1484,7 @@ Teaching point:
 
 # Part 6 — Prediction as Conditional Probability
 
-**Time:** 8 minutes
+**Time:** 6 minutes
 
 ## 6.1 The Core AI Formula
 
@@ -1908,9 +2007,13 @@ The most important ideas in Lecture 2 are:
 2. Conditional probabilities are not symmetric.
 3. Joint probabilities describe variables together.
 4. Marginalization means summing over hidden or alternative possibilities.
-5. Independence means information does not help.
-6. Dependence is what makes machine learning possible.
-7. Bayes’ theorem updates beliefs using evidence.
+5. The law of total probability adds mutually exclusive paths to an outcome.
+6. The multiplication rule keeps a conditional term unless independence is
+   justified.
+7. Independence means information does not help; it is not itself a causal
+   conclusion.
+8. Dependence is what makes machine learning possible.
+9. Bayes’ theorem updates beliefs using evidence and base rates.
 
 ---
 

@@ -129,21 +129,73 @@ export const LEARNING_EXPERIENCES = [
     ],
   },
   {
+    sourceId: "crash-probability-l0",
+    shortTitle: "Probability Notation Gym",
+    title: "Crash Course Probability L0: Math and Notation Foundations",
+    summary:
+      "Turn normalization, odds, weighted averages, powers, logarithms, geometric series, vectors, and Gaussian notation into inspectable probability tools.",
+    durationMinutes: 32,
+    level: "Foundation for the Probability course",
+    sourceMaterialPath:
+      "lib/other/Crash Courses/Probability/transcripts-and-files/Syllabus.md",
+    outcomes: [
+      "Read probability notation as operations on concrete quantities.",
+      "Normalize weights and move between probability and odds.",
+      "Use weighted averages, powers, roots, exponentials, logarithms, and geometric series.",
+      "Recognize the vectors, matrices, and Gaussian symbols reused throughout AI.",
+    ],
+  },
+  {
+    sourceId: "crash-probability-l1",
+    shortTitle: "Events and Random Variables",
+    title: "Crash Course Probability L1: Probability as the Language of AI",
+    summary:
+      "Build probability from sample spaces and event algebra through counting, random variables, distributions, expectation, variance, and calibration.",
+    durationMinutes: 38,
+    level: "Introductory probability for AI",
+    sourceMaterialPath:
+      "lib/other/Crash Courses/Probability/transcripts-and-files/Lecture 1 - overview.md",
+    outcomes: [
+      "Distinguish outcomes, events, random variables, and distributions.",
+      "Derive complement and addition rules from the probability axioms.",
+      "Choose the correct counting rule for ordered and unordered spaces.",
+      "Interpret PMFs, PDFs, expectation, variance, and calibrated probability.",
+    ],
+  },
+  {
+    sourceId: "crash-probability-l2",
+    shortTitle: "Evidence and Bayes",
+    title:
+      "Crash Course Probability L2: Conditional Probability, Bayes, and Dependence",
+    summary:
+      "Shrink probability universes with evidence, read joint tables, audit independence, combine hidden paths, and reverse conditions with Bayes and natural frequencies.",
+    durationMinutes: 38,
+    level: "After Probability Lecture 1",
+    sourceMaterialPath:
+      "lib/other/Crash Courses/Probability/transcripts-and-files/Lecture 2 - overview.md",
+    outcomes: [
+      "Interpret conditioning as restricting and renormalizing a sample space.",
+      "Read joint, marginal, and conditional probability from the same distribution.",
+      "Use independence, the product rule, and the law of total probability correctly.",
+      "Apply Bayes with base rates and natural-frequency counts.",
+    ],
+  },
+  {
     sourceId: "crash-probability-l3",
     shortTitle: "Likelihood, Loss, Softmax",
     title:
       "Crash Course Probability L3: Likelihood, Loss, Softmax, and Deep Learning",
     summary:
-      "Build intuition for how neural networks turn raw scores into probabilities and learn by lowering cross-entropy loss.",
-    durationMinutes: 12,
+      "Inspect the full training path from logits and softmax through likelihood, log-likelihood, cross-entropy, entropy, and a gradient update.",
+    durationMinutes: 36,
     level: "After Probability Lectures 1-2",
     sourceMaterialPath:
       "lib/other/Crash Courses/Probability/transcripts-and-files/Lecture 3 - overview.md",
     outcomes: [
-      "Separate logits, probabilities, and decisions.",
-      "Use softmax as a normalization step, not a magic classifier.",
-      "Connect likelihood, negative log-likelihood, and cross-entropy.",
-      "Recognize entropy as uncertainty in a categorical distribution.",
+      "Turn logits into stable probability distributions with softmax.",
+      "Compute sequence likelihood, log-likelihood, and negative log-likelihood.",
+      "Connect one-hot and soft targets to cross-entropy and gradient direction.",
+      "Separate entropy, confidence, calibration, and correctness.",
     ],
   },
   {
@@ -152,16 +204,16 @@ export const LEARNING_EXPERIENCES = [
     title:
       "Crash Course Probability L4: Probability Over Time: Reinforcement Learning",
     summary:
-      "Use a gridworld decision lab to connect transition probabilities, policies, discounted return, value functions, and exploration.",
-    durationMinutes: 15,
+      "Use a stochastic decision world to connect transitions, Markov state, policies, paths, discounted return, value, recursive expectation, and exploration.",
+    durationMinutes: 38,
     level: "After Probability Lectures 1-3",
     sourceMaterialPath:
       "lib/other/Crash Courses/Probability/transcripts-and-files/Lecture 4 - overview.md",
     outcomes: [
-      "Trace the state-action-reward-next-state loop.",
-      "Separate environment transitions from policy probabilities.",
-      "Compute expected one-step return from stochastic outcomes.",
-      "Explain why discounting, value functions, and exploration matter.",
+      "Separate policy probabilities from environment transition probabilities.",
+      "Audit whether a state representation satisfies the Markov property.",
+      "Compute trajectory probability, discounted return, and one-step value.",
+      "Solve waiting times with first-step recursion and explain controlled exploration.",
     ],
   },
   {
@@ -170,16 +222,16 @@ export const LEARNING_EXPERIENCES = [
     title:
       "Crash Course Probability L5: Sampling, Latent Variables, and Diffusion Models",
     summary:
-      "Control token sampling, latent variables, and denoising steps to see how learned probability becomes generated output.",
-    durationMinutes: 16,
+      "Forge generated outcomes through token sampling, latent-variable inference, Gaussian noise, forward diffusion, learned reverse transitions, and guidance.",
+    durationMinutes: 40,
     level: "After Probability Lectures 1-4",
     sourceMaterialPath:
       "lib/other/Crash Courses/Probability/transcripts-and-files/Lecture 5 - overview.md",
     outcomes: [
-      "Distinguish greedy decoding, sampling, top-k, and top-p strategies.",
-      "Explain how temperature changes randomness without adding knowledge.",
-      "Use latent variables as hidden structure behind generated data.",
-      "Trace diffusion from Gaussian noise through learned reverse denoising.",
+      "Compare greedy, temperature, top-k, and top-p decoding as distribution transforms.",
+      "Factor autoregressive sequence probability into repeated conditional samples.",
+      "Marginalize latent causes and infer them from observations.",
+      "Trace Gaussian forward noising, learned reverse diffusion, and conditional guidance.",
     ],
   },
   {
