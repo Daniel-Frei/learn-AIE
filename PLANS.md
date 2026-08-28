@@ -1,3 +1,63 @@
+# Development Database Outage Visibility
+
+## Goal
+
+Recover any retained fallback practice data that can be proven from local
+artifacts, and make sustained shared-database outages visible in the web quiz
+during development without warning for brief connectivity interruptions.
+
+## Non-goals
+
+- Do not invent or replay answer attempts when no durable attempt payload exists.
+- Do not show the database warning in production.
+- Do not replace the existing short-lived in-memory fallback or add a new
+  runtime dependency.
+
+## Steps
+
+- [x] Inspect Supabase, Firefox origin storage, and live processes for recoverable
+      answer data.
+- [x] Capture the current browser behavior with Supabase unreachable.
+- [x] Make the fallback retry Supabase and expose its current outage duration.
+- [x] Add a development-only warning after a 60-second grace period.
+- [x] Add regression coverage, update persistence docs, and re-verify the browser
+      flow and repository checks.
+
+## Files to touch
+
+- `lib/server/quizDataStore.ts`
+- `app/api/persistence-health/route.ts`
+- `lib/quizSync.ts`
+- `lib/useQuiz.ts`
+- `components/QuizPageClient.tsx`
+- `tests/lib/quizDataStore-resilience.spec.ts`
+- `tests/app/api/persistence-health.route.spec.ts`
+- `e2e/smoke.spec.ts`
+- `docs/product-scope.md`
+- `docs/api-contract.md`
+- `docs/team-preferences.md`
+- `PLANS.md`
+
+## Verification
+
+- `npm run test:focused -- tests/lib/quizDataStore-resilience.spec.ts tests/app/api/persistence-health.route.spec.ts`
+- `npm run e2e -- e2e/smoke.spec.ts`
+- `make check`
+- Browser evidence with an unreachable Supabase endpoint before and after the fix
+
+## Verification result
+
+- Focused resilience/health tests pass (13 tests), the full Vitest suite passes
+  (254 passed, 1 skipped), and coverage remains above the configured 95% gates.
+- TypeScript, ESLint, mobile lint/types, touched-file Prettier, and all 8 E2E
+  smoke tests pass.
+- Browser evidence confirms the warning appears for a real sustained outage and
+  clears after database recovery without a page reload or client console error.
+- Repository-wide `make check` stops at the existing Prettier baseline on 21
+  unrelated files; all later gates were run independently and pass.
+
+---
+
 # Stanford CS109 Lectures 1-2 Question Sets
 
 ## Goal

@@ -41,10 +41,15 @@ import {
 } from "./quizSession";
 import type {
   LocalMigrationResponse,
+  PersistenceHealthResponse,
   QuizStateResponse,
   RecordAnswerResponse,
   ResetParticipantRatingResponse,
   SubmitQuestionReportResponse,
+} from "./quizSync";
+import {
+  QUIZ_PERSISTENCE_HEALTH_POLL_INTERVAL_MS,
+  QUIZ_PERSISTENCE_WARNING_GRACE_MS,
 } from "./quizSync";
 export type { DifficultyRange, QuestionSelectionMode } from "./quizSession";
 
@@ -158,6 +163,7 @@ export function useQuiz(
   >(null);
   const [answerRatingSnapshot, setAnswerRatingSnapshot] =
     useState<AnswerRatingSnapshot | null>(null);
+  const [persistenceWarning, setPersistenceWarning] = useState(false);
   const questionStartedAtRef = useRef<number | null>(null);
 
   const applyRemoteState = (response: QuizStateResponse) => {
@@ -243,6 +249,90 @@ export function useQuiz(
 
     return () => {
       cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "development") return;
+
+    let cancelled = false;
+    let outageStartedAt: number | null = null;
+    let warningTimerId: number | null = null;
+    let checkInFlight = false;
+
+    const clearWarningTimer = () => {
+      if (warningTimerId !== null) {
+        window.clearTimeout(warningTimerId);
+        warningTimerId = null;
+      }
+    };
+
+    const observeHealthy = () => {
+      outageStartedAt = null;
+      clearWarningTimer();
+      setPersistenceWarning(false);
+    };
+
+    const observeOutage = (reportedStart?: string | null) => {
+      const parsedStart = reportedStart
+        ? Date.parse(reportedStart)
+        : Number.NaN;
+      if (outageStartedAt === null) {
+        outageStartedAt = Number.isFinite(parsedStart)
+          ? parsedStart
+          : Date.now();
+        setPersistenceWarning(false);
+      } else if (Number.isFinite(parsedStart)) {
+        outageStartedAt = Math.min(outageStartedAt, parsedStart);
+      }
+
+      clearWarningTimer();
+      const remaining =
+        QUIZ_PERSISTENCE_WARNING_GRACE_MS -
+        (Date.now() - (outageStartedAt ?? Date.now()));
+      if (remaining <= 0) {
+        setPersistenceWarning(true);
+        return;
+      }
+
+      warningTimerId = window.setTimeout(() => {
+        if (!cancelled) setPersistenceWarning(true);
+      }, remaining);
+    };
+
+    const checkPersistence = async () => {
+      if (checkInFlight) return;
+      checkInFlight = true;
+      try {
+        const response = await fetch("/api/persistence-health", {
+          cache: "no-store",
+        });
+        if (!response.ok) throw new Error("Persistence health check failed.");
+
+        const health = (await response.json()) as PersistenceHealthResponse;
+        if (cancelled) return;
+        if (health.mode === "supabase") {
+          observeHealthy();
+        } else {
+          observeOutage(health.unavailableSince);
+        }
+      } catch {
+        if (!cancelled) observeOutage();
+      } finally {
+        checkInFlight = false;
+      }
+    };
+
+    void checkPersistence();
+    const pollTimerId = window.setInterval(
+      () => void checkPersistence(),
+      QUIZ_PERSISTENCE_HEALTH_POLL_INTERVAL_MS,
+    );
+
+    return () => {
+      cancelled = true;
+      clearWarningTimer();
+      window.clearInterval(pollTimerId);
     };
   }, []);
 
@@ -664,6 +754,7 @@ export function useQuiz(
     userRatingDelta: visibleAnswerRatingSnapshot?.userDelta ?? null,
     totalReportCount,
     currentQuestionReportCount,
+    persistenceWarning,
 
     submitQuestionReport,
     resetParticipantRating,

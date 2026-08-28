@@ -6,6 +6,14 @@ import type {
   RatingStateV2,
 } from "./ratingEngine";
 
+export const QUIZ_PERSISTENCE_WARNING_GRACE_MS = 60_000;
+export const QUIZ_PERSISTENCE_HEALTH_POLL_INTERVAL_MS = 10_000;
+
+export type PersistenceHealthResponse = {
+  mode: "supabase" | "memory";
+  unavailableSince: string | null;
+};
+
 export type ReportSummary = {
   totalReportCount: number;
   countsByQuestion: Record<string, number>;

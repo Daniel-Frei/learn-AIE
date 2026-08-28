@@ -78,6 +78,7 @@ This file captures durable process preferences so future tasks can follow them b
 ## Shared Data Operations
 
 - For the initial legacy-to-Supabase backfill, treat `store/manual/quiz-ratings(2).json` as the latest legacy rating export snapshot.
+- Keep brief web-development database interruptions unobtrusive, but make a sustained outage visible without requiring log inspection. The current threshold is 60 seconds: retry Supabase in the background, then show a persistent development-only warning that process-memory answers are not durable until the connection recovers.
 
 ## Question Bank Preferences
 

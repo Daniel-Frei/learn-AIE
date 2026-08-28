@@ -153,6 +153,40 @@ Load the current anonymous participant rating state, global question difficulty 
 }
 ```
 
+## Endpoint: `GET /api/persistence-health`
+
+### Purpose
+
+Report whether the web quiz is currently using durable Supabase storage or the
+temporary in-memory fallback. The development frontend polls this endpoint to
+surface sustained storage outages.
+
+### Success Response
+
+- Status: `200`
+
+```ts
+{
+  mode: "supabase" | "memory";
+  unavailableSince: string | null; // ISO 8601 when mode is "memory"
+}
+```
+
+### Error Response
+
+- Status: `503`
+
+```ts
+{
+  error: "Failed to check quiz persistence";
+}
+```
+
+The endpoint performs a lightweight participant lookup. While in fallback
+mode, that lookup retries Supabase when the 10-second circuit-breaker interval
+has elapsed. A successful retry returns `mode: "supabase"` and resumes durable
+storage.
+
 ## Endpoint: `POST /api/answers`
 
 ### Purpose
@@ -356,7 +390,8 @@ Import one participant's legacy local browser rating data into the shared databa
 - `NEXT_PUBLIC_SUPABASE_URL` (required)
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (required for client configuration / deployment parity)
 - `SUPABASE_SERVICE_ROLE_KEY` (required for server-side route access)
-- In local development, if Supabase is unreachable the server falls back to an in-memory quiz store for the current process so the app can still load. That fallback is not durable and resets on restart.
+- In local development, if Supabase is unreachable the server falls back to an in-memory quiz store for the current process so the app can still load. The server retries Supabase every 10 seconds. The frontend allows a 60-second grace period, then shows a development-only warning until a retry succeeds.
+- The fallback is not durable and resets on restart. It stores no browser-side answer queue, so attempts that existed only in a terminated server process cannot be reconstructed or retrospectively migrated.
 
 ## Mobile Client Configuration
 

@@ -145,6 +145,47 @@ test("renders core quiz controls on the home page", async ({ page }) => {
   expect(runtimeSmokeErrors, "home page should hydrate cleanly").toEqual([]);
 });
 
+test("keeps the database warning hidden during the outage grace period", async ({
+  page,
+}) => {
+  await page.route("**/api/persistence-health", async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        mode: "memory",
+        unavailableSince: new Date().toISOString(),
+      }),
+    });
+  });
+
+  await page.goto("/");
+
+  await expect(page.getByTestId("database-persistence-warning")).toHaveCount(0);
+});
+
+test("warns when the development database outage exceeds the grace period", async ({
+  page,
+}) => {
+  await page.route("**/api/persistence-health", async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        mode: "memory",
+        unavailableSince: new Date(Date.now() - 61_000).toISOString(),
+      }),
+    });
+  });
+
+  await page.goto("/");
+
+  const warning = page.getByTestId("database-persistence-warning");
+  await expect(warning).toBeVisible();
+  await expect(warning).toContainText(/practice database unavailable/i);
+  await expect(warning).toContainText(/temporary memory/i);
+});
+
 test("updates filter checkboxes immediately after clicking", async ({
   page,
 }) => {

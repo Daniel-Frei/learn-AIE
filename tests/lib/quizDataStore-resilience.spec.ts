@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import type { QuizDataStore } from "@/lib/server/quizDataStore";
 import {
   InMemoryQuizDataStore,
@@ -8,6 +8,11 @@ import {
   getQuizState,
   recordQuizAnswerForParticipant,
 } from "@/lib/server/quizDataService";
+
+afterEach(() => {
+  vi.useRealTimers();
+  vi.restoreAllMocks();
+});
 
 function makeFailingStore(message = "fetch failed"): QuizDataStore {
   const fail = async (): Promise<never> => {
@@ -88,6 +93,59 @@ describe("resilient quiz data store", () => {
     expect(
       nextState.ratingState.questions["mit15773-l4-q1"]?.legacyCorrect,
     ).toBe(1);
+  });
+
+  it("reports fallback duration and retries the primary store", async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-08-28T12:00:00.000Z"));
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const info = vi.spyOn(console, "info").mockImplementation(() => {});
+    let primaryAvailable = false;
+    let primaryCalls = 0;
+    const participant = {
+      id: "participant-a",
+      rating: 1600,
+      rd: 200,
+      sigma: 0.06,
+      lastUpdatedAt: Date.now(),
+      gamesPlayed: 5,
+      legacyMigratedAt: null,
+    };
+    const primary = makeFailingStore();
+    primary.getParticipant = async () => {
+      primaryCalls += 1;
+      if (!primaryAvailable) throw new Error("fetch failed");
+      return participant;
+    };
+    const store = new ResilientQuizDataStore(
+      primary,
+      new InMemoryQuizDataStore(),
+      { primaryRetryIntervalMs: 1_000 },
+    );
+
+    await expect(store.getParticipant("participant-a")).resolves.toBeNull();
+    expect(store.getPersistenceHealth()).toEqual({
+      mode: "memory",
+      unavailableSince: "2026-08-28T12:00:00.000Z",
+    });
+    expect(warn).toHaveBeenCalledTimes(1);
+
+    primaryAvailable = true;
+    await expect(store.getParticipant("participant-a")).resolves.toBeNull();
+    expect(primaryCalls).toBe(1);
+
+    vi.advanceTimersByTime(1_000);
+    await expect(store.getParticipant("participant-a")).resolves.toEqual(
+      participant,
+    );
+    expect(primaryCalls).toBe(2);
+    expect(store.getPersistenceHealth()).toEqual({
+      mode: "supabase",
+      unavailableSince: null,
+    });
+    expect(info).toHaveBeenCalledWith(
+      expect.stringContaining("Supabase connection recovered"),
+    );
   });
 
   it("rethrows non-transient primary store failures", async () => {

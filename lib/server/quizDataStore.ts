@@ -44,6 +44,11 @@ export interface QuizDataStore {
   appendQuestionReport(report: StoredQuestionReport): Promise<void>;
 }
 
+export type QuizPersistenceHealth = {
+  mode: "supabase" | "memory";
+  unavailableSince: string | null;
+};
+
 type ParticipantRow = {
   participant_id: string;
   rating: number;
@@ -210,29 +215,80 @@ function isMissingAnswerAttemptMetadataError(err: unknown): boolean {
 }
 
 export class ResilientQuizDataStore implements QuizDataStore {
-  private primaryFailed = false;
+  private primaryUnavailableSince: number | null;
+  private nextPrimaryRetryAt = 0;
+  private readonly primaryRetryIntervalMs: number;
 
   constructor(
     private readonly primary: QuizDataStore,
     private readonly fallback: QuizDataStore,
-  ) {}
+    options: {
+      primaryRetryIntervalMs?: number;
+      initiallyUnavailableAt?: number;
+    } = {},
+  ) {
+    this.primaryRetryIntervalMs = options.primaryRetryIntervalMs ?? 10_000;
+    this.primaryUnavailableSince = options.initiallyUnavailableAt ?? null;
+    if (this.primaryUnavailableSince !== null) {
+      this.nextPrimaryRetryAt =
+        this.primaryUnavailableSince + this.primaryRetryIntervalMs;
+    }
+  }
+
+  getPersistenceHealth(): QuizPersistenceHealth {
+    return {
+      mode: this.primaryUnavailableSince === null ? "supabase" : "memory",
+      unavailableSince:
+        this.primaryUnavailableSince === null
+          ? null
+          : new Date(this.primaryUnavailableSince).toISOString(),
+    };
+  }
+
+  async probePrimary(): Promise<QuizPersistenceHealth> {
+    await this.getParticipant("__learning_ai_persistence_healthcheck__");
+    return this.getPersistenceHealth();
+  }
+
+  private markPrimaryUnavailable(operation: string): void {
+    const now = Date.now();
+    if (this.primaryUnavailableSince === null) {
+      this.primaryUnavailableSince = now;
+      console.warn(
+        `[quiz-data] Supabase unavailable during ${operation}; using in-memory fallback while retrying the connection.`,
+      );
+    }
+    this.nextPrimaryRetryAt = now + this.primaryRetryIntervalMs;
+  }
+
+  private markPrimaryAvailable(): void {
+    if (this.primaryUnavailableSince !== null) {
+      console.info(
+        "[quiz-data] Supabase connection recovered; resuming durable storage.",
+      );
+    }
+    this.primaryUnavailableSince = null;
+    this.nextPrimaryRetryAt = 0;
+  }
 
   private async run<T>(
     operation: string,
     work: (store: QuizDataStore) => Promise<T>,
   ): Promise<T> {
-    if (!this.primaryFailed) {
+    if (
+      this.primaryUnavailableSince === null ||
+      Date.now() >= this.nextPrimaryRetryAt
+    ) {
       try {
-        return await work(this.primary);
+        const result = await work(this.primary);
+        this.markPrimaryAvailable();
+        return result;
       } catch (err) {
         if (!isTransientSupabaseError(err)) {
           throw err;
         }
 
-        this.primaryFailed = true;
-        console.warn(
-          `[quiz-data] Supabase unavailable during ${operation}; using in-memory fallback for this session.`,
-        );
+        this.markPrimaryUnavailable(operation);
       }
     }
 
@@ -536,6 +592,25 @@ export class InMemoryQuizDataStore implements QuizDataStore {
 let storeOverride: QuizDataStore | null = null;
 let cachedStore: QuizDataStore | null = null;
 
+function makeUnavailableQuizDataStore(err: unknown): QuizDataStore {
+  const fail = async (): Promise<never> => {
+    throw err;
+  };
+
+  return {
+    getParticipant: fail,
+    upsertParticipant: fail,
+    listQuestionRatings: fail,
+    getQuestionRating: fail,
+    upsertQuestionRating: fail,
+    hasAnswerAttempt: fail,
+    appendAnswerAttempt: fail,
+    listQuestionReports: fail,
+    hasQuestionReport: fail,
+    appendQuestionReport: fail,
+  };
+}
+
 export function setQuizDataStoreForTests(store: QuizDataStore | null): void {
   storeOverride = store;
 }
@@ -556,8 +631,23 @@ export function getQuizDataStore(): QuizDataStore {
       console.warn(
         "[quiz-data] Supabase client could not be created; using in-memory fallback for this session.",
       );
-      cachedStore = new InMemoryQuizDataStore();
+      const unavailableAt = Date.now();
+      cachedStore = new ResilientQuizDataStore(
+        makeUnavailableQuizDataStore(err),
+        new InMemoryQuizDataStore(),
+        { initiallyUnavailableAt: unavailableAt },
+      );
     }
   }
   return cachedStore;
+}
+
+export async function probeQuizDataPersistence(
+  store: QuizDataStore = getQuizDataStore(),
+): Promise<QuizPersistenceHealth> {
+  if (store instanceof ResilientQuizDataStore) {
+    return store.probePrimary();
+  }
+
+  return { mode: "supabase", unavailableSince: null };
 }
