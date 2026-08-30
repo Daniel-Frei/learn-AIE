@@ -7,6 +7,8 @@ import {
   QUESTION_SOURCES,
   stanfordCS109Lecture1WelcomeCountingQuestions,
   stanfordCS109Lecture2CombinatoricsQuestions,
+  stanfordCS109Lecture3IntroProbabilityQuestions,
+  stanfordCS109Lecture4ConditioningAndBayesQuestions,
   type Question,
 } from "@/lib/quiz";
 
@@ -48,6 +50,34 @@ const sets = [
       "integer solutions",
     ],
   },
+  {
+    sourceId: "cs109-lect3",
+    chapter: 3,
+    questions: stanfordCS109Lecture3IntroProbabilityQuestions,
+    fileName: "lecture3_intro_probability.ts",
+    coverage: [
+      "sample space",
+      "event",
+      "equally likely",
+      "axiom",
+      "complement",
+      "mutually exclusive",
+    ],
+  },
+  {
+    sourceId: "cs109-lect4",
+    chapter: 4,
+    questions: stanfordCS109Lecture4ConditioningAndBayesQuestions,
+    fileName: "lecture4_conditioning_and_bayes.ts",
+    coverage: [
+      "conditional probability",
+      "chain rule",
+      "total probability",
+      "bayes",
+      "prior",
+      "posterior",
+    ],
+  },
 ] as const;
 
 function getDifficultyDistribution(questions: Question[]) {
@@ -74,7 +104,7 @@ function getCorrectAnswerDistribution(questions: Question[]) {
 }
 
 describe("Stanford CS109 question sets", () => {
-  it("keeps both lecture banks at 35 questions with stable hardcoded IDs", () => {
+  it("keeps all lecture banks at 35 questions with stable hardcoded IDs", () => {
     for (const set of sets) {
       const expectedIds = Array.from(
         { length: 35 },
@@ -87,7 +117,7 @@ describe("Stanford CS109 question sets", () => {
       );
       const authoredIds = [
         ...fileContent.matchAll(
-          /makeQuestion\(\s*\n\s*"(cs109-lect[12]-q\d{2})"/g,
+          /makeQuestion\(\s*\n\s*"(cs109-lect[1-4]-q\d{2})"/g,
         ),
       ].map((match) => match[1]);
 
@@ -148,9 +178,25 @@ describe("Stanford CS109 question sets", () => {
         topic: "Math",
         questionCount: 35,
       },
+      {
+        id: "cs109-lect3",
+        seriesId: "stanford-cs109",
+        seriesLabel: "Stanford CS109 Probability for Computer Scientists",
+        topic: "Math",
+        questionCount: 35,
+      },
+      {
+        id: "cs109-lect4",
+        seriesId: "stanford-cs109",
+        seriesLabel: "Stanford CS109 Probability for Computer Scientists",
+        topic: "Math",
+        questionCount: 35,
+      },
     ]);
     expect(QUESTION_SOURCE_CONTEXT["cs109-lect1"]).toContain("product");
     expect(QUESTION_SOURCE_CONTEXT["cs109-lect2"]).toContain("divider");
+    expect(QUESTION_SOURCE_CONTEXT["cs109-lect3"]).toContain("axioms");
+    expect(QUESTION_SOURCE_CONTEXT["cs109-lect4"]).toContain("Bayes");
   });
 
   it("covers the probability and counting source boundary without logistics prompts", () => {
@@ -180,6 +226,10 @@ describe("Stanford CS109 question sets", () => {
       "lecture 1 - transcript.md",
       "lecture 2 - slides.pdf",
       "lecture 2 - transcript.md",
+      "lecture 3 - slides.pdf",
+      "lecture 3 - transcript.md",
+      "lecture 4 - slides.pdf",
+      "lecture 4 - transcript.md",
     ];
 
     for (const fileName of expectedFiles) {

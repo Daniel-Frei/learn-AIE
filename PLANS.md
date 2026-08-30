@@ -1,3 +1,62 @@
+# Stanford CS109 Lectures 3-4 Question Sets
+
+## Goal
+
+Store the supplied Fall 2022 Stanford CS109 Lecture 3 and Lecture 4 source
+bundles, then extend the existing selectable course with two 35-question
+practice sources focused on introductory probability, conditioning, total
+probability, and Bayes' theorem.
+
+## Non-goals
+
+- Do not create questions about course logistics, staff, assignments, grading,
+  classroom anecdotes, or unrelated review material.
+- Do not change quiz UI behavior or shared question infrastructure.
+- Do not add later CS109 lectures or a learning-experience page in this pass.
+
+## Steps
+
+- [x] Inspect both PDFs and both transcripts, preserving the user's Lecture 3
+      and Lecture 4 source mapping.
+- [x] Store the paired lecture PDFs and transcripts alongside Lectures 1-2.
+- [x] Author 35 stable-ID, self-contained questions per lecture with balanced
+      difficulty and answer-count patterns.
+- [x] Register both Math-topic sources, extend focused coverage, and update
+      durable product documentation.
+- [x] Run the manual quality gate plus registration, guessability, type,
+      formatting, and full repository checks as appropriate.
+
+## Files to touch
+
+- `lib/lectures/Stanford CS109 Probability for Computer Scientists/lecture3_intro_probability.ts`
+- `lib/lectures/Stanford CS109 Probability for Computer Scientists/lecture4_conditioning_and_bayes.ts`
+- `lib/lectures/Stanford CS109 Probability for Computer Scientists/transcripts-and-files/*`
+- `lib/quiz.ts`
+- `tests/lib/cs109Questions.spec.ts`
+- `docs/product-scope.md`
+- `PLANS.md`
+
+## Verification
+
+- `npm run test:focused -- tests/lib/cs109Questions.spec.ts tests/lib/question-registration.spec.ts`
+- `$env:QUESTION_GUESSABILITY_SOURCE_IDS="cs109-lect3,cs109-lect4"; npm run test:question-guessability`
+- `make types-check`
+- `make format-check`
+- `make check`
+
+## Verification result
+
+- Focused CS109 and registration coverage passes (13 tests), targeted
+  guessability passes (4 tests), and the full Vitest suite passes (254 passed,
+  1 skipped) above the configured coverage thresholds.
+- TypeScript, ESLint, mobile lint/types, touched-file Prettier, and all 8 E2E
+  smoke tests pass.
+- Repository-wide `make check` stops at the existing Prettier baseline on 21
+  unrelated CME296 and learning-page files; all later gates were run
+  independently and pass.
+
+---
+
 # Development Database Outage Visibility
 
 ## Goal
