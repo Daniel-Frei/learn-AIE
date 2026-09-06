@@ -25,6 +25,8 @@ import { stanfordCS109Lecture1WelcomeCountingQuestions } from "./lectures/Stanfo
 import { stanfordCS109Lecture2CombinatoricsQuestions } from "./lectures/Stanford CS109 Probability for Computer Scientists/lecture2_combinatorics";
 import { stanfordCS109Lecture3IntroProbabilityQuestions } from "./lectures/Stanford CS109 Probability for Computer Scientists/lecture3_intro_probability";
 import { stanfordCS109Lecture4ConditioningAndBayesQuestions } from "./lectures/Stanford CS109 Probability for Computer Scientists/lecture4_conditioning_and_bayes";
+import { stanfordCS109Lecture5IndependenceQuestions } from "./lectures/Stanford CS109 Probability for Computer Scientists/lecture5_independence";
+import { stanfordCS109Lecture6RandomVariablesQuestions } from "./lectures/Stanford CS109 Probability for Computer Scientists/lecture6_random_variables";
 import { cs224rLecture1IntroQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture1_intro";
 import { cs224rLecture2ImitationLearningQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture2_Imitation Learning";
 import { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture3_Policy Gradients";
@@ -386,6 +388,24 @@ export const QUESTION_SOURCES = [
     seriesLabel: "Stanford CS109 Probability for Computer Scientists",
     topic: "Math" as const,
     questions: stanfordCS109Lecture4ConditioningAndBayesQuestions,
+  },
+  {
+    id: "cs109-lect5" as const,
+    label: "Stanford CS109 Lecture 5",
+    title: "Stanford CS109 Lecture 5: Independence",
+    seriesId: "stanford-cs109" as const,
+    seriesLabel: "Stanford CS109 Probability for Computer Scientists",
+    topic: "Math" as const,
+    questions: stanfordCS109Lecture5IndependenceQuestions,
+  },
+  {
+    id: "cs109-lect6" as const,
+    label: "Stanford CS109 Lecture 6",
+    title: "Stanford CS109 Lecture 6: Random Variables",
+    seriesId: "stanford-cs109" as const,
+    seriesLabel: "Stanford CS109 Probability for Computer Scientists",
+    topic: "Math" as const,
+    questions: stanfordCS109Lecture6RandomVariablesQuestions,
   },
   {
     id: "cs224r-lect1" as const,
@@ -962,6 +982,10 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
     "Introductory probability lecture about sample spaces, events, probability axioms, equally likely outcomes, complements, and counting-based probability models.",
   "cs109-lect4":
     "Conditional probability and Bayes lecture about conditioning, the chain rule, the law of total probability, priors, likelihoods, and posterior updates.",
+  "cs109-lect5":
+    "Independence lecture about inclusion-exclusion, independence versus mutual exclusivity, generalized independence, network reliability, binomial counting, and hash occupancy.",
+  "cs109-lect6":
+    "Random-variables lecture about conditional independence, discrete random variables, probability mass functions, expectation, linearity, and the St. Petersburg game.",
   "cs224r-lect1":
     "Deep reinforcement learning introduction about MDPs, value functions, policies, and the RL problem setup.",
   "cs224r-lect2":
@@ -1251,6 +1275,8 @@ export { stanfordCS109Lecture1WelcomeCountingQuestions } from "./lectures/Stanfo
 export { stanfordCS109Lecture2CombinatoricsQuestions } from "./lectures/Stanford CS109 Probability for Computer Scientists/lecture2_combinatorics";
 export { stanfordCS109Lecture3IntroProbabilityQuestions } from "./lectures/Stanford CS109 Probability for Computer Scientists/lecture3_intro_probability";
 export { stanfordCS109Lecture4ConditioningAndBayesQuestions } from "./lectures/Stanford CS109 Probability for Computer Scientists/lecture4_conditioning_and_bayes";
+export { stanfordCS109Lecture5IndependenceQuestions } from "./lectures/Stanford CS109 Probability for Computer Scientists/lecture5_independence";
+export { stanfordCS109Lecture6RandomVariablesQuestions } from "./lectures/Stanford CS109 Probability for Computer Scientists/lecture6_random_variables";
 export { cs224rLecture1IntroQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture1_intro";
 export { cs224rLecture2ImitationLearningQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture2_Imitation Learning";
 export { cs224rLecture3PolicyGradientsQuestions } from "./lectures/Stanford CS224R Deep Reinforcement Learning/lecture3_Policy Gradients";

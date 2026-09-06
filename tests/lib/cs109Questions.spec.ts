@@ -9,6 +9,8 @@ import {
   stanfordCS109Lecture2CombinatoricsQuestions,
   stanfordCS109Lecture3IntroProbabilityQuestions,
   stanfordCS109Lecture4ConditioningAndBayesQuestions,
+  stanfordCS109Lecture5IndependenceQuestions,
+  stanfordCS109Lecture6RandomVariablesQuestions,
   type Question,
 } from "@/lib/quiz";
 
@@ -78,6 +80,34 @@ const sets = [
       "posterior",
     ],
   },
+  {
+    sourceId: "cs109-lect5",
+    chapter: 5,
+    questions: stanfordCS109Lecture5IndependenceQuestions,
+    fileName: "lecture5_independence.ts",
+    coverage: [
+      "independent",
+      "mutually exclusive",
+      "inclusion-exclusion",
+      "network",
+      "exactly",
+      "hash",
+    ],
+  },
+  {
+    sourceId: "cs109-lect6",
+    chapter: 6,
+    questions: stanfordCS109Lecture6RandomVariablesQuestions,
+    fileName: "lecture6_random_variables.ts",
+    coverage: [
+      "conditional independence",
+      "random variable",
+      "probability mass function",
+      "support",
+      "expectation",
+      "st. petersburg",
+    ],
+  },
 ] as const;
 
 function getDifficultyDistribution(questions: Question[]) {
@@ -117,7 +147,7 @@ describe("Stanford CS109 question sets", () => {
       );
       const authoredIds = [
         ...fileContent.matchAll(
-          /makeQuestion\(\s*\n\s*"(cs109-lect[1-4]-q\d{2})"/g,
+          /makeQuestion\(\s*\n\s*"(cs109-lect[1-6]-q\d{2})"/g,
         ),
       ].map((match) => match[1]);
 
@@ -192,11 +222,27 @@ describe("Stanford CS109 question sets", () => {
         topic: "Math",
         questionCount: 35,
       },
+      {
+        id: "cs109-lect5",
+        seriesId: "stanford-cs109",
+        seriesLabel: "Stanford CS109 Probability for Computer Scientists",
+        topic: "Math",
+        questionCount: 35,
+      },
+      {
+        id: "cs109-lect6",
+        seriesId: "stanford-cs109",
+        seriesLabel: "Stanford CS109 Probability for Computer Scientists",
+        topic: "Math",
+        questionCount: 35,
+      },
     ]);
     expect(QUESTION_SOURCE_CONTEXT["cs109-lect1"]).toContain("product");
     expect(QUESTION_SOURCE_CONTEXT["cs109-lect2"]).toContain("divider");
     expect(QUESTION_SOURCE_CONTEXT["cs109-lect3"]).toContain("axioms");
     expect(QUESTION_SOURCE_CONTEXT["cs109-lect4"]).toContain("Bayes");
+    expect(QUESTION_SOURCE_CONTEXT["cs109-lect5"]).toContain("independence");
+    expect(QUESTION_SOURCE_CONTEXT["cs109-lect6"]).toContain("mass functions");
   });
 
   it("covers the probability and counting source boundary without logistics prompts", () => {
@@ -230,6 +276,10 @@ describe("Stanford CS109 question sets", () => {
       "lecture 3 - transcript.md",
       "lecture 4 - slides.pdf",
       "lecture 4 - transcript.md",
+      "lecture 5 - slides.pdf",
+      "lecture 5 - transcript.md",
+      "lecture 6 - slides.pdf",
+      "lecture 6 - transcript.md",
     ];
 
     for (const fileName of expectedFiles) {
