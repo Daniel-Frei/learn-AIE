@@ -86,6 +86,7 @@ Run this gate whenever this skill creates, adds, rewrites, fixes, or otherwise e
 For new question sets, run the gate over the full draft before finalizing. For additions, rewrites, and fixes, run it over every changed question plus enough surrounding questions to catch repeated schemas and answer-pattern drift. For review-only tasks, perform the same triage but stop at findings unless the user asked you to edit. For combined add-and-rewrite tasks, run the triage over the affected existing slice and apply the same quality bar to the newly added questions.
 
 1. Audit each question with `isCorrect` hidden.
+   - First run the question-option alignment review below: state the selection criterion, judge every option against the full prompt, then compare the resulting key with `isCorrect`. Resolve ambiguous interpretations before reviewing diagnosticity; a plausible option is not necessarily a responsive answer.
    - Mark a question low-diagnosticity if a learner can answer by matching object categories, rejecting extreme wording, choosing the broad/hedged reasonable option, spotting the familiar definition, following wording in the stem, or reusing a repeated course theme.
    - Mark definition-recognition items low-diagnosticity when three options are plainly about other concepts and only one option is the right kind of thing.
    - Mark broad all-true or mostly-true multi-select items low-diagnosticity when the true options are generic introductory truths and false options are absurd, impossible, or overclaimed.
@@ -183,6 +184,23 @@ For new question sets, run the gate over the full draft before finalizing. For a
 - Every distractor should pass the "real learner" test: a learner with a partial misconception could plausibly select it for a substantive reason.
 - For multi-select items with several true options, avoid making all true options broad introductory facts and all false options absurd. Mix specificity and plausibility so selecting all correct options requires discriminating understanding.
 
+## Question-Option Alignment
+
+`isCorrect` means the learner should select the option as an answer to this prompt. Factual truth in isolation and association with the topic are insufficient. For prompts asking for false statements or exceptions, a factually false statement can be the correct selection.
+
+- Before assigning answer flags, state the selection criterion in one sentence: what relation, scope, conditions, and polarity must an option satisfy? Make that criterion clear in the learner-visible prompt. Distinguish causes from consequences, definitions from explanations, associations from causal claims, and possible outcomes from guaranteed or necessary outcomes.
+- Evaluate each option with the full prompt, separating three judgments: factual accuracy under the stated conditions, whether it answers the precise relation asked for, and whether it should be selected. For fragments or formulas, evaluate the claim formed by combining stem and option. Derive `isCorrect` from the selection judgment, not from factual accuracy alone.
+- Check for true but irrelevant statements, true and related statements that answer a different question, and options whose relevance depends on unstated assumptions. If reasonable readings lead to different answer keys, revise the prompt or option until the key is defensible from the visible wording; do not resolve ambiguity only in the explanation.
+- Keep instructions and stem aligned. Use wording such as "Select all statements that explain ..." when explanation is the task. Use "Select all true statements about ..." only when factual truth within that stated scope is the intended task. Do not silently broaden a specific question into a collection of true facts about the topic.
+- Prefer distractors that attempt to answer the same question but make a substantive conceptual mistake. A true statement that fails the requested relation can be useful when that distinction is the learning target and the wording is clear; avoid unrelated true facts as filler or attention traps.
+- For assertion-reason items, judge the Assertion's truth, the Reason's truth, and the explanatory link separately. Both statements being true or topically related does not establish that the Reason explains the Assertion.
+
+Examples for checking the distinction:
+
+- "What is the capital of France?" does not license selecting "The capital of the UK is London." That statement is true but unresponsive. Improve the item with competing capitals of France rather than unrelated geographical facts.
+- "Which observations demonstrate that X causes Y?" cannot key "X and Y are correlated" as correct merely because the correlation is real. Specify evidence sufficient for the causal claim, or change the prompt to ask about association if that is the intended construct.
+- "Which statements are false about matrix multiplication?" can correctly select "Matrix multiplication is commutative for all square matrices of the same size." The statement is false, so it satisfies the explicitly negative selection criterion.
+
 ## Adversarial Answer Review
 
 Before finalizing a generated or revised set, review it from the perspective of a reasonably educated learner who has not read the source and is trying to game the quiz.
@@ -206,6 +224,7 @@ Before finalizing a generated or revised set, review it from the perspective of 
 - Across the multi-select questions in each complete question set, keep 1-, 2-, 3-, and 4-correct-answer questions as balanced as practical unless the user or existing set convention specifies another pattern.
 - For assertion-reason questions, exactly one option should be correct. When a set contains several assertion-reason questions, vary which of the fixed five ordered options is correct as practical.
 - For small or tightly scoped sets, prioritize source coverage and answer quality over exact answer-count balance.
+- Never mark a true but unresponsive option correct to meet an answer-count target. Establish semantic correctness first, then rebalance by revising or replacing items while respecting stable-ID rules.
 - "Correct" means `isCorrect: true`, meaning the user should select that option. It does not merely mean whether a statement is factually true in isolation.
 - Mixed phrasing is allowed, such as "which are correct" or "which are false", but the prompt must align exactly with the `isCorrect` flags.
 
@@ -215,6 +234,7 @@ Before finalizing a generated or revised set, review it from the perspective of 
 - Users read explanations after submitting an answer, when the UI already shows which choices are correct or incorrect. Focus on why each choice has that status rather than restating the status.
 - Each explanation must be at least two sentences.
 - Explain why correct options are correct and why incorrect options are incorrect.
+- Tie each option's selection status to the prompt's criterion. If an unselected statement is true but does not answer the question, acknowledge its truth and explain the missing relation or scope instead of calling it factually false. For negative prompts, explain why a false statement should be selected.
 - Avoid explanations that merely repeat an answer option, quote it back, or label it as a misconception without adding the missing concept. Bad: `The option "All swans are white" is incorrect.` Better: `Black swans living in Australia disprove the universal claim, so the statement overgeneralizes from limited observations.`
 - Do not refer to answer order, such as "option A" or "the second answer".
 - Use simple, teaching-oriented language.
@@ -312,6 +332,7 @@ For assertion-reason questions, use this shape inside the same `Question[]` arra
 - Difficulty is exactly `"easy"`, `"medium"`, or `"hard"`, follows any user/source-specified distribution, and otherwise uses a reasonable balanced default when the source material supports it.
 - Final response reports the difficulty balance with `"easy"`, `"medium"`, and `"hard"` counts.
 - Answer options are plausible enough that the learner needs concept understanding rather than elimination of obviously wrong distractors.
+- Every option has passed the question-option alignment review: the visible selection criterion yields an unambiguous key, truth is distinguished from responsiveness, and explanations justify selection relative to the prompt.
 - Adversarial answer review has been applied: absolutes, overclaims, option length/detail, and obvious false-option cues do not let a generic heuristic score well.
 - Multi-select math questions do not make the correct answer the only math-heavy or KaTeX/LaTeX-heavy option; when formulas are used, plausible competing formulas or calculations are present where appropriate.
 - For every created, added, rewritten, fixed, or otherwise edited question, low-diagnosticity risk has been triaged by construct target and misconception target, and weak recognition items were substantially rewritten rather than lightly polished.
