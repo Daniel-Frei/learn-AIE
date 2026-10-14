@@ -195,23 +195,32 @@ export const stanfordCS109Lecture2CombinatoricsQuestions: Question[] = [
     "Union overlap and repeated-object labels create different kinds of duplication. Repeated-object permutations create a uniform multiplicative overcount, so \\(5!/(3!2!)=10\\); subtracting the denominator instead would have no valid counting interpretation.",
   ),
   makeQuestion(
-    "cs109-lect2-q10",
-    "easy",
-    "A code uses six different digits chosen from ten, and order matters. Which statements correctly describe the count?",
+    "cs109-lect2-q36",
+    "medium",
+    "A six-digit code uses six different decimal digits, and its first digit cannot be 0. Which statements correctly count the codes?",
     [
-      ["The position counts are \\(10,9,8,7,6,5\\).", true],
-      ["The product is \\(10!/4!\\).", true],
-      ["The numerical count is 151,200.", true],
       [
-        "The count is \\(\\binom{10}{6}\\) because a code ignores the order of its digits.",
+        "A direct count is \\(9\\cdot9\\cdot8\\cdot7\\cdot6\\cdot5=136{,}080\\).",
+        true,
+      ],
+      [
+        "The unrestricted partial-permutation count is \\(10!/4!=151{,}200\\).",
+        true,
+      ],
+      [
+        "Subtracting the \\(9!/4!=15{,}120\\) codes starting with 0 gives \\(136{,}080\\).",
+        true,
+      ],
+      [
+        "The count is \\(9\\cdot8\\cdot7\\cdot6\\cdot5\\cdot4=60{,}480\\).",
         false,
       ],
     ],
-    "The code is an ordered selection without replacement, also called a partial permutation. Choosing a six-digit set would give only \\(\\binom{10}{6}\\); each such set has \\(6!\\) orders, and their product equals \\(10!/4!=151{,}200\\).",
+    "There are nine choices for the first digit. After that digit is used, nine digits remain because 0 becomes available, so the second factor is also nine. Alternatively, subtract codes with a fixed leading zero from all six-digit partial permutations; excluding zero from every position counts only the smaller all-nonzero subset.",
   ),
   makeQuestion(
     "cs109-lect2-q11",
-    "hard",
+    "medium",
     "A 10-bit string must contain exactly four 1s. Which statements are correct?",
     [
       [
@@ -312,28 +321,22 @@ export const stanfordCS109Lecture2CombinatoricsQuestions: Question[] = [
     "A hand is an unordered selection of five distinct cards, so the appropriate count is the binomial coefficient. The descending product counts every hand in \\(5!\\) draw orders, while the power permits repeated cards and \\(52!/5!\\) leaves the unselected-card order overcount unresolved.",
   ),
   makeQuestion(
-    "cs109-lect2-q17",
+    "cs109-lect2-q37",
     "easy",
-    "A programmer uses enumeration to verify combinatorial formulas on small inputs. Which statements are sound?",
+    "A program permutes four temporarily labeled tiles A1, A2, B1, B2, removes the numeric labels, and stores the resulting four-letter strings in a set. Which statements are correct?",
     [
+      ["The labeled enumeration produces \\(4!=24\\) orderings.", true],
       [
-        "Python's itertools.permutations generates ordered tuples, so repeated input values can produce duplicate-looking tuples.",
+        "Each visible string corresponds to \\(2!2!=4\\) labeled orderings.",
         true,
       ],
+      ["The set contains \\(24/4=6\\) distinct strings.", true],
       [
-        "Converting repeated-value permutations to a set can reveal the number of unique visible arrangements.",
-        true,
-      ],
-      [
-        "Python's itertools.combinations(cards, 5) enumerates unordered five-card selections without enumerating their draw orders.",
-        true,
-      ],
-      [
-        "A formula can count a large outcome set without materializing every outcome in memory.",
+        "Choosing the two A positions gives the same count, \\(\\binom42=6\\).",
         true,
       ],
     ],
-    "Enumeration and counting answer related but different computational questions. Python's iterator tools are useful for checking small cases, while factorial and combination formulas obtain the cardinality directly and avoid constructing millions of outcomes.",
+    "Swapping the two A labels or the two B labels leaves the visible string unchanged, creating four labeled histories for every visible arrangement. The set removes those duplicates and keeps six strings. Equivalently, the two A positions determine both B positions, so choosing those positions counts the same outcomes.",
   ),
   makeQuestion(
     "cs109-lect2-q18",
@@ -448,7 +451,7 @@ export const stanfordCS109Lecture2CombinatoricsQuestions: Question[] = [
   ),
   makeQuestion(
     "cs109-lect2-q24",
-    "hard",
+    "medium",
     "How many nonnegative integer solutions satisfy \\(x_1+x_2+x_3=7\\)?",
     [
       ["\\(\\binom{7+3-1}{3-1}=\\binom{9}{2}=36\\)", true],
@@ -526,7 +529,7 @@ export const stanfordCS109Lecture2CombinatoricsQuestions: Question[] = [
   ),
   makeQuestion(
     "cs109-lect2-q28",
-    "easy",
+    "medium",
     "For each task use \\(n=5\\) distinct objects, choose-size \\(k=2\\), and \\(r=3\\) labeled buckets where relevant. Which row gives, in order, the counts for (i) arranging all objects, (ii) choosing a subset, (iii) assigning distinct objects to buckets, and (iv) assigning five indistinguishable objects to buckets?",
     [
       ["\\(120,\\ 10,\\ 243,\\ 21\\)", true],
@@ -612,28 +615,25 @@ export const stanfordCS109Lecture2CombinatoricsQuestions: Question[] = [
     "Reserve one request for each server to enforce positivity, leaving five indistinguishable requests to distribute with zeros allowed. Stars and bars then gives \\(\\binom{5+3-1}{2}=\\binom{7}{2}=21\\); the unrestricted nonnegative count would include empty servers.",
   ),
   makeQuestion(
-    "cs109-lect2-q33",
+    "cs109-lect2-q38",
     "hard",
-    "Which statements correctly describe how bucket constraints change the counting model?",
+    "Eight indistinguishable requests are assigned to three labeled servers. The occupancies satisfy \\(x_1\\ge2\\), \\(x_2\\ge1\\), \\(0\\le x_3\\le2\\), and \\(x_1+x_2+x_3=8\\). Which statements are correct?",
     [
       [
-        "The unrestricted distinct-object count \\(r^n\\) allows empty buckets and arbitrary occupancies.",
+        "After reserving the lower bounds, \\(y_1=x_1-2\\) and \\(y_2=x_2-1\\) satisfy \\(y_1+y_2+x_3=5\\).",
         true,
       ],
       [
-        "The unrestricted divider method allows empty buckets through adjacent or endpoint dividers.",
+        "Ignoring the upper bound on \\(x_3\\) gives \\(\\binom72=21\\) assignments.",
         true,
       ],
+      ["Assignments violating \\(x_3\\le2\\) number \\(\\binom42=6\\).", true],
       [
-        "A requirement that every bucket be nonempty changes the count and must be enforced, for indistinguishable objects, by reserving one object per bucket.",
-        true,
-      ],
-      [
-        "Fixed bucket capacities such as 2-2-2 require a constrained count rather than the unrestricted power or stars-and-bars formula.",
+        "The valid count is \\(21-6=15\\), also obtainable as \\(6+5+4\\) for \\(x_3=0,1,2\\).",
         true,
       ],
     ],
-    "The canonical formulas assume no occupancy limits beyond nonnegativity. Nonempty or fixed-capacity requirements remove outcomes from those unrestricted spaces, so the constraint must be built into the construction through shifts, subset choices, or multinomial counts.",
+    "Reserve two requests for server 1 and one for server 2, leaving five units for a nonnegative stars-and-bars problem. To count violations, also reserve three for server 3; two units remain, giving six violating assignments. Subtracting from 21 leaves 15, and fixing server 3's occupancy gives the independent check of six, five, and four possibilities.",
   ),
   makeQuestion(
     "cs109-lect2-q34",
@@ -660,24 +660,27 @@ export const stanfordCS109Lecture2CombinatoricsQuestions: Question[] = [
     "Boundary cases are useful checks: one destination, an empty selection, and an empty distribution each have a single outcome. Fully indistinguishable copies also have only one visible ordering, so applying \\(n!\\) without removing label overcounting fails that sanity check.",
   ),
   makeQuestion(
-    "cs109-lect2-q35",
+    "cs109-lect2-q39",
     "hard",
-    "Eight ordered observations contain exactly 4 results of type A, 3 of type B, and 1 of type C. Which statements are correct?",
+    "An eight-symbol sequence contains four As, three Bs, and one C. Both its first and last symbols must be A. Which statements correctly count the valid sequences?",
     [
-      ["The number of type sequences is \\(8!/(4!3!1!)=280\\).", true],
       [
-        "The same count is \\(\\binom{8}{4}\\binom{4}{3}=70\\times4=280\\).",
+        "The six interior positions contain two As, three Bs, and one C, giving \\(6!/(2!3!)=60\\).",
         true,
       ],
       [
-        "The number is \\(8!\\) because the observation times distinguish repeated type labels.",
+        "Choosing the three interior B positions and then the C position gives \\(\\binom63\\cdot3=60\\).",
+        true,
+      ],
+      [
+        "The count is \\(6!/(4!3!)=5\\), retaining all original multiplicities in the denominator.",
         false,
       ],
       [
-        "The number is \\(3^8\\) because it enforces exactly four A results, three B results, and one C result.",
+        "The count is \\(\\binom62=15\\), since choosing the interior A positions completes the sequence.",
         false,
       ],
     ],
-    "The positions are distinct but labels within each result type are not, so the multinomial denominator removes within-type permutations. Sequentially choosing A positions and then B positions encodes the same frequency constraint and confirms the value 280.",
+    "Fixing both endpoints uses two of the four As, leaving the multiset AAB B B C in the six interior positions. The interior factorial count therefore divides by \\(2!3!\\), not \\(4!3!\\). Choosing only the remaining A positions is incomplete because the C can occupy any of four remaining positions; choosing the B positions and then C also yields 60.",
   ),
 ];

@@ -143,14 +143,20 @@ export const stanfordCS109Lecture4ConditioningAndBayesQuestions: Question[] = [
         "They normalize the same joint mass by different observed-event probabilities.",
         true,
       ],
-      ["Intersection changes order when the conditional is reversed.", false],
       [
-        "Only the expression with the more likely event on the right is defined.",
+        "They normalize different joint masses by the same observed-event probability.",
         false,
       ],
-      ["The two expressions use different definitions of probability.", false],
+      [
+        "They normalize the same joint mass by the same union probability.",
+        false,
+      ],
+      [
+        "They divide the target marginal by the observed-event marginal without using a joint mass.",
+        false,
+      ],
     ],
-    "Both conditionals contain the same numerator \\(P(E\\cap F)\\), because intersection is symmetric, but their denominators are \\(P(F)\\) and \\(P(E)\\). They therefore describe different restricted worlds and agree only in special cases, not as a general rule.",
+    "Both conditionals contain the same joint numerator \\(P(E\\cap F)\\), since intersection is symmetric. Their denominators are \\(P(F)\\) and \\(P(E)\\), respectively, so each normalizes within a different observed event. Neither a union denominator nor a ratio of marginals substitutes for the intersection-based conditional definition.",
   ),
   makeQuestion(
     "cs109-lect4-q09",
@@ -197,7 +203,7 @@ export const stanfordCS109Lecture4ConditioningAndBayesQuestions: Question[] = [
   makeQuestion(
     "cs109-lect4-q11",
     "easy",
-    "Which formulas correctly decompose \\(P(E)\\) according to whether event \\(F\\) occurs?",
+    "Assume \\(0<P(F)<1\\). Which formulas correctly decompose \\(P(E)\\) according to whether event \\(F\\) occurs?",
     [
       ["\\(P(E)=P(E\\cap F)+P(E\\cap F^c)\\).", true],
       ["\\(P(E)=P(E\\mid F)P(F)+P(E\\mid F^c)P(F^c)\\).", true],
@@ -209,7 +215,7 @@ export const stanfordCS109Lecture4ConditioningAndBayesQuestions: Question[] = [
   makeQuestion(
     "cs109-lect4-q12",
     "easy",
-    "What property must background events \\(B_1,\\ldots,B_m\\) have to support the partition form \\(P(E)=\\sum_i P(E\\mid B_i)P(B_i)\\)?",
+    "Assume \\(P(B_i)>0\\) for each background event. What property must background events \\(B_1,\\ldots,B_m\\) have to support the partition form \\(P(E)=\\sum_i P(E\\mid B_i)P(B_i)\\)?",
     [
       [
         "They must be mutually exclusive and together cover the sample space.",
@@ -260,7 +266,7 @@ export const stanfordCS109Lecture4ConditioningAndBayesQuestions: Question[] = [
   makeQuestion(
     "cs109-lect4-q15",
     "medium",
-    "Events \\(B_1,B_2,B_3\\) partition the sample space with probabilities 0.2, 0.5, and 0.3. If \\(P(E\\mid B_1)=0.1\\), \\(P(E\\mid B_2)=0.4\\), and \\(P(E\\mid B_3)=0.8\\), which calculations are correct?",
+    "Events \\(B_1,B_2,B_3\\) partition the sample space. Their probabilities and event likelihoods are:\n\n| Background event | Probability | \\(P(E\\mid B_i)\\) |\n| --- | ---: | ---: |\n| \\(B_1\\) | 0.2 | 0.1 |\n| \\(B_2\\) | 0.5 | 0.4 |\n| \\(B_3\\) | 0.3 | 0.8 |\n\nWhich calculations are correct?",
     [
       ["\\(P(E)=0.1(0.2)+0.4(0.5)+0.8(0.3)=0.46\\).", true],
       ["The \\(B_3\\) branch contributes 0.24 to \\(P(E)\\).", true],
@@ -274,7 +280,7 @@ export const stanfordCS109Lecture4ConditioningAndBayesQuestions: Question[] = [
   ),
   makeQuestion(
     "cs109-lect4-q16",
-    "medium",
+    "easy",
     "For events with positive probabilities, which expression is Bayes' theorem for reversing the conditioning direction?",
     [
       ["\\(P(F\\mid E)=\\dfrac{P(E\\mid F)P(F)}{P(E)}\\)", true],
@@ -286,7 +292,7 @@ export const stanfordCS109Lecture4ConditioningAndBayesQuestions: Question[] = [
   ),
   makeQuestion(
     "cs109-lect4-q17",
-    "medium",
+    "easy",
     "In the Bayes expression \\(P(F\\mid E)=P(E\\mid F)P(F)/P(E)\\), which terminology matches the roles of the terms?",
     [
       [
@@ -327,7 +333,7 @@ export const stanfordCS109Lecture4ConditioningAndBayesQuestions: Question[] = [
         false,
       ],
     ],
-    "The given 0.20 is the likelihood of seeing the word under spam, not the reversed probability that the message is spam after seeing the word. Bayes combines both possible sources of the evidence and normalizes the spam contribution by their total, producing a posterior near 0.968.",
+    "Let S mean spam and D mean the email contains 'Dear.' The evidence probability is \\(P(D)=P(D\\mid S)P(S)+P(D\\mid S^c)P(S^c)=0.20(0.60)+0.01(0.40)=0.124\\). Bayes' rule gives \\(P(S\\mid D)=0.12/0.124\\approx0.9677\\). The given 0.20 is \\(P(D\\mid S)\\), the likelihood of the word under spam, rather than the reversed probability \\(P(S\\mid D)\\).",
   ),
   makeQuestion(
     "cs109-lect4-q19",
@@ -350,7 +356,7 @@ export const stanfordCS109Lecture4ConditioningAndBayesQuestions: Question[] = [
   makeQuestion(
     "cs109-lect4-q20",
     "medium",
-    "Using the same disease model—0.5% prevalence, 98% sensitivity, and 1% false-positive rate—which value is closest to the probability of disease after a negative test?",
+    "A disease model has 0.5% prevalence, 98% sensitivity, and 1% false-positive rate. Which value is closest to the probability of disease after a negative test?",
     [
       [
         "\\(\\dfrac{0.02(0.005)}{0.02(0.005)+0.99(0.995)}\\approx0.00010\\)",
@@ -368,7 +374,7 @@ export const stanfordCS109Lecture4ConditioningAndBayesQuestions: Question[] = [
   makeQuestion(
     "cs109-lect4-q21",
     "medium",
-    "In a population of 1,000 under the disease model, about 5 people have the disease. Which statements correctly explain the positive-test posterior using expected counts?",
+    "A disease has 0.5% prevalence. A test has 98% sensitivity and a 1% false-positive rate. In a population of 1,000, about 5 people have the disease. Which statements explain the positive-test posterior using expected counts?",
     [
       ["About \\(0.98(5)=4.9\\) diseased people test positive.", true],
       ["About \\(0.01(995)=9.95\\) disease-free people test positive.", true],
@@ -408,51 +414,33 @@ export const stanfordCS109Lecture4ConditioningAndBayesQuestions: Question[] = [
     "Sensitivity conditions on the true disease state, while the posterior conditions on the observed test result. Reversing that direction requires the disease prior and competing positive-test likelihoods; with low prevalence, even a sensitive test can have a moderate positive predictive value.",
   ),
   makeQuestion(
-    "cs109-lect4-q23",
+    "cs109-lect4-q36",
     "medium",
-    "Which facts are sufficient to compute \\(P(F\\mid E)\\) by the expanded two-case form of Bayes' theorem?",
+    "For events \\(E,F\\), each option is a separate proposed data set. Which data sets are sufficient on their own to determine \\(P(F\\mid E)\\)?",
     [
-      [
-        "The prior for the state, the evidence likelihood under that state, and the evidence likelihood under its complement.",
-        true,
-      ],
-      ["The complement prior, obtained as one minus the state prior.", true],
-      [
-        "Only the forward evidence likelihood, because the conditioning direction can be reversed directly.",
-        false,
-      ],
-      [
-        "Only the evidence probability and the state prior, because joint behavior is unnecessary.",
-        false,
-      ],
+      ["\\(P(F)=0.3,\\ P(E\\mid F)=0.8,\\ P(E\\mid F^c)=0.2\\).", true],
+      ["\\(P(F)=0.3,\\ P(E\\mid F)=0.8,\\ P(E)=0.5\\).", true],
+      ["\\(P(F)=0.3,\\ P(E)=0.5\\).", false],
+      ["\\(P(F^c)=0.7\\).", false],
     ],
-    "The numerator needs the joint contribution from \\(F\\), while the denominator needs every way the evidence can occur. The stated prior and two likelihoods supply both branches, with the complementary prior derived from \\(P(F)\\); a single likelihood cannot account for competing explanations of the evidence.",
+    "The first data set gives joint mass \\(0.3(0.8)=0.24\\) and evidence mass \\(0.24+0.7(0.2)=0.38\\), so Bayes determines the posterior. The second already supplies the evidence mass, giving \\(0.24/0.5=0.48\\). Marginal rates alone do not fix the intersection, and knowing only the complement prior leaves both evidence likelihoods unspecified.",
   ),
   makeQuestion(
-    "cs109-lect4-q24",
+    "cs109-lect4-q37",
     "medium",
-    "A classifier flags 8% of inputs. Among truly harmful inputs it flags 90%, and harmful inputs have prevalence 2%. What additional quantity is needed to determine \\(P(\\text{harmful}\\mid\\text{flag})\\) directly from Bayes' theorem?",
+    "A classifier flags 8% of inputs. It flags 90% of truly harmful inputs, which constitute 2% of all inputs. What is the probability that a flagged input is harmful?",
     [
-      ["No additional quantity; \\(0.90(0.02)/0.08\\) is sufficient.", true],
-      [
-        "The value \\(0.10(0.02)/0.08\\), using the no-flag rate among harmful inputs.",
-        false,
-      ],
-      [
-        "The ratio \\(0.90(0.08)/0.02\\), using the flag rate as though it were the prior.",
-        false,
-      ],
-      [
-        "The ratio \\(0.08/[0.90(0.02)]\\), which reverses the Bayes numerator and denominator.",
-        false,
-      ],
+      ["\\(0.90(0.02)/0.08=0.225\\)", true],
+      ["\\(0.10(0.02)/0.08=0.025\\)", false],
+      ["\\(0.90(0.08)=0.072\\)", false],
+      ["\\(0.90(0.02)=0.018\\)", false],
     ],
-    "Bayes' compact form needs the likelihood \\(P(\\text{flag}\\mid\\text{harmful})=0.90\\), the prior 0.02, and the evidence probability \\(P(\\text{flag})=0.08\\), all of which are given. The posterior is therefore \\(0.90\\times0.02/0.08=0.225\\).",
+    "The joint harmful-and-flagged probability is \\(0.90(0.02)=0.018\\). Conditioning on a flag divides that mass by the overall flag rate 0.08, yielding 0.225. Using 0.10 substitutes the missed-harm likelihood, multiplying by the flag rate confuses the prior with the evidence, and leaving 0.018 unnormalized returns a joint probability.",
   ),
   makeQuestion(
     "cs109-lect4-q25",
     "hard",
-    "Locations \\(L_1,L_2,L_3\\) have priors 0.2, 0.5, and 0.3. A satellite observation \\(O\\) has likelihoods 0.1, 0.4, and 0.2 at those locations. Which statements correctly compute \\(P(L_2\\mid O)\\)?",
+    "An object occupies exactly one of three locations. A satellite observation \\(O\\) has the following likelihoods:\n\n| Location | Prior | \\(P(O\\mid L_i)\\) |\n| --- | ---: | ---: |\n| \\(L_1\\) | 0.2 | 0.1 |\n| \\(L_2\\) | 0.5 | 0.4 |\n| \\(L_3\\) | 0.3 | 0.2 |\n\nWhich statements correctly compute \\(P(L_2\\mid O)\\)?",
     [
       [
         "The unnormalized weight for \\(L_2\\) is \\(0.5\\times0.4=0.20\\).",
@@ -472,7 +460,7 @@ export const stanfordCS109Lecture4ConditioningAndBayesQuestions: Question[] = [
   ),
   makeQuestion(
     "cs109-lect4-q26",
-    "hard",
+    "medium",
     "Suppose \\(P(A)=0.5\\), \\(P(B\\mid A)=0.4\\), and \\(P(C\\mid A,B)=0.3\\). Which statements correctly use the chain rule?",
     [
       ["\\(P(A\\cap B)=0.5\\times0.4=0.20\\).", true],
@@ -487,7 +475,7 @@ export const stanfordCS109Lecture4ConditioningAndBayesQuestions: Question[] = [
   ),
   makeQuestion(
     "cs109-lect4-q27",
-    "hard",
+    "medium",
     "An event \\(E\\) has \\(P(E)=0.4\\), and an observation \\(F\\) has \\(P(F)=0.25\\) and \\(P(E\\cap F)=0.15\\). Which statements are correct?",
     [
       ["\\(P(E\\mid F)=0.15/0.25=0.60\\).", true],
@@ -505,7 +493,7 @@ export const stanfordCS109Lecture4ConditioningAndBayesQuestions: Question[] = [
   ),
   makeQuestion(
     "cs109-lect4-q28",
-    "hard",
+    "medium",
     "Two independent fair dice are rolled. Given that their sum is 7, what is the probability that the first die is at most 2?",
     [
       [
@@ -548,7 +536,7 @@ export const stanfordCS109Lecture4ConditioningAndBayesQuestions: Question[] = [
   makeQuestion(
     "cs109-lect4-q30",
     "hard",
-    "A search area has four possible cells with priors \\((0.1,0.2,0.3,0.4)\\). An observation has likelihoods \\((0.6,0.3,0.2,0.1)\\) in those cells. Which statements correctly describe the posterior?",
+    "An object occupies exactly one of four search cells. An observation \\(O\\) has these likelihoods:\n\n| Cell | Prior | \\(P(O\\mid L_i)\\) |\n| --- | ---: | ---: |\n| \\(L_1\\) | 0.1 | 0.6 |\n| \\(L_2\\) | 0.2 | 0.3 |\n| \\(L_3\\) | 0.3 | 0.2 |\n| \\(L_4\\) | 0.4 | 0.1 |\n\nWhich statements correctly describe the posterior?",
     [
       ["The unnormalized weights are \\((0.06,0.06,0.06,0.04)\\).", true],
       ["The evidence probability is \\(0.22\\).", true],
@@ -564,22 +552,25 @@ export const stanfordCS109Lecture4ConditioningAndBayesQuestions: Question[] = [
     "Bayesian updating balances prior plausibility with how well each location predicts the observation. The first three prior-times-likelihood products tie, while the fourth falls to a smaller weight despite its larger prior; normalizing all four weights by 0.22 gives the posterior distribution.",
   ),
   makeQuestion(
-    "cs109-lect4-q31",
+    "cs109-lect4-q38",
     "hard",
-    "Which statements are required for the multi-case total-probability identity \\(P(E)=\\sum_i P(E\\mid B_i)P(B_i)\\)?",
+    "Events \\(A\\) and \\(B\\) cover the sample space but may overlap. The following joint probabilities are known:\n\n| Event | Probability |\n| --- | ---: |\n| \\(E\\cap A\\) | 0.24 |\n| \\(E\\cap B\\) | 0.28 |\n| \\(E\\cap A\\cap B\\) | 0.12 |\n\nWhich conclusions are correct?",
     [
-      ["The background events must cover every possible outcome.", true],
-      ["No outcome may belong to two different background events.", true],
+      ["\\(P(E)=0.24+0.28-0.12=0.40\\).", true],
       [
-        "Each branch's conditional factor by itself represents the branch's joint mass.",
+        "The disjoint contributions \\(E\\cap A\\cap B^c\\), \\(E\\cap A^c\\cap B\\), and \\(E\\cap A\\cap B\\) have masses \\(0.12,0.16,0.12\\).",
+        true,
+      ],
+      [
+        "Coverage by \\(A,B\\) makes their two joint contributions a partition, so \\(P(E)=0.52\\).",
         false,
       ],
       [
-        "Every branch-specific conditional probability must have the same value.",
+        "Removing the overlap from both joint contributions gives \\(P(E)=0.24+0.28-2(0.12)=0.28\\).",
         false,
       ],
     ],
-    "Coverage and mutual exclusivity make the background events a partition, so the joint pieces of \\(E\\) neither omit nor double-count probability mass. A full term is the product \\(P(E\\mid B_i)P(B_i)=P(E\\cap B_i)\\); the conditional factor alone is not the joint mass and may vary by branch.",
+    "Coverage ensures every outcome in \\(E\\) lies in at least one of the two joint pieces, but it does not make those pieces disjoint. Their shared mass is 0.12, so subtracting one duplicate copy gives 0.40. Splitting into A-only, B-only, and shared cases yields \\(0.12+0.16+0.12\\); subtracting the overlap twice would exclude shared outcomes entirely.",
   ),
   makeQuestion(
     "cs109-lect4-q32",
@@ -615,36 +606,27 @@ export const stanfordCS109Lecture4ConditioningAndBayesQuestions: Question[] = [
     "Bayes compares \\(0.95P(D)\\) with \\(0.05(1-P(D))\\). Raising prevalence makes the true-positive contribution grow relative to the false-positive contribution, so the posterior rises; at very low prevalence the false-positive branch can dominate, and sensitivity alone cannot determine the balance.",
   ),
   makeQuestion(
-    "cs109-lect4-q34",
+    "cs109-lect4-q39",
     "hard",
-    "For events with \\(P(F)>0\\), which statements correctly distinguish complements under conditioning?",
+    "A population has \\(P(F)=0.3\\), \\(P(E)=0.5\\), and \\(P(E\\mid F)=0.8\\). Which conditional probabilities follow?",
     [
-      ["\\(P(E^c\\mid F)=1-P(E\\mid F)\\).", true],
-      [
-        "\\(P(E\\mid F^c)\\) concerns a different conditioned world from \\(P(E^c\\mid F)\\).",
-        true,
-      ],
-      [
-        "Knowing \\(P(E\\mid F)\\) alone does not determine \\(P(E\\mid F^c)\\).",
-        true,
-      ],
-      ["\\(P(E\\mid F^c)=1-P(E\\mid F)\\) for all events.", false],
+      ["\\(P(E^c\\mid F)=0.2\\).", true],
+      ["\\(P(E\\mid F^c)=(0.5-0.3\\cdot0.8)/0.7=13/35\\).", true],
+      ["\\(P(E^c\\mid F^c)=22/35\\).", true],
+      ["\\(P(F^c\\mid E)=0.2\\).", false],
     ],
-    "Within the fixed world \\(F\\), the events \\(E\\) and \\(E^c\\) are complements and their conditional probabilities sum to 1. Switching the event after the bar changes the reference population entirely, so the corresponding rate needs separate information rather than a simple complement.",
+    "Complementing the target within \\(F\\) gives 0.2. Total probability leaves \\(P(E\\cap F^c)=0.5-0.24=0.26\\); dividing by \\(P(F^c)=0.7\\) gives \\(13/35\\), whose within-\\(F^c\\) complement is \\(22/35\\). Reversing the conditioning uses \\(P(E)=0.5\\) instead, so \\(P(F^c\\mid E)=0.26/0.5=0.52\\).",
   ),
   makeQuestion(
-    "cs109-lect4-q35",
+    "cs109-lect4-q40",
     "hard",
-    "Which identities correctly connect conditional probability, the chain rule, total probability, and Bayes' theorem?",
+    "A bag contains three red balls and two blue balls. Three balls are drawn uniformly without replacement. Let \\(R_i\\) mean draw \\(i\\) is red. Which probabilities are correct?",
     [
-      ["\\(P(E\\mid F)=P(E\\cap F)/P(F)\\) when \\(P(F)>0\\).", true],
-      ["\\(P(E\\cap F)=P(F)P(E\\mid F)=P(E)P(F\\mid E)\\).", true],
-      ["\\(P(E)=P(E\\mid F)P(F)+P(E\\mid F^c)P(F^c)\\).", true],
-      [
-        "\\(P(F\\mid E)=P(E\\mid F)P(F)/P(E)\\) when the denominators are positive.",
-        true,
-      ],
+      ["\\(P(R_1\\cap R_2\\cap R_3)=(3/5)(2/4)(1/3)=1/10\\).", true],
+      ["\\(P(R_3\\mid R_1,R_2)=1/3\\).", true],
+      ["\\(P(R_2\\cap R_3)=3/10\\).", true],
+      ["\\(P(R_1\\mid R_2,R_3)=(1/10)/(3/10)=1/3\\).", true],
     ],
-    "These identities form one connected toolkit: conditioning normalizes a joint event, the chain rule reconstructs that joint event, total probability expands an evidence probability across a partition, and Bayes equates the two chain-rule factorizations to reverse a conditional.",
+    "The chain rule follows the shrinking red counts for three successive red draws. To compute the joint event on draws two and three, split on draw one: \\((3/5)(2/4)(1/3)+(2/5)(3/4)(2/3)=3/10\\). Dividing the all-red probability by that evidence mass gives \\(1/3\\) for a red first draw after observing red on the other two; marginal red probabilities cannot simply be multiplied without replacement.",
   ),
 ];

@@ -23,7 +23,7 @@ export const stanfordCS109Lecture6RandomVariablesQuestions: Question[] = [
   makeQuestion(
     "cs109-lect6-q01",
     "easy",
-    "A probability problem is analyzed entirely within an event \\(G\\) with \\(P(G)>0\\). Which familiar probability rules remain valid when every term is conditioned on \\(G\\)?",
+    "A probability problem is analyzed entirely within an event \\(G\\) with \\(P(G)>0\\). Assume every displayed conditional has a positive-probability conditioning event. Which familiar probability rules remain valid when every term is conditioned on \\(G\\)?",
     [
       ["Complement: \\(P(E^c\\mid G)=1-P(E\\mid G)\\).", true],
       ["Chain rule: \\(P(E\\cap F\\mid G)=P(E\\mid F,G)P(F\\mid G)\\).", true],
@@ -41,7 +41,7 @@ export const stanfordCS109Lecture6RandomVariablesQuestions: Question[] = [
   makeQuestion(
     "cs109-lect6-q02",
     "easy",
-    "Which statements correctly express that events \\(E\\) and \\(F\\) are conditionally independent given \\(G\\)?",
+    "Assume \\(P(G)>0\\). Which statements correctly express that events \\(E\\) and \\(F\\) are conditionally independent given \\(G\\)?",
     [
       ["\\(P(E\\cap F\\mid G)=P(E\\mid G)P(F\\mid G)\\).", true],
       [
@@ -81,22 +81,16 @@ export const stanfordCS109Lecture6RandomVariablesQuestions: Question[] = [
     "Conditioning changes the reference population and can reveal, remove, or introduce statistical relationships. Therefore neither marginal independence nor independence under one condition logically guarantees the other; each relationship must be checked in the probability space where it is being used.",
   ),
   makeQuestion(
-    "cs109-lect6-q04",
+    "cs109-lect6-q36",
     "easy",
-    "Which description best defines a discrete random variable?",
+    "Two labeled coins are flipped. A discrete random variable X records the number of heads. In the order HH, HT, TH, TT, which list gives the four values of X?",
     [
-      [
-        "A numerical variable whose realized value is uncertain and whose possible values have associated probabilities.",
-        true,
-      ],
-      ["An event that is true whenever any outcome occurs.", false],
-      ["A fixed but unknown constant that has no probability model.", false],
-      [
-        "A probability value that must itself lie strictly between zero and one.",
-        false,
-      ],
+      ["\\(2,\\ 1,\\ 1,\\ 0\\)", true],
+      ["\\(1,\\ 1,\\ 1,\\ 0\\)", false],
+      ["\\(1,\\ 0,\\ 0,\\ 0\\)", false],
+      ["\\(0,\\ 1,\\ 1,\\ 2\\)", false],
     ],
-    "A random variable maps experimental outcomes to values, and uncertainty about the outcome induces a probability distribution over those values. It is not itself a Boolean event or a single probability; events arise by making claims such as \\(X=2\\) or \\(X<5\\) about the variable.",
+    "A random variable maps each experimental outcome to a number: HH has two heads, each mixed sequence has one, and TT has none. Different outcomes can map to the same value. The competing lists instead encode at least one head, both heads, or the number of tails, so they describe different random variables.",
   ),
   makeQuestion(
     "cs109-lect6-q05",
@@ -113,7 +107,7 @@ export const stanfordCS109Lecture6RandomVariablesQuestions: Question[] = [
   makeQuestion(
     "cs109-lect6-q06",
     "easy",
-    "For a random variable \\(Y\\), which probability expressions are meaningful events to which probability can be assigned?",
+    "For a random variable \\(Y\\), which expressions assign probability to a well-specified event?",
     [
       ["\\(P(Y=3)\\)", true],
       ["\\(P(Y<2)\\)", true],
@@ -125,7 +119,7 @@ export const stanfordCS109Lecture6RandomVariablesQuestions: Question[] = [
   makeQuestion(
     "cs109-lect6-q07",
     "easy",
-    "Let \\(Y\\) count heads in three coin flips. Which statements about its possible values are correct?",
+    "Let \\(Y\\) count heads in three independent fair coin flips. Which statements about its possible values are correct?",
     [
       ["Its support is \\(\\{0,1,2,3\\}\\).", true],
       ["\\(P(Y=4)=0\\).", true],
@@ -242,10 +236,10 @@ export const stanfordCS109Lecture6RandomVariablesQuestions: Question[] = [
   makeQuestion(
     "cs109-lect6-q14",
     "medium",
-    "Two players have independent frisbees with the same unknown head probability \\(p\\). They repeat whenever the orientations match and otherwise the player showing heads wins. Which statements explain why the procedure is fair?",
+    "Two players have independent frisbees with the same unknown head probability \\(p\\), where \\(0<p<1\\). All flips across rounds are independent. They repeat whenever the orientations match and otherwise the player showing heads wins. Which statements explain why the procedure is fair?",
     [
       [
-        "In a decisive round, HT and TH each have probability \\(p(1-p)\\).",
+        "On any one round, HT and TH each have unconditional probability \\(p(1-p)\\).",
         true,
       ],
       [
@@ -261,7 +255,7 @@ export const stanfordCS109Lecture6RandomVariablesQuestions: Question[] = [
         false,
       ],
     ],
-    "The two decisive orientations have equal probability for every common value of \\(p\\), even when the individual frisbees are biased. Conditioning on eventually reaching one of those orientations normalizes equal masses to one half each, while symmetric repeats merely postpone that decisive round.",
+    "The decisive outcomes HT and TH each have probability \\(p(1-p)>0\\), so conditioning on a decisive round gives probability one half to each. Independent repeats with the same positive chance of a decisive result terminate with probability one. Biased frisbees are allowed, but at \\(p=0\\) or \\(p=1\\) every round matches and no winner is produced.",
   ),
   makeQuestion(
     "cs109-lect6-q15",
@@ -323,7 +317,7 @@ export const stanfordCS109Lecture6RandomVariablesQuestions: Question[] = [
   makeQuestion(
     "cs109-lect6-q18",
     "medium",
-    "A recommendation model assumes movie events \\(E_1,\\ldots,E_4\\) are conditionally independent given a latent preference event \\(K\\). Which simplifications are justified?",
+    "A recommendation model assumes movie events \\(E_1,\\ldots,E_4\\) are mutually conditionally independent given a latent preference event \\(K\\). Assume the displayed conditionals are defined. Which simplifications are justified?",
     [
       ["\\(P(E_4\\mid E_1,E_2,E_3,K)=P(E_4\\mid K)\\).", true],
       [
@@ -393,7 +387,7 @@ export const stanfordCS109Lecture6RandomVariablesQuestions: Question[] = [
     "Expectation weights support values by their probabilities rather than treating distinct values equally or keeping only the modal mass. Here the weighted contributions are 0.3, 0.4, and 2.0, so the value 4 dominates the total and the mean is 2.7.",
   ),
   makeQuestion(
-    "cs109-lect6-q22",
+    "cs109-lect6-q37",
     "medium",
     "A school has classes of sizes 5, 10, and 150, with each student enrolled in exactly one class. Which statements correctly compare two sampling procedures?",
     [
@@ -402,7 +396,7 @@ export const stanfordCS109Lecture6RandomVariablesQuestions: Question[] = [
         true,
       ],
       [
-        "Choosing one student uniformly gives expected class size \\(5(5/165)+10(10/165)+150(150/165)\\approx137.18\\).",
+        "Choosing one student uniformly gives expected class size \\(5(5/165)+10(10/165)+150(150/165)\\approx137.12\\).",
         true,
       ],
       [
@@ -414,7 +408,7 @@ export const stanfordCS109Lecture6RandomVariablesQuestions: Question[] = [
         false,
       ],
     ],
-    "The possible class sizes match, but the probabilities attached to them do not. Uniform class sampling assigns one third to each size, whereas uniform student sampling assigns probability in proportion to class enrollment, heavily weighting the 150-person class and producing a much larger expectation.",
+    "Uniform class sampling assigns probability \\(1/3\\) to each class. Uniform student sampling instead assigns probabilities \\(5/165,10/165,150/165\\), since a larger class supplies more possible sampled students. Its weighted sum is \\((25+100+22500)/165=22625/165\\approx137.12\\), rather than 55; sharing support does not make the two probability distributions equal.",
   ),
   makeQuestion(
     "cs109-lect6-q23",
@@ -450,23 +444,20 @@ export const stanfordCS109Lecture6RandomVariablesQuestions: Question[] = [
     "Linearity gives \\(E[2X+Y+5]=2E[X]+E[Y]+5=6-1+5=10\\). Dependence affects many joint quantities but not the expectation of a sum, so no joint PMF or independence assumption is needed for this calculation.",
   ),
   makeQuestion(
-    "cs109-lect6-q25",
+    "cs109-lect6-q38",
     "hard",
-    "A discrete random variable \\(X\\) has PMF \\(p_X(x)\\), and \\(g\\) is a real-valued function. Which statements correctly use \\(E[g(X)]=\\sum_x g(x)p_X(x)\\)?",
+    "A discrete variable \\(X\\) has this probability mass function. Let \\(Y=X^2\\).\n\n| \\(x\\) | -2 | 0 | 1 |\n| --- | ---: | ---: | ---: |\n| \\(P(X=x)\\) | 0.25 | 0.50 | 0.25 |\n\nWhich statements are correct?",
     [
-      [
-        "The sum ranges over supported values of \\(X\\), not separately over outcomes with identical \\(X\\)-values.",
-        true,
-      ],
-      ["The formula can compute \\(E[X^2]\\) by taking \\(g(x)=x^2\\).", true],
-      ["It avoids first deriving a separate PMF for \\(g(X)\\).", true],
-      ["For \\(g(x)=ax+b\\), it yields \\(aE[X]+b\\).", true],
+      ["The support of \\(Y\\) is \\(\\{0,1,4\\}\\).", true],
+      ["\\(P(Y=1)=0.25\\).", true],
+      ["\\(E[X]=-0.25\\), so \\((E[X])^2=0.0625\\).", true],
+      ["\\(E[Y]=4(0.25)+0(0.50)+1(0.25)=1.25\\).", true],
     ],
-    "The law of the unconscious statistician averages the transformed value using the original PMF, so it can compute moments and nonlinear rewards directly. Applying it to an affine function separates the weighted sum into \\(a\\sum_x xp_X(x)+b\\sum_x p_X(x)\\), and normalization turns the second sum into \\(b\\).",
+    "Squaring maps -2, 0, and 1 to 4, 0, and 1, while their probability masses remain attached to those images. Averaging the squared values gives 1.25, whereas averaging first gives -0.25 and then squaring gives 0.0625. The identity \\(E[g(X)]=\\sum_x g(x)P(X=x)\\) transforms each value before averaging; it does not generally equal \\(g(E[X])\\).",
   ),
   makeQuestion(
     "cs109-lect6-q26",
-    "hard",
+    "medium",
     "A random variable \\(X\\) takes values 0, 1, and 2 with probabilities 0.2, 0.5, and 0.3. Let \\(Y=2X-1\\). Which statements are correct?",
     [
       ["The support of \\(Y\\) is \\(\\{-1,1,3\\}\\).", true],
@@ -477,45 +468,36 @@ export const stanfordCS109Lecture6RandomVariablesQuestions: Question[] = [
     "The transformation maps the three supported \\(X\\)-values to -1, 1, and 3 without merging them, so their probabilities transfer to those images. Since \\(E[X]=1.1\\), linearity gives 1.2; the event \\(Y=3\\) corresponds to \\(X=2\\), not \\(X=3\\), and has probability 0.3.",
   ),
   makeQuestion(
-    "cs109-lect6-q27",
+    "cs109-lect6-q39",
     "hard",
-    "Let \\(D_1\\) and \\(D_2\\) each have the fair-die PMF, and define \\(S=D_1+D_2\\). Which statements correctly compute \\(E[S]\\)?",
+    "Roll one fair six-sided die with result \\(D\\). Set \\(D_1=D\\), \\(D_2=7-D\\), and \\(S=D_1+D_2\\). Both \\(D_1\\) and \\(D_2\\) have fair-die marginals. Which statements are correct?",
     [
-      ["Linearity gives \\(E[S]=E[D_1]+E[D_2]=3.5+3.5=7\\).", true],
-      [
-        "The expectation calculation does not require independence, although independence affects the joint distribution and the PMF of \\(S\\).",
-        true,
-      ],
-      [
-        "\\(E[S]=3.5^2=12.25\\) because the die expectations must multiply.",
-        false,
-      ],
-      [
-        "The triangular PMF of \\(S\\) implies that the expectation must equal the most likely mass \\(1/6\\).",
-        false,
-      ],
+      ["\\(E[S]=E[D_1]+E[D_2]=7\\).", true],
+      ["\\(P(S=7)=1\\).", true],
+      ["\\(E[D_1D_2]=E[D_1]E[D_2]=12.25\\).", false],
+      ["\\(P(S=2)=1/36\\).", false],
     ],
-    "Expectation of a sum is the sum of expectations for dependent or independent variables alike, so the two die means add to 7. Multiplication pertains to products or independent event probabilities, and the height of the PMF at its mode is a probability rather than a possible value or expectation of the sum.",
+    "Every outcome gives \\(D+(7-D)=7\\), so the sum is constant even though each marginal is uniform. Linearity still gives a mean of seven, but independent-dice probabilities do not describe this joint model. Averaging the products \\(6,10,12,12,10,6\\) gives \\(28/3\\), not 12.25; no outcome can give sum two.",
   ),
   makeQuestion(
-    "cs109-lect6-q28",
+    "cs109-lect6-q40",
     "hard",
-    "An object occupies exactly one of locations \\(L_1,\\ldots,L_m\\). After observation \\(O\\), which expression correctly gives the posterior probability of location \\(L_j\\)?",
+    "An object occupies exactly one of two locations. Two observations \\(O_1,O_2\\) are independent conditional on each location, with:\n\n| Location | Prior | \\(P(O_1\\mid L_i)\\) | \\(P(O_2\\mid L_i)\\) |\n| --- | ---: | ---: | ---: |\n| \\(L_1\\) | 0.25 | 0.8 | 0.6 |\n| \\(L_2\\) | 0.75 | 0.2 | 0.4 |\n\nAfter both observations occur, what is \\(P(L_1\\mid O_1,O_2)\\)?",
     [
       [
-        "\\(P(L_j\\mid O)=\\dfrac{P(O\\mid L_j)P(L_j)}{\\sum_{i=1}^m P(O\\mid L_i)P(L_i)}\\)",
+        "\\(\\dfrac{0.25(0.8)(0.6)}{0.25(0.8)(0.6)+0.75(0.2)(0.4)}=\\dfrac23\\)",
         true,
       ],
-      ["\\(P(L_j\\mid O)=\\dfrac{P(L_j\\mid O)P(O)}{P(L_j)}\\)", false],
-      ["\\(P(L_j\\mid O)=\\dfrac{P(O\\mid L_j)}{\\sum_i P(L_i)}\\)", false],
-      ["\\(P(L_j\\mid O)=P(O\\mid L_j)P(L_j)\\)", false],
+      ["\\(\\dfrac{0.8(0.6)}{0.8(0.6)+0.2(0.4)}=\\dfrac67\\)", false],
+      ["\\(\\dfrac{0.25(0.8)}{0.25(0.8)+0.75(0.2)}=\\dfrac47\\)", false],
+      ["\\(0.25(0.8)(0.6)=0.12\\)", false],
     ],
-    "Bayes' theorem gives each location an unnormalized weight equal to its observation likelihood times its prior. The law of total probability sums those weights over the mutually exclusive and exhaustive locations to obtain \\(P(O)\\), which normalizes the selected weight into a posterior distribution.",
+    "Conditional independence allows the two likelihoods to multiply within each fixed location. The resulting prior-weighted joint masses are 0.12 and 0.06, so normalization gives \\(0.12/0.18=2/3\\). Ignoring priors assumes different location weights, using only the first observation discards evidence, and 0.12 is the unnormalized joint mass rather than a posterior.",
   ),
   makeQuestion(
     "cs109-lect6-q29",
     "hard",
-    "A latent preference \\(K\\) influences whether a user watches either of two movies \\(E\\) and \\(F\\). Which statements can hold in a model where \\(E\\) and \\(F\\) are conditionally independent given \\(K\\)?",
+    "A binary latent preference variable \\(K\\) influences whether a user watches movies \\(E\\) and \\(F\\). The movie events are independent conditional on each fixed value of \\(K\\). In the options, conditioning on \\(K\\) means its value is known. Which statements correctly describe the model?",
     [
       [
         "The movies can be marginally dependent because observing one changes beliefs about the unobserved preference \\(K\\).",
@@ -555,27 +537,24 @@ export const stanfordCS109Lecture6RandomVariablesQuestions: Question[] = [
     "Conditioning divides every joint mass inside \\(G\\) by the total mass \\(P(G)=0.5\\), producing a normalized PMF on the restricted world. That renormalization doubles each listed joint mass and gives conditional expectation 1; retaining 0.1 would confuse joint and conditional probability.",
   ),
   makeQuestion(
-    "cs109-lect6-q31",
+    "cs109-lect6-q41",
     "hard",
-    "Two discrete random variables have the same expected value but different PMFs. Which statements correctly describe what can still differ between them?",
+    "Delivery time A is always 4 days. Delivery time B is 1 day with probability 0.75 and 13 days with probability 0.25. Which statements are correct?",
     [
-      ["Their probabilities of exceeding a threshold can differ.", true],
-      ["Their most likely values can differ.", true],
+      ["\\(E[A]=E[B]=4\\) days.", true],
+      ["\\(P(A>10)=0\\), while \\(P(B>10)=0.25\\).", true],
+      ["The most likely times are 4 days for A and 1 day for B.", true],
       [
-        "Their tail risks can differ even though their weighted centers match.",
-        true,
-      ],
-      [
-        "The expectation alone is therefore a lossy summary of the distribution.",
+        "For the recorded time capped at 5 days, \\(E[\\min(A,5)]=4\\) but \\(E[\\min(B,5)]=2\\).",
         true,
       ],
     ],
-    "A single weighted average does not determine how probability mass is arranged around that center. Distinct PMFs can share a mean while assigning different mass to typical values, extremes, and decision-relevant events, so comparing expectations alone can conceal substantial differences in behavior and risk.",
+    "B's weighted average is \\(0.75(1)+0.25(13)=4\\), matching A despite different typical values and tail probabilities. Capping the recorded time transforms each value before averaging: B's value 13 becomes 5, giving \\(0.75(1)+0.25(5)=2\\). Equal means therefore determine neither deadline probabilities nor means after a nonlinear transformation.",
   ),
   makeQuestion(
     "cs109-lect6-q32",
     "hard",
-    "In a St. Petersburg-style game, \\(N\\) is the number of heads before the first tail and the payout is \\(X=2^N\\) dollars. The coin is fair. Which statements are correct for the uncapped game?",
+    "In a St. Petersburg-style game, \\(N\\) is the number of heads before the first tail and the payout is \\(X=2^N\\) dollars. The flips are independent and fair. Which statements are correct for the uncapped game?",
     [
       ["\\(P(N=i)=2^{-(i+1)}\\) for \\(i=0,1,2,\\ldots\\).", true],
       [
@@ -596,7 +575,7 @@ export const stanfordCS109Lecture6RandomVariablesQuestions: Question[] = [
   makeQuestion(
     "cs109-lect6-q33",
     "hard",
-    "Modify the St. Petersburg game so payouts corresponding to \\(N>16\\) are not honored, while \\(X=2^N\\) is paid for \\(0\\le N\\le16\\). Which statements are correct?",
+    "In a St. Petersburg game, flip a fair coin independently until the first tail. Let \\(N\\) count the preceding heads. The payout is \\(2^N\\) dollars for \\(0\\le N\\le16\\), and zero for \\(N>16\\). Which statements are correct?",
     [
       [
         "Each honored level contributes \\(2^i2^{-(i+1)}=1/2\\) to the expectation.",
@@ -606,7 +585,10 @@ export const stanfordCS109Lecture6RandomVariablesQuestions: Question[] = [
         "There are 17 honored levels, so the expected honored payout is \\(17/2=8.5\\) dollars.",
         true,
       ],
-      ["The cap turns the divergent expectation into a finite sum.", true],
+      [
+        "The zero-payment cutoff turns the divergent expectation into a finite sum.",
+        true,
+      ],
       [
         "The expected payout becomes \\(2^{16}\\) because that is the largest honored amount.",
         false,
@@ -615,33 +597,24 @@ export const stanfordCS109Lecture6RandomVariablesQuestions: Question[] = [
     "The uncapped paradox comes from infinitely many equal one-half contributions, not from any single likely huge payment. Limiting honored outcomes to indices 0 through 16 leaves 17 such contributions and expectation 8.5; a maximum payout is merely a support bound and is not the probability-weighted average.",
   ),
   makeQuestion(
-    "cs109-lect6-q34",
+    "cs109-lect6-q42",
     "hard",
-    "Why can expected payout alone be inadequate for deciding whether to play a high-stakes game?",
+    "Flip a fair coin independently until the first tail, and let \\(N\\) be the number of preceding heads. The advertised payout is \\(2^N\\) dollars. Under rule F, payouts above \\(2^{16}\\) are forfeited and pay zero; under rule C, they are capped and pay \\(2^{16}\\). Which statements are correct?",
     [
+      ["The probability of \\(N>16\\) is \\(2^{-17}\\).", true],
+      ["The expected payout under F is \\(17/2=8.5\\) dollars.", true],
       [
-        "Expectation compresses an entire PMF into one number and hides how mass is distributed.",
+        "The outcomes \\(N>16\\) contribute \\(2^{16}2^{-17}=0.5\\) dollars to expectation under C.",
         true,
       ],
-      [
-        "A rare, enormous advertised payout may be impossible to collect if the payer has limited resources.",
-        true,
-      ],
-      [
-        "A player's finite budget and sensitivity to losses can matter even when expected winnings are positive.",
-        true,
-      ],
-      [
-        "Changing real payout limits changes the random variable and can radically change its expectation.",
-        true,
-      ],
+      ["The expected payout under C is \\(8.5+0.5=9\\) dollars.", true],
     ],
-    "Expected value is mathematically useful, but a decision also depends on whether the stated payoff distribution is real and on how outcomes interact with finite resources and risk preferences. A solvency cap changes the actual PMF, while a learner who sees only the mean cannot recover the frequency or severity of losses and extreme gains.",
+    "For \\(N=i\\), the probability of i heads followed by a tail is \\(2^{-(i+1)}\\). Each of the seventeen levels from 0 through 16 therefore contributes one half dollar under either rule. Longer runs occur with probability \\(2^{-17}\\); forfeiture pays zero there, whereas capping still pays \\(2^{16}\\), adding another half dollar to expectation.",
   ),
   makeQuestion(
     "cs109-lect6-q35",
     "hard",
-    "For \\(k=0,1,\\ldots,n\\), a candidate PMF has the form \\(P(X=k)=c(k+1)\\). Which pair correctly normalizes the PMF and gives its expectation?",
+    "For a positive integer \\(n\\), a candidate probability mass function (PMF) is \\(P(X=k)=c(k+1)\\) for \\(k=0,1,\\ldots,n\\), and zero otherwise. Here \\(c\\) is an unknown constant chosen so the probabilities sum to 1. Which pair gives \\(c\\) and the expectation \\(E[X]\\)?",
     [
       ["\\(c=\\dfrac{2}{(n+1)(n+2)}\\) and \\(E[X]=\\dfrac{2n}{3}\\)", true],
       ["\\(c=\\dfrac{1}{n+1}\\) and \\(E[X]=\\dfrac{n}{2}\\)", false],

@@ -927,9 +927,9 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
   {
     id: "la-crash-l3-q38",
     chapter: 3,
-    difficulty: "hard",
+    difficulty: "easy",
     prompt:
-      "Which statements correctly identify misconceptions about gradients and backpropagation?",
+      "Which statements about gradients, backpropagation, and learning rates are correct?",
     options: [
       {
         text: "Saying that the gradient points downhill is a sign error for minimization.",
@@ -949,7 +949,7 @@ export const CrashCourseLinearAlgebraLecture3Questions: Question[] = [
       },
     ],
     explanation:
-      "The gradient points uphill, while the negative gradient points downhill. Backpropagation is a systematic application of the chain rule, and learning rate affects both speed and stability because steps can be too small or too large.",
+      "The gradient points in the direction of steepest local increase, so minimization steps use its negative. Backpropagation applies the chain rule through composed operations, allowing derivatives of complex networks to be computed from local derivatives. The learning rate affects both progress and stability: a large step can overshoot or diverge rather than merely move faster.",
   },
   {
     id: "la-crash-l3-q39",

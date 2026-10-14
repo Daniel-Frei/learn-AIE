@@ -132,7 +132,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The matrix expects 2048 input features because 2048 appears first.",
+        text: "The matrix expects an input \\(x\\in\\mathbb{R}^{2048}\\) because 2048 appears first.",
         isCorrect: false,
       },
     ],
@@ -361,7 +361,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "The stacked operation automatically becomes more expressive than any single linear layer.",
+        text: "The map \\(x\\mapsto A(Bx)\\) automatically becomes more expressive than any single linear layer.",
         isCorrect: false,
       },
     ],
@@ -405,7 +405,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "Removing GELU would make the block more nonlinear.",
+        text: "Removing GELU to obtain \\(x\\mapsto W_2W_1x\\) would make the block more nonlinear.",
         isCorrect: false,
       },
     ],
@@ -516,7 +516,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "LoRA requires replacing the base model with a larger full-rank matrix update.",
+        text: "The LoRA update \\(\\Delta W=AB\\) must be full rank, replacing the base matrix rather than adding a low-rank change.",
         isCorrect: false,
       },
     ],
@@ -742,7 +742,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "hard",
     prompt:
-      "Which statements correctly explain why matrix multiplication order matters?",
+      "For matrices acting on column vectors, which statements correctly explain why matrix multiplication order matters?",
     options: [
       {
         text: "Rotating then stretching can produce a different result from stretching then rotating.",
@@ -762,7 +762,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
       },
     ],
     explanation:
-      "Matrix multiplication represents ordered composition, so changing the order can change the geometry. A stretch followed by a rotation is generally not the same as a rotation followed by a stretch, and neural networks also rely on ordered layers. The product \\(ABx\\) applies \\(B\\) before \\(A\\), and \\(AB=BA\\) is not generally true.",
+      "For column vectors, \\(ABx=A(Bx)\\): first compute \\(Bx\\), then apply \\(A\\) to that result. For example, let A stretch the horizontal coordinate by 2 and B rotate 90 degrees counterclockwise. Starting at \\(x=(1,0)^T\\), \\(ABx=(0,1)^T\\), whereas \\(BAx=(0,2)^T\\). Thus applying A before B describes BA, and changing the order of geometric transformations or neural-network layers can change the output.",
   },
 
   {
@@ -980,7 +980,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: false,
       },
       {
-        text: "Changing the order of the two vectors in a dot product changes the scalar value.",
+        text: "Reversing the dot-product order changes the value: \\(x_i\\cdot x_j\\ne x_j\\cdot x_i\\).",
         isCorrect: false,
       },
     ],
@@ -1221,7 +1221,7 @@ export const CrashCourseLinearAlgebraLecture2Questions: Question[] = [
         isCorrect: true,
       },
       {
-        text: "The transformation keeps the full three-dimensional input information.",
+        text: "The transformation keeps the full three-dimensional input information, with \\(\\operatorname{rank}(P)=3\\).",
         isCorrect: false,
       },
       {

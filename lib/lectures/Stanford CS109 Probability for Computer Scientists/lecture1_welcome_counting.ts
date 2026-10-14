@@ -61,7 +61,7 @@ export const stanfordCS109Lecture1WelcomeCountingQuestions: Question[] = [
   ),
   makeQuestion(
     "cs109-lect1-q03",
-    "hard",
+    "medium",
     "A two-step construction has \\(m\\) first-step choices. After any first choice, there are exactly \\(n\\) legal second-step choices, although the identities of those choices can differ. Which conclusions follow?",
     [
       [
@@ -205,9 +205,12 @@ export const stanfordCS109Lecture1WelcomeCountingQuestions: Question[] = [
       ["\\(|A\\cup B|=18+12-5=25\\).", true],
       ["The naive sum 30 overcounts the five shared outcomes once each.", true],
       ["\\(|A\\cup B|=35\\) because the overlap must be added.", false],
-      ["The sets are mutually exclusive because both sizes are finite.", false],
+      [
+        "Exactly \\(18\\) outcomes belong to \\(A\\) but not to \\(B\\).",
+        false,
+      ],
     ],
-    "The union should contain each distinct outcome once. Adding the set sizes produces two copies of every shared member, and subtracting the intersection removes the extra copy, yielding 25; finiteness has no bearing on mutual exclusivity.",
+    "Adding the set sizes produces two copies of every shared outcome. Subtracting the five shared members once yields a union of 25, whereas adding the overlap gives 35 and increases the overcount. The part of \\(A\\) outside \\(B\\) has \\(18-5=13\\) members, since its five shared members must be excluded.",
   ),
   makeQuestion(
     "cs109-lect1-q12",
@@ -273,7 +276,7 @@ export const stanfordCS109Lecture1WelcomeCountingQuestions: Question[] = [
         false,
       ],
     ],
-    "The unrestricted sample space has 64 strings, and exactly one of them has no 1s. Fixing an unspecified position to 1 would double-count strings containing multiple 1s, so subtracting the single complement outcome is the clean count.",
+    "The unrestricted space has \\(2^6=64\\) strings, and exactly one, 000000, has no 1s. Fixing one particular position to 1 gives only 32 strings and misses valid strings with a 1 elsewhere; trying each possible fixed position instead counts strings with multiple 1s repeatedly. Complement counting avoids both problems by subtracting the single excluded string.",
   ),
   makeQuestion(
     "cs109-lect1-q16",
@@ -309,28 +312,16 @@ export const stanfordCS109Lecture1WelcomeCountingQuestions: Question[] = [
     "Each calculation describes a sequence of choices with a fixed number of legal continuations at each step. The counts can remain constant, as with dice, or decline predictably, as with no-reuse codes and permutations; both structures satisfy the product rule.",
   ),
   makeQuestion(
-    "cs109-lect1-q18",
+    "cs109-lect1-q37",
     "hard",
-    "A counting problem is decomposed into branches. Which statements correctly diagnose when a single fixed-factor product is or is not justified?",
+    "A four-digit code uses digits 0 through 5 without repetition. Its first digit is nonzero and its last digit is even. Which statements are correct?",
     [
-      [
-        "Choosing a chair and then a different secretary from 5 people gives \\(5\\times4\\) assignments.",
-        true,
-      ],
-      [
-        "If one first-step branch has 3 continuations and another has 5, the branch totals should be counted separately and added.",
-        true,
-      ],
-      [
-        "A 4-digit code allowing repetition has \\(10^4\\) outcomes because every position retains 10 choices.",
-        true,
-      ],
-      [
-        "Whenever earlier choices change the names of later options, multiplication is invalid even if every branch has the same number of options.",
-        false,
-      ],
+      ["Codes ending in 0 number \\(5\\cdot4\\cdot3=60\\).", true],
+      ["Codes ending in 2 number \\(4\\cdot4\\cdot3=48\\).", true],
+      ["The total is \\(60+2(48)=156\\).", true],
+      ["The total is \\(3\\cdot5\\cdot4\\cdot3=180\\).", false],
     ],
-    "The relevant condition is equality of continuation counts at each stage, not equality of labels. Unequal branch sizes call for conditional case counts followed by addition, while role assignments and repeated-digit codes have well-defined products.",
+    "Choose the last digit first. If it is 0, all five nonzero digits remain available for the first position; if it is 2 or 4, only four remain. Each case then has four and three choices for the middle positions, so adding the three branch counts gives 156; using five first-position choices in every case permits a repeated endpoint digit.",
   ),
   makeQuestion(
     "cs109-lect1-q19",
@@ -369,57 +360,45 @@ export const stanfordCS109Lecture1WelcomeCountingQuestions: Question[] = [
     "The first and last bits are fixed and therefore contribute one choice each. Only the two middle positions remain free, so the product is \\(1\\times2\\times2\\times1=4\\).",
   ),
   makeQuestion(
-    "cs109-lect1-q21",
+    "cs109-lect1-q38",
     "medium",
-    "A product-rule argument says the first choice must not affect the number of choices at the next step. Which clarifications are correct?",
+    "A generator chooses one digit from {1, 2, 3} twice, allowing repetition, and outputs the two digits in sorted order. Which statements are correct?",
     [
+      ["The generator has \\(3^2=9\\) ordered choice histories.", true],
       [
-        "The first choice is allowed to change which particular choices remain.",
+        "The output 12 has \\(2\\) choice histories, while 11 has \\(1\\).",
         true,
       ],
+      ["There are \\(6\\) distinct output strings.", true],
       [
-        "The continuation count must be the same for every branch being represented by one factor.",
-        true,
-      ],
-      [
-        "Without-replacement arrangements can satisfy the rule because each depth has a fixed number of unused objects.",
-        true,
-      ],
-      [
-        "If continuation counts differ, the problem can still be solved by counting the branch cases separately and adding them.",
+        "Dividing the \\(9\\) histories by \\(2\\) is invalid because not every output has two histories.",
         true,
       ],
     ],
-    "The product rule is a statement about the shape of the branching tree. Equal branch widths support one common factor, while unequal widths require finer case decomposition; neither situation says that later options must have identical names.",
+    "The product rule counts the ordered choices before sorting. Sorting merges 12 with 21 but does not give 11 a second history: the distinct outputs are 11, 12, 13, 22, 23, and 33. Because the number of histories per output varies, one uniform division factor cannot remove the duplicates.",
   ),
   makeQuestion(
-    "cs109-lect1-q22",
+    "cs109-lect1-q39",
     "medium",
-    "A student writes a short program to enumerate every outcome of a small counting problem. Which uses of that enumeration are sound?",
+    "To enumerate 3-bit strings starting with 1 or ending with 0, a program appends the entire start-with-1 list to the entire end-with-0 list, then removes duplicate strings. Which statements are correct?",
     [
       [
-        "It can check a derived count by comparing the number of generated unique outcomes.",
+        "Before removing duplicates, the list contains \\(4+4=8\\) entries.",
         true,
       ],
+      ["Exactly \\(2\\) distinct strings appear in both lists.", true],
+      ["After removing duplicates, there are \\(6\\) strings.", true],
       [
-        "It can reveal duplicates that indicate an overcounting argument needs correction.",
-        true,
-      ],
-      [
-        "It can make the structure of outcomes concrete before a formula is derived.",
-        true,
-      ],
-      [
-        "It proves that the same formula works for every larger instance without further reasoning.",
+        "Removing duplicates divides the list length by \\(2\\), leaving \\(4\\) strings.",
         false,
       ],
     ],
-    "Enumeration is a valuable diagnostic for small instances: it exposes the sample space and makes accidental duplicates visible. A finite program run does not by itself establish a general formula, so the structural counting argument remains necessary.",
+    "The shared strings are 100 and 110, since both endpoints are fixed and the middle bit is free. Each of those appears twice, while the other four strings appear once. Deduplication therefore subtracts two extra entries from eight; dividing the whole count by two would discard singly represented strings as well.",
   ),
   makeQuestion(
     "cs109-lect1-q23",
     "hard",
-    "A 7-bit identifier is valid if it starts with 1 or contains exactly the fixed suffix 001. Which statements correctly set up inclusion-exclusion?",
+    "A 7-bit identifier is valid if it starts with 1 or ends with 001. Which statements correctly set up inclusion-exclusion?",
     [
       [
         "The start-with-1 set has \\(2^6\\) identifiers, and the suffix-001 set has \\(2^4\\).",
@@ -442,8 +421,8 @@ export const stanfordCS109Lecture1WelcomeCountingQuestions: Question[] = [
   ),
   makeQuestion(
     "cs109-lect1-q24",
-    "hard",
-    "One image format has 12 pixels and another has 300 pixels; every pixel independently has \\(c\\) possible colors. Which expression gives the factor by which the larger format has more possible images?",
+    "medium",
+    "One image format has 12 pixels and another has 300 pixels; every pixel independently has \\(c\\) possible colors, where \\(c\\ge2\\). Which expression gives the factor by which the larger format has more possible images?",
     [
       ["\\(c^{300}/c^{12}=c^{288}\\)", true],
       ["\\(c^{300-12}=288c\\)", false],
@@ -472,7 +451,7 @@ export const stanfordCS109Lecture1WelcomeCountingQuestions: Question[] = [
   ),
   makeQuestion(
     "cs109-lect1-q26",
-    "hard",
+    "medium",
     "A deployment configuration chooses 1 of 4 regions, 1 of 3 model versions, and then either 1 of 2 CPU builds or 1 of 5 GPU builds. CPU and GPU builds are disjoint. Which statements are correct?",
     [
       ["There are \\(2+5=7\\) hardware-build choices.", true],
@@ -564,40 +543,28 @@ export const stanfordCS109Lecture1WelcomeCountingQuestions: Question[] = [
     "A full ordering uses each letter exactly once, so reuse is not allowed. The branching count therefore decreases with each position, and multiplying \\(4\\times3\\times2\\times1\\) gives 24.",
   ),
   makeQuestion(
-    "cs109-lect1-q31",
-    "hard",
-    "Which statements correctly distinguish the set union \\(A\\cup B\\) from the Cartesian product \\(A\\times B\\)?",
+    "cs109-lect1-q40",
+    "medium",
+    "A team can choose a lead from set \\(A\\) and a reviewer from set \\(B\\). Each set contains 4 people, with exactly 2 people in both sets. One person cannot fill both roles. Which statements are correct?",
     [
-      [
-        "\\(A\\cup B\\) contains outcomes belonging to at least one set and is counted with addition plus any overlap correction.",
-        true,
-      ],
-      [
-        "\\(A\\times B\\) contains ordered pairs with one choice from each set and has size \\(|A||B|\\) for finite sets.",
-        true,
-      ],
-      [
-        "\\(A\\cup B\\) and \\(A\\times B\\) are interchangeable whenever \\(|A|=|B|\\).",
-        false,
-      ],
-      [
-        "\\(|A\\times B|=|A|+|B|-|A\\cap B|\\) because pairs can overlap.",
-        false,
-      ],
+      ["There are \\(4\\cdot4-2=14\\) valid role assignments.", true],
+      ["There are \\(4+4-2=6\\) people eligible for at least one role.", true],
+      ["There are \\(\\binom{6}{2}=15\\) valid role assignments.", false],
+      ["There are \\(4\\cdot3=12\\) valid role assignments.", false],
     ],
-    "Union models an 'A or B' qualification, while Cartesian product models an 'A choice and a B choice' construction. Equal set sizes do not erase this structural difference: members of a union are original outcomes, whereas members of a product are ordered pairs.",
+    "The Cartesian product has sixteen ordered lead-reviewer pairs. Exactly two pairs put an overlapping person in both roles, so fourteen are valid; the union instead counts six individual people. Choosing an unordered pair loses role eligibility and assignment direction, while multiplying by three assumes every possible lead is also an eligible reviewer.",
   ),
   makeQuestion(
-    "cs109-lect1-q32",
+    "cs109-lect1-q41",
     "hard",
-    "A first step has two choices, X and Y. Choosing X leaves 3 possible completions, while choosing Y leaves 5. Which expression correctly counts the complete outcomes?",
+    "A 6-bit string is accepted if it starts with 01 or ends with 10, but strings satisfying both conditions are rejected. How many strings are accepted?",
     [
-      ["\\(3+5=8\\)", true],
-      ["\\(2\\times5=10\\)", false],
-      ["\\(2\\times3=6\\)", false],
-      ["\\(2\\times(3+5)=16\\)", false],
+      ["\\(2^4+2^4-2\\cdot2^2=24\\)", true],
+      ["\\(2^4+2^4-2^2=28\\)", false],
+      ["\\(2^4+2^4=32\\)", false],
+      ["\\(2^6-2^2=60\\)", false],
     ],
-    "The second-step branch width is not constant, so neither 3 nor 5 can serve as a common product factor for both first choices. Count the three X outcomes and five Y outcomes as disjoint branch cases, then add them to get eight.",
+    "Each endpoint condition admits sixteen strings, and their intersection has four strings with two free middle bits. The initial sum includes each intersection string twice, and rejecting that intersection requires removing both copies. Ordinary inclusion-exclusion would retain one copy, while subtracting from all 64 strings would also accept strings meeting neither condition.",
   ),
   makeQuestion(
     "cs109-lect1-q33",
@@ -613,7 +580,7 @@ export const stanfordCS109Lecture1WelcomeCountingQuestions: Question[] = [
   ),
   makeQuestion(
     "cs109-lect1-q34",
-    "easy",
+    "medium",
     "A queue contains \\(n\\) distinct tasks, where \\(n\\ge3\\). Only three designated tasks are permitted in the first position; after the first task is chosen, the remaining tasks may appear in any order. Which statements are correct?",
     [
       ["The number of valid queues is \\(3(n-1)!\\).", true],
@@ -630,24 +597,30 @@ export const stanfordCS109Lecture1WelcomeCountingQuestions: Question[] = [
         false,
       ],
     ],
-    "The restriction applies only to the identity of the first task, giving three choices, and each choice leaves all \\(n-1\\) remaining tasks to be permuted. Selecting a three-task subset would impose a different condition and greatly overcount the allowed first-task decision.",
+    "There are three choices for the first task, each leaving all \\(n-1\\) remaining tasks to be permuted. This gives \\(3(n-1)!\\); removing the first-position restriction gives \\(n(n-1)!=n!\\). Choosing a three-task subset does not identify which one goes first and counts a different decision, so \\(\\binom n3\\) is not the required first-step factor.",
   ),
   makeQuestion(
-    "cs109-lect1-q35",
+    "cs109-lect1-q42",
     "hard",
-    "A 7-bit string is valid if it starts with 10 or ends with 01. Which statements are correct?",
+    "Compare strings of length 2 and length 3. In either length, a string qualifies if it starts with 10 or ends with 01. Which statements are correct?",
     [
       [
-        "The two qualifying sets each contain \\(2^5=32\\) strings, their intersection contains \\(2^3=8\\), and the union contains 56.",
+        "At length 2, the qualifying strings are 10 and 01, so the count is \\(2\\).",
         true,
       ],
-      ["The three free intersection bits are positions 3, 4, and 5.", true],
-      ["The union contains 64 strings because \\(32+32=64\\).", false],
       [
-        "The intersection contains \\(2^5\\) strings because each individual condition leaves five free bits.",
+        "At length 3, the intersection is \\(\\{101\\}\\), so the union count is \\(2+2-1=3\\).",
+        true,
+      ],
+      [
+        "At length 3, the conditions fix four distinct positions, so the intersection count is \\(0\\).",
+        false,
+      ],
+      [
+        "At length 2, the two cases share one string, so the union count is \\(1+1-1=1\\).",
         false,
       ],
     ],
-    "Each single condition fixes two bits, but satisfying both fixes four distinct endpoint bits and leaves only the three middle positions free. Inclusion-exclusion therefore gives \\(32+32-8=56\\), not the uncorrected sum of 64.",
+    "For length two, the prefix and suffix each specify the whole string and demand different strings, so they are disjoint. At length three, the constraints share the middle position and both require it to be 0; 101 satisfies both. The prefix cases 100 and 101 and the suffix cases 001 and 101 therefore give three distinct strings.",
   ),
 ];

@@ -8,7 +8,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
     prompt: "Which statements correctly describe eigenvectors and eigenvalues?",
     options: [
       {
-        text: "An eigenvector keeps its direction under a matrix transformation.",
+        text: "An eigenvector \\(v\\ne0\\) spans a line preserved by the transformation \\(Av=\\lambda v\\).",
         isCorrect: true,
       },
       {
@@ -215,7 +215,10 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
     prompt:
       "Which statements correctly describe symmetric covariance matrices?",
     options: [
-      { text: "A covariance matrix is symmetric.", isCorrect: true },
+      {
+        text: "A covariance matrix has mirrored entries \\(\\Sigma_{ij}=\\Sigma_{ji}\\).",
+        isCorrect: true,
+      },
       {
         text: "Symmetry means \\(\\Sigma=\\Sigma^T\\).",
         isCorrect: true,
@@ -873,8 +876,9 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
   {
     id: "la-crash-l4-q34",
     chapter: 4,
-    difficulty: "hard",
-    prompt: "Which statements correctly describe common misconceptions?",
+    difficulty: "easy",
+    prompt:
+      "Which statements about eigenvectors, principal component analysis (PCA), singular value decomposition (SVD), and low-rank structure are correct?",
     options: [
       {
         text: "Eigenvectors are not just abstract symbols; they are stable transformation directions.",
@@ -894,7 +898,7 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
       },
     ],
     explanation:
-      "Eigenvectors, PCA, and SVD all have concrete geometric interpretations. Low rank can indicate efficient structure rather than poor quality, especially when the data contains redundancy.",
+      "An eigenvector spans a direction preserved by a linear transformation, although its scale or sign can change. PCA finds directions of greatest variation, often mixing original features. SVD describes rotations or reflections and stretching along orthogonal directions, which also supports compression. Low rank describes a limited number of independent directions; it can capture useful redundancy rather than imply low-quality information.",
   },
   {
     id: "la-crash-l4-q35",
@@ -1515,31 +1519,31 @@ export const CrashCourseLinearAlgebraLecture4Questions: Question[] = [
       "Feature selection keeps original variables, while PCA constructs new axes as linear combinations of the original variables. Those axes are chosen from covariance structure and can be rotated relative to the original coordinates. This is why PCA can preserve structure that no single original feature captures by itself.",
   },
   {
-    id: "la-crash-l4-q58",
+    id: "la-crash-l4-q61",
     chapter: 4,
     difficulty: "hard",
     prompt:
-      "Which statement best explains why \\(X^TX\\) has no negative eigenvalues?",
+      "Let \\(X\\) be a real matrix. Which argument establishes that \\(X^TX\\) has no negative eigenvalues, including when its columns are linearly dependent?",
     options: [
       {
         text: "For every vector \\(z\\), \\(z^TX^TXz=\\|Xz\\|^2\\ge 0\\).",
         isCorrect: true,
       },
       {
-        text: "A matrix product has positive entries when it is written as \\(X^TX\\).",
+        text: "Its diagonal entries \\((X^TX)_{jj}=\\sum_iX_{ij}^2\\) are nonnegative, which is sufficient to make all its eigenvalues nonnegative.",
         isCorrect: false,
       },
       {
-        text: "A transpose removes zero directions from a matrix product.",
+        text: "The equality \\(z^TX^TXz=\\|Xz\\|^2\\) is strictly positive for nonzero \\(z\\), even when X has linearly dependent columns.",
         isCorrect: false,
       },
       {
-        text: "Real square matrices have nonnegative eigenvalues by default.",
+        text: "The identity \\((X^TX)^T=X^TX\\) makes the matrix symmetric, and symmetry by itself makes its eigenvalues nonnegative.",
         isCorrect: false,
       },
     ],
     explanation:
-      "The quadratic form of \\(X^TX\\) is a squared norm, so it cannot be negative. This property is called positive semidefiniteness and is central to covariance geometry. General real square matrices can have negative eigenvalues, so the argument depends on the special \\(X^TX\\) structure.",
+      "For an eigenvector z with eigenvalue \\(\\lambda\\), \\(\\lambda\\|z\\|^2=z^TX^TXz=\\|Xz\\|^2\\ge0\\), so \\(\\lambda\\ge0\\). This is positive semidefiniteness, a statement about quadratic forms rather than entry signs: \\(X=[1,-1]\\) gives \\(X^TX=\\begin{bmatrix}1&-1\\\\-1&1\\end{bmatrix}\\), with negative off-diagonal entries. Dependent columns allow \\(Xz=0\\) for nonzero z, so strict positivity is not guaranteed. Nonnegative diagonal entries alone do not suffice (the symmetric matrix \\(\\begin{bmatrix}1&2\\\\2&1\\end{bmatrix}\\) has eigenvalue -1), and symmetry alone guarantees real, not nonnegative, eigenvalues.",
   },
   {
     id: "la-crash-l4-q59",

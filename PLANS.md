@@ -837,3 +837,78 @@ Create and register a 60-question practice set that teaches the DiffusionGemma t
 - `make types-check`
 - `make format-check`
 - `make check`
+
+# CS109 Question Quality Review
+
+## Goal
+
+Review all 210 CS109 questions against their transcripts, slides, and authoring quality gate; improve weak items selectively while preserving sound questions and database identities.
+
+## Non-goals
+
+- No wholesale bank rewrite, new source sets, UI changes, or dependencies.
+- Do not reuse retired IDs or rebalance by changing scoring under existing IDs.
+
+## Steps
+
+- [x] Audit all six banks and source bundles; record findings and retained orientation items.
+- [x] Improve selected questions, assigning fresh IDs for substantial changes; document replacements.
+- [x] Update focused identity/content checks and durable review preferences.
+- [x] Re-review changes and verify registration, answer patterns, formatting, types, and full gate.
+
+## Files to touch
+
+- Six question files in `lib/lectures/Stanford CS109 Probability for Computer Scientists/`
+- `tests/lib/cs109Questions.spec.ts`, `docs/team-preferences.md`, `PLANS.md`
+- Review evidence in `.tmp/agent-artifacts/20260906-cs109-review/`
+- Canonical `make format` also normalizes existing Markdown emphasis/newlines in nine lecture transcripts; no source meaning changes.
+
+## Verification
+
+- `npm run test:focused -- tests/lib/cs109Questions.spec.ts tests/lib/question-registration.spec.ts`
+- `$env:QUESTION_GUESSABILITY_SOURCE_IDS="cs109-lect1,cs109-lect2,cs109-lect3,cs109-lect4,cs109-lect5,cs109-lect6"; npm run test:question-guessability`
+- `make types-check`, `make format-check`, `make check`
+
+Result: all 210 questions reviewed; 31 substantial rewrites, 2 scoring corrections, and 54 minor edits; 33 replacement IDs; 123 unchanged questions. Final difficulty: 75 easy / 84 medium / 51 hard. Full gate passed with 261 unit tests, one skipped test, and eight browser smoke tests; all six targeted guessability sources passed.
+
+---
+
+# Reported Question Review — 2026-10-15
+
+## Goal
+
+Review shared database reports against the current question bank and source evidence, correct warranted issues, and mark processed open reports resolved with decision notes, as clarified by the owner.
+
+## Non-goals
+
+- No unrelated question rewrites, UI changes, rating resets, or dependency additions.
+- Preserve existing local work and keep raw report/user data out of tracked files.
+
+## Steps
+
+- [x] Read and snapshot reports privately; match current and retired question IDs.
+- [x] Assess each report, apply justified corrections, and add focused regression coverage.
+- [x] Verify changes, then resolve only the reviewed open report IDs and confirm their status.
+- [x] Record the review outcome and durable review preferences in project docs.
+
+## Files to touch
+
+- Reported question files under `lib/`, focused tests under `tests/lib/`.
+- `e2e/reported-question-rendering.spec.ts` for numeric choices and previously repaired theta formulas.
+- `docs/team-preferences.md`, `PLANS.md`.
+- Ignored `.tmp/` files for private review evidence and database operations.
+
+## Verification
+
+- Focused content tests and `tests/lib/question-registration.spec.ts`.
+- Targeted `npm run test:question-guessability` for changed sources.
+- `make format`, `make check`.
+- Read back reviewed database IDs after resolution; preserve newly arriving reports and existing resolved history.
+
+## Result
+
+Reviewed 91 reports: 27 open and 64 previously resolved. Of the open reports, 13 prompted corrections across 11 questions, 11 were already addressed by the current bank, two concerned retired IDs, and one lecture-coverage concern did not warrant a change. Marked all 27 open reports resolved with timestamps and decision notes; read-back confirmed all 91 reports retained as resolved, zero reports deleted, and zero remaining open reports. Existing resolution timestamps and notes were preserved.
+
+Corrected invisible numeric answers, ambiguous truth/misconception criteria, the independence proof criterion, missing definitions/comparisons, and worked explanations. Added small notation improvements to eight nearby linear-algebra items after the source-level guessability check exposed existing math-salience cues. The quality gate covered all 19 changed questions: two substantial rewrites with fresh IDs, 17 minor edits, and eight intentionally retained introductory items. Changed-item difficulty is eight easy, five medium, and six hard; this selective repair does not rebalance the whole bank. Replacements: `la-crash-l4-q58` → `la-crash-l4-q61`, `la-crash-l5-q19` → `la-crash-l5-q61`.
+
+Verification passed: `make format`, `make check` (272 unit tests passed, one skipped, eight browser smoke tests passed), three focused browser rendering tests, and the targeted guessability check for all nine changed sources. The first full-gate attempt failed with `.next/dev/types/validator.ts(239,1): error TS1128: Declaration or statement expected.` The generated file contained duplicated trailing content; removing that generated file and running Next's `typegen` regenerated valid route types, and the complete gate passed on retry. No runtime dependencies or API contracts changed; question-bank corrections remain local until published.

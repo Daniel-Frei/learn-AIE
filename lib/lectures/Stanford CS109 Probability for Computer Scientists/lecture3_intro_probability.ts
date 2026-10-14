@@ -57,22 +57,16 @@ export const stanfordCS109Lecture3IntroProbabilityQuestions: Question[] = [
     "Sample spaces may be finite, countably infinite, or continuous as long as they enumerate all possible outcomes at the chosen level of description. An even-result set is an event inside the die's full sample space, not the complete set of possible die results.",
   ),
   makeQuestion(
-    "cs109-lect3-q03",
+    "cs109-lect3-q36",
     "easy",
-    "Two labeled coins are flipped. Which sets are events in the sample space \\(S=\\{HH,HT,TH,TT\\}\\)?",
+    "Two labeled coins are flipped, with sample space \\(S=\\{HH,HT,TH,TT\\}\\). Which sets correctly represent the named events?",
     [
       ["At least one head: \\(\\{HH,HT,TH\\}\\).", true],
       ["Exactly one head: \\(\\{HT,TH\\}\\).", true],
-      [
-        "The number \\(6\\), because any object can be treated as an event.",
-        false,
-      ],
-      [
-        "The set containing \\(HH,HT,TH,TT,HHH\\), because an event may extend the sample space.",
-        false,
-      ],
+      ["The first coin is heads: \\(\\{HH,TH\\}\\).", false],
+      ["Both coins match: \\(\\{HT,TH\\}\\).", false],
     ],
-    "An event must be a subset of the selected sample space, and both head-related sets meet that requirement. The number 6 is not one of these coin-flip outcomes, while \\(HHH\\) describes three flips and therefore cannot be added to an event for this two-flip experiment.",
+    "An event is a subset selected by the stated property. At least one head includes every outcome except TT, and exactly one head excludes both matching outcomes. The first-coin-heads event is \\(\\{HH,HT\\}\\), while matching coins give \\(\\{HH,TT\\}\\); the labels' order matters when the event refers to a specific coin.",
   ),
   makeQuestion(
     "cs109-lect3-q04",
@@ -89,7 +83,7 @@ export const stanfordCS109Lecture3IntroProbabilityQuestions: Question[] = [
   makeQuestion(
     "cs109-lect3-q05",
     "easy",
-    "A program repeatedly performs the same randomized experiment and records whether event \\(E\\) occurs. Which statements correctly connect the simulation to \\(P(E)\\)?",
+    "A program performs independent repetitions of the same randomized experiment and records whether event \\(E\\) occurs. Which statements correctly connect the simulation to \\(P(E)\\)?",
     [
       [
         "After \\(n\\) trials, the empirical frequency is the number of hits divided by \\(n\\).",
@@ -185,7 +179,7 @@ export const stanfordCS109Lecture3IntroProbabilityQuestions: Question[] = [
   makeQuestion(
     "cs109-lect3-q10",
     "easy",
-    "Two fair labeled coins are flipped. Which statements about the equally likely sample space \\(\\{HH,HT,TH,TT\\}\\) are correct?",
+    "Two fair labeled coins are flipped independently. Which statements about the equally likely sample space \\(\\{HH,HT,TH,TT\\}\\) are correct?",
     [
       ["Each ordered outcome has probability \\(1/4\\).", true],
       ["The event of exactly one head has probability \\(2/4=1/2\\).", true],
@@ -213,24 +207,21 @@ export const stanfordCS109Lecture3IntroProbabilityQuestions: Question[] = [
     "The ordered pair of die values gives \\(6\\times6=36\\) equally likely outcomes. Six pairs sum to 7, but only \\((1,1)\\) sums to 2; grouping the pairs by their sum produces categories with unequal numbers of underlying outcomes.",
   ),
   makeQuestion(
-    "cs109-lect3-q12",
+    "cs109-lect3-q37",
     "easy",
-    "A lottery is described only by the two outcomes 'win' and 'lose.' Why is \\(P(\\text{win})=1/2\\) not justified by that description?",
+    "One of 100 numbered tickets is selected uniformly. A player holds 4 distinct tickets; the recorded result is simply win or lose. What is the probability of winning?",
     [
-      ["The two named outcomes need not be equally likely.", true],
-      [
-        "A probability can be computed only when a sample space has more than two outcomes.",
-        false,
-      ],
-      ["The event 'win' is not a subset of the sample space.", false],
-      ["Probabilities cannot be assigned to verbal outcomes.", false],
+      ["\\(4/100=0.04\\)", true],
+      ["\\(1/2=0.50\\)", false],
+      ["\\(1/100=0.01\\)", false],
+      ["\\(4/96\\approx0.0417\\)", false],
     ],
-    "The ratio-of-counts formula depends on equal likelihood, not merely on there being two labels. Winning can correspond to far less probability mass than losing, so counting one favorable category out of two categories silently makes an unsupported symmetry assumption.",
+    "Winning collects the four equally likely ticket outcomes held by the player out of 100 possible drawn tickets. The two result labels merge groups of unequal size, so they do not receive equal probabilities. Counting one winning ticket ignores the other three, and dividing by 96 computes a winning-to-losing ratio rather than a probability.",
   ),
   makeQuestion(
     "cs109-lect3-q13",
-    "medium",
-    "Why is the ordered-pair sample space \\(S=\\{(i,j):1\\le i,j\\le6\\}\\) effective for two fair dice?",
+    "easy",
+    "Why is the ordered-pair sample space \\(S=\\{(i,j):1\\le i,j\\le6\\}\\) effective for two independent fair dice?",
     [
       ["It distinguishes which die produced each value.", true],
       [
@@ -251,7 +242,7 @@ export const stanfordCS109Lecture3IntroProbabilityQuestions: Question[] = [
   makeQuestion(
     "cs109-lect3-q14",
     "medium",
-    "Two fair dice are represented by unordered value multisets such as \\(\\{1,1\\}\\) and \\(\\{1,2\\}\\). Which statements correctly diagnose this sample space?",
+    "Two independent fair dice are represented by unordered value multisets such as \\(\\{1,1\\}\\) and \\(\\{1,2\\}\\). Which statements correctly diagnose this sample space?",
     [
       [
         "It is a valid way to describe the observable values if die identity is ignored.",
@@ -299,19 +290,16 @@ export const stanfordCS109Lecture3IntroProbabilityQuestions: Question[] = [
     "A bag contains 4 distinct cow toys and 3 distinct pig toys. Three toys are selected uniformly without replacement, with order ignored. What is the probability of selecting exactly 1 cow and 2 pigs?",
     [
       ["\\(\\dfrac{\\binom41\\binom32}{\\binom73}=\\dfrac{12}{35}\\)", true],
-      ["\\(\\dfrac{1}{2}\\), because the toy types are cow or pig.", false],
-      [
-        "\\(\\dfrac{3}{4}\\), because two of the three selected toys are pigs.",
-        false,
-      ],
+      ["\\(\\dfrac{4}{7}\\left(\\dfrac{3}{7}\\right)^2\\)", false],
+      ["\\(\\dfrac{4\\cdot3\\cdot2}{7\\cdot6\\cdot5}\\)", false],
       ["\\(\\dfrac{\\binom31\\binom42}{\\binom73}\\)", false],
     ],
-    "The denominator counts all three-toy subsets of seven distinct toys. A favorable subset chooses one of the four cows and two of the three pigs, giving \\(4\\times3=12\\) subsets; the reversed binomial factors count two cows and one pig instead.",
+    "All \\(\\binom73=35\\) three-toy subsets are equally likely. Selecting one cow and two pigs gives \\(\\binom41\\binom32=12\\) favorable subsets. The product using sevenths assumes replacement and a fixed type order; the descending product counts only cow-pig-pig and misses the other two cow positions. Reversing the binomial factors instead counts two cows and one pig.",
   ),
   makeQuestion(
     "cs109-lect3-q17",
     "medium",
-    "The cow-and-pig selection is instead modeled as three ordered draws of distinct toys. Which statements correctly recover the same probability of exactly 1 cow and 2 pigs?",
+    "A bag contains four distinct cow toys and three distinct pig toys. Three toys are drawn uniformly without replacement and the draw order is recorded. Which statements correctly compute the probability of exactly one cow and two pigs?",
     [
       [
         "The ordered sample space has \\(7\\times6\\times5=210\\) outcomes.",
@@ -373,7 +361,7 @@ export const stanfordCS109Lecture3IntroProbabilityQuestions: Question[] = [
   ),
   makeQuestion(
     "cs109-lect3-q21",
-    "medium",
+    "easy",
     "Events \\(E_1,E_2,E_3\\) are pairwise mutually exclusive. Which statements are correct?",
     [
       ["No outcome belongs to more than one of the three events.", true],
@@ -388,7 +376,7 @@ export const stanfordCS109Lecture3IntroProbabilityQuestions: Question[] = [
   ),
   makeQuestion(
     "cs109-lect3-q22",
-    "medium",
+    "easy",
     "Which facts justify the complement identity \\(P(E^c)=1-P(E)\\)?",
     [
       ["\\(E\\) and \\(E^c\\) are mutually exclusive.", true],
@@ -420,56 +408,38 @@ export const stanfordCS109Lecture3IntroProbabilityQuestions: Question[] = [
     "A room with no acquaintances must draw all \\(r\\) people from the \\(N-f\\) strangers, while the denominator counts all possible rooms. Taking the complement captures every room with one or more acquaintances at once and avoids a long sum of disjoint exact-count cases.",
   ),
   makeQuestion(
-    "cs109-lect3-q24",
+    "cs109-lect3-q38",
     "medium",
-    "An analytic calculation gives \\(P(E)=1/6\\), while a simulation of 10,000 trials reports 0.1649. What is the best interpretation?",
+    "A simulation intends to model the sum of two independent fair six-sided dice. It instead selects an integer uniformly from 2 through 12 on each trial. As the trial count grows, what fraction of trials will report sum 7?",
     [
-      [
-        "The finite simulation is reasonably close to the analytic probability and need not match it exactly.",
-        true,
-      ],
-      [
-        "The analytic answer is disproved because 0.1649 is not exactly repeating 6.",
-        false,
-      ],
-      [
-        "The simulation establishes that the true probability is exactly 0.1649.",
-        false,
-      ],
-      [
-        "The difference shows that the simulated experiment had no randomness.",
-        false,
-      ],
+      ["\\(1/11\\)", true],
+      ["\\(1/6\\)", false],
+      ["\\(1/36\\)", false],
+      ["\\(3/21\\)", false],
     ],
-    "Finite trial counts produce sampling variation, so empirical frequencies fluctuate around the underlying probability. The analytic value remains the exact model-based result, while 0.1649 is one noisy estimate that should tend to stabilize nearer \\(1/6\\) as the number of trials grows.",
+    "The implemented generator gives each of its eleven sum labels equal probability, so its frequency of 7 approaches \\(1/11\\). Actual independent dice assign six of 36 equally likely pairs to sum 7, giving \\(1/6\\); more trials reduce sampling noise but do not repair the model. The other ratios count one ordered pair or incorrectly weight unordered pairs equally.",
   ),
   makeQuestion(
-    "cs109-lect3-q25",
+    "cs109-lect3-q39",
     "hard",
-    "Two analysts model the same random experiment with different sample spaces. Which statements correctly describe when their probability answers can still agree?",
+    "Experiment A rolls two independent fair six-sided dice and discards die order. Experiment B chooses uniformly from the 21 unordered value multisets, including doubles. Which statements correctly compare the experiments?",
     [
+      ["Experiment A has probability \\(6/36=1/6\\) of a double.", true],
+      ["Experiment B has probability \\(6/21=2/7\\) of a double.", true],
       [
-        "They may use different outcome descriptions if each assigns the correct probability mass.",
+        "The multiset \\(\\{1,2\\}\\) has probability \\(2/36=1/18\\) in A and \\(1/21\\) in B.",
         true,
       ],
       [
-        "A coarser sample space can work when merged outcomes are weighted by their underlying probabilities.",
-        true,
-      ],
-      [
-        "Two equally likely sample spaces can differ in size if favorable and total counts change by the same multiplicative refinement factor.",
-        true,
-      ],
-      [
-        "Agreement depends on representing the same physical event, not on using identical outcome labels.",
+        "A sum of 7 has probability \\(6/36=1/6\\) in A and \\(3/21=1/7\\) in B.",
         true,
       ],
     ],
-    "A sample space is a modeling choice, and refinements or coarsenings can preserve probabilities when mass is transferred correctly. The danger arises only when a ratio-of-counts calculation assigns equal weight to coarse outcomes that actually represent different numbers or masses of elementary results.",
+    "Discarding die order combines two ordered realizations for each nondouble but only one for each double. Choosing uniformly among the resulting labels is a different experiment: each of its 21 multisets has mass \\(1/21\\). There are six double labels and three sum-seven labels, giving the stated probabilities and showing why a shared set of labels does not determine a distribution.",
   ),
   makeQuestion(
     "cs109-lect3-q26",
-    "hard",
+    "medium",
     "A fair die is rolled independently twice, but only the sum is recorded. Which statements are correct about using sums \\(2,3,\\ldots,12\\) as the sample space?",
     [
       [
@@ -494,7 +464,7 @@ export const stanfordCS109Lecture3IntroProbabilityQuestions: Question[] = [
   makeQuestion(
     "cs109-lect3-q27",
     "hard",
-    "Under the poker convention with 10 allowed rank sequences, which expressions correctly distinguish a straight from a straight flush in an unordered five-card hand?",
+    "A five-card hand is selected uniformly from a standard 52-card deck. A straight uses one of 10 allowed consecutive rank sequences and any suits; a straight flush uses one common suit as well. Which expressions correctly distinguish these events?",
     [
       [
         "\\(P(\\text{straight including flushes})=10\\cdot4^5/\\binom{52}{5}\\).",
@@ -531,19 +501,28 @@ export const stanfordCS109Lecture3IntroProbabilityQuestions: Question[] = [
     "The three favorable unordered pairs \\(\\{1,6\\},\\{2,5\\},\\{3,4\\}\\) each have two ordered realizations, while the six doubles in the 21-pair space have only one. The sample space is valid, but a raw count ratio ignores these unequal weights; the 36 ordered pairs give \\(6/36=1/6\\).",
   ),
   makeQuestion(
-    "cs109-lect3-q29",
+    "cs109-lect3-q40",
     "hard",
-    "Exactly one of \\(n\\) chips is defective, and a uniformly random \\(k\\)-chip test set is chosen. Which statements are correct?",
+    "A batch of 10 distinct chips contains exactly 2 defective chips. A test selects 3 chips uniformly without replacement. Which statements are correct?",
     [
-      ["The probability of detecting the defect is \\(k/n\\).", true],
-      ["The probability of missing it is \\((n-k)/n\\).", true],
-      ["Testing all \\(n\\) chips gives detection probability 1.", true],
       [
-        "Doubling \\(k\\) doubles the detection probability whenever the new value remains at most \\(n\\).",
+        "The probability of selecting no defective chip is \\(\\binom83/\\binom{10}3=7/15\\).",
+        true,
+      ],
+      [
+        "The probability of detecting at least one defect is \\(1-7/15=8/15\\).",
+        true,
+      ],
+      [
+        "The probability of selecting both defective chips is \\(\\binom81/\\binom{10}3=1/15\\).",
+        true,
+      ],
+      [
+        "Each particular defective chip has inclusion probability \\(3/10\\), but adding those two probabilities counts selections containing both twice.",
         true,
       ],
     ],
-    "Uniform subset selection treats every chip symmetrically, so the unique defective chip is included in exactly a \\(k/n\\) fraction of test sets. Its complement is the miss probability, and the formula has the expected boundary at \\(k=n\\); within the feasible range it is linear in \\(k\\).",
+    "There are 120 equally likely test sets, with 56 containing only good chips and eight containing both defective chips. Complement counting gives \\(64/120=8/15\\) for detecting at least one defect. Each defective chip individually appears in a \\(3/10\\) fraction of test sets, but their selection events overlap, so the union is \\(3/10+3/10-1/15\\).",
   ),
   makeQuestion(
     "cs109-lect3-q30",
@@ -564,8 +543,8 @@ export const stanfordCS109Lecture3IntroProbabilityQuestions: Question[] = [
     "The first two models retain distinct toy identities and produce equally likely elementary outcomes, so they agree after the common ordering factor cancels. A type-only model merges many selections into cow/pig patterns with different multiplicities and cannot use an unweighted count of type labels.",
   ),
   makeQuestion(
-    "cs109-lect3-q31",
-    "hard",
+    "cs109-lect3-q41",
+    "medium",
     "A dart is equally likely to land anywhere on a rectangular board. Which statements correctly describe geometric probability for a target region entirely inside the board?",
     [
       ["The target probability is target area divided by board area.", true],
@@ -575,7 +554,7 @@ export const stanfordCS109Lecture3IntroProbabilityQuestions: Question[] = [
       ],
       [
         "Replacing area by perimeter generally gives a different and unjustified quantity.",
-        false,
+        true,
       ],
       [
         "Every target shape with the same perimeter must have the same hit probability.",
@@ -585,19 +564,16 @@ export const stanfordCS109Lecture3IntroProbabilityQuestions: Question[] = [
     "Uniform spatial outcomes distribute probability mass in proportion to area, so a region's shape matters only through its area under this model. A two-label hit/miss sample space is not equally likely in general, and perimeter neither measures two-dimensional mass nor determines enclosed area uniquely.",
   ),
   makeQuestion(
-    "cs109-lect3-q32",
-    "hard",
-    "Which condition is essential before replacing an event probability by the counting ratio \\(|E|/|S|\\)?",
+    "cs109-lect3-q42",
+    "medium",
+    "A bag contains two distinct red tokens, one blue token, and one green token. Two tokens are drawn uniformly without replacement. What is the probability that their colors match?",
     [
-      [
-        "Every elementary outcome in the finite sample space must be equally likely.",
-        true,
-      ],
-      ["The event must contain exactly half the sample space.", false],
-      ["The outcomes must be written in increasing numerical order.", false],
-      ["The experiment must use physical dice or cards.", false],
+      ["\\(\\binom22/\\binom42=1/6\\)", true],
+      ["\\(1/3\\)", false],
+      ["\\(1/2\\)", false],
+      ["\\((2/4)^2=1/4\\)", false],
     ],
-    "The ratio works because equal likelihood gives every elementary outcome the common mass \\(1/|S|\\). Neither the event's size, the notation used, nor the physical type of randomizer establishes that symmetry; it must follow from the experiment and the chosen representation.",
+    "The six unordered pairs of distinct physical tokens are equally likely, and only the pair of red tokens matches in color. Treating three color labels as equally likely ignores their multiplicities and the impossibility of blue-blue and green-green pairs. Two coarse labels, match and differ, are also unequal in mass; squaring \\(2/4\\) instead models replacement.",
   ),
   makeQuestion(
     "cs109-lect3-q33",
@@ -624,26 +600,20 @@ export const stanfordCS109Lecture3IntroProbabilityQuestions: Question[] = [
     "Both methods describe the same uniformly selected room and therefore must agree when counted correctly. The complement is compact because 'no acquaintances' has one simple binomial count, whereas the direct method partitions the desired event by the exact number of acquaintances present.",
   ),
   makeQuestion(
-    "cs109-lect3-q34",
-    "hard",
-    "A probability problem will be solved by counting equally likely outcomes. Which steps form a sound workflow?",
+    "cs109-lect3-q43",
+    "medium",
+    "Two distinct tasks are selected uniformly from seven tasks and placed in first and second execution positions. One task is designated urgent. Which ratios correctly give the probability that the urgent task is selected?",
     [
-      ["Define what one complete outcome records before counting.", true],
-      ["Argue why the chosen elementary outcomes are equally likely.", true],
-      [
-        "Construct the event as a subset using the same ordered or unordered convention as the sample space.",
-        true,
-      ],
-      [
-        "Choose the smallest denominator first and infer the experiment from it afterward.",
-        false,
-      ],
+      ["\\(12/(7\\cdot6)=2/7\\)", true],
+      ["\\(\\binom61/\\binom72=6/21\\)", true],
+      ["\\((\\binom72-\\binom62)/\\binom72=6/21\\)", true],
+      ["\\(6/(7\\cdot6)=1/7\\)", false],
     ],
-    "A correct ratio requires the numerator and denominator to live in the same representation and to count elementary outcomes with equal mass. Starting from a convenient number without defining the experiment invites mismatched order conventions, merged outcomes, and unsupported equal-likelihood assumptions.",
+    "There are 42 equally likely ordered selections, with two choices for the urgent task's position and six for its partner, giving twelve favorable sequences. Ignoring execution order gives six favorable unordered pairs out of 21; the complement excludes the fifteen pairs of nonurgent tasks. Using six unordered favorable pairs over 42 ordered outcomes mixes representations and halves the probability.",
   ),
   makeQuestion(
     "cs109-lect3-q35",
-    "hard",
+    "easy",
     "Which conclusions follow from the probability axioms for any event \\(E\\) and mutually exclusive events \\(A_1,\\ldots,A_m\\)?",
     [
       ["\\(P(E^c)=1-P(E)\\).", true],

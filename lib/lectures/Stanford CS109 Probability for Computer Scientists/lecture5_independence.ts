@@ -90,7 +90,7 @@ export const stanfordCS109Lecture5IndependenceQuestions: Question[] = [
       ["0.75", false],
       ["0.10", false],
     ],
-    "For independent success events, the probability of their intersection is the product \\(0.8\\times0.7=0.56\\). The value 0.94 would come from an incorrect complement calculation, 0.75 merely averages the rates, and 0.10 is their difference rather than a joint probability.",
+    "The probability of both independent success events is \\(0.8\\cdot0.7=0.56\\). Taking \\(1-(0.2)(0.3)=0.94\\) gives at least one success, which is a different event. Averaging the two success rates gives 0.75 and subtracting them gives 0.10; neither operation computes their intersection.",
   ),
   makeQuestion(
     "cs109-lect5-q05",
@@ -166,17 +166,17 @@ export const stanfordCS109Lecture5IndependenceQuestions: Question[] = [
     "easy",
     "Two fair dice are rolled independently. Let \\(E=\\{D_1=1\\}\\) and \\(F=\\{D_2=1\\}\\). Which calculations establish that \\(E\\) and \\(F\\) are independent?",
     [
-      ["\\(P(E)=P(F)=1/6\\).", true],
+      ["\\(P(E)=P(F)=1/6\\) and \\(P(E\\mid F)=1/6=P(E)\\).", true],
       ["\\(P(E\\cap F)=1/36=(1/6)(1/6)\\).", true],
       ["\\(P(E\\cup F)=1/6\\).", false],
       ["\\(P(E\\mid F)=1/36\\).", false],
     ],
-    "The marginal probabilities are each \\(1/6\\), and exactly one of the 36 ordered outcomes makes both dice equal 1. Thus the joint probability equals the product of the marginals; the union is \\(11/36\\), and conditioning on the second die leaves the first-die probability at \\(1/6\\), not \\(1/36\\).",
+    "Equal marginal probabilities alone do not establish independence: two events can have the same probability and still be dependent. Here \\(P(E\\mid F)=P(E)=1/6\\), so learning the second die is 1 leaves the first-die probability unchanged. Equivalently, \\(P(E\\cap F)=1/36=P(E)P(F)\\). Inclusion-exclusion gives \\(P(E\\cup F)=1/6+1/6-1/36=11/36\\); the conditional probability is \\(1/6\\), not \\(1/36\\).",
   ),
   makeQuestion(
     "cs109-lect5-q10",
     "easy",
-    "In a uniform finite sample space, what geometric relationships characterize independent events \\(A\\) and \\(B\\)?",
+    "In a uniform finite sample space with \\(P(B)>0\\), what geometric relationships characterize independent events \\(A\\) and \\(B\\)?",
     [
       [
         "The fraction of the whole sample space occupied by \\(A\\) equals the fraction of \\(B\\) occupied by \\(A\\cap B\\).",
@@ -221,7 +221,7 @@ export const stanfordCS109Lecture5IndependenceQuestions: Question[] = [
   makeQuestion(
     "cs109-lect5-q12",
     "easy",
-    "A biased coin has head probability \\(p\\). What is the probability of the particular six-flip sequence HHTHTT?",
+    "A coin has head probability \\(p\\). What is the probability of obtaining the particular sequence HHTHTT in six independent flips?",
     [
       ["\\(p^3(1-p)^3\\)", true],
       ["\\(\\binom{6}{3}p^3(1-p)^3\\)", false],
@@ -354,24 +354,21 @@ export const stanfordCS109Lecture5IndependenceQuestions: Question[] = [
     "De Morgan's law converts a union into an intersection of complements, and mutual independence then makes that intersection easy to multiply. The direct product of the event probabilities describes every event occurring, not at least one, so it answers a different joint-event question.",
   ),
   makeQuestion(
-    "cs109-lect5-q20",
-    "medium",
-    "Independent components fail with probabilities \\(q_1,\\ldots,q_n\\). A parallel system works whenever at least one component works. Which statements are correct?",
+    "cs109-lect5-q36",
+    "hard",
+    "A network needs a gateway G to work, plus at least one of links A and B. G, A, and B work independently with probabilities 0.9, 0.8, and 0.7. Route A uses G and A; route B uses G and B. Which statements are correct?",
     [
-      ["The system fails exactly when all components fail.", true],
-      ["System failure has probability \\(\\prod_i q_i\\).", true],
-      ["System success has probability \\(1-\\prod_i q_i\\).", true],
-      [
-        "The formula allows the components to have different failure probabilities.",
-        true,
-      ],
+      ["Route A works with probability \\(0.9(0.8)=0.72\\).", true],
+      ["Route B works with probability \\(0.9(0.7)=0.63\\).", true],
+      ["Both routes work with probability \\(0.9(0.8)(0.7)=0.504\\).", true],
+      ["Network reliability is \\(0.9[1-(0.2)(0.3)]=0.846\\).", true],
     ],
-    "A parallel system's failure event is the intersection of all component failures, so independence yields the product of their possibly unequal failure probabilities. Taking the complement then gives system success; no identical-rate assumption is required because each factor retains its own component's rate.",
+    "The gateway is a single shared requirement, so its success factor appears once in the joint event that both routes work. Conditional on an operational gateway, either independent link suffices and their failure complement gives 0.94. Multiplying by the gateway rate gives 0.846, also \\(0.72+0.63-0.504\\); the route events themselves are dependent because both include G.",
   ),
   makeQuestion(
     "cs109-lect5-q21",
     "medium",
-    "A coin with head probability 0.6 is flipped ten times. Which statements correctly describe the event of exactly four heads?",
+    "A coin with head probability 0.6 is flipped independently ten times. Which statements correctly describe the event of exactly four heads?",
     [
       ["Its probability is \\(\\binom{10}{4}0.6^4 0.4^6\\).", true],
       [
@@ -392,7 +389,7 @@ export const stanfordCS109Lecture5IndependenceQuestions: Question[] = [
   makeQuestion(
     "cs109-lect5-q22",
     "medium",
-    "A complete outcome of four coin flips is HHTT. Which statements are correct about HHTT, HTHT, and the event of exactly two heads?",
+    "Four independent coin flips each have head probability \\(p\\), where \\(0<p<1\\). Which statements are correct about the full outcomes HHTT and HTHT and the event of exactly two heads?",
     [
       ["HHTT and HTHT are mutually exclusive complete outcomes.", true],
       ["Both outcomes belong to the event of exactly two heads.", true],
@@ -462,30 +459,30 @@ export const stanfordCS109Lecture5IndependenceQuestions: Question[] = [
     "The partition isolates the part of \\(A\\) outside \\(B\\), and independence supplies a product for the part inside \\(B\\). Algebra then turns the remainder into \\(P(A)P(B^c)\\), which is exactly the product criterion required for independence of \\(A\\) and \\(B^c\\).",
   ),
   makeQuestion(
-    "cs109-lect5-q26",
+    "cs109-lect5-q37",
     "hard",
-    "Which conditions must hold for three events \\(A,B,C\\) to be mutually independent?",
+    "Events \\(A,B,C\\) each have probability \\(1/2\\). Their intersections are:\n\n| Intersection | Probability |\n| --- | ---: |\n| \\(A\\cap B\\) | \\(3/8\\) |\n| \\(A\\cap C\\) | \\(1/4\\) |\n| \\(B\\cap C\\) | \\(1/4\\) |\n| \\(A\\cap B\\cap C\\) | \\(1/8\\) |\n\nWhich conclusions follow?",
     [
       [
-        "\\(P(A\\cap B)=P(A)P(B)\\), and likewise for the other two pairs.",
+        "The three-way intersection equals the product of all three marginals, \\(1/8\\).",
         true,
       ],
-      ["\\(P(A\\cap B\\cap C)=P(A)P(B)P(C)\\).", true],
+      ["The pairs \\(A,C\\) and \\(B,C\\) are independent.", true],
       [
-        "Every subset containing at least two of the events satisfies the corresponding product identity.",
+        "The three events are not mutually independent because \\(P(A\\cap B)\\ne1/4\\).",
         true,
       ],
       [
-        "It is sufficient that the three marginal probabilities are equal.",
+        "The three events are pairwise independent because the three-way product identity holds.",
         false,
       ],
     ],
-    "Mutual independence requires the product rule for all pairs and for the three-way intersection, equivalently for every relevant subset. Matching marginal probabilities says nothing about how events overlap, so equal rates cannot replace the joint-probability checks.",
+    "Mutual independence requires every pairwise product identity as well as the three-way identity. The given table passes the three-way check and both pairs involving C, but \\(3/8\\ne(1/2)(1/2)\\) for A and B. Thus even a correct full-intersection product cannot replace the lower-order checks.",
   ),
   makeQuestion(
     "cs109-lect5-q27",
     "hard",
-    "Two fair dice define \\(E=\\{D_1=1\\}\\), \\(F=\\{D_2=6\\}\\), and \\(G=\\{D_1+D_2=7\\}\\). Which statements explain why these events are pairwise independent but not mutually independent?",
+    "Two independent fair dice define \\(E=\\{D_1=1\\}\\), \\(F=\\{D_2=6\\}\\), and \\(G=\\{D_1+D_2=7\\}\\). Which statements explain why these events are pairwise independent but not mutually independent?",
     [
       [
         "Each event has probability \\(1/6\\), and every pair intersects in the single outcome \\((1,6)\\), so each pair has intersection probability \\(1/36\\).",
@@ -528,7 +525,7 @@ export const stanfordCS109Lecture5IndependenceQuestions: Question[] = [
         true,
       ],
       [
-        "Adding the all-three contribution \\(0.8(0.7)(0.6)=0.336\\) gives 0.788.",
+        "All three succeed with probability \\(0.8(0.7)(0.6)=0.336\\), so at least two succeed with probability \\(0.452+0.336=0.788\\).",
         true,
       ],
       [
@@ -540,7 +537,7 @@ export const stanfordCS109Lecture5IndependenceQuestions: Question[] = [
         false,
       ],
     ],
-    "At least two successes is the disjoint union of the three ways exactly two jobs succeed and the way all three succeed. Unequal job rates require keeping the appropriate success and failure factor for each named job; the simple binomial shortcut is unavailable, and the complement of all failures answers a broader event.",
+    "Multiply within each outcome because the jobs are independent: the three exactly-two probabilities are \\(0.224\\), \\(0.144\\), and \\(0.084\\), which sum to \\(0.452\\). The separate all-three outcome has probability \\(0.8\\cdot0.7\\cdot0.6=0.336\\). These outcomes are mutually exclusive, so add their probabilities: \\(P(\\text{at least two})=0.452+0.336=0.788\\). The complement of all failures gives at least one success, while a binomial shortcut would require identical job success rates.",
   ),
   makeQuestion(
     "cs109-lect5-q30",
@@ -555,7 +552,7 @@ export const stanfordCS109Lecture5IndependenceQuestions: Question[] = [
       ["Replacing a route by one with a smaller failure probability.", true],
       ["Removing a route whose success probability is positive.", false],
     ],
-    "Each listed improvement reduces the product of all failure probabilities, so its complement cannot decrease. Removing a useful route deletes a factor below one from the failure product, making simultaneous failure more likely and reliability lower unless that route had zero chance of success.",
+    "Increasing a success rate reduces its failure factor, and adding an independent route multiplies the failure probability by a factor below one. These changes cannot lower reliability. Removing a positive-success route can lower reliability, but need not change it if another route works with probability one; this is why the improvement claims are weak rather than strict.",
   ),
   makeQuestion(
     "cs109-lect5-q31",
@@ -581,7 +578,7 @@ export const stanfordCS109Lecture5IndependenceQuestions: Question[] = [
   makeQuestion(
     "cs109-lect5-q32",
     "hard",
-    "Each of \\(m\\) independent strings goes to bucket 1 with probability \\(p\\) and bucket 2 with probability \\(1-p\\). Which statements correctly describe the probability that both buckets are nonempty?",
+    "For an integer \\(m\\ge2\\), each of \\(m\\) independent strings goes to bucket 1 with probability \\(p\\), where \\(0<p<1\\), and bucket 2 with probability \\(1-p\\). Which statements correctly describe the probability that both buckets are nonempty?",
     [
       ["It is \\(1-p^m-(1-p)^m\\).", true],
       [
@@ -601,7 +598,7 @@ export const stanfordCS109Lecture5IndependenceQuestions: Question[] = [
   ),
   makeQuestion(
     "cs109-lect5-q33",
-    "hard",
+    "medium",
     "Events \\(A\\) and \\(B\\) satisfy \\(P(A)=0.4\\), \\(P(B)=0.5\\), and \\(P(A\\cap B)=0.2\\). Which conclusions are correct?",
     [
       ["The events are independent because \\(0.2=(0.4)(0.5)\\).", true],
@@ -633,15 +630,15 @@ export const stanfordCS109Lecture5IndependenceQuestions: Question[] = [
     "Independence supplies a product for any specified success-failure pattern, including the all-failure and all-success extremes. Exactly one success is a disjoint union over which trial succeeds, so its terms must retain the individual rates; only identical rates make those terms equal and collapse the distribution to the ordinary binomial formula.",
   ),
   makeQuestion(
-    "cs109-lect5-q35",
+    "cs109-lect5-q38",
     "hard",
-    "A system has five independent components with success probabilities \\(p_1,\\ldots,p_5\\), and \\(X\\) is the number that succeed. Which expression gives \\(P(X\\ge1)\\)?",
+    "Three strings are hashed independently. Each lands in bucket 1 with probability 0.2, bucket 2 with probability 0.3, or another bucket with probability 0.5. What is the probability that at least one of buckets 1 and 2 is nonempty?",
     [
-      ["\\(1-\\prod_{i=1}^5(1-p_i)\\)", true],
-      ["\\(\\prod_{i=1}^5 p_i\\)", false],
-      ["\\(\\sum_{i=1}^5 p_i\\prod_{j\\ne i}(1-p_j)\\)", false],
-      ["\\(\\prod_{i=1}^5(1-p_i)\\)", false],
+      ["\\(1-0.5^3=0.875\\)", true],
+      ["\\(1-0.8^3-0.7^3+0.5^3=0.270\\)", false],
+      ["\\(1-(0.8\\cdot0.7)^3=0.824384\\)", false],
+      ["\\(1-0.8^3=0.488\\)", false],
     ],
-    "The complement of at least one success is the event that all five components fail, whose probability factors as \\(\\prod_i(1-p_i)\\). The other expressions respectively calculate all five succeeding, exactly one succeeding, and all five failing, so they are nearby but distinct events of the same system.",
+    "Both named buckets are empty exactly when all three strings go elsewhere, with probability \\(0.5^3\\). Independence applies across strings, while a single string's bucket-1 and bucket-2 destinations are mutually exclusive. Subtracting both individual empty-bucket rates and adding their intersection gives the probability both buckets are nonempty; multiplying their empty rates assumes a false bucket-level independence, and \\(1-0.8^3\\) concerns bucket 1 alone.",
   ),
 ];

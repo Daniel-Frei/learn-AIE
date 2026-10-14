@@ -666,7 +666,7 @@ Which option correctly computes \\(V^\\pi(s)\\)?`,
     chapter: 4,
     difficulty: "hard",
     prompt:
-      "Which statements correctly describe the modified-MDP interpretation of discounting shown on the slides?",
+      "For a Markov decision process (MDP) with discount factor \\(0<\\gamma<1\\), which statements correctly describe the equivalent undiscounted process with random termination?",
     options: [
       {
         text: "Ordinary transition probabilities can be viewed as scaled to \\(\\tilde p(s'\\mid s,a)=\\gamma p(s'\\mid s,a)\\).",
@@ -686,7 +686,7 @@ Which option correctly computes \\(V^\\pi(s)\\)?`,
       },
     ],
     explanation:
-      "The slide's interpretation of discounting is a stochastic termination model: continue according to the original dynamics with probability mass \\(\\gamma\\), and terminate with probability mass \\(1-\\gamma\\). This is another way to understand why future rewards are geometrically downweighted.",
+      "After each current reward, continue according to the original dynamics with probability \\(\\gamma\\), or enter a zero-reward absorbing state with probability \\(1-\\gamma\\). Surviving t transitions has probability \\(\\gamma^t\\), so expected future rewards receive the same weights as discounting. Swapping the probabilities would change the discount factor, and this is a property of the environment/value formulation rather than only the actor network.",
   },
 
   {

@@ -478,31 +478,31 @@ export const CrashCourseLinearAlgebraLecture5Questions: Question[] = [
       "A saddle point is not simply a minimum; it can have escape directions where loss decreases. In high-dimensional neural-network landscapes, saddle points are common and not every critical point is a bad local minimum.",
   },
   {
-    id: "la-crash-l5-q19",
+    id: "la-crash-l5-q61",
     chapter: 5,
     difficulty: "medium",
     prompt:
-      "Which statements correctly describe why high-dimensional optimization can behave differently?",
+      "Near a stationary point of a three-parameter loss, a displacement \\((u,v,w)\\) changes the loss by \\(\\Delta L=u^2+v^2-w^2\\). By comparison, a one-parameter loss changes by \\(\\Delta\\ell=u^2\\) near its stationary point. Which conclusions are correct?",
     options: [
       {
-        text: "There can be many possible directions to move.",
+        text: "The loss with \\(\\Delta L=u^2+v^2-w^2\\) has a saddle point, while the one-parameter loss has a local minimum.",
         isCorrect: true,
       },
       {
-        text: "Some critical points may have escape directions.",
+        text: "A small displacement \\((0,0,w)\\) with nonzero w lowers L even though its gradient at the stationary point is zero.",
         isCorrect: true,
       },
       {
-        text: "Bad local minima are the main optimization concern in this setting.",
+        text: "Because \\(u^2+v^2\\ge0\\), the three-parameter stationary point is a local minimum regardless of w.",
         isCorrect: false,
       },
       {
-        text: "High dimensions make gradient directions unusable.",
+        text: "With \\(\\nabla L=(0,0,0)\\) at the stationary point, exact gradient descent takes a nonzero step along w.",
         isCorrect: false,
       },
     ],
     explanation:
-      "High-dimensional spaces have many directions, and saddle points can allow movement downhill in at least some of them. Bad local minima are not the only concern, so the claim that they are the only concern is incorrect.",
+      "The sign of the loss change depends on direction: moving along u or v raises L, whereas moving along w gives \\(\\Delta L=-w^2<0\\). Thus the three-parameter point is a saddle, unlike the one-parameter minimum where \\(\\Delta\\ell=u^2\\ge0\\). Extra dimensions can supply a downhill escape direction without making every critical point a minimum. At the exact stationary point the gradient is zero, so an exact gradient-descent step is zero; perturbations or noise can move the iterate onto a downhill path.",
   },
   {
     id: "la-crash-l5-q20",

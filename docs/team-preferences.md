@@ -62,6 +62,7 @@ This file captures durable process preferences so future tasks can follow them b
 - Prioritize tests for quiz source selection/title logic, difficulty rating behavior, and API validation/error handling.
 - For question reporting, prefer append-only shared database entries and include source/prompt snapshot context for reviewer triage.
 - Do not delete handled question reports from shared storage. Mark them `resolved` with `resolved_at` and, when useful, a short `resolution_note`; active report counts should include only open reports.
+- Treat question reports as credible signals rather than established facts. Compare the report's saved prompt and date with the current bank and source evidence; old reports can concern earlier versions or retired IDs. Correct questions, answers, or explanations only when warranted, and keep raw comments and participant data out of tracked review notes.
 - When adding a quiz topic, update the central `lib/questionTopics.ts` list and the API/product docs. Do not add topic-specific Supabase `question_reports.topic` enum constraints; reports should accept future configured topics without another report-table schema migration.
 - Do not revive browser-local report storage or report export/import UI; legacy local reports should be ignored.
 - For shared quiz data, use anonymous per-device participants in v1: question difficulty is global, but each participant keeps their own rating/climb state.
@@ -81,6 +82,8 @@ This file captures durable process preferences so future tasks can follow them b
 - Keep brief web-development database interruptions unobtrusive, but make a sustained outage visible without requiring log inspection. The current threshold is 60 seconds: retry Supabase in the background, then show a persistent development-only warning that process-memory answers are not durable until the connection recovers.
 
 ## Question Bank Preferences
+
+- Reviews of existing question banks should inspect the full requested scope and improve quality selectively. Preserve sound questions and useful introductory items; do not treat a quality review as a mandate to replace every item. Check available transcripts and slides, but independently verify their arithmetic and assumptions. Prefer replacements that reduce repetition or test a plausible misconception over cosmetic rewrites.
 
 - For question-bank files under `/lib` (excluding `/lib/llm`), keep answer patterns roughly balanced across 1, 2, 3, and 4 correct-answer questions.
 - Question-bank files may mix `multiple-select` and `assertion-reason` questions. Use assertion-reason items when the source material benefits from testing whether two statements are true and whether the reason explains the assertion; do not force a fixed mix, because the right question type depends on the subject and field.
