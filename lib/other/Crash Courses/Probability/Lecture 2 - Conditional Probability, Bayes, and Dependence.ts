@@ -529,14 +529,14 @@ export const CrashCourseProbabilityL2Questions: Question[] = [
   makeQuestion(
     "crash-probability-l2-q91",
     "easy",
-    "A fair coin is flipped twice. What is the relationship between the first-flip-head and second-flip-head events?",
+    "Two flips of a fair coin have four equally likely complete outcomes: HH, HT, TH, and TT, with the first letter recording the first flip. Let A be the event that the first flip is heads and B the event that the second flip is heads. Which relationship holds between A and B?",
     [
       ["They are independent.", true],
       ["They are mutually exclusive.", false],
       ["They are complements.", false],
-      ["They are conditionally impossible.", false],
+      ["Observing A makes B certain.", false],
     ],
-    "The first result does not change the fair probability of the second, so the joint head-head probability is \\(1/4=(1/2)(1/2)\\). Both heads can occur together, so the events are neither disjoint nor complements.",
+    "The experiment includes both flips: \\(A=\\{HH,HT\\}\\) and \\(B=\\{HH,TH\\}\\). They share the complete outcome HH, so \\(P(A\\cap B)=1/4=P(A)P(B)\\), which establishes independence. Mutual exclusivity means no complete outcome belongs to both events; it does not mean the flips happen at different times. The events are not complements, since TT belongs to neither, and \\(P(B\\mid A)=1/2\\), so observing A does not make B certain.",
   ),
   makeQuestion(
     "crash-probability-l2-q92",
@@ -714,7 +714,7 @@ export const CrashCourseProbabilityL2Questions: Question[] = [
   makeQuestion(
     "crash-probability-l2-q102",
     "hard",
-    "Prior odds for a fault are 1:19, and an alarm is four times as likely under a fault as under no fault. Which statements are correct?",
+    "Before observing an alarm, the fault:no-fault odds are 1:19, meaning a fault has prior probability 1/20. An alarm is four times as likely when there is a fault as when there is no fault. After an alarm occurs, which statements about the likelihood ratio, posterior odds, and posterior fault probability are correct?",
     [
       ["The likelihood ratio is 4.", true],
       ["Posterior odds are \\(4:19\\).", true],
@@ -724,7 +724,7 @@ export const CrashCourseProbabilityL2Questions: Question[] = [
         false,
       ],
     ],
-    "Bayes in odds form multiplies prior odds by the likelihood ratio, turning 1:19 into 4:19. Converting odds to probability requires dividing by the sum of both sides, so a likelihood ratio is not itself a posterior probability.",
+    "Let F mean fault and A mean alarm. Prior fault:no-fault odds of 1:19 mean \\(P(F)=1/20\\) and \\(P(F^c)=19/20\\). The likelihood ratio is \\(P(A\\mid F)/P(A\\mid F^c)=4\\): it compares alarm probabilities under the two possible states. Bayes' rule multiplies prior odds by this ratio, giving posterior odds \\((1/19)\\cdot4=4/19\\), or 4:19. Converting those odds to probability gives \\(P(F\\mid A)=4/(4+19)=4/23\\approx0.174\\). The value 4/5 would result from equal prior odds of 1:1, which discards the given rarity of faults.",
   ),
   makeQuestion(
     "crash-probability-l2-q103",
@@ -906,7 +906,7 @@ export const CrashCourseProbabilityL2Questions: Question[] = [
         false,
       ],
     ],
-    "The observation probability marginalizes both hidden-state paths, and Bayes divides the state-1 joint path by that evidence. Neither the largest likelihood nor the likelihood alone accounts for the prior probability of the hidden state.",
+    "The numerator 0.24 is the state-1 joint probability: \\(P(Z=1,X=x)=P(Z=1)P(X=x\\mid Z=1)=0.3\\cdot0.8=0.24\\). Since \\(P(Z=0)=1-0.3=0.7\\), the state-0 joint probability is \\(0.7\\cdot0.2=0.14\\). These two disjoint paths sum to the observation probability \\(P(X=x)=0.24+0.14=0.38\\). Bayes' rule then normalizes the state-1 path: \\(P(Z=1\\mid X=x)=0.24/0.38\\approx0.632\\). The likelihood 0.8 conditions on an already known state; neither choosing the largest likelihood nor reversing that conditional accounts for the state priors and the alternative path.",
   ),
   makeQuestion(
     "crash-probability-l2-q113",

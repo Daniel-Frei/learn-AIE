@@ -44,27 +44,36 @@ export const CrashCourseProbabilityL1Questions: Question[] = [
       ],
       ["The three class probabilities must sum to 1.", true],
       [
-        "Equal likelihood would additionally require \\(P(\\text{cat})=P(\\text{dog})=1/3\\).",
+        "Listing three outcomes forces each class probability to equal \\(1/3\\), without any further assumption.",
         false,
       ],
       [
-        "The label other has probability zero because it is not a named animal.",
+        "The probabilities of cat and dog must sum to 1, even though other is also a possible outcome.",
         false,
       ],
     ],
-    "A single-label sample space treats its listed classes as mutually exclusive and exhaustive, so one class occurs and their probabilities sum to one. Exhaustiveness does not make outcomes equally likely, and an other class can carry substantial probability mass.",
+    "The single-label model makes cat, dog, and other mutually exclusive and exhaustive: exactly one is the outcome, and \\(P(\\text{cat})+P(\\text{dog})+P(\\text{other})=1\\). Listing the labels does not assign their probabilities. For example, probabilities \\(0.60,0.30,0.10\\) satisfy the model without being uniform, and cat plus dog then has probability 0.90. Equal likelihood would be an additional assumption, rather than a consequence of listing three outcomes.",
   ),
   makeQuestion(
     "crash-probability-l1-q63",
     "medium",
-    "An LLM can emit one of \\(\\{\\text{a},\\text{an},\\text{the},\\text{dog}\\}\\) with probabilities \\(0.20,0.10,0.45,0.25\\). Let \\(A\\) be “an article” and \\(B\\) be “a token containing the letter a.” Which statements are correct?",
+    `A language model emits exactly one token from the following distribution:
+
+| Token | Probability |
+| --- | ---: |
+| a | 0.20 |
+| an | 0.10 |
+| the | 0.45 |
+| dog | 0.25 |
+
+Define \\(A\\) as the event consisting of tokens that are English grammatical articles, and \\(B\\) as the event consisting of tokens whose spelling contains the letter a. Which statements about these sets of outcomes and their probabilities are correct?`,
     [
       ["\\(A=\\{\\text{a},\\text{an},\\text{the}\\}\\).", true],
       ["\\(B=\\{\\text{a},\\text{an}\\}\\).", true],
       ["\\(P(A)=0.75\\).", true],
       ["\\(A\\) and \\(B\\) are disjoint.", false],
     ],
-    "Events group token outcomes by a property: the article event has mass \\(0.20+0.10+0.45=0.75\\), while the letter-a event contains a and an. Their intersection is \\(B\\), so calling the events disjoint ignores their shared outcomes.",
+    "An event is a set of possible outcomes, rather than one token or a probability value. The English articles in this vocabulary are a, an, and the, so \\(A=\\{\\text{a},\\text{an},\\text{the}\\}\\) and \\(P(A)=0.20+0.10+0.45=0.75\\). Only a and an contain the letter a, giving \\(B=\\{\\text{a},\\text{an}\\}\\). These sets overlap: \\(A\\cap B=B\\), with probability \\(0.20+0.10=0.30\\), so they are not disjoint.",
   ),
   makeQuestion(
     "crash-probability-l1-q64",
@@ -929,7 +938,14 @@ export const CrashCourseProbabilityL1Questions: Question[] = [
   makeQuestion(
     "crash-probability-l1-q117",
     "hard",
-    "A classifier estimates \\(P(\\text{disease})=0.20\\). Treating costs in the same units, a missed disease costs 100, a false alarm costs 5, and correct decisions cost 0. Which statements are correct?",
+    `For one case, a binary classifier estimates a 0.20 probability of disease and a 0.80 probability of no disease. It must choose one of two prediction labels. The cost of each prediction depends on the unknown true state:
+
+| Prediction label | True state: disease | True state: no disease |
+| --- | ---: | ---: |
+| Disease | 0 | 5 (false alarm) |
+| No disease | 100 (missed disease) | 0 |
+
+All costs use the same units. Evaluate each label by multiplying its cost in each true state by that state's estimated probability and adding the two contributions. Which statements correctly describe the expected costs and the label that minimizes them?`,
     [
       ["Predicting no disease has expected cost \\(0.20(100)=20\\).", true],
       ["Predicting disease has expected cost \\(0.80(5)=4\\).", true],
@@ -938,11 +954,11 @@ export const CrashCourseProbabilityL1Questions: Question[] = [
         true,
       ],
       [
-        "Argmax classification must minimize expected cost for every cost structure.",
+        "Choosing no disease minimizes expected cost because its estimated probability 0.80 exceeds 0.20.",
         false,
       ],
     ],
-    "A decision depends on outcome probabilities and their consequences: the low-probability missed disease is expensive enough to dominate. The 0.50 argmax threshold is suitable only for particular symmetric costs, not for this asymmetric medical decision.",
+    "The model probabilities describe uncertainty about the true state; choosing a label does not change those probabilities. For the no-disease label, expected cost is \\(0.20\\cdot100+0.80\\cdot0=20\\), because a missed disease is costly. For the disease label, expected cost is \\(0.20\\cdot0+0.80\\cdot5=4\\), because only a false alarm incurs cost. Thus the disease label minimizes expected cost. Choosing the most probable class (argmax) would instead pick no disease; that rule minimizes misclassification probability under equal error costs, but not this asymmetric expected cost.",
   ),
   makeQuestion(
     "crash-probability-l1-q118",

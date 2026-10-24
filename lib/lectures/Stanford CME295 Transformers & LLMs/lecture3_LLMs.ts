@@ -300,7 +300,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
   ),
   makeQuestion(
     "cme295-lect3-q195",
-    "hard",
+    "medium",
     "A visualization colors each token by the expert selected in decoder layer 0, and the sentence contains several colors. Which conclusions are supported?",
     [
       [
@@ -312,15 +312,15 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         true,
       ],
       [
-        "Each color proves that its expert has one stable, human-nameable linguistic function across all inputs.",
+        "The color assigned to a token identifies that token's expert in the next decoder layer as well.",
         false,
       ],
       [
-        "One varied sentence proves that expert usage is balanced over the complete training distribution.",
+        "The number of distinct colors in the sentence gives the number of experts available in the layer.",
         false,
       ],
     ],
-    "Multiple colors rule out complete single-expert routing for this particular sentence and layer, and the layer label limits the trace's scope. Semantic specialization and population-level balance require broader analysis; neither follows from a single qualitative visualization.",
+    "Different colors establish that this sentence uses several experts in the displayed layer, and the layer label defines the trace's scope. Experts that received no token are absent from the colors, so the plot need not reveal the layer's full expert count. Each layer has its own routing decisions; a layer-0 color does not identify the next layer's expert.",
   ),
 
   // Response generation (18): autoregression, search, sampling, and constraints.
@@ -358,19 +358,19 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         true,
       ],
       [
-        "The A path is necessarily better because greedy decoding chose the larger first-step probability.",
+        "The A path is better: its complete probability is \\(0.6\\), compared with \\(0.4\\) for the B path.",
         false,
       ],
       [
-        "The paths tie because their first-step probabilities sum to one.",
+        "The paths tie at \\(0.30\\), using \\(0.5\\) as the continuation conditional after either first token.",
         false,
       ],
       [
-        "The B path has probability \\(0.4+0.9=1.3\\) because sequence scores add raw probabilities.",
+        "The B path is better: its complete probability is \\(0.9\\), because the continuation conditional supplies the sequence score.",
         false,
       ],
     ],
-    "A path probability multiplies conditional token probabilities, so the locally weaker first token can still lead to the stronger complete path. Greedy decoding cannot recover that alternative after committing to A, which illustrates why a locally optimal token does not guarantee a globally better sequence.",
+    "A path probability multiplies its first-token probability by the continuation conditional for that particular prefix: 0.6 × 0.5 = 0.30 versus 0.4 × 0.9 = 0.36. Using just the first step or just the continuation omits a factor, and borrowing A's continuation probability for B changes the given model. This is a concrete case in which greedy selection misses the better complete path.",
   ),
   makeQuestion(
     "cme295-lect3-q198",
@@ -468,7 +468,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         false,
       ],
       [
-        "Keep A, B, C, D and use the original distribution because 0.80 is not a token count.",
+        "Keep A, B, C, D and use the original distribution because no individual token reaches probability 0.80.",
         false,
       ],
     ],
@@ -570,7 +570,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
   ),
   makeQuestion(
     "cme295-lect3-q209",
-    "medium",
+    "easy",
     'A JSON generator has already emitted an opening brace followed by the property name "age". The schema now requires the key-value separator. Which next-token action best matches guided decoding?',
     [
       [
@@ -773,7 +773,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
   ),
   makeQuestion(
     "cme295-lect3-q218",
-    "hard",
+    "medium",
     "A self-consistency run samples five independent reasoning paths with final answers A, A, B, A, and B. Which statements correctly describe the aggregation and cost?",
     [
       ["Majority vote returns A with three of five votes.", true],
@@ -786,7 +786,7 @@ export const stanfordCME295Lecture3LLMsQuestions: Question[] = [
         true,
       ],
       [
-        "Compared with one direct answer, the method removes generation cost because only the majority trace is retained.",
+        "Running the five branches in parallel uses the total generation compute of one branch, apart from the voting step.",
         false,
       ],
     ],

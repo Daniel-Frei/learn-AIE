@@ -206,3 +206,184 @@ describe("reported question corrections", () => {
     }
   });
 });
+
+describe("additional probability report corrections", () => {
+  const ids = [
+    "crash-probability-l1-q62",
+    "crash-probability-l1-q63",
+    "crash-probability-l1-q117",
+    "crash-probability-l2-q91",
+    "crash-probability-l2-q102",
+    "crash-probability-l2-q112",
+  ];
+
+  function tableRows(prompt: string) {
+    return prompt
+      .split("\n")
+      .filter((line) => line.startsWith("|") && !line.includes("---"))
+      .map((line) =>
+        line
+          .split("|")
+          .slice(1, -1)
+          .map((cell) => cell.trim()),
+      );
+  }
+
+  it("distinguishes an exhaustive sample space from a uniform distribution", () => {
+    const item = question("crash-probability-l1-q62");
+    const probabilities = [0.6, 0.3, 0.1];
+    expect(probabilities.reduce((sum, value) => sum + value, 0)).toBeCloseTo(1);
+    expect(probabilities.every((value) => value === 1 / 3)).toBe(false);
+    expect(probabilities[0] + probabilities[1]).toBeCloseTo(0.9);
+    expect(item.options[2].text).toContain("Listing three outcomes forces");
+    expect(item.options[2].text).not.toContain("would additionally require");
+    expect(item.options.map((option) => option.isCorrect)).toEqual([
+      true,
+      true,
+      false,
+      false,
+    ]);
+    expect(item.explanation).toContain("additional assumption");
+  });
+
+  it("defines token events as sets and maps each token to its probability", () => {
+    const item = question("crash-probability-l1-q63");
+    expect(item.prompt).toContain(
+      "event consisting of tokens that are English grammatical articles",
+    );
+    const rows = tableRows(item.prompt);
+    expect(rows[0]).toEqual(["Token", "Probability"]);
+    const distribution = new Map(
+      rows.slice(1).map(([token, probability]) => [token, Number(probability)]),
+    );
+    const articles = ["a", "an", "the"];
+    const letterA = [...distribution.keys()].filter((token) =>
+      token.includes("a"),
+    );
+    expect(
+      articles.reduce((sum, token) => sum + distribution.get(token)!, 0),
+    ).toBeCloseTo(0.75);
+    expect(letterA).toEqual(["a", "an"]);
+    expect(letterA.every((token) => articles.includes(token))).toBe(true);
+    expect(item.options.map((option) => option.isCorrect)).toEqual([
+      true,
+      true,
+      true,
+      false,
+    ]);
+    expect(item.explanation).toContain("A\\cap B=B");
+  });
+
+  it("connects cost-table rows to expected decision costs without changing the probabilities", () => {
+    const item = question("crash-probability-l1-q117");
+    const rows = tableRows(item.prompt);
+    expect(rows[0]).toEqual([
+      "Prediction label",
+      "True state: disease",
+      "True state: no disease",
+    ]);
+    const probabilities = [0.2, 0.8];
+    const costs = Object.fromEntries(
+      rows
+        .slice(1)
+        .map(([label, ...values]) => [
+          label,
+          values.reduce(
+            (total, value, i) =>
+              total + Number.parseFloat(value) * probabilities[i],
+            0,
+          ),
+        ]),
+    );
+    expect(costs).toEqual({ Disease: 4, "No disease": 20 });
+    expect(item.prompt).toContain(
+      "multiplying its cost in each true state by that state's estimated probability",
+    );
+    expect(item.options[3].text).toContain("0.80 exceeds 0.20");
+    expect(item.options[3].isCorrect).toBe(false);
+    expect(item.explanation).toContain(
+      "choosing a label does not change those probabilities",
+    );
+    expect(item.explanation).toContain("0.20\\cdot100+0.80\\cdot0=20");
+    expect(item.explanation).toContain("0.20\\cdot0+0.80\\cdot5=4");
+  });
+
+  it("establishes independent coin events within the complete two-flip experiment", () => {
+    const item = question("crash-probability-l2-q91");
+    const outcomes = ["HH", "HT", "TH", "TT"];
+    const a = outcomes.filter((outcome) => outcome[0] === "H");
+    const b = outcomes.filter((outcome) => outcome[1] === "H");
+    const joint = a.filter((outcome) => b.includes(outcome));
+    expect(joint).toEqual(["HH"]);
+    expect(joint.length / outcomes.length).toBe(
+      (a.length / outcomes.length) * (b.length / outcomes.length),
+    );
+    expect(item.prompt).toContain("four equally likely complete outcomes");
+    expect(item.explanation).toContain(
+      "does not mean the flips happen at different times",
+    );
+    expect(item.options.map((option) => option.isCorrect)).toEqual([
+      true,
+      false,
+      false,
+      false,
+    ]);
+  });
+
+  it("updates fault odds by the alarm likelihood ratio before converting to probability", () => {
+    const item = question("crash-probability-l2-q102");
+    // One concrete alarm model with the stated likelihood ratio of four.
+    const faultAlarm = (1 / 20) * 0.4;
+    const noFaultAlarm = (19 / 20) * 0.1;
+    expect(faultAlarm / noFaultAlarm).toBeCloseTo(4 / 19);
+    expect(faultAlarm / (faultAlarm + noFaultAlarm)).toBeCloseTo(4 / 23);
+    expect(item.prompt).toContain("After an alarm occurs");
+    expect(item.explanation).toContain("(1/19)\\cdot4=4/19");
+    expect(item.explanation).toContain("equal prior odds of 1:1");
+    expect(item.options[3].isCorrect).toBe(false);
+  });
+
+  it("derives both latent-state joint paths and the posterior numerator", () => {
+    const item = question("crash-probability-l2-q112");
+    const jointOne = 0.3 * 0.8;
+    const jointZero = (1 - 0.3) * 0.2;
+    expect(jointOne).toBeCloseTo(0.24);
+    expect(jointZero).toBeCloseTo(0.14);
+    expect(jointOne + jointZero).toBeCloseTo(0.38);
+    expect(jointOne / (jointOne + jointZero)).toBeCloseTo(0.632, 3);
+    expect(item.explanation).toContain("0.3\\cdot0.8=0.24");
+    expect(item.explanation).toContain("0.7\\cdot0.2=0.14");
+    expect(item.explanation).toContain("0.24+0.14=0.38");
+    expect(item.explanation).toContain("0.24/0.38");
+    expect(item.options.map((option) => option.isCorrect)).toEqual([
+      true,
+      true,
+      false,
+      false,
+    ]);
+  });
+
+  it("retains the six question identities and renders all edited math", () => {
+    expect(ids.map((id) => question(id).id)).toEqual(ids);
+    for (const id of ids) {
+      const item = question(id);
+      for (const field of [
+        item.prompt,
+        item.explanation,
+        ...item.options.map((option) => option.text),
+      ]) {
+        expect(field).not.toMatch(/[\t\r\u0008\u000c]/);
+        for (const match of field.matchAll(
+          /\\\(([\s\S]*?)\\\)|\\\[([\s\S]*?)\\\]/g,
+        )) {
+          expect(() =>
+            renderToString(match[1] ?? match[2], {
+              throwOnError: true,
+              strict: "error",
+            }),
+          ).not.toThrow();
+        }
+      }
+    }
+  });
+});

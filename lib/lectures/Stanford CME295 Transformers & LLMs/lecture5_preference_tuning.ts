@@ -219,7 +219,7 @@ export const stanfordCME295Lecture5PreferenceTuningQuestions: Question[] = [
   makeQuestion(
     "cme295-lect5-q10",
     "medium",
-    "A reward model is trained on pairs \\((x, y_w, y_l)\\), where \\(y_w\\) is preferred over \\(y_l\\). Which statements describe what the Bradley-Terry training setup is trying to learn?",
+    "A reward model is trained on pairs \\((x,y_w,y_l)\\), where \\(y_w\\) is preferred over \\(y_l\\). Select all true statements about Bradley-Terry training and the resulting reward model.",
     [
       [
         "The reward for \\((x, y_w)\\) should be higher than the reward for \\((x, y_l)\\).",
@@ -234,11 +234,11 @@ export const stanfordCME295Lecture5PreferenceTuningQuestions: Question[] = [
         false,
       ],
       [
-        "The losing response must come from a different model architecture than the winning response.",
+        "The two scalar reward scores must sum to one for each response pair.",
         false,
       ],
     ],
-    "Bradley-Terry training turns pairwise preferences into pressure on score differences. The resulting reward model is pointwise at inference time: it takes one prompt-response pair and emits a scalar score, even though the loss compared winners and losers during training.",
+    "Bradley-Terry training learns score differences that favor preferred responses; exact absolute utilities are not required. The model scores one prompt-response pair at a time, while the pairwise probability comes from applying a sigmoid to a score difference. The raw scores need not sum to one: it is the induced pairwise probabilities, rather than scalar rewards, that are normalized.",
   ),
   makeQuestion(
     "cme295-lect5-q11",
@@ -254,7 +254,7 @@ export const stanfordCME295Lecture5PreferenceTuningQuestions: Question[] = [
         true,
       ],
       [
-        "If \\(r_i=r_j\\), the modeled preference probability for \\(y_i\\) over \\(y_j\\) is exactly 1.",
+        "Multiplying both reward scores by two leaves the modeled preference probability unchanged for any score pair.",
         false,
       ],
       [
@@ -262,7 +262,7 @@ export const stanfordCME295Lecture5PreferenceTuningQuestions: Question[] = [
         true,
       ],
     ],
-    "The sigmoid depends on the reward difference, so larger winner-minus-loser gaps push the preferred probability toward one. Equal scores give \\(\\sigma(0)=0.5\\), and shifting both scores by the same constant cancels in the difference.",
+    "The sigmoid increases with its input, so enlarging the winner-minus-loser difference raises the modeled preference probability and reduces the preferred-pair loss. Adding a shared constant cancels from the difference, but multiplying both scores by two doubles a nonzero gap and changes its sigmoid. Equal scores remain the special case with probability 0.5.",
   ),
   makeQuestion(
     "cme295-lect5-q12",

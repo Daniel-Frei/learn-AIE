@@ -18,6 +18,8 @@
 
 ## Current Behavior
 
+- Stanford CME295 2026 is a separate selectable series with four 50-question lecture sets (200 questions): transformer foundations; model architecture/scaling/decoding; training/reasoning/distillation; and policy gradients/PPO/GRPO/on-policy distillation. The sets follow the 2026 slide and transcript boundaries and selectively reuse material across legacy lecture numbers. Forty-six items reference the original canonical question objects and IDs, sharing existing ratings and reports; the other 154 have edition-specific identities. Mixed practice deduplicates shared IDs, while tooltips and report snapshots use the applied source selection. Paired source bundles, allocation, provenance, and review counts are documented in [the coverage note](cme295-2026-question-coverage.md).
+
 - Main quiz UI lives in `/app/page.tsx`.
 - The web app includes a learning layer:
   - `/learn` lists courses that have available in-app learning experiences.

@@ -369,8 +369,12 @@ export function useQuiz(
 
   const currentQuestionContext = useMemo(() => {
     if (!currentQuestion) return null;
-    return getQuestionSourceContext(currentQuestion.id);
-  }, [currentQuestion]);
+    return getQuestionSourceContext(
+      currentQuestion.id,
+      selectedSources,
+      selectedTopics,
+    );
+  }, [currentQuestion, selectedSources, selectedTopics]);
 
   useEffect(() => {
     if (!currentQuestionId) {
@@ -478,7 +482,11 @@ export function useQuiz(
     const trimmedComment = comment.trim();
     if (!trimmedComment) return false;
 
-    const sourceMetadata = getQuestionSourceMetadata(currentQuestion.id);
+    const sourceMetadata = getQuestionSourceMetadata(
+      currentQuestion.id,
+      selectedSources,
+      selectedTopics,
+    );
     if (!sourceMetadata) return false;
 
     try {

@@ -41,7 +41,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
   {
     id: "cme295-lect2-q02",
     chapter: 2,
-    difficulty: "hard",
+    difficulty: "medium",
     prompt:
       "The sinusoidal construction can write \\(\\omega_i=10000^{-2i/d_{\\text{model}}}\\). If \\(d_{\\text{model}}=4\\) and \\(i=1\\), what is \\(\\omega_i\\)?",
     options: [
@@ -495,7 +495,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
     chapter: 2,
     difficulty: "medium",
     prompt:
-      "A decoder has 32 query heads. Full multi-head attention uses 32 key/value heads, grouped-query attention (GQA) uses 8 key/value heads, and multi-query attention (MQA) uses 1 key/value head. Which cache-ratio statements are correct?",
+      "A decoder has 32 query heads. Full multi-head attention uses 32 key/value heads, grouped-query attention (GQA) uses 8 key/value heads, and multi-query attention (MQA) uses 1 key/value head. Assume the same cached sequence length, precision, layer count, and per-head width. Which cache-ratio statements are correct?",
     options: [
       {
         text: "GQA uses \\(8/32=1/4\\) as many key/value cache entries as full multi-head attention.",
@@ -549,7 +549,7 @@ export const stanfordCME295Lecture2Questions: Question[] = [
   {
     id: "cme295-lect2-q20",
     chapter: 2,
-    difficulty: "hard",
+    difficulty: "medium",
     prompt:
       "For an activation vector \\(x\\in\\mathbb{R}^d\\), compare LayerNorm and RMSNorm. Which formula statements are correct?",
     options: [

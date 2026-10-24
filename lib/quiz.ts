@@ -1,5 +1,6 @@
 // lib/quiz.ts
 import type { Topic } from "./questionTopics";
+import { uniqueQuestions } from "./questionReferences";
 import { chapter1Questions } from "./chapter1";
 import { chapter2Questions } from "./chapter2";
 import { chapter3Questions } from "./chapter3";
@@ -15,6 +16,10 @@ import { stanfordCME295Lecture6ReasoningQuestions } from "./lectures/Stanford CM
 import { stanfordCME295Lecture7RagToolsAgentsQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture7_rag_tools_agents";
 import { stanfordCME295Lecture8EvaluationQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture8_evaluation";
 import { stanfordCME295Lecture9SynthesisFrontiersQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture9_synthesis_frontiers";
+import { stanfordCME2952026Lecture1Questions } from "./lectures/Stanford CME295 2026 Transformers & LLMs/lecture1_transformer_foundations";
+import { stanfordCME2952026Lecture2Questions } from "./lectures/Stanford CME295 2026 Transformers & LLMs/lecture2_architecture_decoding";
+import { stanfordCME2952026Lecture3Questions } from "./lectures/Stanford CME295 2026 Transformers & LLMs/lecture3_training_reasoning";
+import { stanfordCME2952026Lecture4Questions } from "./lectures/Stanford CME295 2026 Transformers & LLMs/lecture4_policy_optimization";
 import { stanfordCME296Lecture1DiffusionQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture1_diffusion";
 import { stanfordCME296Lecture2ScoreMatchingQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture2_score_matching";
 import { stanfordCME296Lecture3FlowMatchingQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture3_flow_matching";
@@ -98,6 +103,7 @@ export type SourceSeriesId =
   | "aie-foundations"
   | "aie-building-apps"
   | "stanford-cme295"
+  | "stanford-cme295-2026"
   | "stanford-cme296"
   | "stanford-cs109"
   | "stanford-cs224r"
@@ -298,6 +304,44 @@ export const QUESTION_SOURCES = [
     seriesLabel: "Stanford CME295 Transformers & LLMs",
     topic: "NLP" as const,
     questions: stanfordCME295Lecture9SynthesisFrontiersQuestions,
+  },
+  {
+    id: "cme295-2026-lect1" as const,
+    label: "Stanford CME295 2026 Lecture 1",
+    title: "Stanford CME295 2026 Lecture 1: Transformer Foundations",
+    seriesId: "stanford-cme295-2026" as const,
+    seriesLabel: "Stanford CME295 2026 Transformers & LLMs",
+    topic: "NLP" as const,
+    questions: stanfordCME2952026Lecture1Questions,
+  },
+  {
+    id: "cme295-2026-lect2" as const,
+    label: "Stanford CME295 2026 Lecture 2",
+    title:
+      "Stanford CME295 2026 Lecture 2: LLM Architecture, Scaling & Decoding",
+    seriesId: "stanford-cme295-2026" as const,
+    seriesLabel: "Stanford CME295 2026 Transformers & LLMs",
+    topic: "NLP" as const,
+    questions: stanfordCME2952026Lecture2Questions,
+  },
+  {
+    id: "cme295-2026-lect3" as const,
+    label: "Stanford CME295 2026 Lecture 3",
+    title: "Stanford CME295 2026 Lecture 3: Training, Reasoning & Distillation",
+    seriesId: "stanford-cme295-2026" as const,
+    seriesLabel: "Stanford CME295 2026 Transformers & LLMs",
+    topic: "NLP" as const,
+    questions: stanfordCME2952026Lecture3Questions,
+  },
+  {
+    id: "cme295-2026-lect4" as const,
+    label: "Stanford CME295 2026 Lecture 4",
+    title:
+      "Stanford CME295 2026 Lecture 4: Policy Gradients, PPO, GRPO & On-Policy Distillation",
+    seriesId: "stanford-cme295-2026" as const,
+    seriesLabel: "Stanford CME295 2026 Transformers & LLMs",
+    topic: "NLP" as const,
+    questions: stanfordCME2952026Lecture4Questions,
   },
   {
     id: "cme296-lect1" as const,
@@ -962,6 +1006,14 @@ export const QUESTION_SOURCE_CONTEXT: Record<SourceId, string> = {
     "Evaluation lecture about human ratings, rule-based metrics, LLM-as-a-Judge, factuality, agent failure modes, benchmarks, reliability, and benchmark limits.",
   "cme295-lect9":
     "Course synthesis lecture about transformer and LLM fundamentals, multimodal transformers, diffusion LLMs, data, hardware, deployment tradeoffs, and open problems.",
+  "cme295-2026-lect1":
+    "CME295 2026 Lecture 1: tokenization, Word2vec, recurrent models, attention calculations, and the complete encoder-decoder transformer.",
+  "cme295-2026-lect2":
+    "CME295 2026 Lecture 2: model families, scaling, MoE routing, positional methods, sparse and shared-head attention, normalization, decoding, and prompting.",
+  "cme295-2026-lect3":
+    "CME295 2026 Lecture 3: pretraining data and loss, long-context midtraining, SFT and LoRA, preference learning, reasoning, distillation, and capability retention.",
+  "cme295-2026-lect4":
+    "CME295 2026 Lecture 4: policy gradients and baselines, PPO ratios and clipping, GRPO advantages and length incentives, and on-policy teacher supervision.",
   "cme296-lect1":
     "Diffusion lecture sections about forward and reverse intuition, DDPM training and sampling, and deterministic DDIM acceleration.",
   "cme296-lect2":
@@ -1138,28 +1190,33 @@ export function getSeriesIdsForSources(
 }
 
 // All questions across all sources
-export const allQuestions: Question[] = QUESTION_SOURCES.flatMap(
-  (s) => s.questions,
+export const allQuestions: Question[] = uniqueQuestions(
+  QUESTION_SOURCES.flatMap((source) => source.questions),
 );
 
 export const ALL_SOURCE_IDS: SourceId[] = QUESTION_SOURCES.map((s) => s.id);
 
-const QUESTION_SOURCE_METADATA_BY_ID = new Map<string, QuestionSourceMetadata>(
-  QUESTION_SOURCES.flatMap((source) =>
-    source.questions.map((question) => [
-      question.id,
-      {
-        sourceId: source.id,
-        sourceLabel: source.label,
-        sourceTitle: source.title,
-        sourceContext: QUESTION_SOURCE_CONTEXT[source.id],
-        seriesId: source.seriesId,
-        seriesLabel: source.seriesLabel,
-        topic: source.topic,
-      },
-    ]),
-  ),
-);
+const QUESTION_SOURCE_MEMBERSHIPS_BY_ID = new Map<
+  string,
+  QuestionSourceMetadata[]
+>();
+for (const source of QUESTION_SOURCES) {
+  const metadata: QuestionSourceMetadata = {
+    sourceId: source.id,
+    sourceLabel: source.label,
+    sourceTitle: source.title,
+    sourceContext: QUESTION_SOURCE_CONTEXT[source.id],
+    seriesId: source.seriesId,
+    seriesLabel: source.seriesLabel,
+    topic: source.topic,
+  };
+  for (const question of source.questions) {
+    const memberships =
+      QUESTION_SOURCE_MEMBERSHIPS_BY_ID.get(question.id) ?? [];
+    memberships.push(metadata);
+    QUESTION_SOURCE_MEMBERSHIPS_BY_ID.set(question.id, memberships);
+  }
+}
 
 // Helper: get questions for a given mode
 export function getQuestionsForMode(mode: Mode): Question[] {
@@ -1186,23 +1243,47 @@ export function getQuestionsForFilters(
   const activeQuestionTypes = new Set(questionTypes);
   if (activeQuestionTypes.size === 0) return [];
 
-  return QUESTION_SOURCES.filter(
-    (s) => activeSources.has(s.id) || activeTopics.has(s.topic),
-  ).flatMap((s) =>
-    s.questions.filter((question) =>
-      activeQuestionTypes.has(getQuestionType(question)),
+  return uniqueQuestions(
+    QUESTION_SOURCES.filter(
+      (s) => activeSources.has(s.id) || activeTopics.has(s.topic),
+    ).flatMap((s) =>
+      s.questions.filter((question) =>
+        activeQuestionTypes.has(getQuestionType(question)),
+      ),
     ),
   );
 }
 
-export function getQuestionSourceMetadata(
+export function getQuestionSourceMemberships(
   questionId: string,
-): QuestionSourceMetadata | null {
-  return QUESTION_SOURCE_METADATA_BY_ID.get(questionId) ?? null;
+): readonly QuestionSourceMetadata[] {
+  return QUESTION_SOURCE_MEMBERSHIPS_BY_ID.get(questionId) ?? [];
 }
 
-export function getQuestionSourceContext(questionId: string): string | null {
-  return getQuestionSourceMetadata(questionId)?.sourceContext ?? null;
+export function getQuestionSourceMetadata(
+  questionId: string,
+  sourceIds: readonly SourceId[] = [],
+  topics: readonly Topic[] = [],
+): QuestionSourceMetadata | null {
+  const memberships = getQuestionSourceMemberships(questionId);
+  // Explicit source selection takes precedence over topic-expanded selection.
+  return (
+    memberships.find((membership) => sourceIds.includes(membership.sourceId)) ??
+    memberships.find((membership) => topics.includes(membership.topic)) ??
+    memberships[0] ??
+    null
+  );
+}
+
+export function getQuestionSourceContext(
+  questionId: string,
+  sourceIds: readonly SourceId[] = [],
+  topics: readonly Topic[] = [],
+): string | null {
+  return (
+    getQuestionSourceMetadata(questionId, sourceIds, topics)?.sourceContext ??
+    null
+  );
 }
 
 // Helper: title for the current mode (for page header)
@@ -1265,6 +1346,10 @@ export { stanfordCME295Lecture6ReasoningQuestions } from "./lectures/Stanford CM
 export { stanfordCME295Lecture7RagToolsAgentsQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture7_rag_tools_agents";
 export { stanfordCME295Lecture8EvaluationQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture8_evaluation";
 export { stanfordCME295Lecture9SynthesisFrontiersQuestions } from "./lectures/Stanford CME295 Transformers & LLMs/lecture9_synthesis_frontiers";
+export { stanfordCME2952026Lecture1Questions } from "./lectures/Stanford CME295 2026 Transformers & LLMs/lecture1_transformer_foundations";
+export { stanfordCME2952026Lecture2Questions } from "./lectures/Stanford CME295 2026 Transformers & LLMs/lecture2_architecture_decoding";
+export { stanfordCME2952026Lecture3Questions } from "./lectures/Stanford CME295 2026 Transformers & LLMs/lecture3_training_reasoning";
+export { stanfordCME2952026Lecture4Questions } from "./lectures/Stanford CME295 2026 Transformers & LLMs/lecture4_policy_optimization";
 export { stanfordCME296Lecture1DiffusionQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture1_diffusion";
 export { stanfordCME296Lecture2ScoreMatchingQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture2_score_matching";
 export { stanfordCME296Lecture3FlowMatchingQuestions } from "./lectures/Stanford CME296 Diffusion & Large Vision Models/lecture3_flow_matching";

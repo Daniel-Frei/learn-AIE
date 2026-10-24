@@ -83,6 +83,8 @@ This file captures durable process preferences so future tasks can follow them b
 
 ## Question Bank Preferences
 
+- Stanford CME295 2026 lecture sets should contain 50 questions per lecture and remain a separate selectable edition. Match the current slides and transcripts, inspect visual teaching content, and search all legacy lectures because topics can move across lecture numbers. Reuse unchanged questions by explicit canonical reference with their original ID so existing Elo/Glicko data continues to apply. Keep one content definition per question ID; apply minor fixes there for every membership. Give new or substantially rewritten items fresh IDs and retain no duplicate copies for reuse. Source membership is independent of the canonical chapter, mixed pools deduplicate IDs, and source tooltips/reports reflect the applied lecture selection.
+
 - Reviews of existing question banks should inspect the full requested scope and improve quality selectively. Preserve sound questions and useful introductory items; do not treat a quality review as a mandate to replace every item. Check available transcripts and slides, but independently verify their arithmetic and assumptions. Prefer replacements that reduce repetition or test a plausible misconception over cosmetic rewrites.
 
 - For question-bank files under `/lib` (excluding `/lib/llm`), keep answer patterns roughly balanced across 1, 2, 3, and 4 correct-answer questions.

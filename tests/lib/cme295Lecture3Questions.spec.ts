@@ -42,7 +42,9 @@ describe("CME295 Lecture 3 question set", () => {
       correctAnswerCounts[correctCount] += 1;
     }
 
-    expect(difficultyCounts).toEqual({ easy: 20, medium: 20, hard: 20 });
+    // Scope interpretation, guided punctuation, and five-vote counting are
+    // labeled by their actual reasoning demands after the shared-item review.
+    expect(difficultyCounts).toEqual({ easy: 21, medium: 21, hard: 18 });
     expect(correctAnswerCounts).toEqual({ 1: 15, 2: 15, 3: 15, 4: 15 });
   });
 

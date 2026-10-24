@@ -1299,7 +1299,7 @@ export const stanfordCME295Lecture4TrainingQuestions: Question[] = [
   ),
   makeQuestion(
     "cme295-lect4-q168",
-    "medium",
+    "easy",
     "Why is swapping LoRA adapters useful for task specialization?",
     [
       [

@@ -1,5 +1,13 @@
 # API Contract
 
+## Question source identities
+
+The bundled registry in lib/quiz.ts defines source and series IDs used by quiz filters, ratings, and report snapshots. Stanford CME295 2026 uses series ID stanford-cme295-2026 and source IDs cme295-2026-lect1 through cme295-2026-lect4, with 50 question memberships per source. Of its 200 distinct items, 46 reference canonical legacy questions with their original cme295-lectN IDs; the other 154 use explicit cme295-2026-lectN-qNN identities. Substantially rewritten items receive fresh IDs. Backend consumers must treat question IDs as opaque keys and source membership as many-to-many. No endpoint payload shape changes.
+
+Ratings, answer attempts, and report counts remain keyed by canonical questionId, so selecting a reused question in either edition reads and updates the same existing Glicko record. No database migration or statistical merge is required. Retired IDs from the original 2026 draft are absent from the active bank; any stored history for those IDs remains untouched and is not combined with another item's history.
+
+Mixed-source and topic pools include each question ID once. The frontend helper getQuestionSourceMemberships(questionId) returns all registered memberships. getQuestionSourceMetadata(questionId, sourceIds?, topics?) and getQuestionSourceContext(questionId, sourceIds?, topics?) accept optional selection context: explicit selected source first, then selected topic, then first registered membership as a deterministic default. Ties use registry order. Web and mobile pass the applied selection for source tooltips and report snapshots, while keeping the canonical questionId. A report snapshot can therefore identify the 2026 lecture even when its questionId is a legacy ID. The question object's chapter remains its canonical chapter; it is not a membership identifier.
+
 ## Endpoint: `POST /api/explain`
 
 ### Purpose
